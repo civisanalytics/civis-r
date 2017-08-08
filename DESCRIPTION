@@ -1,0 +1,66 @@
+Package: civis
+Title: R Client for the Civis Platform API
+Version: 0.9.0
+Authors@R: c(
+  person("Bill", "Lattner", email = "wlattner@civisanalytics.com", role = c("cre", "aut")),
+  person("Patrick", "Miller", email = "pmiller@civisanlytics.com", role = "aut"),
+  person("Keith", "Ingersoll", email = "kingersoll@civisanalytics.com", role = "aut"),
+  person("Anh", "Le", email = "ale@civisanalytics.com", role = "aut"),
+  person("Michelangelo", "D'Agostino", email = "mdagostino@civisanalytics.com", role = "ctb"),
+  person("Sam", "Weiss", email = "sweiss@civisanalytics.com", role = "ctb"),
+  person("Danning", "Chen", email = "dchen@civisanalytics.com", role = "ctb"))
+Description: The Civis API R client is an R package that helps analysts and
+  developers interact with the Civis Platform. The package includes a set of
+  tools around common workflows as well as a convenient interface to make
+  requests directly to the Civis API.
+Depends:
+    R (>= 3.2.0)
+License: BSD_3_clause + file LICENSE
+LazyData: true
+URL: https://github.com/civisanalytics/civis-r
+BugReports: https://github.com/civisanalytics/civis-r/issues
+Imports:
+    httr,
+    jsonlite,
+    lazyeval,
+    assertthat,
+    purrr,
+    methods,
+    stats,
+    roxygen2,
+    DBI,
+    dplyr (>= 0.7.0),
+    dbplyr (>= 1.0.0),
+    memoise,
+    stringr,
+    devtools,
+    testthat,
+    lubridate,
+    uuid,
+    utils
+Suggests:
+    knitr,
+    rmarkdown,
+    DBItest,
+    mockery,
+    R.utils
+RoxygenNote: 6.0.1
+VignetteBuilder: knitr
+Collate: 
+    'await.R'
+    'civis_ml.R'
+    'civis_ml_workflows.R'
+    'client_base.R'
+    'dbi-driver.R'
+    'dbi-connection.R'
+    'dbi-result.R'
+    'dplyr.R'
+    'generate_client.R'
+    'generated_client.R'
+    'io.R'
+    'logs.R'
+    'pagination_helpers.R'
+    'reports.R'
+    'tables.R'
+    'utils.R'
+    'zzz.R'

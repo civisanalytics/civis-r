@@ -1,0 +1,8 @@
+.Rproj.user*
+.Rhistory
+.RData
+__pycache__
+swagger.json
+inst/doc
+inst/web
+.Rproj.user

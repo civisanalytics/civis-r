@@ -1,0 +1,9 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.travis\.yml$
+^\.circleci$
+^circle\.yml$
+^Dockerfile$
+^docs$
+^CODE_OF_CONDUCT\.md$
+^_pkgdown\.yaml$

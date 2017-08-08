@@ -1,0 +1,59 @@
+url: http://civisanalytics.github.io/civis-r
+
+template:
+    params:
+        bootswatch: cosmo
+
+reference:
+    - title: IO
+      desc: Moving data to and from the Civis Platform
+      contents:
+      - read_civis
+      - write_civis
+      - query_civis
+      - sql
+    - title: CivisML
+      desc: Training and scoring models with CivisML
+      contents:
+      - civis_ml
+      - civis_file
+      - civis_table
+      - civis_file_manifest
+    - title: CivisML Workflows
+      desc: Named workflows for CivisML models
+      contents:
+      - matches("^civis_ml_(extra|random|sparse|gradient)")
+    - title: dplyr
+      desc: dplyr backend for remote data manipulation
+      contents:
+      - DBI
+    - title: Reports
+      desc: Publishing reports to the Civis Platform
+      contents:
+      - publish_rmd
+      - publish_html
+    - title: Pagination
+      desc: Retrieve data from paginated endpoints
+      contents:
+      - fetch_all
+      - fetch_until
+    - title: Polling
+      desc: Polling the status of long running tasks
+      contents:
+      - await
+      - get_status
+    - title: Debugging
+      desc: Helper tools for debugging
+      contents:
+      - fetch_logs
+      - get_error
+    - title: API Utilities
+      desc: Utilities for common tasks when using direct API calls
+      contents:
+      - default_credential
+      - get_database_id
+      - get_table_id
+    - title: API
+      desc: Direct API calls to the Civis Platform
+      contents:
+      - matches("^\\w*_(delete|get|list|patch|post|put)")
