@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# civis-r
-Civis API Client for R" and we'll need Travis set up for continuous integration.
-=======
 Civis API Client
 ================
 [![Build Status](https://travis-ci.com/civisanalytics/civis-r-client.svg?token=E2j26hcJpSqCtyNqWd2B&branch=open-source)](https://travis-ci.com/civisanalytics/civis-r-client)
@@ -13,16 +9,16 @@ Setup
 2. Add a `CIVIS_API_KEY` environmental variable. It is best to put this in `.Renviron` to accommodate the many ways in which R can be run. When a key expires (usually after 30 days), the new key will need to be saved in `.Renviron`.
 3. Alternatively, you may set the API key inside an R session:
 
-  ```r
+```r
     Sys.setenv(CIVIS_API_KEY = "somestringwithlettersandnumbers")    
-  ```
+```
 
 Installation
 ------------
 
 ```
-git clone git@github.com:civisanalytics/civis-r-client.git
-Rscript -e "devtools::install('civis-r-client');"
+git clone git@github.com:civisanalytics/civis-r.git
+Rscript -e "devtools::install('civis-r');"
 ```
 
 Usage
@@ -62,4 +58,3 @@ person("FirstName", "LastName", email = "email@email.com", role = "ctb")
 
 This project is intended to be a safe, welcoming space for collaboration, and
 contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
->>>>>>> [RCL-63] welcome to your new home, R client

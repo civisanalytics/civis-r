@@ -71,20 +71,10 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-    
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
-<div id="civis-r" class="section level1">
+    <div id="civis-api-client" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#civis-r" class="anchor"></a>civis-r</h1></div>
-</div>
-<div id="civis-api-client-for-r-and-well-need-travis-set-up-for-continuous-integration-" class="section level1">
-<h1 class="hasAnchor">
-<a href="#civis-api-client-for-r-and-well-need-travis-set-up-for-continuous-integration-" class="anchor"></a>Civis API Client for R" and we’ll need Travis set up for continuous integration.</h1>
-</div>
-<div id="civis-api-client" class="section level1">
-<h1 class="hasAnchor">
-<a href="#civis-api-client" class="anchor"></a>Civis API Client</h1>
-<p><a href="https://travis-ci.com/civisanalytics/civis-r-client"><img src="https://travis-ci.com/civisanalytics/civis-r-client.svg?token=E2j26hcJpSqCtyNqWd2B&amp;branch=open-source" alt="Build Status"></a></p>
+<a href="#civis-api-client" class="anchor"></a>Civis API Client</h1></div>
+
 <div id="setup" class="section level2">
 <h2 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h2>
@@ -93,13 +83,13 @@
 <li>Add a <code>CIVIS_API_KEY</code> environmental variable. It is best to put this in <code>.Renviron</code> to accommodate the many ways in which R can be run. When a key expires (usually after 30 days), the new key will need to be saved in <code>.Renviron</code>.</li>
 <li>Alternatively, you may set the API key inside an R session:</li>
 </ol>
-<p><code>r     Sys.setenv(CIVIS_API_KEY = "somestringwithlettersandnumbers")</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">    <span class="kw">Sys.setenv</span>(<span class="dt">CIVIS_API_KEY =</span> <span class="st">"somestringwithlettersandnumbers"</span>)    </code></pre></div>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<pre><code>git clone git@github.com:civisanalytics/civis-r-client.git
-Rscript -e "devtools::install('civis-r-client');"</code></pre>
+<pre><code>git clone git@github.com:civisanalytics/civis-r.git
+Rscript -e "devtools::install('civis-r');"</code></pre>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -128,24 +118,8 @@ Rscript -e "devtools::install('civis-r-client');"</code></pre>
 <p>All contributors of code should include themselves in <code>DESCRIPTION</code> by adding the following object in the <code>Authors@R</code> section:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">person</span>(<span class="st">"FirstName"</span>, <span class="st">"LastName"</span>, <span class="dt">email =</span> <span class="st">"email@email.com"</span>, <span class="dt">role =</span> <span class="st">"ctb"</span>)</code></pre></div>
 <p>This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the <a href="http://contributor-covenant.org">Contributor Covenant</a> code of conduct.</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>[RCL-63] welcome to your new home, R client</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
 </div>
 </div>
-
   </div>
 
   <div class="col-md-3" id="sidebar">
@@ -165,6 +139,10 @@ Rscript -e "devtools::install('civis-r-client');"</code></pre>
 <li>Keith Ingersoll <br><small class="roles"> Author </small> </li>
 <li>Anh Le <br><small class="roles"> Author </small> </li>
 <li><a href="authors.html">All authors...</a></li>
+</ul>
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://travis-ci.com/civisanalytics/civis-r-client"><img src="https://travis-ci.com/civisanalytics/civis-r-client.svg?token=E2j26hcJpSqCtyNqWd2B&amp;branch=open-source" alt="Build Status"></a></li>
 </ul>
 </div>
 </div>
