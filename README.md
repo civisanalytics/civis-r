@@ -18,7 +18,7 @@ Installation
 
 ```
 git clone git@github.com:civisanalytics/civis-r.git
-Rscript -e "devtools::install('civis-r');"
+Rscript -e "devtools::install('civis-r', build_vignettes = TRUE);"
 ```
 
 Usage
