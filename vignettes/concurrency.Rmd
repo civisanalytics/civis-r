@@ -1,0 +1,157 @@
+---
+title: "Making Simultaneous Calls to Platform"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Asychronous Programming}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Concurrency in the Civis R Client
+
+Just like most functions in R, all functions in `civis` block.  This means
+that each function in a program must complete before the next function runs.
+For instance,
+
+```{r, eval=FALSE}
+nap <- function(seconds) {
+    Sys.sleep(seconds)
+}
+
+start <- Sys.time()
+nap(1)
+nap(2)
+nap(3)
+end <- Sys.time()
+print(end - start)
+```
+
+This program takes 6 seconds to complete, since it takes 1 second for the
+first `nap`, 2 for the second and 3 for the last. This program is easy to
+reason about because each function is sequentially executed. Usually, that
+is how we want our programs to run.
+
+There are some exceptions to this rule. Sequentially executing each function
+might be inconvenient if each `nap` took 30 minutes instead of a few seconds.
+In that case, we might like our program to perform all 3 naps simultaneously.
+In the above example, running all 3 naps simultaneously would take 3 seconds
+(the length of the longest nap) rather than 6 seconds.
+
+As all function calls in `civis` block, `civis` relies on the mature
+R ecosystem for parallel programming to enable multiple simultaneous
+tasks. The three packages we introduce are `future`, `foreach`, and
+`parallel` (included in base R). For all packages, simultaneous tasks are
+enabled by starting each task in a seperate R process. Examples for building
+several models in parallel with different libraries are included below. The
+libraries have strengths and weaknesses and choosing which library to use is
+often a matter of preference.
+
+It is important to note that when calling `civis` functions, the computation
+required to complete the task takes place in Platform.  For instance, during
+a call to `civis_ml`, Platform builds the model while your laptop waits
+for the task to complete.  This means that you don't have to worry about
+running out of memory or cpu cores on your laptop when training dozens of
+models, or when scoring a model on a very large population. The task being
+parallized in the code below is simply the task of waiting for Platform to
+send results back to your laptop.
+
+
+## Building Many Models with `future`
+
+```{r, eval=FALSE}
+library(future)
+library(civis)
+
+# Define a concurrent backend with enough processes so each function
+# we want to run concurrently has its own process. Here we'll need at least 2.
+plan("multiprocess", workers=10)
+
+# Load data
+data(iris)
+data(airquality)
+airquality <- airquality[!is.na(airquality$Ozone),]  # remove missing in dv
+
+# Create a future for each model, using the special %<-% assignment operator.
+# These futures are created immediately, kicking off the models.
+air_model %<-% civis_ml(airquality, "Ozone", "gradient_boosting_regressor")
+iris_model %<-% civis_ml(iris, "Species", "sparse_logistic")
+
+# At this point, `air_model` has not finished training yet. That's okay,
+# the program will just wait until `air_model` is done before printing it.
+print("airquality R^2:")
+print(air_model$metrics$metrics$r_squared)
+print("iris ROC:")
+print(iris_model$metrics$metrics$roc_auc)
+```
+
+
+## Building Many Models with `foreach`
+
+```{r, eval=FALSE}
+library(parallel)
+library(doParallel)
+library(foreach)
+library(civis)
+
+# Register a local cluster with enough processes so each function
+# we want to run concurrently has its own process. Here we'll
+# need at least 3, with 1 for each model_type in model_types.
+cluster <- makeCluster(10)
+registerDoParallel(cluster)
+
+# Model types to build
+model_types <- c("sparse_logistic",
+                 "gradient_boosting_classifier",
+                 "random_forest_classifier")
+
+# Load data
+data(iris)
+
+# Listen for multiple models to complete concurrently
+model_results <- foreach(model_type=iter(model_types), .packages='civis') %dopar% {
+    civis_ml(iris, "Species", model_type)
+}
+stopCluster(cluster)
+print("ROC Results")
+lapply(model_results, function(result) result$metrics$metrics$roc_auc)
+```
+
+## Building Many Models with `mcparallel`
+
+Note: `mcparallel` relies on forking and thus is not available on Windows.
+
+```{r, eval=FALSE}
+library(civis)
+library(parallel)
+
+# Model types to build
+model_types <- c("sparse_logistic",
+                 "gradient_boosting_classifier",
+                 "random_forest_classifier")
+
+# Load data
+data(iris)
+
+# Loop over all models in parallel with a max of 10 processes
+model_results <- mclapply(model_types, function(model_type) {
+  civis_ml(iris, "Species", model_type)
+}, mc.cores=10)
+
+# Wait for all models simultaneously
+print("ROC Results")
+lapply(model_results, function(result) result$metrics$metrics$roc_auc)
+```
+
+## Operating System / Environment Specific Errors
+
+Differences in operating systems and R environments may cause errors for
+some users of the parallel libraries listed above.  In particular,
+`mclapply` does not work on Windows and may not work in RStudio on
+certain operating systems.  `future` may require `plan(multisession)` on
+certain operating systems.  If you encounter an error parallelizing
+functions in `civis`, we recommend first trying more than one method
+listed above.  While we will address errors specific to `civis` with
+regards to parallel code, the technicalities of parallel libraries in
+R across operating systems and enviroments prevent us from providing
+more general support for issues regarding parallelized code in R.
