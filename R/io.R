@@ -1,10 +1,10 @@
 #' Read a table or file from the Civis Platform as a data frame.
-#' 
-#' @description \code{read_civis} loads a table from Redshift as a data frame if 
-#' given a \code{"schema.table"} or \code{sql("query")} as the first argument, or 
+#'
+#' @description \code{read_civis} loads a table from Redshift as a data frame if
+#' given a \code{"schema.table"} or \code{sql("query")} as the first argument, or
 #' loads a file from Amazon S3 (the files endpoint) if a file id is given.
-#' 
-#' A default database for all IO operations can be set 
+#'
+#' A default database for all IO operations can be set
 #' using \code{options(civis.default_db = "mydatabase")}.
 #'
 #' @param x  \code{"schema.table"}, \code{sql("query")}, or a file id.
@@ -111,13 +111,13 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv, job_name
 }
 
 #' Upload a local data frame or csv file to the Civis Platform (Redshift)
-#' 
+#'
 #' @description Uploads either a data frame or csv file to Redshift, based
-#' on the first argument. 
-#' 
-#' A default database for all IO operations can be set 
+#' on the first argument.
+#'
+#' A default database for all IO operations can be set
 #' using \code{options(civis.default_db = "mydatabase")}.
-#' 
+#'
 #' @param x data frame or file path of csv to upload to platform.
 #' @param tablename string, Name of table and schema \code{"schema.tablename"}
 #' @param database string, Name of database where data frame is to be uploaded. If no database is specified,
@@ -198,17 +198,18 @@ write_civis.character <- function(x, tablename, database = NULL, if_exists = "fa
 }
 
 #' Upload a R object or file to Civis Platform (Files endpoint)
-#' 
+#'
 #' @description Uploads a R object or file to the files endpoint on Civis
-#' Platform (Amazon S3). 
+#' Platform (Amazon S3).
 #' It returns the id of the file for use with \code{\link{read_civis}}.
-#' 
+#'
 #' R objects are serialized with \code{\link{saveRDS}}, files are unserialized.
 #' Files expire after 30 days by default.
 #'
 #' @param x R object or path of file to upload
-#' @param name Name of the file or object.
-#' @param expires_at The date and time the object will expire on. The default is 30 days.
+#' @param name string. Name of the file or object.
+#' @param expires_at string. The date and time the object will expire on in the
+#' format \code{"YYYY-MM-DD HH:MM:SS"}. The default is 30 days.
 #' Setting \code{expires_at = NULL} will keep the file indefinitely.
 #' @param ... further parameters passed to \code{\link{saveRDS}}.
 #'
@@ -222,6 +223,14 @@ write_civis.character <- function(x, tablename, database = NULL, if_exists = "fa
 #'
 #' file_id <- write_civis_file("path/to/my.csv")
 #' read_civis(file_id, using = read.csv)
+#'
+#' # Does not expire
+#' file_id <- write_civis_file(iris, expires_at = NULL)
+#'
+#' # Expires on a given date and time
+#' file_id <- write_civis_file(iris, expires_at = "2030-01-01")
+#' file_id <- write_civis_file(iris, expires_at = "12:00:00")
+#' file_id <- write_civis_file(iris, expires_at = "2030-01-01 12:00:00")
 #' }
 #' @details By default, R objects are serialized using \code{\link{saveRDS}} before uploading the object
 #' to the files endpoint. If given a filepath, the file is uploaded as-is.
