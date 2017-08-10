@@ -34,11 +34,11 @@ If no database is specified, uses \code{options(civis.default_db)}}
 \item{hidden}{Whether the job is hidden}
 }
 \description{
-\code{read_civis} loads a table from Redshift as a data frame if 
-given a \code{"schema.table"} or \code{sql("query")} as the first argument, or 
+\code{read_civis} loads a table from Redshift as a data frame if
+given a \code{"schema.table"} or \code{sql("query")} as the first argument, or
 loads a file from Amazon S3 (the files endpoint) if a file id is given.
 
-A default database for all IO operations can be set 
+A default database for all IO operations can be set
 using \code{options(civis.default_db = "mydatabase")}.
 }
 \details{

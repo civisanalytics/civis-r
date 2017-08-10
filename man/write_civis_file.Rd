@@ -18,9 +18,10 @@ write_civis_file(x, ...)
 
 \item{...}{further parameters passed to \code{\link{saveRDS}}.}
 
-\item{name}{Name of the file or object.}
+\item{name}{string. Name of the file or object.}
 
-\item{expires_at}{The date and time the object will expire on. The default is 30 days.
+\item{expires_at}{string. The date and time the object will expire on in the
+format \code{"YYYY-MM-DD HH:MM:SS"}. The default is 30 days.
 Setting \code{expires_at = NULL} will keep the file indefinitely.}
 }
 \value{
@@ -29,7 +30,7 @@ The file id which can be used to later retrieve the file using
 }
 \description{
 Uploads a R object or file to the files endpoint on Civis
-Platform (Amazon S3). 
+Platform (Amazon S3).
 It returns the id of the file for use with \code{\link{read_civis}}.
 
 R objects are serialized with \code{\link{saveRDS}}, files are unserialized.
@@ -54,6 +55,14 @@ read_civis(file_id)
 
 file_id <- write_civis_file("path/to/my.csv")
 read_civis(file_id, using = read.csv)
+
+# Does not expire
+file_id <- write_civis_file(iris, expires_at = NULL)
+
+# Expires on a given date and time
+file_id <- write_civis_file(iris, expires_at = "2030-01-01")
+file_id <- write_civis_file(iris, expires_at = "12:00:00")
+file_id <- write_civis_file(iris, expires_at = "2030-01-01 12:00:00")
 }
 }
 \seealso{

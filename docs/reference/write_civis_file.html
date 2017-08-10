@@ -100,7 +100,7 @@
 
     
     <p>Uploads a R object or file to the files endpoint on Civis
-Platform (Amazon S3). 
+Platform (Amazon S3).
 It returns the id of the file for use with <code><a href='read_civis.html'>read_civis</a></code>.</p>
 <p>R objects are serialized with <code>saveRDS</code>, files are unserialized.
 Files expire after 30 days by default.</p>
@@ -128,11 +128,12 @@ Files expire after 30 days by default.</p>
     </tr>
     <tr>
       <th>name</th>
-      <td><p>Name of the file or object.</p></td>
+      <td><p>string. Name of the file or object.</p></td>
     </tr>
     <tr>
       <th>expires_at</th>
-      <td><p>The date and time the object will expire on. The default is 30 days.
+      <td><p>string. The date and time the object will expire on in the
+format <code>"YYYY-MM-DD HH:MM:SS"</code>. The default is 30 days.
 Setting <code>expires_at = NULL</code> will keep the file indefinitely.</p></td>
     </tr>
     </table>
@@ -169,6 +170,14 @@ to the files endpoint. If given a filepath, the file is uploaded as-is.</p>
 
 <span class='no'>file_id</span> <span class='kw'>&lt;-</span> <span class='fu'>write_civis_file</span>(<span class='st'>"path/to/my.csv"</span>)
 <span class='fu'><a href='read_civis.html'>read_civis</a></span>(<span class='no'>file_id</span>, <span class='kw'>using</span> <span class='kw'>=</span> <span class='no'>read.csv</span>)
+
+<span class='co'># Does not expire</span>
+<span class='no'>file_id</span> <span class='kw'>&lt;-</span> <span class='fu'>write_civis_file</span>(<span class='no'>iris</span>, <span class='kw'>expires_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='co'># Expires on a given date and time</span>
+<span class='no'>file_id</span> <span class='kw'>&lt;-</span> <span class='fu'>write_civis_file</span>(<span class='no'>iris</span>, <span class='kw'>expires_at</span> <span class='kw'>=</span> <span class='st'>"2030-01-01"</span>)
+<span class='no'>file_id</span> <span class='kw'>&lt;-</span> <span class='fu'>write_civis_file</span>(<span class='no'>iris</span>, <span class='kw'>expires_at</span> <span class='kw'>=</span> <span class='st'>"12:00:00"</span>)
+<span class='no'>file_id</span> <span class='kw'>&lt;-</span> <span class='fu'>write_civis_file</span>(<span class='no'>iris</span>, <span class='kw'>expires_at</span> <span class='kw'>=</span> <span class='st'>"2030-01-01 12:00:00"</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

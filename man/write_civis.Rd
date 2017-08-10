@@ -43,9 +43,9 @@ to remove before failing.}
 }
 \description{
 Uploads either a data frame or csv file to Redshift, based
-on the first argument. 
+on the first argument.
 
-A default database for all IO operations can be set 
+A default database for all IO operations can be set
 using \code{options(civis.default_db = "mydatabase")}.
 }
 \section{Methods (by class)}{
