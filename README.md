@@ -2,31 +2,88 @@ Civis API Client
 ================
 [![Build Status](https://travis-ci.com/civisanalytics/civis-r-client.svg?token=E2j26hcJpSqCtyNqWd2B&branch=open-source)](https://travis-ci.com/civisanalytics/civis-r-client)
 
-Setup
------
+Introduction
+------------
 
-1. Get a Civis API key [(instructions)](https://console.civisanalytics.com/support#/api). Instructions cannot be run on the Civis Platform if an API key is not found or if an API key is expired. By default, API keys expire after 30 days. Repeat these instructions when an expired API key must be updates.
-2. Add a `CIVIS_API_KEY` environmental variable. It is best to put this in `.Renviron` to accommodate the many ways in which R can be run. When a key expires (usually after 30 days), the new key will need to be saved in `.Renviron`.
-3. Alternatively, you may set the API key inside an R session:
-
-```r
-    Sys.setenv(CIVIS_API_KEY = "somestringwithlettersandnumbers")    
-```
+`civis` is an R package that helps analysts and developers interact with
+the Civis Platform. The package includes a set of tools around common
+workflows as well as a convenient interface to make requests directly to
+the Civis API.
 
 Installation
 ------------
 
+Installing and using `civis` requires a Civis API key.  Instructions
+for creating an API key can be found [here](https://civis.zendesk.com/hc/en-us/articles/216341583-Generating-an-API-Key).
+All API keys have a set expiration date and so a new key will need to be
+created at least every 30 days.
+
+Once you have created an API key, you will then need to add it to your
+environment so `civis` can access it. To do this, add the following
+line to your `.Renviron` file:
+
+```bash
+CIVIS_API_KEY=adlfk942l2ka0dd0232
 ```
+
+Be sure to replace the fake key `adlfk942l2ka0dd0232` with your newly
+created key.
+
+With an API key in place, you can now install `civis` using devtools:
+
+```bash
 git clone git@github.com:civisanalytics/civis-r.git
 Rscript -e "devtools::install('civis-r', build_vignettes = TRUE);"
 ```
 
 Usage
--------
+-----
+
+`civis` includes functionality for both
+
+1. Making direct calls to the Platform API
+2. Making single calls to accomplish a specific task (which may involve
+making multiple calls to the Platform API)
+
+Functions which make direct calls to the Platform API are prefixed with
+the name of the resource that the function accesses.  For example, the
+`users` resource encapsulates all the functionality of Platform regarding
+users.  We can make various calls to the `users` resource to get information
+about ourselves and our team.
+
+```r
+# Data about me
+me <- civis::users_list_me()
+my_id <- me$id
+
+# Data about my team
+my_team <- civis::users_list()
+team_members <- sapply(my_team, function(x) x$name)
+```
+
+Many useful tasks will require making multiple direct calls to Platform.
+In order to make this easier, `civis` includes a number of wrapper functions
+to make common tasks easier. For example, reading data from a table in
+Platform is as easy as
+
 ```r
 library(civis)
 
-users_list_me()
+# Read an entire table in to memory
+my_table <- "schema.tablename"
+df <- read_civis(my_table, database="my_database")
+
+# Run a query and read the results into memory
+query <- sql("SELECT a, b, c FROM schema.tablename WHERE b > 42")
+df2 <- read_civis(query, database="my_database")
+```
+
+`civis` includes many more functions for tasks like writing data to tables
+and files as well as for creating reports. For more detailed documentation,
+see the included vignettes:
+
+```r
+browseVignettes('civis')
 ```
 
 Updating
