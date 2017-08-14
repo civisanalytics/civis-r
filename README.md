@@ -31,8 +31,9 @@ created key.
 
 With an API key in place, you can now install `civis-r` using devtools:
 
-```r
-devtools::install_github("civisanalytics/civis-r", build_vignettes=TRUE)
+```bash
+git clone git@github.com:civisanalytics/civis-r.git
+Rscript -e "devtools::install('civis-r', build_vignettes = TRUE);"
 ```
 
 Usage
