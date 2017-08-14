@@ -9,7 +9,7 @@ with_tempfile(fn, ...)
 \arguments{
 \item{fn}{a function that takes a filename as the first argument.}
 
-\item{...}{further args passed to fn.}
+\item{...}{arguments passed to to fn.}
 }
 \value{
 object the return value of fn

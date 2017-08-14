@@ -101,8 +101,9 @@
     
     <p>Uploads either a data frame or csv file to Redshift, based
 on the first argument.</p>
-<p>A default database for all IO operations can be set
-using <code>options(civis.default_db = "mydatabase")</code>.</p>
+<p>A default database can be set using <code>options(civis.default_db = "my_database")</code>.
+If there is only one database available,
+this database will automatically be used as the default.</p>
     
 
     <pre class="usage"><span class='fu'>write_civis</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -126,16 +127,16 @@ using <code>options(civis.default_db = "mydatabase")</code>.</p>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Extra arguments to <code>write.csv</code></p></td>
+      <td><p>arguments passed to <code>write.csv</code>.</p></td>
     </tr>
     <tr>
       <th>tablename</th>
-      <td><p>string, Name of table and schema <code>"schema.tablename"</code></p></td>
+      <td><p>string, Name of table and schema <code>"schema.tablename"</code>.</p></td>
     </tr>
     <tr>
       <th>database</th>
       <td><p>string, Name of database where data frame is to be uploaded. If no database is specified,
-uses <code>options(civis.default_db)</code></p></td>
+uses <code>options(civis.default_db)</code>.</p></td>
     </tr>
     <tr>
       <th>if_exists</th>
@@ -144,11 +145,11 @@ exists.  Must be either "fail", "truncate" or "append". Defaults to "fail".</p><
     </tr>
     <tr>
       <th>distkey</th>
-      <td><p>string, optional, Column name designating the distkey</p></td>
+      <td><p>string, optional, Column name designating the distkey.</p></td>
     </tr>
     <tr>
       <th>sortkey1</th>
-      <td><p>string, optional, Column name designating the first sortkey</p></td>
+      <td><p>string, optional, Column name designating the first sortkey.</p></td>
     </tr>
     <tr>
       <th>sortkey2</th>
@@ -169,8 +170,8 @@ to remove before failing.</p></td>
     <h2 class="hasAnchor" id="methods-by-class-"><a class="anchor" href="#methods-by-class-"></a>Methods (by class)</h2>
 
     <ul>
-<li><p><code>data.frame</code>: Upload a data frame to Civis Platform (Redshift)</p></li>
-<li><p><code>character</code>: Upload a csv to Civis Platform (Redshift)</p></li>
+<li><p><code>data.frame</code>: Upload a data frame to Civis Platform (Redshift).</p></li>
+<li><p><code>character</code>: Upload a csv to Civis Platform (Redshift).</p></li>
 </ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

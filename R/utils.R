@@ -40,7 +40,19 @@ get_db <- function(database) {
   db
 }
 
-get_default_database <- function() getOption("civis.default_db")
+# Returns options(civis.default_db).
+# If not set and databases_list is length 1, sets the package option.
+get_default_database <- function() {
+  db <- getOption("civis.default_db")
+  if (is.null(db)) {
+    db_list <- databases_list()
+    if (length(db_list) == 1) {
+      db <- db_list[[1]]$name
+      options(civis.default_db = db)
+    }
+  }
+  db
+}
 
 get_content_type <- function(x){
   x$headers[["Content-Type"]] %||% "application/octet-stream"

@@ -104,7 +104,9 @@ argument, which can be a string <code>"schema.table"</code>,
 a SQL query <code><a href='http://dplyr.tidyverse.org/reference/sql.html'>sql(...)</a></code>, or a numeric file ID.</p>
 <p>A table or a query from Redshift will be downloaded onto disk as a CSV.
 A file from Platform files endpoint will be downloaded as is.</p>
-<p>A default database can be set using <code>options(civis.default_db = "my_database")</code>.</p>
+<p>A default database can be set using <code>options(civis.default_db = "my_database")</code>.
+If there is only one database available,
+this database will automatically be used as the default.</p>
     
 
     <pre class="usage"><span class='fu'>download_civis</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -132,40 +134,40 @@ A file from Platform files endpoint will be downloaded as is.</p>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to other methods, currently ignored.</p></td>
+      <td><p>Currently ignored.</p></td>
     </tr>
     <tr>
       <th>database</th>
-      <td><p>string. The database. If <code>NULL</code>, tries to use the default database.</p></td>
+      <td><p>string, The database. If <code>NULL</code>, tries to use the default database.</p></td>
     </tr>
     <tr>
       <th>file</th>
-      <td><p>string. The file to write to.</p></td>
+      <td><p>string, The file to write to.</p></td>
     </tr>
     <tr>
       <th>overwrite</th>
-      <td><p>logical. Whether to overwrite the existing <code>file</code>.</p></td>
+      <td><p>logical, Whether to overwrite the existing <code>file</code>.</p></td>
     </tr>
     <tr>
       <th>progress</th>
-      <td><p>logical. Whether to display a progress bar.</p></td>
+      <td><p>logical, Whether to display a progress bar.</p></td>
     </tr>
     <tr>
       <th>split</th>
-      <td><p>logical. Whether to download a big table by splitting it into multiple
+      <td><p>logical, Whether to download a big table by splitting it into multiple
 CSV parts first. See <code><a href='civis_to_multifile_csv.html'>civis_to_multifile_csv</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>job_name</th>
-      <td><p>string. Name of the job (default: <code>"Civis Download Via R Client"</code>).</p></td>
+      <td><p>string, Name of the job (default: <code>"Civis Download Via R Client"</code>).</p></td>
     </tr>
     <tr>
       <th>hidden</th>
-      <td><p>logical. Whether the job is hidden on Platform.</p></td>
+      <td><p>logical, Whether the job is hidden on Platform.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>logical. Whether to print detailed updates of job status.</p></td>
+      <td><p>logical, Whether to print detailed updates of job status.</p></td>
     </tr>
     </table>
     

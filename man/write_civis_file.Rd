@@ -14,13 +14,13 @@ write_civis_file(x, ...)
 \method{write_civis_file}{character}(x, name, expires_at = NULL, ...)
 }
 \arguments{
-\item{x}{R object or path of file to upload}
+\item{x}{R object or path of file to upload.}
 
-\item{...}{further parameters passed to \code{\link{saveRDS}}.}
+\item{...}{arguments passed to \code{\link{saveRDS}}.}
 
-\item{name}{string. Name of the file or object.}
+\item{name}{string, Name of the file or object.}
 
-\item{expires_at}{string. The date and time the object will expire on in the
+\item{expires_at}{string, The date and time the object will expire on in the
 format \code{"YYYY-MM-DD HH:MM:SS"}. The default is 30 days.
 Setting \code{expires_at = NULL} will keep the file indefinitely.}
 }

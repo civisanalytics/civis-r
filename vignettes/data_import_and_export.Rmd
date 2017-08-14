@@ -52,8 +52,9 @@ df <- read_civis("schema.tablename", database = "my-database")
 ```
 
 For convenience, a default database can be set in the package options, and not specified
-in further calls to any IO function. In the examples that follow, we assume that a default 
-database has been set.
+in further calls to any IO function. If there is only one database available, this 
+database will automatically be used as the default.
+In the examples that follow, we assume that a default database has been set.
 
 ```{r eval=FALSE}
 options(civis.default_db = "my-database")

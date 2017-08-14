@@ -100,6 +100,9 @@
 
     
     <p>Utility to run queries that return no output.</p>
+<p>A default database can be set using <code>options(civis.default_db = "my_database")</code>.
+If there is only one database available,
+this database will automatically be used as the default.</p>
     
 
     <pre class="usage"><span class='fu'>query_civis</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -122,7 +125,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>extra arguments to <code>queries_post</code></p></td>
+      <td><p>arguments passed to <code>queries_post</code>.</p></td>
     </tr>
     <tr>
       <th>database</th>
@@ -130,21 +133,21 @@
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>Print detailed updates of job status.</p></td>
+      <td><p>bool, Print detailed updates of job status.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="methods-by-class-"><a class="anchor" href="#methods-by-class-"></a>Methods (by class)</h2>
 
     <ul>
-<li><p><code>sql</code>: Run a SQL query</p></li>
-<li><p><code>numeric</code>: Run a SQL query from a previous SQL query id</p></li>
-<li><p><code>character</code>: Run a SQL query</p></li>
+<li><p><code>sql</code>: Run a SQL query.</p></li>
+<li><p><code>numeric</code>: Run a SQL query from a previous SQL query id.</p></li>
+<li><p><code>character</code>: Run a SQL query.</p></li>
 </ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='read_civis.html'>read_civis</a></code> for downloading results of SQL scripts from Civis Platform.</p>
+    <p><code><a href='read_civis.html'>read_civis</a></code> for downloading results of SQL scripts from Civis Platform as a data frame.</p>
 <p>Other io: <code><a href='download_civis.html'>download_civis</a></code>,
   <code><a href='read_civis.html'>read_civis</a></code>, <code><a href='write_civis_file.html'>write_civis_file</a></code>,
   <code><a href='write_civis.html'>write_civis</a></code></p>

@@ -75,7 +75,7 @@
       <h1>Data Import and Export</h1>
                         <h4 class="author">Patrick Miller, Keith Ingersoll</h4>
             
-            <h4 class="date">2017-08-10</h4>
+            <h4 class="date">2017-08-14</h4>
           </div>
 
     
@@ -104,7 +104,7 @@
 <p>The main workhose for getting data from Platform is <code>read_civis</code>. This function is designed to work similarly to the built in function <code>read.csv</code>, returning a dataframe from a table in Platform. For more flexibility, <code>read_civis</code> can download files from Redshift using an SQL query, or download a file from S3 (‘the files endpoint’) using a file id.</p>
 <p>To read from a table in Platform, simply provide the name of the schema, table within the schema, and the database:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="st">"schema.tablename"</span>, <span class="dt">database =</span> <span class="st">"my-database"</span>)</code></pre></div>
-<p>For convenience, a default database can be set in the package options, and not specified in further calls to any IO function. In the examples that follow, we assume that a default database has been set.</p>
+<p>For convenience, a default database can be set in the package options, and not specified in further calls to any IO function. If there is only one database available, this database will automatically be used as the default. In the examples that follow, we assume that a default database has been set.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">civis.default_db =</span> <span class="st">"my-database"</span>)
 df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="st">"schema.tablename"</span>)</code></pre></div>
 <p><code>read_civis</code> accepts SQL queries when more flexibility is needed. This is accomplished by wrapping <code><a href="http://dplyr.tidyverse.org/reference/sql.html">sql(...)</a></code> around a string containing the query. With <code>read_civis</code>, queries are always read only, and always return a <code>data.frame</code>.</p>

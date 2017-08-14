@@ -23,24 +23,24 @@ download_civis(x, ...)
 \arguments{
 \item{x}{\code{"schema.table"}, \code{sql("query")}, or a file id.}
 
-\item{...}{Arguments passed to other methods, currently ignored.}
+\item{...}{Currently ignored.}
 
-\item{database}{string. The database. If \code{NULL}, tries to use the default database.}
+\item{database}{string, The database. If \code{NULL}, tries to use the default database.}
 
-\item{file}{string. The file to write to.}
+\item{file}{string, The file to write to.}
 
-\item{overwrite}{logical. Whether to overwrite the existing \code{file}.}
+\item{overwrite}{logical, Whether to overwrite the existing \code{file}.}
 
-\item{progress}{logical. Whether to display a progress bar.}
+\item{progress}{logical, Whether to display a progress bar.}
 
-\item{split}{logical. Whether to download a big table by splitting it into multiple
+\item{split}{logical, Whether to download a big table by splitting it into multiple
 CSV parts first. See \code{\link{civis_to_multifile_csv}} for details.}
 
-\item{job_name}{string. Name of the job (default: \code{"Civis Download Via R Client"}).}
+\item{job_name}{string, Name of the job (default: \code{"Civis Download Via R Client"}).}
 
-\item{hidden}{logical. Whether the job is hidden on Platform.}
+\item{hidden}{logical, Whether the job is hidden on Platform.}
 
-\item{verbose}{logical. Whether to print detailed updates of job status.}
+\item{verbose}{logical, Whether to print detailed updates of job status.}
 }
 \value{
 The file where the downloaded files or tables are written to.
@@ -55,6 +55,8 @@ A table or a query from Redshift will be downloaded onto disk as a CSV.
 A file from Platform files endpoint will be downloaded as is.
 
 A default database can be set using \code{options(civis.default_db = "my_database")}.
+If there is only one database available,
+this database will automatically be used as the default.
 }
 \section{Methods (by class)}{
 \itemize{
