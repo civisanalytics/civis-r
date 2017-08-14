@@ -5,7 +5,7 @@ Civis API Client
 Introduction
 ------------
 
-`civis-r` is an R package that helps analysts and developers interact with
+`civis` is an R package that helps analysts and developers interact with
 the Civis Platform. The package includes a set of tools around common
 workflows as well as a convenient interface to make requests directly to
 the Civis API.
@@ -13,13 +13,13 @@ the Civis API.
 Installation
 ------------
 
-Installing and using `civis-r` requires a Civis API key.  Instructions
+Installing and using `civis` requires a Civis API key.  Instructions
 for creating an API key can be found [here](https://civis.zendesk.com/hc/en-us/articles/216341583-Generating-an-API-Key).
 All API keys have a set expiration date and so a new key will need to be
 created at least every 30 days.
 
 Once you have created an API key, you will then need to add it to your
-environment so `civis-r` can access it. To do this, add the following
+environment so `civis` can access it. To do this, add the following
 line to your `.Renviron` file:
 
 ```bash
@@ -29,7 +29,7 @@ CIVIS_API_KEY=adlfk942l2ka0dd0232
 Be sure to replace the fake key `adlfk942l2ka0dd0232` with your newly
 created key.
 
-With an API key in place, you can now install `civis-r` using devtools:
+With an API key in place, you can now install `civis` using devtools:
 
 ```bash
 git clone git@github.com:civisanalytics/civis-r.git
@@ -39,7 +39,7 @@ Rscript -e "devtools::install('civis-r', build_vignettes = TRUE);"
 Usage
 -----
 
-`civis-r` includes functionality for both
+`civis` includes functionality for both
 
 1. Making direct calls to the Platform API
 2. Making single calls to accomplish a specific task (which may involve
@@ -62,7 +62,7 @@ team_members <- sapply(my_team, function(x) x$name)
 ```
 
 Many useful tasks will require making multiple direct calls to Platform.
-In order to make this easier, `civis-r` includes a number of wrapper functions
+In order to make this easier, `civis` includes a number of wrapper functions
 to make common tasks easier. For example, reading data from a table in
 Platform is as easy as
 
@@ -78,7 +78,7 @@ query <- sql("SELECT a, b, c FROM schema.tablename WHERE b > 42")
 df2 <- read_civis(query, database="my_database")
 ```
 
-`civis-r` includes many more functions for tasks like writing data to tables
+`civis` includes many more functions for tasks like writing data to tables
 and files as well as for creating reports. For more detailed documentation,
 see the included vignettes:
 
