@@ -5,7 +5,7 @@ Civis API Client
 Setup
 -----
 
-1. Get a Civis API key [(instructions)](https://console.civisanalytics.com/support#/api). Instructions cannot be run on the Civis Platform if an API key is not found or if an API key is expired. By default, API keys expire after 30 days. Repeat these instructions when an expired API key must be updates.
+1. Get a Civis API key [(instructions)](https://console.civisanalytics.com/support#/api). Instructions cannot be run on the Civis Platform if an API key is not found or if an API key is expired. By default, API keys expire after 30 days. Repeat these instructions when your API expires.
 2. Add a `CIVIS_API_KEY` environmental variable. It is best to put this in `.Renviron` to accommodate the many ways in which R can be run. When a key expires (usually after 30 days), the new key will need to be saved in `.Renviron`.
 3. Alternatively, you may set the API key inside an R session:
 
