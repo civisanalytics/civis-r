@@ -1,4 +1,7 @@
-#' Interface for modeling in the Civis Platform.
+#' Interface for modeling in the Civis Platform
+#'
+#' @description An interface for training and scoring data on Civis Platform
+#' using a set of Scikit-Learn estimators.
 #'
 #' @param object A \code{civis_ml} object.
 #' @param model_id The \code{id} of CivisML model built previously.
@@ -22,7 +25,7 @@
 #'   parameters, e.g. \code{list(n_estimators = c(100, 200, 500),
 #'   learning_rate = c(0.01, 0.1), max_depth = c(2, 3))}.
 #' @param model_name Optional, the prefix of the Platform modeling jobs.
-#'   It will have " Train" or " Predict" added to become the Script title.
+#'   It will have \code{" Train"} or \code{" Predict"} added to become the Script title.
 #' @param calibration Optional, if not \code{NULL}, calibrate output
 #'   probabilities with the selected method. Valid only with classification
 #'   models.
@@ -34,7 +37,8 @@
 #'   \code{oos_scores_table} will be created. If not provided, this will default
 #'   to \code{database_name}.
 #' @param oos_scores_if_exists Optional, action to take if
-#'   \code{oos_scores_table} already exists. The default is \code{"fail"}.
+#'   \code{oos_scores_table} already exists. One of \code{"fail"}, \code{"append"}, \code{"drop"}, or \code{"truncate"}.
+#'   The default is \code{"fail"}.
 #' @param fit_params Optional, a mapping from parameter names in the model's
 #'   \code{fit} method to the column names which hold the data, e.g.
 #'   \code{list(sample_weight = 'survey_weight_column')}.
@@ -42,7 +46,8 @@
 #' @param output_db The database containing \code{output_table}. If not
 #'   provided, this will default to the \code{database_name} specified when
 #'   the model was built.
-#' @param if_output_exists Action to take if the prediction table already exists.
+#' @param if_output_exists Action to take if the prediction table already exists. One of \code{"fail"}, \code{"append"}, \code{"drop"}, or \code{"truncate"}.
+#'   The default is \code{"fail"}.
 #' @param n_jobs  Number of concurrent Platform jobs to use for
 #'   multi-file / large table prediction.
 #' @param cpu_requested Optional, the number of CPU shares requested in the
@@ -63,22 +68,23 @@
 #'
 #' You can use the following pre-defined models with \code{civis_ml}. All models
 #' start by imputing missing values with the mean of non-null values in a
-#' column. The "sparse_*" models include a LASSO regression step
+#' column. The \code{"sparse_*"} models include a LASSO regression step
 #' (using \code{glmnet}) to do feature selection before passing data to the
 #' final model. In some models, CivisML uses default parameters from those in
 #' \href{http://scikit-learn.org/stable/}{Scikit-Learn}.
+#' Specific workflows can also be called directly using the R workflow functions.
 #'
-#' \tabular{rrrr}{
-#'  Name \tab Model Type \tab Algorithm \tab Defaults \cr
-#'  sparse_logistic	\tab classification	\tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html}{LogisticRegression}	\tab \code{C=499999950, tol=1e-08} \cr
-#'  gradient_boosting_classifier \tab	classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html}{GradientBoostingClassifier} \tab	\code{n_estimators=500, max_depth=2} \cr
-#'  random_forest_classifier \tab	classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}{RandomForestClassifier} \tab	\code{n_estimators=500} \cr
-#'  extra_trees_classifier \tab	classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html}{ExtraTreesClassifier} \tab	\code{n_estimators=500} \cr
-#'  sparse_linear_regressor \tab	regression \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html}{LinearRegression} \tab \cr
-#'  sparse_ridge_regressor \tab	regression \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html}{Ridge} \tab \cr
-#'  gradient_boosting_regressor	\tab regression \tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html}{GradientBoostingRegressor} \tab \code{n_estimators=500, max_depth=2} \cr
-#'  random_forest_regressor	\tab regression \tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html}{RandomForestRegressor} \tab \code{n_estimators=500} \cr
-#'  extra_trees_regressor \tab regression	\tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html}{ExtraTreesRegressor} \tab \code{n_estimators=500} \cr
+#' \tabular{rrrrr}{
+#'  Name \tab R Workflow \tab Model Type \tab Algorithm \tab Altered Defaults \cr
+#'  \code{sparse_logistic}	\tab \code{\link{civis_ml_sparse_logistic}} \tab classification	\tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html}{LogisticRegression}	\tab \code{C=499999950, tol=1e-08} \cr
+#'  \code{gradient_boosting_classifier} \tab	\code{\link{civis_ml_gradient_boosting_classifier}} \tab classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html}{GradientBoostingClassifier} \tab	\code{n_estimators=500, max_depth=2} \cr
+#'  \code{random_forest_classifier} \tab	\code{\link{civis_ml_random_forest_classifier}} \tab classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}{RandomForestClassifier} \tab	\code{n_estimators=500} \cr
+#'  \code{extra_trees_classifier} \tab	\code{\link{civis_ml_extra_trees_classifier}} \tab classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html}{ExtraTreesClassifier} \tab	\code{n_estimators=500} \cr
+#'  \code{sparse_linear_regressor} \tab \code{\link{civis_ml_sparse_linear_regressor}} \tab	regression \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html}{LinearRegression} \tab \cr
+#'  \code{sparse_ridge_regressor} \tab	\code{\link{civis_ml_sparse_ridge_regressor}} \tab regression \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html}{Ridge} \tab \cr
+#'  \code{gradient_boosting_regressor}	\tab \code{\link{civis_ml_gradient_boosting_regressor}} \tab regression \tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html}{GradientBoostingRegressor} \tab \code{n_estimators=500, max_depth=2} \cr
+#'  \code{random_forest_regressor}	\tab \code{\link{civis_ml_random_forest_regressor}} \tab regression \tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html}{RandomForestRegressor} \tab \code{n_estimators=500} \cr
+#'  \code{extra_trees_regressor} \tab \code{\link{civis_ml_extra_trees_regressor}} \tab regression	\tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html}{ExtraTreesRegressor} \tab \code{n_estimators=500} \cr
 #' }
 #'
 #' @section Data Sources:
@@ -96,31 +102,91 @@
 #'   \item{table in Civis Platform}{\code{civis_ml(x = civis_table(table_name = "schema.table", database_name = "database"))}}
 #' }
 #'
+#' @section Out of sample scores:
+#' Model outputs will always contain out-of-sample (or out of fold) scores,
+#' which are accessible through \code{\link{fetch_oos_scores}}.
+#' These may be stored in a Civis table on Redshift using the
+#' \code{oos_scores}, \code{oos_scores_db}, and \code{oos_scores_if_exists} parameters.
+#'
+#' @section Predictions:
+#'
 #' A fitted model can be used to make predictions for data residing in any of
 #' the sources above and a \code{\link{civis_file_manifest}}. Similar to
 #' \code{civis_ml}, use the data source helpers as the \code{newdata} argument
 #' to \code{predict.civis_ml}.
 #'
-#' @return A \code{civis_ml} object.
+#' A "manifest file" is JSON which specifies the location of many shards of the data to be used for prediction.
+#' A manifest file is the output of a Civis export job with \code{force_multifile = TRUE} set, e.g.
+#' from \code{\link{civis_to_multifile_csv}}. Large civis tables (provided using \code{table_name})
+#' will automatically be exported to manifest files.
+#'
+#' Prediction outputs will always be stored as gzipped CSVs in one or more civis files.
+#' Provide an \code{output_table} (and optionally an \code{output_db},
+#' if it’s different from \code{database_name}) to copy these predictions into a
+#' table on Redshift.
+#'
+#' @return A \code{civis_ml} object, a list containing the following elements:
+#' \item{job}{job metadata from \code{\link{scripts_get_custom}}.}
+#' \item{run}{run metadata from \code{\link{scripts_get_custom_runs}}.}
+#' \item{outputs}{CivisML metadata from \code{\link{scripts_list_custom_runs_outputs}} containing the locations of
+#'  files produced by CivisML e.g. files, projects, metrics, model_info, logs, predictions, and estimators.}
+#' \item{metrics}{Parsed CivisML output from \code{metrics.json} containing metadata from validation.
+#'  A list containing the following elements:
+#'   \itemize{
+#'   \item run list, metadata about the run.
+#'   \item data list, metadata about the training data.
+#'   \item model list, the fitted scikit-learn model with CV results.
+#'   \item metrics list, validation metrics (accuracy, confusion, ROC, AUC, etc).
+#'   \item warnings list.
+#'   \item data_platform list, training data location.
+#' }}
+#' \item{model_info}{Parsed CivisML output from \code{model_info.json} containing metadata from training. A list containing the following elements:
+#'   \itemize{
+#'   \item run list, metadata about the run.
+#'   \item data list, metdata about the training data.
+#'   \item model list, the fitted scikit-learn model.
+#'   \item metrics empy list.
+#'   \item warnings list.
+#'   \item data_platform list, training data location.
+#'   }}
+#'
 #' @examples \dontrun{
-#' # Build a model from a local data.frame:
-#' civis_ml(x = df, model_type = "sparse_logistic",
-#'          dependent_variable = "species", verbose = TRUE)
+#' # From a data frame:
+#' m <- civis_ml(df, model_type = "sparse_logistic",
+#'               dependent_variable = "Species")
 #'
-#' # or from a table:
-#' civis_ml(x = civis_table("schema.table", "database_name"),
-#'          model_type = "sparse_logistic", dependent_variable = "species")
+#' # From a table:
+#' m <- civis_ml(civis_table("schema.table", "database_name"),
+#'               model_type = "sparse_logistic", dependent_variable = "Species",
+#'               oos_scores_table = "schema.scores_table",
+#'               oos_scores_if_exists = "drop")
 #'
-#' # or from a Civis file:
-#' civis_ml(x = civis_file(file_id), model_type = "sparse_logistic",
-#'          dependent_variable = "species")
+#' # From a local file:
+#' m <- civis_ml("path/to/file.csv", model_type = "sparse_logistic",
+#'               dependent_variable = "Species")
+#'
+#' # From a Civis file:
+#' file_id <- write_civis_file("path/to/file.csv", name = "file.csv")
+#' m <- civis_ml(civis_file(file_id), model_type = "sparse_logistic",
+#'               dependent_variable = "Species")
+#'
+#' pred_job <- predict(m, newdata = df)
+#' pred_job <- predict(m, civis_table("schema.table", "database_name"),
+#'                     output_table = "schema.scores_table")
+#' pred_job <- predict(m, civis_file(file_id),
+#'                     output_table = "schema.scores_table")
+#'
+#' m <- civis_ml_fetch_existing(model_id = m$job$id, m$run$id)
+#' logs <- fetch_logs(m)
+#' yhat <- fetch_oos_scores(m)
 #' }
 #' @name civis_ml
 #' @seealso
 #'   \code{\link{civis_file}}, \code{\link{civis_table}}, and
 #'   \code{\link{civis_file_manifest}} for specifying data sources.
 #'
-#'   \code{\link{fetch_logs}} for retrieving logs for a model build.
+#'   \code{\link{fetch_logs}} for retrieving logs for a model build and
+#'   \code{\link{fetch_oos_scores}} for retrieving the out of sample (fold) scores for each training observation.
 NULL
 
 #' @rdname civis_ml

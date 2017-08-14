@@ -104,10 +104,11 @@ predictions on training set data to this Redshift "schema.tablename".}
 to \code{database_name}.}
 
 \item{oos_scores_if_exists}{Optional, action to take if
-\code{oos_scores_table} already exists. The default is \code{"fail"}.}
+\code{oos_scores_table} already exists. One of \code{"fail"}, \code{"append"}, \code{"drop"}, or \code{"truncate"}.
+The default is \code{"fail"}.}
 
 \item{model_name}{Optional, the prefix of the Platform modeling jobs.
-It will have " Train" or " Predict" added to become the Script title.}
+It will have \code{" Train"} or \code{" Predict"} added to become the Script title.}
 
 \item{cpu_requested}{Optional, the number of CPU shares requested in the
 Civis Platform for training jobs. 1024 shares = 1 CPU.}
@@ -128,7 +129,30 @@ and URL notification.}
 logs and make prediction child jobs visible.}
 }
 \value{
-A \code{civis_ml} object.
+A \code{civis_ml} object, a list containing the following elements:
+\item{job}{job metadata from \code{\link{scripts_get_custom}}.}
+\item{run}{run metadata from \code{\link{scripts_get_custom_runs}}.}
+\item{outputs}{CivisML metadata from \code{\link{scripts_list_custom_runs_outputs}} containing the locations of
+ files produced by CivisML e.g. files, projects, metrics, model_info, logs, predictions, and estimators.}
+\item{metrics}{Parsed CivisML output from \code{metrics.json} containing metadata from validation.
+ A list containing the following elements:
+  \itemize{
+  \item run list, metadata about the run.
+  \item data list, metadata about the training data.
+  \item model list, the fitted scikit-learn model with CV results.
+  \item metrics list, validation metrics (accuracy, confusion, ROC, AUC, etc).
+  \item warnings list.
+  \item data_platform list, training data location.
+}}
+\item{model_info}{Parsed CivisML output from \code{model_info.json} containing metadata from training. A list containing the following elements:
+  \itemize{
+  \item run list, metadata about the run.
+  \item data list, metdata about the training data.
+  \item model list, the fitted scikit-learn model.
+  \item metrics empy list.
+  \item warnings list.
+  \item data_platform list, training data location.
+  }}
 }
 \description{
 CivisML Random Forest Regressor
@@ -148,10 +172,30 @@ data source when calling \code{civis_ml}:
   \item{file in Civis Platform}{\code{civis_ml(x = civis_file(1234))}}
   \item{table in Civis Platform}{\code{civis_ml(x = civis_table(table_name = "schema.table", database_name = "database"))}}
 }
-
-A fitted model can be used to make predictions for data residing in any of
-the sources above and a \code{\link{civis_file_manifest}}. Similar to
-\code{civis_ml}, use the data source helpers as the \code{newdata} argument
-to \code{predict.civis_ml}.
 }
 
+\examples{
+\dontrun{
+data(ChickWeight)
+
+m <- civis_ml_random_forest_regressor(ChickWeight,
+  dependent_variable = "weight",
+  n_estimators = 100,
+  max_depth = 5,
+  max_features = NULL)
+yhat <- fetch_oos_scores(m)
+
+# Grid Search
+cv_params <- list(
+  n_estimators = c(100, 200, 500),
+  max_depth = c(2, 3))
+
+m <- civis_ml_random_forest_regressor(ChickWeight,
+  dependent_variable = "weight",
+  max_features = NULL,
+  cross_validation_parameters = cv_params)
+
+pred_info <- predict(m,  civis_table("schema.table", "my_database"),
+   output_table = "schema.scores_table")
+}
+}
