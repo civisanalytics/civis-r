@@ -18,22 +18,26 @@ query_civis(x, ...)
 \arguments{
 \item{x}{\code{sql("...")}, \code{"query"}, or id of an existing sql script.}
 
-\item{...}{extra arguments to \code{queries_post}}
+\item{...}{arguments passed to \code{queries_post}.}
 
 \item{database}{string, Name of database where query is run.}
 
-\item{verbose}{Print detailed updates of job status.}
+\item{verbose}{bool, Print detailed updates of job status.}
 }
 \description{
 Utility to run queries that return no output.
+
+A default database can be set using \code{options(civis.default_db = "my_database")}.
+If there is only one database available,
+this database will automatically be used as the default.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{sql}: Run a SQL query
+\item \code{sql}: Run a SQL query.
 
-\item \code{numeric}: Run a SQL query from a previous SQL query id
+\item \code{numeric}: Run a SQL query from a previous SQL query id.
 
-\item \code{character}: Run a SQL query
+\item \code{character}: Run a SQL query.
 }}
 
 \examples{
@@ -43,7 +47,7 @@ query_civis("GRANT ALL ON schema.my_table TO GROUP admin", "database")
 
 }
 \seealso{
-\code{\link{read_civis}} for downloading results of SQL scripts from Civis Platform.
+\code{\link{read_civis}} for downloading results of SQL scripts from Civis Platform as a data frame.
 
 Other io: \code{\link{download_civis}},
   \code{\link{read_civis}}, \code{\link{write_civis_file}},

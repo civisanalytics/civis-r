@@ -192,7 +192,11 @@ test_that("get_db returns default database or an error", {
 
   options(civis.default_db = NULL)
   msg <- c("Argument database is NULL and options(\"civis.default_db\") not set. Set this option using options(civis.default_db = \"my_database\")")
-  expect_equal(tryCatch(get_db(NULL), error = function(e) e$message), msg)
+  test_msg <- with_mock(
+    `civis::get_default_database` = function(...) NULL,
+    tryCatch(get_db(NULL), error = function(e) e$message)
+  )
+  expect_equal(msg, test_msg)
 
   options(civis.default_db = "sea_creatures")
   expect_equal(get_db(NULL), "sea_creatures")

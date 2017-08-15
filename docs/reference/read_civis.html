@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read a table or file from the Civis Platform as a data frame. — read_civis • civis</title>
+<title>Read a table or file from the Civis Platform as a data frame — read_civis • civis</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -95,15 +95,16 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read a table or file from the Civis Platform as a data frame.</h1>
+    <h1>Read a table or file from the Civis Platform as a data frame</h1>
     </div>
 
     
     <p><code>read_civis</code> loads a table from Redshift as a data frame if
 given a <code>"schema.table"</code> or <code><a href='http://dplyr.tidyverse.org/reference/sql.html'>sql("query")</a></code> as the first argument, or
 loads a file from Amazon S3 (the files endpoint) if a file id is given.</p>
-<p>A default database for all IO operations can be set
-using <code>options(civis.default_db = "mydatabase")</code>.</p>
+<p>A default database can be set using <code>options(civis.default_db = "my_database")</code>.
+If there is only one database available,
+this database will automatically be used as the default.</p>
     
 
     <pre class="usage"><span class='fu'>read_civis</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -127,11 +128,11 @@ using <code>options(civis.default_db = "mydatabase")</code>.</p>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>arguments passed to <code>using</code></p></td>
+      <td><p>arguments passed to <code>using</code>.</p></td>
     </tr>
     <tr>
       <th>using</th>
-      <td><p>Function to convert the file to a data frame or to unserialize
+      <td><p>function, Function to convert the file to a data frame or to unserialize.
 the file (e.g. <code>read.csv</code> or <code>readRDS</code>).</p></td>
     </tr>
     <tr>
@@ -141,15 +142,15 @@ the file (e.g. <code>read.csv</code> or <code>readRDS</code>).</p></td>
     <tr>
       <th>database</th>
       <td><p>string, Name of database where data frame is to be uploaded.
-If no database is specified, uses <code>options(civis.default_db)</code></p></td>
+If no database is specified, uses <code>options(civis.default_db)</code>.</p></td>
     </tr>
     <tr>
       <th>job_name</th>
-      <td><p>Name of the job (default: <code>"Civis Export Via R Client"</code>)</p></td>
+      <td><p>string, Name of the job (default: <code>"Civis Export Via R Client"</code>).</p></td>
     </tr>
     <tr>
       <th>hidden</th>
-      <td><p>Whether the job is hidden</p></td>
+      <td><p>bool, Whether the job is hidden.</p></td>
     </tr>
     </table>
     
@@ -164,9 +165,9 @@ an uncompressed text or csv from the files endpoint, set <code>using = read.csv<
     <h2 class="hasAnchor" id="methods-by-class-"><a class="anchor" href="#methods-by-class-"></a>Methods (by class)</h2>
 
     <ul>
-<li><p><code>numeric</code>: Return a file as a data frame.</p></li>
-<li><p><code>character</code>: Return all columns from a table as a data frame</p></li>
-<li><p><code>sql</code>: Return a SQL query as a data frame</p></li>
+<li><p><code>numeric</code>: Return a file as a data frame</p></li>
+<li><p><code>character</code>: Return all columns from a table as a data frame.</p></li>
+<li><p><code>sql</code>: Return a SQL query as a data frame.</p></li>
 </ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

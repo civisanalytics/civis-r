@@ -9,13 +9,13 @@ civis_to_multifile_csv(sql, database, job_name = NULL, hidden = TRUE,
   unquoted = FALSE, prefix = NULL)
 }
 \arguments{
-\item{sql}{string. The SQL select string to be executed}
+\item{sql}{string, The SQL select string to be executed.}
 
-\item{database}{string. Name of database where query is run.}
+\item{database}{string, Name of database where query is run.}
 
 \item{job_name}{string, optional. Name to identify scripted sql job.}
 
-\item{hidden}{logical. Whether to hide the query in platform.}
+\item{hidden}{logical, Whether to hide the query in platform.}
 
 \item{include_header}{logical, optional. Whether to include headers as an
 element in the returned list.}

@@ -1,21 +1,22 @@
-#' Read a table or file from the Civis Platform as a data frame.
+#' Read a table or file from the Civis Platform as a data frame
 #'
 #' @description \code{read_civis} loads a table from Redshift as a data frame if
 #' given a \code{"schema.table"} or \code{sql("query")} as the first argument, or
 #' loads a file from Amazon S3 (the files endpoint) if a file id is given.
 #'
-#' A default database for all IO operations can be set
-#' using \code{options(civis.default_db = "mydatabase")}.
+#' A default database can be set using \code{options(civis.default_db = "my_database")}.
+#' If there is only one database available,
+#' this database will automatically be used as the default.
 #'
 #' @param x  \code{"schema.table"}, \code{sql("query")}, or a file id.
-#' @param using Function to convert the file to a data frame or to unserialize
+#' @param using function, Function to convert the file to a data frame or to unserialize.
 #'  the file (e.g. \code{read.csv} or \code{readRDS}).
 #' @param database string, Name of database where data frame is to be uploaded.
-#' If no database is specified, uses \code{options(civis.default_db)}
-#' @param job_name Name of the job (default: \code{"Civis Export Via R Client"})
-#' @param hidden Whether the job is hidden
+#' If no database is specified, uses \code{options(civis.default_db)}.
+#' @param job_name string, Name of the job (default: \code{"Civis Export Via R Client"}).
+#' @param hidden bool, Whether the job is hidden.
 #' @param verbose bool, Set to TRUE to print intermediate progress indicators.
-#' @param ... arguments passed to \code{using}
+#' @param ... arguments passed to \code{using}.
 #' @details For \code{read_civis.sql}, queries must be \code{READ ONLY}.
 #' To execute arbitrary queries, use \code{\link{query_civis}}.
 #' @examples
@@ -41,7 +42,7 @@ read_civis <- function(x, ...) {
   UseMethod("read_civis")
 }
 
-#' @describeIn read_civis Return a file as a data frame.
+#' @describeIn read_civis Return a file as a data frame
 #' @details
 #' By default, \code{read_civis.numeric} assumes the file has been serialized using
 #' \code{saveRDS}, as in \code{write_civis_file} and uses \code{using = readRDS} by default. For reading
@@ -80,7 +81,7 @@ read_civis.numeric <- function(x, using = readRDS, verbose = FALSE, ...) {
 }
 
 #' @export
-#' @describeIn read_civis Return all columns from a table as a data frame
+#' @describeIn read_civis Return all columns from a table as a data frame.
 read_civis.character <- function(x, database = NULL, ...) {
   if (stringr::str_detect(tolower(x), "\\bselect\\b")) {
     msg <- c("Argument x should be \"schema.tablename\". Did you mean x = sql(\"...\")?")
@@ -91,7 +92,7 @@ read_civis.character <- function(x, database = NULL, ...) {
 }
 
 
-#' @describeIn read_civis  Return a SQL query as a data frame
+#' @describeIn read_civis  Return a SQL query as a data frame.
 #' @export
 read_civis.sql <- function(x, database = NULL, using = utils::read.csv, job_name = NULL,
                            hidden = TRUE, verbose = FALSE, ...) {
@@ -115,23 +116,24 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv, job_name
 #' @description Uploads either a data frame or csv file to Redshift, based
 #' on the first argument.
 #'
-#' A default database for all IO operations can be set
-#' using \code{options(civis.default_db = "mydatabase")}.
+#' A default database can be set using \code{options(civis.default_db = "my_database")}.
+#' If there is only one database available,
+#' this database will automatically be used as the default.
 #'
 #' @param x data frame or file path of csv to upload to platform.
-#' @param tablename string, Name of table and schema \code{"schema.tablename"}
+#' @param tablename string, Name of table and schema \code{"schema.tablename"}.
 #' @param database string, Name of database where data frame is to be uploaded. If no database is specified,
-#' uses \code{options(civis.default_db)}
+#' uses \code{options(civis.default_db)}.
 #' @param if_exists string, optional,  String indicating action to take if table already
 #' exists.  Must be either "fail", "truncate" or "append". Defaults to "fail".
-#' @param distkey string, optional, Column name designating the distkey
-#' @param sortkey1 string, optional, Column name designating the first sortkey
+#' @param distkey string, optional, Column name designating the distkey.
+#' @param sortkey1 string, optional, Column name designating the first sortkey.
 #' @param sortkey2 string, optional, Column name designating the second
 #' (compound) sortkey.
 #' @param max_errors int, optional, Maximum number of rows with errors
 #' to remove before failing.
 #' @param verbose bool, Set to TRUE to print intermediate progress indicators.
-#' @param ... Extra arguments to \code{write.csv}
+#' @param ... arguments passed to \code{write.csv}.
 #' @seealso \code{\link{refresh_table}} to update table meta-data.
 #'
 #' @examples
@@ -159,7 +161,7 @@ write_civis <- function(x, ...) {
   UseMethod("write_civis")
 }
 
-#' @describeIn write_civis Upload a data frame to Civis Platform (Redshift)
+#' @describeIn write_civis Upload a data frame to Civis Platform (Redshift).
 #' @export
 write_civis.data.frame <- function(x, tablename, database = NULL, if_exists="fail",
                         distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
@@ -176,7 +178,7 @@ write_civis.data.frame <- function(x, tablename, database = NULL, if_exists="fai
   })
 }
 
-#' @describeIn write_civis Upload a csv to Civis Platform (Redshift)
+#' @describeIn write_civis Upload a csv to Civis Platform (Redshift).
 #' @export
 write_civis.character <- function(x, tablename, database = NULL, if_exists = "fail",
                          distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
@@ -206,12 +208,12 @@ write_civis.character <- function(x, tablename, database = NULL, if_exists = "fa
 #' R objects are serialized with \code{\link{saveRDS}}, files are unserialized.
 #' Files expire after 30 days by default.
 #'
-#' @param x R object or path of file to upload
-#' @param name string. Name of the file or object.
-#' @param expires_at string. The date and time the object will expire on in the
+#' @param x R object or path of file to upload.
+#' @param name string, Name of the file or object.
+#' @param expires_at string, The date and time the object will expire on in the
 #' format \code{"YYYY-MM-DD HH:MM:SS"}. The default is 30 days.
 #' Setting \code{expires_at = NULL} will keep the file indefinitely.
-#' @param ... further parameters passed to \code{\link{saveRDS}}.
+#' @param ... arguments passed to \code{\link{saveRDS}}.
 #'
 #' @return The file id which can be used to later retrieve the file using
 #' \code{\link{read_civis}}.
@@ -285,18 +287,20 @@ write_civis_file.character <- function(x, name, expires_at = NULL, ...) {
 #' A file from Platform files endpoint will be downloaded as is.
 #'
 #' A default database can be set using \code{options(civis.default_db = "my_database")}.
+#' If there is only one database available,
+#' this database will automatically be used as the default.
 #'
 #' @param x  \code{"schema.table"}, \code{sql("query")}, or a file id.
-#' @param database string. The database. If \code{NULL}, tries to use the default database.
-#' @param file string. The file to write to.
-#' @param overwrite logical. Whether to overwrite the existing \code{file}.
-#' @param split logical. Whether to download a big table by splitting it into multiple
+#' @param database string, The database. If \code{NULL}, tries to use the default database.
+#' @param file string, The file to write to.
+#' @param overwrite logical, Whether to overwrite the existing \code{file}.
+#' @param split logical, Whether to download a big table by splitting it into multiple
 #' CSV parts first. See \code{\link{civis_to_multifile_csv}} for details.
-#' @param progress logical. Whether to display a progress bar.
-#' @param job_name string. Name of the job (default: \code{"Civis Download Via R Client"}).
-#' @param hidden logical. Whether the job is hidden on Platform.
-#' @param verbose logical. Whether to print detailed updates of job status.
-#' @param ... Arguments passed to other methods, currently ignored.
+#' @param progress logical, Whether to display a progress bar.
+#' @param job_name string, Name of the job (default: \code{"Civis Download Via R Client"}).
+#' @param hidden logical, Whether the job is hidden on Platform.
+#' @param verbose logical, Whether to print detailed updates of job status.
+#' @param ...  Currently ignored.
 #' @return The file where the downloaded files or tables are written to.
 #' It is returned invisibly.
 #' @examples
@@ -426,10 +430,10 @@ download_civis.numeric <- function(x, file,
 #' of the list returned by this function is similar to that of the manifest file
 #' returned by Amazon S3 UNLOAD statements.
 #'
-#' @param sql string. The SQL select string to be executed
-#' @param database string. Name of database where query is run.
+#' @param sql string, The SQL select string to be executed.
+#' @param database string, Name of database where query is run.
 #' @param job_name string, optional. Name to identify scripted sql job.
-#' @param hidden logical. Whether to hide the query in platform.
+#' @param hidden logical, Whether to hide the query in platform.
 #' @param include_header logical, optional. Whether to include headers as an
 #' element in the returned list.
 #' @param compression string, optional, Type of compression to use, if any.
@@ -501,12 +505,16 @@ civis_to_multifile_csv <- function(sql, database, job_name = NULL, hidden = TRUE
 
 #' Run a Query on Platform
 #'
-#' Utility to run queries that return no output.
+#' @description Utility to run queries that return no output.
+#'
+#' A default database can be set using \code{options(civis.default_db = "my_database")}.
+#' If there is only one database available,
+#' this database will automatically be used as the default.
 #'
 #' @param x \code{sql("...")}, \code{"query"}, or id of an existing sql script.
-#' @param ... extra arguments to \code{queries_post}
+#' @param ... arguments passed to \code{queries_post}.
 #'
-#' @seealso \code{\link{read_civis}} for downloading results of SQL scripts from Civis Platform.
+#' @seealso \code{\link{read_civis}} for downloading results of SQL scripts from Civis Platform as a data frame.
 #' @family io
 #' @examples
 #' \dontrun{
@@ -520,22 +528,22 @@ query_civis <- function(x, ...) {
 
 #' @export
 #' @param database string, Name of database where query is run.
-#' @param verbose Print detailed updates of job status.
-#' @describeIn query_civis Run a SQL query
+#' @param verbose bool, Print detailed updates of job status.
+#' @describeIn query_civis Run a SQL query.
 query_civis.sql <- function(x, database = NULL, verbose = FALSE, ...) {
   sql_str <- as.character(x)
   query_civis.character(sql_str, database = database, verbose = verbose, ...)
 }
 
 #' @export
-#' @describeIn query_civis Run a SQL query from a previous SQL query id
+#' @describeIn query_civis Run a SQL query from a previous SQL query id.
 query_civis.numeric <- function(x, verbose = FALSE, ...) {
   r <- queries_post_runs(x)
   await(queries_get_runs, id = r$queryId, run_id = r$id, .verbose = verbose)
 }
 
 #' @export
-#' @describeIn query_civis Run a SQL query
+#' @describeIn query_civis Run a SQL query.
 query_civis.character <- function(x, database = NULL, verbose = FALSE, ...) {
   db <- get_db(database)
   db_id <- get_database_id(db)
@@ -616,7 +624,7 @@ download_script_results <- function(script_id, run_id,
 #' Call a function with a temporary file.
 #'
 #' @param fn a function that takes a filename as the first argument.
-#' @param ... further args passed to fn.
+#' @param ... arguments passed to to fn.
 #'
 #' @return object the return value of fn
 #'

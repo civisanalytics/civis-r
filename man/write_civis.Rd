@@ -19,19 +19,19 @@ write_civis(x, ...)
 \arguments{
 \item{x}{data frame or file path of csv to upload to platform.}
 
-\item{...}{Extra arguments to \code{write.csv}}
+\item{...}{arguments passed to \code{write.csv}.}
 
-\item{tablename}{string, Name of table and schema \code{"schema.tablename"}}
+\item{tablename}{string, Name of table and schema \code{"schema.tablename"}.}
 
 \item{database}{string, Name of database where data frame is to be uploaded. If no database is specified,
-uses \code{options(civis.default_db)}}
+uses \code{options(civis.default_db)}.}
 
 \item{if_exists}{string, optional,  String indicating action to take if table already
 exists.  Must be either "fail", "truncate" or "append". Defaults to "fail".}
 
-\item{distkey}{string, optional, Column name designating the distkey}
+\item{distkey}{string, optional, Column name designating the distkey.}
 
-\item{sortkey1}{string, optional, Column name designating the first sortkey}
+\item{sortkey1}{string, optional, Column name designating the first sortkey.}
 
 \item{sortkey2}{string, optional, Column name designating the second
 (compound) sortkey.}
@@ -45,14 +45,15 @@ to remove before failing.}
 Uploads either a data frame or csv file to Redshift, based
 on the first argument.
 
-A default database for all IO operations can be set
-using \code{options(civis.default_db = "mydatabase")}.
+A default database can be set using \code{options(civis.default_db = "my_database")}.
+If there is only one database available,
+this database will automatically be used as the default.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{data.frame}: Upload a data frame to Civis Platform (Redshift)
+\item \code{data.frame}: Upload a data frame to Civis Platform (Redshift).
 
-\item \code{character}: Upload a csv to Civis Platform (Redshift)
+\item \code{character}: Upload a csv to Civis Platform (Redshift).
 }}
 
 \examples{

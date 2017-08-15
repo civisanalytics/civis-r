@@ -1,6 +1,6 @@
 ---
 title: "Making Simultaneous Calls to Platform"
-date: "`r Sys.Date()`"
+date: "2017-08-14"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Asychronous Programming}

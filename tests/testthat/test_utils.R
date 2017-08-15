@@ -44,3 +44,14 @@ test_that("default_credential returns a credential id", {
     expect_equal(default_credential(), 12)
   )
 })
+
+test_that("get_default_database sets package option for db_list of length 1", {
+  options(civis.default_db = NULL)
+  with_mock(
+    `civis::databases_list` = function(...) list(list(id = 555, name = "the_only_db")),
+    db <- get_default_database(),
+    expect_equal(db, "the_only_db")
+  )
+  # test that the option is set as a side-effect
+  expect_equal(get_default_database(), "the_only_db")
+})
