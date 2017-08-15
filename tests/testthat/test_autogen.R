@@ -19,7 +19,7 @@ paths <- with(spec, paths[-grep(IGNORE, names(paths))])
 # 4. Parameters: list.  Responses: none.
 # 5. Parameters: list.  Responses: ref.
 # 6. Parameters: none.  Responses: list containing arrays.
-# 7. Parameters: list.  Responses: infinite reference. 
+# 7. Parameters: list.  Responses: infinite reference.
 # 8. Parameters: list with ref. Responses: ref.
 # 9. Parameters: list with ref and arrays. Responses: list with ref and arrays.
 
@@ -35,46 +35,46 @@ ex <- list(paths[["/admin/dump-memory"]]$post,
 
 ex_ref <- lapply(ex, replace_ref, spec=spec)
 ex_verb_names <- c("post", "get", "get", "delete", "get", "get", "get", "patch", "post")
-ex_path_names <- c("/admin/dump-memory", "/admin/announcements", "/admin/organizations", 
+ex_path_names <- c("/admin/dump-memory", "/admin/announcements", "/admin/organizations",
                    "/admin/announcements/{id}", "/bocce_clusters/{id}/active_jobs", "/channels/",
                    "/jobs/{id}/children", "/admin/announcements/{id}", "/scripts/sql")
 ex_params <- lapply(ex_ref, parse_params)
 
 # ----- test utils
 
-str_detect_multiple <- function(string, pattern){ 
-  mapply(function(string, pattern){ 
+str_detect_multiple <- function(string, pattern){
+  mapply(function(string, pattern){
     stringr::str_detect(string, pattern)}, string=string, pattern=pattern)}
 
 
 # ----- function spec ----
 
 test_that("function names are correct", {
-  # - test that 'post'/'put'/'patch' are used and not 'create' and 'partial_update' 
+  # - test that 'post'/'put'/'patch' are used and not 'create' and 'partial_update'
   # - test that function names are singularized or not
   # - test that '-' is removed
   # - test that 'get'->'list'
   # - test that functions from io and models are correct
 
   # examples in list
-  ex_names <- c("admin_post_dump_memory", "admin_list_announcements", "admin_list_organizations", "admin_delete_announcements", 
-                "bocce_clusters_list_active_jobs", "channels_list", "jobs_list_children", "admin_patch_announcements", 
+  ex_names <- c("admin_post_dump_memory", "admin_list_announcements", "admin_list_organizations", "admin_delete_announcements",
+                "bocce_clusters_list_active_jobs", "channels_list", "jobs_list_children", "admin_patch_announcements",
                 "scripts_post_sql")
   test_names <- mapply(build_function_name, verb_name=ex_verb_names, path_name=ex_path_names)
   expect_equivalent(ex_names, test_names)
-  
+
   pkg_names <- lsf.str("package:civis")
-  
+
   # test on examples from io.R, models.R, etc
-  sample_names <- c("predictions_patch", "predictions_post_runs", 
+  sample_names <- c("predictions_patch", "predictions_post_runs",
                     "models_put_predictions", "scripts_post_sql_runs", "predictions_get",
                     "models_get", "tables_post_refresh", "models_list")
   expect_true(all(sample_names %in% pkg_names))
 })
 
 test_that("only v1 paths included in  sysdata.rda", {
-  spec_path <- devtools::package_file("R/sysdata.rda")
-  load(spec_path)
+  # this is a symlink; should work if R/sysdata.rda changes.
+  load("data/sysdata.rda")
   BASE_RESOURCES_V1 = c("credentials", "databases", "files", "imports",
                         "jobs", "models", "predictions", "projects",
                         "queries", "reports", "scripts", "tables", "users")
@@ -89,9 +89,9 @@ test_that("function_args are correct", {
   # - test that optional args have correct string default (currently NULL)
   # - test that args are present
   # - test that args are in snake_case
-  
+
   ignore_str <- 'NULL'
-  ex_arg_str <- 
+  ex_arg_str <-
     list(" <- function(host_name = %s) {\n\n",
          " <- function(limit = %s, page_num = %s, order = %s, order_dir = %s) {\n\n",
          " <- function(name, sql, remote_host_id, credential_id, parent_id = %s, user_context = %s, params = %s, arguments = %s, schedule = %s, notifications = %s, next_run_at = %s, time_zone = %s, hidden = %s, target_project_id = %s, csv_settings = %s) {\n\n")
@@ -104,9 +104,9 @@ test_that("function_args are correct", {
 # ----- function body -----
 test_that("build_function_body", {
   # - test that path name is correct
-  # - test that args are in the form camelCase = snake_case 
+  # - test that args are in the form camelCase = snake_case
   # - test api call exactly
-  
+
   body_lines <- strsplit(build_function_body(ex_ref[[1]], ex_verb_names[[1]], ex_path_names[[1]], ex_params[[1]]), "\n")[[1]]
   path <- grep("path <- ", body_lines, value=T)
   expect_true(stringr::str_detect(path, ex_path_names[[1]]))
@@ -123,23 +123,23 @@ test_that("build_docs", {
   expect_true(stringr::str_detect(test_doc, "@param host_name"))
   expect_true(stringr::str_detect(test_doc, ex_ref[[1]]$summary))
   expect_true(stringr::str_detect(test_doc, "@export"))
-  
+
   test_esc <- build_docs(replace_ref(spec$paths[['/media/dmas']]$get, spec))
   expect_true(stringr::str_detect(test_esc, '\\%"'))
-  
+
   expect_true(stringr::str_detect(build_docs(ex_ref[[4]]), "@return  An empty HTTP response\n#' @export\n"))
-  
+
 })
 
 test_that("build_params_docs", {
-  
+
   # single object
   arg_str <- build_params_docs(ex_ref[[1]])
   ex_arg_str <- paste0("@param ", camel_to_snake(names(ex_ref[[1]]$parameters[[1]]$schema$properties)))
   expect_true(stringr::str_detect(arg_str, ex_arg_str))
   expect_true(stringr::str_detect(arg_str, "optional"))
   expect_true(stringr::str_detect(arg_str, ex_ref[[1]]$parameters[[1]]$schema$properties$hostName$description))
-  
+
   # list of parameters
   arg_str <- strsplit(build_params_docs(ex_ref[[2]]), "\n")[[1]]
   param_lines <- grep("@param", arg_str, value=T)
@@ -147,15 +147,15 @@ test_that("build_params_docs", {
   check_descr <- lapply(ex_ref[[2]]$parameters, function(x){x$description})
   expect_true(all(str_detect_multiple(param_lines, check_names)))
   expect_true(all(str_detect_multiple(param_lines[1:3], check_descr[1:3]))) # descr 4 doesn't play well with regex
-  
+
   # single param
   arg_str <- strsplit(build_params_docs(ex_ref[[4]]), "\n")[[1]][1]
   expect_true(stringr::str_detect(arg_str, ex_ref[[4]]$parameters[[1]]$name))
   expect_true(stringr::str_detect(arg_str, ex_ref[[4]]$parameters[[1]]$description))
-  
+
   # nested object
   ex_param <- ex_ref[[9]]$parameters[[1]]
-  
+
   #   level 1 arg names and order
   arg_str <- strsplit(build_params_docs(ex_ref[[9]]), "\n")[[1]]
   check <- names(ex_param$schema$properties)
@@ -164,26 +164,26 @@ test_that("build_params_docs", {
   check_ <- sapply(check, camel_to_snake)
   param_lines <- arg_str[grep("@param", arg_str)]
   expect_true(all(str_detect_multiple(param_lines, check_)))
-  
+
   #   required/optional strings
   expect_true(all(str_detect_multiple(param_lines[check %in% req], rep("required", length(req)))))
   expect_true(all(str_detect_multiple(param_lines[!(check %in% req)], rep("optional", length(check) - length(req)))))
-  
+
   #   all doc names in fun names: str_match is kind of magical here
   fun_arg_str <- build_function_args(ex_params[[9]])
   param_names <- gsub("@param ", "", stringr::str_match(param_lines, "@param ([a-z_])*")[,1])
   expect_true(all(sapply(param_names, stringr::str_detect, string=fun_arg_str)))
-  
-  #   array args 
+
+  #   array args
   expect_true(stringr::str_detect(arg_str[7], "An array containing"))
   check <- names(ex_param$schema$properties$params$items$properties)
   expect_true(all(str_detect_multiple(arg_str[9:15], check)))
-  
+
   #   obj args
   expect_true(stringr::str_detect(arg_str[18], "A list containing"))
   check <-  names(ex_param$schema$properties$schedule$properties)
   expect_true(all(str_detect_multiple(arg_str[20:24], check)))
-  
+
   # no args
   expect_equal(build_params_docs(ex_ref[[6]]), "")
 })
@@ -191,23 +191,23 @@ test_that("build_params_docs", {
 test_that("build_response_docs", {
   resp_str <- strsplit(build_resp_docs(ex_ref[[9]]), "\n")[[1]]
   ex_resp <- ex_ref[[9]]$responses[[1]]
-  
+
   expect_true(stringr::str_detect(resp_str[1], "@return"))
-  
+
   # level 1 names: case and order
   check <- names(ex_resp$schema$properties)
   expect_true(all(str_detect_multiple(grep("\\item\\{", resp_str, value = T), check)))
-  
+
   # array
   expect_true(stringr::str_detect(resp_str[24], "An array containing"))
   check <- names(ex_resp$schema$properties$params$items$properties)
   expect_true(all(str_detect_multiple(resp_str[26:32], check)))
-  
+
   # obj
   expect_true(stringr::str_detect(resp_str[7], "A list containing"))
   check <- names(ex_resp$schema$properties$author$properties)
   expect_true(all(str_detect_multiple(resp_str[9:13], check)))
-  
+
   # empty, array, object
   expect_true(stringr::str_detect(build_resp_docs(ex_ref[[4]]), "@return  An empty HTTP response\n"))
 })
@@ -215,40 +215,40 @@ test_that("build_response_docs", {
 test_that("write_properties", {
   arg_prop <- get_obj_properties(ex_ref[[9]]$parameters[[1]])
   resp_prop <- get_obj_properties(ex_ref[[9]]$responses[[1]])
-  
+
   arg_prop_str <- strsplit(write_properties(arg_prop, req_str="required", transform_name=camel_to_snake), "\n")[[1]]
   resp_prop_str <- strsplit(write_properties(resp_prop, fmt="#' \\item{%s}{%s, %s%s}"), "\n")[[1]]
-  
+
   # level 1 names, fmt, transform_name
   check <- sapply(names(arg_prop), camel_to_snake)
   expect_true(all(str_detect_multiple(grep("@param", arg_prop_str, value=T), check)))
-  
+
   check <- names(resp_prop)
   expect_true(all(str_detect_multiple(grep("\\item\\{", resp_prop_str, value=T), check)))
-  
+
   # req_str: write_properties doesn't get correct req_str, so just make sure it can be provided
   param_lines <- grep("@param", arg_prop_str, value=T)
   expect_true(all(str_detect_multiple(param_lines, rep("req", length(param_lines)))))
-  
+
   # test non-nested prop is not an array or list
   expect_true(!stringr::str_detect(arg_prop_str[1], "(array|list)"))
-  
+
   # array
   expect_true(stringr::str_detect(arg_prop_str[4], "An array containing"))
   check_names <- names(arg_prop$params$items$properties)
   expect_true(all(str_detect_multiple(arg_prop_str[6:12], check_names)))
-  
+
   check_descr <- lapply(arg_prop$params$items$properties, function(x){x$description})
   expect_true(all(str_detect_multiple(arg_prop_str[6:12], check_descr)))
-  
+
   # obj
   expect_true(stringr::str_detect(resp_prop_str[6], "A list containing"))
   check_names <- names(resp_prop$author$properties)
   expect_true(all(str_detect_multiple(resp_prop_str[8:12], check_names)))
-  
+
   check_descr <- lapply(resp_prop$author$properties, function(x){x$description})
   expect_true(all(str_detect_multiple(resp_prop_str[8:12], check_descr)))
-  
+
   # not nested
   arg_prop <- get_obj_properties(ex_ref[[1]]$parameters[[1]])
   arg_prop_str <- write_properties(arg_prop, transform_name = camel_to_snake)
@@ -264,19 +264,19 @@ test_that("write_nested_docs", {
   ex_array <- ex_prop[[which(sapply(ex_prop, is_array))]]
   array_str <- strsplit(write_nested_docs(ex_array), "\n")[[1]]
   expect_true(stringr::str_detect(array_str[1], "An array containing"))
-  
+
   item_lines <- grep("\\item ", array_str, value=T)
   check_name <- names(ex_array$items$properties)
   check_descr <- ex_array$items$properties$name$description
   expect_true(stringr::str_detect(item_lines, check_name))
   expect_true(stringr::str_detect(item_lines, check_descr))
-  
+
   # nested obj
   ex_prop <- get_obj_properties(ex_ref[[9]]$responses[[1]])
   ex_obj <- ex_prop[[which(sapply(ex_prop, is_obj))[2]]]
   obj_str <- strsplit(write_nested_docs(ex_obj), "\n")[[1]]
   expect_true(stringr::str_detect(obj_str[1], "A list containing"))
-  
+
   item_lines <- grep("\\item ", obj_str, value=T)
   check_names <- names(ex_obj$properties)
   check_descr <- lapply(ex_obj$properties, function(x){x$description})
@@ -289,29 +289,29 @@ test_that("parse_params", {
   # object
   param <- ex_ref[[1]]$parameters[[1]]
   check <- data.frame(name=names(param$schema$properties),
-                      http_location=param$`in`, 
-                      required=param$required, 
+                      http_location=param$`in`,
+                      required=param$required,
                       description=param$schema$properties$hostName$description,
                       type=param$schema$properties$hostName$type,
                       stringsAsFactors = FALSE)
   expect_equal(ex_params[[1]], check)
-  
+
   # list
   param <- ex_ref[[2]]$parameters
   check <- do.call(rbind, lapply(ex_ref[[2]]$parameters, as.data.frame, stringsAsFactors=FALSE))
   colnames(check) <- c("name", "http_location", "required", "description", "type")
   expect_equivalent(ex_params[[2]], check) # ignore attributes
-  
+
   # length 1
   param <- ex_ref[[4]]$parameters[[1]]
   check <- data.frame(param, stringsAsFactors = FALSE)
   colnames(check) <- c("name", "http_location", "required", "description", "type")
   expect_equivalent(ex_params[[4]], check)
-  
+
   # empty
   param <- data.frame(ex_ref[[6]]$parameters, stringsAsFactors = FALSE)
   expect_equal(ex_params[[6]], param)
-  
+
   # nested object (just get level 1)
   param <- ex_ref[[9]]$parameters[[1]]
   prop <- param$schema$properties
@@ -334,7 +334,7 @@ test_that("is_ref", {
 })
 
 test_that("get_ref", {
-  expect_equal(spec$definitions$Object1, 
+  expect_equal(spec$definitions$Object1,
                get_ref(ex[[1]]$responses[[1]]$schema, spec))
 })
 
@@ -356,7 +356,7 @@ test_that("is_nested", {
 
 test_that("is_array", {
   expect_true(is_array(ex_ref[[9]]$parameters[[1]]$schema$properties$params))
-  expect_false(is_array(ex_ref[[9]]$parameters[[1]]$schema$properties$schedule)) 
+  expect_false(is_array(ex_ref[[9]]$parameters[[1]]$schema$properties$schedule))
   expect_false(is_array(ex_ref[[9]]$parameters[[1]]$schema$properties$name))
 })
 
