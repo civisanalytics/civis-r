@@ -13,7 +13,7 @@ civis_ml_gradient_boosting_regressor(x, dependent_variable,
   random_state = 42, max_features = "sqrt", alpha = 0.9,
   max_leaf_nodes = NULL, presort = c("auto", TRUE, FALSE),
   fit_params = NULL, cross_validation_parameters = NULL,
-  calibration = NULL, oos_scores_table = NULL, oos_scores_db = NULL,
+  oos_scores_table = NULL, oos_scores_db = NULL,
   oos_scores_if_exists = c("fail", "append", "drop", "truncate"),
   model_name = NULL, cpu_requested = NULL, memory_requested = NULL,
   disk_requested = NULL, notifications = NULL, polling_interval = NULL,
@@ -114,10 +114,6 @@ splits in fitting.}
 \item{cross_validation_parameters}{Optional, parameter grid for learner
 parameters, e.g. \code{list(n_estimators = c(100, 200, 500),
 learning_rate = c(0.01, 0.1), max_depth = c(2, 3))}.}
-
-\item{calibration}{Optional, if not \code{NULL}, calibrate output
-probabilities with the selected method, \code{sigmoid}, or \code{isotonic}.
-Valid only with classification models.}
 
 \item{oos_scores_table}{Optional, if provided, store out-of-sample
 predictions on training set data to this Redshift "schema.tablename".}
