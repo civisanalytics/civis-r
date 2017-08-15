@@ -24,8 +24,8 @@
 #' @param model_name Optional, the prefix of the Platform modeling jobs.
 #'   It will have " Train" or " Predict" added to become the Script title.
 #' @param calibration Optional, if not \code{NULL}, calibrate output
-#'   probabilities with the selected method. Valid only with classification
-#'   models.
+#'   probabilities with the selected method, \code{sigmoid}, or \code{isotonic}.
+#'   Valid only with classification models.
 #' @param excluded_columns Optional, a vector of columns which will be
 #'   considered ineligible to be independent variables.
 #' @param oos_scores_table Optional, if provided, store out-of-sample
@@ -133,7 +133,7 @@ civis_ml <- function(x,
                      parameters = NULL,
                      fit_params = NULL,
                      cross_validation_parameters = NULL,
-                     calibration = c(NULL, "sigmoid", "isotonic"),
+                     calibration = NULL,
                      oos_scores_table = NULL,
                      oos_scores_db = NULL,
                      oos_scores_if_exists = c('fail', 'append', 'drop', 'truncate'),
@@ -157,7 +157,7 @@ civis_ml.data.frame <- function(x,
                                 parameters = NULL,
                                 fit_params = NULL,
                                 cross_validation_parameters = NULL,
-                                calibration = c(NULL, "sigmoid", "isotonic"),
+                                calibration = NULL,
                                 oos_scores_table = NULL,
                                 oos_scores_db = NULL,
                                 oos_scores_if_exists = c('fail', 'append', 'drop', 'truncate'),
@@ -169,11 +169,6 @@ civis_ml.data.frame <- function(x,
                                 polling_interval = NULL,
                                 verbose = FALSE) {
 
-  if (missing(calibration) || is.null(calibration)) {
-    calibration <- NULL
-  } else {
-    calibration <- match.arg(calibration)
-  }
   oos_scores_if_exists <- match.arg(oos_scores_if_exists)
 
   oos_scores_db_id <- NULL
@@ -213,7 +208,7 @@ civis_ml.civis_table <- function(x,
                                  parameters = NULL,
                                  fit_params = NULL,
                                  cross_validation_parameters = NULL,
-                                 calibration = c(NULL, "sigmoid", "isotonic"),
+                                 calibration = NULL,
                                  oos_scores_table = NULL,
                                  oos_scores_db = NULL,
                                  oos_scores_if_exists = c('fail', 'append', 'drop', 'truncate'),
@@ -225,11 +220,6 @@ civis_ml.civis_table <- function(x,
                                  polling_interval = NULL,
                                  verbose = FALSE) {
 
-  if (missing(calibration) || is.null(calibration)) {
-    calibration <- NULL
-  } else {
-    calibration <- match.arg(calibration)
-  }
   oos_scores_if_exists <- match.arg(oos_scores_if_exists)
 
   oos_scores_db_id <- NULL
@@ -269,7 +259,7 @@ civis_ml.civis_file <- function(x,
                                 parameters = NULL,
                                 fit_params = NULL,
                                 cross_validation_parameters = NULL,
-                                calibration = c(NULL, "sigmoid", "isotonic"),
+                                calibration = NULL,
                                 oos_scores_table = NULL,
                                 oos_scores_db = NULL,
                                 oos_scores_if_exists = c('fail', 'append', 'drop', 'truncate'),
@@ -281,11 +271,6 @@ civis_ml.civis_file <- function(x,
                                 polling_interval = NULL,
                                 verbose = FALSE) {
 
-  if (missing(calibration) || is.null(calibration)) {
-    calibration <- NULL
-  } else {
-    calibration <- match.arg(calibration)
-  }
   oos_scores_if_exists <- match.arg(oos_scores_if_exists)
 
   oos_scores_db_id <- NULL
@@ -322,7 +307,7 @@ civis_ml.character <- function(x,
                                parameters = NULL,
                                fit_params = NULL,
                                cross_validation_parameters = NULL,
-                               calibration = c(NULL, "sigmoid", "isotonic"),
+                               calibration = NULL,
                                oos_scores_table = NULL,
                                oos_scores_db = NULL,
                                oos_scores_if_exists = c('fail', 'append', 'drop', 'truncate'),
@@ -334,11 +319,6 @@ civis_ml.character <- function(x,
                                polling_interval = NULL,
                                verbose = FALSE) {
 
-  if (missing(calibration) || is.null(calibration)) {
-    calibration <- NULL
-  } else {
-    calibration <- match.arg(calibration)
-  }
   oos_scores_if_exists <- match.arg(oos_scores_if_exists)
 
   oos_scores_db_id <- NULL
@@ -396,7 +376,6 @@ create_and_run_model <- function(file_id = NULL,
     PRIMARY_KEY = primary_key,
     PARAMS = jsonlite::toJSON(parameters, auto_unbox = TRUE, null = "null"),
     CVPARAMS = jsonlite::toJSON(cross_validation_parameters, null = "null"),
-    CALIBRATION = calibration,
     IF_EXISTS = oos_scores_if_exists,
     TABLE_NAME = table_name,
     # We unclass the file_id here b/c jsonlite::toJSON does not know how to
@@ -408,6 +387,13 @@ create_and_run_model <- function(file_id = NULL,
     CIVIS_FILE_ID = unclass(file_id),
     DEBUG = verbose
   )
+
+  if (!is.null(calibration)) {
+    if (!(calibration %in% c("sigmoid", "isotonic"))) {
+      stop("calibration must be 'sigmoid', 'isotonic', or NULL.")
+    }
+    args[["CALIBRATION"]] <- calibration
+  }
 
   if (!is.null(oos_scores_table)) {
     args[["OOSTABLE"]] <- oos_scores_table

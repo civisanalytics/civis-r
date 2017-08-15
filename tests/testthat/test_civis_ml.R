@@ -259,6 +259,23 @@ test_that("calls civis_ml.character for local csv", {
               verbose = FALSE)
 })
 
+test_that("raises error on invalid calibration", {
+  fake_get_database_id <- mock(456)
+  fake_write_civis_file <- mock(123)
+
+  with_mock(
+    `civis::get_database_id` = fake_get_database_id,
+    `civis::write_civis_file` = fake_write_civis_file,
+
+    expect_error(civis_ml(x = "fake_temp_path",
+                          model_type = "sparse_logistic",
+                          dependent_variable = "target",
+                          primary_key = "pk",
+                          calibration = "fake"),
+                 "calibration must be 'sigmoid', 'isotonic', or NULL\\.")
+  )
+})
+
 ################################################################################
 # Predict
 context("predict.civis_ml")
@@ -845,7 +862,7 @@ test_that("it looks for predictions.csv.gz", {
 
     fetch_oos_scores(structure(list(), class = "civis_ml"))
   )
-  
+
   fetch_args <- mock_args(fake_must_fetch_output_file)[[1]]
   expect_equal(fetch_args[[2]], "predictions.csv.gz")
 })
@@ -860,7 +877,7 @@ test_that("it calls read.csv with extra args", {
 
     fetch_oos_scores(structure(list(), class = "civis_ml"), stringsAsFactors = FALSE)
   )
-  
+
   csv_args <- mock_args(fake_read_csv)[[1]]
   expect_equal(csv_args[[1]], "a_file.csv")
   expect_equal(csv_args$stringsAsFactors, FALSE)
