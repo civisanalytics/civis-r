@@ -46,10 +46,23 @@
 #' @inheritSection civis_ml Data Sources
 #' @inherit civis_ml return
 #' @examples \dontrun{
-#'   df <- iris
-#'   names(df) <- stringr::str_replace(names(df), "\\.", "_")
 #'
-#'   m <- civis_ml_sparse_logistic(x = df, dependent_variable = "Species")
+#' df <- iris
+#' names(df) <- stringr::str_replace(names(df), "\\.", "_")
+#'
+#' m <- civis_ml_sparse_logistic(df, "Species")
+#' yhat <- fetch_oos_scores(m)
+#'
+#' # Grid Search
+#' cv_params <- list(C = c(.01, 1, 10, 100, 1000))
+#'
+#' m <- civis_ml_sparse_logistic(df, "Species",
+#'   cross_validation_parameters = cv_params)
+#'
+#' # make a prediction job, storing in a redshift table
+#' pred_info <- predict(m, newdata = civis_table("schema.table", "my_database"),
+#'    output_table = "schema.scores_table")
+#'
 #' }
 #' @export
 civis_ml_sparse_logistic <- function(x,
@@ -148,6 +161,17 @@ civis_ml_sparse_logistic <- function(x,
 #'
 #' @inheritSection civis_ml Data Sources
 #' @inherit civis_ml return
+#' @examples
+#' \dontrun{
+#'  data(ChickWeight)
+#'  m <- civis_ml_sparse_linear_regressor(ChickWeight, dependent_variable = "weight")
+#'  yhat <- fetch_oos_scores(m)
+#'
+#' # make a prediction job, storing in a redshift table
+#' pred_info <- predict(m, newdata = civis_table("schema.table", "my_database"),
+#'    output_table = "schema.scores_table")
+#'
+#' }
 #' @export
 civis_ml_sparse_linear_regressor <- function(x,
                                              dependent_variable,
@@ -220,7 +244,23 @@ civis_ml_sparse_linear_regressor <- function(x,
 #'   }
 #' @param random_state The seed of the pseudo random number generator to use
 #'   when shuffling the data. Used only when \code{solver = "sag"}.
+#' @examples
+#' \dontrun{
+#'  data(ChickWeight)
+#'  m <- civis_ml_sparse_ridge_regressor(ChickWeight, dependent_variable = "weight", alpha = 999)
+#'  yhat <- fetch_oos_scores(m)
 #'
+#'  # Grid search
+#'  cv_params <- list(alpha = c(.001, .01, .1, 1))
+#'  m <- civis_ml_sparse_ridge_regressor(ChickWeight,
+#'    dependent_variable = "weight",
+#'    cross_validation_parameters = cv_params,
+#'    calibration = NULL)
+#'
+#' # make a prediction job, storing in a redshift table
+#' pred_info <- predict(m, newdata = civis_table("schema.table", "my_database"),
+#'    output_table = "schema.scores_table")
+#' }
 #' @inheritSection civis_ml Data Sources
 #' @inherit civis_ml return
 #' @export
@@ -329,6 +369,35 @@ civis_ml_sparse_ridge_regressor <- function(x,
 #'   splits in fitting.
 #' @inheritSection civis_ml Data Sources
 #' @inherit civis_ml return
+#' @examples
+#' \dontrun{
+#'  df <- iris
+#'  names(df) <- stringr::str_replace(names(df), "\\.", "_")
+#'
+#'  m <- civis_ml_gradient_boosting_classifier(df,
+#'    dependent_variable = "Species",
+#'    learning_rate = .01,
+#'    n_estimators = 100,
+#'    subsample = .5,
+#'    max_depth = 5,
+#'    max_features = NULL)
+#'  yhat <- fetch_oos_scores(m)
+#'
+#' # Grid Search
+#' cv_params <- list(
+#'    n_estimators = c(100, 200, 500),
+#'    learning_rate = c(.01, .1),
+#'    max_depth = c(2, 3))
+#'
+#' m <- civis_ml_gradient_boosting_classifier(df,
+#'    dependent_variable = "Species",
+#'    subsample = .5,
+#'    max_features = NULL,
+#'    cross_validation_parameters = cv_params)
+#'
+#' pred_info <- predict(m,  civis_table("schema.table", "my_database"),
+#'    output_table = "schema.scores_table")
+#' }
 #' @export
 civis_ml_gradient_boosting_classifier <- function(x,
                                                   dependent_variable,
@@ -413,6 +482,34 @@ civis_ml_gradient_boosting_classifier <- function(x,
 #'
 #' @inheritSection civis_ml Data Sources
 #' @inherit civis_ml return
+#' @examples
+#' \dontrun{
+#' data(ChickWeight)
+#'
+#' m <- civis_ml_gradient_boosting_regressor(ChickWeight,
+#'   dependent_variable = "weight",
+#'   learning_rate = .01,
+#'   n_estimators = 100,
+#'   subsample = .5,
+#'   max_depth = 5,
+#'   max_features = NULL)
+#' yhat <- fetch_oos_scores(m)
+#'
+#' # Grid Search
+#' cv_params <- list(
+#'   n_estimators = c(100, 200, 500),
+#'   learning_rate = c(.01, .1),
+#'   max_depth = c(2, 3))
+#'
+#' m <- civis_ml_gradient_boosting_regressor(ChickWeight,
+#'   dependent_variable = "weight",
+#'   subsample = .5,
+#'   max_features = NULL,
+#'   cross_validation_parameters = cv_params)
+#'
+#' pred_info <- predict(m,  civis_table("schema.table", "my_database"),
+#'    output_table = "schema.scores_table")
+#' }
 #' @export
 civis_ml_gradient_boosting_regressor <- function(x,
                                                  dependent_variable,
@@ -495,6 +592,31 @@ civis_ml_gradient_boosting_regressor <- function(x,
 #'
 #' @inheritSection civis_ml Data Sources
 #' @inherit civis_ml return
+#' @examples
+#' \dontrun{
+#'  df <- iris
+#'  names(df) <- stringr::str_replace(names(df), "\\.", "_")
+#'
+#'  m <- civis_ml_random_forest_classifier(df,
+#'    dependent_variable = "Species",
+#'    n_estimators = 100,
+#'    max_depth = 5,
+#'    max_features = NULL)
+#'  yhat <- fetch_oos_scores(m)
+#'
+#' # Grid Search
+#' cv_params <- list(
+#'    n_estimators = c(100, 200, 500),
+#'    max_depth = c(2, 3))
+#'
+#'  m <- civis_ml_random_forest_classifier(df,
+#'    dependent_variable = "Species",
+#'    max_features = NULL,
+#'    cross_validation_parameters = cv_params)
+#'
+#' pred_info <- predict(m,  civis_table("schema.table", "my_database"),
+#'    output_table = "schema.scores_table")
+#' }
 #' @export
 civis_ml_random_forest_classifier <- function(x,
                                               dependent_variable,
@@ -577,6 +699,30 @@ civis_ml_random_forest_classifier <- function(x,
 #'
 #' @inheritSection civis_ml Data Sources
 #' @inherit civis_ml return
+#' @examples
+#' \dontrun{
+#' data(ChickWeight)
+#'
+#' m <- civis_ml_random_forest_regressor(ChickWeight,
+#'   dependent_variable = "weight",
+#'   n_estimators = 100,
+#'   max_depth = 5,
+#'   max_features = NULL)
+#' yhat <- fetch_oos_scores(m)
+#'
+#' # Grid Search
+#' cv_params <- list(
+#'   n_estimators = c(100, 200, 500),
+#'   max_depth = c(2, 3))
+#'
+#' m <- civis_ml_random_forest_regressor(ChickWeight,
+#'   dependent_variable = "weight",
+#'   max_features = NULL,
+#'   cross_validation_parameters = cv_params)
+#'
+#' pred_info <- predict(m,  civis_table("schema.table", "my_database"),
+#'    output_table = "schema.scores_table")
+#' }
 #' @export
 civis_ml_random_forest_regressor <- function(x,
                                              dependent_variable,
@@ -644,6 +790,31 @@ civis_ml_random_forest_regressor <- function(x,
 #'
 #' @inheritSection civis_ml Data Sources
 #' @inherit civis_ml return
+#' @examples
+#' \dontrun{
+#'  df <- iris
+#'  names(df) <- stringr::str_replace(names(df), "\\.", "_")
+#'
+#'  m <- civis_ml_extra_trees_classifier(df,
+#'    dependent_variable = "Species",
+#'    n_estimators = 100,
+#'    max_depth = 5,
+#'    max_features = NULL)
+#'  yhat <- fetch_oos_scores(m)
+#'
+#' # Grid Search
+#' cv_params <- list(
+#'    n_estimators = c(100, 200, 500),
+#'    max_depth = c(2, 3))
+#'
+#'  m <- civis_ml_extra_trees_classifier(df,
+#'    dependent_variable = "Species",
+#'    max_features = NULL,
+#'    cross_validation_parameters = cv_params)
+#'
+#' pred_info <- predict(m,  civis_table("schema.table", "my_database"),
+#'    output_table = "schema.scores_table")
+#' }
 #' @export
 civis_ml_extra_trees_classifier <- function(x,
                                             dependent_variable,
@@ -722,6 +893,30 @@ civis_ml_extra_trees_classifier <- function(x,
 #'
 #' @inheritSection civis_ml Data Sources
 #' @inherit civis_ml return
+#' @examples
+#' \dontrun{
+#' data(ChickWeight)
+#'
+#' m <- civis_ml_extra_trees_regressor(ChickWeight,
+#'   dependent_variable = "weight",
+#'   n_estimators = 100,
+#'   max_depth = 5,
+#'   max_features = NULL)
+#' yhat <- fetch_oos_scores(m)
+#'
+#' # Grid Search
+#' cv_params <- list(
+#'   n_estimators = c(100, 200, 500),
+#'   max_depth = c(2, 3))
+#'
+#' m <- civis_ml_extra_trees_regressor(ChickWeight,
+#'   dependent_variable = "weight",
+#'   max_features = NULL,
+#'   cross_validation_parameters = cv_params)
+#'
+#' pred_info <- predict(m,  civis_table("schema.table", "my_database"),
+#'    output_table = "schema.scores_table")
+#' }
 #' @export
 civis_ml_extra_trees_regressor <- function(x,
                                            dependent_variable,
