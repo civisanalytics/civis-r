@@ -127,7 +127,8 @@ A \code{civis_ml} object, a list containing the following elements:
   \item warnings list.
   \item data_platform list, training data location.
 }}
-\item{model_info}{Parsed CivisML output from \code{model_info.json} containing metadata from training. A list containing the following elements:
+\item{model_info}{Parsed CivisML output from \code{model_info.json} containing metadata from training.
+ A list containing the following elements:
   \itemize{
   \item run list, metadata about the run.
   \item data list, metdata about the training data.
@@ -199,14 +200,14 @@ the sources above and a \code{\link{civis_file_manifest}}. Similar to
 \code{civis_ml}, use the data source helpers as the \code{newdata} argument
 to \code{predict.civis_ml}.
 
-A "manifest file" is JSON which specifies the location of many shards of the data to be used for prediction.
+A manifest file is a JSON file which specifies the location of many shards of the data to be used for prediction.
 A manifest file is the output of a Civis export job with \code{force_multifile = TRUE} set, e.g.
 from \code{\link{civis_to_multifile_csv}}. Large civis tables (provided using \code{table_name})
 will automatically be exported to manifest files.
 
 Prediction outputs will always be stored as gzipped CSVs in one or more civis files.
 Provide an \code{output_table} (and optionally an \code{output_db},
-if it’s different from \code{database_name}) to copy these predictions into a
+if it's different from \code{database_name}) to copy these predictions into a
 table on Redshift.
 }
 

@@ -130,7 +130,8 @@ A \code{civis_ml} object, a list containing the following elements:
   \item warnings list.
   \item data_platform list, training data location.
 }}
-\item{model_info}{Parsed CivisML output from \code{model_info.json} containing metadata from training. A list containing the following elements:
+\item{model_info}{Parsed CivisML output from \code{model_info.json} containing metadata from training.
+ A list containing the following elements:
   \itemize{
   \item run list, metadata about the run.
   \item data list, metdata about the training data.
