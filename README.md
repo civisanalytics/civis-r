@@ -74,6 +74,9 @@ List of 14
 # Data about my team
 my_team <- civis::users_list()
 team_members <- sapply(my_team, function(x) x$name)
+print(team_members)
+
+[1] "Jean-Luc Picard"      "Beverly Crusher"     "Q"
 ```
 
 Many useful tasks will require making multiple direct calls to the API.
