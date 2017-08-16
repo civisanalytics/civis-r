@@ -36,6 +36,10 @@ git clone git@github.com:civisanalytics/civis-r.git
 Rscript -e "devtools::install('civis-r', build_vignettes = TRUE);"
 ```
 
+:heavy_exclamation_mark: You must keep your API key secret. If you use version
+control tools, ensure you do not commit `.Renviron` or any scripts in which
+you have hard-coded an API key.
+
 Usage
 -----
 
