@@ -118,7 +118,7 @@ test_that("warns when fit_intercept = FALSE and normalize = TRUE", {
 })
 
 test_that("passes other args to civis_ml", {
-  check_civis_ml_call(civis_ml_sparse_linear_regressor)
+  check_civis_ml_call(civis_ml_sparse_linear_regressor, can_calibrate = FALSE)
 })
 
 ################################################################################
@@ -130,7 +130,7 @@ test_that("calls civis_ml with model_type", {
 })
 
 test_that("passes other args to civis_ml", {
-  check_civis_ml_call(civis_ml_sparse_ridge_regressor)
+  check_civis_ml_call(civis_ml_sparse_ridge_regressor, can_calibrate = FALSE)
 })
 test_that("calls civis_ml with params", {
   fake_civis_ml <- mock(NULL)
@@ -211,7 +211,7 @@ test_that("calls civis_ml with model_type", {
 })
 
 test_that("passes other args to civis_ml", {
-  check_civis_ml_call(civis_ml_sparse_ridge_regressor)
+  check_civis_ml_call(civis_ml_sparse_ridge_regressor, can_calibrate = FALSE)
 })
 
 test_that("calls civis_ml with params", {
@@ -295,7 +295,7 @@ test_that("calls civis_ml with model_type", {
 })
 
 test_that("passes other args to civis_ml", {
-  check_civis_ml_call(civis_ml_random_forest_regressor)
+  check_civis_ml_call(civis_ml_random_forest_regressor, can_calibrate = FALSE)
 })
 
 test_that("calls civis_ml with params", {
@@ -376,7 +376,7 @@ test_that("calls civis_ml with model_type", {
 })
 
 test_that("passes other args to civis_ml", {
-  check_civis_ml_call(civis_ml_extra_trees_regressor)
+  check_civis_ml_call(civis_ml_extra_trees_regressor, can_calibrate = FALSE)
 })
 
 test_that("calls civis_ml with params", {
