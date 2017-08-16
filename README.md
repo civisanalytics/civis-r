@@ -1,6 +1,6 @@
 Civis Data Science API Client
 ================
-[![Build Status](https://travis-ci.com/civisanalytics/civis-r-client.svg?token=E2j26hcJpSqCtyNqWd2B&branch=open-source)](https://travis-ci.com/civisanalytics/civis-r-client)
+[![Build Status](https://travis-ci.com/civisanalytics/civis-r.svg?token=E2j26hcJpSqCtyNqWd2B&branch=master)](https://travis-ci.com/civisanalytics/civis-r)
 
 Introduction
 ------------
@@ -8,7 +8,8 @@ Introduction
 `civis` is an R package that helps analysts and developers interact with
 the Civis Platform. The package includes a set of tools around common
 workflows as well as a convenient interface to make requests directly to
-the Civis Data Science API.
+the Civis Data Science API. See the [full documentation](https://civisanalytics.github.io/civis-r)
+for more details.
 
 Installation
 ------------
@@ -57,12 +58,25 @@ team.
 
 ```r
 # Data about me
-me <- civis::users_list_me()
-my_id <- me$id
+civis::users_list_me()
 
+<civis_api>
+List of 14
+ $ id                      : int 971
+ $ name                    : chr "A User"
+ $ email                   : chr "a_user@example.com"
+ $ username                : chr "a_user"
+ $ initials                : chr "AU"
+# ...
+```
+
+```r
 # Data about my team
 my_team <- civis::users_list()
 team_members <- sapply(my_team, function(x) x$name)
+print(team_members)
+
+[1] "Jean-Luc Picard"      "Beverly Crusher"     "Q"
 ```
 
 Many useful tasks will require making multiple direct calls to the API.
