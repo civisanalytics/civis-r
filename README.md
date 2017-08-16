@@ -112,7 +112,7 @@ The `civis` package automatically generates R functions and documentation to int
 API Documentation
 -----------------
 
-[https://console.civisanalytics.com/support#/api](https://console.civisanalytics.com/support#/api)
+[https://platform.civisanalytics.com/support#/api](https://platform.civisanalytics.com/support#/api)
 
 
 Contributing
