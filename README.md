@@ -1,6 +1,6 @@
 Civis Data Science API Client
 ================
-[![Build Status](https://travis-ci.com/civisanalytics/civis-r.svg?token=E2j26hcJpSqCtyNqWd2B&branch=master)](https://travis-ci.com/civisanalytics/civis-r)
+[![Build Status](https://travis-ci.org/civisanalytics/civis-r.svg?branch=master)](https://travis-ci.org/civisanalytics/civis-r)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/civis)](https://cran.r-project.org/package=civis)
 
 Introduction
