@@ -12,9 +12,9 @@ print.civis_ml_classifier <- function(x, ...) {
 #' @export
 print.civis_ml_regressor <- function(x, ...) {
   dv_names <- x$model_info$data$target_columns
-  tab <- with(x$metrics$metrics, t(cbind(mad, rmse, r_squared)))
+  tab <- with(x$metrics$metrics, t(cbind(r_squared, rmse, mad)))
   colnames(tab) <- dv_names
-  rownames(tab) <- c("MAD", "RMSE", "R-squared")
+  rownames(tab) <- c( "R-squared", "RMSE", "MAD")
   print.civis_ml(x, tab = tab, ...)
 }
 
@@ -36,7 +36,7 @@ print.predict_civis_ml <- function(x, ...) {
 }
 
 model_url <- function(x) {
-  paste0("https://platform.civisanalytics.com/#/scripts/custom/", x$job$id)
+  paste0("https://platform.civisanalytics.com/#/models/", x$job$id)
 }
 
 model_type <- function(job) {
