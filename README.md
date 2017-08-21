@@ -9,6 +9,7 @@ Introduction
 the Civis Platform. The package includes a set of tools around common
 workflows as well as a convenient interface to make requests directly to
 the Civis Data Science API. See the [full documentation](https://civisanalytics.github.io/civis-r)
+and the [getting started guide](https://civisanalytics.github.io/civis-r/quick_start.html)
 for more details.
 
 Installation
