@@ -806,6 +806,18 @@ test_that("raises an error if job failed", {
   )
 })
 
+test_that("fetch_logs.civis_ml_error works", {
+  with_mock(
+    `civis::scripts_post_custom` = function(...) NULL,
+    `civis::scripts_post_custom_runs` = function(...) NULL,
+    `civis::scripts_get_custom_runs` = function(...) list(state = "failed", id = 1, run_id = 2, error = "msg"),
+    `civis::fetch_logs.civis_ml_error` = function(...) list("A log message"),
+    e <- tryCatch(civis:::run_model(1234, name = "sparse_logistic", list(), list(), verbose = TRUE),
+             error = function(e) e),
+    log <- fetch_logs(e)[[1]],
+    expect_equal(log, "A log message"))
+})
+
 ###############################################################################
 context("run_model")
 
@@ -841,6 +853,24 @@ test_that("it removes name when NULL", {
   )
   script_args <- mock_args(fake_scripts_post_custom)[[1]]
   expect_false("name" %in% names(script_args))
+})
+
+test_that("civis_ml_error is caught from run_model", {
+  e <- with_mock(
+    `civis::scripts_post_custom` = function(...) NULL,
+    `civis::scripts_post_custom_runs` = function(...) NULL,
+    `civis::scripts_get_custom_runs` = function(...) list(state = "failed", id = 1, run_id = 2, error = "msg"),
+    `civis::fetch_logs.civis_ml_error` = function(...) list("A log message"),
+    tryCatch(civis:::run_model(1234, name = "sparse_logistic", list(), list(), verbose = TRUE),
+             error = function(e) e))
+  msg <- "scripts_get_custom_runs(... = NULL, run_id = NULL): msg\nA log message"
+  expect_equal(e$message, msg)
+  expect_is(e, c("civis_ml_error", "civis_error"))
+  expect_true(any(grepl("A log message", capture.output(print(e)))))
+
+  err_data <- get_error(e)
+  expect_equal(err_data$f, "scripts_get_custom_runs")
+  expect_equal(err_data$log[[1]], "A log message")
 })
 
 ###############################################################################
@@ -888,3 +918,8 @@ test_that("it calls read.csv with extra args", {
   expect_equal(csv_args[[1]], "a_file.csv")
   expect_equal(csv_args$stringsAsFactors, FALSE)
 })
+
+
+
+
+

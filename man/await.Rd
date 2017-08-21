@@ -18,7 +18,7 @@ await_all(f, .x, ..., .status_key = "state",
 
 \item{...}{arguments to \code{f}}
 
-\item{.status_key}{The name of the element of the list returned by \code{f} containing the status. 
+\item{.status_key}{The name of the element of the list returned by \code{f} containing the status.
 For most Civis API endpoints, this is the default, \code{"state"}.}
 
 \item{.success_states}{list of states indicating remote work has completed successfully.
@@ -37,36 +37,36 @@ intervals with jitter (see 'Details')}
 \item{.x}{a vector of values to be passed to \code{f}}
 }
 \description{
-\code{await} repeatedly calls a Civis API endpoint such as \code{scripts_get_sql_runs} 
-that monitors the status of a script, job, import, or model. It blocks until the function 
+\code{await} repeatedly calls a Civis API endpoint such as \code{scripts_get_sql_runs}
+that monitors the status of a script, job, import, or model. It blocks until the function
 returns a result with a successful or error status.
-If the script, job, import or model results in an error state, 
+If the script, job, import or model results in an error state,
 \code{await} throws an error with useful debugging information.
 
-\code{await_all} is a vectorized version of \code{await}. It repeatedly calls a Civis API endpoint for 
-all values of a vector, e.g. a vector of script, job, import, run, or model ids. It blocks until 
+\code{await_all} is a vectorized version of \code{await}. It repeatedly calls a Civis API endpoint for
+all values of a vector, e.g. a vector of script, job, import, run, or model ids. It blocks until
 all calls have returned a result with a given status, and silently captures jobs that return
 errors.
 }
 \details{
-\code{await} and \code{await_all} can wrap Civis API endpoints in \code{generated_client.R}. 
+\code{await} and \code{await_all} can wrap Civis API endpoints in \code{generated_client.R}.
 The default values for \code{.status_key}, \code{.success_states}, and \code{.error_states}
 are suitable for most endpoints. The final status of \code{f} can be obtained using
 \code{\link{get_status}}.
 
 If an error state is reached, \code{await} throws a \code{civis_await_error}.
-\code{await_all} silently captures and returns a \code{civis_await_error} for any job 
-reaching an error state as an element in the list of results.  
+\code{await_all} silently captures and returns a \code{civis_await_error} for any job
+reaching an error state as an element in the list of results.
 
 If \code{.timeout} is specified and the job fails to reach a success state
-within the time limit, \code{await} throws a \code{civis_timeout_error}. 
-Likewise, \code{await_all} throws a \code{civis_timeout_error} if all jobs fail to 
+within the time limit, \code{await} throws a \code{civis_timeout_error}.
+Likewise, \code{await_all} throws a \code{civis_timeout_error} if all jobs fail to
 reach a success state within the time limit.
 
 These errors can be caught using \code{try} or \code{tryCatch}.
 Useful debugging information can be returned using \code{\link{get_error}}.
 
-The set of possible states for jobs on Civis platform are: 
+The set of possible states for jobs on Civis platform are:
 \code{"succeeded"}, \code{"success"}, \code{"failed"}, \code{"queued"}, \code{"running"},
 and \code{"cancelled"}.
 
@@ -92,13 +92,13 @@ Approximate intervals for a given number of retries are as follows:
    q_id <- queries_post(db_id, query, n_rows, cred_id)[["id"]]
    r <- await(queries_get, id = q_id)
    get_status(r)
-   
+
    r <- tryCatch(await(queries_get, id = q_id), error = function(e) e)
    get_error(r)
-   
+
    r <- try(await(queries_get, id = q_id))
    get_error(r)
-   
+
 }
 }
 \seealso{

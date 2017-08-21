@@ -25,7 +25,7 @@ Get error data from civis_errors
  r <- tryCatch(await(queries_get, id = q_id), error = function(e) e)
  print(r)
  get_error(r)
- 
+
  r <- try(await(queries_get, id = q_id))
  get_error(r)
  }

@@ -531,8 +531,10 @@ run_model <- function(template_id, name, arguments, notifications, verbose) {
 
   job <- do.call(scripts_post_custom, script_args)
   run <- scripts_post_custom_runs(job$id)
-  r <- await(scripts_get_custom_runs, id = job$id, run_id = run$id,
-             .verbose = verbose)
+  r <- tryCatch(await(scripts_get_custom_runs, id = job$id, run_id = run$id,
+                      .verbose = verbose),
+                civis_error = function(e) stop(civis_ml_error(e)),
+                error = function(e) stop(e))
   list(job_id = job$id, run_id = run$id)
 }
 
@@ -824,6 +826,14 @@ civis_file_manifest <- function(file_id) {
 fetch_logs.civis_ml <- function(object, limit = 100, ...) {
   logs <- scripts_list_custom_runs_logs(object$job$id, object$run$id,
                                         limit = limit)
+  format_scripts_logs(logs)
+}
+
+#' @export
+fetch_logs.civis_ml_error <- function(object, limit = 100, ...) {
+  job_id <- attr(object, "args")$id
+  run_id <- attr(object, "args")$run_id
+  logs <- scripts_list_custom_runs_logs(job_id, run_id, limit = limit)
   format_scripts_logs(logs)
 }
 
