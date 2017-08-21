@@ -22,8 +22,8 @@ test_that("print.civis_ml_classifier works", {
   first_row <- lapply(class_msg, purrr::pluck, 1)
   expect_true(all(stringr::str_detect(first_row, class_algo)))
 
-  second_row <- lapply(class_msg, purrr::pluck, 2)
-  expect_true(all(str_detect_multiple(second_row, id_regex[1:4])))
+  third_row <- lapply(class_msg, purrr::pluck, 3)
+  expect_true(all(str_detect_multiple(third_row, id_regex[1:4])))
 
   expect_true(all(stringr::str_detect(class_msg, "(AUC)*(Prop Correct)")))
   expect_true(all(stringr::str_detect(class_msg, c("(Setosa)*(Versicolour)*(Virginica)"))))
@@ -35,8 +35,8 @@ test_that("print.civis_ml_regressor works", {
   first_row <- lapply(reg_msg, purrr::pluck, 1)
   expect_true(all(stringr::str_detect(first_row, reg_algo)))
 
-  second_row <- lapply(reg_msg, purrr::pluck, 2)
-  expect_true(all(str_detect_multiple(second_row, id_regex[5:10])))
+  third_row <- lapply(reg_msg, purrr::pluck, 3)
+  expect_true(all(str_detect_multiple(third_row, id_regex[5:10])))
   expect_true(all(stringr::str_detect(reg_msg, "(MAD)*(RMSE)*(R-squared)")))
   expect_true(all(stringr::str_detect(reg_msg[1:5], c("weight"))))
   expect_true(all(stringr::str_detect(reg_msg[6], c("(weight)*(Time)"))))
@@ -44,7 +44,7 @@ test_that("print.civis_ml_regressor works", {
 
 test_that("print.civis_ml digits works", {
   m <- model_list[[5]]
-  d_str <- capture.output(print(m, digits = 2))[5:7]
+  d_str <- capture.output(print(m, digits = 2))[6:8]
   nums <- lapply(stringr::str_split(d_str, " "), tail, 1)
   dec <- lapply(purrr::flatten(lapply(nums, stringr::str_split, "\\.")), tail, 1)
   expect_equal(sapply(dec, nchar), rep(2, 3))
