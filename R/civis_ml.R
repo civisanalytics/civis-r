@@ -536,7 +536,6 @@ run_model <- function(template_id, name, arguments, notifications, verbose) {
   list(job_id = job$id, run_id = run$id)
 }
 
-
 #' @rdname civis_ml
 #' @export
 civis_ml_fetch_existing <- function(model_id, run_id = NULL) {
@@ -554,6 +553,7 @@ civis_ml_fetch_existing <- function(model_id, run_id = NULL) {
     metrics <- must_fetch_output_json(outputs, "metrics.json")
     model_info <- must_fetch_output_json(outputs, "model_info.json")
   }
+  type <- model_type(job)
 
   structure(
     list(
@@ -563,7 +563,7 @@ civis_ml_fetch_existing <- function(model_id, run_id = NULL) {
       metrics = metrics,
       model_info = model_info
     ),
-    class = "civis_ml"
+    class = c(paste0("civis_ml_", type), "civis_ml")
   )
 }
 
@@ -602,16 +602,6 @@ must_fetch_output_file <- function(outputs, file_name) {
   # to return a non-nested list anyway.
   file_output <- out[[1]]
   download_civis(file_output$objectId, tempfile())
-}
-
-#' @export
-print.civis_ml <- function(x, ...) {
-  cat("<CivisML ", model_workflow(x), ">\n", sep = "")
-  invisible(x)
-}
-
-model_workflow <- function(m) {
-  m$job$arguments$MODEL
 }
 
 #' @rdname civis_ml
@@ -765,11 +755,6 @@ fetch_predict_results <- function(job_id, run_id) {
     ),
     class = "predict_civis_ml"
   )
-}
-
-#' @export
-print.predict_civis_ml <- function(x, ...) {
-  cat("<CivisML Prediction>\n", sep = "")
 }
 
 #' A file in the Civis Platform

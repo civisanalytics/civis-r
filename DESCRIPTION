@@ -49,6 +49,7 @@ VignetteBuilder: knitr
 Collate: 
     'await.R'
     'civis_ml.R'
+    'civis_ml_utils.R'
     'civis_ml_workflows.R'
     'client_base.R'
     'dbi-driver.R'

@@ -767,7 +767,10 @@ test_that("issues message for still running", {
     list(
       lastRun = list(
         id = 456
-      )
+      ),
+      arguments = list(
+          MODEL = "regressor"
+        )
     )
   )
   fake_scripts_get_custom_runs <- mock(list(state = "running"))
@@ -786,8 +789,11 @@ test_that("raises an error if job failed", {
     list(
       lastRun = list(
         id = 456
+      ),
+      arguments = list(
+          MODEL = "regressor"
+        )
       )
-    )
   )
   fake_scripts_get_custom_runs <- mock(list(state = "failed"))
 
