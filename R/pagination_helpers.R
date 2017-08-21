@@ -66,7 +66,7 @@ fetch_all <- function(fn, ...) {
 #'                        .until = function(x) x == "voterbase_id")
 #' }
 fetch_until <- function(fn, .until, ...) {
-  until <- purrr::as_function(.until)
+  until <- purrr::as_mapper(.until)
   args <- list(...)
 
   args$page_num <- 1
@@ -79,7 +79,7 @@ fetch_until <- function(fn, .until, ...) {
     if (any(purrr::map_lgl(res, until))) {
       break
     }
-  
+
     args$page_num <- next_page(res)
     if (is.null(args$page_num)) {
       break
