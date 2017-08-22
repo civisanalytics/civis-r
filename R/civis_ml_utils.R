@@ -35,6 +35,28 @@ print.predict_civis_ml <- function(x, ...) {
   cat("<CivisML Prediction>\n", sep = "")
 }
 
+#' @export
+print.civis_ml_error <- function(x, ...) {
+  cat("<civis_ml_error>", fill = T)
+  cat(x$message, sep = "\n")
+}
+
+# wraps a civis_error caught by await specifically for civis_ml.
+civis_ml_error <- function(civis_error_obj) {
+  orig_msg <- civis_error_obj$message
+
+  log <- fetch_logs.civis_ml_error(civis_error_obj)
+  new_msg <- paste0(c(orig_msg, log), collapse = "\n")
+
+  # condition contains all original attributes
+  condition(subclass = c("civis_ml_error", "civis_error", "error"),
+            message = new_msg, call = NULL,
+            log = log,
+            f = attr(civis_error_obj, "f"),
+            args = attr(civis_error_obj, "args"))
+}
+
+
 model_url <- function(x) {
   paste0("https://platform.civisanalytics.com/#/models/", x$job$id)
 }
