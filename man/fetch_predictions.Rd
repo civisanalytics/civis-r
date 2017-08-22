@@ -11,6 +11,12 @@ fetch_predictions(x, ...)
 
 \item{...}{arguments passed to \code{read.csv}}
 }
+\value{
+A \code{data.frame} with out of sample/fold predictions for each
+ row of the training data, and containing an additional column with
+ a primary key. For a multiclass model, a data frame is returned with one
+  column of predictions for each class.
+}
 \description{
 Retrieve predictions from a CivisML prediction job
 }

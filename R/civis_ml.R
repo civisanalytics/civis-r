@@ -766,10 +766,13 @@ fetch_predict_results <- function(job_id, run_id) {
 #' Retrieve predictions from a CivisML prediction job
 #' @param x \code{civis_ml_prediction} object from \code{predict.civis_ml}
 #' @param ... arguments passed to \code{read.csv}
-#'
 #' @export
-#' @details
-#' The resulting file can also be downloaded directly using \code{download_civis} (see examples).
+#' @details The resulting file can also be downloaded directly using \code{download_civis} (see examples).
+#' @return A \code{data.frame} with out of sample/fold predictions for each
+#'  row of the training data, and containing an additional column with
+#'  a primary key. For a multiclass model, a data frame is returned with one
+#'   column of predictions for each class.
+#'
 #' @examples
 #' \dontrun{
 #' m <- civis_ml("path/to/file.csv", model_type = "sparse_logistic",
@@ -883,7 +886,8 @@ fetch_logs.civis_ml_error <- function(object, limit = 100, ...) {
 #' @param model A \code{civis_ml} model.
 #' @param \dots Parameters passed to \code{read.csv}.
 #' @return A \code{data.frame} with out of sample/fold predictions for each
-#'   row of the training data.
+#'  row of the training data, and containing an additional column with
+#'  a primary key.
 #'
 #' @seealso civis_ml
 #' @importFrom utils read.csv
