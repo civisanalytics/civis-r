@@ -241,12 +241,14 @@ pred_job <- predict(m, civis_file(file_id),
 m <- civis_ml_fetch_existing(model_id = m$job$id, m$run$id)
 logs <- fetch_logs(m)
 yhat <- fetch_oos_scores(m)
+yhat <- fetch_predictions(pred_job)
 }
 }
 \seealso{
 \code{\link{civis_file}}, \code{\link{civis_table}}, and
   \code{\link{civis_file_manifest}} for specifying data sources.
 
-  \code{\link{fetch_logs}} for retrieving logs for a model build and
-  \code{\link{fetch_oos_scores}} for retrieving the out of sample (fold) scores for each training observation.
+  \code{\link{fetch_logs}} for retrieving logs for a model build,
+  \code{\link{fetch_oos_scores}} for retrieving the out of sample (fold) scores for each training observation, and
+  \code{\link{fetch_predictions}} for retrieving the predictions from a prediction job.
 }

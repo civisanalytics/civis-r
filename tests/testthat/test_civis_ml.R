@@ -920,6 +920,33 @@ test_that("it calls read.csv with extra args", {
 })
 
 
+###############################################################################
+context("fetch_predictions")
+
+test_that("it checks input type", {
+  expect_error(fetch_predictions("not a model"), "is(x, \"civis_ml_prediction\") is not TRUE", fixed = TRUE)
+})
+
+test_that("it calls read.csv with extra args, and dowload_civis with correct id", {
+  fake_read_csv <- mock(NULL)
+  fake_download_civis <- mock("path.csv")
+
+  with_mock(
+    `utils::read.csv` = fake_read_csv,
+    `civis::fetch_predict_results` = function(...) list(model_info = list(output_file_ids = 1)),
+    `civis::download_civis` = fake_download_civis,
+    fetch_predictions(structure(list(), class = "civis_ml_prediction"), stringsAsFactors = FALSE)
+  )
+
+  csv_args <- mock_args(fake_read_csv)[[1]]
+  expect_equal(csv_args[[1]], "path.csv")
+  expect_equal(csv_args$stringsAsFactors, FALSE)
+
+  dl_args <- mock_args(fake_download_civis)[[1]]
+  expect_equal(dl_args[[1]], 1)
+})
+
+
 
 
 

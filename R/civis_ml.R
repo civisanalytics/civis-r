@@ -180,14 +180,16 @@
 #' m <- civis_ml_fetch_existing(model_id = m$job$id, m$run$id)
 #' logs <- fetch_logs(m)
 #' yhat <- fetch_oos_scores(m)
+#' yhat <- fetch_predictions(pred_job)
 #' }
 #' @name civis_ml
 #' @seealso
 #'   \code{\link{civis_file}}, \code{\link{civis_table}}, and
 #'   \code{\link{civis_file_manifest}} for specifying data sources.
 #'
-#'   \code{\link{fetch_logs}} for retrieving logs for a model build and
-#'   \code{\link{fetch_oos_scores}} for retrieving the out of sample (fold) scores for each training observation.
+#'   \code{\link{fetch_logs}} for retrieving logs for a model build,
+#'   \code{\link{fetch_oos_scores}} for retrieving the out of sample (fold) scores for each training observation, and
+#'   \code{\link{fetch_predictions}} for retrieving the predictions from a prediction job.
 NULL
 
 #' @rdname civis_ml
@@ -748,15 +750,52 @@ fetch_predict_results <- function(job_id, run_id) {
   job <- scripts_get_custom(job_id)
   run <- scripts_get_custom_runs(job_id, run_id)
   outputs <- scripts_list_custom_runs_outputs(job_id, run_id)
+  model_info <- must_fetch_output_json(outputs, "model_info.json")
 
   structure(
     list(
       job = job,
       run = run,
-      outputs = outputs
+      outputs = outputs,
+      model_info = model_info
     ),
-    class = "predict_civis_ml"
+    class = c("civis_ml_prediction", "civis_ml")
   )
+}
+
+#' Retrieve predictions from a CivisML prediction job
+#' @param x \code{civis_ml_prediction} object from \code{predict.civis_ml}
+#' @param ... arguments passed to \code{read.csv}
+#' @export
+#' @details Predictions can also be downloaded as a \code{csv} directly using \code{download_civis} (see examples).
+#' @return A \code{data.frame} of predictions containing an additional column with
+#'  a primary key. For a multiclass model, a data frame is returned with one
+#'   column of predictions for each class.
+#'
+#' @examples
+#' \dontrun{
+#' m <- civis_ml("path/to/file.csv", model_type = "sparse_logistic",
+#'   dependent_variable = "Species")
+#' pred_job <- predict(m, newdata = "path/to/newdata.csv")
+#' yhat <- fetch_predictions(pred_job)
+#'
+#' # download instead:
+#' download_civis(pred_job$model_info$output_file_ids, path = "my_predictions.csv")
+#'
+#' }
+fetch_predictions <- function(x, ...) {
+  stopifnot(is(x, "civis_ml_prediction"))
+  out <- fetch_predict_results(job_id = x$job$id, run_id = x$run$id)
+  # there will always be one file id - this is a pointer to the url shards on S3 (src: Jamie)
+  id <- out$model_info$output_file_ids
+  tryCatch({
+    path <- download_civis(id, tempfile())
+    res <- utils::read.csv(path, ...)
+  }, error = function(e) stop(e),
+  finally = {
+    unlink(path)
+  })
+  res
 }
 
 #' A file in the Civis Platform
@@ -846,7 +885,8 @@ fetch_logs.civis_ml_error <- function(object, limit = 100, ...) {
 #' @param model A \code{civis_ml} model.
 #' @param \dots Parameters passed to \code{read.csv}.
 #' @return A \code{data.frame} with out of sample/fold predictions for each
-#'   row of the training data.
+#'  row of the training data, and containing an additional column with
+#'  a primary key.
 #'
 #' @seealso civis_ml
 #' @importFrom utils read.csv
@@ -856,6 +896,8 @@ fetch_oos_scores <- function(model, ...) {
   path <- must_fetch_output_file(model$outputs, "predictions.csv.gz")
   read.csv(path, ...)
 }
+
+
 
 is_civis_ml <- function(object) {
   is(object, "civis_ml")

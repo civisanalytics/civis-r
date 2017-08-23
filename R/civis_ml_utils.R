@@ -31,8 +31,14 @@ print.civis_ml <- function(x, tab, digits = 4, ...) {
 }
 
 #' @export
-print.predict_civis_ml <- function(x, ...) {
-  cat("<CivisML Prediction>\n", sep = "")
+print.civis_ml_prediction <- function(x, ...) {
+  run_id <- x$run$id
+  job_id <- x$job$id
+  url <- paste0("https://platform.civisanalytics.com/#/scripts/", job_id)
+  cat("<CivisML Prediction>", fill = T)
+  cat(url, fill = TRUE)
+  cat("Job id: ", job_id, " Run id: ", run_id, "\n", fill = TRUE)
+  invisible(x)
 }
 
 #' @export

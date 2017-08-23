@@ -13,7 +13,8 @@ fetch_oos_scores(model, ...)
 }
 \value{
 A \code{data.frame} with out of sample/fold predictions for each
-  row of the training data.
+ row of the training data, and containing an additional column with
+ a primary key.
 }
 \description{
 Retrieve out of sample/fold predictions
