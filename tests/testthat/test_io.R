@@ -33,14 +33,14 @@ test_that("read_civis returns a dataframe or error appropriately", {
   )
 })
 
-test_that("read_civis produces error when query returns no rows", {
+test_that("read_civis produces catchable error when query returns no rows", {
   no_results_resp <- list(state="succeeded", output = list())
-  e <- "Query produced no output."
   mock_sql_job <- function(...) list(script_id=561, run_id=43)
   with_mock(
     `civis::start_scripted_sql_job` = mock_sql_job,
     `civis::scripts_get_sql_runs` = function(...) no_results_resp,
-    expect_error(read_civis(dplyr::sql("SELECT 0"), database="arrgh"), e)
+    try_err <- try(read_civis(dplyr::sql("SELECT 0"), database="arrgh")),
+    expect_true("empty_result_error" %in% class(attr(try_err, "condition")))
   )
 })
 
@@ -237,9 +237,9 @@ test_that("start_import_job parses table correctly", {
 
 
 test_that("download_script_results returns sensible errors", {
-  error <- "Query produced no output."
+  error <- "Query produced no output. \\(script_id = 561, run_id = 43\\)"
   with_mock(
     `civis::scripts_get_sql_runs` = function(...) list(),
-    expect_error(download_script_results(-999, -999, "some_file"), error)
+    expect_error(download_script_results(561, 43, "some_file"), error)
   )
 })

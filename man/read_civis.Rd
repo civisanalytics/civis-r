@@ -75,6 +75,15 @@ df <- read_civis(id)
 # Read a text file or csv from the files endpoint.
 id <- write_civis_file("my_csv.csv")
 df <- read_civis(id, using = read.csv)
+
+# Gracefully handle when read_civis.sql returns no rows
+query <- sql("SELECT * FROM table WHERE 1 = 2")
+tryCatch({
+  df <- read_civis(query, database = "my_database")
+  mean_x <- mean(df$x)
+}, empty_result_error = function(e) {
+  mean_x <- NA
+})
 }
 }
 \seealso{
