@@ -35,6 +35,15 @@
 #' # Read a text file or csv from the files endpoint.
 #' id <- write_civis_file("my_csv.csv")
 #' df <- read_civis(id, using = read.csv)
+#'
+#' # Gracefully handle when read_civis.sql returns no rows
+#' query <- sql("SELECT * FROM table WHERE 1 = 2")
+#' mean_x <- tryCatch({
+#'   df <- read_civis(query, database = "my_database")
+#'   mean(df$x)
+#' }, empty_result_error = function(e) {
+#'    NA
+#' })
 #' }
 #' @export
 #' @family io
@@ -606,7 +615,11 @@ download_script_results <- function(script_id, run_id,
   script_results <- scripts_get_sql_runs(script_id, run_id)
   # Verify that the script actually generated output
   if (length(script_results[["output"]]) == 0) {
-    stop("Query produced no output.")
+    msg <- paste0("Query produced no output. ",
+                  "(script_id = ", script_id,
+                  ", run_id = ", run_id, ")")
+    cond <- condition(c("empty_result_error", "error"), msg, call = NULL)
+    stop(cond)
   }
   url <- script_results[["output"]][[1]][["path"]]
   args <- list(url)
