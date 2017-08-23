@@ -73,6 +73,9 @@
     <li>
       <a href="../articles/data_import_and_export.html">Data Import and Export</a>
     </li>
+    <li>
+      <a href="../articles/quick_start.html">Getting Started</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -99,14 +102,14 @@
     </div>
 
     
-    <p><code>await</code> repeatedly calls a Civis API endpoint such as <code>scripts_get_sql_runs</code> 
-that monitors the status of a script, job, import, or model. It blocks until the function 
+    <p><code>await</code> repeatedly calls a Civis API endpoint such as <code>scripts_get_sql_runs</code>
+that monitors the status of a script, job, import, or model. It blocks until the function
 returns a result with a successful or error status.
-If the script, job, import or model results in an error state, 
+If the script, job, import or model results in an error state,
 <code>await</code> throws an error with useful debugging information.
 
-    <code>await_all</code> is a vectorized version of <code>await</code>. It repeatedly calls a Civis API endpoint for 
-all values of a vector, e.g. a vector of script, job, import, run, or model ids. It blocks until 
+    <code>await_all</code> is a vectorized version of <code>await</code>. It repeatedly calls a Civis API endpoint for
+all values of a vector, e.g. a vector of script, job, import, run, or model ids. It blocks until
 all calls have returned a result with a given status, and silently captures jobs that return
 errors.</p>
     
@@ -132,7 +135,7 @@ errors.</p>
     </tr>
     <tr>
       <th>.status_key</th>
-      <td><p>The name of the element of the list returned by <code>f</code> containing the status. 
+      <td><p>The name of the element of the list returned by <code>f</code> containing the status.
 For most Civis API endpoints, this is the default, <code>"state"</code>.</p></td>
     </tr>
     <tr>
@@ -166,20 +169,20 @@ intervals with jitter (see 'Details')</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>await</code> and <code>await_all</code> can wrap Civis API endpoints in <code>generated_client.R</code>. 
+    <p><code>await</code> and <code>await_all</code> can wrap Civis API endpoints in <code>generated_client.R</code>.
 The default values for <code>.status_key</code>, <code>.success_states</code>, and <code>.error_states</code>
 are suitable for most endpoints. The final status of <code>f</code> can be obtained using
 <code><a href='get_status.html'>get_status</a></code>.</p>
 <p>If an error state is reached, <code>await</code> throws a <code>civis_await_error</code>.
-<code>await_all</code> silently captures and returns a <code>civis_await_error</code> for any job 
+<code>await_all</code> silently captures and returns a <code>civis_await_error</code> for any job
 reaching an error state as an element in the list of results.</p>
 <p>If <code>.timeout</code> is specified and the job fails to reach a success state
-within the time limit, <code>await</code> throws a <code>civis_timeout_error</code>. 
-Likewise, <code>await_all</code> throws a <code>civis_timeout_error</code> if all jobs fail to 
+within the time limit, <code>await</code> throws a <code>civis_timeout_error</code>.
+Likewise, <code>await_all</code> throws a <code>civis_timeout_error</code> if all jobs fail to
 reach a success state within the time limit.</p>
 <p>These errors can be caught using <code>try</code> or <code>tryCatch</code>.
 Useful debugging information can be returned using <code><a href='get_error.html'>get_error</a></code>.</p>
-<p>The set of possible states for jobs on Civis platform are: 
+<p>The set of possible states for jobs on Civis platform are:
 <code>"succeeded"</code>, <code>"success"</code>, <code>"failed"</code>, <code>"queued"</code>, <code>"running"</code>,
 and <code>"cancelled"</code>.</p>
 <p>Unless <code>.interval</code> is specified, retries are attempted with exponentially increasing intervals using

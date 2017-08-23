@@ -50,6 +50,9 @@
     <li>
       <a href="../articles/data_import_and_export.html">Data Import and Export</a>
     </li>
+    <li>
+      <a href="../articles/quick_start.html">Getting Started</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -159,7 +162,7 @@ id &lt;-<span class="st"> </span><span class="kw"><a href="../reference/write_ci
 <p>Arbitrary queries can be run on Redshift using <code>query_civis</code>, which returns the meta-data of the query.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q_res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/query_civis.html">query_civis</a></span>(<span class="st">"GRANT ALL ON schema.my_table TO GROUP admin"</span>)</code></pre></div>
 <p>Existing queries can be re-run by passing the query id to <code>query_civis</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id &lt;-<span class="st"> </span>q_res<span class="op">$</span>id
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id &lt;-<span class="st"> </span>q_res$id
 <span class="kw"><a href="../reference/query_civis.html">query_civis</a></span>(id)</code></pre></div>
 </div>
 <div id="common-errors" class="section level2">
@@ -169,7 +172,7 @@ id &lt;-<span class="st"> </span><span class="kw"><a href="../reference/write_ci
 <h4 class="hasAnchor">
 <a href="#civis-api-key-not-properly-set-or-has-expired-" class="anchor"></a>Civis API key not properly set or has expired.</h4>
 <p>Often an improper API key will return an error like below:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> Error <span class="cf">in</span> <span class="kw">api_key</span>() <span class="op">:</span><span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> Error in <span class="kw">api_key</span>() :<span class="st"> </span>
 <span class="st">  </span>The environmental variable CIVIS_API_KEY is not set. Add this to your .Renviron or call <span class="kw">Sys.setenv</span>(<span class="dt">CIVIS_API_KEY =</span> <span class="st">'&lt;api_key&gt;'</span>) </code></pre></div>
 <p>However, there may be cases where the errors are less straightforward. It is a good idea to test that API credentials are properly set with a simple call such as <code><a href="http://www.rdocumentation.org/packages/civis/topics/users_list_me">civis::users_list_me()</a></code>. See the README to set up API keys correctly.</p>
 </div>
@@ -178,17 +181,17 @@ id &lt;-<span class="st"> </span><span class="kw"><a href="../reference/write_ci
 <a href="#query-does-not-return-any-results-" class="anchor"></a>Query does not return any results.</h4>
 <p>This may happen if a table is empty or when no rows match a <code>WHERE</code> statement. To fix, double check that the query is correct or the table is not empty.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="kw"><a href="http://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(<span class="st">"SELECT * FROM schema.tablename WHERE 1 = 0"</span>))
-Error <span class="cf">in</span> <span class="kw">download_script_results</span>(run<span class="op">$</span>script_id, run<span class="op">$</span>run_id) <span class="op">:</span><span class="st"> </span>
+Error in <span class="kw">download_script_results</span>(run$script_id, run$run_id) :<span class="st"> </span>
 <span class="st">  </span>Query produced no output. </code></pre></div>
 </div>
 <div id="database-not-set-correctly-" class="section level4">
 <h4 class="hasAnchor">
 <a href="#database-not-set-correctly-" class="anchor"></a>Database not set correctly.</h4>
 <p>For both <code>read_civis</code> and <code>write_civis</code>, the database must be set to the correct, case sensitive name (not hostname) of the database.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> Error <span class="cf">in</span> <span class="kw">get_db</span>(database) <span class="op">:</span><span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> Error in <span class="kw">get_db</span>(database) :<span class="st"> </span>
 <span class="st">  </span>Argument database is <span class="ot">NULL</span> and <span class="kw">options</span>(<span class="st">"civis.default_db"</span>) not set. Set this option using <span class="kw">options</span>(<span class="dt">civis.default_db =</span> <span class="st">"my_database"</span>) </code></pre></div>
 <p>To see a complete list of database names, run:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(<span class="kw"><a href="../reference/databases_list.html">databases_list</a></span>(), <span class="cf">function</span>(x) x<span class="op">$</span>name)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(<span class="kw"><a href="../reference/databases_list.html">databases_list</a></span>(), function(x) x$name)</code></pre></div>
 </div>
 </div>
 </div>

@@ -4,4 +4,5 @@ urls:
 articles:
   concurrency: concurrency.html
   data_import_and_export: data_import_and_export.html
+  quick_start: quick_start.html
 

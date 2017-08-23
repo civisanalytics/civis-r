@@ -50,6 +50,9 @@
     <li>
       <a href="articles/data_import_and_export.html">Data Import and Export</a>
     </li>
+    <li>
+      <a href="articles/quick_start.html">Getting Started</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -78,17 +81,17 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p><code>civis</code> is an R package that helps analysts and developers interact with the Civis Platform. The package includes a set of tools around common workflows as well as a convenient interface to make requests directly to the Civis Data Science API. See the <a href="https://civisanalytics.github.io/civis-r">full documentation</a> for more details.</p>
+<p><code>civis</code> is an R package that helps analysts and developers interact with the Civis Platform. The package includes a set of tools around common workflows as well as a convenient interface to make requests directly to the Civis Data Science API. See the <a href="https://civisanalytics.github.io/civis-r">full documentation</a> and the <a href="https://civisanalytics.github.io/civis-r/quick_start.html">getting started guide</a> for more details.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Installing and using <code>civis</code> requires an API key. Instructions for creating an API key can be found <a href="https://civis.zendesk.com/hc/en-us/articles/216341583-Generating-an-API-Key">here</a>. All API keys have a set expiration date and so a new key will need to be created at least every 30 days.</p>
 <p>Once you have created an API key, you will then need to add it to your environment so <code>civis</code> can access it. To do this, add the following line to your <code>.Renviron</code> file:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">CIVIS_API_KEY=</span>adlfk942l2ka0dd0232</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">CIVIS_API_KEY=</span>adlfk942l2ka0dd0232</code></pre></div>
 <p>Be sure to replace the fake key <code>adlfk942l2ka0dd0232</code> with your newly created key.</p>
 <p>With an API key in place, you can now install <code>civis</code> using devtools:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"civisanalytics/civis-r"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"civisanalytics/civis-r"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>❗ You must keep your API key secret. If you use version control tools, ensure you do not commit <code>.Renviron</code> or any scripts in which you have hard-coded an API key.</p>
 </div>
 <div id="usage" class="section level2">
@@ -101,19 +104,19 @@
 </ol>
 <p>Functions which make direct calls to the API are prefixed with the name of the resource that the function accesses. For example, the <code>users</code> resource encapsulates all the functionality of Platform regarding users. We can make various calls to the <code>users</code> resource to get information about ourselves and our team.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Data about me</span>
-civis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/civis/topics/users_list_me">users_list_me</a></span>()
+civis::<span class="kw"><a href="reference/users_list_me.html">users_list_me</a></span>()
 
-<span class="op">&lt;</span>civis_api<span class="op">&gt;</span>
+&lt;civis_api&gt;
 List of <span class="dv">14</span>
- <span class="op">$</span><span class="st"> </span>id                      <span class="op">:</span><span class="st"> </span>int <span class="dv">971</span>
- <span class="op">$</span><span class="st"> </span>name                    <span class="op">:</span><span class="st"> </span>chr <span class="st">"A User"</span>
- <span class="op">$</span><span class="st"> </span>email                   <span class="op">:</span><span class="st"> </span>chr <span class="st">"a_user@example.com"</span>
- <span class="op">$</span><span class="st"> </span>username                <span class="op">:</span><span class="st"> </span>chr <span class="st">"a_user"</span>
- <span class="op">$</span><span class="st"> </span>initials                <span class="op">:</span><span class="st"> </span>chr <span class="st">"AU"</span>
+ $<span class="st"> </span>id                      :<span class="st"> </span>int <span class="dv">971</span>
+ $<span class="st"> </span>name                    :<span class="st"> </span>chr <span class="st">"A User"</span>
+ $<span class="st"> </span>email                   :<span class="st"> </span>chr <span class="st">"a_user@example.com"</span>
+ $<span class="st"> </span>username                :<span class="st"> </span>chr <span class="st">"a_user"</span>
+ $<span class="st"> </span>initials                :<span class="st"> </span>chr <span class="st">"AU"</span>
 <span class="co"># ...</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Data about my team</span>
-my_team &lt;-<span class="st"> </span>civis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/civis/topics/users_list">users_list</a></span>()
-team_members &lt;-<span class="st"> </span><span class="kw">sapply</span>(my_team, <span class="cf">function</span>(x) x<span class="op">$</span>name)
+my_team &lt;-<span class="st"> </span>civis::<span class="kw"><a href="reference/users_list.html">users_list</a></span>()
+team_members &lt;-<span class="st"> </span><span class="kw">sapply</span>(my_team, function(x) x$name)
 <span class="kw">print</span>(team_members)
 
 [<span class="dv">1</span>] <span class="st">"Jean-Luc Picard"</span>      <span class="st">"Beverly Crusher"</span>     <span class="st">"Q"</span></code></pre></div>
@@ -144,8 +147,8 @@ df2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_civis
 <h2 class="hasAnchor">
 <a href="#contributing" class="anchor"></a>Contributing</h2>
 <p>Contributions to the code are very welcome! Issues and bug reports can filed through the standard Github issue interface. In order to submit a pull request, please fork the repo and make a pull request from the fork to the master branch of the main repo. Unit tests must pass before merging and writing tests for new code is highly encouraged! Unit tests can be run with <code>Rscript tests/testthat.R</code>. For major, potentially breaking changes, integration tests should be run with</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="bu">cd</span> tools/integration_tests
-<span class="ex">Rscript</span> smoke_test.R</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cd</span> tools/integration_tests
+<span class="kw">Rscript</span> smoke_test.R</code></pre></div>
 <p>Note, integration tests require a valid API key to run, and my be slow.</p>
 <p>All contributors of code should include themselves in <code>DESCRIPTION</code> by adding the following object in the <code>Authors@R</code> section:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">person</span>(<span class="st">"FirstName"</span>, <span class="st">"LastName"</span>, <span class="dt">email =</span> <span class="st">"email@email.com"</span>, <span class="dt">role =</span> <span class="st">"ctb"</span>)</code></pre></div>
@@ -174,7 +177,8 @@ df2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_civis
 </ul>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.com/civisanalytics/civis-r"><img src="https://travis-ci.com/civisanalytics/civis-r.svg?token=E2j26hcJpSqCtyNqWd2B&amp;branch=master" alt="Build Status"></a></li>
+<li><a href="https://travis-ci.org/civisanalytics/civis-r"><img src="https://travis-ci.org/civisanalytics/civis-r.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="https://cran.r-project.org/package=civis"><img src="http://www.r-pkg.org/badges/version/civis" alt="CRAN_Status_Badge"></a></li>
 </ul>
 </div>
 </div>
