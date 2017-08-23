@@ -12,8 +12,7 @@ fetch_predictions(x, ...)
 \item{...}{arguments passed to \code{read.csv}}
 }
 \value{
-A \code{data.frame} with out of sample/fold predictions for each
- row of the training data, and containing an additional column with
+A \code{data.frame} of predictions containing an additional column with
  a primary key. For a multiclass model, a data frame is returned with one
   column of predictions for each class.
 }
@@ -21,7 +20,7 @@ A \code{data.frame} with out of sample/fold predictions for each
 Retrieve predictions from a CivisML prediction job
 }
 \details{
-The resulting file can also be downloaded directly using \code{download_civis} (see examples).
+Predictions can also be downloaded as a \code{csv} directly using \code{download_civis} (see examples).
 }
 \examples{
 \dontrun{

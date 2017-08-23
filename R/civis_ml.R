@@ -767,9 +767,8 @@ fetch_predict_results <- function(job_id, run_id) {
 #' @param x \code{civis_ml_prediction} object from \code{predict.civis_ml}
 #' @param ... arguments passed to \code{read.csv}
 #' @export
-#' @details The resulting file can also be downloaded directly using \code{download_civis} (see examples).
-#' @return A \code{data.frame} with out of sample/fold predictions for each
-#'  row of the training data, and containing an additional column with
+#' @details Predictions can also be downloaded as a \code{csv} directly using \code{download_civis} (see examples).
+#' @return A \code{data.frame} of predictions containing an additional column with
 #'  a primary key. For a multiclass model, a data frame is returned with one
 #'   column of predictions for each class.
 #'
