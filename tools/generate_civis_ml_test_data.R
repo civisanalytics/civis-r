@@ -9,11 +9,14 @@ class_algo <- c("sparse_logistic", "gradient_boosting_classifier",
 reg_algo <- paste0(c("sparse_linear", "sparse_ridge", "gradient_boosting",
                      "random_forest", "extra_trees"), "_regressor")
 
-do_class <- function(algo) {
-  future(civis_ml(civis_table("datascience.iris", "redshift-general"),
-           dependent_variable = "type",
-           model_type = algo))
+do_class <- function(algo, table =
+                       civis_table("datascience.iris", "redshift-general")) {
+  future(civis_ml(table, dependent_variable = "type", model_type = algo))
 }
+
+# two class
+tab <-  civis_table("datascience.iris", "redshift-general", sql_where = "type IN ('Setosa', 'Virginica')")
+binary_fut <- do_class("sparse_logistic", tab)
 
 data("ChickWeight")
 tmp <- tempfile()
@@ -25,7 +28,6 @@ do_regr <- function(algo, id) {
 }
 unlink(tmp)
 
-
 cat("submitting models...", fill = T)
 
 mclass_fut <- lapply(class_algo, do_class)
@@ -34,11 +36,14 @@ multi_output_fut <- future(civis_ml(civis_file(id), dependent_variable = c("weig
                                 model_type = "random_forest_regressor"))
 
 cat("waiting for models to complete...", fill = TRUE)
-mclass_list <- lapply(mclass_fut, value)
+mclass_list <- lapply(c(mclass_fut, binary_fut), value)
+
 cat("classification models completed", fill = TRUE)
 mreg_list <- lapply(mreg_fut, value)
+
 cat("regression models completed", fill = TRUE)
 multi_output <- value(multi_output_fut)
+
 cat("multi output completed", fill = TRUE)
 ms <- c(mclass_list, mreg_list, list(multi_output))
 

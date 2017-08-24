@@ -62,6 +62,26 @@ civis_ml_error <- function(civis_error_obj) {
             args = attr(civis_error_obj, "args"))
 }
 
+#' Get model metrics
+#' @param model Object from civis_ml
+#' @param name Name of the metric.
+#' @export
+#' @return The metric given by \code{metric_name}. If \code{NULL}, all metrics are returned.
+get_metric <- function(model, name = NULL) {
+  if (!is.null(name)) {
+    model$metrics$metrics[[name]]
+  } else {
+    model$metrics$metrics
+  }
+}
+
+get_model_data <- function(model, name = NULL) {
+  if (!is.null(name)) {
+    model$metrics$data[[name]]
+  } else {
+    model$metrics$data
+  }
+}
 
 model_url <- function(x) {
   paste0("https://platform.civisanalytics.com/#/models/", x$job$id)
@@ -75,4 +95,8 @@ model_type <- function(job) {
 
 model_workflow <- function(m) {
   m$job$arguments$MODEL
+}
+
+is_multiclass <- function(model) {
+  length(get_model_data(model, "class_names")) > 2
 }
