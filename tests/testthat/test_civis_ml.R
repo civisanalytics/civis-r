@@ -1,4 +1,5 @@
 library(mockery)
+context("civis_ml")
 
 test_that("jsonlite works", {
   # The tests below fail when run via R CMD check due with a
@@ -11,7 +12,6 @@ test_that("jsonlite works", {
 
 ################################################################################
 # Build
-context("civis_ml")
 
 test_that("calls scripts_post_custom", {
   fake_get_database_id <- mock(456, cycle = TRUE)

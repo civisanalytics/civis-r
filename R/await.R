@@ -92,13 +92,13 @@ await <- function(f, ...,
     status <- get_status(r$response)
 
     if (!is.null(.timeout)) {
-      running_time <- as.numeric(difftime(Sys.time(), start, units="secs"))
+      running_time <- as.numeric(difftime(Sys.time(), start, units = "secs"))
       if (running_time > .timeout) stop(civis_timeout_error(fname, list(...), status))
     }
 
     interval <- if (is.null(.interval)) interval_jitter(i) else .interval
     if (.verbose) {
-      pretty_time <- formatC(interval, digits=3, format = "fg")
+      pretty_time <- formatC(interval, digits = 3, format = "fg")
       msg <- paste0("Status: ", status, " @ ", Sys.time(),
                     ". Retry ", i, " in ", pretty_time, " seconds")
       message(msg)
@@ -139,7 +139,7 @@ await_all <- function(f, .x, ...,
     }
 
     if (!is.null(.timeout)) {
-      running_time <- as.numeric(difftime(Sys.time(), start, units="secs"))
+      running_time <- as.numeric(difftime(Sys.time(), start, units = "secs"))
       if (running_time > .timeout) {
         args <- c(list(.x), list(...))
         names(args)[1] <- names(formals(f))[1]
@@ -151,7 +151,7 @@ await_all <- function(f, .x, ...,
     interval <- if (is.null(.interval)) interval_jitter(i) else .interval
 
     if (.verbose) {
-      pretty_time <- formatC(interval, digits=3, format = "fg")
+      pretty_time <- formatC(interval, digits = 3, format = "fg")
       make_msg <- function(x) {
         msg <- paste0("Task: ", x, " Status: ", responses[[x]]$response[[.status_key]],
                       " @ ", Sys.time(),

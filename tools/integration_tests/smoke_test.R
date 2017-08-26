@@ -120,13 +120,13 @@ test_that("Reports are created", {
     {
       rmd <- c("```{r}", "summary(cars)", "```")
       html <- "<div><ul>A</ul><ul>B</ul><ul>C</ul></div>"
-      rmd_file <- tempfile(fileext=".Rmd")
+      rmd_file <- tempfile(fileext = ".Rmd")
       md_file <- gsub(".Rmd", ".md", basename(rmd_file))
-      html_file <- tempfile(fileext=".html")
+      html_file <- tempfile(fileext = ".html")
       write(rmd, rmd_file)
       write(html, html_file)
-      out1 <- publish_rmd(rmd_file=rmd_file, report_name="R Smoke Test")
-      out2 <- publish_html(html_file, report_name="R Smoke Test2")
+      out1 <- publish_rmd(rmd_file = rmd_file, report_name = "R Smoke Test")
+      out2 <- publish_html(html_file, report_name = "R Smoke Test2")
       expect_true(is.numeric(out1))
       expect_true(is.numeric(out2))
     }, finally = {
@@ -155,4 +155,4 @@ test_that("iris model works", {
 end <- proc.time()
 tot <- end - start
 
-cat("total time: ", tot[3], "s", fill=TRUE)
+cat("total time: ", tot[3], "s", fill = TRUE)

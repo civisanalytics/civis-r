@@ -1,5 +1,5 @@
 library(civis)
-context("Client Base")
+context("client base")
 
 ###############################################################################
 # Set up
@@ -45,11 +45,11 @@ test_that("print and str methods for civis_api", {
     `httr::VERB` = function(...) httr_200,
     `httr::RETRY` = function(...) httr_200,
     call_api("GET", path, path_params, query_params, body_params))
-  
+
   # print hides attributes
   expect_false(stringr::str_detect(capture_output(print(response)), "attribute"))
-  
-  # str shows attributes and structure 
+
+  # str shows attributes and structure
   resp_str <- capture_output(str(response, 1))
   expect_true(stringr::str_detect(resp_str, "attr"))
   expect_true(stringr::str_detect(resp_str, "List of 8"))
@@ -86,7 +86,7 @@ test_that("stop_for_status concatenates Platform specific errors", {
   error <- "Gateway Timeout \\(HTTP 504\\). hi from platform!"
   with_mock(
     # Mocks the response so it includes an error like those in Platform
-    `httr::content` = function(...) list(errorDescription="hi from platform!"),
+    `httr::content` = function(...) list(errorDescription = "hi from platform!"),
     expect_error(stop_for_status(httr_504), error)
   )
 })
@@ -98,14 +98,14 @@ test_that("204, 205 responses return NULL", {
       call_api("POST", path, path_params, query_params, body_params))
   expect_null(response$content)
   expect_is(response, "civis_api")
-  
+
   response <- with_mock(
       `civis::api_key` = function(...) "fake_key",
       `httr::RETRY` = function(...) httr_205,
       call_api("GET", path, path_params, query_params, body_params))
   expect_null(response$content)
   expect_is(response, "civis_api")
-  
+
 })
 
 test_that("failing to parse JSON content returns CivisClientError", {
@@ -114,16 +114,16 @@ test_that("failing to parse JSON content returns CivisClientError", {
     `civis::api_key` = function(...) "fake_key",
     `httr::VERB` = function(...) httr_200,
     `httr::RETRY` = function(...) httr_200,
-    
+
     # This simulates httr::content failing with an arbitrary error/message
     `httr::content` = function(...) stop("httr failed to parse response, throwing an error!"),
-    
+
     # Tests for the right error message (same as python client)
     expect_error(call_api("GET", path, path_params, query_params, body_params), error),
-    
+
     # Tests that the error is a CivisClientError (same as python client) that is try-catchable
     expect_true(
-      tryCatch(call_api("GET", path, path_params, query_params, body_params), 
+      tryCatch(call_api("GET", path, path_params, query_params, body_params),
              civis_api_error = function(c) TRUE,
              error = function(e) FALSE)
     ))

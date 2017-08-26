@@ -1,5 +1,5 @@
 library(civis)
-context("Pagination Helpers")
+context("pagination")
 
 test_that("calls fn the proper number of times", {
   n_calls <- 0

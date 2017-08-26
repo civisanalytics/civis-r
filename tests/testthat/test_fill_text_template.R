@@ -1,5 +1,5 @@
 library(civis)
-context("URL template format")
+context("fill_text_template")
 
 test_that("fill_text_template returns the same string with no subs", {
   url <- "/scripts"

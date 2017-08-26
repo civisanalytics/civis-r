@@ -12,7 +12,7 @@ reg_algo <- paste0(c("sparse_linear", "sparse_ridge", "gradient_boosting",
 
 str_detect_multiple <- function(string, pattern){
   mapply(function(string, pattern) stringr::str_detect(string, pattern),
-         string=string, pattern=pattern)
+         string = string, pattern = pattern)
 }
 
 
