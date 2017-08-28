@@ -1,5 +1,5 @@
 library(civis)
-context("Util functions")
+context("utils")
 
 
 db_list_response <- list(

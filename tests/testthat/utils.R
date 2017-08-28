@@ -1,3 +1,5 @@
+library(mockery)
+
 check_civis_ml_call <- function(workflow_fn, can_calibrate = TRUE) {
   fake_civis_ml <- mock(NULL)
 

@@ -1,7 +1,6 @@
-
 #' Print results from a Civis API call
 #'
-#' @param x A \code{civis_api} response. 
+#' @param x A \code{civis_api} response.
 #' @param ... Further arguments passed to \code{str}
 #'
 #' @examples
@@ -24,11 +23,11 @@ print.civis_api <- function(x, ...) {
 call_api <- function(verb, path, path_params, query_params, body_params) {
     url <- build_url(path, path_params)
     auth <- httr::authenticate(api_key(), "")
-    session <- utils::sessionInfo()
+
     # this works when call_api is used to download spec before package is installed
     pkg_version <- tryCatch(version(), error = function(e) "")
-    
-    user_str <- sprintf("civis-r/%s %s %s", as.character(pkg_version), 
+
+    user_str <- sprintf("civis-r/%s %s %s", as.character(pkg_version),
                         R.version$version.string, utils::sessionInfo()$platform)
     user_agent <- httr::user_agent(user_str)
 
@@ -43,24 +42,24 @@ call_api <- function(verb, path, path_params, query_params, body_params) {
 
     stop_for_status(response,
                     paste(response$request$method, response$request$url))
-    
-    if(response$status_code %in% c(204, 205)) {
+
+    if (response$status_code %in% c(204, 205)) {
       content <- list()
     } else {
       content <- try(httr::content(response), silent = TRUE)
     }
-    
+
     if (is.error(content)) {
       msg <- paste0("Unable to parse JSON from response")
       call <- build_function_name(verb, path)
       cond <- condition(c("civis_api_error", "civis_error", "error"), msg, call = call, response = response)
       stop(cond)
     }
-    
-    structure(content, 
+
+    structure(content,
               headers = httr::headers(response),
               response = response,
-              path = path, 
+              path = path,
               class = c("civis_api", class(content)))
 }
 

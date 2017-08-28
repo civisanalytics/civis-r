@@ -1,5 +1,5 @@
 library(civis)
-context("IO functions")
+context("io")
 
 # read_civis ------------------------------------------------------------------
 
@@ -9,7 +9,7 @@ test_that("read_civis returns a dataframe or error appropriately", {
   mock_df <- read.csv(con)
   close(con)
   rm(con)
-  mock_sql_job <- function(...) list(script_id=1337, run_id=007)
+  mock_sql_job <- function(...) list(script_id = 1337, run_id = 007)
 
   mock_GET_result <- function(...) {
 
@@ -24,22 +24,23 @@ test_that("read_civis returns a dataframe or error appropriately", {
     `civis::scripts_get_sql_runs` = function(...) list(state = "succeeded"),
     `civis::download_script_results` = mock_GET_result,
     `civis::stop_for_status` = function(...) return(TRUE),
-    `civis::scripts_post_sql_runs` = function(...) list(id=1001),
+    `civis::scripts_post_sql_runs` = function(...) list(id = 1001),
     `civis::files_get` = function(...) list(url = "whatever"),
     `httr::GET` = mock_GET_result,
-    expect_equal(mock_df, read_civis(x="lazy", database="jellyfish")),
-    expect_equal(mock_df, read_civis(dplyr::sql("SELECT * FROM lazy"), database = "jellyfish")),
+    expect_equal(mock_df, read_civis(x = "lazy", database = "jellyfish")),
+    expect_equal(mock_df, read_civis(dplyr::sql("SELECT * FROM lazy"),
+                                     database = "jellyfish")),
     expect_equal(mock_df, read_civis(123, using = read.csv))
   )
 })
 
 test_that("read_civis produces catchable error when query returns no rows", {
-  no_results_resp <- list(state="succeeded", output = list())
-  mock_sql_job <- function(...) list(script_id=561, run_id=43)
+  no_results_resp <- list(state = "succeeded", output = list())
+  mock_sql_job <- function(...) list(script_id = 561, run_id = 43)
   with_mock(
     `civis::start_scripted_sql_job` = mock_sql_job,
     `civis::scripts_get_sql_runs` = function(...) no_results_resp,
-    try_err <- try(read_civis(dplyr::sql("SELECT 0"), database="arrgh")),
+    try_err <- try(read_civis(dplyr::sql("SELECT 0"), database = "arrgh"), silent = TRUE),
     expect_true("empty_result_error" %in% class(attr(try_err, "condition")))
   )
 })
@@ -47,14 +48,14 @@ test_that("read_civis produces catchable error when query returns no rows", {
 # write_civis -----------------------------------------------------------------
 
 test_that("write_civis.character returns meta data if successful", {
-  mock_df <- cbind.data.frame(a=c(1,2), b=c("cape-cod", "clams"))
+  mock_df <- cbind.data.frame(a = c(1,2), b = c("cape-cod", "clams"))
   write("", file = "mockfile")
   res <- with_mock(
     `civis::start_import_job` = function(...) {
-      list(uploadUri="fake", id = 1)
+      list(uploadUri = "fake", id = 1)
     },
     `civis::tables_post_refresh` = function(id) "",
-    `httr::PUT` = function(...) list(status_code=200),
+    `httr::PUT` = function(...) list(status_code = 200),
     `civis::imports_post_files_runs` = function(...) list(""),
     `civis::imports_get_files_runs` = function(...) list(state = "succeeded"),
       write_civis("mockfile", "mock.table", "mockdb")
@@ -64,12 +65,12 @@ test_that("write_civis.character returns meta data if successful", {
 })
 
 test_that("write_civis.character fails if file doesn't exist", {
-  mock_df <- cbind.data.frame(a=c(1,2), b=c("cape-cod", "clams"))
+  mock_df <- cbind.data.frame(a = c(1,2), b = c("cape-cod", "clams"))
   err_msg <- with_mock(
     `civis::start_import_job` = function(...) {
-      list(uploadUri="fake")
+      list(uploadUri = "fake")
     },
-    `httr::PUT` = function(...) list(status_code=200),
+    `httr::PUT` = function(...) list(status_code = 200),
     `civis::imports_post_files_runs` = function(...) list(""),
     `civis::imports_get_files_runs` = function(...) list(state = "succeeded"),
     tryCatch(write_civis("mockfile", "mock.table", "mockdb"), error = function(e) e$message)
@@ -79,13 +80,13 @@ test_that("write_civis.character fails if file doesn't exist", {
 })
 
 test_that("write_civis.data.frame returns meta data if successful", {
-  mock_df <- cbind.data.frame(a=c(1,2), b=c("cape-cod", "clams"))
+  mock_df <- cbind.data.frame(a = c(1,2), b = c("cape-cod", "clams"))
   res <- with_mock(
     `civis::start_import_job` = function(...) {
-      list(uploadUri="fake", id = 1)
+      list(uploadUri = "fake", id = 1)
     },
     `civis::tables_post_refresh` = function(id) "",
-    `httr::PUT` = function(...) list(status_code=200),
+    `httr::PUT` = function(...) list(status_code = 200),
     `civis::imports_post_files_runs` = function(...) list(""),
     `civis::imports_get_files_runs` = function(...) list(state = "succeeded"),
     `civis::tables_list` = function(...) 1,
@@ -95,12 +96,12 @@ test_that("write_civis.data.frame returns meta data if successful", {
 })
 
 test_that("write_civis.character warns under failure", {
-  mock_df <- cbind.data.frame(a=c(1,2), b=c("cape-cod", "clams"))
+  mock_df <- cbind.data.frame(a = c(1,2), b = c("cape-cod", "clams"))
   with_mock(
     `civis::start_import_job` = function(...) {
-      list(uploadUri="fake", id=-999)
+      list(uploadUri = "fake", id = -999)
     },
-    `httr::PUT` = function(...) list(status_code=200),
+    `httr::PUT` = function(...) list(status_code = 200),
     `civis::imports_post_files_runs` = function(...) "",
     `civis::imports_get_files_runs` = function(...) list(state = "failed"),
     `httr::content` = function(...) "error",
@@ -134,7 +135,7 @@ test_that("write_civis_file.character returns a file id", {
 })
 
 test_that("write_civis_file.default returns a file id", {
-  mock_df <- data.frame(a=c(1,2), b=c("cape-cod", "clams"))
+  mock_df <- data.frame(a = c(1,2), b = c("cape-cod", "clams"))
   with_mock(
     `civis::files_post` = function(...) list(uploadFields = list("fakeurl.com"), id = 5),
     `httr::upload_file` = function(...) "the file",
@@ -166,8 +167,8 @@ test_that("query_civis returns object from await", {
   with_mock(
     `civis::get_database_id` = function(...) TRUE,
     `civis::default_credential` = function(...) TRUE,
-    `civis::queries_post` = function(...) list(id="query_id"),
-    `civis::queries_get` = function(...) list(state='succeeded'),
+    `civis::queries_post` = function(...) list(id = "query_id"),
+    `civis::queries_get` = function(...) list(state = 'succeeded'),
     expect_equal(get_status(query_civis("query", "database")), 'succeeded')
   )
 })
@@ -220,15 +221,15 @@ test_that("start_import_job parses table correctly", {
     `civis::default_credential` = function(...) "fake",
     `civis::imports_post_files` = function(...) {
       args <- list(...)
-      list(schema=args[[1]], table=args[[2]])
+      list(schema = args[[1]], table = args[[2]])
     },
     expect_equal(
-      start_import_job("mockdb", "mock.table", if_exists="append",
+      start_import_job("mockdb", "mock.table", if_exists = "append",
                        NULL, NULL, NULL, NULL),
-      list(schema="mock", table="table")
+      list(schema = "mock", table = "table")
     ),
     expect_error(
-      start_import_job("mockdb", "mock.table", if_exists="error",
+      start_import_job("mockdb", "mock.table", if_exists = "error",
                        NULL, NULL, NULL, NULL),
       error_msg
     )

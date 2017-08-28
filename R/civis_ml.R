@@ -533,10 +533,10 @@ run_model <- function(template_id, name, arguments, notifications, verbose) {
 
   job <- do.call(scripts_post_custom, script_args)
   run <- scripts_post_custom_runs(job$id)
-  r <- tryCatch(await(scripts_get_custom_runs, id = job$id, run_id = run$id,
-                      .verbose = verbose),
-                civis_error = function(e) stop(civis_ml_error(e)),
-                error = function(e) stop(e))
+  tryCatch(await(scripts_get_custom_runs, id = job$id, run_id = run$id,
+                    .verbose = verbose),
+          civis_error = function(e) stop(civis_ml_error(e)),
+          error = function(e) stop(e))
   list(job_id = job$id, run_id = run$id)
 }
 

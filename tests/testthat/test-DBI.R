@@ -14,8 +14,8 @@ mock_read_civis <- function(...) iris
 mock_tables_list <- function(...) c("table_1", "table_2")
 mock_get_table_id <- function(...) 2757016
 mock_tables_get <- function(...) {
-  ret <- list(columns = list(list(name="col1", sqlType="integer"),
-                             list(name="col2", sqlType="integer")))
+  ret <- list(columns = list(list(name = "col1", sqlType = "integer"),
+                             list(name = "col2", sqlType = "integer")))
   class(ret) <- c("civis_api", "list")
   return(ret)
 }

@@ -63,7 +63,7 @@ setMethod(
 #' @export
 setGeneric("dbIsReadOnly",
   def = function(dbObj, ...) standardGeneric("dbIsReadOnly"),
-  valueClass="logical")
+  valueClass = "logical")
 
 #' @rdname DBI
 #' @inheritParams DBI::dbIsValid

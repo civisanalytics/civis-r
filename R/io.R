@@ -66,7 +66,6 @@ read_civis.numeric <- function(x, using = readRDS, verbose = FALSE, ...) {
 
   if (serialized) {
     tryCatch({
-      tmp_file <- tempfile()
       raw <- httr::content(resp, as = "raw")
       con <- gzcon(rawConnection(raw))
       res <- using(con, ...)
@@ -74,7 +73,7 @@ read_civis.numeric <- function(x, using = readRDS, verbose = FALSE, ...) {
       if (exists("con")) close(con)
     })
   } else {
-    if(identical(using, readRDS)) {
+    if (identical(using, readRDS)) {
       msg <- "Content does not appear to be serialized. Maybe using = read.csv?"
       stop(msg)
     }
@@ -177,8 +176,8 @@ write_civis.data.frame <- function(x, tablename, database = NULL, if_exists="fai
                         max_errors = NULL, verbose = FALSE, ...) {
   db <- get_db(database)
   tryCatch({
-    filename <- tempfile(fileext=".csv")
-    utils::write.csv(x, filename, row.names=FALSE, na = "", ...)
+    filename <- tempfile(fileext = ".csv")
+    utils::write.csv(x, filename, row.names = FALSE, na = "", ...)
     write_civis.character(filename, tablename, database = db, if_exists,
                  distkey, sortkey1, sortkey2, max_errors,
                  verbose)
@@ -194,9 +193,9 @@ write_civis.character <- function(x, tablename, database = NULL, if_exists = "fa
                          max_errors = NULL, verbose = FALSE, ...) {
     db <- get_db(database)
     stopifnot(file.exists(x))
-    job_r <- start_import_job(database, tablename, if_exists, distkey,
+    job_r <- start_import_job(db, tablename, if_exists, distkey,
                               sortkey1, sortkey2, max_errors)
-    put_r <- httr::PUT(job_r[["uploadUri"]], body=httr::upload_file(x))
+    put_r <- httr::PUT(job_r[["uploadUri"]], body = httr::upload_file(x))
     if (put_r$status_code != 200) {
       msg <- httr::content(put_r)
       stop(msg)
@@ -255,7 +254,7 @@ write_civis_file <- function(x, ...) {
 #' @describeIn write_civis_file Serialize R object to Civis Platform (Files endpoint).
 write_civis_file.default <- function(x, name = 'r-object.rds', expires_at = NULL, ...) {
   args <- list()
-  if(!missing(expires_at)) args <- list(expires_at = expires_at)
+  if (!missing(expires_at)) args <- list(expires_at = expires_at)
 
   with_tempfile(function(tmp_file, ...) {
     saveRDS(x, file = tmp_file, ...)
@@ -269,7 +268,7 @@ write_civis_file.default <- function(x, name = 'r-object.rds', expires_at = NULL
 write_civis_file.character <- function(x, name, expires_at = NULL, ...) {
   stopifnot(file.exists(x))
   args <- list(name = name)
-  if(!missing(expires_at)) args <- c(args, list(expires_at = expires_at))
+  if (!missing(expires_at)) args <- c(args, list(expires_at = expires_at))
   u <- do.call(files_post, args)
 
   # uploadFields is the set of form parameters that we must pass to S3 in a post
@@ -373,11 +372,11 @@ download_civis.sql <- function(x, database = NULL, file,
   if (!split) {
     run <- start_scripted_sql_job(database = db, sql = sql_str,
                                   job_name = job_name, hidden = hidden)
-    r <- await(scripts_get_sql_runs,
-               id = run$script_id, run_id = run$run_id, .verbose = verbose)
-    resp <- download_script_results(script_id = run$script_id,
-                                    run_id = run$run_id, filename = file,
-                                    progress = progress)
+    await(scripts_get_sql_runs,
+          id = run$script_id, run_id = run$run_id, .verbose = verbose)
+    download_script_results(script_id = run$script_id,
+                            run_id = run$run_id, filename = file,
+                            progress = progress)
   } else {
     if (!requireNamespace("R.utils", quietly = TRUE)) {
       stop("Package R.utils is needed to unzip downloaded files. Please install it.",
@@ -489,16 +488,14 @@ civis_to_multifile_csv <- function(sql, database, job_name = NULL, hidden = TRUE
   }
 
   column_delimiter <- delimiter_name_from_string(delimiter)
-  db_id <- get_database_id(database)
-  cred_id <- default_credential()
   job_name <- ifelse(is.null(job_name), "civis Export", job_name)
   filename_prefix <- if (is.null(prefix)) "" else prefix
-  csv_settings = list(include_header=include_header,
-                      compression=compression,
-                      column_delimiter=column_delimiter,
-                      unquoted=unquoted,
-                      filename_prefix=filename_prefix,
-                      force_multifile=TRUE)
+  csv_settings = list(include_header = include_header,
+                      compression = compression,
+                      column_delimiter = column_delimiter,
+                      unquoted = unquoted,
+                      filename_prefix = filename_prefix,
+                      force_multifile = TRUE)
   script_run_ids <- start_scripted_sql_job(database, sql, job_name,
                                            hidden = hidden,
                                            csv_settings = csv_settings)
@@ -509,7 +506,7 @@ civis_to_multifile_csv <- function(sql, database, job_name = NULL, hidden = TRUE
   r <- switch(get_status(stat),
          "succeeded" = download_script_results(script_id, run_id),
          "failed" = stop(scripts_get_sql_runs(script_id, run_id)[["error"]]))
-  httr::content(r, as='parsed', type='application/json')
+  httr::content(r, as = 'parsed', type = 'application/json')
 }
 
 #' Run a Query on Platform
@@ -574,7 +571,7 @@ start_scripted_sql_job <- function(database, sql, job_name, hidden = TRUE,
   script_id <- do.call(scripts_post_sql, args)[["id"]]
   # Kick off job
   run_id <- scripts_post_sql_runs(script_id)[["id"]]
-  list(script_id=script_id, run_id=run_id)
+  list(script_id = script_id, run_id = run_id)
 }
 
 
@@ -601,10 +598,10 @@ start_import_job <- function(database, tablename, if_exists, distkey,
 
 # Get the name of delimiter platform expects from actual string
 delimiter_name_from_string <- function(s) {
-  delimiters <- list(","="comma", "|"="pipe", "\t"="tab")
+  delimiters <- list("," = "comma", "|" = "pipe", "\t" = "tab")
   delimiter <- delimiters[[s]]
   if (is.null(delimiter)) {
-    keys <- paste0("'", paste0(names(delimiters), collapse="', '"), "'")
+    keys <- paste0("'", paste0(names(delimiters), collapse = "', '"), "'")
     stop(paste("Delimiter must be one of", keys))
   }
   delimiter

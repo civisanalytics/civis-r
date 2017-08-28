@@ -1,11 +1,13 @@
 library(civis)
 library(future)
 
-cat("setting up models...", fill =T)
+cat("setting up models...", fill = TRUE)
 plan("multisession", workers = 20)
 
-class_algo <- c("sparse_logistic", "gradient_boosting_classifier", "random_forest_classifier", "extra_trees_classifier")
-reg_algo <- paste0(c("sparse_linear", "sparse_ridge", "gradient_boosting", "random_forest", "extra_trees"), "_regressor")
+class_algo <- c("sparse_logistic", "gradient_boosting_classifier",
+                "random_forest_classifier", "extra_trees_classifier")
+reg_algo <- paste0(c("sparse_linear", "sparse_ridge", "gradient_boosting",
+                     "random_forest", "extra_trees"), "_regressor")
 
 do_class <- function(algo) {
   future(civis_ml(civis_table("datascience.iris", "redshift-general"),

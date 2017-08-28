@@ -45,15 +45,15 @@ publish_rmd <- function(rmd_file, report_id=NULL, report_name=NULL,
   render_args[["input"]] <- rmd_file
 
   tryCatch({
-    temp_output <- tempfile(fileext=".html")
+    temp_output <- tempfile(fileext = ".html")
     if (is.null(render_args[["output_file"]])) {
       render_args[["output_file"]] <- temp_output
     }
     do.call(rmarkdown::render, render_args)
     publish_html(render_args[["output_file"]],
                  report_id, report_name,
-                 provide_api_key=provide_api_key,
-                 project_id=project_id)
+                 provide_api_key = provide_api_key,
+                 project_id = project_id)
   }, finally = {
     unlink(temp_output)
   })
@@ -84,11 +84,11 @@ publish_html <- function(html_file, report_id=NULL, report_name=NULL,
   html <- wrap_in_scrolling_div(html)
 
   if (is.null(report_id)) {
-    r <-  reports_post(code_body=html, name=report_name,
-                       provide_api_key=provide_api_key)
+    r <- reports_post(code_body = html, name = report_name,
+                      provide_api_key = provide_api_key)
   } else {
-    r <- reports_patch(report_id, code_body=html, name=report_name,
-                       provide_api_key=provide_api_key)
+    r <- reports_patch(report_id, code_body = html, name = report_name,
+                       provide_api_key = provide_api_key)
   }
 
   report_id <- r[["id"]]
