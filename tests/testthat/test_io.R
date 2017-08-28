@@ -215,7 +215,6 @@ test_that("delimiter_name_from_string catches bad input", {
 })
 
 test_that("start_import_job parses table correctly", {
-  error_msg <- 'if_exists must be set to "fail", "truncate" or "append"'
   with_mock(
     `civis::get_database_id` = function(...) -999,
     `civis::default_credential` = function(...) "fake",
@@ -227,15 +226,26 @@ test_that("start_import_job parses table correctly", {
       start_import_job("mockdb", "mock.table", if_exists = "append",
                        NULL, NULL, NULL, NULL),
       list(schema = "mock", table = "table")
-    ),
+    )
+  )
+})
+
+test_that("start_import_job checks if_exists value", {
+  error_msg <- 'if_exists must be set to "fail", "truncate", "append", or "drop"'
+  with_mock(
+    `civis::get_database_id` = function(...) -999,
+    `civis::default_credential` = function(...) "fake",
+    `civis::imports_post_files` = function(...) {
+      args <- list(...)
+      list(schema=args[[1]], table=args[[2]])
+    },
     expect_error(
-      start_import_job("mockdb", "mock.table", if_exists = "error",
+      start_import_job("mockdb", "mock.table", if_exists="do nothing",
                        NULL, NULL, NULL, NULL),
       error_msg
     )
   )
 })
-
 
 test_that("download_script_results returns sensible errors", {
   error <- "Query produced no output. \\(script_id = 561, run_id = 43\\)"
