@@ -578,8 +578,8 @@ start_scripted_sql_job <- function(database, sql, job_name, hidden = TRUE,
 # Kick off a job to send data to the civis platform
 start_import_job <- function(database, tablename, if_exists, distkey,
                              sortkey1, sortkey2, max_errors) {
-  if (!if_exists %in% c("fail", "truncate", "append")) {
-    stop('if_exists must be set to "fail", "truncate" or "append"')
+  if (!if_exists %in% c("fail", "truncate", "append", "drop")) {
+    stop('if_exists must be set to "fail", "truncate", "append", or "drop"')
   }
 
   # Split tablename into schema and table
