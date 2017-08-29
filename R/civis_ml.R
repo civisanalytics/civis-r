@@ -464,6 +464,13 @@ create_and_run_model <- function(file_id = NULL,
     args[["CALIBRATION"]] <- calibration
   }
 
+  if (length(dependent_variable) > 1) {
+    mo_not_supported <- c("sparse_linear_regressor", "sparse_ridge_regressor",
+                          "gradient_boosting_regressor", "sparse_logistic", "gradient_boosting_classifier")
+    if (model_type %in% mo_not_supported) {
+      stop(paste0("Multi target models not supported with ", model_type))
+  }
+
   if (!is.null(oos_scores_table)) {
     args[["OOSTABLE"]] <- oos_scores_table
     args[["OOSDB"]] <- list(database = oos_scores_db_id)
