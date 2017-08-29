@@ -80,6 +80,7 @@ civis_ml_error <- function(civis_error_obj) {
 #'
 #' \code{"mad"}, \code{"rmse"}, \code{"r_squared"}, \code{"score_histogram"}, \code{"training_histogram"},
 #' \code{"y_yhat_plot"}, \code{"y_yhat_outlier_rows"}, \code{"oos_score_table"}
+#'
 get_metric <- function(model, name = NULL) {
   stopifnot(is_civis_ml(model))
   if (!is.null(name)) {

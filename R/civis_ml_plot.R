@@ -60,7 +60,7 @@ plot.civis_ml_regressor <- function(x, ...) {
     ggplot2::geom_tile() +
     ggplot2::scale_fill_gradient("Bin Size", low = "white", high = civisblue) +
     ggplot2::geom_abline(intercept = 0, slope = 1, color = civisyellow) +
-    ggplot2::ylab("Predictions") + ggplot2::xlab("Actuals") +
+    ggplot2::ylab("PREDICTIONS") + ggplot2::xlab("ACTUALS") +
     ggplot2::theme_classic()
 }
 
@@ -75,16 +75,17 @@ plot.civis_ml_classifier <- function(x, name =  NULL, ...) {
   if (is_multiclass(x)) {
     names <- get_model_data(x, "class_names")
     decile <- t(get_metric(x, "deciles"))
+    name_id <- if (!is.null(name)) which(names == name) else 1
   } else {
     names <- get_model_data(x, "target_columns")
     decile <- matrix(get_metric(x, "deciles"))
+    name_id <- 2
   }
   decile_df <- utils::stack(data.frame(decile))
   decile_df$decile <- rep(1:nrow(decile), times = ncol(decile))
   decile_df$names <- rep(names, each = nrow(decile))
 
-  # There is always 1 population incidence; but for multiclass output this is a vector.
-  incidence <- get_metric(x, "pop_incidence_true")[1]
+  incidence <- get_metric(x, "pop_incidence_true")[name_id]
 
   if (!is.null(name)) decile_df <- subset(decile_df, names == name)
 
