@@ -64,10 +64,24 @@ civis_ml_error <- function(civis_error_obj) {
 
 #' Get model metrics
 #' @param model Object from civis_ml
-#' @param name Name of the metric.
+#' @param name Name of the metric. If \code{NULL}, all metrics are returned. Possible metrics are listed in details.
 #' @export
-#' @return The metric given by \code{metric_name}. If \code{NULL}, all metrics are returned.
+#' @return The metric given by \code{metric_name}, or all metrics.
+#' @details The list of possible metrics provided by CivisML is:
+#'
+#' Classification:
+#'
+#' \code{"accuracy"}, \code{"confusion_matrix"}, \code{"p_correct"}, \code{"pop_incidence_true"},
+#' \code{"pop_incidence_pred"}, \code{"roc_auc"}, \code{"log_loss"}, \code{"brier_score"},
+#' \code{"roc_curve"}, \code{"calibration_curve"}, \code{"deciles"}, \code{"score_histogram"},
+#' \code{"training_histogram"}, \code{"oos_score_table"}.
+#'
+#' Regression:
+#'
+#' \code{"mad"}, \code{"rmse"}, \code{"r_squared"}, \code{"score_histogram"}, \code{"training_histogram"},
+#' \code{"y_yhat_plot"}, \code{"y_yhat_outlier_rows"}, \code{"oos_score_table"}
 get_metric <- function(model, name = NULL) {
+  stopifnot(is_civis_ml(model))
   if (!is.null(name)) {
     model$metrics$metrics[[name]]
   } else {

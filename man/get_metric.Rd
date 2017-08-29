@@ -9,11 +9,26 @@ get_metric(model, name = NULL)
 \arguments{
 \item{model}{Object from civis_ml}
 
-\item{name}{Name of the metric.}
+\item{name}{Name of the metric. If \code{NULL}, all metrics are returned. Possible metrics are listed in details.}
 }
 \value{
-The metric given by \code{metric_name}. If \code{NULL}, all metrics are returned.
+The metric given by \code{metric_name}, or all metrics.
 }
 \description{
 Get model metrics
+}
+\details{
+The list of possible metrics provided by CivisML is:
+
+Classification:
+
+\code{"accuracy"}, \code{"confusion_matrix"}, \code{"p_correct"}, \code{"pop_incidence_true"},
+\code{"pop_incidence_pred"}, \code{"roc_auc"}, \code{"log_loss"}, \code{"brier_score"},
+\code{"roc_curve"}, \code{"calibration_curve"}, \code{"deciles"}, \code{"score_histogram"},
+\code{"training_histogram"}, \code{"oos_score_table"}.
+
+Regression:
+
+\code{"mad"}, \code{"rmse"}, \code{"r_squared"}, \code{"score_histogram"}, \code{"training_histogram"},
+\code{"y_yhat_plot"}, \code{"y_yhat_outlier_rows"}, \code{"oos_score_table"}
 }

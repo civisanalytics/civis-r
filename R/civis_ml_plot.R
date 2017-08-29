@@ -3,6 +3,7 @@
 #' @param x civis_ml object
 #' @param name name of the class (for multiclass output)
 #' @param ... unused.
+#' @return A \code{ggplot2} plot object is returned invisibly.
 #' @export
 hist.civis_ml <- function(x, name = NULL, ...) {
   score_array <- get_metric(x, "score_histogram")
@@ -33,15 +34,23 @@ hist.civis_ml <- function(x, name = NULL, ...) {
     ggplot2::theme_classic()
 }
 
+#' Y-yhat plot for regression with civis_ml
+#' @param x \code{civis_ml} object
+#' @param ... unused
+#' @return A \code{ggplot2} plot object is returned invisibly.
 #' @export
 plot.civis_ml_regressor <- function(x, ...) {
   pl <- get_metric(x, "y_yhat_plot")
   if (is.null(pl)) stop("Plotting data not available.")
 
+  # values is a matrix (binned histogram) with y values along the rows, and yhat values on the columns.
+  # this matrix is transformed from wide to long for plotting with ggplot2.
   values <- data.frame(pl$values)
   df <- utils::stack(values)
   df$col_id <- as.numeric(df$ind)
   df$row_id <- rep(1:nrow(values), ncol(values))
+
+  # valid y and yhat values are created from their ranges and step sizes.
   y_vals <- round(seq(from = pl$y_range[1], to = pl$y_range[2], by = pl$y_step))
   yhat_vals <- round(seq(from = pl$yhat_range[1], to = pl$yhat_range[2], by = pl$yhat_step))
 
@@ -55,6 +64,11 @@ plot.civis_ml_regressor <- function(x, ...) {
     ggplot2::theme_classic()
 }
 
+#' Decile plot for classification with civis_ml
+#' @param x \code{civis_ml} object.
+#' @param name Name of the class in a multiclass model to plot.
+#' @param ... unused.
+#' @return A \code{ggplot2} plot object is returned invisibly.
 #' @export
 plot.civis_ml_classifier <- function(x, name =  NULL, ...) {
 

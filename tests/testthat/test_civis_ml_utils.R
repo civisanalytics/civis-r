@@ -60,6 +60,11 @@ test_that("get_metrics returns metrics", {
   expect_equal(get_metric(m, "mad"), m$metrics$metrics$mad)
 })
 
+test_that("get_metrics throws error if not model", {
+  msg <- "is_civis_ml\\(model\\) is not TRUE"
+  expect_error(get_metric("HIPPO_INA_STRING"), msg)
+})
+
 test_that("get_model_data returns model data", {
   for (m in model_list) {
     dat <- m$metrics$data

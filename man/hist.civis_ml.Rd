@@ -13,6 +13,9 @@
 
 \item{...}{unused.}
 }
+\value{
+A \code{ggplot2} plot object is returned invisibly.
+}
 \description{
 Plot a histogram of the predicted scores or probabilities for a CivisML object
 }
