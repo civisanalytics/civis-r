@@ -23,17 +23,18 @@ The first step of modeling with `civis_ml` is to specify the data source, which 
 
 ```{r, eval = FALSE}
 library(civis)
+
 civis_ml(df, ...)
 civis_ml("path/to/data.csv", ...)
 civis_ml(civis_table(table_name = "schema.table", database_name = "database"), ...)
 civis_ml(civis_file(1234), ...)
 ```
 
-The Brandable data is located in a Redshift table called `sample_project.premium_training_set`:
+The Brandable data is located in a Redshift table called `sample_project.premium_training_set`. 
 
 ```{r, eval  = FALSE}
-tab <- civis_table(table_name = "sample_project.premium_training_set", 
-                   database_name = "redshift-general")
+options(civis.default_db = "my_database")
+tab <- civis_table(table_name = "sample_project.premium_training_set")
 ```
 
 Note that `civis_table` only returns information on where to find the data for `civis_ml`, not the data itself. `civis_table` also takes two SQL statements that can be useful for limiting the rows used for training: `sql_where`, and `sql_limit`. 
@@ -59,10 +60,9 @@ Documentation on the meta parameters specific to each estimator are provided in 
 
 For the Brandable data, we use a `random_forest` classifier to predict the probability that a customer upgrades from free to premium services. For efficiency, we can also denote a `primary_key`, and a set of `excluded_columns` that are not included in the model:
 
-
 ```{r, eval = FALSE}
 library(civis)
-tab <- civis_table("sample_project.premium_training_set", "redshift-general")
+tab <- civis_table("sample_project.premium_training_set")
 m   <- civis_ml(tab, dependent_variable = "upgrade", 
                 model_type = "random_forest_classifier", 
                 primary_key = "brandable_user_id", 
@@ -80,7 +80,7 @@ CivisML takes care of metaparameter tuning by evaluating the performance of the 
 For the `random_forest_classifier` in the Brandable data, we specify a search grid over `max_depth` and `n_estimators`:
 
 ```{r, eval = FALSE}
-tab       <- civis_table("sample_project.premium_training_set", "redshift-general")
+tab       <- civis_table("sample_project.premium_training_set")
 cv_params <- list("max_depth" = c(2, 3, 5), 
                   "n_estimators" = c(50, 100, 500))
   
@@ -108,7 +108,7 @@ m
 ```{r run_model, eval=FALSE, echo=FALSE}
 # use this chunk to actually update the model if necessary
 library(civis)
-tab       <- civis_table("sample_project.premium_training_set", "redshift-general")
+tab       <- civis_table("sample_project.premium_training_set")
 cv_params <- list("max_depth" = c(2, 3, 5), 
                   "n_estimators" = c(50, 100, 500))
   
@@ -181,8 +181,7 @@ hist(m)
 CivisML can also be used to score models on hundreds of millions of rows, and distributed over many compute instances. Like many estimators in R, this is done through a `predict` method. The `newdata` argument of `predict` can take any data source supported in `civis_ml`. Here we use a table in Redshift containing all Brandable users, and output the result to another table in Redshift:
 
 ```{r, eval=FALSE}
-pred_tab <- civis_table(table_name = "sample_project.brandable_all_users",
-                        database_name = "redshift-general")
+pred_tab <- civis_table(table_name = "sample_project.brandable_all_users")
 pred_job <- predict(m, newdata = pred_tab, 
                     output_table = "sample_project.brandable_user_scores")
 ```
@@ -208,7 +207,7 @@ Note that if the table of predictions exceeds available memory, it may be helpfu
 download_civis(pred_job$model_info$output_file_ids, path = "my_predictions.csv")
 
 # download from Redshift 
-download_civis("sample_project.brandable_user_scores", "redshift-general")
+download_civis("sample_project.brandable_user_scores")
 ```
 
 ## Retrieving Existing models
