@@ -7,12 +7,12 @@
 get_metric(model, name = NULL)
 }
 \arguments{
-\item{model}{Object from civis_ml}
+\item{model}{Object from \code{\link{civis_ml}}}
 
 \item{name}{Name of the metric. If \code{NULL}, all metrics are returned. Possible metrics are listed in details.}
 }
 \value{
-The metric given by \code{metric_name}, or all metrics.
+The metric given by \code{name}, or all metrics.
 }
 \description{
 Get model metrics
