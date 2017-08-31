@@ -681,57 +681,6 @@ test_that("adds resources when n_jobs = 1", {
 })
 
 ###############################################################################
-# logs
-context("fetch_logs.civis_ml")
-
-log_response <- list(
-  list(
-    id = 1147128844,
-    createdAt = "2017-07-10T02:53:11.000Z",
-    message = "Script complete.",
-    level = "info"
-  ),
-  list(
-    id = 1147128841,
-    createdAt = "2017-07-10T02:53:11.000Z",
-    message = "Process used approximately 83.28 MiB of its 3188 limit",
-    level = "info"
-  )
-)
-
-test_that("calls scripts_list_custom_runs_logs", {
-  fake_scripts_list_custom_runs_logs <- mock(log_response)
-
-  with_mock(
-    `civis::scripts_list_custom_runs_logs` = fake_scripts_list_custom_runs_logs,
-
-    fetch_logs(fake_model)
-  )
-
-  expect_args(fake_scripts_list_custom_runs_logs, 1,
-              id = fake_model$job$id,
-              run_id = fake_model$run$id,
-              limit = 100)
-})
-
-test_that("formats the log messages", {
-  Sys.setenv("TZ" = "CST6CDT")
-  fake_scripts_list_custom_runs_logs <- mock(log_response)
-
-  with_mock(
-    `civis::scripts_list_custom_runs_logs` = fake_scripts_list_custom_runs_logs,
-
-    messages <- fetch_logs(fake_model)
-  )
-
-  expected_messages <- structure(c(
-    "2017-07-09 21:53:11 PM CDT Process used approximately 83.28 MiB of its 3188 limit",
-    "2017-07-09 21:53:11 PM CDT Script complete."),
-    class = "civis_logs")
-  expect_equal(messages, expected_messages)
-
-  Sys.unsetenv("TZ")
-})
 
 ################################################################################
 # fetch existing model

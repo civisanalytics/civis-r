@@ -127,32 +127,32 @@ test_that("verbose produces correct messages", {
 
 test_that("call_once returns list with element called", {
   f <- function(id) return(list(state = "succeeded"))
-  expect_true(call_once(f, .id = 1)$called)
+  expect_true(call_once(f, .id = 1, fname = "f")$called)
 
   f <- function(id) return(list(state = "partying instead"))
-  expect_false(call_once(f, .id = 1)$called)
+  expect_false(call_once(f, .id = 1, fname = "f")$called)
 })
 
 test_that("if called, get_status(r$response) returns status", {
   f <- function(id) return(list(state = "succeeded"))
-  expect_equal(get_status(call_once(f, .id = 1)$response), "succeeded")
+  expect_equal(get_status(call_once(f, .id = 1, fname = "f")$response), "succeeded")
 })
 
 test_that("call_once captures completed_states and status_keys", {
   f <- function(id) return(list(party_status = "at the party"))
   expect_true(call_once(f, .id = 1, .success_states = "at the party",
-                        .status_key = "party_status")$called)
+                        .status_key = "party_status",  fname = "f")$called)
 })
 
 test_that("safe_call_once catches civis_await_error", {
   f <- function(x) list(state = "succeeded", x = x)
-  r <- safe_call_once(f, x = 1)
+  r <- safe_call_once(f, x = 1, fname = "f")
   expect_true(r$called)
   expect_equal(r$response$x, 1)
   expect_equal(get_status(r$response), "succeeded")
 
   f <- function(x) list(state = "failed", error = "platform error")
-  e <- safe_call_once(f, x = 1)
+  e <- safe_call_once(f, x = 1, fname = "f")
   expect_is(e, c("civis_await_error", "civis_error", "error"))
 })
 

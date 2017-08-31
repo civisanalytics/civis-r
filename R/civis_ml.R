@@ -860,7 +860,6 @@ civis_file_manifest <- function(file_id) {
   structure(file_id, class = "civis_file_manifest")
 }
 
-#' @rdname fetch_logs
 #' @export
 fetch_logs.civis_ml <- function(object, limit = 100, ...) {
   logs <- scripts_list_custom_runs_logs(object$job$id, object$run$id,
