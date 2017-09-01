@@ -3,7 +3,7 @@ context("civis_ml_plot")
 
 model_list    <- readRDS("data/civis_ml_models.rds")
 plotable_mods <- model_list[1:10]
-err_mod       <- model_list[[11]]
+err_mod       <- model_list[11:12]
 is_classif    <- sapply(plotable_mods, function(m) is(m, "civis_ml_classifier"))
 
 test_that("decile plot for classification is produced", {
@@ -26,11 +26,17 @@ ps <- lapply(plotable_mods[!is_classif], function(m) plot(m))
 
 test_that("multi output plot throws error for hist and plot", {
   msg <- "Plotting data not available."
-  e <- tryCatch(plot(err_mod), error = function(e) e)
+  e <- tryCatch(plot(err_mod[[1]]), error = function(e) e)
+  expect_equal(e$message, msg)
+
+  e <- tryCatch(plot(err_mod[[2]]), error = function(e) e)
   expect_equal(e$message, msg)
 
   msg <- "Histogram data not available."
-  e <- tryCatch(hist(err_mod), error = function(e) e)
+  e <- tryCatch(hist(err_mod[[1]]), error = function(e) e)
+  expect_equal(e$message, msg)
+
+  e <- tryCatch(hist(err_mod[[2]]), error = function(e) e)
   expect_equal(e$message, msg)
 })
 

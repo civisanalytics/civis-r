@@ -7,12 +7,12 @@
 #' @export
 hist.civis_ml <- function(x, name = NULL, ...) {
   score_array <- get_metric(x, "score_histogram")
+  if (is.null(score_array)) stop("Histogram data not available.")
   if (is_multiclass(x)) {
     names <- get_model_data(x, "class_names")
   } else {
     names <- get_model_data(x, "target_columns")
   }
-  if (is.null(score_array)) stop("Histogram data not available.")
   if (is.array(score_array)) {
     # 3d array to list of 2d arrays
     score_array <- purrr::array_tree(score_array, margin = 1)
@@ -72,6 +72,7 @@ plot.civis_ml_regressor <- function(x, ...) {
 #' @export
 plot.civis_ml_classifier <- function(x, name =  NULL, ...) {
 
+  if (is_multitarget(x)) stop("Plotting data not available.")
   if (is_multiclass(x)) {
     names <- get_model_data(x, "class_names")
     decile <- t(get_metric(x, "deciles"))
