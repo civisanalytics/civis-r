@@ -86,7 +86,7 @@
 #'  \code{random_forest_regressor}	\tab \code{\link{civis_ml_random_forest_regressor}} \tab regression \tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html}{RandomForestRegressor} \tab \code{n_estimators=500} \cr
 #'  \code{extra_trees_regressor} \tab \code{\link{civis_ml_extra_trees_regressor}} \tab regression	\tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html}{ExtraTreesRegressor} \tab \code{n_estimators=500} \cr
 #' }
-#' Model names can be easily accessed using the global variables \code{CIVIS_ML_REGRESSOR} and \code{CIVIS_ML_CLASSIFIER}.
+#' Model names can be easily accessed using the global variables \code{CIVIS_ML_REGRESSORS} and \code{CIVIS_ML_CLASSIFIERS}.
 #'
 #'
 #' @section Data Sources:
@@ -464,8 +464,7 @@ create_and_run_model <- function(file_id = NULL,
   if (length(dependent_variable) > 1) {
     mo_not_supported <- c("sparse_linear_regressor", "sparse_ridge_regressor",
                           "gradient_boosting_regressor",
-                          "sparse_logistic", "gradient_boosting_classifier",
-                          "random_forest_classifier")
+                          "sparse_logistic", "gradient_boosting_classifier")
     if (model_type %in% mo_not_supported) {
       stop(paste0("Multioutput is not supported for "), model_type)
     }

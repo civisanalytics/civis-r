@@ -165,7 +165,7 @@ Specific workflows can also be called directly using the R workflow functions.
  \code{random_forest_regressor}	\tab \code{\link{civis_ml_random_forest_regressor}} \tab regression \tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html}{RandomForestRegressor} \tab \code{n_estimators=500} \cr
  \code{extra_trees_regressor} \tab \code{\link{civis_ml_extra_trees_regressor}} \tab regression	\tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html}{ExtraTreesRegressor} \tab \code{n_estimators=500} \cr
 }
-Model names can be easily accessed using the global variables \code{CIVIS_ML_REGRESSOR} and \code{CIVIS_ML_CLASSIFIER}.
+Model names can be easily accessed using the global variables \code{CIVIS_ML_REGRESSORS} and \code{CIVIS_ML_CLASSIFIERS}.
 }
 
 \section{Data Sources}{

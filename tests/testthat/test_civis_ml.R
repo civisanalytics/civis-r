@@ -280,7 +280,7 @@ test_that("raises error if multioutput not supported", {
   fake_get_database_id <- mock(456, cycle = TRUE)
   fake_write_civis_file <- mock(123, cycle = TRUE)
   mo_not_supported <- c("sparse_linear_regressor", "sparse_ridge_regressor", "gradient_boosting_regressor",
-    "sparse_logistic", "gradient_boosting_classifier", "random_forest_classifier")
+    "sparse_logistic", "gradient_boosting_classifier")
 
   for (mtype in mo_not_supported) {
     with_mock(

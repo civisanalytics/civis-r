@@ -2,13 +2,13 @@
 
 #' List of civis_ml regression models.
 #' @export
-CIVIS_ML_REGRESSOR <- c("sparse_linear_regressor", "sparse_ridge_regressor",
+CIVIS_ML_REGRESSORS <- c("sparse_linear_regressor", "sparse_ridge_regressor",
                         "gradient_boosting_regressor","random_forest_regressor",
                         "extra_trees_regressor")
 
 #' List of classification models.
 #' @export
-CIVIS_ML_CLASSIFIER <- c("sparse_logistic", "gradient_boosting_classifier",
+CIVIS_ML_CLASSIFIERS <- c("sparse_logistic", "gradient_boosting_classifier",
                          "random_forest_classifier",
                          "extra_trees_classifier")
 
