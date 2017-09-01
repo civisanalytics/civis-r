@@ -276,6 +276,27 @@ test_that("raises error on invalid calibration", {
   )
 })
 
+test_that("raises error if multioutput not supported", {
+  fake_get_database_id <- mock(456, cycle = TRUE)
+  fake_write_civis_file <- mock(123, cycle = TRUE)
+  mo_not_supported <- c("sparse_linear_regressor", "sparse_ridge_regressor", "gradient_boosting_regressor",
+    "sparse_logistic", "gradient_boosting_classifier")
+
+  for (mtype in mo_not_supported) {
+    with_mock(
+      `civis::get_database_id` = fake_get_database_id,
+      `civis::write_civis_file` = fake_write_civis_file,
+
+      expect_error(civis_ml(x = "fake_temp_path",
+                            model_type = mtype,
+                            dependent_variable = c("target", "target_2"),
+                            primary_key = "pk",
+                            calibration = "fake"),
+                   paste0("Multioutput is not supported for ", mtype))
+    )
+  }
+})
+
 ################################################################################
 # Predict
 context("predict.civis_ml")
@@ -616,7 +637,8 @@ test_that("space separates target_column", {
     `civis::run_model` = fake_run_model,
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
 
-    create_and_run_model(file_id = 132, dependent_variable = c("c1", "c2"))
+    create_and_run_model(file_id = 132, dependent_variable = c("c1", "c2"),
+                         model_type = "random_forest_regressor")
   )
 
   run_args <- mock_args(fake_run_model)[[1]]
