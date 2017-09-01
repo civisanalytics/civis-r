@@ -65,7 +65,7 @@ as the minimum number. If a float, then \code{min_samples_split} is a
 percentage and \code{ceiling(min_samples_split * n_samples)} are the
 minimum number of samples for each split.}
 
-\item{min_samples_leaf}{The minumum number of samples required to be in
+\item{min_samples_leaf}{The minimum number of samples required to be in
 a leaf node. If an integer, then consider \code{min_samples_leaf} as the
 minimum number. If a float, the \code{min_samples_leaf} is a percentage
 and \code{ceiling(min_samples_leaf * n_samples)} are the minimum number
@@ -76,7 +76,7 @@ total of weights required to be at a leaf node.}
 
 \item{max_depth}{Maximum depth of the individual regression estimators. The
 maximum depth limits the number of nodes in the tree. Tune this parameter
-for best performace. The best value depends on the interaction of the
+for best performance. The best value depends on the interaction of the
 input variables.}
 
 \item{min_impurity_split}{Threshold for early stopping in tree growth. A node
