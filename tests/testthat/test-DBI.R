@@ -36,8 +36,10 @@ with_mock(
   )),
   DBItest::test_driver(),
   DBItest::test_connection(c(
-    "disconnect_invalid_connection"  # the test doesn't actually invalidate the connection
+    "disconnect_invalid_connection",  # the test doesn't actually invalidate the connection
+    "cannot_forget_disconnect"
   ))
+
   # DBItest::test_result(),
   # DBItest::test_sql(),
   # DBItest::test_meta(),

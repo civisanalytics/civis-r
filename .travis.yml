@@ -5,3 +5,4 @@ sudo: false
 r:
     - oldrel
     - release
+    - devel
