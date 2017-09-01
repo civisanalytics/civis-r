@@ -32,7 +32,7 @@ explicitly indicate the data have no primary_key.}
 considered ineligible to be independent variables.}
 
 \item{alpha}{The regularization strength, must be a vector of floats of
-lenght n_targets or a single float. Larger values specify stronger
+length n_targets or a single float. Larger values specify stronger
 regularization.}
 
 \item{fit_intercept}{Should an intercept term be included in the model. If
