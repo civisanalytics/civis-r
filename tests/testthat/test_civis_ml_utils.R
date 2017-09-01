@@ -8,7 +8,8 @@ job_ids <- lapply(model_list, function(x) purrr::pluck(x, "job", "id"))
 run_ids <- lapply(model_list, function(x) purrr::pluck(x, "run", "id"))
 id_regex <- purrr:::map2(paste0("(", job_ids, ")*"), paste0("(", run_ids, ")"), paste)
 class_algo <- c("sparse_logistic", "gradient_boosting_classifier",
-                "random_forest_classifier", "extra_trees_classifier", "sparse_logistic")
+                "random_forest_classifier", "extra_trees_classifier",
+                "sparse_logistic", "random_forest_classifier")
 reg_algo <- paste0(c("sparse_linear", "sparse_ridge", "gradient_boosting",
                      "random_forest", "extra_trees", "random_forest"), "_regressor")
 
@@ -26,9 +27,6 @@ test_that("print.civis_ml_classifier works", {
 
   third_row <- lapply(class_msg, purrr::pluck, 3)
   expect_true(all(str_detect_multiple(third_row, id_regex[is_classif])))
-
-  expect_true(all(stringr::str_detect(class_msg, "(AUC)*(Prop Correct)")))
-  expect_true(all(stringr::str_detect(class_msg, c("(Setosa)*(Versicolour)*(Virginica)"))))
 })
 
 test_that("print.civis_ml_regressor works", {
@@ -78,4 +76,12 @@ test_that("is_multiclass works", {
   expect_true(is_multiclass(model_list[[1]]))
   expect_false(is_multiclass(model_list[[5]]))
   expect_false(is_multiclass(model_list[[6]]))
+})
+
+test_that("is_multitarget works", {
+  expect_true(is_multitarget(model_list[[11]]))
+  expect_true(is_multitarget(model_list[[12]]))
+  expect_false(is_multitarget(model_list[[2]]))
+  expect_true(is_multitarget(model_list[[12]]) &
+                all(is_multiclass(model_list[[12]])))
 })

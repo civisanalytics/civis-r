@@ -13,31 +13,65 @@ CIVIS_ML_CLASSIFIERS <- c("sparse_logistic", "gradient_boosting_classifier",
                          "extra_trees_classifier")
 
 #' @export
-print.civis_ml_classifier <- function(x, ...) {
-  class_names <- c(x$model_info$data$class_names)
-  tab <- with(x$metrics$metrics, t(cbind(roc_auc, p_correct)))
-  colnames(tab) <- class_names
-  rownames(tab) <- c("AUC", "Prop Correct")
-  print.civis_ml(x, tab = tab, ...)
-}
+print.civis_ml_classifier <- function(x, digits = 4, ...) {
+  class_names <- get_model_data(x, "class_names")
+  aucs <- get_metric(x, "roc_auc")
+  p_cor <- get_metric(x, "p_correct")
+  dv_names <- get_model_data(x, "target_columns")
 
-#' @export
-print.civis_ml_regressor <- function(x, ...) {
-  dv_names <- x$model_info$data$target_columns
-  tab <- with(x$metrics$metrics, t(cbind(r_squared, rmse, mad)))
-  colnames(tab) <- dv_names
-  rownames(tab) <- c( "R-squared", "RMSE", "MAD")
-  print.civis_ml(x, tab = tab, ...)
-}
-
-print.civis_ml <- function(x, tab, digits = 4, ...) {
   wfl <- model_workflow(x)
   url <- model_url(x)
   run_id <- x$run$id
   job_id <- x$job$id
+
   cat("<CivisML ", wfl, ">\n", sep = "")
   cat(url, fill = TRUE)
   cat("Job id: ", job_id, " Run id: ", run_id, "\n", fill = TRUE)
+
+  if (any(is_multiclass(x)) & is_multitarget(x)) {
+    tabs <- mapply(class_metric_table, p_cor, class_names, aucs)
+  } else if (is_multiclass(x)) {
+      tabs <- list(class_metric_table(p_cor, class_names, aucs))
+  } else {
+    cat("AUC: ", signif(aucs, digits = digits), fill = TRUE)
+    tabs <- list(class_metric_table(p_cor, class_names))
+  }
+
+  for (i in seq_along(tabs)) {
+    cat(paste0(dv_names[i], ":"), fill = TRUE)
+    print(signif(tabs[[i]], digits = digits))
+    cat("\n")
+  }
+  invisible(x)
+}
+
+class_metric_table <- function(p_correct = NULL, names, auc = NULL) {
+  if (!is.null(auc)) {
+    tab <- t(cbind(auc, p_correct))
+    rownames(tab) <- c("AUC", "Prop Correct")
+  } else {
+    tab <- t(as.matrix(p_correct))
+    rownames(tab) <- c("Prop Correct")
+  }
+  colnames(tab) <- names
+  tab
+}
+
+#' @export
+print.civis_ml_regressor <- function(x, digits = 4, ...) {
+  wfl <- model_workflow(x)
+  url <- model_url(x)
+  run_id <- x$run$id
+  job_id <- x$job$id
+
+  cat("<CivisML ", wfl, ">\n", sep = "")
+  cat(url, fill = TRUE)
+  cat("Job id: ", job_id, " Run id: ", run_id, "\n", fill = TRUE)
+
+  dv_names <- x$model_info$data$target_columns
+  tab <- with(x$metrics$metrics, t(cbind(r_squared, rmse, mad)))
+  colnames(tab) <- dv_names
+  rownames(tab) <- c( "R-squared", "RMSE", "MAD")
   print(signif(tab, digits = digits))
   invisible(x)
 }
@@ -125,5 +159,10 @@ model_workflow <- function(m) {
 }
 
 is_multiclass <- function(model) {
-  length(get_model_data(model, "class_names")) > 2
+  (get_model_data(model, "n_unique_targets") > 2) &
+    is(model, "civis_ml_classifier")
+}
+
+is_multitarget <- function(model) {
+  length(get_model_data(model, "n_unique_targets")) > 1
 }
