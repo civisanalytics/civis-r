@@ -4,7 +4,7 @@ BASE_RESOURCES_V1 = c("credentials", "databases", "files", "imports",
                       "jobs", "models", "predictions", "projects",
                       "queries", "reports", "scripts", "tables", "users")
 
-#' Generate a cilent
+#' Generate a client
 #' @param spec usually from \code{get_spec}
 #' @param IGNORE endpoints to ignore (e.g. "apps")
 #' @return A string containing one documented function for each verb at each endpoint.

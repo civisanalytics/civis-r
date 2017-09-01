@@ -2,7 +2,7 @@
 % Please edit documentation in R/generate_client.R
 \name{generate_client}
 \alias{generate_client}
-\title{Generate a cilent}
+\title{Generate a client}
 \usage{
 generate_client(spec, IGNORE)
 }
@@ -15,5 +15,5 @@ generate_client(spec, IGNORE)
 A string containing one documented function for each verb at each endpoint.
 }
 \description{
-Generate a cilent
+Generate a client
 }

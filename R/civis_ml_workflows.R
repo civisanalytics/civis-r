@@ -219,7 +219,7 @@ civis_ml_sparse_linear_regressor <- function(x,
 #' @inheritParams civis_ml
 #' @inheritParams civis_ml_sparse_linear_regressor
 #' @param alpha The regularization strength, must be a vector of floats of
-#'   lenght n_targets or a single float. Larger values specify stronger
+#'   length n_targets or a single float. Larger values specify stronger
 #'   regularization.
 #' @param max_iter Maximum number of iterations for conjugate gradient solver.
 #'   For \code{sparse_cg} and \code{lsqr} solvers, the default value is
@@ -337,7 +337,7 @@ civis_ml_sparse_ridge_regressor <- function(x,
 #'   as the minimum number. If a float, then \code{min_samples_split} is a
 #'   percentage and \code{ceiling(min_samples_split * n_samples)} are the
 #'   minimum number of samples for each split.
-#' @param min_samples_leaf The minumum number of samples required to be in
+#' @param min_samples_leaf The minimum number of samples required to be in
 #'   a leaf node. If an integer, then consider \code{min_samples_leaf} as the
 #'   minimum number. If a float, the \code{min_samples_leaf} is a percentage
 #'   and \code{ceiling(min_samples_leaf * n_samples)} are the minimum number
@@ -346,7 +346,7 @@ civis_ml_sparse_ridge_regressor <- function(x,
 #'   total of weights required to be at a leaf node.
 #' @param max_depth Maximum depth of the individual regression estimators. The
 #'   maximum depth limits the number of nodes in the tree. Tune this parameter
-#'   for best performace. The best value depends on the interaction of the
+#'   for best performance. The best value depends on the interaction of the
 #'   input variables.
 #' @param min_impurity_split Threshold for early stopping in tree growth. A node
 #'   will split if its impurity is above the threshold, otherwise it is a leaf.
