@@ -57,7 +57,7 @@
 #' reach a success state within the time limit.
 #'
 #' These errors can be caught using \code{try} or \code{tryCatch}.
-#' Useful debugging information can be returned using \code{\link{get_error}}.
+#' Useful debugging information can be returned using \code{\link{get_error}} and \code{\link{fetch_logs}}.
 #'
 #' The set of possible states for jobs on Civis platform are:
 #' \code{"succeeded"}, \code{"success"}, \code{"failed"}, \code{"queued"}, \code{"running"},
@@ -72,7 +72,7 @@
 #' \item{11-19: 5-10s}
 #' \item{20-29: 10s - 1m}
 #' }
-#' @seealso \code{\link{get_status}, \link{get_error}}
+#' @seealso \code{\link{get_status}, \link{get_error}, \link{fetch_logs}}
 await <- function(f, ...,
                   .status_key = "state",
                   .success_states = c("succeeded", "success"),
@@ -187,8 +187,10 @@ call_once <- function(f, ..., .id = NULL, .status_key = "state",
     error <- response$error %||% response$exception
     stop(civis_await_error(fname, args, status = status, error = error))
   }
-  attr(response, "status") <- status
-
+  response <- structure(response,
+                        status = status,
+                        fname = fname,
+                        args = list(...))
   return(list(response = response, called = called))
 }
 

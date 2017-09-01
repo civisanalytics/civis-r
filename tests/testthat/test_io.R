@@ -237,10 +237,10 @@ test_that("start_import_job checks if_exists value", {
     `civis::default_credential` = function(...) "fake",
     `civis::imports_post_files` = function(...) {
       args <- list(...)
-      list(schema=args[[1]], table=args[[2]])
+      list(schema = args[[1]], table = args[[2]])
     },
     expect_error(
-      start_import_job("mockdb", "mock.table", if_exists="do nothing",
+      start_import_job("mockdb", "mock.table", if_exists = "do nothing",
                        NULL, NULL, NULL, NULL),
       error_msg
     )

@@ -64,7 +64,7 @@ Likewise, \code{await_all} throws a \code{civis_timeout_error} if all jobs fail 
 reach a success state within the time limit.
 
 These errors can be caught using \code{try} or \code{tryCatch}.
-Useful debugging information can be returned using \code{\link{get_error}}.
+Useful debugging information can be returned using \code{\link{get_error}} and \code{\link{fetch_logs}}.
 
 The set of possible states for jobs on Civis platform are:
 \code{"succeeded"}, \code{"success"}, \code{"failed"}, \code{"queued"}, \code{"running"},
@@ -102,5 +102,5 @@ Approximate intervals for a given number of retries are as follows:
 }
 }
 \seealso{
-\code{\link{get_status}, \link{get_error}}
+\code{\link{get_status}, \link{get_error}, \link{fetch_logs}}
 }
