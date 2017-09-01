@@ -86,6 +86,8 @@
 #'  \code{random_forest_regressor}	\tab \code{\link{civis_ml_random_forest_regressor}} \tab regression \tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html}{RandomForestRegressor} \tab \code{n_estimators=500} \cr
 #'  \code{extra_trees_regressor} \tab \code{\link{civis_ml_extra_trees_regressor}} \tab regression	\tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html}{ExtraTreesRegressor} \tab \code{n_estimators=500} \cr
 #' }
+#' Model names can be easily accessed using the global variables \code{CIVIS_ML_REGRESSORS} and \code{CIVIS_ML_CLASSIFIERS}.
+#'
 #'
 #' @section Data Sources:
 #'
@@ -187,7 +189,9 @@
 #'   \code{\link{civis_file}}, \code{\link{civis_table}}, and
 #'   \code{\link{civis_file_manifest}} for specifying data sources.
 #'
-#'   \code{\link{fetch_logs}} for retrieving logs for a model build,
+#'   \code{\link{get_metric}} to access model validation metrics.
+#'
+#'   \code{\link{fetch_logs}} for retrieving logs for a (failed) model build,
 #'   \code{\link{fetch_oos_scores}} for retrieving the out of sample (fold) scores for each training observation, and
 #'   \code{\link{fetch_predictions}} for retrieving the predictions from a prediction job.
 NULL
@@ -456,6 +460,15 @@ create_and_run_model <- function(file_id = NULL,
     CIVIS_FILE_ID = unclass(file_id),
     DEBUG = verbose
   )
+
+  if (length(dependent_variable) > 1) {
+    mo_not_supported <- c("sparse_linear_regressor", "sparse_ridge_regressor",
+                          "gradient_boosting_regressor",
+                          "sparse_logistic", "gradient_boosting_classifier")
+    if (model_type %in% mo_not_supported) {
+      stop(paste0("Multioutput is not supported for "), model_type)
+    }
+  }
 
   if (!is.null(calibration)) {
     if (!(calibration %in% c("sigmoid", "isotonic"))) {
@@ -902,3 +915,4 @@ fetch_oos_scores <- function(model, ...) {
 is_civis_ml <- function(object) {
   is(object, "civis_ml")
 }
+

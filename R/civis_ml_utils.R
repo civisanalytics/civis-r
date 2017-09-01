@@ -1,5 +1,17 @@
 # print, summary, plot -----
 
+#' List of civis_ml regression models.
+#' @export
+CIVIS_ML_REGRESSORS <- c("sparse_linear_regressor", "sparse_ridge_regressor",
+                        "gradient_boosting_regressor","random_forest_regressor",
+                        "extra_trees_regressor")
+
+#' List of classification models.
+#' @export
+CIVIS_ML_CLASSIFIERS <- c("sparse_logistic", "gradient_boosting_classifier",
+                         "random_forest_classifier",
+                         "extra_trees_classifier")
+
 #' @export
 print.civis_ml_classifier <- function(x, ...) {
   class_names <- c(x$model_info$data$class_names)
@@ -63,10 +75,10 @@ civis_ml_error <- function(civis_error_obj) {
 }
 
 #' Get model metrics
-#' @param model Object from civis_ml
+#' @param model Object from \code{\link{civis_ml}}
 #' @param name Name of the metric. If \code{NULL}, all metrics are returned. Possible metrics are listed in details.
 #' @export
-#' @return The metric given by \code{metric_name}, or all metrics.
+#' @return The metric given by \code{name}, or all metrics.
 #' @details The list of possible metrics provided by CivisML is:
 #'
 #' Classification:
