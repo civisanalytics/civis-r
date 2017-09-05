@@ -1,0 +1,4 @@
+#!/bin/bash
+
+Rscript tools/run_generate_client.R
+

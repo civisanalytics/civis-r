@@ -1,5 +1,39 @@
 # Changelog
 
+## [1.0.0] - 2017-09-08
+
+### Added 
+
+#### CivisML
+
+- Print methods for `civis_ml` objects have been improved.
+- `fetch_predictions` is provided to read results from a prediction job into memory from S3.
+- Plot method for `civis_ml_regressor` shows y-yhat binned histogram using ggplot2.
+- Plot method for `civis_ml_classifier` shows the decile plot using ggplot2.
+- Hist methods for `civis_ml` objects provide histograms of the OOS scores using ggplot2.
+- A list of estimator names is provided in `CIVIS_ML_CLASSIFIERS` and `CIVIS_ML_REGRESSORS`.
+
+#### Programming
+
+- `fetch_logs` now works for any `civis_api` object with a valid `*_runs_logs` method, and any `civis_error` object.
+
+#### Documentation
+
+- A [quick start](https://civisanalytics.github.io/civis-r/articles/quick_start.html) vignette was added.
+- A [CivisML](https://civisanalytics.github.io/civis-r/articles/civis_ml.html) modeling vignette was added.
+- Only whitelisted endpoints are documented on the web.
+- The `expires_at` parameter of `write_civis_file` has been clarified.
+
+
+### Changed
+
+- `civis_ml` now throws an appropriate error message if a model type is called with multiple dependent variables but doesn't support them.
+- Errors from CivisML are now errors in `civis_ml`, with the CivisML error logs being printed to the console.
+- A `empty_result_error` is now thrown from `read_civis.sql` if the query returns no results.
+- `as_function` deprecation from `purrr` replaced.
+- If there is only one available database and a default database has not been set as a package option or provided, `get_default_database` uses that database.
+
+
 ## [0.9.1] - 2017-08-15
 
 ### Added
