@@ -136,7 +136,8 @@ saveRDS(err_m, file = "../inst/civis_ml_err.rds")
 
 ```{r, eval=TRUE, echo=FALSE}
 library(civis)
-m <- readRDS("../inst/civis_ml_brandable.rds")
+path <- devtools::package_file("inst", "civis_ml_brandable.rds")
+m <- readRDS(path)
 m
 ```
 Following the link takes you to a summary of the model results in Civis Platform. Additional metrics can be computed with `get_metric`:
@@ -155,7 +156,8 @@ head(oos)
 ```
 
 ```{r, echo=FALSE, eval=TRUE}
-oos <- readRDS("../inst/civis_ml_oos.rds")
+path <- devtools::package_file("inst", "civis_ml_oos.rds")
+oos <- readRDS(path)
 head(oos)
 ```
 
@@ -234,7 +236,8 @@ civis_ml(tab, dependent_variable = "upgrade",
 ```
 
 ```{r, echo=FALSE, eval=TRUE}
-err <- readRDS("../inst/civis_ml_err.rds")
+path <- devtools::package_file("inst", "civis_ml_err.rds")
+err <- readRDS(path)
 err
 ```
 
