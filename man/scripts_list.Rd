@@ -4,15 +4,20 @@
 \alias{scripts_list}
 \title{List scripts}
 \usage{
-scripts_list(type = NULL, author = NULL, status = NULL, archived = NULL,
-  limit = NULL, page_num = NULL, order = NULL, order_dir = NULL)
+scripts_list(type = NULL, category = NULL, author = NULL, status = NULL,
+  hidden = NULL, archived = NULL, limit = NULL, page_num = NULL,
+  order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{type}{string optional. If specified, return objects of these types. The valid types are sql, python3, javascript, r, and containers.}
 
+\item{category}{string optional. A job category for filtering scripts. Must be one of script, import, export, and enhancement.}
+
 \item{author}{string optional. If specified, return objects from this author. Must use user IDs. A comma separated list of IDs is also accepted to return objects from multiple authors.}
 
 \item{status}{string optional. If specified, returns objects with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.}
+
+\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
 
 \item{archived}{string optional. The archival status of the requested object(s).}
 

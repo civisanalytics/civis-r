@@ -86,6 +86,14 @@ A list containing the following elements:
 \item name string, 
 \item currentDeploymentId integer, 
 }}
+\item{workflows}{array, An array containing the following fields: 
+\itemize{
+\item id integer, The object ID.
+\item createdAt string, 
+\item updatedAt string, 
+\item name string, 
+\item state string, 
+}}
 \item{reports}{array, An array containing the following fields: 
 \itemize{
 \item id integer, The object ID.
@@ -131,7 +139,7 @@ A list containing the following elements:
 \item archived string, The archival status of the requested object(s).
 }}
 \item{note}{string, }
-\item{hidden}{boolean, The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID}
+\item{hidden}{boolean, The hidden status of the object.}
 \item{archived}{string, The archival status of the requested object(s).}
 }
 \description{

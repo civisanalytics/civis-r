@@ -24,7 +24,7 @@ A list containing the following elements:
 \item{finishedAt}{string, The end time of the last run.}
 \item{state}{string, The state of the last run.}
 \item{lastRunId}{integer, The ID of the last run.}
-\item{hidden}{boolean, The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID}
+\item{hidden}{boolean, The hidden status of the object.}
 \item{name}{string, The name of the query.}
 \item{author}{object, A list containing the following elements: 
 \itemize{

@@ -58,10 +58,12 @@ scripts_post_containers(required_resources, docker_command, docker_image_name,
 \item successEmailSubject string, Custom subject line for success e-mail.
 \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
 \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+\item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+\item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on
-\item failureOn boolean, If failure email notifications are on
+\item successOn boolean, If success email notifications are on.
+\item failureOn boolean, If failure email notifications are on.
 }}
 
 \item{repo_http_uri}{string optional. The location of a github repo to clone into the container, e.g. github.com/my-user/my-repo.git.}
@@ -78,7 +80,7 @@ scripts_post_containers(required_resources, docker_command, docker_image_name,
 
 \item{time_zone}{string optional. The time zone of this script.}
 
-\item{hidden}{boolean optional. The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID}
+\item{hidden}{boolean optional. The hidden status of the object.}
 
 \item{target_project_id}{integer optional. Target project to which script outputs will be added.}
 }
@@ -99,6 +101,7 @@ A list containing the following elements:
 }}
 \item{state}{string, The status of the script's last run.}
 \item{finishedAt}{string, The time that the script's last run finished.}
+\item{category}{string, The category of the script.}
 \item{projects}{array, An array containing the following fields: 
 \itemize{
 \item id integer, The ID for the project.
@@ -141,10 +144,12 @@ A list containing the following elements:
 \item successEmailSubject string, Custom subject line for success e-mail.
 \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
 \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+\item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+\item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on
-\item failureOn boolean, If failure email notifications are on
+\item successOn boolean, If success email notifications are on.
+\item failureOn boolean, If failure email notifications are on.
 }}
 \item{runningAs}{object, A list containing the following elements: 
 \itemize{
@@ -178,7 +183,7 @@ A list containing the following elements:
 \item error string, The error message for this run, if present.
 }}
 \item{timeZone}{string, The time zone of this script.}
-\item{hidden}{boolean, The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID}
+\item{hidden}{boolean, The hidden status of the object.}
 \item{archived}{string, The archival status of the requested object(s).}
 \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 }

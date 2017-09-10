@@ -34,7 +34,7 @@ imports_post_files(schema, name, remote_host_id, credential_id,
 
 \item{multipart}{boolean optional. If true, the upload URI will require a `multipart/form-data` POST request. Defaults to false.}
 
-\item{hidden}{boolean optional. The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID}
+\item{hidden}{boolean optional. The hidden status of the object.}
 }
 \value{
 A list containing the following elements:

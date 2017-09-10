@@ -11,13 +11,13 @@ scripts_post_custom_runs_outputs(id, run_id, object_type, object_id)
 
 \item{run_id}{integer required. The ID of the run.}
 
-\item{object_type}{string required. The type of the output. Valid values are File, Report, Table, Project, or Credential}
+\item{object_type}{string required. The type of the output. Valid values are File, Table, Report, Project, or Credential}
 
 \item{object_id}{integer required. The ID of the output object.}
 }
 \value{
 A list containing the following elements:
-\item{objectType}{string, The type of the output. Valid values are File, Report, Table, Project, or Credential}
+\item{objectType}{string, The type of the output. Valid values are File, Table, Report, Project, or Credential}
 \item{objectId}{integer, The ID of the output object.}
 \item{name}{string, The name of the output object.}
 \item{link}{string, The link to retrieve the output object.}

@@ -4,10 +4,12 @@
 \alias{imports_list_projects}
 \title{List the projects a JobTypes::Import belongs to}
 \usage{
-imports_list_projects(id)
+imports_list_projects(id, hidden = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the resource.}
+
+\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
 }
 \value{
 An array containing the following fields:

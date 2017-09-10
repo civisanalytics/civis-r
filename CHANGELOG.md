@@ -33,6 +33,9 @@
 - `as_function` deprecation from `purrr` replaced.
 - If there is only one available database and a default database has not been set as a package option or provided, `get_default_database` uses that database.
 
+### Fixed
+
+- `read_civis` now reads from a temporary file when the file size is > than 2^31-1 bytes.
 
 ## [0.9.1] - 2017-08-15
 

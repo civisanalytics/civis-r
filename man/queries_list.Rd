@@ -5,7 +5,8 @@
 \title{List}
 \usage{
 queries_list(database_id = NULL, author_id = NULL, created_before = NULL,
-  limit = NULL, page_num = NULL, order = NULL, order_dir = NULL)
+  hidden = NULL, limit = NULL, page_num = NULL, order = NULL,
+  order_dir = NULL)
 }
 \arguments{
 \item{database_id}{integer optional. The database ID.}
@@ -13,6 +14,8 @@ queries_list(database_id = NULL, author_id = NULL, created_before = NULL,
 \item{author_id}{integer optional. The author of the query.}
 
 \item{created_before}{string optional. An upper bound for the creation date of the query.}
+
+\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.}
 

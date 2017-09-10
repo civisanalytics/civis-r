@@ -5,8 +5,8 @@
 \title{List Custom Scripts}
 \usage{
 scripts_list_custom(from_template_id = NULL, author = NULL, status = NULL,
-  archived = NULL, limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+  hidden = NULL, archived = NULL, limit = NULL, page_num = NULL,
+  order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{from_template_id}{string optional. If specified, return scripts based on the template with this ID. Specify multiple IDs as a comma-separated list.}
@@ -14,6 +14,8 @@ scripts_list_custom(from_template_id = NULL, author = NULL, status = NULL,
 \item{author}{string optional. If specified, return objects from this author. Must use user IDs. A comma separated list of IDs is also accepted to return objects from multiple authors.}
 
 \item{status}{string optional. If specified, returns objects with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.}
+
+\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
 
 \item{archived}{string optional. The archival status of the requested object(s).}
 

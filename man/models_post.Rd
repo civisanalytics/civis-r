@@ -52,10 +52,12 @@ models_post(table_name = NULL, database_id = NULL, credential_id = NULL,
 \item successEmailSubject string, Custom subject line for success e-mail.
 \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
 \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+\item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+\item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on
-\item failureOn boolean, If failure email notifications are on
+\item successOn boolean, If success email notifications are on.
+\item failureOn boolean, If failure email notifications are on.
 }}
 
 \item{schedule}{object optional. A list containing the following elements: 
@@ -71,7 +73,7 @@ models_post(table_name = NULL, database_id = NULL, credential_id = NULL,
 
 \item{time_zone}{string optional. The time zone of this model.}
 
-\item{hidden}{boolean optional. The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID}
+\item{hidden}{boolean optional. The hidden status of the object.}
 }
 \value{
 A list containing the following elements:
@@ -98,10 +100,12 @@ A list containing the following elements:
 \item successEmailSubject string, Custom subject line for success e-mail.
 \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
 \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+\item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+\item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on
-\item failureOn boolean, If failure email notifications are on
+\item successOn boolean, If success email notifications are on.
+\item failureOn boolean, If failure email notifications are on.
 }}
 \item{schedule}{object, A list containing the following elements: 
 \itemize{
@@ -130,7 +134,7 @@ A list containing the following elements:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
-\item{hidden}{boolean, The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID}
+\item{hidden}{boolean, The hidden status of the object.}
 \item{user}{object, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.

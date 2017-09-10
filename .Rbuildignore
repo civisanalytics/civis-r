@@ -8,4 +8,4 @@
 ^CODE_OF_CONDUCT\.md$
 ^_pkgdown\.yaml$
 ^CHANGELOG\.md$
-cran_comments.md
+^cran-comments\.md$

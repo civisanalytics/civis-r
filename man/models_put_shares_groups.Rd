@@ -4,7 +4,8 @@
 \alias{models_put_shares_groups}
 \title{Set the permissions groups has on this object}
 \usage{
-models_put_shares_groups(id, group_ids, permission_level)
+models_put_shares_groups(id, group_ids, permission_level,
+  share_email_body = NULL, send_shared_email = NULL)
 }
 \arguments{
 \item{id}{integer required. ID of the resource to be shared}
@@ -12,6 +13,10 @@ models_put_shares_groups(id, group_ids, permission_level)
 \item{group_ids}{array required. An array of one or more group IDs}
 
 \item{permission_level}{string required. Options are: "read", "write", or "manage"}
+
+\item{share_email_body}{string optional. Custom body text for e-mail sent on a share.}
+
+\item{send_shared_email}{boolean optional. Send email to the recipients of a share.}
 }
 \value{
 A list containing the following elements:

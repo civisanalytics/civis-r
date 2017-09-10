@@ -5,8 +5,8 @@
 \title{List}
 \usage{
 imports_list(type = NULL, author = NULL, destination = NULL,
-  status = NULL, archived = NULL, limit = NULL, page_num = NULL,
-  order = NULL, order_dir = NULL)
+  status = NULL, hidden = NULL, archived = NULL, limit = NULL,
+  page_num = NULL, order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{type}{string optional. If specified, return imports of these types. It accepts a comma-separated list, possible values are 'AutoImport', 'DbSync', 'Salesforce', 'GdocImport'.}
@@ -16,6 +16,8 @@ imports_list(type = NULL, author = NULL, destination = NULL,
 \item{destination}{string optional. If specified, returns imports with one of these destinations. It accepts a comma-separated list of remote host ids.}
 
 \item{status}{string optional. If specified, returns imports with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.}
+
+\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
 
 \item{archived}{string optional. The archival status of the requested object(s).}
 
@@ -55,6 +57,7 @@ An array containing the following fields:
 }}
 \item{id}{integer, The ID for the import.}
 \item{isOutbound}{boolean, }
+\item{jobType}{string, The job type of this import.}
 \item{state}{string, }
 \item{createdAt}{string, }
 \item{updatedAt}{string, }

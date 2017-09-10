@@ -5,8 +5,8 @@
 \title{List}
 \usage{
 jobs_list(state = NULL, type = NULL, q = NULL, permission = NULL,
-  archived = NULL, limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+  hidden = NULL, archived = NULL, limit = NULL, page_num = NULL,
+  order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{state}{string optional. The job's state. One or more of queued, running, succeeded, failed, and cancelled. Specify multiple values as a comma-separated list (e.g., "A,B").}
@@ -16,6 +16,8 @@ jobs_list(state = NULL, type = NULL, q = NULL, permission = NULL,
 \item{q}{string optional. Query string to search on the id, name, and job type}
 
 \item{permission}{string optional. A permissions string, one of "read", "write", or "manage". Lists only jobs for which the current user has that permission.}
+
+\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
 
 \item{archived}{string optional. The archival status of the requested object(s).}
 
