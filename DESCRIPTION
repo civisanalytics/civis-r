@@ -18,21 +18,22 @@ LazyData: true
 URL: https://github.com/civisanalytics/civis-r
 BugReports: https://github.com/civisanalytics/civis-r/issues
 Imports:
-    httr,
-    jsonlite,
-    purrr,
-    methods,
-    stats,
-    roxygen2,
     DBI,
     dplyr (>= 0.7.0),
     dbplyr (>= 1.0.0),
-    ggplot2,
-    memoise,
-    stringr,
     devtools,
-    testthat,
+    future,
+    ggplot2,
+    httr,
+    jsonlite,
     lubridate,
+    methods,
+    memoise,
+    purrr,
+    roxygen2,
+    stats,
+    stringr,
+    testthat,
     utils
 Suggests:
     knitr,
@@ -44,6 +45,7 @@ RoxygenNote: 6.0.1
 VignetteBuilder: knitr
 Collate: 
     'await.R'
+    'civis_future.R'
     'civis_ml.R'
     'civis_ml_plot.R'
     'civis_ml_utils.R'
