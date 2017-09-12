@@ -3,14 +3,13 @@ context("io")
 
 # read_civis ------------------------------------------------------------------
 
-test_that("read_civis returns a dataframe or error appropriately", {
+test_that("read_civis reads < 2gb files from memory", {
   mock_df_string <- "a,b\n1,sentimental\n2,centipede"
   con <- textConnection(mock_df_string)
   mock_df <- read.csv(con)
   close(con)
   rm(con)
   mock_sql_job <- function(...) list(script_id = 1337, run_id = 007)
-
   mock_GET_result <- function(...) {
 
     GET_result <- list("url" = "http://www.fakeurl.com",
@@ -19,29 +18,76 @@ test_that("read_civis returns a dataframe or error appropriately", {
     class(GET_result) <- "response"
     return(GET_result)
   }
+  mock_get_sql_runs <- function(...) {
+    list(state = "succeeded",
+         output = list(list(fileId = 1234))
+    )
+  }
   with_mock(
     `civis::start_scripted_sql_job` = mock_sql_job,
-    `civis::scripts_get_sql_runs` = function(...) list(state = "succeeded"),
+    `civis::scripts_post_sql_runs` = function(...) list(id = 1001),
+    `civis::scripts_get_sql_runs` = mock_get_sql_runs,
+    `civis::files_get` = function(...) list(fileSize = 10),
     `civis::download_script_results` = mock_GET_result,
     `civis::stop_for_status` = function(...) return(TRUE),
-    `civis::scripts_post_sql_runs` = function(...) list(id = 1001),
-    `civis::files_get` = function(...) list(url = "whatever"),
-    `httr::GET` = mock_GET_result,
     expect_equal(mock_df, read_civis(x = "lazy", database = "jellyfish")),
-    expect_equal(mock_df, read_civis(dplyr::sql("SELECT * FROM lazy"),
-                                     database = "jellyfish")),
-    expect_equal(mock_df, read_civis(123, using = read.csv))
+    expect_equal(mock_df, read_civis(dbplyr::sql("SELECT * FROM lazy"),
+                                     database = "jellyfish"))
   )
 })
 
-test_that("read_civis produces catchable error when query returns no rows", {
+test_that("read_civis.sql reads > 2gb files from file", {
+  mock_df <- data.frame(a = 1:2, b = c("sentimental", "centipede"))
+  mock_get_sql_runs <- function(...) {
+    list(state = "succeeded",
+         output = list(list(fileId = 1234))
+    )
+  }
+  mock_sql_job <- function(...) list(script_id = 1337, run_id = 007)
+  mock_download_script_results <- function(id, run_id, filename) {
+    write.csv(mock_df, file = filename, row.names = FALSE)
+    return(filename)
+  }
+  with_mock(
+    `civis::start_scripted_sql_job` = mock_sql_job,
+    `civis::scripts_post_sql_runs` = function(...) list(id = 1001),
+    `civis::scripts_get_sql_runs` = mock_get_sql_runs,
+    `civis::files_get` = function(...) list(fileSize = 4E9),
+    `civis::download_script_results` = mock_download_script_results,
+    `civis::stop_for_status` = function(...) return(TRUE),
+    expect_equal(mock_df, read_civis(x = "lazy", database = "jellyfish")),
+    expect_equal(mock_df, read_civis(dbplyr::sql("SELECT * FROM lazy"),
+                                     database = "jellyfish"))
+  )
+})
+
+test_that("read_civis.sql produces catchable error when query returns no rows", {
   no_results_resp <- list(state = "succeeded", output = list())
+
   mock_sql_job <- function(...) list(script_id = 561, run_id = 43)
   with_mock(
     `civis::start_scripted_sql_job` = mock_sql_job,
     `civis::scripts_get_sql_runs` = function(...) no_results_resp,
-    try_err <- try(read_civis(dplyr::sql("SELECT 0"), database = "arrgh"), silent = TRUE),
+    try_err <- try(read_civis(dbplyr::sql("SELECT 0"), database = "arrgh"), silent = TRUE),
     expect_true("empty_result_error" %in% class(attr(try_err, "condition")))
+  )
+})
+
+test_that("read_civis.numeric reads a csv", {
+  mock_df <- data.frame(a = 1:2, b = c("sentimental", "centipede"))
+  mock_df_string <- "a,b\n1,sentimental\n2,centipede"
+  mock_GET_result <- function(...) {
+    GET_result <- list("url" = "http://www.fakeurl.com",
+                       "status_code" = 200,
+                       "headers" = list("Content-Type" = "text/csv"),
+                       "content" = charToRaw(mock_df_string))
+    class(GET_result) <- "response"
+    return(GET_result)
+  }
+  with_mock(
+    `civis::files_get` =  function(...) list(fileUrl = "fakeurl.com"),
+    `httr::GET` = mock_GET_result,
+    expect_equal(mock_df, read_civis(123, using = read.csv))
   )
 })
 
@@ -249,8 +295,9 @@ test_that("start_import_job checks if_exists value", {
 
 test_that("download_script_results returns sensible errors", {
   error <- "Query produced no output. \\(script_id = 561, run_id = 43\\)"
+  mock_get_run <- function(script_id, run_id) list(script_id = script_id, run_id = run_id)
   with_mock(
-    `civis::scripts_get_sql_runs` = function(...) list(),
+    `civis::scripts_get_sql_runs` = mock_get_run,
     expect_error(download_script_results(561, 43, "some_file"), error)
   )
 })

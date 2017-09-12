@@ -102,20 +102,40 @@ read_civis.character <- function(x, database = NULL, ...) {
 
 #' @describeIn read_civis  Return a SQL query as a data frame.
 #' @export
-read_civis.sql <- function(x, database = NULL, using = utils::read.csv, job_name = NULL,
-                           hidden = TRUE, verbose = FALSE, ...) {
+read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
+                           job_name = NULL, hidden = TRUE, verbose = FALSE, ...) {
   db <- get_db(database)
   sql_str <- declare_statement_read_only(x)
   job_name <- if (is.null(job_name)) "Civis Export Via R Client"
   if (!is.character(job_name)) stop("job_name must be a string.")
-  run <- start_scripted_sql_job(db, sql = sql_str, job_name, hidden = hidden)
+  run <- start_scripted_sql_job(db, sql_str, job_name, hidden)
+  r <- await(scripts_get_sql_runs, id = run$script_id, run_id = run$run_id)
+  stop_if_no_output(r)
 
-  r <- await(scripts_get_sql_runs, id = run$script_id, run_id = run$run_id, .verbose = verbose)
-  if (get_status(r) == "succeeded") {
-    resp <- download_script_results(run$script_id, run$run_id)
-    parsed <- httr::content(resp, as = "text", encoding = "UTF-8")
-    con <- textConnection(parsed)
-    using(con, ...)
+  # Read < 2gb in memory, > 2gb from a temp file.
+  #
+  # 2^31-1 comes from ?'Memory-limits':
+  # 2^31 is the limit to the number of bytes in a character string.
+  file_id <- r[["output"]][[1]][["fileId"]]
+  file_size <- files_get(file_id)$fileSize
+  if (file_size < 2^31 - 1) {
+    tryCatch({
+      resp <- download_script_results(run$script_id, run_id = run$run_id)
+      parsed <- httr::content(resp, as = "text", encoding = "UTF-8")
+      con <- textConnection(parsed)
+      using(con, ...)
+    }, finally = {
+      close(con)
+    })
+  } else {
+    tryCatch({
+      tmp <- tempfile()
+      resp <- download_script_results(run$script_id, run_id = run$run_id,
+                                      filename = tmp)
+      using(tmp, ...)
+    }, finally = {
+      unlink(tmp)
+    })
   }
 }
 
@@ -610,14 +630,8 @@ delimiter_name_from_string <- function(s) {
 download_script_results <- function(script_id, run_id,
                                     filename = NULL, progress = FALSE) {
   script_results <- scripts_get_sql_runs(script_id, run_id)
-  # Verify that the script actually generated output
-  if (length(script_results[["output"]]) == 0) {
-    msg <- paste0("Query produced no output. ",
-                  "(script_id = ", script_id,
-                  ", run_id = ", run_id, ")")
-    cond <- condition(c("empty_result_error", "error"), msg, call = NULL)
-    stop(cond)
-  }
+  stop_if_no_output(script_results)
+
   url <- script_results[["output"]][[1]][["path"]]
   args <- list(url)
   if (!is.null(filename)) {
@@ -629,6 +643,16 @@ download_script_results <- function(script_id, run_id,
   r <- do.call(httr::GET, args)
   stop_for_status(r)
   r
+}
+
+stop_if_no_output <- function(script_results) {
+  if (length(script_results[["output"]]) == 0) {
+    msg <- paste0("Query produced no output. ",
+                  "(script_id = ", script_results$script_id,
+                  ", run_id = ", script_results$run_id, ")")
+    cond <- condition(c("empty_result_error", "error"), msg, call = NULL)
+    stop(cond)
+  }
 }
 
 #' Call a function with a temporary file.
