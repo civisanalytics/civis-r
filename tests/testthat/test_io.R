@@ -69,8 +69,7 @@ test_that("read_civis.sql produces catchable error when query returns no rows", 
     `civis::start_scripted_sql_job` = mock_sql_job,
     `civis::scripts_get_sql_runs` = function(...) no_results_resp,
     try_err <- try(read_civis(dbplyr::sql("SELECT 0"), database = "arrgh"), silent = TRUE),
-    #expect_true("empty_result_error" %in% class(attr(try_err, "condition")))
-    try_err
+    expect_true("empty_result_error" %in% class(attr(try_err, "condition")))
   )
 })
 
