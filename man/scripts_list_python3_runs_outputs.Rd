@@ -22,7 +22,7 @@ scripts_list_python3_runs_outputs(id, run_id, limit = NULL, page_num = NULL,
 }
 \value{
 An array containing the following fields:
-\item{objectType}{string, The type of the output. Valid values are File, Report, Table, Project, or Credential}
+\item{objectType}{string, The type of the output. Valid values are File, Table, Report, Project, or Credential}
 \item{objectId}{integer, The ID of the output object.}
 \item{name}{string, The name of the output object.}
 \item{link}{string, The link to retrieve the output object.}

@@ -4,10 +4,12 @@
 \alias{imports_list_batches}
 \title{List batch imports}
 \usage{
-imports_list_batches(limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+imports_list_batches(hidden = NULL, limit = NULL, page_num = NULL,
+  order = NULL, order_dir = NULL)
 }
 \arguments{
+\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
+
 \item{limit}{integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.}
 
 \item{page_num}{integer optional. Page number of the results to return. Defaults to the first page, 1.}

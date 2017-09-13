@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{reports_delete_grants}
 \alias{reports_delete_grants}
-\title{Revoke permisstion for this report to perform Civis platform API operations on your behalf}
+\title{Revoke permission for this report to perform Civis platform API operations on your behalf}
 \usage{
 reports_delete_grants(id)
 }
@@ -13,5 +13,5 @@ reports_delete_grants(id)
 An empty HTTP response
 }
 \description{
-Revoke permisstion for this report to perform Civis platform API operations on your behalf
+Revoke permission for this report to perform Civis platform API operations on your behalf
 }

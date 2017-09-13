@@ -17,7 +17,7 @@ queries_post(database, sql, preview_rows, credential = NULL, hidden = NULL,
 
 \item{credential}{integer optional. The credential ID.}
 
-\item{hidden}{boolean optional. The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID}
+\item{hidden}{boolean optional. The hidden status of the object.}
 
 \item{interactive}{boolean optional. Deprecated and not used.}
 
@@ -46,7 +46,7 @@ A list containing the following elements:
 \item{finishedAt}{string, The end time of the last run.}
 \item{state}{string, The state of the last run.}
 \item{lastRunId}{integer, The ID of the last run.}
-\item{hidden}{boolean, The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID}
+\item{hidden}{boolean, The hidden status of the object.}
 \item{interactive}{boolean, Deprecated and not used.}
 \item{previewRows}{integer, The number of rows to save from the query's result (maximum: 100).}
 \item{includeHeader}{boolean, Whether the CSV output should include a header row [default: true].}

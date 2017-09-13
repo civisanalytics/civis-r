@@ -6,8 +6,8 @@
 \usage{
 models_list(model_name = NULL, training_table_name = NULL,
   dependent_variable = NULL, author = NULL, status = NULL,
-  archived = NULL, limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+  hidden = NULL, archived = NULL, limit = NULL, page_num = NULL,
+  order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{model_name}{string optional. If specified, will be used to filter the models returned. Substring matching is supported. (e.g., "modelName=model" will return both "model1" and "my model").}
@@ -19,6 +19,8 @@ models_list(model_name = NULL, training_table_name = NULL,
 \item{author}{string optional. If specified, return models from this author. It accepts a comma-separated list of author ids.}
 
 \item{status}{string optional. If specified, returns models with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.}
+
+\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
 
 \item{archived}{string optional. The archival status of the requested object(s).}
 

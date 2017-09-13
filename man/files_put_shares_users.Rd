@@ -4,7 +4,8 @@
 \alias{files_put_shares_users}
 \title{Set the permissions users have on this object}
 \usage{
-files_put_shares_users(id, user_ids, permission_level)
+files_put_shares_users(id, user_ids, permission_level,
+  share_email_body = NULL, send_shared_email = NULL)
 }
 \arguments{
 \item{id}{integer required. ID of the resource to be shared}
@@ -12,6 +13,10 @@ files_put_shares_users(id, user_ids, permission_level)
 \item{user_ids}{array required. An array of one or more user IDs}
 
 \item{permission_level}{string required. Options are: "read", "write", or "manage"}
+
+\item{share_email_body}{string optional. Custom body text for e-mail sent on a share.}
+
+\item{send_shared_email}{boolean optional. Send email to the recipients of a share.}
 }
 \value{
 A list containing the following elements:

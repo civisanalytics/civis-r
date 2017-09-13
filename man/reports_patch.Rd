@@ -6,7 +6,7 @@
 \usage{
 reports_patch(id, name = NULL, script_id = NULL, code_body = NULL,
   config = NULL, app_state = NULL, provide_api_key = NULL,
-  template_id = NULL)
+  template_id = NULL, use_viewers_tableau_username = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the report to modify.}
@@ -24,6 +24,8 @@ reports_patch(id, name = NULL, script_id = NULL, code_body = NULL,
 \item{provide_api_key}{boolean optional. Allow the report to provide an API key to front-end code.}
 
 \item{template_id}{integer optional. The ID of the template used for this report. If null is passed, no template will back this report. Changes to the backing template will reset the report appState.}
+
+\item{use_viewers_tableau_username}{boolean optional. Apply user level filtering on Tableau reports.}
 }
 \value{
 A list containing the following elements:
@@ -67,7 +69,7 @@ A list containing the following elements:
 \item error string, The error message for this run, if present.
 }}
 \item{archived}{string, The archival status of the requested object(s).}
-\item{hidden}{boolean, The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID}
+\item{hidden}{boolean, The hidden status of the object.}
 \item{authDataUrl}{string, }
 \item{authCodeUrl}{string, }
 \item{config}{string, Any configuration metadata for this report.}
@@ -76,6 +78,7 @@ A list containing the following elements:
 \item{apiKey}{string, A Civis API key that can be used by this report.}
 \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
 \item{appState}{object, Any application state blob for this report.}
+\item{useViewersTableauUsername}{boolean, Apply user level filtering on Tableau reports.}
 }
 \description{
 Update a report

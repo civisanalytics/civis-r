@@ -35,7 +35,7 @@ A list containing the following elements:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
-\item{hidden}{boolean, The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID}
+\item{hidden}{boolean, The hidden status of the object.}
 \item{archived}{string, The archival status of the requested object(s).}
 }
 \description{

@@ -5,8 +5,8 @@
 \title{List}
 \usage{
 reports_list(type = NULL, author = NULL, template_id = NULL,
-  archived = NULL, limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+  hidden = NULL, archived = NULL, limit = NULL, page_num = NULL,
+  order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{type}{string optional. If specified, return report of these types. It accepts a comma-separated list, possible values are 'tableau' or 'other'.}
@@ -14,6 +14,8 @@ reports_list(type = NULL, author = NULL, template_id = NULL,
 \item{author}{string optional. If specified, return reports from this author. It accepts a comma-separated list of author ids.}
 
 \item{template_id}{integer optional. If specified, return reports using the provided Template.}
+
+\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
 
 \item{archived}{string optional. The archival status of the requested object(s).}
 

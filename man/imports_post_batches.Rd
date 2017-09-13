@@ -25,7 +25,7 @@ imports_post_batches(file_ids, schema, table, remote_host_id, credential_id,
 
 \item{compression}{string optional. The type of compression. Valid arguments are "gzip", "zip", and "none". If unspecified, defaults to "gzip".}
 
-\item{hidden}{boolean optional. The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID}
+\item{hidden}{boolean optional. The hidden status of the object.}
 }
 \value{
 A list containing the following elements:
@@ -37,7 +37,7 @@ A list containing the following elements:
 \item{startedAt}{string, The time the last run started at.}
 \item{finishedAt}{string, The time the last run completed.}
 \item{error}{string, The error returned by the run, if any.}
-\item{hidden}{boolean, The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID}
+\item{hidden}{boolean, The hidden status of the object.}
 }
 \description{
 Upload multiple files to Redshift

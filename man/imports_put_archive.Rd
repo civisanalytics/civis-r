@@ -43,14 +43,17 @@ A list containing the following elements:
 \item successEmailSubject string, Custom subject line for success e-mail.
 \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
 \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+\item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+\item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on
-\item failureOn boolean, If failure email notifications are on
+\item successOn boolean, If success email notifications are on.
+\item failureOn boolean, If failure email notifications are on.
 }}
 \item{parentId}{integer, Parent id to trigger this import from}
 \item{id}{integer, The ID for the import.}
 \item{isOutbound}{boolean, }
+\item{jobType}{string, The job type of this import.}
 \item{syncs}{array, An array containing the following fields: 
 \itemize{
 \item id integer, 
@@ -88,7 +91,7 @@ A list containing the following elements:
 }}
 \item{nextRunAt}{string, The time of the next scheduled run.}
 \item{timeZone}{string, The time zone of this import.}
-\item{hidden}{boolean, The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID}
+\item{hidden}{boolean, The hidden status of the object.}
 \item{archived}{string, The archival status of the requested object(s).}
 }
 \description{

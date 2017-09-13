@@ -55,10 +55,12 @@ models_patch(id, table_name = NULL, database_id = NULL,
 \item successEmailSubject string, Custom subject line for success e-mail.
 \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
 \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+\item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+\item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on
-\item failureOn boolean, If failure email notifications are on
+\item successOn boolean, If success email notifications are on.
+\item failureOn boolean, If failure email notifications are on.
 }}
 
 \item{schedule}{object optional. A list containing the following elements: 
