@@ -13,6 +13,7 @@ reference:
       - write_civis_file
       - query_civis
       - sql
+      - download_civis
     - title: CivisML
       desc: Training and scoring models with CivisML
       contents:
@@ -20,6 +21,8 @@ reference:
       - civis_file
       - civis_table
       - civis_file_manifest
+      - fetch_logs
+      - get_metric
     - title: CivisML Workflows
       desc: Named workflows for CivisML models
       contents:
