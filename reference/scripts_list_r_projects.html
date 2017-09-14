@@ -68,6 +68,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/civis_ml.html">Machine Learning in R with CivisML</a>
+    </li>
+    <li>
       <a href="../articles/concurrency.html">Making Simultaneous Calls to Platform</a>
     </li>
     <li>
@@ -105,7 +108,7 @@
     <p>List the projects a r docker belongs to</p>
     
 
-    <pre class="usage"><span class='fu'>scripts_list_r_projects</span>(<span class='no'>id</span>)</pre>
+    <pre class="usage"><span class='fu'>scripts_list_r_projects</span>(<span class='no'>id</span>, <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -113,6 +116,10 @@
     <tr>
       <th>id</th>
       <td><p>integer required. The ID of the resource.</p></td>
+    </tr>
+    <tr>
+      <th>hidden</th>
+      <td><p>boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.</p></td>
     </tr>
     </table>
     
@@ -159,7 +166,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bill Lattner, Patrick Miller, Keith Ingersoll, Anh Le.</p>
+  <p>Developed by Patrick Miller, Keith Ingersoll.</p>
 </div>
 
 <div class="pkgdown">

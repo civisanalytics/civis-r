@@ -68,6 +68,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/civis_ml.html">Machine Learning in R with CivisML</a>
+    </li>
+    <li>
       <a href="../articles/concurrency.html">Making Simultaneous Calls to Platform</a>
     </li>
     <li>
@@ -138,7 +141,7 @@
     </tr>
     <tr>
       <th>hidden</th>
-      <td><p>boolean optional. The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID</p></td>
+      <td><p>boolean optional. The hidden status of the object.</p></td>
     </tr>
     </table>
     
@@ -185,7 +188,7 @@
 <li><p>error string, The error message for this run, if present.</p></li>
 </ul></p></dd>
 <dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
-<dt>hidden</dt><dd><p>boolean, The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID</p></dd>
+<dt>hidden</dt><dd><p>boolean, The hidden status of the object.</p></dd>
 <dt>authDataUrl</dt><dd><p>string,</p></dd>
 <dt>authCodeUrl</dt><dd><p>string,</p></dd>
 <dt>config</dt><dd><p>string, Any configuration metadata for this report.</p></dd>
@@ -194,6 +197,7 @@
 <dt>apiKey</dt><dd><p>string, A Civis API key that can be used by this report.</p></dd>
 <dt>apiKeyId</dt><dd><p>integer, The ID of the API key. Can be used for auditing API use by this report.</p></dd>
 <dt>appState</dt><dd><p>object, Any application state blob for this report.</p></dd>
+<dt>useViewersTableauUsername</dt><dd><p>boolean, Apply user level filtering on Tableau reports.</p></dd>
 
     
 
@@ -211,7 +215,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bill Lattner, Patrick Miller, Keith Ingersoll, Anh Le.</p>
+  <p>Developed by Patrick Miller, Keith Ingersoll.</p>
 </div>
 
 <div class="pkgdown">

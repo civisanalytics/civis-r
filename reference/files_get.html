@@ -68,6 +68,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/civis_ml.html">Machine Learning in R with CivisML</a>
+    </li>
+    <li>
       <a href="../articles/concurrency.html">Making Simultaneous Calls to Platform</a>
     </li>
     <li>
@@ -105,7 +108,7 @@
     <p>Get details about a file</p>
     
 
-    <pre class="usage"><span class='fu'>files_get</span>(<span class='no'>id</span>)</pre>
+    <pre class="usage"><span class='fu'>files_get</span>(<span class='no'>id</span>, <span class='kw'>link_expires_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -113,6 +116,10 @@
     <tr>
       <th>id</th>
       <td><p>integer required. The ID of the file object.</p></td>
+    </tr>
+    <tr>
+      <th>link_expires_at</th>
+      <td><p>string optional. The date and time the download link will expire. Must be a time between now and 36 hours from now. Defaults to 30 minutes from now.</p></td>
     </tr>
     </table>
     
@@ -143,7 +150,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bill Lattner, Patrick Miller, Keith Ingersoll, Anh Le.</p>
+  <p>Developed by Patrick Miller, Keith Ingersoll.</p>
 </div>
 
 <div class="pkgdown">

@@ -68,6 +68,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/civis_ml.html">Machine Learning in R with CivisML</a>
+    </li>
+    <li>
       <a href="../articles/concurrency.html">Making Simultaneous Calls to Platform</a>
     </li>
     <li>
@@ -196,6 +199,15 @@ an uncompressed text or csv from the files endpoint, set <code>using = read.csv<
 <span class='co'># Read a text file or csv from the files endpoint.</span>
 <span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='write_civis_file.html'>write_civis_file</a></span>(<span class='st'>"my_csv.csv"</span>)
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>read_civis</span>(<span class='no'>id</span>, <span class='kw'>using</span> <span class='kw'>=</span> <span class='no'>read.csv</span>)
+
+<span class='co'># Gracefully handle when read_civis.sql returns no rows</span>
+<span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/sql.html'>sql</a></span>(<span class='st'>"SELECT * FROM table WHERE 1 = 2"</span>)
+<span class='no'>mean_x</span> <span class='kw'>&lt;-</span> <span class='fu'>tryCatch</span>({
+  <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>read_civis</span>(<span class='no'>query</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='st'>"my_database"</span>)
+  <span class='fu'>mean</span>(<span class='no'>df</span>$<span class='no'>x</span>)
+}, <span class='kw'>empty_result_error</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>e</span>) {
+   <span class='fl'>NA</span>
+})
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -217,7 +229,7 @@ an uncompressed text or csv from the files endpoint, set <code>using = read.csv<
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bill Lattner, Patrick Miller, Keith Ingersoll, Anh Le.</p>
+  <p>Developed by Patrick Miller, Keith Ingersoll.</p>
 </div>
 
 <div class="pkgdown">
