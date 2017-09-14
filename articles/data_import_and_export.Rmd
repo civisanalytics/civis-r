@@ -1,0 +1,231 @@
+---
+title: "Data Import and Export"
+author: "Patrick Miller, Keith Ingersoll"
+date: "2017-08-14"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Civis IO}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Passing Data Back and Forth
+
+Often the simplest, but most useful operation when working with the
+Platform is to move data in and out.  From the perspective of the R
+client, we call moving data from the Platform to the local
+machine *reading*.  Likewise, moving data from the local
+machine to the Platform is called *writing*.
+
+The `civis` client handles data imports and exports in two basic ways:
+
+1. Moving data directly between the R workspace and the Platform (the most common use case).
+2. Moving data between the Platform and local csv files (this is useful for large data that doesn't fit into memory).
+
+Data can be stored on Platform in two places:
+
+1. Amazon Redshift, a SQL database.
+2. Amazon S3, also referred to as the 'files' endpoint.
+
+Tables in Redshift are accessed and modified using SQL queries. Tables in Redshift 
+can be easily shared and used in multiple workflows by multiple people. 
+However, importing and exporting even small files on Redshift can be slow.
+
+R objects and arbitrary files can be stored on Amazon S3, and are accessed 
+using a numeric file id. In `civis`, R objects are serialized using `saveRDS`
+for speed and efficiency. Text or csv files created by other programs can also
+be read back into R as a data frames.
+
+## Reading Data Into R From Platform
+
+The main workhose for getting data from Platform is `read_civis`.
+This function is designed to work similarly to the built in function
+`read.csv`, returning a dataframe from a table in Platform. For more flexibility,
+`read_civis` can download files from Redshift using an SQL query, or download a 
+file from S3 ('the files endpoint') using a file id.
+
+To read from a table in Platform, simply provide  the name of the schema,
+table within the schema, and the database:
+
+```{r eval=FALSE}
+df <- read_civis("schema.tablename", database = "my-database")
+```
+
+For convenience, a default database can be set in the package options, and not specified
+in further calls to any IO function. If there is only one database available, this 
+database will automatically be used as the default.
+In the examples that follow, we assume that a default database has been set.
+
+```{r eval=FALSE}
+options(civis.default_db = "my-database")
+df <- read_civis("schema.tablename")
+```
+
+`read_civis` accepts SQL queries when more flexibility is needed. This is accomplished
+by wrapping `sql(...)` around a string containing the query. With `read_civis`, 
+queries are always read only, and always return a `data.frame`.
+
+```{r eval=FALSE}
+query <- "SELECT * FROM table JOIN other_table USING id WHERE var1 < 23"
+df <- read_civis(sql(query))
+```
+
+Finally, `read_civis` accepts a file id as the first argument to read in files 
+from S3 as data frames. IDs are obtained from `write_civis_file`. 
+
+```{r, eval=FALSE}
+data(iris)
+id <- write_civis_file(iris)
+df <- read_civis(id)
+```
+
+For maximum flexibility, `read_civis` accepts parameters from `read.csv` which
+can be used to define data types when the defaults are not appropriate. 
+For instance, when numbers should be read in as characters or when strings 
+shouldn't be read in as factors.
+
+```{r eval=FALSE}
+query <- "SELECT * FROM table JOIN other_table USING id WHERE var1 < 23"
+df <- read_civis(sql(query), colClasses = "character")
+df2 <- read_civis(sql(query), as.is = TRUE)
+```
+
+
+## Uploading Data to Platform
+
+The complement to reading data into the R workspace is writing data
+to the Platform.  The function `write_civis` uploads data frames or csv files to
+an Amazon Redshift database. The function `write_civis_file` uploads R objects and 
+arbitrary files to Amazon S3 (the files endpoint).
+
+When creating a new table, `write_civis` relies on Platform to determine
+data types.  Distkeys and sortkeys can optionally be set to improve query performance.
+Again, we set a default database in these examples for convenience.
+
+```{r eval=FALSE}
+options(civis.default_db = "my_database")
+df <- data.frame(x = rnorm(100), y = rnorm(100), z = rnorm(100))
+write_civis(df, tablename = "schema.tablename",
+            distkey = "id", sortkey1 = "date", sortkey2 = "type")
+```
+
+By default, `write_civis` will fail if the table passed in `tablename`
+already exists.  Optionally, `write_civis` can append to an existing
+table.  It may also delete all rows and then append (truncate). If
+specific datatypes are required, a table may first be created with a
+SQL `CREATE TABLE` command and then data can be inserted with
+`write_civis`.
+
+```{r eval=FALSE}
+write_civis(df, tablename = "schema.tablename", if_exists = "append")
+write_civis(df, tablename = "schema.tablename", if_exists = "truncate")
+```
+
+If a csv file is saved to disk but not loaded in the R workspace,
+`write_civis` will upload the csv to Platform without needing
+first load the csv into RAM. This can save time when a file is large. 
+Uploading a csv directly to Platform is done by simply passing the file name
+and path to `write_civis` as the first argument:
+
+```{r, eval=FALSE}
+write_civis("~/path/to/my_data.csv", tablename="schema.tablename")
+```
+
+Finally, `write_civis_file` uploads R objects and files to Amazon S3, which is also
+referred to as the 'files endpoint.' R objects saved to the files endpoint expire after
+30 days and are serialized using `saveRDS`. R objects can be loaded back into memory by
+passing the file id to `read_civis`.
+
+```{r, eval = FALSE}
+data(iris)
+id <- write_civis_file(iris)
+iris2 <- read_civis(id)
+```
+
+When passed a file name and path, `write_civis_file` will upload the file to S3 as-is. 
+To read the file back into memory as a data frame, an appropriate function to convert the
+file to a data frame must be provided to the `using` argument of `read_civis`. 
+For example, a csv on the files endpoint can be read back into R as a data frame 
+by setting `using = read.csv`.
+
+```{r, eval = FALSE}
+id <- write_civis_file("path/to/my_data.csv")
+read_civis(id, using = read.csv)
+```
+
+
+## Downloading Large Data Sets from Platform.
+
+Occasionally, a table may be too large to store in memory. `download_civis`
+can be used in place of `read_civis` to download data straight to disk from Platform.
+
+Like `read_civis`, `download_civis` can download files from Amazon Redshift by passing
+`schema.tablename`, or `sql(...)` as the first argument. Files can be downloaded from
+Amazon S3 by passing the file id to `download_civis`. 
+
+```{r eval=FALSE}
+query <- "SELECT * FROM table JOIN other_table USING id WHERE var1 < 23"
+download_civis(sql(query), file = "path/to/my_file.csv")
+download_civis("schema.tablename", file = "path/to/my_file.csv")
+
+id <- write_civis_file(iris)
+download_civis(id, file = "path/to/my_iris.rds")
+```
+
+
+## Running Queries on Platform
+
+Arbitrary queries can be run on Redshift using `query_civis`, which returns the meta-data
+of the query.
+
+```{r eval=FALSE}
+q_res <- query_civis("GRANT ALL ON schema.my_table TO GROUP admin")
+```
+
+Existing queries can be re-run by passing the query id to `query_civis`:
+
+```{r, eval = FALSE}
+id <- q_res$id
+query_civis(id)
+```
+
+## Common Errors
+
+#### Civis API key not properly set or has expired.
+Often an improper API key will return an error like below:
+```{r, eval=FALSE}
+ Error in api_key() : 
+  The environmental variable CIVIS_API_KEY is not set. Add this to your .Renviron or call Sys.setenv(CIVIS_API_KEY = '<api_key>') 
+```
+
+However, there may be cases where the errors are less straightforward.  It
+is a good idea to test that API credentials are properly set with a simple
+call such as `civis::users_list_me()`.  See the README to set
+up API keys correctly.
+
+#### Query does not return any results.
+This may happen if a table is empty 
+or when no rows match a `WHERE` statement. To fix, double check that
+the query is correct or the table is not empty.
+
+```{r, eval=FALSE}
+read_civis(sql("SELECT * FROM schema.tablename WHERE 1 = 0"))
+Error in download_script_results(run$script_id, run$run_id) : 
+  Query produced no output. 
+```
+
+#### Database not set correctly.
+For both `read_civis` and `write_civis`, the database must be set to the
+correct, case sensitive name (not hostname) of
+the database. 
+
+```{r, eval=FALSE}
+ Error in get_db(database) : 
+  Argument database is NULL and options("civis.default_db") not set. Set this option using options(civis.default_db = "my_database") 
+```
+
+To see a complete list of database names, run:
+
+```{r, eval=FALSE}
+sapply(databases_list(), function(x) x$name)
+```

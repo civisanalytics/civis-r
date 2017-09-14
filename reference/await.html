@@ -68,6 +68,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/civis_ml.html">Machine Learning in R with CivisML</a>
+    </li>
+    <li>
       <a href="../articles/concurrency.html">Making Simultaneous Calls to Platform</a>
     </li>
     <li>
@@ -181,7 +184,7 @@ within the time limit, <code>await</code> throws a <code>civis_timeout_error</co
 Likewise, <code>await_all</code> throws a <code>civis_timeout_error</code> if all jobs fail to
 reach a success state within the time limit.</p>
 <p>These errors can be caught using <code>try</code> or <code>tryCatch</code>.
-Useful debugging information can be returned using <code><a href='get_error.html'>get_error</a></code>.</p>
+Useful debugging information can be returned using <code><a href='get_error.html'>get_error</a></code> and <code><a href='fetch_logs.html'>fetch_logs</a></code>.</p>
 <p>The set of possible states for jobs on Civis platform are:
 <code>"succeeded"</code>, <code>"success"</code>, <code>"failed"</code>, <code>"queued"</code>, <code>"running"</code>,
 and <code>"cancelled"</code>.</p>
@@ -202,7 +205,7 @@ Approximate intervals for a given number of retries are as follows:</p><ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='get_status.html'>get_status</a>, <a href='get_error.html'>get_error</a></code></p>
+    <p><code><a href='get_status.html'>get_status</a>, <a href='get_error.html'>get_error</a>, <a href='fetch_logs.html'>fetch_logs</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -239,7 +242,7 @@ Approximate intervals for a given number of retries are as follows:</p><ul>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bill Lattner, Patrick Miller, Keith Ingersoll, Anh Le.</p>
+  <p>Developed by Patrick Miller, Keith Ingersoll.</p>
 </div>
 
 <div class="pkgdown">

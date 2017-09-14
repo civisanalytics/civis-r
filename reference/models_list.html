@@ -68,6 +68,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/civis_ml.html">Machine Learning in R with CivisML</a>
+    </li>
+    <li>
       <a href="../articles/concurrency.html">Making Simultaneous Calls to Platform</a>
     </li>
     <li>
@@ -107,8 +110,8 @@
 
     <pre class="usage"><span class='fu'>models_list</span>(<span class='kw'>model_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>training_table_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>dependent_variable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>author</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>status</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>archived</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>page_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>order_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>archived</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>page_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -132,6 +135,10 @@
     <tr>
       <th>status</th>
       <td><p>string optional. If specified, returns models with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.</p></td>
+    </tr>
+    <tr>
+      <th>hidden</th>
+      <td><p>boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.</p></td>
     </tr>
     <tr>
       <th>archived</th>
@@ -243,7 +250,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bill Lattner, Patrick Miller, Keith Ingersoll, Anh Le.</p>
+  <p>Developed by Patrick Miller, Keith Ingersoll.</p>
 </div>
 
 <div class="pkgdown">

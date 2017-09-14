@@ -2,6 +2,7 @@ urls:
   reference: https://civisanalytics.github.io/civis-r/reference
   article: https://civisanalytics.github.io/civis-r/articles
 articles:
+  civis_ml: civis_ml.html
   concurrency: concurrency.html
   data_import_and_export: data_import_and_export.html
   quick_start: quick_start.html

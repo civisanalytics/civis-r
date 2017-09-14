@@ -68,6 +68,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/civis_ml.html">Machine Learning in R with CivisML</a>
+    </li>
+    <li>
       <a href="../articles/concurrency.html">Making Simultaneous Calls to Platform</a>
     </li>
     <li>
@@ -367,7 +370,7 @@ Specific workflows can also be called directly using the R workflow functions.</
 <td> regression	</td>
 <td> <a href='http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html'>ExtraTreesRegressor</a> </td>
 <td> <code>n_estimators=500</code> </td>
-</tr></table>
+</tr></table><p>Model names can be easily accessed using the global variables <code>CIVIS_ML_REGRESSORS</code> and <code>CIVIS_ML_CLASSIFIERS</code>.</p>
     
     <h2 class="hasAnchor" id="data-sources"><a class="anchor" href="#data-sources"></a>Data Sources</h2>
 
@@ -411,8 +414,10 @@ table on Redshift.</p>
 
     <p><code><a href='civis_file.html'>civis_file</a></code>, <code><a href='civis_table.html'>civis_table</a></code>, and
   <code><a href='civis_file_manifest.html'>civis_file_manifest</a></code> for specifying data sources.</p>
-<p><code><a href='fetch_logs.html'>fetch_logs</a></code> for retrieving logs for a model build and
-  <code><a href='fetch_oos_scores.html'>fetch_oos_scores</a></code> for retrieving the out of sample (fold) scores for each training observation.</p>
+<p><code><a href='get_metric.html'>get_metric</a></code> to access model validation metrics.</p>
+<p><code><a href='fetch_logs.html'>fetch_logs</a></code> for retrieving logs for a (failed) model build,
+  <code><a href='fetch_oos_scores.html'>fetch_oos_scores</a></code> for retrieving the out of sample (fold) scores for each training observation, and
+  <code><a href='fetch_predictions.html'>fetch_predictions</a></code> for retrieving the predictions from a prediction job.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -445,6 +450,7 @@ table on Redshift.</p>
 <span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'>civis_ml_fetch_existing</span>(<span class='kw'>model_id</span> <span class='kw'>=</span> <span class='no'>m</span>$<span class='no'>job</span>$<span class='no'>id</span>, <span class='no'>m</span>$<span class='no'>run</span>$<span class='no'>id</span>)
 <span class='no'>logs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='fetch_logs.html'>fetch_logs</a></span>(<span class='no'>m</span>)
 <span class='no'>yhat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='fetch_oos_scores.html'>fetch_oos_scores</a></span>(<span class='no'>m</span>)
+<span class='no'>yhat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='fetch_predictions.html'>fetch_predictions</a></span>(<span class='no'>pred_job</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -472,7 +478,7 @@ table on Redshift.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bill Lattner, Patrick Miller, Keith Ingersoll, Anh Le.</p>
+  <p>Developed by Patrick Miller, Keith Ingersoll.</p>
 </div>
 
 <div class="pkgdown">

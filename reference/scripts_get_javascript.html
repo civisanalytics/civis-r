@@ -68,6 +68,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/civis_ml.html">Machine Learning in R with CivisML</a>
+    </li>
+    <li>
       <a href="../articles/concurrency.html">Making Simultaneous Calls to Platform</a>
     </li>
     <li>
@@ -134,6 +137,7 @@
 </ul></p></dd>
 <dt>state</dt><dd><p>string, The status of the script's last run.</p></dd>
 <dt>finishedAt</dt><dd><p>string, The time that the script's last run finished.</p></dd>
+<dt>category</dt><dd><p>string, The category of the script.</p></dd>
 <dt>projects</dt><dd><p>array, An array containing the following fields: 
 <ul>
 <li><p>id integer, The ID for the project.</p></li>
@@ -176,10 +180,12 @@
 <li><p>successEmailSubject string, Custom subject line for success e-mail.</p></li>
 <li><p>successEmailBody string, Custom body text for success e-mail, written in Markdown.</p></li>
 <li><p>successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.</p></li>
+<li><p>successEmailFromName string, Name from which success emails are sent; defaults to "Civis."</p></li>
+<li><p>successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.</p></li>
 <li><p>failureEmailAddresses array, Addresses to notify by e-mail when the job fails.</p></li>
 <li><p>stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.</p></li>
-<li><p>successOn boolean, If success email notifications are on</p></li>
-<li><p>failureOn boolean, If failure email notifications are on</p></li>
+<li><p>successOn boolean, If success email notifications are on.</p></li>
+<li><p>failureOn boolean, If failure email notifications are on.</p></li>
 </ul></p></dd>
 <dt>runningAs</dt><dd><p>object, A list containing the following elements: 
 <ul>
@@ -200,7 +206,7 @@
 <li><p>finishedAt string, The time that the run completed.</p></li>
 <li><p>error string, The error message for this run, if present.</p></li>
 </ul></p></dd>
-<dt>hidden</dt><dd><p>boolean, The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID</p></dd>
+<dt>hidden</dt><dd><p>boolean, The hidden status of the object.</p></dd>
 <dt>targetProjectId</dt><dd><p>integer, Target project to which script outputs will be added.</p></dd>
 <dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
 <dt>source</dt><dd><p>string, The body/text of the script.</p></dd>
@@ -223,7 +229,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bill Lattner, Patrick Miller, Keith Ingersoll, Anh Le.</p>
+  <p>Developed by Patrick Miller, Keith Ingersoll.</p>
 </div>
 
 <div class="pkgdown">
