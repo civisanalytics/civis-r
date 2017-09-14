@@ -15,7 +15,7 @@ There are so many models to build! When this becomes challenging on a local mach
 
 CivisML is built in Python using [scikit-learn](http://scikit-learn.org/stable/), and leverages AWS behind the scenes for efficient distributed computing. However, most of its features can be used through R without knowledge of Python or AWS with the `civis_ml` function in `civis`.
 
-While `civis_ml` is a complex function with many arguments, basic machine learning modeling and scoring can be easily carried out easily. We illustrate several features of `civis_ml` with data from a fictious company called Brandable, who is looking to predict which customers are likely to upgrade from the free to the premium service.
+While `civis_ml` is a complex function with many arguments, basic machine learning modeling and scoring can be easily carried out. We illustrate several features of `civis_ml` with data from a fictious company called Brandable, who is looking to predict which customers are likely to upgrade from the free to the premium service.
 
 ## Data sources
 
