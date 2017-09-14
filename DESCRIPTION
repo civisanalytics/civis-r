@@ -9,10 +9,8 @@ Authors@R: c(
   person("Michelangelo", "D'Agostino", email = "mdagostino@civisanalytics.com", role = "ctb"),
   person("Sam", "Weiss", email = "sweiss@civisanalytics.com", role = "ctb"),
   person("Danning", "Chen", email = "dchen@civisanalytics.com", role = "ctb"))
-Description: The Civis API R client is an R package that helps analysts and
-  developers interact with the Civis Platform. The package includes a set of
-  tools around common workflows as well as a convenient interface to make
-  requests directly to the Civis API.
+Description: The package includes a set of tools around common workflows and a convenient interface to make
+  requests directly to the Civis Data Science API (https://www.civisanalytics.com/platform/).
 Depends:
     R (>= 3.2.0)
 License: BSD_3_clause + file LICENSE
