@@ -1,5 +1,5 @@
 Package: civis
-Title: R Client for the Civis Data Science API
+Title: R Client for the 'Civis data science API'
 Version: 1.0.0
 Authors@R: c(
   person("Patrick", "Miller", email = "pmiller@civisanalytics.com", role = c("cre", "aut")),
@@ -9,8 +9,8 @@ Authors@R: c(
   person("Michelangelo", "D'Agostino", email = "mdagostino@civisanalytics.com", role = "ctb"),
   person("Sam", "Weiss", email = "sweiss@civisanalytics.com", role = "ctb"),
   person("Danning", "Chen", email = "dchen@civisanalytics.com", role = "ctb"))
-Description: The package includes a set of tools around common workflows and a convenient interface to make
-  requests directly to the Civis Data Science API (https://www.civisanalytics.com/platform/).
+Description: A set of tools around common workflows and a convenient interface to make
+  requests directly to the 'Civis data science API' <https://www.civisanalytics.com/platform/>.
 Depends:
     R (>= 3.2.0)
 License: BSD_3_clause + file LICENSE
