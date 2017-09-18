@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
-Rscript tools/run_generate_client.R
+"${R_HOME}"/bin/Rscript tools/run_generate_client.R
 
