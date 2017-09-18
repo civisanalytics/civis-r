@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.1] - 2017-09-18
+
+### Fixed
+
+- `configure` and `configure.win` now use `R_HOME` to find `Rscript` instead of assuming that `Rscript` is on the path.
+- `configure` uses `bin/sh` instead of `bin/bash`
+- `configure.win` uses `Rscript.exe` for windows builds
+- `configure.win` does not use `bin/bash`.
+
 ## [1.0.0] - 2017-09-08
 
 ### Added 
