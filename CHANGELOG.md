@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.2] - 2017-09-21
+
+### Fixed
+
+- roxygen2::roxygenize, devtools::build, and memoise::memoise included in NAMESPACE
+- uuid dependency removed
+- run_generate_client now in R/generate_client.R
+- skip autogen on windows with R < 3.4.0
+- don't test time formatting in fetch logs.
+
+
 ## [1.0.1] - 2017-09-18
 
 ### Fixed
