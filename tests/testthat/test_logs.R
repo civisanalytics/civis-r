@@ -97,20 +97,15 @@ test_that("fetch_logs.civis_error calls the right logging function with right ar
 })
 
 test_that("formats the log messages", {
-  Sys.setenv("TZ" = "CST6CDT")
+  # note: do *NOT* test time formatting in messages.
   fake_scripts_list_custom_runs_logs <- mock(log_response)
 
-  with_mock(
+  msgs <- with_mock(
     `civis::scripts_list_custom_runs_logs` = fake_scripts_list_custom_runs_logs,
 
-    messages <- fetch_logs(fake_model)
+    fetch_logs(fake_model)
   )
-
-  expected_messages <- structure(c(
-    "2017-07-09 21:53:11 PM CDT Process used approximately 83.28 MiB of its 3188 limit",
-    "2017-07-09 21:53:11 PM CDT Script complete."),
-    class = "civis_logs")
-  expect_equal(messages, expected_messages)
-
-  Sys.unsetenv("TZ")
+  msg_lines <- strsplit(msgs, "\n")
+  expected_messages <- c("Process used approximately 83.28 MiB of its 3188 limit", "Script complete.")
+  for (i in 1:2) expect_true(grepl(expected_messages[i], msg_lines[i]))
 })

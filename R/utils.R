@@ -19,6 +19,8 @@ get_database_id <- function(database_name) {
   stop(paste("Database", database_name, "not found. Did you mean",
              paste0(aprx, "?")))
 }
+
+#' @import memoise memoise
 get_database_id <- memoise::memoise(get_database_id)
 
 # Split schema.table into a list of schema and table.

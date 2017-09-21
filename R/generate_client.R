@@ -4,6 +4,35 @@ BASE_RESOURCES_V1 = c("credentials", "databases", "files", "imports",
                       "jobs", "models", "predictions", "projects",
                       "queries", "reports", "scripts", "tables", "users")
 
+#' Fetches and generates the client in generated_client.R
+#'
+#' @details
+#' Skips autogeneration on windows with R < 3.4.0 and if R_CLIENT_DEV == "TRUE".
+#' Skips downloading a fresh spec if CIVIS_API_KEY is not set.
+#' @importFrom devtools document
+#' @importFrom roxygen2 roxygenize
+fetch_and_generate_client <- function() {
+  if (Sys.getenv("R_CLIENT_DEV") != "TRUE" && windows_r_version_is_valid()) {
+    message("Generating API")
+    spec <- get_spec()
+    client_str <- generate_client(spec, IGNORE = IGNORE)
+    message(paste0("Writing API to ", FILENAME))
+    write_client(client_str, FILENAME = FILENAME)
+    devtools::document()
+  } else {
+    message("Skipping client generation")
+  }
+}
+
+windows_r_version_is_valid <- function(major = 3, minor = 3.4) {
+  valid <- TRUE
+  if (.Platform$OS.type == "windows") {
+    valid <- as.numeric(R.version$major) >= major && as.numeric(R.version$minor) >= minor
+  }
+  if (!valid) message("Autogenerating API on Windows requires R > 3.4.0")
+  valid
+}
+
 #' Generate a client
 #' @param spec usually from \code{get_spec}
 #' @param IGNORE endpoints to ignore (e.g. "apps")
@@ -228,7 +257,7 @@ parse_params <- function(verb, spec) {
 #   replace_ref(verb$parameters[[1]], spec)
 #   replace_ref(verb$responses, spec)
 
-replace_ref <- function(x, spec, previous_ref="") {
+replace_ref <- function(x, spec, previous_ref = "") {
   x_replaced <- list()
   for (i in seq_along(x)) {
     val <- x[[i]]
@@ -335,7 +364,7 @@ get_spec <- function() {
       message("Downloading API specification from Civis successful.")
     }
   } else {
-    message("The environmental variable CIVIS_API_KEY is not set, using cached API specicification.")
+    message("The environment variable CIVIS_API_KEY is not set, using cached API specification.")
     load("R/sysdata.rda")
   }
   api_spec
