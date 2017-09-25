@@ -157,10 +157,12 @@ test_that("write_civis.character warns under failure", {
 })
 
 test_that("write_civis fails if no db given and default not provided", {
-  options(civis.default_db = NULL)
-  err_msg <- tryCatch(write_civis(iris), error = function(e) e$message)
-  db_err <- tryCatch(get_db(NULL), error = function(e) e$message)
-  expect_equal(err_msg, db_err)
+  with_mock(
+    `civis::get_default_database` = function(...) NULL,
+    err_msg <- tryCatch(write_civis(iris), error = function(e) e$message),
+    db_err <- tryCatch(get_db(NULL), error = function(e) e$message),
+    expect_equal(err_msg, db_err)
+  )
 })
 
 test_that("write_civis_file fails if file doesn't exist", {
@@ -237,7 +239,6 @@ test_that("transfer_table succeeds", {
 test_that("get_db returns default database or an error", {
   expect_equal(get_db("sea_creatures"), "sea_creatures")
 
-  options(civis.default_db = NULL)
   msg <- c("Argument database is NULL and options(\"civis.default_db\") not set. Set this option using options(civis.default_db = \"my_database\")")
   test_msg <- with_mock(
     `civis::get_default_database` = function(...) NULL,
