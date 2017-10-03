@@ -5,10 +5,7 @@ library(civis)
 args <- commandArgs(trailingOnly = TRUE)
 task_file_id <- as.numeric(args[[1]])
 
-# suppresses a warning about namespace future not being available,
-# and being masked by .Globalenv.
-# nothing from future is used here, so I'm suppressing this warning rather than installing/requiring future.
-suppressWarnings(fut <- read_civis(task_file_id))
+fut <- read_civis(task_file_id)
 
 # install and load missing packages
 cat("Installing and loading required packages", fill = TRUE)

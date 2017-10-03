@@ -7,17 +7,19 @@
 civis_platform(...)
 }
 \arguments{
-\item{...}{Arguments to \code{\link{CivisFuture}}}
+\item{...}{Arguments to \code{\link{CivisFuture}} and then \code{\link{scripts_post_containers}}}
 }
 \value{
 The result of evaluating \code{expr}.
 }
 \description{
-Evaluate an expression in Civis Platform
+This is used as with the \code{\link{future}} API as an argument to \code{\link{plan}}.
 }
 \examples{
 \dontrun{
- eval_civis(quote(sqrt(10)))
+ plan(civis_platform)
+ fut <- future({2 + 2}, required_resources = list(cpu = 1024, memory = 2048))
+ value(fut)
 }
 
 }

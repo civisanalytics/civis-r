@@ -44,7 +44,7 @@ as soon as possible or not.}
 \item{label}{An optional character string label attached to the
 future.}
 
-\item{required_resources}{resources}
+\item{required_resources}{resources, see \code{\link{scripts_post_containers}}}
 
 \item{docker_image_name}{the image for the container script.}
 
@@ -53,7 +53,7 @@ future.}
 \item{...}{arguments to \code{\link{scripts_post_containers}}}
 }
 \value{
-A future evaluating \code{expr} on the given container.
+A \code{CivisFuture} inheriting from \code{\link{Future}} that evaluates \code{expr} on the given container.
 }
 \description{
 Evaluate an expression in Civis Platform

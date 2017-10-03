@@ -1,10 +1,16 @@
+#' @importFrom future run value resolved
+NULL
+
 #' Evaluate an expression in Civis Platform
 #'
-#' @param ... Arguments to \code{\link{CivisFuture}}
-#' @return The result of evaluating \code{expr}.
+#' This is used as with the \code{\link{future}} API as an argument to \code{\link{plan}}.
 #'
+#' @param ... Arguments to \code{\link{CivisFuture}} and then \code{\link{scripts_post_containers}}
+#' @return The result of evaluating \code{expr}.
 #' @examples \dontrun{
-#'  eval_civis(quote(sqrt(10)))
+#'  plan(civis_platform)
+#'  fut <- future({2 + 2}, required_resources = list(cpu = 1024, memory = 2048))
+#'  value(fut)
 #' }
 #'
 #' @export
@@ -17,12 +23,12 @@ class(civis_platform) <- c("CivisFuture", "future", "function")
 
 #' Evaluate an expression in Civis Platform
 #' @inheritParams future::Future
-#' @param required_resources resources
+#' @param required_resources resources, see \code{\link{scripts_post_containers}}
 #' @param docker_image_name the image for the container script.
 #' @param docker_image_tag the tag for the Docker image.
 #' @param ... arguments to \code{\link{scripts_post_containers}}
 #'
-#' @return A future evaluating \code{expr} on the given container.
+#' @return A \code{CivisFuture} inheriting from \code{\link{Future}} that evaluates \code{expr} on the given container.
 #'
 #' @export
 CivisFuture <- function(expr = NULL,
@@ -40,9 +46,7 @@ CivisFuture <- function(expr = NULL,
                         docker_image_tag = "2.0.0",
                          ...) {
 
-  # import_future imports the function from future without :::, which triggers R CMD CHECK
-  getGlobalsAndPackages <- import_future("getGlobalsAndPackages")
-  gp <- getGlobalsAndPackages(expr, envir = envir, globals = globals)
+  gp <- future::getGlobalsAndPackages(expr, envir = envir, globals = globals)
 
   ## if there are globals, assign them in envir
   env <- new.env()
@@ -68,9 +72,6 @@ CivisFuture <- function(expr = NULL,
                            docker_image_tag = docker_image_tag, ...)
   structure(future, class = c("CivisFuture", class(future)))
 }
-
-#' @importFrom future run value resolved
-NULL
 
 #' @export
 run.CivisFuture <- function(future, ...) {
@@ -140,7 +141,9 @@ fetch_output <- function(run) {
 }
 
 make_docker_cmd <- function(task_file_id, run_script_file_id) {
-  cmd <- "Rscript -e \"civis::download_civis(${run_script_file_id}, 'run.R')\" && Rscript run.R ${task_file_id}"
+  # this loads the same initial packages in the same order as default R.
+  cmd <- "Rscript -e \"civis::download_civis(${run_script_file_id}, 'run.R')\" && \
+    Rscript --default-packages=methods,datasets,utils,grDevices,graphics,stats run.R ${task_file_id}"
   stringr::str_interp(cmd)
 }
 
@@ -148,20 +151,3 @@ upload_runner_script <- function() {
   path <- system.file("scripts", "r_remote_eval.R", package = "civis")
   write_civis_file(path, name = "r_remote_eval.R")
 }
-
-# This is to get around R CMD check
-import_from <- function(name, default = NULL, package) {
-  ns <- getNamespace(package)
-  if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
-    get(name, mode = "function", envir = ns, inherits = FALSE)
-  } else if (!is.null(default)) {
-    default
-  } else {
-    stop(sprintf("No such '%s' function: %s()", package, name))
-  }
-}
-
-import_future <- function(name, default = NULL) {
-  import_from(name, default = default, package = "future")
-}
-
