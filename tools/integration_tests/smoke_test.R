@@ -149,10 +149,28 @@ test_that("iris model works", {
 })
 
 ###############################################################################
-# Frequently Used Endpoints (Files, Sharing, Databases)
+# Futures
 ###############################################################################
+library(future)
+
+test_that("futures work", {
+  plan(civis_platform)
+  d2 <- future({read_civis("datascience.iris", "redshift-general")})
+  d <- read_civis("datascience.iris", verbose = TRUE)
+  expect_is(d2, "CivisFuture")
+  expect_equal(d, value(d2))
+})
+
+test_that("additional packages get installed", {
+  library(purrr)
+  plan(civis_platform)
+  fut <- future({map(1:2, c)})
+  res <- value(fut)
+  expect_equal(res, list(1, 2))
+})
 
 end <- proc.time()
 tot <- end - start
 
 cat("total time: ", tot[3], "s", fill = TRUE)
+
