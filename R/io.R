@@ -153,7 +153,7 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
 #' @param database string, Name of database where data frame is to be uploaded. If no database is specified,
 #' uses \code{options(civis.default_db)}.
 #' @param if_exists string, optional,  String indicating action to take if table already
-#' exists.  Must be either "fail", "truncate" or "append". Defaults to "fail".
+#' exists.  Must be either "fail", "drop", "truncate" or "append". Defaults to "fail".
 #' @param distkey string, optional, Column name designating the distkey.
 #' @param sortkey1 string, optional, Column name designating the first sortkey.
 #' @param sortkey2 string, optional, Column name designating the second
