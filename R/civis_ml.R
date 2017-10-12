@@ -48,18 +48,22 @@
 #'   the model was built.
 #' @param if_output_exists Action to take if the prediction table already exists. One of \code{"fail"}, \code{"append"}, \code{"drop"}, or \code{"truncate"}.
 #'   The default is \code{"fail"}.
-#' @param n_jobs  Number of concurrent Platform jobs to use for
-#'   multi-file / large table prediction.
+#' @param n_jobs  Number of concurrent Platform jobs to use for training and
+#'   validation, or multi-file / large table prediction.
 #' @param cpu_requested Optional, the number of CPU shares requested in the
-#'   Civis Platform for training jobs. 1024 shares = 1 CPU.
+#'   Civis Platform for training jobs or prediction child jobs.
+#'   1024 shares = 1 CPU.
 #' @param memory_requested Optional, the memory requested from Civis Platform
-#'   for training jobs, in MiB.
+#'   for training jobs or prediction child jobs, in MiB.
 #' @param disk_requested Optional, the disk space requested on Civis Platform
-#'   for training jobs, in GB.
+#'   for training jobs or prediction child jobs, in GB.
 #' @param notifications Optional, model status notifications. See
 #'   \code{\link{scripts_post_custom}} for further documentation about email
 #'   and URL notification.
 #' @param polling_interval Check for job completion every this number of seconds.
+#' @param validation_data Optional, source for validation data. There are
+#'   currently two options: \code{train} (the default), which uses training
+#'   data for validation, and \code{skip}, which skips the validation step.
 #' @param verbose Optional, If \code{TRUE}, supply debug outputs in Platform
 #'   logs and make prediction child jobs visible.
 #' @param \dots Unused
@@ -216,6 +220,8 @@ civis_ml <- function(x,
                      disk_requested = NULL,
                      notifications = NULL,
                      polling_interval = NULL,
+                     validation_data = c('train', 'skip'),
+                     n_jobs = NULL,
                      verbose = FALSE) {
 
   UseMethod("civis_ml", x)
@@ -240,9 +246,12 @@ civis_ml.data.frame <- function(x,
                                 disk_requested = NULL,
                                 notifications = NULL,
                                 polling_interval = NULL,
+                                validation_data = c('train', 'skip'),
+                                n_jobs = NULL,
                                 verbose = FALSE) {
 
   oos_scores_if_exists <- match.arg(oos_scores_if_exists)
+  validation_data <- match.arg(validation_data)
 
   oos_scores_db_id <- NULL
   if (!is.null(oos_scores_db)) {
@@ -268,6 +277,8 @@ civis_ml.data.frame <- function(x,
                        cpu_requested = cpu_requested,
                        memory_requested = memory_requested,
                        disk_requested = disk_requested,
+                       validation_data = validation_data,
+                       n_jobs = n_jobs,
                        notifications = notifications,
                        verbose = verbose)
 }
@@ -291,9 +302,12 @@ civis_ml.civis_table <- function(x,
                                  disk_requested = NULL,
                                  notifications = NULL,
                                  polling_interval = NULL,
+                                 validation_data = c('train', 'skip'),
+                                 n_jobs = NULL,
                                  verbose = FALSE) {
 
   oos_scores_if_exists <- match.arg(oos_scores_if_exists)
+  validation_data <- match.arg(validation_data)
 
   oos_scores_db_id <- NULL
   if (!is.null(oos_scores_db)) {
@@ -319,6 +333,8 @@ civis_ml.civis_table <- function(x,
                        cpu_requested = cpu_requested,
                        memory_requested = memory_requested,
                        disk_requested = disk_requested,
+                       validation_data = validation_data,
+                       n_jobs = n_jobs,
                        notifications = notifications,
                        verbose = verbose)
 }
@@ -342,9 +358,12 @@ civis_ml.civis_file <- function(x,
                                 disk_requested = NULL,
                                 notifications = NULL,
                                 polling_interval = NULL,
+                                validation_data = c('train', 'skip'),
+                                n_jobs = NULL,
                                 verbose = FALSE) {
 
   oos_scores_if_exists <- match.arg(oos_scores_if_exists)
+  validation_data <- match.arg(validation_data)
 
   oos_scores_db_id <- NULL
   if (!is.null(oos_scores_db)) {
@@ -367,6 +386,8 @@ civis_ml.civis_file <- function(x,
                        cpu_requested = cpu_requested,
                        memory_requested = memory_requested,
                        disk_requested = disk_requested,
+                       validation_data = validation_data,
+                       n_jobs = n_jobs,
                        notifications = notifications,
                        verbose = verbose)
 }
@@ -390,9 +411,12 @@ civis_ml.character <- function(x,
                                disk_requested = NULL,
                                notifications = NULL,
                                polling_interval = NULL,
+                               validation_data = c('train', 'skip'),
+                               n_jobs = NULL,
                                verbose = FALSE) {
 
   oos_scores_if_exists <- match.arg(oos_scores_if_exists)
+  validation_data <- match.arg(validation_data)
 
   oos_scores_db_id <- NULL
   if (!is.null(oos_scores_db)) {
@@ -416,6 +440,8 @@ civis_ml.character <- function(x,
                        cpu_requested = cpu_requested,
                        memory_requested = memory_requested,
                        disk_requested = disk_requested,
+                       validation_data = validation_data,
+                       n_jobs = n_jobs,
                        notifications = notifications,
                        verbose = verbose)
 }
@@ -440,6 +466,9 @@ create_and_run_model <- function(file_id = NULL,
                                  cpu_requested = NULL,
                                  memory_requested = NULL,
                                  disk_requested = NULL,
+                                 polling_interval = NULL,
+                                 validation_data = NULL,
+                                 n_jobs = NULL,
                                  notifications = NULL,
                                  verbose = FALSE) {
 
@@ -515,6 +544,14 @@ create_and_run_model <- function(file_id = NULL,
     args[["REQUIRED_DISK_SPACE"]] <- disk_requested
   }
 
+  if (!is.null(validation_data)) {
+    args[["VALIDATION_DATA"]] <- validation_data
+  }
+
+  if (!is.null(n_jobs)) {
+    args[["N_JOBS"]] <- n_jobs
+  }
+
   args <- I(args)  # We don't want any conversions and by toJSON.
 
   job_name <- NULL
@@ -524,11 +561,14 @@ create_and_run_model <- function(file_id = NULL,
 
   tmpl_id <- getOption("civis.ml_train_template_id")
   run <- run_model(template_id = tmpl_id, name = job_name, arguments = args,
-                   notifications = notifications, verbose = verbose)
+                   notifications = notifications,
+                   polling_interval = polling_interval,
+                   verbose = verbose)
   civis_ml_fetch_existing(run$job_id, run$run_id)
 }
 
-run_model <- function(template_id, name, arguments, notifications, verbose) {
+run_model <- function(template_id, name, arguments, notifications,
+                      polling_interval, verbose) {
   script_args <- list(
     from_template_id = template_id,
     arguments = arguments
@@ -547,7 +587,7 @@ run_model <- function(template_id, name, arguments, notifications, verbose) {
   job <- do.call(scripts_post_custom, script_args)
   run <- scripts_post_custom_runs(job$id)
   tryCatch(await(scripts_get_custom_runs, id = job$id, run_id = run$id,
-                    .verbose = verbose),
+                 .interval = polling_interval, .verbose = verbose),
           civis_error = function(e) stop(civis_ml_error(e)),
           error = function(e) stop(e))
   list(job_id = job$id, run_id = run$id)
@@ -630,6 +670,9 @@ predict.civis_ml <- function(object,
                              output_db = NULL,
                              if_output_exists = c('fail', 'append', 'drop', 'truncate'),
                              n_jobs = NULL,
+                             cpu_requested= NULL,
+                             memory_requested= NULL,
+                             disk_requested = NULL,
                              polling_interval = NULL,
                              verbose = FALSE,
                              ...) {
@@ -655,6 +698,9 @@ predict.civis_ml <- function(object,
     if_output_exists = if_output_exists,
     model_name = model_name,
     n_jobs = n_jobs,
+    cpu_requested= cpu_requested,
+    memory_requested= memory_requested,
+    disk_requested = disk_requested,
     polling_interval = polling_interval,
     verbose = verbose
   )
@@ -670,7 +716,6 @@ predict.civis_ml <- function(object,
     file_id <- write_civis_file(newdata, "modelpipeline_data.csv")
     pred_args[["file_id"]] <- file_id
   }
-
   if (inherits(newdata, "civis_file")) {
     # See above, we need to strip class attribute for jsonlite::toJSON.
     pred_args[["file_id"]] <- unclass(newdata)
@@ -705,6 +750,9 @@ create_and_run_pred <- function(train_job_id = NULL,
                                 if_output_exists = NULL,
                                 model_name = NULL,
                                 n_jobs = NULL,
+                                cpu_requested= NULL,
+                                memory_requested= NULL,
+                                disk_requested = NULL,
                                 polling_interval = NULL,
                                 notifications = NULL,
                                 verbose = FALSE) {
@@ -740,10 +788,20 @@ create_and_run_pred <- function(train_job_id = NULL,
     args[["MANIFEST"]] <- manifest
   }
 
-  if (!is.null(n_jobs) && n_jobs == 1) {
-    args[["REQUIRED_CPU"]] <- 1024
-    args[["REQUIRED_MEMORY"]] <- 3000
-    args[["REQUIRED_DISK_SPACE"]] <- 30
+  if (!is.null(n_jobs)) {
+    args[["N_JOBS"]] <- n_jobs
+  }
+
+  if (!is.null(cpu_requested)) {
+    args[["CPU"]] <- cpu_requested
+  }
+
+  if (!is.null(memory_requested)) {
+    args[["MEMORY"]] <- memory_requested
+  }
+
+  if (!is.null(disk_requested)) {
+    args[["DISK_SPACE"]] <- disk_requested
   }
 
   args <- I(args)
@@ -755,7 +813,9 @@ create_and_run_pred <- function(train_job_id = NULL,
 
   tmpl_id <- getOption("civis.ml_predict_template_id")
   run <- run_model(template_id = tmpl_id, name = job_name, arguments = args,
-                   notifications = notifications, verbose = verbose)
+                   notifications = notifications,
+                   polling_interval = polling_interval,
+                   verbose = verbose)
   fetch_predict_results(run$job_id, run$run_id)
 }
 

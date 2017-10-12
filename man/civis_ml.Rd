@@ -14,13 +14,14 @@ civis_ml(x, dependent_variable, model_type, primary_key = NULL,
   oos_scores_if_exists = c("fail", "append", "drop", "truncate"),
   model_name = NULL, cpu_requested = NULL, memory_requested = NULL,
   disk_requested = NULL, notifications = NULL, polling_interval = NULL,
-  verbose = FALSE)
+  validation_data = c("train", "skip"), n_jobs = NULL, verbose = FALSE)
 
 civis_ml_fetch_existing(model_id, run_id = NULL)
 
 \method{predict}{civis_ml}(object, newdata, primary_key = NA,
   output_table = NULL, output_db = NULL, if_output_exists = c("fail",
-  "append", "drop", "truncate"), n_jobs = NULL, polling_interval = NULL,
+  "append", "drop", "truncate"), n_jobs = NULL, cpu_requested = NULL,
+  memory_requested = NULL, disk_requested = NULL, polling_interval = NULL,
   verbose = FALSE, ...)
 }
 \arguments{
@@ -73,19 +74,27 @@ The default is \code{"fail"}.}
 It will have \code{" Train"} or \code{" Predict"} added to become the Script title.}
 
 \item{cpu_requested}{Optional, the number of CPU shares requested in the
-Civis Platform for training jobs. 1024 shares = 1 CPU.}
+Civis Platform for training jobs or prediction child jobs.
+1024 shares = 1 CPU.}
 
 \item{memory_requested}{Optional, the memory requested from Civis Platform
-for training jobs, in MiB.}
+for training jobs or prediction child jobs, in MiB.}
 
 \item{disk_requested}{Optional, the disk space requested on Civis Platform
-for training jobs, in GB.}
+for training jobs or prediction child jobs, in GB.}
 
 \item{notifications}{Optional, model status notifications. See
 \code{\link{scripts_post_custom}} for further documentation about email
 and URL notification.}
 
 \item{polling_interval}{Check for job completion every this number of seconds.}
+
+\item{validation_data}{Optional, source for validation data. There are
+currently two options: \code{train} (the default), which uses training
+data for validation, and \code{skip}, which skips the validation step.}
+
+\item{n_jobs}{Number of concurrent Platform jobs to use for training and
+validation, or multi-file / large table prediction.}
 
 \item{verbose}{Optional, If \code{TRUE}, supply debug outputs in Platform
 logs and make prediction child jobs visible.}
@@ -105,9 +114,6 @@ the model was built.}
 
 \item{if_output_exists}{Action to take if the prediction table already exists. One of \code{"fail"}, \code{"append"}, \code{"drop"}, or \code{"truncate"}.
 The default is \code{"fail"}.}
-
-\item{n_jobs}{Number of concurrent Platform jobs to use for
-multi-file / large table prediction.}
 
 \item{\dots}{Unused}
 }

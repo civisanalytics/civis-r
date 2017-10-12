@@ -53,6 +53,8 @@ test_that("calls scripts_post_custom", {
              notifications = list(successEmailSubject = "A success",
                                   successEmailAddresses = c("user@example.com")),
              polling_interval = 5,
+             validation_data = "skip",
+             n_jobs = 9,
              verbose = FALSE)
   )
 
@@ -84,6 +86,8 @@ test_that("calls scripts_post_custom", {
   expect_equal(ml_args$REQUIRED_CPU, 1111)
   expect_equal(ml_args$REQUIRED_MEMORY, 9096)
   expect_equal(ml_args$REQUIRED_DISK_SPACE, 9)
+  expect_equal(ml_args$VALIDATION_DATA, "skip")
+  expect_equal(ml_args$N_JOBS, 9)
 
   # Make sure we started the job.
   expect_args(fake_scripts_post_custom_runs, 1, 999)
@@ -133,6 +137,8 @@ test_that("calls civis_ml.data.frame for local df", {
                 cpu_requested = NULL,
                 memory_requested = NULL,
                 disk_requested = NULL,
+                validation_data = 'train',
+                n_jobs = NULL,
                 notifications = NULL,
                 verbose = FALSE)
   )
@@ -179,6 +185,8 @@ test_that("calls civis_ml.civis_table for table_name", {
               cpu_requested = NULL,
               memory_requested = NULL,
               disk_requested = NULL,
+              validation_data = 'train',
+              n_jobs = NULL,
               notifications = NULL,
               verbose = FALSE)
 })
@@ -214,6 +222,8 @@ test_that("calls civis_ml.civis_file for file_id", {
               cpu_requested = NULL,
               memory_requested = NULL,
               disk_requested = NULL,
+              validation_data = 'train',
+              n_jobs = NULL,
               notifications = NULL,
               verbose = FALSE)
 })
@@ -255,6 +265,8 @@ test_that("calls civis_ml.character for local csv", {
               cpu_requested = NULL,
               memory_requested = NULL,
               disk_requested = NULL,
+              validation_data = 'train',
+              n_jobs = NULL,
               notifications = NULL,
               verbose = FALSE)
 })
@@ -342,6 +354,9 @@ test_that("calls scripts_post_custom", {
             output_db = "score_database",
             if_output_exists = "append",
             n_jobs = 10,
+            cpu_requested = 2000,
+            memory_requested = 10,
+            disk_requested = 15,
             polling_interval = 5,
             verbose = TRUE)
   )
@@ -358,6 +373,9 @@ test_that("calls scripts_post_custom", {
   expect_equal(pred_args$PRIMARY_KEY, "row_number")
   expect_equal(pred_args$IF_EXISTS, "append")
   expect_equal(pred_args$N_JOBS, 10)
+  expect_equal(pred_args$CPU, 2000)
+  expect_equal(pred_args$MEMORY, 10)
+  expect_equal(pred_args$DISK_SPACE, 15)
   expect_equal(pred_args$DEBUG, TRUE)
   expect_equal(pred_args$CIVIS_FILE_ID, NULL)
   expect_equal(pred_args$TABLE_NAME, "schema.table")
@@ -420,6 +438,9 @@ test_that("uploads local df and passes a file_id", {
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
+              cpu_requested= NULL,
+              memory_requested= NULL,
+              disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
               file_id = 1234)
@@ -449,6 +470,9 @@ test_that("uploads a local file and passes a file_id", {
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
+              cpu_requested= NULL,
+              memory_requested= NULL,
+              disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
               file_id = 561)
@@ -472,6 +496,9 @@ test_that("passes a file_id directly", {
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
+              cpu_requested= NULL,
+              memory_requested= NULL,
+              disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
               file_id = 1234)
@@ -495,6 +522,9 @@ test_that("passes a manifest file_id", {
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
+              cpu_requested= NULL,
+              memory_requested= NULL,
+              disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
               manifest = 123)
@@ -527,6 +557,9 @@ test_that("passes table info", {
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
+              cpu_requested= NULL,
+              memory_requested= NULL,
+              disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
               table_name = "a_schema.table",
@@ -681,25 +714,6 @@ test_that("uses the correct template_id", {
 
   run_args <- mock_args(fake_run_model)[[1]]
   expect_equal(run_args$template_id, 8888)
-})
-
-test_that("adds resources when n_jobs = 1", {
-  fake_getOption <- mock(8888, cycle = TRUE)
-  fake_run_model <- mock(list(job_id = 133, run_id = 244))
-  fake_fetch_predict_results <- mock(NULL)
-
-  with_mock(
-    `base::getOption` = fake_getOption,
-    `civis::run_model` = fake_run_model,
-    `civis::fetch_predict_results` = fake_fetch_predict_results,
-
-    create_and_run_pred(train_job_id = 111, train_run_id = 222, n_jobs = 1)
-  )
-
-  run_args <- mock_args(fake_run_model)[[1]]
-  expect_equal(run_args$arguments$REQUIRED_CPU, 1024)
-  expect_equal(run_args$arguments$REQUIRED_MEMORY, 3000)
-  expect_equal(run_args$arguments$REQUIRED_DISK_SPACE, 30)
 })
 
 ###############################################################################
