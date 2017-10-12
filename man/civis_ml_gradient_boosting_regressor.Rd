@@ -130,13 +130,14 @@ The default is \code{"fail"}.}
 It will have \code{" Train"} or \code{" Predict"} added to become the Script title.}
 
 \item{cpu_requested}{Optional, the number of CPU shares requested in the
-Civis Platform for training jobs. 1024 shares = 1 CPU.}
+Civis Platform for training jobs or prediction child jobs.
+1024 shares = 1 CPU.}
 
 \item{memory_requested}{Optional, the memory requested from Civis Platform
-for training jobs, in MiB.}
+for training jobs or prediction child jobs, in MiB.}
 
 \item{disk_requested}{Optional, the disk space requested on Civis Platform
-for training jobs, in GB.}
+for training jobs or prediction child jobs, in GB.}
 
 \item{notifications}{Optional, model status notifications. See
 \code{\link{scripts_post_custom}} for further documentation about email
