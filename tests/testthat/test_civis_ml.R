@@ -53,6 +53,8 @@ test_that("calls scripts_post_custom", {
              notifications = list(successEmailSubject = "A success",
                                   successEmailAddresses = c("user@example.com")),
              polling_interval = 5,
+             validation_data = "skip",
+             n_jobs = 9,
              verbose = FALSE)
   )
 
@@ -84,6 +86,8 @@ test_that("calls scripts_post_custom", {
   expect_equal(ml_args$REQUIRED_CPU, 1111)
   expect_equal(ml_args$REQUIRED_MEMORY, 9096)
   expect_equal(ml_args$REQUIRED_DISK_SPACE, 9)
+  expect_equal(ml_args$VALIDATION_DATA, "skip")
+  expect_equal(ml_args$N_JOBS, 9)
 
   # Make sure we started the job.
   expect_args(fake_scripts_post_custom_runs, 1, 999)
@@ -350,6 +354,9 @@ test_that("calls scripts_post_custom", {
             output_db = "score_database",
             if_output_exists = "append",
             n_jobs = 10,
+            cpu_requested = 2000,
+            memory_requested = 10,
+            disk_requested = 15,
             polling_interval = 5,
             verbose = TRUE)
   )
@@ -366,6 +373,9 @@ test_that("calls scripts_post_custom", {
   expect_equal(pred_args$PRIMARY_KEY, "row_number")
   expect_equal(pred_args$IF_EXISTS, "append")
   expect_equal(pred_args$N_JOBS, 10)
+  expect_equal(pred_args$CPU, 2000)
+  expect_equal(pred_args$MEMORY, 10)
+  expect_equal(pred_args$DISK_SPACE, 15)
   expect_equal(pred_args$DEBUG, TRUE)
   expect_equal(pred_args$CIVIS_FILE_ID, NULL)
   expect_equal(pred_args$TABLE_NAME, "schema.table")
@@ -428,9 +438,9 @@ test_that("uploads local df and passes a file_id", {
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
-              cpu = NULL,
-              memory = NULL,
-              disk_space = NULL,
+              cpu_requested= NULL,
+              memory_requested= NULL,
+              disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
               file_id = 1234)
@@ -460,9 +470,9 @@ test_that("uploads a local file and passes a file_id", {
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
-              cpu = NULL,
-              memory = NULL,
-              disk_space = NULL,
+              cpu_requested= NULL,
+              memory_requested= NULL,
+              disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
               file_id = 561)
@@ -486,9 +496,9 @@ test_that("passes a file_id directly", {
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
-              cpu = NULL,
-              memory = NULL,
-              disk_space = NULL,
+              cpu_requested= NULL,
+              memory_requested= NULL,
+              disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
               file_id = 1234)
@@ -512,9 +522,9 @@ test_that("passes a manifest file_id", {
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
-              cpu = NULL,
-              memory = NULL,
-              disk_space = NULL,
+              cpu_requested= NULL,
+              memory_requested= NULL,
+              disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
               manifest = 123)
@@ -547,9 +557,9 @@ test_that("passes table info", {
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
-              cpu = NULL,
-              memory = NULL,
-              disk_space = NULL,
+              cpu_requested= NULL,
+              memory_requested= NULL,
+              disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
               table_name = "a_schema.table",

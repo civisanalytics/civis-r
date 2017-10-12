@@ -51,20 +51,12 @@
 #' @param n_jobs  Number of concurrent Platform jobs to use for training and
 #'   validation, or multi-file / large table prediction.
 #' @param cpu_requested Optional, the number of CPU shares requested in the
-#'   Civis Platform for training jobs. 1024 shares = 1 CPU.
+#'   Civis Platform for training jobs or prediction child jobs.
+#'   1024 shares = 1 CPU.
 #' @param memory_requested Optional, the memory requested from Civis Platform
-#'   for training jobs, in MiB.
+#'   for training jobs or prediction child jobs, in MiB.
 #' @param disk_requested Optional, the disk space requested on Civis Platform
-#'   for training jobs, in GB.
-#' @param cpu Optional, the number of CPU shares requested in the Civis Platform
-#'   for prediction child jobs. Should only be used if automatically calculated
-#'   resources are not sufficient. 1024 shares = 1 CPU.
-#' @param memory Optional, the memory requested from Civis Platform for
-#'   prediction child jobs, in MiB. Should only be used if automatically calculated
-#'   resources are not sufficient.
-#' @param disk_space Optional, the disk space requested on Civis Platform for
-#'   prediction child jobs, in GB. Should only be used if automatically calculated
-#'   resources are not sufficient.
+#'   for training jobs or prediction child jobs, in GB.
 #' @param notifications Optional, model status notifications. See
 #'   \code{\link{scripts_post_custom}} for further documentation about email
 #'   and URL notification.
@@ -474,6 +466,7 @@ create_and_run_model <- function(file_id = NULL,
                                  cpu_requested = NULL,
                                  memory_requested = NULL,
                                  disk_requested = NULL,
+                                 polling_interval = NULL,
                                  validation_data = NULL,
                                  n_jobs = NULL,
                                  notifications = NULL,
@@ -568,11 +561,14 @@ create_and_run_model <- function(file_id = NULL,
 
   tmpl_id <- getOption("civis.ml_train_template_id")
   run <- run_model(template_id = tmpl_id, name = job_name, arguments = args,
-                   notifications = notifications, verbose = verbose)
+                   notifications = notifications,
+                   polling_interval = polling_interval,
+                   verbose = verbose)
   civis_ml_fetch_existing(run$job_id, run$run_id)
 }
 
-run_model <- function(template_id, name, arguments, notifications, verbose) {
+run_model <- function(template_id, name, arguments, notifications,
+                      polling_interval, verbose) {
   script_args <- list(
     from_template_id = template_id,
     arguments = arguments
@@ -591,7 +587,7 @@ run_model <- function(template_id, name, arguments, notifications, verbose) {
   job <- do.call(scripts_post_custom, script_args)
   run <- scripts_post_custom_runs(job$id)
   tryCatch(await(scripts_get_custom_runs, id = job$id, run_id = run$id,
-                    .verbose = verbose),
+                 .interval = polling_interval, .verbose = verbose),
           civis_error = function(e) stop(civis_ml_error(e)),
           error = function(e) stop(e))
   list(job_id = job$id, run_id = run$id)
@@ -674,9 +670,9 @@ predict.civis_ml <- function(object,
                              output_db = NULL,
                              if_output_exists = c('fail', 'append', 'drop', 'truncate'),
                              n_jobs = NULL,
-                             cpu = NULL,
-                             memory = NULL,
-                             disk_space = NULL,
+                             cpu_requested= NULL,
+                             memory_requested= NULL,
+                             disk_requested = NULL,
                              polling_interval = NULL,
                              verbose = FALSE,
                              ...) {
@@ -702,9 +698,9 @@ predict.civis_ml <- function(object,
     if_output_exists = if_output_exists,
     model_name = model_name,
     n_jobs = n_jobs,
-    cpu = cpu,
-    memory = memory,
-    disk_space = disk_space,
+    cpu_requested= cpu_requested,
+    memory_requested= memory_requested,
+    disk_requested = disk_requested,
     polling_interval = polling_interval,
     verbose = verbose
   )
@@ -720,7 +716,6 @@ predict.civis_ml <- function(object,
     file_id <- write_civis_file(newdata, "modelpipeline_data.csv")
     pred_args[["file_id"]] <- file_id
   }
-
   if (inherits(newdata, "civis_file")) {
     # See above, we need to strip class attribute for jsonlite::toJSON.
     pred_args[["file_id"]] <- unclass(newdata)
@@ -755,9 +750,9 @@ create_and_run_pred <- function(train_job_id = NULL,
                                 if_output_exists = NULL,
                                 model_name = NULL,
                                 n_jobs = NULL,
-                                cpu = NULL,
-                                memory = NULL,
-                                disk_space = NULL,
+                                cpu_requested= NULL,
+                                memory_requested= NULL,
+                                disk_requested = NULL,
                                 polling_interval = NULL,
                                 notifications = NULL,
                                 verbose = FALSE) {
@@ -797,16 +792,16 @@ create_and_run_pred <- function(train_job_id = NULL,
     args[["N_JOBS"]] <- n_jobs
   }
 
-  if (!is.null(cpu)) {
-    args[["CPU"]] <- cpu
+  if (!is.null(cpu_requested)) {
+    args[["CPU"]] <- cpu_requested
   }
 
-  if (!is.null(memory)) {
-    args[["MEMORY"]] <- memory
+  if (!is.null(memory_requested)) {
+    args[["MEMORY"]] <- memory_requested
   }
 
-  if (!is.null(disk_space)) {
-    args[["DISK_SPACE"]] <- disk_space
+  if (!is.null(disk_requested)) {
+    args[["DISK_SPACE"]] <- disk_requested
   }
 
   args <- I(args)
@@ -818,7 +813,9 @@ create_and_run_pred <- function(train_job_id = NULL,
 
   tmpl_id <- getOption("civis.ml_predict_template_id")
   run <- run_model(template_id = tmpl_id, name = job_name, arguments = args,
-                   notifications = notifications, verbose = verbose)
+                   notifications = notifications,
+                   polling_interval = polling_interval,
+                   verbose = verbose)
   fetch_predict_results(run$job_id, run$run_id)
 }
 
