@@ -68,10 +68,10 @@
 #' @param notifications Optional, model status notifications. See
 #'   \code{\link{scripts_post_custom}} for further documentation about email
 #'   and URL notification.
+#' @param polling_interval Check for job completion every this number of seconds.
 #' @param validation_data Optional, source for validation data. There are
 #'   currently two options: \code{train} (the default), which uses training
 #'   data for validation, and \code{skip}, which skips the validation step.
-#' @param polling_interval Check for job completion every this number of seconds.
 #' @param verbose Optional, If \code{TRUE}, supply debug outputs in Platform
 #'   logs and make prediction child jobs visible.
 #' @param \dots Unused
@@ -309,9 +309,9 @@ civis_ml.civis_table <- function(x,
                                  memory_requested = NULL,
                                  disk_requested = NULL,
                                  notifications = NULL,
+                                 polling_interval = NULL,
                                  validation_data = c('train', 'skip'),
                                  n_jobs = NULL,
-                                 polling_interval = NULL,
                                  verbose = FALSE) {
 
   oos_scores_if_exists <- match.arg(oos_scores_if_exists)
@@ -365,9 +365,9 @@ civis_ml.civis_file <- function(x,
                                 memory_requested = NULL,
                                 disk_requested = NULL,
                                 notifications = NULL,
+                                polling_interval = NULL,
                                 validation_data = c('train', 'skip'),
                                 n_jobs = NULL,
-                                polling_interval = NULL,
                                 verbose = FALSE) {
 
   oos_scores_if_exists <- match.arg(oos_scores_if_exists)
@@ -418,9 +418,9 @@ civis_ml.character <- function(x,
                                memory_requested = NULL,
                                disk_requested = NULL,
                                notifications = NULL,
+                               polling_interval = NULL,
                                validation_data = c('train', 'skip'),
                                n_jobs = NULL,
-                               polling_interval = NULL,
                                verbose = FALSE) {
 
   oos_scores_if_exists <- match.arg(oos_scores_if_exists)
