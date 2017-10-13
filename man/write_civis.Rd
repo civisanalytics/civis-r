@@ -27,7 +27,7 @@ write_civis(x, ...)
 uses \code{options(civis.default_db)}.}
 
 \item{if_exists}{string, optional,  String indicating action to take if table already
-exists.  Must be either "fail", "truncate" or "append". Defaults to "fail".}
+exists.  Must be either "fail", "drop", "truncate" or "append". Defaults to "fail".}
 
 \item{distkey}{string, optional, Column name designating the distkey.}
 
