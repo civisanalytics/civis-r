@@ -746,6 +746,7 @@ predict.civis_ml <- function(object,
   pred_args <- list(
     train_job_id = object$job$id,
     train_run_id = object$run$id,
+    template_id = get_predict_template_id(object),
     primary_key = primary_key,
     output_table = output_table,
     output_db_id = output_db_id,
@@ -792,6 +793,7 @@ predict.civis_ml <- function(object,
 
 create_and_run_pred <- function(train_job_id = NULL,
                                 train_run_id = NULL,
+                                template_id = NULL,
                                 file_id = NULL,
                                 table_name = NULL,
                                 database_id = NULL,
@@ -865,8 +867,7 @@ create_and_run_pred <- function(train_job_id = NULL,
     job_name <- paste0(model_name, " Predict")
   }
 
-  tmpl_id <- getOption("civis.ml_predict_template_id")
-  run <- run_model(template_id = tmpl_id, name = job_name, arguments = args,
+  run <- run_model(template_id = template_id, name = job_name, arguments = args,
                    notifications = notifications,
                    polling_interval = polling_interval,
                    verbose = verbose)
