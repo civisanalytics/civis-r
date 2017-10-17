@@ -43,20 +43,23 @@ print.civis_ml_classifier <- function(x, digits = 4, ...) {
   cat(url, fill = TRUE)
   cat("Job id: ", job_id, " Run id: ", run_id, "\n", fill = TRUE)
 
-  if (any(is_multiclass(x)) & is_multitarget(x)) {
-    tabs <- mapply(class_metric_table, p_cor, class_names, aucs)
-  } else if (is_multiclass(x)) {
-      tabs <- list(class_metric_table(p_cor, class_names, aucs))
-  } else {
-    cat("AUC: ", signif(aucs, digits = digits), fill = TRUE)
-    tabs <- list(class_metric_table(p_cor, class_names))
+  if (!is.null(x$metrics)) {
+    if (any(is_multiclass(x)) & is_multitarget(x)) {
+      tabs <- mapply(class_metric_table, p_cor, class_names, aucs)
+    } else if (is_multiclass(x)) {
+        tabs <- list(class_metric_table(p_cor, class_names, aucs))
+    } else {
+      cat("AUC: ", signif(aucs, digits = digits), fill = TRUE)
+      tabs <- list(class_metric_table(p_cor, class_names))
+    }
+
+    for (i in seq_along(tabs)) {
+      cat(paste0(dv_names[i], ":"), fill = TRUE)
+      print(signif(tabs[[i]], digits = digits))
+      cat("\n")
+    }
   }
 
-  for (i in seq_along(tabs)) {
-    cat(paste0(dv_names[i], ":"), fill = TRUE)
-    print(signif(tabs[[i]], digits = digits))
-    cat("\n")
-  }
   invisible(x)
 }
 
@@ -84,10 +87,12 @@ print.civis_ml_regressor <- function(x, digits = 4, ...) {
   cat("Job id: ", job_id, " Run id: ", run_id, "\n", fill = TRUE)
 
   dv_names <- x$model_info$data$target_columns
-  tab <- with(x$metrics$metrics, t(cbind(r_squared, rmse, mad)))
-  colnames(tab) <- dv_names
-  rownames(tab) <- c( "R-squared", "RMSE", "MAD")
-  print(signif(tab, digits = digits))
+  if (!is.null(x$metrics)) {
+    tab <- with(x$metrics$metrics, t(cbind(r_squared, rmse, mad)))
+    colnames(tab) <- dv_names
+    rownames(tab) <- c( "R-squared", "RMSE", "MAD")
+    print(signif(tab, digits = digits))
+  }
   invisible(x)
 }
 
