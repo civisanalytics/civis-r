@@ -90,7 +90,7 @@
 #'  \code{random_forest_classifier} \tab	\code{\link{civis_ml_random_forest_classifier}} \tab classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}{RandomForestClassifier} \tab	\code{n_estimators=500} \cr
 #'  \code{extra_trees_classifier} \tab	\code{\link{civis_ml_extra_trees_classifier}} \tab classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html}{ExtraTreesClassifier} \tab	\code{n_estimators=500} \cr
 #'  \code{multilayer_perceptron_classifier} \tab \tab classification \tab \href{<https://github.com/civisanalytics/muffnn>}{MLPClassifier} \tab \cr
-#'  \code{stacking_classifer} \tab \tab classification  \tab \href{<https://github.com/civisanalytics/civisml-extensions>}{StackedClassifer}\tab \cr
+#'  \code{stacking_classifier} \tab \tab classification  \tab \href{<https://github.com/civisanalytics/civisml-extensions>}{StackedClassifier}\tab \cr
 #'  \code{sparse_linear_regressor} \tab \code{\link{civis_ml_sparse_linear_regressor}} \tab	regression \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html}{LinearRegression} \tab \cr
 #'  \code{sparse_ridge_regressor} \tab	\code{\link{civis_ml_sparse_ridge_regressor}} \tab regression \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html}{Ridge} \tab \cr
 #'  \code{gradient_boosting_regressor}	\tab \code{\link{civis_ml_gradient_boosting_regressor}} \tab regression \tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html}{GradientBoostingRegressor} \tab \code{n_estimators=500, max_depth=2} \cr
@@ -550,7 +550,12 @@ create_and_run_model <- function(file_id = NULL,
     if (is_mlp & !hyperband) {
       stop("cross_validation_parameters = \"hyperband\" is required for ", model_type)
     }
-    args[["CVPARAMS"]] <- jsonlite::toJSON(cross_validation_parameters, null = "null")
+    if (hyperband) {
+      # need to escape quotes to get the string to work
+      args[["CVPARAMS"]] <- '\"hyperband\"'
+    } else {
+      args[["CVPARAMS"]] <- jsonlite::toJSON(cross_validation_parameters, null = "null")
+    }
   }
 
   if (!is.null(calibration)) {

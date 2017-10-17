@@ -2,15 +2,37 @@
 
 #' List of civis_ml regression models.
 #' @export
-CIVIS_ML_REGRESSORS <- c("sparse_linear_regressor", "sparse_ridge_regressor",
-                        "gradient_boosting_regressor","random_forest_regressor",
-                        "extra_trees_regressor")
+CIVIS_ML_REGRESSORS <- c("sparse_linear_regressor",
+                         "sparse_ridge_regressor",
+                         "gradient_boosting_regressor",
+                         "random_forest_regressor",
+                         "extra_trees_regressor",
+                         "multilayer_perceptron_regressor",
+                         "stacking_regressor")
 
 #' List of classification models.
 #' @export
-CIVIS_ML_CLASSIFIERS <- c("sparse_logistic", "gradient_boosting_classifier",
-                         "random_forest_classifier",
-                         "extra_trees_classifier")
+CIVIS_ML_CLASSIFIERS <- c("sparse_logistic",
+                          "gradient_boosting_classifier",
+                          "random_forest_classifier",
+                          "extra_trees_classifier",
+                          "multilayer_perceptron_classifier",
+                          "stacking_classifier")
+
+CIVIS_ML_TEMPLATE_IDS <- data.frame(
+  id = c(9112, 9113, 9968, 9969),
+  version = c(1.1, 1.1, 2.0, 2.0),
+  name = c("train", "predict", "train", "predict"),
+  stringsAsFactors = FALSE
+)
+
+# returns a version compatible template id for a given training model without API calls.
+get_predict_template_id <- function(m) {
+  train_id <- m$job$fromTemplateId
+  this_version <- CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$id == train_id, "version"]
+  CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$version == this_version &
+                        CIVIS_ML_TEMPLATE_IDS$name == "predict", "id"]
+}
 
 CIVIS_ML_TEMPLATE_IDS <- data.frame(
   id = c(9112, 9113, 9968, 9969),
@@ -158,9 +180,9 @@ get_metric <- function(model, name = NULL) {
 
 get_model_data <- function(model, name = NULL) {
   if (!is.null(name)) {
-    model$metrics$data[[name]]
+    model$model_info$data[[name]]
   } else {
-    model$metrics$data
+    model$model_info$data
   }
 }
 

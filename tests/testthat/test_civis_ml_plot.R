@@ -2,8 +2,8 @@ library(civis)
 context("civis_ml_plot")
 
 model_list    <- readRDS("data/civis_ml_models.rds")
-plotable_mods <- model_list[1:10]
-err_mod       <- model_list[11:14]
+plotable_mods <- model_list[1:(length(model_list) - 4)]
+err_mod       <- tail(model_list, n = 4)
 is_classif    <- sapply(plotable_mods, function(m) is(m, "civis_ml_classifier"))
 
 test_that("decile plot for classification is produced", {

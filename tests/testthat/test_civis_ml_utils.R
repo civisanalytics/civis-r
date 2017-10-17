@@ -29,6 +29,7 @@ test_that("print.civis_ml_classifier works", {
 
 test_that("print.civis_ml_regressor works", {
   reg_msg <- lapply(model_list[!is_classif], function(x) utils::capture.output(x))
+  n_models <- length(reg_msg)
 
   first_row <- lapply(reg_msg, purrr::pluck, 1)
   expect_true(all(stringr::str_detect(first_row, reg_algo)))
@@ -36,13 +37,13 @@ test_that("print.civis_ml_regressor works", {
   third_row <- lapply(reg_msg, purrr::pluck, 3)
   expect_true(all(str_detect_multiple(third_row, id_regex[!is_classif])))
 
-  expect_true(all(stringr::str_detect(reg_msg[1:5], "(MAD)*(RMSE)*(R-squared)")))
-  expect_true(all(stringr::str_detect(reg_msg[1:5], c("weight"))))
-  expect_true(all(stringr::str_detect(reg_msg[6], c("(weight)*(Time)"))))
+  expect_true(all(stringr::str_detect(reg_msg[1:(n_models - 1)], "(MAD)*(RMSE)*(R-squared)")))
+  expect_true(all(stringr::str_detect(reg_msg[1:(n_models - 1)], c("weight"))))
+  expect_true(all(stringr::str_detect(reg_msg[n_models - 1], c("(weight)*(Time)"))))
 })
 
 test_that("print.civis_ml digits works", {
-  m <- model_list[[6]]
+  m <- model_list[!is_classif][[1]]
   d_str <- capture.output(print(m, digits = 2))[6:8]
   nums <- lapply(stringr::str_split(d_str, " "), tail, 1)
   dec <- lapply(purrr::flatten(lapply(nums, stringr::str_split, "\\.")), tail, 1)
@@ -54,7 +55,6 @@ test_that("get_metrics returns metrics", {
     metr <- m$metrics$metrics
     expect_equal(metr, get_metric(m))
   }
-  expect_equal(get_metric(m, "mad"), m$metrics$metrics$mad)
 })
 
 test_that("get_metrics throws error if not model", {
@@ -64,25 +64,25 @@ test_that("get_metrics throws error if not model", {
 
 test_that("get_model_data returns model data", {
   for (m in model_list) {
-    dat <- m$metrics$data
+    dat <- m$model_info$data
     expect_equal(dat, get_model_data(m))
+    expect_equal(get_model_data(m, "target_columns"),
+                 m$model_info$data$target_columns)
   }
-  expect_equal(get_model_data(m, "target_columns"),
-               m$metrics$data$target_columns)
 })
 
 test_that("is_multiclass works", {
   expect_true(is_multiclass(model_list[[1]]))
-  expect_false(is_multiclass(model_list[[5]]))
-  expect_false(is_multiclass(model_list[[6]]))
+  # binary
+  expect_false(is_multiclass(model_list[[7]]))
+  # reg
+  expect_false(is_multiclass(model_list[!is_classif][[1]]))
 })
 
 test_that("is_multitarget works", {
-  expect_true(is_multitarget(model_list[[11]]))
-  expect_true(is_multitarget(model_list[[12]]))
-  expect_false(is_multitarget(model_list[[2]]))
-  expect_true(is_multitarget(model_list[[12]]) &
-                all(is_multiclass(model_list[[12]])))
+  test <- sapply(model_list, is_multitarget)
+  ans <- sapply(model_list, function(m) length(m$model_info$data$n_unique_targets) > 1)
+  expect_equal(test, ans)
 })
 
 test_that("get_predict_template_id returns correct template for train/predict version ", {
@@ -105,3 +105,4 @@ test_that("get_train_template_id returns previous id if current not available", 
   ans <- tail(CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$name == "train", "id"], n = 2)[1]
   expect_equal(id, ans)
 })
+
