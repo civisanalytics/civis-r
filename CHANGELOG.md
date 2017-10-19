@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.1.0] - TBD
+
+### Added
+
+#### CivisML
+- New named workflows: `multilayer_perceptron_regressor`, `multilayer_perceptron_classifier`,
+`stacking_regressor`,  and `stacking_classifier`
+- Hyperband is provided for hyperparameter tuning by setting `cross_validation_parameters = "hyperband` in `gradient_boosting_classifier`, `random_forest_classifier`, `extra_trees_classifier`, `multilayer_perceptron_classifier`, `gradient_boosting_regressor`, `random_forest_regressor`, `extra_trees_regressor`, and `multilayer_perceptron_regressor`.
+- Hyperparameter tuning (grid search and hyperband) is now distributed across EC2 instances by setting `n_jobs > 1`
+- The validation step can now be skipped by setting `validation_data = "skip"`.
+- Compute resources for prediction jobs can now also be set using `"cpu_requested"`, `"memory_requested"`, and `"disk_requested"`
+arguments in `predict.civis_ml`.
+
+### Fixed
+
+- `polling_interval` can now be specified in `civis_ml`
+
 ## [1.0.2] - 2017-09-21
 
 ### Fixed
@@ -9,7 +26,6 @@
 - run_generate_client now in R/generate_client.R
 - skip autogen on windows with R < 3.4.0
 - don't test time formatting in fetch logs.
-
 
 ## [1.0.1] - 2017-09-18
 
