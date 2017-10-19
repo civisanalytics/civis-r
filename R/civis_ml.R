@@ -115,7 +115,7 @@
 #' hyperband. CivisML will perform grid search if you pass a list
 #' of hyperparameters to the \code{cross_validation_parameters} parameter, where list elements are
 #' hyperparameter names, and the values are vectors of hyperparameter
-#' values to grid search over. You can run grid search in parallel by
+#' values to grid search over. You can run hyperparameter optimization in parallel by
 #' setting the \code{n_jobs}
 #' parameter to however many jobs you would like to run in
 #' parallel. \code{n_jobs} defaults to 1 (no parallelization).
