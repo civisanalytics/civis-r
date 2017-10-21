@@ -58,33 +58,14 @@ read_civis <- function(x, ...) {
 #' an uncompressed text or csv from the files endpoint, set \code{using = read.csv} for example.
 #' @export
 read_civis.numeric <- function(x, using = readRDS, verbose = FALSE, ...) {
-  url <- files_get(x)$fileUrl
   stopifnot(is.function(using))
-  resp <- httr::GET(url)
-  stop_for_status(resp, task = "download file from S3")
-  serialized <- get_content_type(resp) == "application/octet-stream"
-
-  if (serialized) {
-    tryCatch({
-      raw <- httr::content(resp, as = "raw")
-      con <- gzcon(rawConnection(raw))
-      res <- using(con, ...)
-    }, finally = {
-      if (exists("con")) close(con)
-    })
-  } else {
-    if (identical(using, readRDS)) {
-      msg <- "Content does not appear to be serialized. Maybe using = read.csv?"
-      stop(msg)
-    }
-    tryCatch({
-      parsed <- httr::content(resp, as = "text", encoding = "UTF-8")
-      con <- textConnection(parsed)
-      res <- using(con, ...)
-    }, finally = {
-      if (exists("con")) close(con)
-    })
-  }
+  fn <- tempfile()
+  tryCatch({
+    download_civis(x, fn)
+    res <- using(fn, ...)
+  }, finally = {
+    unlink(fn)
+  })
   return(res)
 }
 
@@ -230,17 +211,17 @@ write_civis.character <- function(x, tablename, database = NULL, if_exists = "fa
 #' Upload a R object or file to Civis Platform (Files endpoint)
 #'
 #' @description Uploads a R object or file to the files endpoint on Civis
-#' Platform (Amazon S3).
-#' It returns the id of the file for use with \code{\link{read_civis}}.
+#' Platform (Amazon S3). It returns the id of the file for use with \code{\link{read_civis}}
+#' or \code{\link{download_civis}}.
 #'
 #' R objects are serialized with \code{\link{saveRDS}}, files are unserialized.
-#' Files expire after 30 days by default.
+#' Objects or files larger than 50mb are chunked and can be uploaded in parallel
+#' if a \code{\link{plan}} has been set. Files larger than 5TB cannot be uploaded.
 #'
 #' @param x R object or path of file to upload.
 #' @param name string, Name of the file or object.
 #' @param expires_at string, The date and time the object will expire on in the
-#' format \code{"YYYY-MM-DD HH:MM:SS"}. The default is 30 days.
-#' Setting \code{expires_at = NULL} will keep the file indefinitely.
+#' format \code{"YYYY-MM-DD HH:MM:SS"}. \code{expires_at = NULL} allows files to be kept indefinitely.
 #' @param ... arguments passed to \code{\link{saveRDS}}.
 #'
 #' @return The file id which can be used to later retrieve the file using
@@ -253,6 +234,7 @@ write_civis.character <- function(x, tablename, database = NULL, if_exists = "fa
 #'
 #' file_id <- write_civis_file("path/to/my.csv")
 #' read_civis(file_id, using = read.csv)
+#' read_civis(file_id, using = readr::read_csv)
 #'
 #' # Does not expire
 #' file_id <- write_civis_file(iris, expires_at = NULL)
@@ -261,6 +243,11 @@ write_civis.character <- function(x, tablename, database = NULL, if_exists = "fa
 #' file_id <- write_civis_file(iris, expires_at = "2030-01-01")
 #' file_id <- write_civis_file(iris, expires_at = "12:00:00")
 #' file_id <- write_civis_file(iris, expires_at = "2030-01-01 12:00:00")
+#'
+#' # Upload a large file in parallel.
+#' library(future)
+#' plan(multisession)
+#' file_id <- write_civis_file("my_large_file")
 #' }
 #' @details By default, R objects are serialized using \code{\link{saveRDS}} before uploading the object
 #' to the files endpoint. If given a filepath, the file is uploaded as-is.
@@ -273,13 +260,9 @@ write_civis_file <- function(x, ...) {
 #' @export
 #' @describeIn write_civis_file Serialize R object to Civis Platform (Files endpoint).
 write_civis_file.default <- function(x, name = 'r-object.rds', expires_at = NULL, ...) {
-  args <- list()
-  if (!missing(expires_at)) args <- list(expires_at = expires_at)
-
   with_tempfile(function(tmp_file, ...) {
     saveRDS(x, file = tmp_file, ...)
-    args <- c(list(x = tmp_file, name = name), args)
-    do.call(write_civis_file.character, args)
+    write_civis_file.character(x = tmp_file, name = name, expires_at = expires_at)
   })
 }
 
@@ -287,20 +270,21 @@ write_civis_file.default <- function(x, name = 'r-object.rds', expires_at = NULL
 #' @export
 write_civis_file.character <- function(x, name, expires_at = NULL, ...) {
   stopifnot(file.exists(x))
-  args <- list(name = name)
-  if (!missing(expires_at)) args <- c(args, list(expires_at = expires_at))
-  u <- do.call(files_post, args)
-
-  # uploadFields is the set of form parameters that we must pass to S3 in a post
-  # request. Here we also add the file we're uploading to the body of the
-  # request.
-  uploadFields <- u$uploadFields
-  uploadFields$file <- httr::upload_file(x)
-
-  resp <- httr::POST(u$uploadUrl, body = uploadFields)
-  stop_for_status(resp, task = "upload file to S3")
-
-  return(u$id)
+  size <- file.size(x)
+  if (size > MAX_FILE_SIZE) stop("File larger than 5tb, can't upload.")
+  if (size > MIN_MULTIPART_SIZE) {
+    chunk_size_guess <- max(ceiling(sqrt(MIN_PART_SIZE) * sqrt(size)), MIN_PART_SIZE)
+    chunk_size <- min(chunk_size_guess, MAX_PART_SIZE)
+    id <- multipart_upload(x, name, chunk_size, expires_at)
+  } else {
+    u <- files_post(name = name, expires_at = expires_at)
+    uploadFields <- u$uploadFields
+    uploadFields$file <- httr::upload_file(x)
+    resp <- httr::POST(u$uploadUrl, body = uploadFields)
+    httr::stop_for_status(resp, task = "upload file to S3")
+    id <- u$id
+  }
+  return(id)
 }
 
 #' Download a table or a file from the Civis Platform to local disk
@@ -438,7 +422,7 @@ download_civis.numeric <- function(x, file,
   if (progress) args <- c(args, list(httr::progress()))
   resp <- do.call(httr::GET, args)
 
-  stop_for_status(resp, task = "download file from S3")
+  httr::stop_for_status(resp, task = "download file from S3")
   invisible(file)
 }
 
@@ -594,6 +578,58 @@ start_scripted_sql_job <- function(database, sql, job_name, hidden = TRUE,
   list(script_id = script_id, run_id = run_id)
 }
 
+#' Upload to files endpoint in parts.
+#'
+#' If a future::plan has been set, will be carried out in parallel.
+#' @param file the file
+#' @param name name of the upload, defualts to
+#' @param chunk_size size of the chunks in bytes
+#' @param expires_at when the file expires (default never).
+#'
+multipart_upload <- function(file, name = "", chunk_size = 32 * 1024, expires_at = NULL) {
+  fls <- write_chunks(file, chunk_size = chunk_size)
+  u <- files_post_multipart(name, length(fls), expires_at = expires_at)
+  urls <- u$uploadUrls
+  uploads <- lapply(seq_along(urls), upload_one, urls = urls, fls = fls)
+  lapply(uploads, future::value)
+  files_post_multipart_complete(u$id)
+  lapply(fls, unlink)
+  u$id
+}
+
+upload_one <- function(i, urls, fls) {
+  future::future({
+    data <- httr::upload_file(fls[[i]], type = "raw")
+    resp <- httr::RETRY("PUT", url = urls[[i]], body = data)
+    cat("Uploading file part ", i, " of ", length(urls), fill = TRUE)
+    httr::stop_for_status(resp, task = "upload file to S3")
+    return(resp)
+  })
+}
+
+MIN_MULTIPART_SIZE <- 50 * 2 ^ 20  # 50MB
+MIN_PART_SIZE <- 5 * 2 ^ 20  # 5MB
+MAX_PART_SIZE <- 5 * 2 ^ 30  # 5GB
+MAX_FILE_SIZE <- 5 * 2 ^ 40  # 5TB
+
+#' Split a file into chunks of a given chunk size, returning a list of file names.
+#' @param file name of the file
+#' @param chunk_size size of the chunk in bytes.
+write_chunks <- function(file, chunk_size) {
+  size <- file.size(file)
+  n_chunks <- ceiling(size / chunk_size)
+  fns <- sapply(seq(n_chunks), function(x) tempfile(fileext = ".txt"))
+  rr <- file(file, "rb")
+  for (i in seq(n_chunks)) {
+    vals <- readBin(rr, what = "raw", chunk_size)
+    zz <- file(fns[i], "wb")
+    writeBin(vals, con = zz)
+    close(zz)
+  }
+  close(rr)
+  return(fns)
+}
+
 
 # Kick off a job to send data to the civis platform
 start_import_job <- function(database, tablename, if_exists, distkey,
@@ -641,7 +677,7 @@ download_script_results <- function(script_id, run_id,
     args <- c(args, list(httr::progress()))
   }
   r <- do.call(httr::GET, args)
-  stop_for_status(r)
+  httr::stop_for_status(r)
   r
 }
 

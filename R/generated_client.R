@@ -757,6 +757,58 @@ files_post <- function(name, expires_at = NULL) {
  }
 
 
+#' Initiate a multipart upload
+#' @param name string required. The file name.
+#' @param num_parts integer required. The number of parts in which the file will be uploaded. This parameter determines the number of presigned URLs that are returned.
+#' @param expires_at string optional. The date and time the file will expire. If not specified, the file will expire in 30 days. To keep a file indefinitely, specify null.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the file object.}
+#' \item{name}{string, The file name.}
+#' \item{createdAt}{string, The date and time the file was created.}
+#' \item{fileSize}{integer, The file size.}
+#' \item{expiresAt}{string, The date and time the file will expire. If not specified, the file will expire in 30 days. To keep a file indefinitely, specify null.}
+#' \item{uploadUrls}{array, An array of URLs that may be used to upload file parts. Use separate PUT requests to complete the part uploads. Links expire after 12 hours.}
+#' @export
+files_post_multipart <- function(name, num_parts, expires_at = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/files/multipart"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(name = name, numParts = num_parts, expiresAt = expires_at)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Complete a multipart upload
+#' @param id integer required. The ID of the file object.
+#' 
+#' @return  An empty HTTP response
+#' @export
+files_post_multipart_complete <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/files/multipart/{id}/complete"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Get details about a file
 #' @param id integer required. The ID of the file object.
 #' @param link_expires_at string optional. The date and time the download link will expire. Must be a time between now and 36 hours from now. Defaults to 30 minutes from now.
@@ -6610,6 +6662,251 @@ reports_put_archive <- function(id, status) {
  }
 
 
+#' Show a single solutions report
+#' @param id integer required. The ID of this report.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this report.}
+#' \item{name}{string, The name of the report.}
+#' \item{user}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{host}{string, The host for the Shiny App}
+#' \item{displayUrl}{string, The URL to display the Shiny-based report.}
+#' \item{shinyAppId}{integer, The id of the backing Shiny app}
+#' @export
+reports_get_solutions <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/solutions/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a solutions report
+#' @param shiny_app_id integer required. The id of the backing Shiny app
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this report.}
+#' \item{name}{string, The name of the report.}
+#' \item{user}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{host}{string, The host for the Shiny App}
+#' \item{displayUrl}{string, The URL to display the Shiny-based report.}
+#' \item{shinyAppId}{integer, The id of the backing Shiny app}
+#' @export
+reports_post_solutions <- function(shiny_app_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/solutions"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(shinyAppId = shiny_app_id)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List users and groups permissioned on this object
+#' @param id integer required. The ID of the object.
+#' 
+#' @return  An array containing the following fields:
+#' \item{readers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+reports_list_solutions_shares <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/solutions/{id}/shares"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions users have on this object
+#' @param id integer required. ID of the resource to be shared
+#' @param user_ids array required. An array of one or more user IDs
+#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+reports_put_solutions_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/solutions/{id}/shares/users"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a user has on this object
+#' @param id integer required. ID of the resource to be revoked
+#' @param user_id integer required. ID of the user
+#' 
+#' @return  An empty HTTP response
+#' @export
+reports_delete_solutions_shares_users <- function(id, user_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/solutions/{id}/shares/users/{user_id}"
+  path_params  <- list(id = id, user_id = user_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions groups has on this object
+#' @param id integer required. ID of the resource to be shared
+#' @param group_ids array required. An array of one or more group IDs
+#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+reports_put_solutions_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/solutions/{id}/shares/groups"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a group has on this object
+#' @param id integer required. ID of the resource to be revoked
+#' @param group_id integer required. ID of the group
+#' 
+#' @return  An empty HTTP response
+#' @export
+reports_delete_solutions_shares_groups <- function(id, group_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/solutions/{id}/shares/groups/{group_id}"
+  path_params  <- list(id = id, group_id = group_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List available script types
 #' 
 #' @return  An array containing the following fields:
@@ -6676,7 +6973,7 @@ scripts_list_history <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -6727,7 +7024,7 @@ scripts_list_history <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -6885,7 +7182,7 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -6944,7 +7241,7 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -7078,7 +7375,7 @@ scripts_delete <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -7222,7 +7519,7 @@ scripts_post_cancel <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -7288,7 +7585,7 @@ scripts_post_cancel <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -7410,7 +7707,7 @@ scripts_post_containers <- function(required_resources, docker_command, docker_i
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -7518,7 +7815,7 @@ scripts_get_containers <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -7583,7 +7880,7 @@ scripts_get_containers <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -7683,7 +7980,7 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -7756,7 +8053,7 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -8042,7 +8339,7 @@ scripts_post_containers_runs_heartbeats <- function(id, run_id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -8112,7 +8409,7 @@ scripts_post_containers_runs_heartbeats <- function(id, run_id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -8235,7 +8532,7 @@ scripts_post_sql <- function(name, sql, remote_host_id, credential_id, parent_id
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -8339,7 +8636,7 @@ scripts_get_sql <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -8408,7 +8705,7 @@ scripts_get_sql <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -8509,7 +8806,7 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -8581,7 +8878,7 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -8704,7 +9001,7 @@ scripts_delete_sql <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -8772,7 +9069,7 @@ scripts_delete_sql <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -8889,7 +9186,7 @@ scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = 
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -8985,7 +9282,7 @@ scripts_get_python3 <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -9052,7 +9349,7 @@ scripts_get_python3 <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -9147,7 +9444,7 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -9215,7 +9512,7 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -9332,7 +9629,7 @@ scripts_delete_python3 <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -9400,7 +9697,7 @@ scripts_delete_python3 <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -9517,7 +9814,7 @@ scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, 
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -9613,7 +9910,7 @@ scripts_get_r <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -9680,7 +9977,7 @@ scripts_get_r <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -9775,7 +10072,7 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -9843,7 +10140,7 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -9962,7 +10259,7 @@ scripts_delete_r <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -10023,7 +10320,7 @@ scripts_delete_r <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -10135,7 +10432,7 @@ scripts_post_javascript <- function(name, source, remote_host_id, credential_id,
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -10228,7 +10525,7 @@ scripts_get_javascript <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -10288,7 +10585,7 @@ scripts_get_javascript <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -10378,7 +10675,7 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -10441,7 +10738,7 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -10666,7 +10963,7 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -10769,7 +11066,7 @@ scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL,
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -10900,7 +11197,7 @@ scripts_get_custom <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -11031,7 +11328,7 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -12552,7 +12849,7 @@ scripts_delete_sql_projects <- function(id, project_id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -12939,7 +13236,7 @@ scripts_delete_containers_projects <- function(id, project_id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -13325,7 +13622,7 @@ scripts_delete_python3_projects <- function(id, project_id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -13706,7 +14003,7 @@ scripts_delete_r_projects <- function(id, project_id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -14087,7 +14384,7 @@ scripts_delete_javascript_projects <- function(id, project_id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -14462,7 +14759,7 @@ scripts_delete_custom_projects <- function(id, project_id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
