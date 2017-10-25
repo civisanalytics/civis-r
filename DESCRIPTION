@@ -40,7 +40,8 @@ Suggests:
     rmarkdown,
     DBItest,
     mockery,
-    R.utils
+    R.utils,
+    rstudioapi
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
 Collate: 
@@ -61,6 +62,7 @@ Collate:
     'logs.R'
     'pagination_helpers.R'
     'reports.R'
+    'rstudio.R'
     'tables.R'
     'utils.R'
     'zzz.R'
