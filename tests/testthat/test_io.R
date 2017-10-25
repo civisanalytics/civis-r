@@ -192,8 +192,8 @@ test_that("write_civis_file.default returns a file id", {
 
 test_that("write_civis_file calls multipart_unload for big files", {
   fn <- tempfile()
-  # it's fast
-  system(paste0("mkfile "," 51m ", fn), intern = FALSE)
+  system(paste0("dd if=/dev/zero of=", fn, " count=1 bs=",
+                civis:::MIN_MULTIPART_SIZE + 1))
   with_mock(
     `civis::multipart_upload` = function(...) 1,
     expect_equal(write_civis_file(fn, name = "asdf"), 1)

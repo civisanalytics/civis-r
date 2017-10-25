@@ -88,7 +88,8 @@ test_that("files can be uploaded", {
   library(future)
   plan("sequential")
   fn <- tempfile()
-  system(paste0("mkfile "," 51m ", fn), intern = FALSE)
+  system(paste0("dd if=/dev/zero of=", fn, " count=1 bs=",
+                civis:::MIN_MULTIPART_SIZE + 1))
   system.time(id <- write_civis_file(fn, name = "a"))
 
   plan("multisession")
