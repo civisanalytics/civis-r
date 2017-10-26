@@ -16,5 +16,5 @@ publish_addin <- function() {
   url <- paste0("https://platform.civisanalytics.com/#/reports/",
                 report_id,
                 "?fullscreen=true")
-  browseURL(url)
+  utils::browseURL(url)
 }
