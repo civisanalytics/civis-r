@@ -100,7 +100,8 @@ will split if its impurity is above the threshold, otherwise it is a leaf.}
 
 \item{cross_validation_parameters}{Optional, parameter grid for learner
 parameters, e.g. \code{list(n_estimators = c(100, 200, 500),
-learning_rate = c(0.01, 0.1), max_depth = c(2, 3))}.}
+learning_rate = c(0.01, 0.1), max_depth = c(2, 3))}
+or \code{"hyperband"} for supported models.}
 
 \item{calibration}{Optional, if not \code{NULL}, calibrate output
 probabilities with the selected method, \code{sigmoid}, or \code{isotonic}.

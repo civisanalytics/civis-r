@@ -53,7 +53,8 @@ model.}
 
 \item{cross_validation_parameters}{Optional, parameter grid for learner
 parameters, e.g. \code{list(n_estimators = c(100, 200, 500),
-learning_rate = c(0.01, 0.1), max_depth = c(2, 3))}.}
+learning_rate = c(0.01, 0.1), max_depth = c(2, 3))}
+or \code{"hyperband"} for supported models.}
 
 \item{calibration}{Optional, if not \code{NULL}, calibrate output
 probabilities with the selected method, \code{sigmoid}, or \code{isotonic}.
@@ -205,7 +206,7 @@ You can tune hyperparamters using one of two methods: grid search or
 hyperband. CivisML will perform grid search if you pass a list
 of hyperparameters to the \code{cross_validation_parameters} parameter, where list elements are
 hyperparameter names, and the values are vectors of hyperparameter
-values to grid search over. You can run grid search in parallel by
+values to grid search over. You can run hyperparameter optimization in parallel by
 setting the \code{n_jobs}
 parameter to however many jobs you would like to run in
 parallel. \code{n_jobs} defaults to 1 (no parallelization).
