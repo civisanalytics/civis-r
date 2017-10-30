@@ -617,6 +617,7 @@ test_that("converts cross_validation_parameters to JSON string", {
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
 
     create_and_run_model(file_id = 123,
+                         model_type = "sparse_logistic",
                          cross_validation_parameters = list(n_trees = c(500, 250), c = -1))
   )
 
@@ -694,6 +695,25 @@ test_that("file_id is always numeric", {
   run_args <- mock_args(fake_run_model)[[1]]
   expect_equal(run_args$arguments$CIVIS_FILE_ID, 132)
 })
+
+test_that("exceptions with hyperband correct", {
+  fake_run_model <- mock(list(job_id = 133, run_id = 244))
+  fake_civis_ml_fetch_existing <- mock(NULL)
+
+  with_mock(
+    `civis::run_model` = fake_run_model,
+    `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
+    err1 <-  "cross_validation_parameters = \"hyperband\" not supported for sparse_logistic",
+    expect_error(create_and_run_model(file_id = civis_file(132),
+                                      model_type = "sparse_logistic",
+                                      cross_validation_parameters = "hyperband"), err1),
+    err2 <-  "cross_validation_parameters = \"hyperband\" is required for multilayer_perceptron_regressor",
+    expect_error(create_and_run_model(file_id = civis_file(132),
+                                      model_type = "multilayer_perceptron_regressor",
+                                      cross_validation_parameters = list(a = 5)), err2)
+  )
+})
+
 
 ################################################################################
 # run predictions

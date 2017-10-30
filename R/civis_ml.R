@@ -23,7 +23,8 @@
 #'   model.
 #' @param cross_validation_parameters Optional, parameter grid for learner
 #'   parameters, e.g. \code{list(n_estimators = c(100, 200, 500),
-#'   learning_rate = c(0.01, 0.1), max_depth = c(2, 3))}.
+#'   learning_rate = c(0.01, 0.1), max_depth = c(2, 3))}
+#'   or \code{"hyperband"} for supported models.
 #' @param model_name Optional, the prefix of the Platform modeling jobs.
 #'   It will have \code{" Train"} or \code{" Predict"} added to become the Script title.
 #' @param calibration Optional, if not \code{NULL}, calibrate output
@@ -517,7 +518,6 @@ create_and_run_model <- function(file_id = NULL,
     TARGET_COLUMN = paste(dependent_variable, collapse = " "),
     PRIMARY_KEY = primary_key,
     PARAMS = jsonlite::toJSON(parameters, auto_unbox = TRUE, null = "null"),
-    CVPARAMS = jsonlite::toJSON(cross_validation_parameters, null = "null"),
     IF_EXISTS = oos_scores_if_exists,
     TABLE_NAME = table_name,
     # We unclass the file_id here b/c jsonlite::toJSON does not know how to
@@ -537,6 +537,20 @@ create_and_run_model <- function(file_id = NULL,
     if (model_type %in% mo_not_supported) {
       stop(paste0("Multioutput is not supported for "), model_type)
     }
+  }
+
+  if (!is.null(cross_validation_parameters)) {
+    hyperband <- identical(cross_validation_parameters, "hyperband")
+    hyperband_not_supported <- model_type %in% c("sparse_logistic", "sparse_linear_regressor",
+                                                 "stacking_regressor")
+    if (hyperband & hyperband_not_supported) {
+      stop(paste0("cross_validation_parameters = \"hyperband\" not supported for ", model_type))
+    }
+    is_mlp <- model_type %in% c("multilayer_perceptron_regressor", "multilayer_perceptron_classifier")
+    if (is_mlp & !hyperband) {
+      stop("cross_validation_parameters = \"hyperband\" is required for ", model_type)
+    }
+    args[["CVPARAMS"]] <- jsonlite::toJSON(cross_validation_parameters, null = "null")
   }
 
   if (!is.null(calibration)) {

@@ -113,7 +113,8 @@ splits in fitting.}
 
 \item{cross_validation_parameters}{Optional, parameter grid for learner
 parameters, e.g. \code{list(n_estimators = c(100, 200, 500),
-learning_rate = c(0.01, 0.1), max_depth = c(2, 3))}.}
+learning_rate = c(0.01, 0.1), max_depth = c(2, 3))}
+or \code{"hyperband"} for supported models.}
 
 \item{oos_scores_table}{Optional, if provided, store out-of-sample
 predictions on training set data to this Redshift "schema.tablename".}
