@@ -6,6 +6,9 @@
 
 - Corrected project_id type in `publish_rmd` and `publish_html`
 
+### Changed
+
+- `call_api` only retries on 413, 429, 502, 503, 504 as in the python client.
 
 ## [1.0.2] - 2017-09-21
 
