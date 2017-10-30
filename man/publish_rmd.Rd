@@ -28,6 +28,21 @@ is not explicity set and \code{input} will be overwritten with
 \description{
 Publish an R Markdown file to Platform Reports
 }
+\details{
+This function also supports passing \code{report_id}, \code{report_name},
+\code{provide_api_key} and \code{project_id} as metadata in the report's
+YAML front matter.  Just as the title of an RMarkdown document can be set
+with \code{title: "my title!"}, these parameters can be set like
+\preformatted{
+  civis:
+    report_name: "My Report Name"
+    report_id: 9000
+}
+Since \code{report_id} is set, this code will overwrite the existing
+report with that number, which may be useful when updating a report on
+a schedule.  Any argument passed in explicity to \code{publish_rmd}
+will be used in place of the corresponding argument set in YAML metadata.
+}
 \note{
 \code{rmarkdown::render} depends on a recent version of \code{pandoc}.
 \code{pandoc} is distributed with RStudio and thus, \code{publish_rmd}
