@@ -131,7 +131,7 @@ wrap_in_scrolling_div <- function(html) {
 }
 
 
-#' Simple RMarkdown YAML front matter parser. For a more robust parser,
+# Simple RMarkdown YAML front matter parser. For a more robust parser,
 # see rmarkdown::render.
 parse_front_matter <- function(rmd_file) {
   metadata <- tryCatch({
