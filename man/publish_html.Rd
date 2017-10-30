@@ -30,5 +30,6 @@ publish_html("my_beautiful_report.html")
 }
 }
 \seealso{
-'publish_rmd' to publish an R Markdown document to Civis
+\code{\link{publish_rmd}} to publish an R Markdown document
+to Civis
 }

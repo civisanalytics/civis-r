@@ -70,7 +70,8 @@ publish_rmd <- function(rmd_file, report_id=NULL, report_name=NULL,
 #' @param provide_api_key bool, Set to true to include API key in report.
 #' @param project_id integer, Project_id that the report should be added to.
 #'
-#' @seealso 'publish_rmd' to publish an R Markdown document to Civis
+#' @seealso \code{\link{publish_rmd}} to publish an R Markdown document
+#' to Civis
 #'
 #' @examples
 #' \dontrun{
