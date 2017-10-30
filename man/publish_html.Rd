@@ -18,7 +18,7 @@ report will be created.}
 
 \item{provide_api_key}{bool, Set to true to include API key in report.}
 
-\item{project_id}{bool, Project_id that the report should be added to.}
+\item{project_id}{integer, Project_id that the report should be added to.}
 }
 \description{
 Publish HTML to Platform Reports

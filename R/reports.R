@@ -6,7 +6,7 @@
 #' report will be created.
 #' @param report_name string, Title of report in platform
 #' @param provide_api_key bool, Set to true to include API key in report.
-#' @param project_id bool, Project_id that the report should be added to.
+#' @param project_id integer, Project_id that the report should be added to.
 #' @param ... additional parameters to send to \code{rmarkdown::render}. Note:
 #' A temporary file will be used for \code{output_file} if \code{output_file}
 #' is not explicity set and \code{input} will be overwritten with
@@ -20,7 +20,7 @@
 #' Markdown document into html. The html can then be published to Civis
 #' with \code{publish_html}.
 #'
-#' @seealso 'publish_html' to publish html to Civis
+#' @seealso \code{\link{publish_html}} to publish html to Civis
 #'
 #' @examples
 #' \dontrun{
@@ -68,7 +68,7 @@ publish_rmd <- function(rmd_file, report_id=NULL, report_name=NULL,
 #' report will be created.
 #' @param report_name string, Title of report in platform
 #' @param provide_api_key bool, Set to true to include API key in report.
-#' @param project_id bool, Project_id that the report should be added to.
+#' @param project_id integer, Project_id that the report should be added to.
 #'
 #' @seealso 'publish_rmd' to publish an R Markdown document to Civis
 #'

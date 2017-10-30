@@ -18,7 +18,7 @@ report will be created.}
 
 \item{provide_api_key}{bool, Set to true to include API key in report.}
 
-\item{project_id}{bool, Project_id that the report should be added to.}
+\item{project_id}{integer, Project_id that the report should be added to.}
 
 \item{...}{additional parameters to send to \code{rmarkdown::render}. Note:
 A temporary file will be used for \code{output_file} if \code{output_file}
@@ -49,5 +49,5 @@ publish_rmd("my_parameterized_doc.Rmd", params=params)
 }
 }
 \seealso{
-'publish_html' to publish html to Civis
+\code{\link{publish_html}} to publish html to Civis
 }
