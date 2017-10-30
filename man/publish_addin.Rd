@@ -7,12 +7,5 @@
 publish_addin()
 }
 \description{
-This function is called when the "Publish To Civis" button is pressed in
-the RStudio IDE AddIn menu. It will attempt to save the current changes
-of the active document and push it to the appropriate location in Platform.
-RMarkdown files will be rendered to html with \code{\link{publish_rmd}}
-and published as a report. Currently only RMarkdown files are supported.
-}
-\seealso{
-\code{\link{publish_rmd}} for publishing RMarkdown files
+Add in to Publish an R Markdown file to Platform Reports from RStudio
 }

@@ -39,6 +39,17 @@ test_that("write_civis writes to redshift", {
   colnames(x) <- colnames(iris)
   expect_equivalent(x[order(x$id), ], iris)
   query_civis(paste0("DROP TABLE IF EXISTS ", tablename), database = database)
+
+  # write_civis.numeric
+  tablename <- paste0("scratch.r_smoke_test", sample(1:10000, 1))
+  fname <- tempfile(fileext = ".csv")
+  write.csv(iris, file = fname, row.names = FALSE)
+  fid <- write_civis_file(fname, "iris.csv")
+  write_civis(fid, tablename, "redshift-general", if_exists = "drop", verbose = TRUE)
+  x <- read_civis(tablename)
+  colnames(x) <- colnames(iris)
+  expect_equivalent(x[order(x$id), ], iris)
+  query_civis(paste0("DROP TABLE IF EXISTS ", tablename), database = database)
 })
 
 test_that("download_civis downloads onto disk", {
