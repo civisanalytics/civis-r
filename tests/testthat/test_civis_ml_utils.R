@@ -88,7 +88,11 @@ test_that("is_multitarget works", {
 
 test_that("get_predict_template_id returns correct template for train/predict version ", {
   m <- model_list[[1]]
-  expect_equal(get_predict_template_id(m), m$job$fromTemplateId + 1)
+  id <- m$job$fromTemplateId
+  ver <- CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$id == id, "version"]
+  pred_id <- CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$version == ver &
+                                   CIVIS_ML_TEMPLATE_IDS$name == "predict", "id"]
+  expect_equal(get_predict_template_id(m), pred_id)
 
   fake_model <- list(job = list(fromTemplateId = 9112))
   expect_equal(get_predict_template_id(fake_model), 9113)

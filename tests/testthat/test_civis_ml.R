@@ -313,12 +313,14 @@ test_that("raises error if multioutput not supported", {
 # Predict
 context("predict.civis_ml")
 
+current <- tail(CIVIS_ML_TEMPLATE_IDS, n = 2)
+
 fake_model <- structure(
   list(
     job = list(
       id = 123,
       name = "model_task",
-      fromTemplateId = tail(CIVIS_ML_TEMPLATE_IDS, n = 2)[1, "id"],
+      fromTemplateId = current[current$name == "train", "id"],
       arguments = list(
         PRIMARY_KEY = "training_primary_key"
       )
@@ -327,7 +329,6 @@ fake_model <- structure(
   ),
   class = "civis_ml"
 )
-
 
 test_that("calls scripts_post_custom", {
   fake_get_database_id <- mock(456, cycle = TRUE)
@@ -362,7 +363,7 @@ test_that("calls scripts_post_custom", {
   )
 
   script_args <- mock_args(fake_scripts_post_custom)[[1]]
-  expect_equal(script_args$from_template_id, fake_model$job$fromTemplateId + 1)
+  expect_equal(script_args$from_template_id, get_predict_template_id(fake_model))
   expect_equal(script_args$name, "model_task Predict")
 
   # These are template args/params:
@@ -432,7 +433,7 @@ test_that("uploads local df and passes a file_id", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
-              template_id = fake_model$job$fromTemplateId + 1,
+              template_id = get_predict_template_id(fake_model),
               primary_key = NULL,
               output_table = NULL,
               output_db_id = NULL,
@@ -465,15 +466,15 @@ test_that("uploads a local file and passes a file_id", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
-              template_id = fake_model$job$fromTemplateId + 1,
+              template_id = get_predict_template_id(fake_model),
               primary_key = NULL,
               output_table = NULL,
               output_db_id = NULL,
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
-              cpu_requested= NULL,
-              memory_requested= NULL,
+              cpu_requested = NULL,
+              memory_requested = NULL,
               disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
@@ -492,15 +493,15 @@ test_that("passes a file_id directly", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
-              template_id = fake_model$job$fromTemplateId + 1,
+              template_id = get_predict_template_id(fake_model),
               primary_key = "training_primary_key",
               output_table = NULL,
               output_db_id = NULL,
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
-              cpu_requested= NULL,
-              memory_requested= NULL,
+              cpu_requested = NULL,
+              memory_requested = NULL,
               disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
@@ -519,7 +520,7 @@ test_that("passes a manifest file_id", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
-              template_id = fake_model$job$fromTemplateId + 1,
+              template_id = get_predict_template_id(fake_model),
               primary_key = NULL,
               output_table = NULL,
               output_db_id = NULL,
@@ -555,7 +556,7 @@ test_that("passes table info", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
-              template_id = fake_model$job$fromTemplateId + 1,
+              template_id = get_predict_template_id(fake_model),
               primary_key = NULL,
               output_table = NULL,
               output_db_id = NULL,
