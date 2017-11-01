@@ -12,6 +12,20 @@ CIVIS_ML_CLASSIFIERS <- c("sparse_logistic", "gradient_boosting_classifier",
                          "random_forest_classifier",
                          "extra_trees_classifier")
 
+CIVIS_ML_TEMPLATE_IDS <- data.frame(
+  id = c(9112, 9113, 9968, 9969),
+  version = c(1.1, 1.1, 2.0, 2.0),
+  name = c("train", "predict", "train", "predict"),
+  stringsAsFactors = FALSE
+)
+
+# returns a version compatible template id for a given training model without API calls.
+get_template_id <- function(m, template = "train") {
+  train_id <- m$job$fromTemplateId
+  this_version <- subset(CIVIS_ML_TEMPLATE_IDS, id == train_id)$version
+  subset(CIVIS_ML_TEMPLATE_IDS, version == this_version & name == template)$id
+}
+
 #' @export
 print.civis_ml_classifier <- function(x, digits = 4, ...) {
   class_names <- get_model_data(x, "class_names")
