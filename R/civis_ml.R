@@ -746,7 +746,7 @@ predict.civis_ml <- function(object,
   pred_args <- list(
     train_job_id = object$job$id,
     train_run_id = object$run$id,
-    template_id = get_template_id(m, "predict"),
+    template_id = get_template_id(object, "predict"),
     primary_key = primary_key,
     output_table = output_table,
     output_db_id = output_db_id,

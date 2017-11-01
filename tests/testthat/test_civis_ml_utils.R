@@ -85,3 +85,22 @@ test_that("is_multitarget works", {
   expect_true(is_multitarget(model_list[[12]]) &
                 all(is_multiclass(model_list[[12]])))
 })
+
+test_that("get_template_id returns consistent version ", {
+  m <- model_list[[1]]
+  expect_equal(get_template_id(m, "train"), 9968)
+  expect_equal(get_template_id(m, "predict"), 9969)
+
+  fake_model <- list(job = list(fromTemplateId = 9112))
+  expect_equal(get_template_id(fake_model, "train"), 9112)
+  expect_equal(get_template_id(fake_model, "predict"), 9113)
+})
+
+test_that("get_default_template_ids returns previous ids if current not available", {
+  ids <- with_mock(
+    `api_key` = function(...) "key",
+    `scripts_list_custom` = function(...) list(),
+    get_default_template_ids())
+
+  expect_equal(ids, c(9112, 9113))
+})

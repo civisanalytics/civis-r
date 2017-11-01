@@ -318,6 +318,7 @@ fake_model <- structure(
     job = list(
       id = 123,
       name = "model_task",
+      fromTemplateId = 9968,
       arguments = list(
         PRIMARY_KEY = "training_primary_key"
       )
@@ -327,13 +328,13 @@ fake_model <- structure(
   class = "civis_ml"
 )
 
+
 test_that("calls scripts_post_custom", {
   fake_get_database_id <- mock(456, cycle = TRUE)
   fake_scripts_post_custom <- mock(list(id = 999))
   fake_scripts_post_custom_runs <- mock(list(id = 888))
   fake_scripts_get_custom_runs <- mock(list(state = "running"), list(state = "succeeded"))
   fake_fetch_predict_results <- mock(NULL)
-  fake_getOption <- mock(1111, cycle = TRUE)
 
   with_mock(
     `civis::get_database_id` = fake_get_database_id,
@@ -341,7 +342,6 @@ test_that("calls scripts_post_custom", {
     `civis::scripts_post_custom_runs` = fake_scripts_post_custom_runs,
     `civis::scripts_get_custom_runs` = fake_scripts_get_custom_runs,
     `civis::fetch_predict_results` = fake_fetch_predict_results,
-    `base::getOption` = fake_getOption,
 
     tbl <- civis_table(table_name = "schema.table",
                        database_name = "a_database",
@@ -362,7 +362,7 @@ test_that("calls scripts_post_custom", {
   )
 
   script_args <- mock_args(fake_scripts_post_custom)[[1]]
-  expect_equal(script_args$from_template_id, 1111)
+  expect_equal(script_args$from_template_id, fake_model$job$fromTemplateId + 1)
   expect_equal(script_args$name, "model_task Predict")
 
   # These are template args/params:
@@ -432,14 +432,15 @@ test_that("uploads local df and passes a file_id", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
+              template_id = fake_model$job$fromTemplateId + 1,
               primary_key = NULL,
               output_table = NULL,
               output_db_id = NULL,
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
-              cpu_requested= NULL,
-              memory_requested= NULL,
+              cpu_requested = NULL,
+              memory_requested = NULL,
               disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
@@ -464,6 +465,7 @@ test_that("uploads a local file and passes a file_id", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
+              template_id = fake_model$job$fromTemplateId + 1,
               primary_key = NULL,
               output_table = NULL,
               output_db_id = NULL,
@@ -490,6 +492,7 @@ test_that("passes a file_id directly", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
+              template_id = fake_model$job$fromTemplateId + 1,
               primary_key = "training_primary_key",
               output_table = NULL,
               output_db_id = NULL,
@@ -516,14 +519,15 @@ test_that("passes a manifest file_id", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
+              template_id = fake_model$job$fromTemplateId + 1,
               primary_key = NULL,
               output_table = NULL,
               output_db_id = NULL,
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
-              cpu_requested= NULL,
-              memory_requested= NULL,
+              cpu_requested = NULL,
+              memory_requested = NULL,
               disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
@@ -551,14 +555,15 @@ test_that("passes table info", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
+              template_id = fake_model$job$fromTemplateId + 1,
               primary_key = NULL,
               output_table = NULL,
               output_db_id = NULL,
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
-              cpu_requested= NULL,
-              memory_requested= NULL,
+              cpu_requested = NULL,
+              memory_requested = NULL,
               disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
@@ -720,20 +725,18 @@ test_that("exceptions with hyperband correct", {
 context("create_and_run_pred")
 
 test_that("uses the correct template_id", {
-  fake_getOption <- mock(8888, cycle = TRUE)
   fake_run_model <- mock(list(job_id = 133, run_id = 244))
   fake_fetch_predict_results <- mock(NULL)
 
   with_mock(
-    `base::getOption` = fake_getOption,
     `civis::run_model` = fake_run_model,
     `civis::fetch_predict_results` = fake_fetch_predict_results,
 
-    create_and_run_pred(train_job_id = 111, train_run_id = 222)
+    create_and_run_pred(train_job_id = 111, train_run_id = 222, template_id = 555)
   )
 
   run_args <- mock_args(fake_run_model)[[1]]
-  expect_equal(run_args$template_id, 8888)
+  expect_equal(run_args$template_id, 555)
 })
 
 ###############################################################################
