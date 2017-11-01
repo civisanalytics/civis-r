@@ -318,7 +318,7 @@ fake_model <- structure(
     job = list(
       id = 123,
       name = "model_task",
-      fromTemplateId = 9968,
+      fromTemplateId = tail(CIVIS_ML_TEMPLATE_IDS, n = 2)[1, "id"],
       arguments = list(
         PRIMARY_KEY = "training_primary_key"
       )

@@ -22,8 +22,9 @@ CIVIS_ML_TEMPLATE_IDS <- data.frame(
 # returns a version compatible template id for a given training model without API calls.
 get_template_id <- function(m, template = "train") {
   train_id <- m$job$fromTemplateId
-  this_version <- subset(CIVIS_ML_TEMPLATE_IDS, id == train_id)$version
-  subset(CIVIS_ML_TEMPLATE_IDS, version == this_version & name == template)$id
+  this_version <- CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$id == train_id, "version"]
+  CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$version == this_version &
+                        CIVIS_ML_TEMPLATE_IDS$name == template, "id"]
 }
 
 #' @export
