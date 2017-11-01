@@ -85,3 +85,24 @@ test_that("is_multitarget works", {
   expect_true(is_multitarget(model_list[[12]]) &
                 all(is_multiclass(model_list[[12]])))
 })
+
+test_that("get_predict_template_id returns correct template for train/predict version ", {
+  m <- model_list[[1]]
+  id <- m$job$fromTemplateId
+  ver <- CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$id == id, "version"]
+  pred_id <- CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$version == ver &
+                                   CIVIS_ML_TEMPLATE_IDS$name == "predict", "id"]
+  expect_equal(get_predict_template_id(m), pred_id)
+
+  fake_model <- list(job = list(fromTemplateId = 9112))
+  expect_equal(get_predict_template_id(fake_model), 9113)
+})
+
+test_that("get_train_template_id returns previous id if current not available", {
+  id <- with_mock(
+    `civis:::api_key` = function(...) "key",
+    `civis::scripts_list_custom` = function(...) list(),
+    get_train_template_id())
+  ans <- tail(CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$name == "train", "id"], n = 2)[1]
+  expect_equal(id, ans)
+})
