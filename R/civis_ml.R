@@ -55,7 +55,7 @@
 #'   Civis Platform for training jobs or prediction child jobs.
 #'   1024 shares = 1 CPU.
 #' @param memory_requested Optional, the memory requested from Civis Platform
-#'   for training jobs or prediction child jobs, in MiB.
+#'   for training jobs or prediction child jobs, in MB.
 #' @param disk_requested Optional, the disk space requested on Civis Platform
 #'   for training jobs or prediction child jobs, in GB.
 #' @param notifications Optional, model status notifications. See

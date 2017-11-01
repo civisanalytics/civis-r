@@ -54,6 +54,12 @@ cat("regression models completed", fill = TRUE)
 multi_output <- list(value(multi_output_fut), value(multi_class_output_fut))
 cat("multi output completed", fill = TRUE)
 
+# no val
+future(civis_ml(civis_file(id), dependent_variable = "Species", model_type = algo, model_type
+                ))
+
+
+
 ms <- c(mclass_list, mreg_list, multi_output)
 
 cat("writing tests/testthat/data/civis_ml_models.rds", fill = TRUE)
@@ -61,5 +67,7 @@ saveRDS(ms, "../tests/testthat/data/civis_ml_models.rds")
 
 end <- proc.time()
 tot <- end - start
+
+
 
 cat("total time: ", tot[3], "s", fill = TRUE)

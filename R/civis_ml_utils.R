@@ -144,6 +144,19 @@ get_model_data <- function(model, name = NULL) {
   }
 }
 
+get_template_ids <- function(){
+  # get options
+  train <- getOption("civis.ml_train_template_id")
+  predict <- getOption("civis.ml_predict_template_id")
+
+  # check if scripts list custom returns null, and fall back
+  if (length(scripts_list_custom(train)) == 0) {
+    train <- getOption("civis.ml_train_template_id_prev")
+    predict <- getOption("civis.ml_predict_template_id_prev")
+  }
+  return(c(train = train, predict = predict))
+}
+
 model_url <- function(x) {
   paste0("https://platform.civisanalytics.com/#/models/", x$job$id)
 }
