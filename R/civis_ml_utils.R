@@ -34,21 +34,6 @@ get_predict_template_id <- function(m) {
                         CIVIS_ML_TEMPLATE_IDS$name == "predict", "id"]
 }
 
-CIVIS_ML_TEMPLATE_IDS <- data.frame(
-  id = c(9112, 9113, 9968, 9969),
-  version = c(1.1, 1.1, 2.0, 2.0),
-  name = c("train", "predict", "train", "predict"),
-  stringsAsFactors = FALSE
-)
-
-# returns a version compatible template id for a given training model without API calls.
-get_predict_template_id <- function(m) {
-  train_id <- m$job$fromTemplateId
-  this_version <- CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$id == train_id, "version"]
-  CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$version == this_version &
-                        CIVIS_ML_TEMPLATE_IDS$name == "predict", "id"]
-}
-
 #' @export
 print.civis_ml_classifier <- function(x, digits = 4, ...) {
   class_names <- get_model_data(x, "class_names")
