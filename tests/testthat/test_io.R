@@ -156,6 +156,30 @@ test_that("write_civis.character warns under failure", {
   )
 })
 
+test_that("write_civis.numeric calls imports_post_syncs correctly", {
+  ips <- mock(imports_post_syncs)
+  with_mock(
+    `civis:::get_database_id` = function(...) 32,
+    `civis:::default_credential` = function(...) 999,
+    `civis::imports_post` = function(...) list(id = 2),
+    `civis::imports_post_syncs` = ips,
+    `civis::jobs_post_runs` = function(...) list(id = 4),
+    `civis::jobs_get_runs` = function(...) list(state = "succeeded"),
+    res <- write_civis(1234, "mock.table", "mockdb"),
+    expect_equal(get_status(res), "succeeded"),
+    expect_args(ips, 1, 2,
+                list(file = list(id = 1234)),
+                destination = list(database_table =
+                                     list(schema = "mock", table = "table")),
+                advanced_options = list(max_errors = NULL,
+                     existing_table_rows = "fail",
+                     distkey = NULL,
+                     sortkey1 = NULL,
+                     sortkey2 = NULL,
+                     column_delimiter = "comma"))
+  )
+})
+
 test_that("write_civis fails if no db given and default not provided", {
   with_mock(
     `civis::get_default_database` = function(...) NULL,
