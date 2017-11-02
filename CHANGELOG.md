@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- Corrected project_id type in `publish_rmd` and `publish_html`
+
+
 ## [1.0.2] - 2017-09-21
 
 ### Fixed
