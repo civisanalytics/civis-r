@@ -1,11 +1,14 @@
 # Changelog
 
-## Unreleased
+## [1.1.0] - 2017-11-10
 
 ### Fixed
 
 - Corrected project_id type in `publish_rmd` and `publish_html`
 
+### Added
+
+- `write_civis.numeric` is provided to sync a CSV file on S3 to Redshift given a file id.
 
 ## [1.0.2] - 2017-09-21
 
