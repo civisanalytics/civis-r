@@ -72,7 +72,7 @@ plot.civis_ml_regressor <- function(x, ...) {
 #' @export
 plot.civis_ml_classifier <- function(x, name =  NULL, ...) {
 
-  if (is_multitarget(x)) stop("Plotting data not available.")
+  if (is_multitarget(x) | is.null(x$metrics)) stop("Plotting data not available.")
   if (is_multiclass(x)) {
     names <- get_model_data(x, "class_names")
     decile <- t(get_metric(x, "deciles"))
