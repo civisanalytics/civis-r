@@ -6,6 +6,10 @@
 
 - Corrected project_id type in `publish_rmd` and `publish_html`
 
+### Changed
+
+- `call_api` only retries on 413, 429, 502, 503, 504 as in the python client.
+
 ### Added
 
 - `write_civis.numeric` is provided to sync a CSV file on S3 to Redshift given a file id.
