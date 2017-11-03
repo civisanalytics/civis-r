@@ -123,7 +123,7 @@
 #' values to grid search over. You can run hyperparameter optimization in parallel by
 #' setting the \code{n_jobs}
 #' parameter to however many jobs you would like to run in
-#' parallel. \code{n_jobs} defaults to 1 (no parallelization).
+#' parallel. If not set by the user, \code{n_jobs} defaults to 4.
 #'
 #'  \href{https://arxiv.org/abs/1603.06560}{Hyperband}
 #' is an efficient approach to hyperparameter optimization, and
