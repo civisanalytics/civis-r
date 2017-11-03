@@ -1,7 +1,7 @@
 ---
 title: "Machine Learning in R with CivisML"
 author: "Patrick Miller"
-date: "2017-08-30"
+date: "2017-11-03"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{civis_ml}
@@ -11,7 +11,7 @@ vignette: >
 
 There are so many models to build! When this becomes challenging on a local machine, offloading model building to the cloud can save a lot of time and effort.
 
-[CivisML](https://www.civisanalytics.com/blog/civisml-scikit-learn-at-scale/) is a machine learning service on Civis Platform that makes this as painless as possible. You can fit many different models, do extensive metaparameter tuning, and score data sets with millions of observations stored in remote databases. Once these models are built, they live in Civis Platform permanently and can be included into production pipelines. Results can be easily incorporated into reports and dashboards.
+[CivisML](https://www.civisanalytics.com/blog/civisml-scikit-learn-at-scale/) is a machine learning service on Civis Platform that makes this as painless as possible. You can fit many different models, do extensive hyperparameter tuning, and score data sets with millions of observations stored in remote databases. Once these models are built, they live in Civis Platform permanently and can be included into production pipelines. Results can be easily incorporated into reports and dashboards.
 
 CivisML is built in Python using [scikit-learn](http://scikit-learn.org/stable/), and leverages AWS behind the scenes for efficient distributed computing. However, most of its features can be used through R without knowledge of Python or AWS with the `civis_ml` function in `civis`.
 
@@ -42,7 +42,7 @@ Note that `civis_table` only returns information on where to find the data for `
 
 ## Modeling
 
-After the data source is specified, we next choose the model type. There are 9 named CivisML models that can be called from `civis_ml`, 4 for classification and 5 for regression. The name of the model corresponds to the name of the estimator in scikit-learn. It can be given in the `model_type` argument of `civis_ml`, or called directly using a `civis_ml_*` function such as `civis_ml_sparse_logistic`.
+After the data source is specified, we next choose the model type. There are 13 named CivisML models that can be called from `civis_ml`, 6 for classification and 7 for regression. The name of the model corresponds to the name of the estimator in scikit-learn. It can be given in the `model_type` argument of `civis_ml`, or called directly using a `civis_ml_*` function such as `civis_ml_sparse_logistic`.
 
 | Name | R Workflow | Model Type | scikit-learn Documentation |
 |------|:-----------|------------|-----------|------------------|
@@ -50,11 +50,15 @@ After the data source is specified, we next choose the model type. There are 9 n
   `gradient_boosting_classifier` |	`civis_ml_gradient_boosting_classifier` | classification |	[GradientBoostingClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html) |
   `random_forest_classifier` |	`civis_ml_random_forest_classifier` | classification |	[RandomForestClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html) | 
   `extra_trees_classifier` |	`civis_ml_extra_trees_classifier` | classification |	[ExtraTreesClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html)|
+  `multilayer_perceptron_classifier` | | classification | [MLPClassifier](https://github.com/civisanalytics/muffnn) |
+  `stacking_classifier` | | classification | [StackedClassifier](https://github.com/civisanalytics/civisml-extensions)
   `sparse_linear_regressor` | `civis_ml_sparse_linear_regressor` |	regression |	[LinearRegression](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html) |
   `sparse_ridge_regressor` |	`civis_ml_sparse_ridge_regressor` | regression |	[Ridge](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html) |
   `gradient_boosting_regressor`	| `civis_ml_gradient_boosting_regressor` | regression | [GradientBoostingRegressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html) |
   `random_forest_regressor`	| `civis_ml_random_forest_regressor` | regression | [RandomForestRegressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)|
-  `extra_trees_regressor` | `civis_ml_extra_trees_regressor` | regression	| [ExtraTreesRegressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html) 
+  `extra_trees_regressor` | `civis_ml_extra_trees_regressor` | regression	| [ExtraTreesRegressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html)| 
+`multilayer_perceptron_regressor` | | regression | [MLPRegressor](https://github.com/civisanalytics/muffnn) |
+`stacking_regressor` | | regression | [StackedRegressor](https://github.com/civisanalytics/civisml-extensions)
 
 Documentation on the meta parameters specific to each estimator are provided in `?civis_ml_*`. For example, the regularization strength parameter `C` of `sparse_logistic` is documented in `?civis_ml_sparse_logistic`.
 
@@ -73,27 +77,46 @@ m <- civis_ml_random_forest_classifier(tab,
       excluded_columns = "residential_zip")
 ```
 
-### Metaparameter Tuning
+### Hyperparameter Tuning
 
-CivisML takes care of metaparameter tuning by evaluating the performance of the classifier over the grid created from all combinations of candidate values. Any metaparameter provided by scikit-learn can be included in this search. Evaluation is carried out in parallel using 4-fold CV. 
+You can tune hyperparamters using one of two methods: grid search or hyperband. CivisML will perform grid search if you pass a named list of hyperparameters and candidate values to `cross_validation_parameters`. You can run hyperparameter tuning in parallel by setting the `n_jobs` to however many jobs you would like to run in parallel.
 
-For the `random_forest_classifier` in the Brandable data, we specify a search grid over `max_depth` and `n_estimators`:
+[Hyperband](https://arxiv.org/abs/1603.06560) is an efficient approach to hyperparameter optimization, and recommended over grid search where possible. CivisML will perform hyperband optimization if you pass the string `"hyperband"` to `cross_validation_parameters`. Hyperband is currently only supported for random forests, gradient boosted trees, extra trees, and MLPs. MLPs can only be trained with hyperband.
+
+For the `random_forest_classifier` in the Brandable data, we try both `"hyperband"` and grid search for hyperparameter optimization.
 
 ```{r, eval = FALSE}
-tab       <- civis_table("sample_project.premium_training_set")
+tab <- civis_table("sample_project.premium_training_set")
+
+# hyperband
+m_hyper <- civis_ml(tab, dependent_variable = "upgrade", 
+              model_type = "random_forest_classifier", 
+              primary_key = "brandable_user_id", 
+              excluded_columns = "residential_zip", 
+              cross_validation_parameters = 'hyperband')
+
+# grid search
 cv_params <- list("max_depth" = c(2, 3, 5), 
                   "n_estimators" = c(50, 100, 500))
   
-m <- civis_ml(tab, dependent_variable = "upgrade", 
+m_grid <- civis_ml(tab, dependent_variable = "upgrade", 
               model_type = "random_forest_classifier", 
               primary_key = "brandable_user_id", 
               excluded_columns = "residential_zip", 
               cross_validation_parameters = cv_params)
 
-m <- civis_ml_random_forest_classifier(tab,
-      primary_key = "brandable_user_id", 
-      excluded_columns = "residential_zip", 
-      cross_validation_parameters = cv_params)
+
+```
+
+### Stacking 
+
+The `"stacking_classifier"` model stacks together the `"sparse_logistic"`, `"gradient_boosting_classifier"`, and `"random_forest_classifier"` models using defaults documented in `?civis_ml`. Each row is first [standardized](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.Normalizer.html), and then the model predictions are combined using [LogisticRegressionCV](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html) with `penalty='l2'` and `tol=1e-08`. The `"stacking_regressor"` works similarly, stacking together the `"sparse_linear_regressor"`, `"gradient_boosting_regressor"`, and `"random_forest_regressor"` models, and combining them using [NonNegativeLinearRegression](https://github.com/civisanalytics/civisml-extensions).
+
+```{r, eval = FALSE}
+m_stack <- civis_ml(tab, dependent_variable = "upgrade", 
+              model_type = "stacking_classifier", 
+              primary_key = "brandable_user_id", 
+              excluded_columns = "residential_zip")
 ```
 
 ## Results
