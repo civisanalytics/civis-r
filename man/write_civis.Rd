@@ -4,6 +4,7 @@
 \alias{write_civis}
 \alias{write_civis.data.frame}
 \alias{write_civis.character}
+\alias{write_civis.numeric}
 \title{Upload a local data frame or csv file to the Civis Platform (Redshift)}
 \usage{
 write_civis(x, ...)
@@ -15,9 +16,14 @@ write_civis(x, ...)
 \method{write_civis}{character}(x, tablename, database = NULL,
   if_exists = "fail", distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
   max_errors = NULL, verbose = FALSE, ...)
+
+\method{write_civis}{numeric}(x, tablename, database = NULL,
+  if_exists = "fail", distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
+  max_errors = NULL, verbose = FALSE, delimiter = ",", hidden = TRUE,
+  ...)
 }
 \arguments{
-\item{x}{data frame or file path of csv to upload to platform.}
+\item{x}{data frame, file path of a csv, or the id of a csv file on S3 to upload to platform.}
 
 \item{...}{arguments passed to \code{write.csv}.}
 
@@ -27,7 +33,7 @@ write_civis(x, ...)
 uses \code{options(civis.default_db)}.}
 
 \item{if_exists}{string, optional,  String indicating action to take if table already
-exists.  Must be either "fail", "truncate" or "append". Defaults to "fail".}
+exists.  Must be either "fail", "drop", "truncate" or "append". Defaults to "fail".}
 
 \item{distkey}{string, optional, Column name designating the distkey.}
 
@@ -40,9 +46,14 @@ exists.  Must be either "fail", "truncate" or "append". Defaults to "fail".}
 to remove before failing.}
 
 \item{verbose}{bool, Set to TRUE to print intermediate progress indicators.}
+
+\item{delimiter}{string, optional. Which delimiter to use. One of
+\code{','}, \code{'\\t'} or \code{'|'}.}
+
+\item{hidden}{bool, if \code{TRUE} (default), this job will not appear in the Civis UI.}
 }
 \description{
-Uploads either a data frame or csv file to Redshift, based
+Uploads a data frame, a csv file, or file on S3 to Redshift based
 on the first argument.
 
 A default database can be set using \code{options(civis.default_db = "my_database")}.
@@ -54,6 +65,8 @@ this database will automatically be used as the default.
 \item \code{data.frame}: Upload a data frame to Civis Platform (Redshift).
 
 \item \code{character}: Upload a csv to Civis Platform (Redshift).
+
+\item \code{numeric}: Upload a csv file from the files endpoint to Civis Platform (Redshift)
 }}
 
 \examples{
@@ -66,12 +79,16 @@ write_civis(df, "schema.my_table", "my_database")
 # Create new table, append if already exists
 write_civis(df, "schema.my_table", "my_database", if_exists="append")
 
-# Create new table with defined diskey / sortkeys for speed!
+# Create new table with defined diskey / sortkeys for speed
 write_civis(df, "schema.my_table", "my_database", distkey="id",
             sortkey1="added_date")
 
 # Create new table directly from a saved csv
 write_civis("my/file/path.csv", "schema.my_table", "my_database")
+
+# Create new table from a file_id
+id <- write_civis_file("my/file/path.csv", name = "path.csv")
+write_civis(id, "schema.my_table", "my_database")
 
 }
 }

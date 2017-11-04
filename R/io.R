@@ -141,19 +141,19 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
 
 #' Upload a local data frame or csv file to the Civis Platform (Redshift)
 #'
-#' @description Uploads either a data frame or csv file to Redshift, based
+#' @description Uploads a data frame, a csv file, or file on S3 to Redshift based
 #' on the first argument.
 #'
 #' A default database can be set using \code{options(civis.default_db = "my_database")}.
 #' If there is only one database available,
 #' this database will automatically be used as the default.
 #'
-#' @param x data frame or file path of csv to upload to platform.
+#' @param x data frame, file path of a csv, or the id of a csv file on S3 to upload to platform.
 #' @param tablename string, Name of table and schema \code{"schema.tablename"}.
 #' @param database string, Name of database where data frame is to be uploaded. If no database is specified,
 #' uses \code{options(civis.default_db)}.
 #' @param if_exists string, optional,  String indicating action to take if table already
-#' exists.  Must be either "fail", "truncate" or "append". Defaults to "fail".
+#' exists.  Must be either "fail", "drop", "truncate" or "append". Defaults to "fail".
 #' @param distkey string, optional, Column name designating the distkey.
 #' @param sortkey1 string, optional, Column name designating the first sortkey.
 #' @param sortkey2 string, optional, Column name designating the second
@@ -161,6 +161,9 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
 #' @param max_errors int, optional, Maximum number of rows with errors
 #' to remove before failing.
 #' @param verbose bool, Set to TRUE to print intermediate progress indicators.
+#' @param delimiter string, optional. Which delimiter to use. One of
+#' \code{','}, \code{'\\t'} or \code{'|'}.
+#' @param hidden bool, if \code{TRUE} (default), this job will not appear in the Civis UI.
 #' @param ... arguments passed to \code{write.csv}.
 #' @seealso \code{\link{refresh_table}} to update table meta-data.
 #'
@@ -174,12 +177,16 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
 #' # Create new table, append if already exists
 #' write_civis(df, "schema.my_table", "my_database", if_exists="append")
 #'
-#' # Create new table with defined diskey / sortkeys for speed!
+#' # Create new table with defined diskey / sortkeys for speed
 #' write_civis(df, "schema.my_table", "my_database", distkey="id",
 #'             sortkey1="added_date")
 #'
 #' # Create new table directly from a saved csv
 #' write_civis("my/file/path.csv", "schema.my_table", "my_database")
+#'
+#' # Create new table from a file_id
+#' id <- write_civis_file("my/file/path.csv", name = "path.csv")
+#' write_civis(id, "schema.my_table", "my_database")
 #'
 #' }
 #' @export
@@ -226,6 +233,42 @@ write_civis.character <- function(x, tablename, database = NULL, if_exists = "fa
     r <- await(imports_get_files_runs, id = job_id, run_id = run$id, .verbose = verbose)
     r
 }
+
+#' @describeIn write_civis Upload a csv file from the files endpoint to Civis Platform (Redshift)
+#' @export
+write_civis.numeric <- function(x, tablename, database = NULL, if_exists = "fail",
+                                distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
+                                max_errors = NULL, verbose = FALSE,
+                                delimiter = ",", hidden = TRUE, ...) {
+  db <- get_db(database)
+  db_id <- get_database_id(db)
+  cred_id <- default_credential()
+  delimiter <- delimiter_name_from_string(delimiter)
+
+  parts <- split_schema_name(tablename)
+  import_name <- paste0("CSV import to ", tablename)
+  destination <- list(remote_host_id = db_id, credential_id = cred_id)
+
+  job <- imports_post(import_name, 'AutoImport',
+                     is_outbound = FALSE,
+                     destination = destination,
+                     hidden = hidden)
+  options <- list(max_errors = max_errors,
+                  existing_table_rows = if_exists,
+                  distkey = distkey,
+                  sortkey1 = sortkey1,
+                  sortkey2 = sortkey2,
+                  column_delimiter = delimiter)
+
+  imports_post_syncs(job$id,
+                     source = list(file = list(id = x)),
+                     destination = list(database_table =
+                                          list(schema = parts$schema, table = parts$table)),
+                     advanced_options = options)
+  run <- jobs_post_runs(job$id)
+  await(jobs_get_runs, id = job$id, run_id = run$id, .verbose = verbose)
+}
+
 
 #' Upload a R object or file to Civis Platform (Files endpoint)
 #'

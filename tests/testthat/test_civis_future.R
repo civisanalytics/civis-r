@@ -1,13 +1,16 @@
 context("civis_future")
 library(civis)
 library(future)
+library(mockery)
 
 mock_r_eval <- function(fut) {
-  # anything in inst/ is actually installed in the package root.
-  # note: devtools provides a system.file that makes tests and checks pass when run interactively.
   r_remote_eval <- parse(system.file("scripts", "r_remote_eval.R", package = "civis"))
+
+  # so you can delete expressions.
+  # this deletes the commandArgs lines, which can no longer be mocked.
+  r_remote_eval[2:3] <- NULL
+
   with_mock(
-    `base::commandArgs` = function(...) list("123"),
     `civis::read_civis` = function(...) fut,
     `civis::scripts_post_containers_runs_outputs` = function(...) NULL,
     `civis::write_civis_file` = function(...) NULL,

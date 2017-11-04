@@ -1,5 +1,6 @@
 # Changelog
 
+<<<<<<< HEAD
 ## [1.1.0] - TBD
 
 ### Added
@@ -16,6 +17,21 @@ arguments in `predict.civis_ml`.
 ### Fixed
 
 - `polling_interval` can now be specified in `civis_ml`
+=======
+## [1.1.0] - 2017-11-10
+
+### Fixed
+
+- Corrected project_id type in `publish_rmd` and `publish_html`
+
+### Changed
+
+- `call_api` only retries on 413, 429, 502, 503, 504 as in the python client.
+
+### Added
+
+- `write_civis.numeric` is provided to sync a CSV file on S3 to Redshift given a file id.
+>>>>>>> upstream/master
 
 ## [1.0.2] - 2017-09-21
 

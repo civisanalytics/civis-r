@@ -6,3 +6,5 @@ swagger.json
 inst/doc
 inst/web
 .Rproj.user
+.*.swp
+.*.swo
