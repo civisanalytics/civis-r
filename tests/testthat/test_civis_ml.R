@@ -51,6 +51,8 @@ test_that("calls scripts_post_custom", {
              notifications = list(successEmailSubject = "A success",
                                   successEmailAddresses = c("user@example.com")),
              polling_interval = 5,
+             validation_data = "skip",
+             n_jobs = 9,
              verbose = FALSE)
   )
 
@@ -82,6 +84,8 @@ test_that("calls scripts_post_custom", {
   expect_equal(ml_args$REQUIRED_CPU, 1111)
   expect_equal(ml_args$REQUIRED_MEMORY, 9096)
   expect_equal(ml_args$REQUIRED_DISK_SPACE, 9)
+  expect_equal(ml_args$VALIDATION_DATA, "skip")
+  expect_equal(ml_args$N_JOBS, 9)
 
   # Make sure we started the job.
   expect_args(fake_scripts_post_custom_runs, 1, 999)
@@ -123,6 +127,8 @@ test_that("calls civis_ml.data.frame for local df", {
                 cpu_requested = NULL,
                 memory_requested = NULL,
                 disk_requested = NULL,
+                validation_data = 'train',
+                n_jobs = NULL,
                 notifications = NULL,
                 verbose = FALSE)
   )
@@ -169,6 +175,8 @@ test_that("calls civis_ml.civis_table for table_name", {
               cpu_requested = NULL,
               memory_requested = NULL,
               disk_requested = NULL,
+              validation_data = 'train',
+              n_jobs = NULL,
               notifications = NULL,
               verbose = FALSE)
 })
@@ -204,6 +212,8 @@ test_that("calls civis_ml.civis_file for file_id", {
               cpu_requested = NULL,
               memory_requested = NULL,
               disk_requested = NULL,
+              validation_data = 'train',
+              n_jobs = NULL,
               notifications = NULL,
               verbose = FALSE)
 })
@@ -245,6 +255,8 @@ test_that("calls civis_ml.character for local csv", {
               cpu_requested = NULL,
               memory_requested = NULL,
               disk_requested = NULL,
+              validation_data = 'train',
+              n_jobs = NULL,
               notifications = NULL,
               verbose = FALSE)
 })
@@ -291,11 +303,14 @@ test_that("raises error if multioutput not supported", {
 # Predict
 context("predict.civis_ml")
 
+current <- tail(CIVIS_ML_TEMPLATE_IDS, n = 2)
+
 fake_model <- structure(
   list(
     job = list(
       id = 123,
       name = "model_task",
+      fromTemplateId = current[current$name == "train", "id"],
       arguments = list(
         PRIMARY_KEY = "training_primary_key"
       )
@@ -330,12 +345,15 @@ test_that("calls scripts_post_custom", {
             output_db = "score_database",
             if_output_exists = "append",
             n_jobs = 10,
+            cpu_requested = 2000,
+            memory_requested = 10,
+            disk_requested = 15,
             polling_interval = 5,
             verbose = TRUE)
   )
 
   script_args <- mock_args(fake_scripts_post_custom)[[1]]
-  expect_equal(script_args$from_template_id,  getOption("civis.ml_predict_template_id"))
+  expect_equal(script_args$from_template_id, get_predict_template_id(fake_model))
   expect_equal(script_args$name, "model_task Predict")
 
   # These are template args/params:
@@ -346,6 +364,9 @@ test_that("calls scripts_post_custom", {
   expect_equal(pred_args$PRIMARY_KEY, "row_number")
   expect_equal(pred_args$IF_EXISTS, "append")
   expect_equal(pred_args$N_JOBS, 10)
+  expect_equal(pred_args$CPU, 2000)
+  expect_equal(pred_args$MEMORY, 10)
+  expect_equal(pred_args$DISK_SPACE, 15)
   expect_equal(pred_args$DEBUG, TRUE)
   expect_equal(pred_args$CIVIS_FILE_ID, NULL)
   expect_equal(pred_args$TABLE_NAME, "schema.table")
@@ -393,12 +414,16 @@ test_that("uploads local df and passes a file_id", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
+              template_id = get_predict_template_id(fake_model),
               primary_key = NULL,
               output_table = NULL,
               output_db_id = NULL,
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
+              cpu_requested = NULL,
+              memory_requested = NULL,
+              disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
               file_id = 1234)
@@ -422,12 +447,16 @@ test_that("uploads a local file and passes a file_id", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
+              template_id = get_predict_template_id(fake_model),
               primary_key = NULL,
               output_table = NULL,
               output_db_id = NULL,
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
+              cpu_requested = NULL,
+              memory_requested = NULL,
+              disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
               file_id = 561)
@@ -445,12 +474,16 @@ test_that("passes a file_id directly", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
+              template_id = get_predict_template_id(fake_model),
               primary_key = "training_primary_key",
               output_table = NULL,
               output_db_id = NULL,
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
+              cpu_requested = NULL,
+              memory_requested = NULL,
+              disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
               file_id = 1234)
@@ -468,12 +501,16 @@ test_that("passes a manifest file_id", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
+              template_id = get_predict_template_id(fake_model),
               primary_key = NULL,
               output_table = NULL,
               output_db_id = NULL,
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
+              cpu_requested = NULL,
+              memory_requested = NULL,
+              disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
               manifest = 123)
@@ -500,12 +537,16 @@ test_that("passes table info", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
+              template_id = get_predict_template_id(fake_model),
               primary_key = NULL,
               output_table = NULL,
               output_db_id = NULL,
               if_output_exists = 'fail',
               model_name = "model_task",
               n_jobs = NULL,
+              cpu_requested = NULL,
+              memory_requested = NULL,
+              disk_requested = NULL,
               polling_interval = NULL,
               verbose = FALSE,
               table_name = "a_schema.table",
@@ -556,6 +597,7 @@ test_that("converts cross_validation_parameters to JSON string", {
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
 
     create_and_run_model(file_id = 123,
+                         model_type = "sparse_logistic",
                          cross_validation_parameters = list(n_trees = c(500, 250), c = -1))
   )
 
@@ -624,6 +666,26 @@ test_that("file_id is always numeric", {
   expect_equal(run_args$arguments$CIVIS_FILE_ID, 132)
 })
 
+
+test_that("exceptions with hyperband correct", {
+  fake_run_model <- mock(list(job_id = 133, run_id = 244))
+  fake_civis_ml_fetch_existing <- mock(NULL)
+
+  with_mock(
+    `civis::run_model` = fake_run_model,
+    `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
+    err1 <-  "cross_validation_parameters = \"hyperband\" not supported for sparse_logistic",
+    expect_error(create_and_run_model(file_id = civis_file(132),
+                                      model_type = "sparse_logistic",
+                                      cross_validation_parameters = "hyperband"), err1),
+    err2 <-  "cross_validation_parameters = \"hyperband\" is required for multilayer_perceptron_regressor",
+    expect_error(create_and_run_model(file_id = civis_file(132),
+                                      model_type = "multilayer_perceptron_regressor",
+                                      cross_validation_parameters = list(a = 5)), err2)
+  )
+})
+
+
 ################################################################################
 # run predictions
 context("create_and_run_pred")
@@ -635,14 +697,12 @@ test_that("uses the correct template_id", {
   with_mock(
     `civis::run_model` = fake_run_model,
     `civis::fetch_predict_results` = fake_fetch_predict_results,
-    create_and_run_pred(train_job_id = 111, train_run_id = 222)
+
+    create_and_run_pred(train_job_id = 111, train_run_id = 222, template_id = 555),
+    run_args <- mock_args(fake_run_model)[[1]],
+    expect_equal(run_args$template_id, 555)
   )
-
-  run_args <- mock_args(fake_run_model)[[1]]
-  expect_equal(run_args$template_id, getOption("civis.ml_predict_template_id"))
 })
-
-###############################################################################
 
 ################################################################################
 # fetch existing model
@@ -723,7 +783,8 @@ test_that("fetch_logs.civis_ml_error works", {
     `civis::scripts_post_custom_runs` = function(...) NULL,
     `civis::scripts_get_custom_runs` = function(...) list(state = "failed", id = 1, run_id = 2, error = "msg"),
     `civis::fetch_logs.civis_ml_error` = function(...) list("A log message"),
-    e <- tryCatch(civis:::run_model(1234, name = "sparse_logistic", list(), list(), verbose = TRUE),
+    e <- tryCatch(civis:::run_model(1234, name = "sparse_logistic", list(), list(),
+                                    verbose = TRUE, polling_interval = NULL),
              error = function(e) e),
     log <- fetch_logs(e)[[1]],
     expect_equal(log, "A log message"))

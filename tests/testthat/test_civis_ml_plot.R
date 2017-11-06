@@ -2,8 +2,8 @@ library(civis)
 context("civis_ml_plot")
 
 model_list    <- readRDS("data/civis_ml_models.rds")
-plotable_mods <- model_list[1:10]
-err_mod       <- model_list[11:12]
+plotable_mods <- model_list[1:(length(model_list) - 4)]
+err_mod       <- tail(model_list, n = 4)
 is_classif    <- sapply(plotable_mods, function(m) is(m, "civis_ml_classifier"))
 
 test_that("decile plot for classification is produced", {
@@ -24,20 +24,18 @@ test_that("decile plot for classification is produced", {
 
 ps <- lapply(plotable_mods[!is_classif], function(m) plot(m))
 
-test_that("multi output plot throws error for hist and plot", {
+test_that("models with no metrics throw errors for hist and plot", {
   msg <- "Plotting data not available."
-  e <- tryCatch(plot(err_mod[[1]]), error = function(e) e)
-  expect_equal(e$message, msg)
-
-  e <- tryCatch(plot(err_mod[[2]]), error = function(e) e)
-  expect_equal(e$message, msg)
+  for (m in err_mod) {
+    e <- tryCatch(plot(m), error = function(e) e)
+    expect_equal(e$message, msg)
+  }
 
   msg <- "Histogram data not available."
-  e <- tryCatch(hist(err_mod[[1]]), error = function(e) e)
-  expect_equal(e$message, msg)
-
-  e <- tryCatch(hist(err_mod[[2]]), error = function(e) e)
-  expect_equal(e$message, msg)
+  for (m in err_mod) {
+    e <- tryCatch(hist(m), error = function(e) e)
+    expect_equal(e$message, msg)
+  }
 })
 
 test_that("y_yhat plot for reg is produced", {

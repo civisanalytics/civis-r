@@ -4,7 +4,7 @@
 \name{CIVIS_ML_REGRESSORS}
 \alias{CIVIS_ML_REGRESSORS}
 \title{List of civis_ml regression models.}
-\format{An object of class \code{character} of length 5.}
+\format{An object of class \code{character} of length 7.}
 \usage{
 CIVIS_ML_REGRESSORS
 }
