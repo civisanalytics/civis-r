@@ -5,8 +5,8 @@
 \title{List users}
 \usage{
 users_list(feature_flag = NULL, account_status = NULL, query = NULL,
-  group_id = NULL, organization_id = NULL, limit = NULL,
-  page_num = NULL, order = NULL, order_dir = NULL)
+  group_id = NULL, organization_id = NULL, exclude_groups = NULL,
+  limit = NULL, page_num = NULL, order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{feature_flag}{string optional. Return users that have a feature flag enabled.}
@@ -18,6 +18,8 @@ users_list(feature_flag = NULL, account_status = NULL, query = NULL,
 \item{group_id}{integer optional. The ID of the group by which to filter users. Cannot be present if organization_id is.}
 
 \item{organization_id}{integer optional. The ID of the organization by which to filter users. Cannot be present if group_id is.}
+
+\item{exclude_groups}{boolean optional. Whether or to exclude users' groups. Default: false.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 20. Maximum allowed is 10000.}
 
