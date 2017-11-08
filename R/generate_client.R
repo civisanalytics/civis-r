@@ -1,8 +1,4 @@
-IGNORE <- c("apps")
 FILENAME <- c("R/generated_client.R")
-BASE_RESOURCES_V1 = c("credentials", "databases", "files", "imports",
-                      "jobs", "models", "predictions", "projects",
-                      "queries", "reports", "scripts", "tables", "users")
 
 #' Fetches and generates the client in generated_client.R
 #'
@@ -15,7 +11,7 @@ fetch_and_generate_client <- function() {
   if (Sys.getenv("R_CLIENT_DEV") != "TRUE" && windows_r_version_is_valid()) {
     message("Generating API")
     spec <- get_spec()
-    client_str <- generate_client(spec, IGNORE = IGNORE)
+    client_str <- generate_client(spec)
     message(paste0("Writing API to ", FILENAME))
     write_client(client_str, FILENAME = FILENAME)
     devtools::document()
@@ -35,12 +31,10 @@ windows_r_version_is_valid <- function(major = 3, minor = 3.4) {
 
 #' Generate a client
 #' @param spec usually from \code{get_spec}
-#' @param IGNORE endpoints to ignore (e.g. "apps")
 #' @return A string containing one documented function for each verb at each endpoint.
-generate_client <- function(spec, IGNORE) {
+generate_client <- function(spec) {
   client_str <- ""
-  ign_regex <- paste0("^/", IGNORE)
-  paths <- with(spec, paths[!grepl(ign_regex, names(paths))])
+  paths <- spec[["paths"]]
 
   for (i in seq_along(paths)) {
     path <- paths[[i]]
