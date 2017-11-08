@@ -23,9 +23,9 @@ A list containing the following elements:
 }}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
-\item{host}{string, The host for the Shiny App}
-\item{displayUrl}{string, The URL to display the Shiny-based report.}
-\item{shinyAppId}{integer, The id of the backing Shiny app}
+\item{host}{string, The host for the solution}
+\item{displayUrl}{string, The URL to display the solution report.}
+\item{serviceId}{integer, The id of the backing service}
 }
 \description{
 Show a single solutions report

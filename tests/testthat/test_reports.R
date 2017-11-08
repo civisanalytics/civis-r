@@ -7,6 +7,7 @@ test_that("rmd_file overwritting warning is called", {
   with_mock(
     `rmarkdown::render` = function(...) TRUE,
     `civis::publish_html` = function(...) -999,
+    `civis::parse_front_matter` = function(...) list(),
     expect_warning(publish_rmd("fake.Rmd", input = "duplicate"), warn_msg)
   )
 })
@@ -17,19 +18,11 @@ test_that("output_file overrides temp file when passed.", {
   with_mock(
     `civis::publish_html` = mock_publish_html,
     `rmarkdown::render` = function(...) TRUE,
+    `civis::parse_front_matter` = function(...) list(),
     publish_rmd("fake.Rmd", output_file = output_file)
   )
   publish_html_args <- mockery::mock_args(mock_publish_html)[[1]]
   expect_equal(publish_html_args[[1]], output_file)
-})
-
-test_that("publish_rmd passes project_id", {
-  with_mock(
-    `civis::publish_html` = function(project_id, ...) cat(project_id),
-    `rmarkdown::render` = function(...) TRUE,
-    expect_output(publish_rmd("rmd", project_id = "abc123"), "abc123"),
-    expect_output(publish_rmd("rmd"), NA)
-  )
 })
 
 test_that("publish_html calls reports_put_project", {
@@ -61,11 +54,47 @@ test_that("publish_html can put an existing report", {
   )
 })
 
-test_that("publish_rmd passes report_id", {
+test_that("publish_rmd passes project_id", {
+  mock_publish_html <- mockery::mock(NULL, cycle=TRUE)
   with_mock(
-    `civis::publish_html` = function(html_file, report_id, ...) report_id,
+    `civis::publish_html` = mock_publish_html,
     `rmarkdown::render` = function(...) TRUE,
-    expect_equal(publish_rmd("rmd", report_id = 123), 123),
-    expect_null(publish_rmd("rmd"))
+    `civis::parse_front_matter` = function(...) list(),
+    publish_rmd("rmd", project_id = "abc123"),
+    publish_rmd("rmd")
   )
+  publish_html_args <- mockery::mock_args(mock_publish_html)
+  expect_equal("abc123", publish_html_args[[1]][["project_id"]])
+  expect_null(publish_html_args[[2]][["project_id"]])
+})
+
+test_that("publish_rmd passes report_id", {
+  mock_publish_html <- mockery::mock(NULL, cycle=TRUE)
+  with_mock(
+    `civis::publish_html` = mock_publish_html,
+    `rmarkdown::render` = function(...) TRUE,
+    `civis::parse_front_matter` = function(...) list(),
+    publish_rmd("rmd", report_id = 123),
+    publish_rmd("rmd")
+  )
+  publish_html_args <- mockery::mock_args(mock_publish_html)
+  expect_equal(123, publish_html_args[[1]][["report_id"]])
+  expect_null(publish_html_args[[2]][["report_id"]])
+})
+
+test_that("parse_front_matter parses yaml correctly", {
+    rmd_a <- "---\ncivis:\n  a: 1\n  b: 100\n---\n R code here.\n"
+    rmd_b <- "RMD with no front matter.\n"
+    expect_a <- list(civis = list(a = 1, b = 100))
+    expect_b <- list()
+    expect_equal(parse_front_matter(textConnection(rmd_a)), expect_a)
+    expect_equal(parse_front_matter(textConnection(rmd_b)), expect_b)
+})
+
+test_that("parse_front_matter handles parsing errors with warning", {
+    rmd_a <- "---\ncivis\n -bad_yaml:\n---\n R code here.\n"
+    warn <- paste("Failed to parse Civis metadata from Rmarkdown file:",
+                  "Scanner error: mapping values are not allowed in this",
+                  "context at line 2, column 11")
+    expect_warning(parse_front_matter(textConnection(rmd_a)), warn)
 })

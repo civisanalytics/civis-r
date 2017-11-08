@@ -20,6 +20,12 @@ print.civis_api <- function(x, ...) {
   invisible(resp)
 }
 
+
+# Like the python client, only RETRY on get/put and connection-error.
+RETRY_ON <- c(413, 429, 502, 503, 504)
+# But httr: only takes terminate_on, so terminate on success and non-connection errors.
+TERMINATE_ON <- setdiff(200:527, RETRY_ON)
+
 call_api <- function(verb, path, path_params, query_params, body_params) {
     url <- build_url(path, path_params)
     auth <- httr::authenticate(api_key(), "")
@@ -31,14 +37,18 @@ call_api <- function(verb, path, path_params, query_params, body_params) {
                         R.version$version.string, utils::sessionInfo()$platform)
     user_agent <- httr::user_agent(user_str)
 
-    request <- if (tolower(verb) %in% c("get", "put")) httr::RETRY else httr::VERB
-    if (length(body_params) == 0) {
-      response <- request(verb, url, auth, user_agent, query = query_params)
-    } else {
+    request_args <- list(verb, url, auth, user_agent, query = query_params)
+    if (length(body_params) > 0) {
       body_json <- jsonlite::toJSON(body_params, auto_unbox = TRUE, null = "null")
-      response <- request(verb, url, auth, user_agent, query = query_params,
-                          body = body_json, httr::content_type_json())
+      request_args <- c(request_args, list(body = body_json, httr::content_type_json()))
     }
+    if (tolower(verb) %in% c("get", "put")) {
+      request <- httr::RETRY
+      request_args <- c(request_args, list(terminate_on = TERMINATE_ON))
+    } else {
+      request <- httr::VERB
+    }
+    response <- do.call(request, request_args)
 
     stop_for_status(response,
                     paste(response$request$method, response$request$url))

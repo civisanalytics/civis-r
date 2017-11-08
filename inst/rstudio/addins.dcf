@@ -1,0 +1,4 @@
+Name: Publish To Civis
+Description: Publishes current document to the Civis Platform (currently only supports RMarkdown)
+Binding: publish_addin
+Interactive: false

@@ -14,13 +14,14 @@ civis_ml(x, dependent_variable, model_type, primary_key = NULL,
   oos_scores_if_exists = c("fail", "append", "drop", "truncate"),
   model_name = NULL, cpu_requested = NULL, memory_requested = NULL,
   disk_requested = NULL, notifications = NULL, polling_interval = NULL,
-  verbose = FALSE)
+  validation_data = c("train", "skip"), n_jobs = NULL, verbose = FALSE)
 
 civis_ml_fetch_existing(model_id, run_id = NULL)
 
 \method{predict}{civis_ml}(object, newdata, primary_key = NA,
   output_table = NULL, output_db = NULL, if_output_exists = c("fail",
-  "append", "drop", "truncate"), n_jobs = NULL, polling_interval = NULL,
+  "append", "drop", "truncate"), n_jobs = NULL, cpu_requested = NULL,
+  memory_requested = NULL, disk_requested = NULL, polling_interval = NULL,
   verbose = FALSE, ...)
 }
 \arguments{
@@ -52,7 +53,8 @@ model.}
 
 \item{cross_validation_parameters}{Optional, parameter grid for learner
 parameters, e.g. \code{list(n_estimators = c(100, 200, 500),
-learning_rate = c(0.01, 0.1), max_depth = c(2, 3))}.}
+learning_rate = c(0.01, 0.1), max_depth = c(2, 3))}
+or \code{"hyperband"} for supported models.}
 
 \item{calibration}{Optional, if not \code{NULL}, calibrate output
 probabilities with the selected method, \code{sigmoid}, or \code{isotonic}.
@@ -73,19 +75,27 @@ The default is \code{"fail"}.}
 It will have \code{" Train"} or \code{" Predict"} added to become the Script title.}
 
 \item{cpu_requested}{Optional, the number of CPU shares requested in the
-Civis Platform for training jobs. 1024 shares = 1 CPU.}
+Civis Platform for training jobs or prediction child jobs.
+1024 shares = 1 CPU.}
 
 \item{memory_requested}{Optional, the memory requested from Civis Platform
-for training jobs, in MiB.}
+for training jobs or prediction child jobs, in MiB.}
 
 \item{disk_requested}{Optional, the disk space requested on Civis Platform
-for training jobs, in GB.}
+for training jobs or prediction child jobs, in GB.}
 
 \item{notifications}{Optional, model status notifications. See
 \code{\link{scripts_post_custom}} for further documentation about email
 and URL notification.}
 
 \item{polling_interval}{Check for job completion every this number of seconds.}
+
+\item{validation_data}{Optional, source for validation data. There are
+currently two options: \code{train} (the default), which uses training
+data for validation, and \code{skip}, which skips the validation step.}
+
+\item{n_jobs}{Number of concurrent Platform jobs to use for training and
+validation, or multi-file / large table prediction.}
 
 \item{verbose}{Optional, If \code{TRUE}, supply debug outputs in Platform
 logs and make prediction child jobs visible.}
@@ -105,9 +115,6 @@ the model was built.}
 
 \item{if_output_exists}{Action to take if the prediction table already exists. One of \code{"fail"}, \code{"append"}, \code{"drop"}, or \code{"truncate"}.
 The default is \code{"fail"}.}
-
-\item{n_jobs}{Number of concurrent Platform jobs to use for
-multi-file / large table prediction.}
 
 \item{\dots}{Unused}
 }
@@ -150,7 +157,11 @@ start by imputing missing values with the mean of non-null values in a
 column. The \code{"sparse_*"} models include a LASSO regression step
 (using \code{glmnet}) to do feature selection before passing data to the
 final model. In some models, CivisML uses default parameters from those in
-\href{http://scikit-learn.org/stable/}{Scikit-Learn}.
+\href{http://scikit-learn.org/stable/}{Scikit-Learn}, as indicated in the "Altered Defaults" column.
+All models also have \code{random_state=42}. Note that \code{"multilayer_perceptron_classifier"}
+and \code{"multilayer_perceptron_regressor"} can only be used with
+hyperband.
+
 Specific workflows can also be called directly using the R workflow functions.
 
 \tabular{rrrrr}{
@@ -159,13 +170,56 @@ Specific workflows can also be called directly using the R workflow functions.
  \code{gradient_boosting_classifier} \tab	\code{\link{civis_ml_gradient_boosting_classifier}} \tab classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html}{GradientBoostingClassifier} \tab	\code{n_estimators=500, max_depth=2} \cr
  \code{random_forest_classifier} \tab	\code{\link{civis_ml_random_forest_classifier}} \tab classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}{RandomForestClassifier} \tab	\code{n_estimators=500} \cr
  \code{extra_trees_classifier} \tab	\code{\link{civis_ml_extra_trees_classifier}} \tab classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html}{ExtraTreesClassifier} \tab	\code{n_estimators=500} \cr
+ \code{multilayer_perceptron_classifier} \tab \tab classification \tab \href{<https://github.com/civisanalytics/muffnn>}{MLPClassifier} \tab \cr
+ \code{stacking_classifier} \tab \tab classification  \tab \href{<https://github.com/civisanalytics/civisml-extensions>}{StackedClassifier}\tab \cr
  \code{sparse_linear_regressor} \tab \code{\link{civis_ml_sparse_linear_regressor}} \tab	regression \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html}{LinearRegression} \tab \cr
  \code{sparse_ridge_regressor} \tab	\code{\link{civis_ml_sparse_ridge_regressor}} \tab regression \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html}{Ridge} \tab \cr
  \code{gradient_boosting_regressor}	\tab \code{\link{civis_ml_gradient_boosting_regressor}} \tab regression \tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html}{GradientBoostingRegressor} \tab \code{n_estimators=500, max_depth=2} \cr
  \code{random_forest_regressor}	\tab \code{\link{civis_ml_random_forest_regressor}} \tab regression \tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html}{RandomForestRegressor} \tab \code{n_estimators=500} \cr
  \code{extra_trees_regressor} \tab \code{\link{civis_ml_extra_trees_regressor}} \tab regression	\tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html}{ExtraTreesRegressor} \tab \code{n_estimators=500} \cr
+ \code{multilayer_perceptron_regressor} \tab \tab regression \tab \href{https://github.com/civisanalytics/muffnn}{MLPRegressor} \tab \cr
+ \code{stacking_regressor} \tab \tab regression  \tab \href{https://github.com/civisanalytics/civisml-extensions}{StackedRegressor}\tab \cr
 }
 Model names can be easily accessed using the global variables \code{CIVIS_ML_REGRESSORS} and \code{CIVIS_ML_CLASSIFIERS}.
+}
+
+\section{Stacking}{
+
+
+The \code{"stacking_classifier"} model stacks
+together the \code{"sparse_logistic"}, \code{"gradient_boosting_classifier"},
+and \code{"random_forest_classifier"} models, using altered defaults as
+listed for each in the \code{"Altered Defaults"} column of the table
+above. The models are combined using a pipeline
+containing a \href{http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.Normalizer.html#sklearn.preprocessing.Normalizer}{Normalizer}
+step, followed by a \href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html}{LogisticRegressionCV}
+with \code{penalty='l2'} and \code{tol=1e-08}. The
+\code{"stacking_regressor"} works similarly, stacking together the
+\code{"sparse_linear_regressor"}, \code{"gradient_boosting_regressor"},
+and \code{"random_forest_regressor"} models, and combining them using
+\href{https://github.com/civisanalytics/civisml-extensions}{NonNegativeLinearRegression}.
+}
+
+\section{Hyperparameter Tuning}{
+
+You can tune hyperparamters using one of two methods: grid search or
+hyperband. CivisML will perform grid search if you pass a list
+of hyperparameters to the \code{cross_validation_parameters} parameter, where list elements are
+hyperparameter names, and the values are vectors of hyperparameter
+values to grid search over. You can run hyperparameter optimization in parallel by
+setting the \code{n_jobs}
+parameter to however many jobs you would like to run in
+parallel. \code{n_jobs} defaults to 1 (no parallelization).
+
+ \href{https://arxiv.org/abs/1603.06560}{Hyperband}
+is an efficient approach to hyperparameter optimization, and
+recommended over grid search where possible. CivisML will perform
+hyperband optimization if you pass the string \code{"hyperband"} to
+\code{cross_validation_parameters}. Hyperband is currently only supported for the following models:
+\code{"gradient_boosting_classifier"}, \code{"random_forest_classifier"},
+\code{"extra_trees_classifier"}, \code{"multilayer_perceptron_classifier"},
+\code{"gradient_boosting_regressor"}, \code{"random_forest_regressor"},
+\code{"extra_trees_regressor"}, and \code{"multilayer_perceptron_regressor"}.
 }
 
 \section{Data Sources}{

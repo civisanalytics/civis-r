@@ -45,6 +45,7 @@ A list containing the following elements:
 }}
 \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 \item{fromTemplateId}{integer, The ID of the template script.}
+\item{uiReportUrl}{integer, The url of the custom HTML.}
 \item{templateScriptName}{string, The name of the template script.}
 \item{templateNote}{string, The template's note.}
 \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
