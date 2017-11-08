@@ -92,10 +92,20 @@ test_that("files can be uploaded", {
   x <- read_civis(fid)
   expect_equal(x, iris)
 
-  # test expires_at = NULL
-  fid2 <- write_civis_file(iris, expires_at = NULL)
-  info <- files_get(id = fid2)
+  info <- files_get(id = fid)
   expect_null(info$expiresAt)
+
+  # test large file
+  library(future)
+  plan("sequential")
+  fn <- tempfile()
+  system(paste0("dd if=/dev/zero of=", fn, " count=1 bs=",
+                civis:::MIN_MULTIPART_SIZE + 1))
+  system.time(id <- write_civis_file(fn, name = "a"))
+
+  plan("multisession")
+  # if you've got a big pipe, it can make some difference...
+  system.time(id <- write_civis_file(fn, name = "a"))
 })
 
 test_that("DBI Read-Only connections forbid writes", {

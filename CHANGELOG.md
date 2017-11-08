@@ -10,6 +10,8 @@
 ### Changed
 
 - `call_api` only retries on 413, 429, 502, 503, 504 as in civis-python.
+- `write_civis_file` uploads objects larger than 50MB in multiple parts, and supports objects up to 5TB. 
+Uploads occur in parallel if a `future::plan` has been specified.
 
 ### Added
 

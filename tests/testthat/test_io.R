@@ -74,20 +74,16 @@ test_that("read_civis.sql produces catchable error when query returns no rows", 
 })
 
 test_that("read_civis.numeric reads a csv", {
-  mock_df <- data.frame(a = 1:2, b = c("sentimental", "centipede"))
-  mock_df_string <- "a,b\n1,sentimental\n2,centipede"
-  mock_GET_result <- function(...) {
-    GET_result <- list("url" = "http://www.fakeurl.com",
-                       "status_code" = 200,
-                       "headers" = list("Content-Type" = "text/csv"),
-                       "content" = charToRaw(mock_df_string))
-    class(GET_result) <- "response"
-    return(GET_result)
+  d <- data.frame(a = 1:2, b = c("sentimental", "centipede"))
+  mock_response <- function(...) {
+    structure(list(url = "http://www.fakeurl.com", status_code = 200),
+              class = "response")
   }
   with_mock(
     `civis::files_get` =  function(...) list(fileUrl = "fakeurl.com"),
-    `httr::GET` = mock_GET_result,
-    expect_equal(mock_df, read_civis(123, using = read.csv))
+    `httr::GET` = mock_response,
+    `civis::download_civis` = function(id, fn) write.csv(d, file = fn),
+    expect_equal(d, read_civis(123, using = read.csv, row.names = 1))
   )
 })
 
@@ -218,6 +214,17 @@ test_that("write_civis_file.default returns a file id", {
   )
 })
 
+test_that("write_civis_file calls multipart_unload for big files", {
+  fn <- tempfile()
+  system(paste0("dd if=/dev/zero of=", fn, " count=1 bs=",
+                civis:::MIN_MULTIPART_SIZE + 1))
+  with_mock(
+    `civis::multipart_upload` = function(...) 1,
+    expect_equal(write_civis_file(fn, name = "asdf"), 1)
+  )
+  unlink(fn)
+})
+
 # download_civis --------------------------------------------------------------
 
 test_that("download_civis raises an error if destination file is not specified", {
@@ -259,6 +266,44 @@ test_that("transfer_table succeeds", {
 })
 
 # utils functions -------------------------------------------------------------
+
+test_that("multipart_upload returns file_id", {
+  fn <- tempfile()
+  d <- data.frame(a = 1:5, b = 5:1)
+  write.csv(d, fn, row.names = FALSE)
+  id <- with_mock(
+    `civis::upload_one` = function(...) NULL,
+    `civis::files_post_multipart` = function(...) list(id = 1, uploadUrls = "url"),
+    `future::value` = function(...) NULL,
+    `civis::files_post_multipart_complete` = function(...) NULL,
+    multipart_upload(fn, name = "asdf")
+  )
+  expect_equal(id, 1)
+})
+
+test_that("write_chunks splits files", {
+  # csv
+  d <- data.frame(a = 1:5, b = 5:1)
+  fn <- tempfile()
+  write.csv(d, fn, row.names = FALSE)
+  fl <- write_chunks(fn, chunk_size = file.size(fn)/4)
+  expect_equal(length(fl), 4)
+
+  # it's harder to read the chunks since we split up the files by bytes, not lines;
+  # raw concat -> read.csv
+  res <- tempfile()
+  system(paste0("cat ", paste0(fl, collapse = " "), " > ", res))
+  ans <- read.csv(res)
+  expect_equal(ans, d)
+
+  # rds; again, we have to really just stitch the files together to read it back.
+  fn <- tempfile()
+  saveRDS(d, fn)
+  fl <- write_chunks(fn, chunk_size = file.size(fn)/4)
+  res <- tempfile()
+  system(paste0("cat ", paste0(fl, collapse = " "), " > ", res))
+  expect_equal(readRDS(res), d)
+})
 
 test_that("get_db returns default database or an error", {
   expect_equal(get_db("sea_creatures"), "sea_creatures")
