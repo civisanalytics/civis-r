@@ -10,6 +10,10 @@
 ### Changed
 
 - `call_api` only retries on 413, 429, 502, 503, 504 as in civis-python.
+- Updated the default api spec to the current spec. New endpoints added
+  include /announcements, /apps, /clusters, /codes, /enhancements,
+  /media, /notebooks.  Most endpoints were already available to all users,
+  but with this change these endpoints will now be documented.
 
 ### Added
 
