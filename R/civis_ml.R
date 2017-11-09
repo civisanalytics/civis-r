@@ -89,8 +89,8 @@
 #'  \code{gradient_boosting_classifier} \tab	\code{\link{civis_ml_gradient_boosting_classifier}} \tab classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html}{GradientBoostingClassifier} \tab	\code{n_estimators=500, max_depth=2} \cr
 #'  \code{random_forest_classifier} \tab	\code{\link{civis_ml_random_forest_classifier}} \tab classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}{RandomForestClassifier} \tab	\code{n_estimators=500} \cr
 #'  \code{extra_trees_classifier} \tab	\code{\link{civis_ml_extra_trees_classifier}} \tab classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html}{ExtraTreesClassifier} \tab	\code{n_estimators=500} \cr
-#'  \code{multilayer_perceptron_classifier} \tab \tab classification \tab \href{<https://github.com/civisanalytics/muffnn>}{MLPClassifier} \tab \cr
-#'  \code{stacking_classifier} \tab \tab classification  \tab \href{<https://github.com/civisanalytics/civisml-extensions>}{StackedClassifier}\tab \cr
+#'  \code{multilayer_perceptron_classifier} \tab \tab classification \tab \href{https://github.com/civisanalytics/muffnn}{MLPClassifier} \tab \cr
+#'  \code{stacking_classifier} \tab \tab classification  \tab \href{https://github.com/civisanalytics/civisml-extensions}{StackedClassifier}\tab \cr
 #'  \code{sparse_linear_regressor} \tab \code{\link{civis_ml_sparse_linear_regressor}} \tab	regression \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html}{LinearRegression} \tab \cr
 #'  \code{sparse_ridge_regressor} \tab	\code{\link{civis_ml_sparse_ridge_regressor}} \tab regression \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html}{Ridge} \tab \cr
 #'  \code{gradient_boosting_regressor}	\tab \code{\link{civis_ml_gradient_boosting_regressor}} \tab regression \tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html}{GradientBoostingRegressor} \tab \code{n_estimators=500, max_depth=2} \cr
@@ -116,7 +116,7 @@
 #' \href{https://github.com/civisanalytics/civisml-extensions}{NonNegativeLinearRegression}.
 #'
 #' @section Hyperparameter Tuning:
-#' You can tune hyperparamters using one of two methods: grid search or
+#' You can tune hyperparameters using one of two methods: grid search or
 #' hyperband. CivisML will perform grid search if you pass a list
 #' of hyperparameters to the \code{cross_validation_parameters} parameter, where list elements are
 #' hyperparameter names, and the values are vectors of hyperparameter
@@ -191,9 +191,9 @@
 #'  A list containing the following elements:
 #'   \itemize{
 #'   \item run list, metadata about the run.
-#'   \item data list, metdata about the training data.
+#'   \item data list, metadata about the training data.
 #'   \item model list, the fitted scikit-learn model.
-#'   \item metrics empy list.
+#'   \item metrics empty list.
 #'   \item warnings list.
 #'   \item data_platform list, training data location.
 #'   }}

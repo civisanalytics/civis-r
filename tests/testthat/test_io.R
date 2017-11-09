@@ -215,9 +215,10 @@ test_that("write_civis_file.default returns a file id", {
 })
 
 test_that("write_civis_file calls multipart_unload for big files", {
+  fake_file_size <- mock(file.size)
+  mockery::stub(write_civis_file.character, "file.size", MIN_MULTIPART_SIZE + 1)
   fn <- tempfile()
-  system(paste0("dd if=/dev/zero of=", fn, " count=1 bs=",
-                civis:::MIN_MULTIPART_SIZE + 1))
+  file.create(fn)
   with_mock(
     `civis::multipart_upload` = function(...) 1,
     expect_equal(write_civis_file(fn, name = "asdf"), 1)
@@ -284,25 +285,29 @@ test_that("multipart_upload returns file_id", {
 test_that("write_chunks splits files", {
   # csv
   d <- data.frame(a = 1:5, b = 5:1)
-  fn <- tempfile()
+  fn <- tempfile(fileext = ".txt")
   write.csv(d, fn, row.names = FALSE)
   fl <- write_chunks(fn, chunk_size = file.size(fn)/4)
   expect_equal(length(fl), 4)
 
-  # it's harder to read the chunks since we split up the files by bytes, not lines;
-  # raw concat -> read.csv
-  res <- tempfile()
-  system(paste0("cat ", paste0(fl, collapse = " "), " > ", res))
-  ans <- read.csv(res)
+  the_text <- paste0(unlist(lapply(fl, function(f) {
+    readChar(f, file.size(f))
+  })), collapse = "")
+  ans <- read.csv(textConnection(the_text))
   expect_equal(ans, d)
 
   # rds; again, we have to really just stitch the files together to read it back.
-  fn <- tempfile()
+  fn <- tempfile(fileext = ".rds")
   saveRDS(d, fn)
   fl <- write_chunks(fn, chunk_size = file.size(fn)/4)
-  res <- tempfile()
-  system(paste0("cat ", paste0(fl, collapse = " "), " > ", res))
-  expect_equal(readRDS(res), d)
+
+  the_bin <- unlist(lapply(fl, function(f) {
+    readBin(f, what = "raw", file.size(f))
+  }))
+  zz <- rawConnection(the_bin)
+  ans <- readRDS(gzcon(zz))
+  close(zz)
+  expect_equal(ans, d)
 })
 
 test_that("get_db returns default database or an error", {

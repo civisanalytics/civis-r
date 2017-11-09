@@ -10,13 +10,21 @@
 ### Changed
 
 - `call_api` only retries on 413, 429, 502, 503, 504 as in civis-python.
-- `write_civis_file` uploads objects larger than 50MB in multiple parts, and supports objects up to 5TB. 
+- Updated the default api spec to the current spec. New endpoints added
+include /announcements, /apps, /clusters, /codes, /enhancements,
+/media, /notebooks.  Most endpoints were already available to all users,
+but with this change these endpoints will now be documented.
+- `write_civis_file` uploads objects larger than 50MB
+in multiple parts, and supports objects up to 5TB. 
 Uploads occur in parallel if a `future::plan` has been specified.
+- Files uploaded using `write_civis_file` now don't expire by default. 
 
 ### Added
 
 - "Publish to Civis" Rstudio addin installed by default that publishes `.Rmd` and `.html` files as Civis Platform reports.
 - `write_civis.numeric` is provided to sync a CSV file on S3 to Redshift given a file id.
+- A new `plan(civis_platform)` has been added to evaluate R expressions on Civis Platform 
+using the `future` API. 
 
 #### CivisML
 - New named workflows: `multilayer_perceptron_regressor`, `multilayer_perceptron_classifier`,
