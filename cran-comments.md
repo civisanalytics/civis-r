@@ -1,12 +1,9 @@
-This submission fixes build issues:
+In addition to many new features, this submission updates package tests to be compatible with testthat 2.0.0.
 
-- roxygen2::roxygenize, devtools::build, and memoise::memoise included in NAMESPACE
-- Failing test should be less platform dependent. 
-
-The version has been bumped to 1.0.2.
+The version has been bumped to 1.1.0.
 
 ## Test environments
-* local OS X install, R 3.4.1
+* local OS X install, R 3.4.2
 * ubuntu 12.04 (oldrel, release, devel)
 * win-builder (oldrel, release, and devel)
 
