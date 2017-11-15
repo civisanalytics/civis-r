@@ -282,7 +282,7 @@ pred_job &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">yhat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/fetch_predictions.html">fetch_predictions</a></span>(pred_job)</code></pre></div>
 <p>Note that if the table of predictions exceeds available memory, it may be helpful to use <code>download_civis</code> instead.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download from S3</span>
-<span class="kw"><a href="../reference/download_civis.html">download_civis</a></span>(pred_job$model_info$output_file_ids, <span class="dt">path =</span> <span class="st">"my_predictions.csv"</span>)
+<span class="kw"><a href="../reference/download_civis.html">download_civis</a></span>(pred_job<span class="op">$</span>model_info<span class="op">$</span>output_file_ids, <span class="dt">path =</span> <span class="st">"my_predictions.csv"</span>)
 
 <span class="co"># download from Redshift </span>
 <span class="kw"><a href="../reference/download_civis.html">download_civis</a></span>(<span class="st">"sample_project.brandable_user_scores"</span>)</code></pre></div>
@@ -291,7 +291,7 @@ pred_job &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span 
 <h2 class="hasAnchor">
 <a href="#retrieving-existing-models" class="anchor"></a>Retrieving Existing models</h2>
 <p>An existing model (or particular run of an existing model) can be retrieved using <code>civis_ml_fetch_existing</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model_id &lt;-<span class="st"> </span>m$job$id
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model_id &lt;-<span class="st"> </span>m<span class="op">$</span>job<span class="op">$</span>id
 m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml_fetch_existing</a></span>(model_id)</code></pre></div>
 </div>
 <div id="error-handling" class="section level2">
@@ -327,22 +327,22 @@ m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.
         <span class="dt">model_type =</span> <span class="st">"random_fest_classifier"</span>, 
         <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
         <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)
-  }, <span class="dt">civis_ml_error =</span> function(e) e)
+  }, <span class="dt">civis_ml_error =</span> <span class="cf">function</span>(e) e)
 <span class="kw"><a href="../reference/get_error.html">get_error</a></span>(e)
 <span class="kw"><a href="../reference/fetch_logs.html">fetch_logs</a></span>(e)</code></pre></div>
 <p>Error handling can be used to implement more robust workflow programming with <code>civis_ml</code>. In the following function, we implement <code>retry_model</code>, which retries on e.g. connection failures but not on a <code>civis_ml_error</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">retry_model &lt;-<span class="st"> </span>function(<span class="dt">max_retries =</span> <span class="dv">5</span>) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">retry_model &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">max_retries =</span> <span class="dv">5</span>) {
   i &lt;-<span class="st"> </span><span class="dv">1</span>
-  while (i &lt;<span class="st"> </span>max_retries) {
+  <span class="cf">while</span> (i <span class="op">&lt;</span><span class="st"> </span>max_retries) {
     <span class="kw">tryCatch</span>({
       m &lt;-<span class="st"> </span><span class="kw">civis_ml</span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
                <span class="dt">model_type =</span> <span class="st">"random_forest_classifier"</span>, 
                <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
                <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)
       <span class="kw">return</span>(m)
-    }, <span class="dt">civis_ml_error =</span> function(e) <span class="kw">stop</span>(e))
+    }, <span class="dt">civis_ml_error =</span> <span class="cf">function</span>(e) <span class="kw">stop</span>(e))
     <span class="kw">cat</span>(<span class="st">"Retry: "</span>, i, <span class="dt">fill =</span> <span class="ot">TRUE</span>)
-    i &lt;-<span class="st"> </span>i +<span class="st"> </span><span class="dv">1</span>
+    i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
   }
   <span class="kw">stop</span>(<span class="st">"Exceeded maximum retries."</span>)
 }</code></pre></div>

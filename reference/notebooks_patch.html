@@ -68,10 +68,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/civis_ml.html">Machine Learning in R with CivisML</a>
+    </li>
+    <li>
       <a href="../articles/concurrency.html">Making Simultaneous Calls to Platform</a>
     </li>
     <li>
       <a href="../articles/data_import_and_export.html">Data Import and Export</a>
+    </li>
+    <li>
+      <a href="../articles/quick_start.html">Getting Started</a>
     </li>
   </ul>
 </li>
@@ -105,7 +111,8 @@
     <pre class="usage"><span class='fu'>notebooks_patch</span>(<span class='no'>id</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>file_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>requirements_file_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>requirements</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>docker_image_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>docker_image_tag</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>memory</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cpu</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>cpu</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>credentials</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>git_url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>git_branch</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>git_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>environment_variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>idle_timeout</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -128,15 +135,15 @@
     </tr>
     <tr>
       <th>file_id</th>
-      <td><p>string optional. The file id for the s3 file containing the .ipynb file</p></td>
+      <td><p>string optional. The file ID for the S3 file containing the .ipynb file.</p></td>
     </tr>
     <tr>
       <th>requirements_file_id</th>
-      <td><p>string optional. The file id for the s3 file containing the requirements.txt file</p></td>
+      <td><p>string optional. The file ID for the S3 file containing the requirements.txt file.</p></td>
     </tr>
     <tr>
       <th>requirements</th>
-      <td><p>string optional. The requirements txt file</p></td>
+      <td><p>string optional. The requirements txt file.</p></td>
     </tr>
     <tr>
       <th>docker_image_name</th>
@@ -154,6 +161,30 @@
       <th>cpu</th>
       <td><p>integer optional. The amount of cpu allocated to the the notebook.</p></td>
     </tr>
+    <tr>
+      <th>credentials</th>
+      <td><p>array optional. A list of credential IDs to pass to the notebook.</p></td>
+    </tr>
+    <tr>
+      <th>git_url</th>
+      <td><p>string optional. The URL of the repository that will be cloned.</p></td>
+    </tr>
+    <tr>
+      <th>git_branch</th>
+      <td><p>string optional. The name of the branch that will be cloned.</p></td>
+    </tr>
+    <tr>
+      <th>git_file</th>
+      <td><p>string optional. The name of the notebook file within a repository that will be included in the deployment.</p></td>
+    </tr>
+    <tr>
+      <th>environment_variables</th>
+      <td><p>object optional. Environment variables to be passed into the Notebook.</p></td>
+    </tr>
+    <tr>
+      <th>idle_timeout</th>
+      <td><p>integer optional. How long the notebook will stay alive without any kernel activity.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -166,8 +197,8 @@
 <dt>notebookUrl</dt><dd><p>string, Time-limited URL to get the .ipynb file for this notebook.</p></dd>
 <dt>notebookPreviewUrl</dt><dd><p>string, Time-limited URL to get the .htm preview file for this notebook.</p></dd>
 <dt>requirementsUrl</dt><dd><p>string, Time-limited URL to get the requirements.txt file for this notebook.</p></dd>
-<dt>fileId</dt><dd><p>string, The file id for the s3 file containing the .ipynb file</p></dd>
-<dt>requirementsFileId</dt><dd><p>string, The file id for the s3 file containing the requirements.txt file</p></dd>
+<dt>fileId</dt><dd><p>string, The file ID for the S3 file containing the .ipynb file.</p></dd>
+<dt>requirementsFileId</dt><dd><p>string, The file ID for the S3 file containing the requirements.txt file.</p></dd>
 <dt>user</dt><dd><p>object, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
@@ -182,25 +213,32 @@
 <dt>cpu</dt><dd><p>integer, The amount of cpu allocated to the the notebook.</p></dd>
 <dt>createdAt</dt><dd><p>string,</p></dd>
 <dt>updatedAt</dt><dd><p>string,</p></dd>
-<dt>currentDeployment</dt><dd><p>object, A list containing the following elements: 
+<dt>mostRecentDeployment</dt><dd><p>object, A list containing the following elements: 
 <ul>
-<li><p>deploymentId integer, The ID for this deployment</p></li>
-<li><p>userId integer, The ID of the owner</p></li>
-<li><p>host string, Domain of the deployment</p></li>
-<li><p>name string, Name of the deployment</p></li>
-<li><p>dockerImageName string, The name of the docker image to pull from DockerHub</p></li>
+<li><p>deploymentId integer, The ID for this deployment.</p></li>
+<li><p>userId integer, The ID of the owner.</p></li>
+<li><p>host string, Domain of the deployment.</p></li>
+<li><p>name string, Name of the deployment.</p></li>
+<li><p>dockerImageName string, The name of the docker image to pull from DockerHub.</p></li>
 <li><p>dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).</p></li>
 <li><p>displayUrl string, URL that displays the deployed platform object and includes auth token.</p></li>
-<li><p>memory integer, The memory allocated to the deployment</p></li>
-<li><p>cpu integer, The cpu allocated to the deployment</p></li>
-<li><p>state string, The state of the deployment</p></li>
-<li><p>stateMessage string, A detailed description of the state</p></li>
+<li><p>memory integer, The memory allocated to the deployment.</p></li>
+<li><p>cpu integer, The cpu allocated to the deployment.</p></li>
+<li><p>state string, The state of the deployment.</p></li>
+<li><p>stateMessage string, A detailed description of the state.</p></li>
 <li><p>createdAt string,</p></li>
 <li><p>updatedAt string,</p></li>
+<li><p>published boolean,</p></li>
 <li><p>notebookId integer, The ID of owning Notebook</p></li>
 </ul></p></dd>
+<dt>credentials</dt><dd><p>array, A list of credential IDs to pass to the notebook.</p></dd>
+<dt>gitUrl</dt><dd><p>string, The URL of the repository that will be cloned.</p></dd>
+<dt>gitBranch</dt><dd><p>string, The name of the branch that will be cloned.</p></dd>
+<dt>gitFile</dt><dd><p>string, The name of the notebook file within a repository that will be included in the deployment.</p></dd>
+<dt>environmentVariables</dt><dd><p>object, Environment variables to be passed into the Notebook.</p></dd>
+<dt>idleTimeout</dt><dd><p>integer, How long the notebook will stay alive without any kernel activity.</p></dd>
 <dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
-<dt>hidden</dt><dd><p>boolean, The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID</p></dd>
+<dt>hidden</dt><dd><p>boolean, The hidden status of the object.</p></dd>
 
     
 
@@ -218,7 +256,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bill Lattner, Patrick Miller, Keith Ingersoll, Anh Le.</p>
+  <p>Developed by Patrick Miller, Keith Ingersoll.</p>
 </div>
 
 <div class="pkgdown">

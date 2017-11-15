@@ -134,7 +134,7 @@ report will be created.</p></td>
     </tr>
     <tr>
       <th>project_id</th>
-      <td><p>bool, Project_id that the report should be added to.</p></td>
+      <td><p>integer, Project_id that the report should be added to.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -144,6 +144,20 @@ is not explicity set and <code>input</code> will be overwritten with
 <code>rmd_file</code>.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function also supports passing <code>report_id</code>, <code>report_name</code>,
+<code>provide_api_key</code> and <code>project_id</code> as metadata in the report's
+YAML front matter.  Just as the title of an RMarkdown document can be set
+with <code>title: "my title!"</code>, these parameters can be set like</p><pre>
+  civis:
+    report_name: "My Report Name"
+    report_id: 9000
+</pre><p>Since <code>report_id</code> is set, this code will overwrite the existing
+report with that number, which may be useful when updating a report on
+a schedule.  Any argument passed in explicity to <code>publish_rmd</code>
+will be used in place of the corresponding argument set in YAML metadata.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -156,7 +170,7 @@ with <code>publish_html</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>'publish_html' to publish html to Civis</p>
+    <p><code><a href='publish_html.html'>publish_html</a></code> to publish html to Civis</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -175,6 +189,8 @@ with <code>publish_html</code>.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#note">Note</a></li>
 
       <li><a href="#see-also">See also</a></li>

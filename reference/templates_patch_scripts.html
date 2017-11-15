@@ -68,10 +68,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/civis_ml.html">Machine Learning in R with CivisML</a>
+    </li>
+    <li>
       <a href="../articles/concurrency.html">Making Simultaneous Calls to Platform</a>
     </li>
     <li>
       <a href="../articles/data_import_and_export.html">Data Import and Export</a>
+    </li>
+    <li>
+      <a href="../articles/quick_start.html">Getting Started</a>
     </li>
   </ul>
 </li>
@@ -102,7 +108,8 @@
     <p>Update some attributes of this Script Template</p>
     
 
-    <pre class="usage"><span class='fu'>templates_patch_scripts</span>(<span class='no'>id</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>note</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>archived</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>templates_patch_scripts</span>(<span class='no'>id</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>note</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ui_report_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>archived</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -118,6 +125,10 @@
     <tr>
       <th>note</th>
       <td><p>string optional. A note describing what this template is used for; custom scripts created off this template will display this description.</p></td>
+    </tr>
+    <tr>
+      <th>ui_report_id</th>
+      <td><p>integer optional. The id of the report that this template uses.</p></td>
     </tr>
     <tr>
       <th>archived</th>
@@ -137,9 +148,10 @@
 <dt>createdAt</dt><dd><p>string,</p></dd>
 <dt>updatedAt</dt><dd><p>string,</p></dd>
 <dt>useCount</dt><dd><p>integer, The number of uses of this template.</p></dd>
+<dt>uiReportId</dt><dd><p>integer, The id of the report that this template uses.</p></dd>
 <dt>techReviewed</dt><dd><p>boolean, Whether this template has been audited by Civis for security vulnerability and correctness.</p></dd>
 <dt>archived</dt><dd><p>boolean, Whether the template has been archived.</p></dd>
-<dt>hidden</dt><dd><p>boolean, The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID</p></dd>
+<dt>hidden</dt><dd><p>boolean, The hidden status of the object.</p></dd>
 
     
 
@@ -157,7 +169,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bill Lattner, Patrick Miller, Keith Ingersoll, Anh Le.</p>
+  <p>Developed by Patrick Miller, Keith Ingersoll.</p>
 </div>
 
 <div class="pkgdown">

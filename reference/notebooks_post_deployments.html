@@ -68,10 +68,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/civis_ml.html">Machine Learning in R with CivisML</a>
+    </li>
+    <li>
       <a href="../articles/concurrency.html">Making Simultaneous Calls to Platform</a>
     </li>
     <li>
       <a href="../articles/data_import_and_export.html">Data Import and Export</a>
+    </li>
+    <li>
+      <a href="../articles/quick_start.html">Getting Started</a>
     </li>
   </ul>
 </li>
@@ -102,7 +108,8 @@
     <p>Deploy a Notebook</p>
     
 
-    <pre class="usage"><span class='fu'>notebooks_post_deployments</span>(<span class='no'>notebook_id</span>, <span class='kw'>deployment_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>notebooks_post_deployments</span>(<span class='no'>notebook_id</span>, <span class='kw'>deployment_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>published</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -115,24 +122,29 @@
       <th>deployment_id</th>
       <td><p>integer optional. The ID for this deployment</p></td>
     </tr>
+    <tr>
+      <th>published</th>
+      <td><p>boolean optional.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list containing the following elements:</p>
-<dt>deploymentId</dt><dd><p>integer, The ID for this deployment</p></dd>
-<dt>userId</dt><dd><p>integer, The ID of the owner</p></dd>
-<dt>host</dt><dd><p>string, Domain of the deployment</p></dd>
-<dt>name</dt><dd><p>string, Name of the deployment</p></dd>
-<dt>dockerImageName</dt><dd><p>string, The name of the docker image to pull from DockerHub</p></dd>
+<dt>deploymentId</dt><dd><p>integer, The ID for this deployment.</p></dd>
+<dt>userId</dt><dd><p>integer, The ID of the owner.</p></dd>
+<dt>host</dt><dd><p>string, Domain of the deployment.</p></dd>
+<dt>name</dt><dd><p>string, Name of the deployment.</p></dd>
+<dt>dockerImageName</dt><dd><p>string, The name of the docker image to pull from DockerHub.</p></dd>
 <dt>dockerImageTag</dt><dd><p>string, The tag of the docker image to pull from DockerHub (default: latest).</p></dd>
 <dt>displayUrl</dt><dd><p>string, URL that displays the deployed platform object and includes auth token.</p></dd>
-<dt>memory</dt><dd><p>integer, The memory allocated to the deployment</p></dd>
-<dt>cpu</dt><dd><p>integer, The cpu allocated to the deployment</p></dd>
-<dt>state</dt><dd><p>string, The state of the deployment</p></dd>
-<dt>stateMessage</dt><dd><p>string, A detailed description of the state</p></dd>
+<dt>memory</dt><dd><p>integer, The memory allocated to the deployment.</p></dd>
+<dt>cpu</dt><dd><p>integer, The cpu allocated to the deployment.</p></dd>
+<dt>state</dt><dd><p>string, The state of the deployment.</p></dd>
+<dt>stateMessage</dt><dd><p>string, A detailed description of the state.</p></dd>
 <dt>createdAt</dt><dd><p>string,</p></dd>
 <dt>updatedAt</dt><dd><p>string,</p></dd>
+<dt>published</dt><dd><p>boolean,</p></dd>
 <dt>notebookId</dt><dd><p>integer, The ID of owning Notebook</p></dd>
 
     
@@ -151,7 +163,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bill Lattner, Patrick Miller, Keith Ingersoll, Anh Le.</p>
+  <p>Developed by Patrick Miller, Keith Ingersoll.</p>
 </div>
 
 <div class="pkgdown">

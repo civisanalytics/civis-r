@@ -90,7 +90,7 @@
 <h2 class="hasAnchor">
 <a href="#concurrency-in-the-civis-r-client" class="anchor"></a>Concurrency in the Civis R Client</h2>
 <p>Just like most functions in R, all functions in <code>civis</code> block. This means that each function in a program must complete before the next function runs. For instance,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nap &lt;-<span class="st"> </span>function(seconds) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nap &lt;-<span class="st"> </span><span class="cf">function</span>(seconds) {
     <span class="kw">Sys.sleep</span>(seconds)
 }
 
@@ -99,7 +99,7 @@ start &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
 <span class="kw">nap</span>(<span class="dv">2</span>)
 <span class="kw">nap</span>(<span class="dv">3</span>)
 end &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
-<span class="kw">print</span>(end -<span class="st"> </span>start)</code></pre></div>
+<span class="kw">print</span>(end <span class="op">-</span><span class="st"> </span>start)</code></pre></div>
 <p>This program takes 6 seconds to complete, since it takes 1 second for the first <code>nap</code>, 2 for the second and 3 for the last. This program is easy to reason about because each function is sequentially executed. Usually, that is how we want our programs to run.</p>
 <p>There are some exceptions to this rule. Sequentially executing each function might be inconvenient if each <code>nap</code> took 30 minutes instead of a few seconds. In that case, we might like our program to perform all 3 naps simultaneously. In the above example, running all 3 naps simultaneously would take 3 seconds (the length of the longest nap) rather than 6 seconds.</p>
 <p>As all function calls in <code>civis</code> block, <code>civis</code> relies on the mature R ecosystem for parallel programming to enable multiple simultaneous tasks. The three packages we introduce are <code>future</code>, <code>foreach</code>, and <code>parallel</code> (included in base R). For all packages, simultaneous tasks are enabled by starting each task in a seperate R process. Examples for building several models in parallel with different libraries are included below. The libraries have strengths and weaknesses and choosing which library to use is often a matter of preference.</p>
@@ -114,24 +114,24 @@ end &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
 
 <span class="co"># Define a concurrent backend with enough processes so each function</span>
 <span class="co"># we want to run concurrently has its own process. Here we'll need at least 2.</span>
-<span class="kw">plan</span>(<span class="st">"multiprocess"</span>, <span class="dt">workers=</span><span class="dv">10</span>)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/future/topics/plan">plan</a></span>(<span class="st">"multiprocess"</span>, <span class="dt">workers=</span><span class="dv">10</span>)
 
 <span class="co"># Load data</span>
 <span class="kw">data</span>(iris)
 <span class="kw">data</span>(airquality)
-airquality &lt;-<span class="st"> </span>airquality[!<span class="kw">is.na</span>(airquality$Ozone),]  <span class="co"># remove missing in dv</span>
+airquality &lt;-<span class="st"> </span>airquality[<span class="op">!</span><span class="kw">is.na</span>(airquality<span class="op">$</span>Ozone),]  <span class="co"># remove missing in dv</span>
 
 <span class="co"># Create a future for each model, using the special %&lt;-% assignment operator.</span>
 <span class="co"># These futures are created immediately, kicking off the models.</span>
-air_model %&lt;-%<span class="st"> </span><span class="kw">civis_ml</span>(airquality, <span class="st">"Ozone"</span>, <span class="st">"gradient_boosting_regressor"</span>)
-iris_model %&lt;-%<span class="st"> </span><span class="kw">civis_ml</span>(iris, <span class="st">"Species"</span>, <span class="st">"sparse_logistic"</span>)
+air_model <span class="op">%&lt;-%</span><span class="st"> </span><span class="kw">civis_ml</span>(airquality, <span class="st">"Ozone"</span>, <span class="st">"gradient_boosting_regressor"</span>)
+iris_model <span class="op">%&lt;-%</span><span class="st"> </span><span class="kw">civis_ml</span>(iris, <span class="st">"Species"</span>, <span class="st">"sparse_logistic"</span>)
 
 <span class="co"># At this point, `air_model` has not finished training yet. That's okay,</span>
 <span class="co"># the program will just wait until `air_model` is done before printing it.</span>
 <span class="kw">print</span>(<span class="st">"airquality R^2:"</span>)
-<span class="kw">print</span>(air_model$metrics$metrics$r_squared)
+<span class="kw">print</span>(air_model<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>r_squared)
 <span class="kw">print</span>(<span class="st">"iris ROC:"</span>)
-<span class="kw">print</span>(iris_model$metrics$metrics$roc_auc)</code></pre></div>
+<span class="kw">print</span>(iris_model<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>roc_auc)</code></pre></div>
 </div>
 <div id="building-many-models-with-foreach" class="section level2">
 <h2 class="hasAnchor">
@@ -146,7 +146,7 @@ iris_model %&lt;-%<span class="st"> </span><span class="kw">civis_ml</span>(iris
 <span class="co"># we want to run concurrently has its own process. Here we'll</span>
 <span class="co"># need at least 3, with 1 for each model_type in model_types.</span>
 cluster &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/parallel/topics/makeCluster">makeCluster</a></span>(<span class="dv">10</span>)
-<span class="kw">registerDoParallel</span>(cluster)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/doParallel/topics/registerDoParallel">registerDoParallel</a></span>(cluster)
 
 <span class="co"># Model types to build</span>
 model_types &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"sparse_logistic"</span>,
@@ -157,12 +157,12 @@ model_types &lt;-<span class="st"> </span><span class="kw">c</span>(<span class=
 <span class="kw">data</span>(iris)
 
 <span class="co"># Listen for multiple models to complete concurrently</span>
-model_results &lt;-<span class="st"> </span><span class="kw">foreach</span>(<span class="dt">model_type=</span><span class="kw">iter</span>(model_types), <span class="dt">.packages=</span><span class="st">'civis'</span>) %dopar%<span class="st"> </span>{
+model_results &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/foreach/topics/foreach">foreach</a></span>(<span class="dt">model_type=</span><span class="kw">iter</span>(model_types), <span class="dt">.packages=</span><span class="st">'civis'</span>) <span class="op">%dopar%</span><span class="st"> </span>{
     <span class="kw">civis_ml</span>(iris, <span class="st">"Species"</span>, model_type)
 }
 <span class="kw"><a href="http://www.rdocumentation.org/packages/parallel/topics/makeCluster">stopCluster</a></span>(cluster)
 <span class="kw">print</span>(<span class="st">"ROC Results"</span>)
-<span class="kw">lapply</span>(model_results, function(result) result$metrics$metrics$roc_auc)</code></pre></div>
+<span class="kw">lapply</span>(model_results, <span class="cf">function</span>(result) result<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>roc_auc)</code></pre></div>
 </div>
 <div id="building-many-models-with-mcparallel" class="section level2">
 <h2 class="hasAnchor">
@@ -181,18 +181,18 @@ model_types &lt;-<span class="st"> </span><span class="kw">c</span>(<span class=
 <span class="kw">data</span>(iris)
 
 <span class="co"># Loop over all models in parallel with a max of 10 processes</span>
-model_results &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/parallel/topics/mclapply">mclapply</a></span>(model_types, function(model_type) {
+model_results &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/parallel/topics/mclapply">mclapply</a></span>(model_types, <span class="cf">function</span>(model_type) {
   <span class="kw">civis_ml</span>(iris, <span class="st">"Species"</span>, model_type)
 }, <span class="dt">mc.cores=</span><span class="dv">10</span>)
 
 <span class="co"># Wait for all models simultaneously</span>
 <span class="kw">print</span>(<span class="st">"ROC Results"</span>)
-<span class="kw">lapply</span>(model_results, function(result) result$metrics$metrics$roc_auc)</code></pre></div>
+<span class="kw">lapply</span>(model_results, <span class="cf">function</span>(result) result<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>roc_auc)</code></pre></div>
 </div>
 <div id="operating-system-environment-specific-errors" class="section level2">
 <h2 class="hasAnchor">
 <a href="#operating-system-environment-specific-errors" class="anchor"></a>Operating System / Environment Specific Errors</h2>
-<p>Differences in operating systems and R environments may cause errors for some users of the parallel libraries listed above. In particular, <code>mclapply</code> does not work on Windows and may not work in RStudio on certain operating systems. <code>future</code> may require <code>plan(multisession)</code> on certain operating systems. If you encounter an error parallelizing functions in <code>civis</code>, we recommend first trying more than one method listed above. While we will address errors specific to <code>civis</code> with regards to parallel code, the technicalities of parallel libraries in R across operating systems and enviroments prevent us from providing more general support for issues regarding parallelized code in R.</p>
+<p>Differences in operating systems and R environments may cause errors for some users of the parallel libraries listed above. In particular, <code>mclapply</code> does not work on Windows and may not work in RStudio on certain operating systems. <code>future</code> may require <code><a href="http://www.rdocumentation.org/packages/future/topics/plan">plan(multisession)</a></code> on certain operating systems. If you encounter an error parallelizing functions in <code>civis</code>, we recommend first trying more than one method listed above. While we will address errors specific to <code>civis</code> with regards to parallel code, the technicalities of parallel libraries in R across operating systems and enviroments prevent us from providing more general support for issues regarding parallelized code in R.</p>
 </div>
 </div>
   </div>

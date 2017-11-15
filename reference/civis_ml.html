@@ -116,14 +116,15 @@ using a set of Scikit-Learn estimators.</p>
   <span class='kw'>oos_scores_if_exists</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fail"</span>, <span class='st'>"append"</span>, <span class='st'>"drop"</span>, <span class='st'>"truncate"</span>),
   <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cpu_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>memory_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>disk_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>polling_interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>validation_data</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"train"</span>, <span class='st'>"skip"</span>), <span class='kw'>n_jobs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>civis_ml_fetch_existing</span>(<span class='no'>model_id</span>, <span class='kw'>run_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='co'># S3 method for civis_ml</span>
 <span class='fu'>predict</span>(<span class='no'>object</span>, <span class='no'>newdata</span>, <span class='kw'>primary_key</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>output_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>output_db</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>if_output_exists</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fail"</span>,
-  <span class='st'>"append"</span>, <span class='st'>"drop"</span>, <span class='st'>"truncate"</span>), <span class='kw'>n_jobs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>polling_interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='st'>"append"</span>, <span class='st'>"drop"</span>, <span class='st'>"truncate"</span>), <span class='kw'>n_jobs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cpu_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>memory_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>disk_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>polling_interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -173,7 +174,8 @@ model.</p></td>
       <th>cross_validation_parameters</th>
       <td><p>Optional, parameter grid for learner
 parameters, e.g. <code>list(n_estimators = c(100, 200, 500),
-learning_rate = c(0.01, 0.1), max_depth = c(2, 3))</code>.</p></td>
+learning_rate = c(0.01, 0.1), max_depth = c(2, 3))</code>
+or <code>"hyperband"</code> for supported models.</p></td>
     </tr>
     <tr>
       <th>calibration</th>
@@ -206,17 +208,18 @@ It will have <code>" Train"</code> or <code>" Predict"</code> added to become th
     <tr>
       <th>cpu_requested</th>
       <td><p>Optional, the number of CPU shares requested in the
-Civis Platform for training jobs. 1024 shares = 1 CPU.</p></td>
+Civis Platform for training jobs or prediction child jobs.
+1024 shares = 1 CPU.</p></td>
     </tr>
     <tr>
       <th>memory_requested</th>
       <td><p>Optional, the memory requested from Civis Platform
-for training jobs, in MiB.</p></td>
+for training jobs or prediction child jobs, in MiB.</p></td>
     </tr>
     <tr>
       <th>disk_requested</th>
       <td><p>Optional, the disk space requested on Civis Platform
-for training jobs, in GB.</p></td>
+for training jobs or prediction child jobs, in GB.</p></td>
     </tr>
     <tr>
       <th>notifications</th>
@@ -227,6 +230,17 @@ and URL notification.</p></td>
     <tr>
       <th>polling_interval</th>
       <td><p>Check for job completion every this number of seconds.</p></td>
+    </tr>
+    <tr>
+      <th>validation_data</th>
+      <td><p>Optional, source for validation data. There are
+currently two options: <code>train</code> (the default), which uses training
+data for validation, and <code>skip</code>, which skips the validation step.</p></td>
+    </tr>
+    <tr>
+      <th>n_jobs</th>
+      <td><p>Number of concurrent Platform jobs to use for training and
+validation, or multi-file / large table prediction.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -262,11 +276,6 @@ the model was built.</p></td>
 The default is <code>"fail"</code>.</p></td>
     </tr>
     <tr>
-      <th>n_jobs</th>
-      <td><p>Number of concurrent Platform jobs to use for
-multi-file / large table prediction.</p></td>
-    </tr>
-    <tr>
       <th>&#8230;</th>
       <td><p>Unused</p></td>
     </tr>
@@ -293,9 +302,9 @@ multi-file / large table prediction.</p></td>
  A list containing the following elements:
   <ul>
 <li><p>run list, metadata about the run.</p></li>
-<li><p>data list, metdata about the training data.</p></li>
+<li><p>data list, metadata about the training data.</p></li>
 <li><p>model list, the fitted scikit-learn model.</p></li>
-<li><p>metrics empy list.</p></li>
+<li><p>metrics empty list.</p></li>
 <li><p>warnings list.</p></li>
 <li><p>data_platform list, training data location.</p></li>
 </ul></p></dd>
@@ -309,8 +318,11 @@ start by imputing missing values with the mean of non-null values in a
 column. The <code>"sparse_*"</code> models include a LASSO regression step
 (using <code>glmnet</code>) to do feature selection before passing data to the
 final model. In some models, CivisML uses default parameters from those in
-<a href='http://scikit-learn.org/stable/'>Scikit-Learn</a>.
-Specific workflows can also be called directly using the R workflow functions.</p><table><tr><td>
+<a href='http://scikit-learn.org/stable/'>Scikit-Learn</a>, as indicated in the "Altered Defaults" column.
+All models also have <code>random_state=42</code>. Note that <code>"multilayer_perceptron_classifier"</code>
+and <code>"multilayer_perceptron_regressor"</code> can only be used with
+hyperband.</p>
+<p>Specific workflows can also be called directly using the R workflow functions.</p><table><tr><td>
  Name </td>
 <td> R Workflow </td>
 <td> Model Type </td>
@@ -341,6 +353,18 @@ Specific workflows can also be called directly using the R workflow functions.</
 <td>	<a href='http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html'>ExtraTreesClassifier</a> </td>
 <td>	<code>n_estimators=500</code> </td>
 </tr><tr><td>
+ <code>multilayer_perceptron_classifier</code> </td>
+<td> </td>
+<td> classification </td>
+<td> <a href='https://github.com/civisanalytics/muffnn'>MLPClassifier</a> </td>
+<td> </td>
+</tr><tr><td>
+ <code>stacking_classifier</code> </td>
+<td> </td>
+<td> classification  </td>
+<td> <a href='https://github.com/civisanalytics/civisml-extensions'>StackedClassifier</a></td>
+<td> </td>
+</tr><tr><td>
  <code>sparse_linear_regressor</code> </td>
 <td> <code><a href='civis_ml_sparse_linear_regressor.html'>civis_ml_sparse_linear_regressor</a></code> </td>
 <td>	regression </td>
@@ -370,7 +394,56 @@ Specific workflows can also be called directly using the R workflow functions.</
 <td> regression	</td>
 <td> <a href='http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html'>ExtraTreesRegressor</a> </td>
 <td> <code>n_estimators=500</code> </td>
+</tr><tr><td>
+ <code>multilayer_perceptron_regressor</code> </td>
+<td> </td>
+<td> regression </td>
+<td> <a href='https://github.com/civisanalytics/muffnn'>MLPRegressor</a> </td>
+<td> </td>
+</tr><tr><td>
+ <code>stacking_regressor</code> </td>
+<td> </td>
+<td> regression  </td>
+<td> <a href='https://github.com/civisanalytics/civisml-extensions'>StackedRegressor</a></td>
+<td> </td>
 </tr></table><p>Model names can be easily accessed using the global variables <code>CIVIS_ML_REGRESSORS</code> and <code>CIVIS_ML_CLASSIFIERS</code>.</p>
+    
+    <h2 class="hasAnchor" id="stacking"><a class="anchor" href="#stacking"></a>Stacking</h2>
+
+    
+    <p>The <code>"stacking_classifier"</code> model stacks
+together the <code>"sparse_logistic"</code>, <code>"gradient_boosting_classifier"</code>,
+and <code>"random_forest_classifier"</code> models, using altered defaults as
+listed for each in the <code>"Altered Defaults"</code> column of the table
+above. The models are combined using a pipeline
+containing a <a href='http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.Normalizer.html#sklearn.preprocessing.Normalizer'>Normalizer</a>
+step, followed by a <a href='http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html'>LogisticRegressionCV</a>
+with <code>penalty='l2'</code> and <code>tol=1e-08</code>. The
+<code>"stacking_regressor"</code> works similarly, stacking together the
+<code>"sparse_linear_regressor"</code>, <code>"gradient_boosting_regressor"</code>,
+and <code>"random_forest_regressor"</code> models, and combining them using
+<a href='https://github.com/civisanalytics/civisml-extensions'>NonNegativeLinearRegression</a>.</p>
+    
+    <h2 class="hasAnchor" id="hyperparameter-tuning"><a class="anchor" href="#hyperparameter-tuning"></a>Hyperparameter Tuning</h2>
+
+    
+    <p>You can tune hyperparameters using one of two methods: grid search or
+hyperband. CivisML will perform grid search if you pass a list
+of hyperparameters to the <code>cross_validation_parameters</code> parameter, where list elements are
+hyperparameter names, and the values are vectors of hyperparameter
+values to grid search over. You can run hyperparameter optimization in parallel by
+setting the <code>n_jobs</code>
+parameter to however many jobs you would like to run in
+parallel. <code>n_jobs</code> defaults to 1 (no parallelization).</p>
+<p><a href='https://arxiv.org/abs/1603.06560'>Hyperband</a>
+is an efficient approach to hyperparameter optimization, and
+recommended over grid search where possible. CivisML will perform
+hyperband optimization if you pass the string <code>"hyperband"</code> to
+<code>cross_validation_parameters</code>. Hyperband is currently only supported for the following models:
+<code>"gradient_boosting_classifier"</code>, <code>"random_forest_classifier"</code>,
+<code>"extra_trees_classifier"</code>, <code>"multilayer_perceptron_classifier"</code>,
+<code>"gradient_boosting_regressor"</code>, <code>"random_forest_regressor"</code>,
+<code>"extra_trees_regressor"</code>, and <code>"multilayer_perceptron_regressor"</code>.</p>
     
     <h2 class="hasAnchor" id="data-sources"><a class="anchor" href="#data-sources"></a>Data Sources</h2>
 
@@ -461,6 +534,10 @@ table on Redshift.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#civisml-workflows">CivisML Workflows</a></li>
+
+      <li><a href="#stacking">Stacking</a></li>
+
+      <li><a href="#hyperparameter-tuning">Hyperparameter Tuning</a></li>
 
       <li><a href="#data-sources">Data Sources</a></li>
 

@@ -68,10 +68,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/civis_ml.html">Machine Learning in R with CivisML</a>
+    </li>
+    <li>
       <a href="../articles/concurrency.html">Making Simultaneous Calls to Platform</a>
     </li>
     <li>
       <a href="../articles/data_import_and_export.html">Data Import and Export</a>
+    </li>
+    <li>
+      <a href="../articles/quick_start.html">Getting Started</a>
     </li>
   </ul>
 </li>
@@ -104,7 +110,7 @@
 
     <pre class="usage"><span class='fu'>results_patch</span>(<span class='no'>id</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>script_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>code_body</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>config</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>app_state</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>provide_api_key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>template_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>template_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>use_viewers_tableau_username</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -140,6 +146,10 @@
     <tr>
       <th>template_id</th>
       <td><p>integer optional. The ID of the template used for this report. If null is passed, no template will back this report. Changes to the backing template will reset the report appState.</p></td>
+    </tr>
+    <tr>
+      <th>use_viewers_tableau_username</th>
+      <td><p>boolean optional. Apply user level filtering on Tableau reports.</p></td>
     </tr>
     </table>
     
@@ -186,7 +196,7 @@
 <li><p>error string, The error message for this run, if present.</p></li>
 </ul></p></dd>
 <dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
-<dt>hidden</dt><dd><p>boolean, The hidden status of the object. Setting this to true hides it from most API endpoints. The object can still be queried directly by ID</p></dd>
+<dt>hidden</dt><dd><p>boolean, The hidden status of the object.</p></dd>
 <dt>authDataUrl</dt><dd><p>string,</p></dd>
 <dt>authCodeUrl</dt><dd><p>string,</p></dd>
 <dt>config</dt><dd><p>string, Any configuration metadata for this report.</p></dd>
@@ -195,6 +205,7 @@
 <dt>apiKey</dt><dd><p>string, A Civis API key that can be used by this report.</p></dd>
 <dt>apiKeyId</dt><dd><p>integer, The ID of the API key. Can be used for auditing API use by this report.</p></dd>
 <dt>appState</dt><dd><p>object, Any application state blob for this report.</p></dd>
+<dt>useViewersTableauUsername</dt><dd><p>boolean, Apply user level filtering on Tableau reports.</p></dd>
 
     
 
@@ -212,7 +223,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bill Lattner, Patrick Miller, Keith Ingersoll, Anh Le.</p>
+  <p>Developed by Patrick Miller, Keith Ingersoll.</p>
 </div>
 
 <div class="pkgdown">
