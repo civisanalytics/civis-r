@@ -68,10 +68,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/civis_ml.html">Machine Learning in R with CivisML</a>
+    </li>
+    <li>
       <a href="../articles/concurrency.html">Making Simultaneous Calls to Platform</a>
     </li>
     <li>
       <a href="../articles/data_import_and_export.html">Data Import and Export</a>
+    </li>
+    <li>
+      <a href="../articles/quick_start.html">Getting Started</a>
     </li>
   </ul>
 </li>
@@ -102,23 +108,28 @@
     <p>List Notebooks</p>
     
 
-    <pre class="usage"><span class='fu'>notebooks_list</span>(<span class='kw'>archived</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>author</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>status</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>page_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>notebooks_list</span>(<span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>archived</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>author</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>status</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>page_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>order_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>hidden</th>
+      <td><p>boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.</p></td>
+    </tr>
     <tr>
       <th>archived</th>
       <td><p>string optional. The archival status of the requested object(s).</p></td>
     </tr>
     <tr>
       <th>author</th>
-      <td><p>string optional. If specified, return imports from this author. It accepts a comma-separated list of author ids.</p></td>
+      <td><p>string optional. If specified, return imports from this author. It accepts a comma-separated list of author IDs.</p></td>
     </tr>
     <tr>
       <th>status</th>
-      <td><p>string optional. If specified, returns notebooks with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'idle'.</p></td>
+      <td><p>string optional. If specified, returns notebooks with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'pending', 'idle'.</p></td>
     </tr>
     <tr>
       <th>limit</th>
@@ -155,21 +166,21 @@
 </ul></p></dd>
 <dt>createdAt</dt><dd><p>string,</p></dd>
 <dt>updatedAt</dt><dd><p>string,</p></dd>
-<dt>currentDeployment</dt><dd><p>object, A list containing the following elements: 
+<dt>mostRecentDeployment</dt><dd><p>object, A list containing the following elements: 
 <ul>
-<li><p>deploymentId integer, The ID for this deployment</p></li>
-<li><p>userId integer, The ID of the owner</p></li>
-<li><p>host string, Domain of the deployment</p></li>
-<li><p>name string, Name of the deployment</p></li>
-<li><p>dockerImageName string, The name of the docker image to pull from DockerHub</p></li>
+<li><p>deploymentId integer, The ID for this deployment.</p></li>
+<li><p>userId integer, The ID of the owner.</p></li>
+<li><p>host string, Domain of the deployment.</p></li>
+<li><p>name string, Name of the deployment.</p></li>
+<li><p>dockerImageName string, The name of the docker image to pull from DockerHub.</p></li>
 <li><p>dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).</p></li>
-<li><p>displayUrl string, URL that displays the deployed platform object and includes auth token.</p></li>
-<li><p>memory integer, The memory allocated to the deployment</p></li>
-<li><p>cpu integer, The cpu allocated to the deployment</p></li>
-<li><p>state string, The state of the deployment</p></li>
-<li><p>stateMessage string, A detailed description of the state</p></li>
+<li><p>memory integer, The memory allocated to the deployment.</p></li>
+<li><p>cpu integer, The cpu allocated to the deployment.</p></li>
+<li><p>state string, The state of the deployment.</p></li>
+<li><p>stateMessage string, A detailed description of the state.</p></li>
 <li><p>createdAt string,</p></li>
 <li><p>updatedAt string,</p></li>
+<li><p>published boolean,</p></li>
 <li><p>notebookId integer, The ID of owning Notebook</p></li>
 </ul></p></dd>
 <dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
@@ -190,7 +201,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bill Lattner, Patrick Miller, Keith Ingersoll, Anh Le.</p>
+  <p>Developed by Patrick Miller, Keith Ingersoll.</p>
 </div>
 
 <div class="pkgdown">

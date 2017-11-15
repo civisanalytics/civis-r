@@ -68,10 +68,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/civis_ml.html">Machine Learning in R with CivisML</a>
+    </li>
+    <li>
       <a href="../articles/concurrency.html">Making Simultaneous Calls to Platform</a>
     </li>
     <li>
       <a href="../articles/data_import_and_export.html">Data Import and Export</a>
+    </li>
+    <li>
+      <a href="../articles/quick_start.html">Getting Started</a>
     </li>
   </ul>
 </li>
@@ -102,18 +108,18 @@
     <p>Delete a Notebook deployment</p>
     
 
-    <pre class="usage"><span class='fu'>notebooks_delete_deployments</span>(<span class='no'>deployment_id</span>, <span class='no'>notebook_id</span>)</pre>
+    <pre class="usage"><span class='fu'>notebooks_delete_deployments</span>(<span class='no'>notebook_id</span>, <span class='no'>deployment_id</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>deployment_id</th>
-      <td><p>integer required. The ID for this deployment</p></td>
-    </tr>
-    <tr>
       <th>notebook_id</th>
       <td><p>integer required. The ID of the owning Notebook</p></td>
+    </tr>
+    <tr>
+      <th>deployment_id</th>
+      <td><p>integer required. The ID for this deployment</p></td>
     </tr>
     </table>
     
@@ -136,7 +142,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bill Lattner, Patrick Miller, Keith Ingersoll, Anh Le.</p>
+  <p>Developed by Patrick Miller, Keith Ingersoll.</p>
 </div>
 
 <div class="pkgdown">

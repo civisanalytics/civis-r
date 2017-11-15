@@ -68,10 +68,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/civis_ml.html">Machine Learning in R with CivisML</a>
+    </li>
+    <li>
       <a href="../articles/concurrency.html">Making Simultaneous Calls to Platform</a>
     </li>
     <li>
       <a href="../articles/data_import_and_export.html">Data Import and Export</a>
+    </li>
+    <li>
+      <a href="../articles/quick_start.html">Getting Started</a>
     </li>
   </ul>
 </li>
@@ -102,7 +108,8 @@
     <p>Set the permissions users have on this object</p>
     
 
-    <pre class="usage"><span class='fu'>media_put_optimizations_shares_users</span>(<span class='no'>id</span>, <span class='no'>user_ids</span>, <span class='no'>permission_level</span>)</pre>
+    <pre class="usage"><span class='fu'>media_put_optimizations_shares_users</span>(<span class='no'>id</span>, <span class='no'>user_ids</span>, <span class='no'>permission_level</span>,
+  <span class='kw'>share_email_body</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>send_shared_email</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -118,6 +125,14 @@
     <tr>
       <th>permission_level</th>
       <td><p>string required. Options are: "read", "write", or "manage"</p></td>
+    </tr>
+    <tr>
+      <th>share_email_body</th>
+      <td><p>string optional. Custom body text for e-mail sent on a share.</p></td>
+    </tr>
+    <tr>
+      <th>send_shared_email</th>
+      <td><p>boolean optional. Send email to the recipients of a share.</p></td>
     </tr>
     </table>
     
@@ -158,7 +173,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Bill Lattner, Patrick Miller, Keith Ingersoll, Anh Le.</p>
+  <p>Developed by Patrick Miller, Keith Ingersoll.</p>
 </div>
 
 <div class="pkgdown">

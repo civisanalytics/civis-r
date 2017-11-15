@@ -90,7 +90,7 @@
 <h2 class="hasAnchor">
 <a href="#a-very-quick-start" class="anchor"></a>A (Very) Quick Start</h2>
 <p>To begin, make sure <code>civis</code> is installed and your <a href="https://civisanalytics.github.io/civis-r/#installation">API key is in your R environment</a>. You can quickly test that <code>civis</code> is working by invoking</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">name &lt;-<span class="st"> </span>civis::<span class="kw"><a href="../reference/users_list_me.html">users_list_me</a></span>()$name
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">name &lt;-<span class="st"> </span>civis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/civis/topics/users_list_me">users_list_me</a></span>()<span class="op">$</span>name
 <span class="kw">paste</span>(name, <span class="st">"is really awesome!"</span>)</code></pre></div>
 <p>If <code>civis</code> is working, you’ll see a friendly message. Otherwise, you might see an error like this when <code>civis</code> wasn’t installed properly:</p>
 <pre><code>Error in loadNamespace(name) : there is no package called 'civis'</code></pre>
@@ -138,8 +138,8 @@ data2[[<span class="st">"special_note"</span>]]
 <span class="co"># Gradient boosting or random forest, who will win?</span>
 gb_model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml_gradient_boosting_classifier.html">civis_ml_gradient_boosting_classifier</a></span>(iris, <span class="st">"Species"</span>)
 rf_model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml_random_forest_classifier.html">civis_ml_random_forest_classifier</a></span>(iris, <span class="st">"Species"</span>)
-macroavgs &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">gb_model =</span> gb_model$metrics$metrics$roc_auc_macroavg,
-                  <span class="dt">rf_model =</span> rf_model$metrics$metrics$roc_auc_macroavg)
+macroavgs &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">gb_model =</span> gb_model<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>roc_auc_macroavg,
+                  <span class="dt">rf_model =</span> rf_model<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>roc_auc_macroavg)
 macroavgs
 
 ## $gb_model
