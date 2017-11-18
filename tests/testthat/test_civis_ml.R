@@ -50,7 +50,7 @@ test_that("calls scripts_post_custom", {
              disk_requested = 9,
              notifications = list(successEmailSubject = "A success",
                                   successEmailAddresses = c("user@example.com")),
-             polling_interval = 5,
+             polling_interval = .01,
              validation_data = "skip",
              n_jobs = 9,
              verbose = FALSE)
@@ -325,14 +325,18 @@ test_that("calls scripts_post_custom", {
   fake_scripts_post_custom <- mock(list(id = 999))
   fake_scripts_post_custom_runs <- mock(list(id = 888))
   fake_scripts_get_custom_runs <- mock(list(state = "running"), list(state = "succeeded"))
+  fake_scripts_get_custom <- mock(list(state = "succeeded"), cycle = TRUE)
   fake_fetch_predict_results <- mock(NULL)
+
 
   with_mock(
     `civis::get_database_id` = fake_get_database_id,
     `civis::scripts_post_custom` = fake_scripts_post_custom,
     `civis::scripts_post_custom_runs` = fake_scripts_post_custom_runs,
+    `civis::scripts_get_custom` = fake_scripts_get_custom,
     `civis::scripts_get_custom_runs` = fake_scripts_get_custom_runs,
     `civis::fetch_predict_results` = fake_fetch_predict_results,
+
 
     tbl <- civis_table(table_name = "schema.table",
                        database_name = "a_database",
@@ -348,7 +352,7 @@ test_that("calls scripts_post_custom", {
             cpu_requested = 2000,
             memory_requested = 10,
             disk_requested = 15,
-            polling_interval = 5,
+            polling_interval = .01,
             verbose = TRUE)
   )
 

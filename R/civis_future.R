@@ -10,7 +10,15 @@ NULL
 #' @examples \dontrun{
 #'  plan(civis_platform)
 #'  fut <- future({2 + 2}, required_resources = list(cpu = 1024, memory = 2048))
+#'
+#'  # check if a future as resolved
+#'  resolved(fut)
+#'
+#'  # block until the future resolves, and return the value
 #'  value(fut)
+#'
+#'  # grab the run logs
+#'  fut$logs
 #' }
 #'
 #' @export
@@ -43,7 +51,7 @@ CivisFuture <- function(expr = NULL,
                         label = NULL,
                         required_resources = list(cpu = 1024, memory = 2048, diskSpace = 4),
                         docker_image_name = "civisanalytics/datascience-r",
-                        docker_image_tag = "2.0.0",
+                        docker_image_tag = "2.2.0",
                          ...) {
 
   gp <- future::getGlobalsAndPackages(expr, envir = envir, globals = globals)
@@ -75,17 +83,20 @@ CivisFuture <- function(expr = NULL,
 
 #' @export
 run.CivisFuture <- function(future, ...) {
-  cargo <- c(expr = future$expr, envir = future$envir, packages = list(future$packages))
-  task_file_id <- write_civis_file(cargo)
-  runner_file_id <- upload_runner_script()
-  cmd <- make_docker_cmd(task_file_id, runner_file_id)
-  future$job <- scripts_post_containers(future$required_resources,
-                                        docker_command = cmd,
-                                        docker_image_name = future$docker_image_name,
-                                        docker_image_tag = future$docker_image_tag, ...)
-  future$job <- scripts_post_containers_runs(future$job$id)
-  future$state <- c("running")
-  future
+  if (is.null(future$job$containerId)) {
+    cargo <- c(expr = future$expr, envir = future$envir,
+               packages = list(future$packages))
+    task_file_id <- write_civis_file(cargo)
+    runner_file_id <- upload_runner_script()
+    cmd <- make_docker_cmd(task_file_id, runner_file_id)
+    future$job <- scripts_post_containers(future$required_resources,
+                                          docker_command = cmd,
+                                          docker_image_name = future$docker_image_name,
+                                          docker_image_tag = future$docker_image_tag, ...)
+    future$job <- scripts_post_containers_runs(future$job$id)
+    future$state <- c("running")
+  }
+  return(future)
 }
 
 #' @export
@@ -93,17 +104,19 @@ value.CivisFuture <- function(future, ...) {
   if (future$state == "created") {
     future <- run(future)
   }
-  if (!future$state %in% c("succeeded", "failed", "cancelled")) {
-    # get the run from the future object
+  # if the value isn't collected, try to collect it.
+  if (is.null(future$value)) {
     tryCatch({
-      runs <- await(scripts_get_containers_runs, id = future$job$containerId, run_id = future$job$id)
-      future$state <- runs$state
-      future$run <- runs
-      future$value <- fetch_output(runs)
-    }, error = function(e) {
+      future$run <- await(scripts_get_containers_runs, id = future$job$containerId,
+                          run_id = future$job$id)
+      future$state <- future$run$state
+      future$value <- fetch_output(future$run)
+      future$logs  <- fetch_logs(future$run)
+    }, civis_error = function(e) {
       future$state <- "failed"
+      e$message <- paste0(c(e$message, fetch_logs(e)), collapse = "\n")
       stop(e)
-    })
+    }, error = function(e) stop(e))
   }
   future$value
 }
@@ -124,13 +137,16 @@ cancel.CivisFuture <- function(future, ...) {
 
 #' @export
 resolved.CivisFuture <- function(future, ...){
+  if (!is.null(future$job$containerId)) {
+    future$state <- scripts_get_containers_runs(id = future$job$containerId,
+                                              run_id = future$job$id)$state
+  }
   future$state %in% c("succeeded", "failed", "cancelled")
 }
 
 #' @export
 fetch_logs.CivisFuture <- function(object, limit, ...){
-  logs <- scripts_list_containers_runs_logs(object$job$containerId, run_id = object$job$id, limit = limit)
-  format_scripts_logs(logs)
+  object$logs
 }
 
 fetch_output <- function(run) {
