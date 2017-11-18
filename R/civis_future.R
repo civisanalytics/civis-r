@@ -8,17 +8,35 @@ NULL
 #' @param ... Arguments to \code{\link{CivisFuture}} and then \code{\link{scripts_post_containers}}
 #' @return The result of evaluating \code{expr}.
 #' @examples \dontrun{
-#'  plan(civis_platform)
-#'  fut <- future({2 + 2}, required_resources = list(cpu = 1024, memory = 2048))
 #'
-#'  # check if a future as resolved
+#'  plan(civis_platform)
+#'
+#'  # Specify required resources, image, and tag.
+#'  fut <- future({2 + 2},
+#'    required_resources = list(cpu = 1024, memory = 2048),
+#'    docker_image_name = "civisanalytics/datascience-r",
+#'    docker_image_tag = "2.2.0")
+#'
+#'  # Evaluate the future later
+#'  fut <- future({2 + 2}, lazy = TRUE)
+#'  run(fut)
+#'
+#'  # check if a future has resolved
 #'  resolved(fut)
 #'
-#'  # block until the future resolves, and return the value
+#'  # block until the future resolves, and return the value or throw error
 #'  value(fut)
 #'
+#'  # cancel the job
+#'  cancel(fut)
+#'
 #'  # grab the run logs
-#'  fut$logs
+#'  fetch_logs(fut)
+#'
+#'  # handle errors
+#'  fut <- future({stop("Error!")})
+#'  e <- tryCatch(value(fut), error = function(e) e)
+#'  get_error(e)
 #' }
 #'
 #' @export

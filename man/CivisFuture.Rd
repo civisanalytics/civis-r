@@ -9,7 +9,7 @@ CivisFuture(expr = NULL, envir = parent.frame(), substitute = FALSE,
   gc = FALSE, earlySignal = FALSE, label = NULL,
   required_resources = list(cpu = 1024, memory = 2048, diskSpace = 4),
   docker_image_name = "civisanalytics/datascience-r",
-  docker_image_tag = "2.0.0", ...)
+  docker_image_tag = "2.2.0", ...)
 }
 \arguments{
 \item{expr}{An R \link[base]{expression}.}
