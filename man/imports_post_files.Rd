@@ -5,9 +5,10 @@
 \title{Initate an import of a tabular file into the platform}
 \usage{
 imports_post_files(schema, name, remote_host_id, credential_id,
-  max_errors = NULL, existing_table_rows = NULL, distkey = NULL,
-  sortkey1 = NULL, sortkey2 = NULL, column_delimiter = NULL,
-  first_row_is_header = NULL, multipart = NULL, hidden = NULL)
+  max_errors = NULL, existing_table_rows = NULL, diststyle = NULL,
+  distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
+  column_delimiter = NULL, first_row_is_header = NULL, multipart = NULL,
+  hidden = NULL)
 }
 \arguments{
 \item{schema}{string required. The schema of the destination table.}
@@ -21,6 +22,8 @@ imports_post_files(schema, name, remote_host_id, credential_id,
 \item{max_errors}{integer optional. The maximum number of rows with errors to remove from the import before failing.}
 
 \item{existing_table_rows}{string optional. The behaviour if a table with the requested name already exists.  One of "fail", "truncate", "append", or "drop".Defaults to "fail".}
+
+\item{diststyle}{string optional. The diststyle to use for the table. One of "even", "all", or "key".}
 
 \item{distkey}{string optional. The column to use as the distkey for the table.}
 
