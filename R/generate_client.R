@@ -192,7 +192,7 @@ write_nested_docs <- function(x) {
                                          get_descr_str(ps[[i]])), "\n")
     }
     doc_str <- paste0(doc_str, "#' }")
-  } else if (is_obj(x)) {
+  } else if (is_obj(x) & (length(get_obj_properties(x)) > 0)) {
     ps <- get_obj_properties(x)
     doc_str <- paste0(doc_str,
         "A list containing the following elements: \n#' \\itemize{\n")

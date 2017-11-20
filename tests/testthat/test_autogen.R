@@ -1,4 +1,5 @@
 # Tests
+# RRV: 2017-11-20 for 1.1.1
 context("autogen")
 
 if (file.exists("data/full_spec.rds")) {
@@ -8,8 +9,7 @@ if (file.exists("data/full_spec.rds")) {
   saveRDS(spec, "data/full_spec.rds")
 }
 
-IGNORE <- c("apps")
-paths <- with(spec, paths[-grep(IGNORE, names(paths))])
+paths <- spec$paths
 
 # ---- example data from spec
 
@@ -22,6 +22,7 @@ paths <- with(spec, paths[-grep(IGNORE, names(paths))])
 # 7. Parameters: list.  Responses: infinite reference.
 # 8. Parameters: list with ref. Responses: ref.
 # 9. Parameters: list with ref and arrays. Responses: list with ref and arrays.
+# 10. Parameters: argument with empty list.
 
 ex <- list(paths[["/admin/dump-memory"]]$post,
            paths[["/admin/announcements"]]$get,
@@ -31,14 +32,18 @@ ex <- list(paths[["/admin/dump-memory"]]$post,
            paths[["/channels/"]]$get,
            paths[["/jobs/{id}/children"]]$get,
            paths[["/admin/announcements/{id}"]]$patch,
-           paths[["/scripts/sql"]]$post)
+           paths[["/scripts/sql"]]$post,
+           paths[["/notebooks/{id}"]]$put)
+
+
 
 ex_ref <- lapply(ex, replace_ref, spec = spec)
-ex_verb_names <- c("post", "get", "get", "delete", "get", "get", "get", "patch", "post")
+ex_verb_names <- c("post", "get", "get", "delete", "get", "get", "get", "patch", "post", "put")
 ex_path_names <- c("/admin/dump-memory", "/admin/announcements", "/admin/organizations",
                    "/admin/announcements/{id}", "/bocce_clusters/{id}/active_jobs",
                    "/channels/",
-                   "/jobs/{id}/children", "/admin/announcements/{id}", "/scripts/sql")
+                   "/jobs/{id}/children", "/admin/announcements/{id}", "/scripts/sql",
+                   "/notebooks/{id}")
 ex_params <- lapply(ex_ref, parse_params)
 
 # ----- test utils
@@ -63,7 +68,7 @@ test_that("function names are correct", {
                 "admin_list_organizations", "admin_delete_announcements",
                 "bocce_clusters_list_active_jobs", "channels_list",
                 "jobs_list_children", "admin_patch_announcements",
-                "scripts_post_sql")
+                "scripts_post_sql", "notebooks_put")
   test_names <- mapply(build_function_name, verb_name = ex_verb_names,
                        path_name = ex_path_names)
   expect_equivalent(ex_names, test_names)
@@ -73,7 +78,8 @@ test_that("function names are correct", {
   # test on examples from io.R, models.R, etc
   sample_names <- c("predictions_patch", "predictions_post_runs",
                     "models_put_predictions", "scripts_post_sql_runs", "predictions_get",
-                    "models_get", "tables_post_refresh", "models_list")
+                    "models_get", "tables_post_refresh", "models_list",
+                    "notebooks_put")
   expect_true(all(sample_names %in% pkg_names))
 })
 
@@ -201,6 +207,7 @@ test_that("build_params_docs", {
 
   # no args
   expect_equal(build_params_docs(ex_ref[[6]]), "")
+
 })
 
 test_that("build_response_docs", {
