@@ -221,9 +221,12 @@ test_that("build_response_docs", {
   expect_true(all(str_detect_multiple(grep("\\item\\{", resp_str, value = T), check)))
 
   # array
-  expect_true(stringr::str_detect(resp_str[24], "An array containing"))
+  param_id <- grep("item\\{params\\}", resp_str)
+  expect_true(stringr::str_detect(resp_str[param_id],
+                                  "An array containing"))
   check <- names(ex_resp$schema$properties$params$items$properties)
-  expect_true(all(str_detect_multiple(resp_str[26:32], check)))
+  param_args <- (param_id + 2):(param_id + 1 + length(check))
+  expect_true(all(str_detect_multiple(resp_str[param_args], check)))
 
   # obj
   expect_true(stringr::str_detect(resp_str[7], "A list containing"))
