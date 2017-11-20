@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.1] - Unreleased
+
+### Fixed
+
+- `write_civis` calls `imports_post_files` correctly after a change in the argument order.
+
 ## [1.1.0] - 2017-11-10
 
 ### Fixed

@@ -1144,7 +1144,7 @@ credentials_get <- function(id) {
 
 #' Authenticate against a remote host
 #' @param url string required. The URL to your host.
-#' @param remote_host_type string required. The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Ftp, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Redshift, RemoteHostTypes::Salesforce, and RemoteHostTypes::Van
+#' @param remote_host_type string required. The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Redshift, RemoteHostTypes::Salesforce, and RemoteHostTypes::Van
 #' @param username string required. The username for the credential.
 #' @param password string required. The password for the credential.
 #' 
@@ -3825,6 +3825,7 @@ imports_post <- function(name, sync_type, is_outbound, source = NULL, destinatio
 #' @param credential_id integer required. The id of the credentials to be used when performing the database import.
 #' @param max_errors integer optional. The maximum number of rows with errors to remove from the import before failing.
 #' @param existing_table_rows string optional. The behaviour if a table with the requested name already exists.  One of "fail", "truncate", "append", or "drop".Defaults to "fail".
+#' @param diststyle string optional. The diststyle to use for the table. One of "even", "all", or "key".
 #' @param distkey string optional. The column to use as the distkey for the table.
 #' @param sortkey1 string optional. The column to use as the sort key for the table.
 #' @param sortkey2 string optional. The second column in a compound sortkey for the table.
@@ -3839,13 +3840,13 @@ imports_post <- function(name, sync_type, is_outbound, source = NULL, destinatio
 #' \item{runUri}{string, The URI to POST to once the file upload is complete. After uploading the file using the URI given in the uploadUri attribute of the reponse, POST to this URI to initiate the import of your uploaded file into the platform.}
 #' \item{uploadFields}{object, If multipart was set to true, these fields should be included in the multipart upload.}
 #' @export
-imports_post_files <- function(schema, name, remote_host_id, credential_id, max_errors = NULL, existing_table_rows = NULL, distkey = NULL, sortkey1 = NULL, sortkey2 = NULL, column_delimiter = NULL, first_row_is_header = NULL, multipart = NULL, hidden = NULL) {
+imports_post_files <- function(schema, name, remote_host_id, credential_id, max_errors = NULL, existing_table_rows = NULL, diststyle = NULL, distkey = NULL, sortkey1 = NULL, sortkey2 = NULL, column_delimiter = NULL, first_row_is_header = NULL, multipart = NULL, hidden = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/imports/files"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(schema = schema, name = name, remoteHostId = remote_host_id, credentialId = credential_id, maxErrors = max_errors, existingTableRows = existing_table_rows, distkey = distkey, sortkey1 = sortkey1, sortkey2 = sortkey2, columnDelimiter = column_delimiter, firstRowIsHeader = first_row_is_header, multipart = multipart, hidden = hidden)
+  body_params  <- list(schema = schema, name = name, remoteHostId = remote_host_id, credentialId = credential_id, maxErrors = max_errors, existingTableRows = existing_table_rows, diststyle = diststyle, distkey = distkey, sortkey1 = sortkey1, sortkey2 = sortkey2, columnDelimiter = column_delimiter, firstRowIsHeader = first_row_is_header, multipart = multipart, hidden = hidden)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -4473,6 +4474,7 @@ imports_post_cancel <- function(id) {
 #' \itemize{
 #' \item maxErrors integer, 
 #' \item existingTableRows string, 
+#' \item diststyle string, 
 #' \item distkey string, 
 #' \item sortkey1 string, 
 #' \item sortkey2 string, 
@@ -4521,6 +4523,7 @@ imports_post_cancel <- function(id) {
 #' \itemize{
 #' \item maxErrors integer, 
 #' \item existingTableRows string, 
+#' \item diststyle string, 
 #' \item distkey string, 
 #' \item sortkey1 string, 
 #' \item sortkey2 string, 
@@ -4586,6 +4589,7 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' \itemize{
 #' \item maxErrors integer, 
 #' \item existingTableRows string, 
+#' \item diststyle string, 
 #' \item distkey string, 
 #' \item sortkey1 string, 
 #' \item sortkey2 string, 
@@ -4634,6 +4638,7 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' \itemize{
 #' \item maxErrors integer, 
 #' \item existingTableRows string, 
+#' \item diststyle string, 
 #' \item distkey string, 
 #' \item sortkey1 string, 
 #' \item sortkey2 string, 
@@ -4727,6 +4732,7 @@ imports_delete_syncs <- function(id, sync_id) {
 #' \itemize{
 #' \item maxErrors integer, 
 #' \item existingTableRows string, 
+#' \item diststyle string, 
 #' \item distkey string, 
 #' \item sortkey1 string, 
 #' \item sortkey2 string, 
@@ -5308,6 +5314,7 @@ jobs_delete_projects <- function(id, project_id) {
 #' @return  An array containing the following fields:
 #' \item{id}{integer, }
 #' \item{name}{string, }
+#' \item{table}{string, }
 #' @export
 match_targets_list <- function() {
 
@@ -7530,11 +7537,14 @@ notebooks_list <- function(hidden = NULL, archived = NULL, author = NULL, status
 #' @param memory integer optional. The amount of memory allocated to the notebook.
 #' @param cpu integer optional. The amount of cpu allocated to the the notebook.
 #' @param credentials array optional. A list of credential IDs to pass to the notebook.
-#' @param git_url string optional. The URL of the repository that will be cloned.
-#' @param git_branch string optional. The name of the branch that will be cloned.
-#' @param git_file string optional. The name of the notebook file within a repository that will be included in the deployment.
 #' @param environment_variables object optional. Environment variables to be passed into the Notebook.
 #' @param idle_timeout integer optional. How long the notebook will stay alive without any kernel activity.
+#' @param git_ref string optional. The git reference if git repo is specified
+#' @param git_path string optional. The path to the .ipynb file in the git repo that will be started up on notebook launch
+#' @param git_repo object optional. A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of the git repository.
+#' }
 #' @param hidden boolean optional. The hidden status of the object.
 #' 
 #' @return  A list containing the following elements:
@@ -7580,21 +7590,25 @@ notebooks_list <- function(hidden = NULL, archived = NULL, author = NULL, status
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
-#' \item{gitUrl}{string, The URL of the repository that will be cloned.}
-#' \item{gitBranch}{string, The name of the branch that will be cloned.}
-#' \item{gitFile}{string, The name of the notebook file within a repository that will be included in the deployment.}
 #' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
+#' \item{gitRef}{string, The git reference if git repo is specified}
+#' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
+#' \item{gitRepo}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of the git repository.
+#' \item repoUrl string, The url of the git repository
+#' }}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' @export
-notebooks_post <- function(name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, memory = NULL, cpu = NULL, credentials = NULL, git_url = NULL, git_branch = NULL, git_file = NULL, environment_variables = NULL, idle_timeout = NULL, hidden = NULL) {
+notebooks_post <- function(name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, memory = NULL, cpu = NULL, credentials = NULL, environment_variables = NULL, idle_timeout = NULL, git_ref = NULL, git_path = NULL, git_repo = NULL, hidden = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/notebooks/"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, memory = memory, cpu = cpu, credentials = credentials, gitUrl = git_url, gitBranch = git_branch, gitFile = git_file, environmentVariables = environment_variables, idleTimeout = idle_timeout, hidden = hidden)
+  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, memory = memory, cpu = cpu, credentials = credentials, environmentVariables = environment_variables, idleTimeout = idle_timeout, gitRef = git_ref, gitPath = git_path, gitRepo = git_repo, hidden = hidden)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -7651,11 +7665,15 @@ notebooks_post <- function(name = NULL, language = NULL, description = NULL, fil
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
-#' \item{gitUrl}{string, The URL of the repository that will be cloned.}
-#' \item{gitBranch}{string, The name of the branch that will be cloned.}
-#' \item{gitFile}{string, The name of the notebook file within a repository that will be included in the deployment.}
 #' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
+#' \item{gitRef}{string, The git reference if git repo is specified}
+#' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
+#' \item{gitRepo}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of the git repository.
+#' \item repoUrl string, The url of the git repository
+#' }}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' @export
@@ -7689,11 +7707,13 @@ notebooks_get <- function(id) {
 #' @param memory integer optional. The amount of memory allocated to the notebook.
 #' @param cpu integer optional. The amount of cpu allocated to the the notebook.
 #' @param credentials array optional. A list of credential IDs to pass to the notebook.
-#' @param git_url string optional. The URL of the repository that will be cloned.
-#' @param git_branch string optional. The name of the branch that will be cloned.
-#' @param git_file string optional. The name of the notebook file within a repository that will be included in the deployment.
 #' @param environment_variables object optional. Environment variables to be passed into the Notebook.
 #' @param idle_timeout integer optional. How long the notebook will stay alive without any kernel activity.
+#' @param git_ref string optional. The git reference if git repo is specified
+#' @param git_path string optional. The path to the .ipynb file in the git repo that will be started up on notebook launch
+#' @param git_repo object optional. A list containing the following elements: 
+#' \itemize{
+#' }
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this notebook.}
@@ -7738,21 +7758,25 @@ notebooks_get <- function(id) {
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
-#' \item{gitUrl}{string, The URL of the repository that will be cloned.}
-#' \item{gitBranch}{string, The name of the branch that will be cloned.}
-#' \item{gitFile}{string, The name of the notebook file within a repository that will be included in the deployment.}
 #' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
+#' \item{gitRef}{string, The git reference if git repo is specified}
+#' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
+#' \item{gitRepo}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of the git repository.
+#' \item repoUrl string, The url of the git repository
+#' }}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' @export
-notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, memory = NULL, cpu = NULL, credentials = NULL, git_url = NULL, git_branch = NULL, git_file = NULL, environment_variables = NULL, idle_timeout = NULL) {
+notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, memory = NULL, cpu = NULL, credentials = NULL, environment_variables = NULL, idle_timeout = NULL, git_ref = NULL, git_path = NULL, git_repo = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/notebooks/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, memory = memory, cpu = cpu, credentials = credentials, gitUrl = git_url, gitBranch = git_branch, gitFile = git_file, environmentVariables = environment_variables, idleTimeout = idle_timeout)
+  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, memory = memory, cpu = cpu, credentials = credentials, environmentVariables = environment_variables, idleTimeout = idle_timeout, gitRef = git_ref, gitPath = git_path, gitRepo = git_repo)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -7776,11 +7800,13 @@ notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, 
 #' @param memory integer optional. The amount of memory allocated to the notebook.
 #' @param cpu integer optional. The amount of cpu allocated to the the notebook.
 #' @param credentials array optional. A list of credential IDs to pass to the notebook.
-#' @param git_url string optional. The URL of the repository that will be cloned.
-#' @param git_branch string optional. The name of the branch that will be cloned.
-#' @param git_file string optional. The name of the notebook file within a repository that will be included in the deployment.
 #' @param environment_variables object optional. Environment variables to be passed into the Notebook.
 #' @param idle_timeout integer optional. How long the notebook will stay alive without any kernel activity.
+#' @param git_ref string optional. The git reference if git repo is specified
+#' @param git_path string optional. The path to the .ipynb file in the git repo that will be started up on notebook launch
+#' @param git_repo object optional. A list containing the following elements: 
+#' \itemize{
+#' }
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this notebook.}
@@ -7825,21 +7851,25 @@ notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, 
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
-#' \item{gitUrl}{string, The URL of the repository that will be cloned.}
-#' \item{gitBranch}{string, The name of the branch that will be cloned.}
-#' \item{gitFile}{string, The name of the notebook file within a repository that will be included in the deployment.}
 #' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
+#' \item{gitRef}{string, The git reference if git repo is specified}
+#' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
+#' \item{gitRepo}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of the git repository.
+#' \item repoUrl string, The url of the git repository
+#' }}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' @export
-notebooks_patch <- function(id, name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, memory = NULL, cpu = NULL, credentials = NULL, git_url = NULL, git_branch = NULL, git_file = NULL, environment_variables = NULL, idle_timeout = NULL) {
+notebooks_patch <- function(id, name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, memory = NULL, cpu = NULL, credentials = NULL, environment_variables = NULL, idle_timeout = NULL, git_ref = NULL, git_path = NULL, git_repo = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/notebooks/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, memory = memory, cpu = cpu, credentials = credentials, gitUrl = git_url, gitBranch = git_branch, gitFile = git_file, environmentVariables = environment_variables, idleTimeout = idle_timeout)
+  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, memory = memory, cpu = cpu, credentials = credentials, environmentVariables = environment_variables, idleTimeout = idle_timeout, gitRef = git_ref, gitPath = git_path, gitRepo = git_repo)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -7942,11 +7972,15 @@ notebooks_list_update_links <- function(id) {
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
-#' \item{gitUrl}{string, The URL of the repository that will be cloned.}
-#' \item{gitBranch}{string, The name of the branch that will be cloned.}
-#' \item{gitFile}{string, The name of the notebook file within a repository that will be included in the deployment.}
 #' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
+#' \item{gitRef}{string, The git reference if git repo is specified}
+#' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
+#' \item{gitRepo}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of the git repository.
+#' \item repoUrl string, The url of the git repository
+#' }}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' @export
@@ -8185,11 +8219,15 @@ notebooks_delete_shares_groups <- function(id, group_id) {
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
-#' \item{gitUrl}{string, The URL of the repository that will be cloned.}
-#' \item{gitBranch}{string, The name of the branch that will be cloned.}
-#' \item{gitFile}{string, The name of the notebook file within a repository that will be included in the deployment.}
 #' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
+#' \item{gitRef}{string, The git reference if git repo is specified}
+#' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
+#' \item{gitRepo}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of the git repository.
+#' \item repoUrl string, The url of the git repository
+#' }}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' @export
@@ -10082,12 +10120,12 @@ queries_get <- function(id) {
 
 
 #' List the remote hosts
-#' @param type string optional. The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Ftp, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Redshift, RemoteHostTypes::Salesforce, and RemoteHostTypes::Van
+#' @param type string optional. The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Redshift, RemoteHostTypes::Salesforce, and RemoteHostTypes::Van
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID of the remote host.}
 #' \item{name}{string, The name of the remote host.}
-#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Ftp, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Redshift, RemoteHostTypes::Salesforce, and RemoteHostTypes::Van}
+#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Redshift, RemoteHostTypes::Salesforce, and RemoteHostTypes::Van}
 #' \item{url}{string, The URL for remote host.}
 #' @export
 remote_hosts_list <- function(type = NULL) {
@@ -10110,12 +10148,12 @@ remote_hosts_list <- function(type = NULL) {
 #' Create a new remote host
 #' @param name string required. The human readable name for the remote host.
 #' @param url string required. The URL to your host.
-#' @param type string required. The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Ftp, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Redshift, RemoteHostTypes::Salesforce, and RemoteHostTypes::Van
+#' @param type string required. The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Redshift, RemoteHostTypes::Salesforce, and RemoteHostTypes::Van
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of the remote host.}
 #' \item{name}{string, The name of the remote host.}
-#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Ftp, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Redshift, RemoteHostTypes::Salesforce, and RemoteHostTypes::Van}
+#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Redshift, RemoteHostTypes::Salesforce, and RemoteHostTypes::Van}
 #' \item{url}{string, The URL for remote host.}
 #' @export
 remote_hosts_post <- function(name, url, type) {

@@ -689,9 +689,17 @@ start_import_job <- function(database, tablename, if_exists, distkey,
   # Instantiate table creation job
   db_id <- get_database_id(database)
   creds <- default_credential()
-  job_response <- imports_post_files(schema, table, db_id, creds,
-                                      max_errors, if_exists, distkey,
-                                      sortkey1, sortkey2, "comma", TRUE)
+  job_response <- imports_post_files(schema = schema,
+                                     name = table,
+                                     remote_host_id = db_id,
+                                     credential_id = creds,
+                                     max_errors = max_errors,
+                                     existing_table_rows = if_exists,
+                                     distkey = distkey,
+                                     sortkey1 = sortkey1,
+                                     sortkey2 = sortkey2,
+                                     column_delimiter = "comma",
+                                     first_row_is_header = TRUE)
   job_response
 }
 

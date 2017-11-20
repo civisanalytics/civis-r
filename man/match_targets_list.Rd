@@ -10,6 +10,7 @@ match_targets_list()
 An array containing the following fields:
 \item{id}{integer, }
 \item{name}{string, }
+\item{table}{string, }
 }
 \description{
 List match targets

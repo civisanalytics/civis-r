@@ -7,8 +7,8 @@
 notebooks_post(name = NULL, language = NULL, description = NULL,
   file_id = NULL, requirements_file_id = NULL, requirements = NULL,
   docker_image_name = NULL, docker_image_tag = NULL, memory = NULL,
-  cpu = NULL, credentials = NULL, git_url = NULL, git_branch = NULL,
-  git_file = NULL, environment_variables = NULL, idle_timeout = NULL,
+  cpu = NULL, credentials = NULL, environment_variables = NULL,
+  idle_timeout = NULL, git_ref = NULL, git_path = NULL, git_repo = NULL,
   hidden = NULL)
 }
 \arguments{
@@ -34,15 +34,18 @@ notebooks_post(name = NULL, language = NULL, description = NULL,
 
 \item{credentials}{array optional. A list of credential IDs to pass to the notebook.}
 
-\item{git_url}{string optional. The URL of the repository that will be cloned.}
-
-\item{git_branch}{string optional. The name of the branch that will be cloned.}
-
-\item{git_file}{string optional. The name of the notebook file within a repository that will be included in the deployment.}
-
 \item{environment_variables}{object optional. Environment variables to be passed into the Notebook.}
 
 \item{idle_timeout}{integer optional. How long the notebook will stay alive without any kernel activity.}
+
+\item{git_ref}{string optional. The git reference if git repo is specified}
+
+\item{git_path}{string optional. The path to the .ipynb file in the git repo that will be started up on notebook launch}
+
+\item{git_repo}{object optional. A list containing the following elements: 
+\itemize{
+\item id integer, The ID of the git repository.
+}}
 
 \item{hidden}{boolean optional. The hidden status of the object.}
 }
@@ -90,11 +93,15 @@ A list containing the following elements:
 \item notebookId integer, The ID of owning Notebook
 }}
 \item{credentials}{array, A list of credential IDs to pass to the notebook.}
-\item{gitUrl}{string, The URL of the repository that will be cloned.}
-\item{gitBranch}{string, The name of the branch that will be cloned.}
-\item{gitFile}{string, The name of the notebook file within a repository that will be included in the deployment.}
 \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
 \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
+\item{gitRef}{string, The git reference if git repo is specified}
+\item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
+\item{gitRepo}{object, A list containing the following elements: 
+\itemize{
+\item id integer, The ID of the git repository.
+\item repoUrl string, The url of the git repository
+}}
 \item{archived}{string, The archival status of the requested object(s).}
 \item{hidden}{boolean, The hidden status of the object.}
 }
