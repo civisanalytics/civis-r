@@ -1,4 +1,4 @@
-This is a patch release fixing a bug from an updated dependency.
+This is a patch release fixing a bug and doc error from changes in the Civis API.
 
 The version has been bumped to 1.1.1.
 
