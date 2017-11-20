@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.1.1] - Unreleased
+## [1.1.1] - 2017-11-20
 
 ### Fixed
 

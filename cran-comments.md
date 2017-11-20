@@ -1,6 +1,6 @@
-In addition to many new features, this submission updates package tests to be compatible with testthat 2.0.0.
+This is a patch release fixing a bug from an updated dependency.
 
-The version has been bumped to 1.1.0.
+The version has been bumped to 1.1.1.
 
 ## Test environments
 * local OS X install, R 3.4.2
