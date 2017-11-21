@@ -43,9 +43,7 @@ notebooks_put(id, name = NULL, language = NULL, description = NULL,
 
 \item{git_path}{string optional. The path to the .ipynb file in the git repo that will be started up on notebook launch}
 
-\item{git_repo}{object optional. A list containing the following elements: 
-\itemize{
-}}
+\item{git_repo}{object optional.}
 }
 \value{
 A list containing the following elements:

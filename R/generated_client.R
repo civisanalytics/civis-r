@@ -7711,9 +7711,7 @@ notebooks_get <- function(id) {
 #' @param idle_timeout integer optional. How long the notebook will stay alive without any kernel activity.
 #' @param git_ref string optional. The git reference if git repo is specified
 #' @param git_path string optional. The path to the .ipynb file in the git repo that will be started up on notebook launch
-#' @param git_repo object optional. A list containing the following elements: 
-#' \itemize{
-#' }
+#' @param git_repo object optional. 
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this notebook.}
@@ -7804,9 +7802,7 @@ notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, 
 #' @param idle_timeout integer optional. How long the notebook will stay alive without any kernel activity.
 #' @param git_ref string optional. The git reference if git repo is specified
 #' @param git_path string optional. The path to the .ipynb file in the git repo that will be started up on notebook launch
-#' @param git_repo object optional. A list containing the following elements: 
-#' \itemize{
-#' }
+#' @param git_repo object optional. 
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this notebook.}
