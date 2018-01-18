@@ -8,6 +8,7 @@
 
 ### Added
 
+- Update `civis_ml` documentation with CivisML 2.1 features and defaults.
 - `value.CivisFuture` now prints error logs from failed jobs, throws a catcheable
 error, and fetches the job logs automatically.
 
