@@ -160,9 +160,9 @@ A \code{civis_ml} object, a list containing the following elements:
  A list containing the following elements:
   \itemize{
   \item run list, metadata about the run.
-  \item data list, metdata about the training data.
+  \item data list, metadata about the training data.
   \item model list, the fitted scikit-learn model.
-  \item metrics empy list.
+  \item metrics empty list.
   \item warnings list.
   \item data_platform list, training data location.
   }}

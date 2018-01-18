@@ -17,6 +17,9 @@ httr_204 <- readRDS("data/httr_204_response.rds")
 # http://getstatuscode.com/205"
 httr_205 <- readRDS("data/httr_205_response.rds")
 
+# also from http://getstatuscode.com/"
+httr_403 <- readRDS("data/httr_403_response.rds")
+httr_429 <- readRDS("data/httr_429_response.rds")
 
 # fake parameters to pass into call_api
 path <- "fake_path"
@@ -106,6 +109,29 @@ test_that("204, 205 responses return NULL", {
   expect_null(response$content)
   expect_is(response, "civis_api")
 
+})
+
+test_that("no retry on GET/PUT and code 403", {
+  for (verb in c("GET", "PUT")) {
+      mock_rp <- mock(httr_403, cycle = TRUE)
+      with_mock(
+        `civis::api_key` = function(...) "fake_key",
+        `httr:::request_perform` = mock_rp,
+        expect_error(call_api(verb, path, path_params, query_params, body_params),
+                     paste0(httr_403$status_code)),
+        expect_called(mock_rp, 1))
+    }
+})
+
+test_that("retry on GET/PUT and 429", {
+  mock_rp <- mock(httr_429, cycle = TRUE)
+  with_mock(
+    `civis::api_key` = function(...) "fake_key",
+    `httr:::request_perform` = mock_rp,
+    `httr:::backoff_full_jitter` = function(...) Sys.sleep(0),
+    expect_error(call_api("GET", path, path_params, query_params, body_params),
+                 paste0(httr_429$status_code)),
+    expect_called(mock_rp, 3))
 })
 
 test_that("failing to parse JSON content returns CivisClientError", {

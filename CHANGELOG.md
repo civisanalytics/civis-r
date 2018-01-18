@@ -1,21 +1,56 @@
 # Changelog
 
-## [1.1.0] - TBD
+## [1.2.0] - Unreleased
+
+### Fixed
+
+- `resolved.CivisFuture` now gets the status of the platform job directly and updates the state of the future.
 
 ### Added
+
+- `value.CivisFuture` now prints error logs from failed jobs, throws a catcheable
+error, and fetches the job logs automatically.
+
+## [1.1.1] - 2017-11-20
+
+### Fixed
+
+- `write_civis` calls `imports_post_files` correctly after a change in the argument order.
+
+## [1.1.0] - 2017-11-10
+
+### Fixed
+
+- Corrected project_id type in `publish_rmd` and `publish_html`
+- `polling_interval` can now be specified in `civis_ml`
+
+### Changed
+
+- `call_api` only retries on 413, 429, 502, 503, 504 as in civis-python.
+- Updated the default api spec to the current spec. New endpoints added
+include /announcements, /apps, /clusters, /codes, /enhancements,
+/media, /notebooks.  Most endpoints were already available to all users,
+but with this change these endpoints will now be documented.
+- `write_civis_file` uploads objects larger than 50MB
+in multiple parts, and supports objects up to 5TB. 
+Uploads occur in parallel if a `future::plan` has been specified.
+- Files uploaded using `write_civis_file` now don't expire by default. 
+
+### Added
+
+- "Publish to Civis" Rstudio addin installed by default that publishes `.Rmd` and `.html` files as Civis Platform reports.
+- `write_civis.numeric` is provided to sync a CSV file on S3 to Redshift given a file id.
+- A new `plan(civis_platform)` has been added to evaluate R expressions on Civis Platform 
+using the `future` API. 
 
 #### CivisML
 - New named workflows: `multilayer_perceptron_regressor`, `multilayer_perceptron_classifier`,
 `stacking_regressor`,  and `stacking_classifier`
-- Hyperband is provided for hyperparameter tuning by setting `cross_validation_parameters = "hyperband` in `gradient_boosting_classifier`, `random_forest_classifier`, `extra_trees_classifier`, `multilayer_perceptron_classifier`, `gradient_boosting_regressor`, `random_forest_regressor`, `extra_trees_regressor`, and `multilayer_perceptron_regressor`.
-- Hyperparameter tuning (grid search and hyperband) is now distributed across EC2 instances by setting `n_jobs > 1`
+- Hyperband is provided for hyperparameter tuning by setting `cross_validation_parameters = "hyperband"` in `gradient_boosting_classifier`, `random_forest_classifier`, `extra_trees_classifier`, `multilayer_perceptron_classifier`, `gradient_boosting_regressor`, `random_forest_regressor`, `extra_trees_regressor`, and `multilayer_perceptron_regressor`.
+- Hyperparameter tuning (grid search and hyperband) is now distributed across EC2 instances by setting `n_jobs > 1` (default 4)
 - The validation step can now be skipped by setting `validation_data = "skip"`.
 - Compute resources for prediction jobs can now also be set using `"cpu_requested"`, `"memory_requested"`, and `"disk_requested"`
 arguments in `predict.civis_ml`.
-
-### Fixed
-
-- `polling_interval` can now be specified in `civis_ml`
 
 ## [1.0.2] - 2017-09-21
 

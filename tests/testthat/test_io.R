@@ -74,20 +74,16 @@ test_that("read_civis.sql produces catchable error when query returns no rows", 
 })
 
 test_that("read_civis.numeric reads a csv", {
-  mock_df <- data.frame(a = 1:2, b = c("sentimental", "centipede"))
-  mock_df_string <- "a,b\n1,sentimental\n2,centipede"
-  mock_GET_result <- function(...) {
-    GET_result <- list("url" = "http://www.fakeurl.com",
-                       "status_code" = 200,
-                       "headers" = list("Content-Type" = "text/csv"),
-                       "content" = charToRaw(mock_df_string))
-    class(GET_result) <- "response"
-    return(GET_result)
+  d <- data.frame(a = 1:2, b = c("sentimental", "centipede"))
+  mock_response <- function(...) {
+    structure(list(url = "http://www.fakeurl.com", status_code = 200),
+              class = "response")
   }
   with_mock(
     `civis::files_get` =  function(...) list(fileUrl = "fakeurl.com"),
-    `httr::GET` = mock_GET_result,
-    expect_equal(mock_df, read_civis(123, using = read.csv))
+    `httr::GET` = mock_response,
+    `civis::download_civis` = function(id, fn) write.csv(d, file = fn),
+    expect_equal(d, read_civis(123, using = read.csv, row.names = 1))
   )
 })
 
@@ -156,6 +152,30 @@ test_that("write_civis.character warns under failure", {
   )
 })
 
+test_that("write_civis.numeric calls imports_post_syncs correctly", {
+  ips <- mock(imports_post_syncs)
+  with_mock(
+    `civis:::get_database_id` = function(...) 32,
+    `civis:::default_credential` = function(...) 999,
+    `civis::imports_post` = function(...) list(id = 2),
+    `civis::imports_post_syncs` = ips,
+    `civis::jobs_post_runs` = function(...) list(id = 4),
+    `civis::jobs_get_runs` = function(...) list(state = "succeeded"),
+    res <- write_civis(1234, "mock.table", "mockdb"),
+    expect_equal(get_status(res), "succeeded"),
+    expect_args(ips, 1, 2,
+                list(file = list(id = 1234)),
+                destination = list(database_table =
+                                     list(schema = "mock", table = "table")),
+                advanced_options = list(max_errors = NULL,
+                     existing_table_rows = "fail",
+                     distkey = NULL,
+                     sortkey1 = NULL,
+                     sortkey2 = NULL,
+                     column_delimiter = "comma"))
+  )
+})
+
 test_that("write_civis fails if no db given and default not provided", {
   with_mock(
     `civis::get_default_database` = function(...) NULL,
@@ -192,6 +212,18 @@ test_that("write_civis_file.default returns a file id", {
     expect_equal(write_civis_file(as.list(mock_df)), 5),
     expect_equal(write_civis_file(1:3), 5)
   )
+})
+
+test_that("write_civis_file calls multipart_unload for big files", {
+  fake_file_size <- mock(file.size)
+  mockery::stub(write_civis_file.character, "file.size", MIN_MULTIPART_SIZE + 1)
+  fn <- tempfile()
+  file.create(fn)
+  with_mock(
+    `civis::multipart_upload` = function(...) 1,
+    expect_equal(write_civis_file(fn, name = "asdf"), 1)
+  )
+  unlink(fn)
 })
 
 # download_civis --------------------------------------------------------------
@@ -235,6 +267,48 @@ test_that("transfer_table succeeds", {
 })
 
 # utils functions -------------------------------------------------------------
+
+test_that("multipart_upload returns file_id", {
+  fn <- tempfile()
+  d <- data.frame(a = 1:5, b = 5:1)
+  write.csv(d, fn, row.names = FALSE)
+  id <- with_mock(
+    `civis::upload_one` = function(...) NULL,
+    `civis::files_post_multipart` = function(...) list(id = 1, uploadUrls = "url"),
+    `future::value` = function(...) NULL,
+    `civis::files_post_multipart_complete` = function(...) NULL,
+    multipart_upload(fn, name = "asdf")
+  )
+  expect_equal(id, 1)
+})
+
+test_that("write_chunks splits files", {
+  # csv
+  d <- data.frame(a = 1:5, b = 5:1)
+  fn <- tempfile(fileext = ".txt")
+  write.csv(d, fn, row.names = FALSE)
+  fl <- write_chunks(fn, chunk_size = file.size(fn)/4)
+  expect_equal(length(fl), 4)
+
+  the_text <- paste0(unlist(lapply(fl, function(f) {
+    readChar(f, file.size(f))
+  })), collapse = "")
+  ans <- read.csv(textConnection(the_text))
+  expect_equal(ans, d)
+
+  # rds; again, we have to really just stitch the files together to read it back.
+  fn <- tempfile(fileext = ".rds")
+  saveRDS(d, fn)
+  fl <- write_chunks(fn, chunk_size = file.size(fn)/4)
+
+  the_bin <- unlist(lapply(fl, function(f) {
+    readBin(f, what = "raw", file.size(f))
+  }))
+  zz <- rawConnection(the_bin)
+  ans <- readRDS(gzcon(zz))
+  close(zz)
+  expect_equal(ans, d)
+})
 
 test_that("get_db returns default database or an error", {
   expect_equal(get_db("sea_creatures"), "sea_creatures")

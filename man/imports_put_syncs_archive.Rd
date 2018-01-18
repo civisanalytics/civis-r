@@ -36,6 +36,7 @@ A list containing the following elements:
 \itemize{
 \item maxErrors integer, 
 \item existingTableRows string, 
+\item diststyle string, 
 \item distkey string, 
 \item sortkey1 string, 
 \item sortkey2 string, 

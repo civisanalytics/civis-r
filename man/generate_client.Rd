@@ -4,12 +4,10 @@
 \alias{generate_client}
 \title{Generate a client}
 \usage{
-generate_client(spec, IGNORE)
+generate_client(spec)
 }
 \arguments{
 \item{spec}{usually from \code{get_spec}}
-
-\item{IGNORE}{endpoints to ignore (e.g. "apps")}
 }
 \value{
 A string containing one documented function for each verb at each endpoint.
