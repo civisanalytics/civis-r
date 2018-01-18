@@ -327,10 +327,6 @@ test_that("calls scripts_post_custom", {
   fake_scripts_get_custom_runs <- mock(list(state = "running"), list(state = "succeeded"))
   fake_scripts_get_custom <- mock(list(state = "succeeded"), cycle = TRUE)
   fake_fetch_predict_results <- mock(NULL)
-<<<<<<< HEAD
-=======
-
->>>>>>> upstream/master
 
   with_mock(
     `civis::get_database_id` = fake_get_database_id,
@@ -339,10 +335,6 @@ test_that("calls scripts_post_custom", {
     `civis::scripts_get_custom` = fake_scripts_get_custom,
     `civis::scripts_get_custom_runs` = fake_scripts_get_custom_runs,
     `civis::fetch_predict_results` = fake_fetch_predict_results,
-<<<<<<< HEAD
-=======
-
->>>>>>> upstream/master
 
     tbl <- civis_table(table_name = "schema.table",
                        database_name = "a_database",
@@ -358,11 +350,7 @@ test_that("calls scripts_post_custom", {
             cpu_requested = 2000,
             memory_requested = 10,
             disk_requested = 15,
-<<<<<<< HEAD
-            polling_interval = 5,
-=======
             polling_interval = .01,
->>>>>>> upstream/master
             verbose = TRUE)
   )
 
@@ -680,10 +668,6 @@ test_that("file_id is always numeric", {
   expect_equal(run_args$arguments$CIVIS_FILE_ID, 132)
 })
 
-<<<<<<< HEAD
-=======
-
->>>>>>> upstream/master
 test_that("exceptions with hyperband correct", {
   fake_run_model <- mock(list(job_id = 133, run_id = 244))
   fake_civis_ml_fetch_existing <- mock(NULL)
@@ -715,18 +699,10 @@ test_that("uses the correct template_id", {
     `civis::run_model` = fake_run_model,
     `civis::fetch_predict_results` = fake_fetch_predict_results,
 
-<<<<<<< HEAD
-    create_and_run_pred(train_job_id = 111, train_run_id = 222, template_id = 555)
-  )
-
-  run_args <- mock_args(fake_run_model)[[1]]
-  expect_equal(run_args$template_id, 555)
-=======
     create_and_run_pred(train_job_id = 111, train_run_id = 222, template_id = 555),
     run_args <- mock_args(fake_run_model)[[1]],
     expect_equal(run_args$template_id, 555)
   )
->>>>>>> upstream/master
 })
 
 ################################################################################

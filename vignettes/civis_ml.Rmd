@@ -19,7 +19,7 @@ While `civis_ml` is a complex function with many arguments, basic machine learni
 
 ## Data sources
 
-The first step of modeling with `civis_ml` is to specify the data source, which is the first argument. `civis_ml` works with local data frames, a CSV on local disk, tables in Redshift, and files on S3 (the files endpoint):
+The first step of modeling with `civis_ml` is to specify the data source, which is the first argument. `civis_ml` works with local data frames, a CSV on local disk, [feather-format](https://github.com/wesm/feather) files, tables in Redshift, and files on S3 (the files endpoint):
 
 ```{r, eval = FALSE}
 library(civis)
@@ -77,11 +77,13 @@ m <- civis_ml_random_forest_classifier(tab,
       excluded_columns = "residential_zip")
 ```
 
+Note that if the dependent variables have null values, those rows will be removed before modeling.
+
 ### Hyperparameter Tuning
 
-You can tune hyperparamters using one of two methods: grid search or hyperband. CivisML will perform grid search if you pass a named list of hyperparameters and candidate values to `cross_validation_parameters`. You can run hyperparameter tuning in parallel by setting the `n_jobs` to however many jobs you would like to run in parallel.
+You can tune hyperparamters using one of two methods: grid search or hyperband. CivisML will perform grid search if you pass a named list of hyperparameters and candidate values to `cross_validation_parameters`. By default, hyperparameter tuning will run in parallel, using as many jobs as possible without overloading your computing cluster. If you wish to have more control over the number of jobs running at once, you can set it using the `n_jobs` parameter.
 
-[Hyperband](https://arxiv.org/abs/1603.06560) is an efficient approach to hyperparameter optimization, and recommended over grid search where possible. CivisML will perform hyperband optimization if you pass the string `"hyperband"` to `cross_validation_parameters`. Hyperband is currently only supported for random forests, gradient boosted trees, extra trees, and MLPs. MLPs can only be trained with hyperband.
+[Hyperband](https://arxiv.org/abs/1603.06560) is an efficient approach to hyperparameter optimization, and recommended over grid search where possible. CivisML will perform hyperband optimization if you pass the string `"hyperband"` to `cross_validation_parameters`. Hyperband cannot be used to tune GLMs. For this reason, preset GLMs do not have a hyperband option. Hyperband is supported for random forests, gradient boosted trees, extra trees, multilayer perceptrons, and the random forest and gradient boosted tree steps of stacking. It is highly recommended that multilayer perceptron models only be used with hyperband.
 
 For the `random_forest_classifier` in the Brandable data, we try both `"hyperband"` and grid search for hyperparameter optimization.
 
@@ -107,6 +109,24 @@ m_grid <- civis_ml(tab, dependent_variable = "upgrade",
 
 
 ```
+
+CivisML runs pre-defined models with hyperband using the following distributions:
+
+
+| Models                             | Cost Parameter     | Hyperband Distributions                                                     |
+| ---------------------------------- | ------------------ | --------------------------------------------------------------------------- |
+| gradient_boosting_classifier <br> gradient_boosting_regressor <br> GBT step in stacking_classifier <br> GBT step in stacking_regressor | `n_estimators` <br> `min = 100,` <br> `max = 1000` | `max_depth: randint(low=1, high=5)` <br> `max_features: [None, 'sqrt', 'log2', 0.5, 0.3, 0.1, 0.05, 0.01]` <br> `learning_rate: truncexpon(b=5, loc=.0003, scale=1./167.)` |
+| ---------------------------------- | ------------------ | --------------------------------------------------------------------------- |
+| random_forest_classifier <br> random_forest_regressor <br> extra_trees_classifier <br> extra_trees_regressor <br> RF step in stacking_classifier <br> RF step in stacking_regressor | `n_estimators` <br> `min = 100,` <br> `max = 1000` | `criterion: ['gini', 'entropy']` <br> `max_features: truncexpon(b=10., loc=.01, scale=1./10.11)` <br> `max_depth: [1, 2, 3, 4, 6, 10, None]` |
+| ---------------------------------- | ------------------ | --------------------------------------------------------------------------- |
+| multilayer_perceptron_classifier <br> multilayer_perceptron_regressor | `n_epochs` <br> `min = 5,` <br> `max = 50` | `keep_prob: uniform()` <br> ``hidden_units: [(), (16,), (32,), (64,), (64, 64), (64, 64, 64),` <br> `(128,), (128, 128), (128, 128, 128), (256,),` <br> `(256, 256), (256, 256, 256), (512, 256, 128, 64),` <br> `(1024, 512, 256, 128)]` <br> `learning_rate: [1e-2, 2e-2, 5e-2, 8e-2, 1e-3, 2e-3, 5e-3, 8e-3, 1e-4]` |
+
+The truncated exponential distribution for the gradient boosting
+classifier and regressor was chosen to skew the distribution toward
+small values, ranging between .0003 and .03, with a mean close to
+.006. Similarly, the truncated exponential distribution for the random
+forest and extra trees models skews toward small values, ranging
+between .01 and 1, and with a mean close to .1.
 
 ### Stacking 
 
@@ -211,7 +231,7 @@ pred_job <- predict(m, newdata = pred_tab,
                     output_table = "sample_project.brandable_user_scores")
 ```
 
-For very large scoring jobs, the scoring can be distributed using `n_jobs`:
+Like training and validation, scoring is distributed by default, using up to 90 percent of your computing cluster resources. If you would like to have more control over the number of jobs that are run at once, you can set a maximum using `n_jobs`:
 
 ```{r, eval=FALSE}
 pred_job <- predict(m, newdata = pred_tab, 
@@ -321,5 +341,5 @@ Modeling data must be complete. Any missing values will be imputed with the mean
 
 Custom estimators can be written in Python and included in CivisML if they follow the  scikit-learn API. For example, the `sparse_logistic`, `sparse_linear_regressor`, and `sparse_ridge_regressor` models all use the public Civis Analytics [glmnet](https://github.com/civisanalytics/python-glmnet) wrapper in Python.
 
-Browse [the CivisML documentation](https://civis-python.readthedocs.io/en/v1.6.1/ml.html) for more details!
+Browse [the CivisML documentation](https://civis-python.readthedocs.io/en/stable/ml.html) for more details!
 
