@@ -15,7 +15,7 @@ There are so many models to build! When this becomes challenging on a local mach
 
 CivisML is built in Python using [scikit-learn](http://scikit-learn.org/stable/), and leverages AWS behind the scenes for efficient distributed computing. However, most of its features can be used through R without knowledge of Python or AWS with the `civis_ml` function in `civis`.
 
-While `civis_ml` is a complex function with many arguments, basic machine learning modeling and scoring can be easily carried out. We illustrate several features of `civis_ml` with data from a fictious company called Brandable, who is looking to predict which customers are likely to upgrade from the free to the premium service.
+While `civis_ml` is a complex function with many arguments, basic machine learning modeling and scoring can be easily carried out. We illustrate several features of `civis_ml` with data from a fictitious company called Brandable, who is looking to predict which customers are likely to upgrade from the free to the premium service.
 
 ## Data sources
 
@@ -81,7 +81,7 @@ Note that if the dependent variables have null values, those rows will be remove
 
 ### Hyperparameter Tuning
 
-You can tune hyperparamters using one of two methods: grid search or hyperband. CivisML will perform grid search if you pass a named list of hyperparameters and candidate values to `cross_validation_parameters`. By default, hyperparameter tuning will run in parallel, using as many jobs as possible without overloading your computing cluster. If you wish to have more control over the number of jobs running at once, you can set it using the `n_jobs` parameter.
+You can tune hyperparameters using one of two methods: grid search or hyperband. CivisML will perform grid search if you pass a named list of hyperparameters and candidate values to `cross_validation_parameters`. By default, hyperparameter tuning will run in parallel, using as many jobs as possible without overloading your computing cluster. If you wish to have more control over the number of jobs running at once, you can set it using the `n_jobs` parameter.
 
 [Hyperband](https://arxiv.org/abs/1603.06560) is an efficient approach to hyperparameter optimization, and recommended over grid search where possible. CivisML will perform hyperband optimization if you pass the string `"hyperband"` to `cross_validation_parameters`. Hyperband cannot be used to tune GLMs. For this reason, preset GLMs do not have a hyperband option. Hyperband is supported for random forests, gradient boosted trees, extra trees, multilayer perceptrons, and the random forest and gradient boosted tree steps of stacking. It is highly recommended that multilayer perceptron models only be used with hyperband.
 
@@ -130,7 +130,7 @@ between .01 and 1, and with a mean close to .1.
 
 ### Stacking 
 
-The `"stacking_classifier"` model stacks together the `"sparse_logistic"`, `"gradient_boosting_classifier"`, and `"random_forest_classifier"` models using defaults documented in `?civis_ml`. Each row is first [standardized](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.Normalizer.html), and then the model predictions are combined using [LogisticRegressionCV](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html) with `penalty='l2'` and `tol=1e-08`. The `"stacking_regressor"` works similarly, stacking together the `"sparse_linear_regressor"`, `"gradient_boosting_regressor"`, and `"random_forest_regressor"` models, and combining them using [NonNegativeLinearRegression](https://github.com/civisanalytics/civisml-extensions).
+The `"stacking_classifier"` model stacks together the `"sparse_logistic"`, `"gradient_boosting_classifier"`, and `"random_forest_classifier"` models using defaults documented in `?civis_ml`. Each column is first [standardized](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.Normalizer.html), and then the model predictions are combined using [LogisticRegressionCV](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html) with `penalty='l2'` and `tol=1e-08`. The `"stacking_regressor"` works similarly, stacking together the `"sparse_linear_regressor"`, `"gradient_boosting_regressor"`, and `"random_forest_regressor"` models, and combining them using [NonNegativeLinearRegression](https://github.com/civisanalytics/civisml-extensions).
 
 ```{r, eval = FALSE}
 m_stack <- civis_ml(tab, dependent_variable = "upgrade", 
