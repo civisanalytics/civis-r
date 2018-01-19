@@ -17,6 +17,7 @@ features and defaults:
 	- `n_jobs` is dynamically calculated by default for training as
     well as prediction.
 	- `feather-format` is now allowed as an input format.
+- CivisML vignette updated with new v2 features.
 - `value.CivisFuture` now prints error logs from failed jobs, throws a catcheable
 error, and fetches the job logs automatically.
 
