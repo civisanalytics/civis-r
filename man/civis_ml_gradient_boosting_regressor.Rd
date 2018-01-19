@@ -24,7 +24,8 @@ civis_ml_gradient_boosting_regressor(x, dependent_variable,
 
 \item{dependent_variable}{The dependent variable of the training dataset.
 For a multi-target problem, this should be a vector of column names of
-dependent variables.}
+dependent variables. Nulls in a single dependent variable will
+automatically be dropped.}
 
 \item{primary_key}{Optional, the unique ID (primary key) of the training
 dataset. This will be used to index the out-of-sample scores. In
@@ -183,8 +184,8 @@ CivisML Gradient Boosting Regressor
 
 
 For building models with \code{civis_ml}, the training data can reside in
-four different places, a file in the Civis Platform, a CSV file on the local
-disk, a \code{data.frame} resident in local the R environment, and finally,
+four different places, a file in the Civis Platform, a CSV or feather-format file
+on the local disk, a \code{data.frame} resident in local the R environment, and finally,
 a table in the Civis Platform. Use the following helpers to specify the
 data source when calling \code{civis_ml}:
 
