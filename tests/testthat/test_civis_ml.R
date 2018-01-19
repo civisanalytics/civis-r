@@ -686,6 +686,28 @@ test_that("exceptions with hyperband correct", {
   )
 })
 
+test_that("robust if metrics.json not present", {
+  fn <- tempfile()
+  cat(jsonlite::toJSON(c("a,b,c")), file = fn)
+
+  fake_outputs <- mock(list(list(objectType = "File", objectId = 1, name = "model_info.json")))
+  fake_download <- mock(fn)
+  fake_fetch_job <- mock(1)
+  fake_fetch_run <- mock(list(state = "succeeded"))
+  fake_model_type <- mock("regressor")
+  res <- with_mock(
+    `civis::must_fetch_civis_ml_job` = fake_fetch_job,
+    `civis::must_fetch_civis_ml_run` = fake_fetch_run,
+    `civis::scripts_list_custom_runs_outputs` = fake_outputs,
+    `civis::download_civis` = fake_download,
+    `civis::model_type` = fake_model_type,
+    civis_ml_fetch_existing(123, 1)
+  )
+  expect_equal(res$model_info, c("a,b,c"))
+  expect_null(res$metrics)
+})
+
+
 
 ################################################################################
 # run predictions
