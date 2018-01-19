@@ -12,7 +12,8 @@
 #'   below.
 #' @param dependent_variable The dependent variable of the training dataset.
 #'   For a multi-target problem, this should be a vector of column names of
-#'   dependent variables. Nulls in the dependent variable will automatically be dropped.
+#'   dependent variables. Nulls in a single dependent variable will
+#'   automatically be dropped.
 #' @param primary_key Optional, the unique ID (primary key) of the training
 #'   dataset. This will be used to index the out-of-sample scores. In
 #'   \code{predict.civis_ml}, the primary_key of the training task is used by

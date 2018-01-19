@@ -23,7 +23,8 @@ civis_ml_gradient_boosting_classifier(x, dependent_variable,
 
 \item{dependent_variable}{The dependent variable of the training dataset.
 For a multi-target problem, this should be a vector of column names of
-dependent variables. Nulls in the dependent variable will automatically be dropped.}
+dependent variables. Nulls in a single dependent variable will
+automatically be dropped.}
 
 \item{primary_key}{Optional, the unique ID (primary key) of the training
 dataset. This will be used to index the out-of-sample scores. In

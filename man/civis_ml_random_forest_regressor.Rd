@@ -21,7 +21,8 @@ civis_ml_random_forest_regressor(x, dependent_variable, primary_key = NULL,
 
 \item{dependent_variable}{The dependent variable of the training dataset.
 For a multi-target problem, this should be a vector of column names of
-dependent variables. Nulls in the dependent variable will automatically be dropped.}
+dependent variables. Nulls in a single dependent variable will
+automatically be dropped.}
 
 \item{primary_key}{Optional, the unique ID (primary key) of the training
 dataset. This will be used to index the out-of-sample scores. In

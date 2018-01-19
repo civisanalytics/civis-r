@@ -29,7 +29,8 @@ civis_ml_fetch_existing(model_id, run_id = NULL)
 
 \item{dependent_variable}{The dependent variable of the training dataset.
 For a multi-target problem, this should be a vector of column names of
-dependent variables. Nulls in the dependent variable will automatically be dropped.}
+dependent variables. Nulls in a single dependent variable will
+automatically be dropped.}
 
 \item{model_type}{The name of the CivisML workflow. See the Workflows section
 below.}
