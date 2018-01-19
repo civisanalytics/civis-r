@@ -12,6 +12,11 @@
 - `value.CivisFuture` now prints error logs from failed jobs, throws a catcheable
 error, and fetches the job logs automatically.
 
+### Changed
+
+- `civis_ml_fetch_existing` can handle runs with missing
+  `metrics.json` files.
+
 ## [1.1.1] - 2017-11-20
 
 ### Fixed
