@@ -202,22 +202,14 @@ and \code{"random_forest_regressor"} models, and combining them using
 
 \section{Hyperparameter Tuning}{
 
-<<<<<<< HEAD
-You can tune hyperparamters using one of two methods: grid search or
-=======
 You can tune hyperparameters using one of two methods: grid search or
->>>>>>> upstream/master
 hyperband. CivisML will perform grid search if you pass a list
 of hyperparameters to the \code{cross_validation_parameters} parameter, where list elements are
 hyperparameter names, and the values are vectors of hyperparameter
 values to grid search over. You can run hyperparameter optimization in parallel by
 setting the \code{n_jobs}
 parameter to however many jobs you would like to run in
-<<<<<<< HEAD
-parallel. If unset, \code{n_jobs} defaults to 4.
-=======
 parallel. \code{n_jobs} defaults to 1 (no parallelization).
->>>>>>> upstream/master
 
  \href{https://arxiv.org/abs/1603.06560}{Hyperband}
 is an efficient approach to hyperparameter optimization, and
