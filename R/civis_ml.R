@@ -687,7 +687,8 @@ civis_ml_fetch_existing <- function(model_id, run_id = NULL) {
   outputs <- metrics <- model_info <- NULL
   if (run$state == "succeeded") {
     outputs <- scripts_list_custom_runs_outputs(id = model_id, run_id = run_id)
-    metrics <- must_fetch_output_json(outputs, "metrics.json")
+    metrics <- tryCatch(must_fetch_output_json(outputs, "metrics.json"),
+                        error = function(e) NULL)
     model_info <- must_fetch_output_json(outputs, "model_info.json")
   }
   type <- model_type(job)
