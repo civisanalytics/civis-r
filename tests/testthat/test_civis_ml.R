@@ -328,7 +328,6 @@ test_that("calls scripts_post_custom", {
   fake_scripts_get_custom <- mock(list(state = "succeeded"), cycle = TRUE)
   fake_fetch_predict_results <- mock(NULL)
 
-
   with_mock(
     `civis::get_database_id` = fake_get_database_id,
     `civis::scripts_post_custom` = fake_scripts_post_custom,
@@ -336,7 +335,6 @@ test_that("calls scripts_post_custom", {
     `civis::scripts_get_custom` = fake_scripts_get_custom,
     `civis::scripts_get_custom_runs` = fake_scripts_get_custom_runs,
     `civis::fetch_predict_results` = fake_fetch_predict_results,
-
 
     tbl <- civis_table(table_name = "schema.table",
                        database_name = "a_database",
@@ -669,7 +667,6 @@ test_that("file_id is always numeric", {
   run_args <- mock_args(fake_run_model)[[1]]
   expect_equal(run_args$arguments$CIVIS_FILE_ID, 132)
 })
-
 
 test_that("exceptions with hyperband correct", {
   fake_run_model <- mock(list(job_id = 133, run_id = 244))
