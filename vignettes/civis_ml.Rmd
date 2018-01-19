@@ -130,7 +130,7 @@ between .01 and 1, and with a mean close to .1.
 
 ### Stacking 
 
-The `"stacking_classifier"` model stacks together the `"sparse_logistic"`, `"gradient_boosting_classifier"`, and `"random_forest_classifier"` models using defaults documented in `?civis_ml`. Each column is first [standardized](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.Normalizer.html), and then the model predictions are combined using [LogisticRegressionCV](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html) with `penalty='l2'` and `tol=1e-08`. The `"stacking_regressor"` works similarly, stacking together the `"sparse_linear_regressor"`, `"gradient_boosting_regressor"`, and `"random_forest_regressor"` models, and combining them using [NonNegativeLinearRegression](https://github.com/civisanalytics/civisml-extensions).
+The `"stacking_classifier"` model stacks together the `"sparse_logistic"`, `"gradient_boosting_classifier"`, and `"random_forest_classifier"` models using defaults documented in `?civis_ml`. Each column is first [standardized](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html), and then the model predictions are combined using [LogisticRegressionCV](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html) with `penalty='l2'` and `tol=1e-08`. The `"stacking_regressor"` works similarly, stacking together the `"sparse_linear_regressor"`, `"gradient_boosting_regressor"`, and `"random_forest_regressor"` models, and combining them using [NonNegativeLinearRegression](https://github.com/civisanalytics/civisml-extensions).
 
 ```{r, eval = FALSE}
 m_stack <- civis_ml(tab, dependent_variable = "upgrade", 
