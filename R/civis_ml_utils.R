@@ -20,8 +20,8 @@ CIVIS_ML_CLASSIFIERS <- c("sparse_logistic",
                           "stacking_classifier")
 
 CIVIS_ML_TEMPLATE_IDS <- data.frame(
-  id = c(9112, 9113, 9968, 9969),
-  version = c(1.1, 1.1, 2.0, 2.0),
+  id = c(9112, 9113, 9968, 9969, 10582, 10583),
+  version = c(1.1, 1.1, 2.0, 2.0, 2.1, 2.1),
   name = c("train", "predict", "train", "predict"),
   stringsAsFactors = FALSE
 )
