@@ -44,10 +44,15 @@ A list containing the following elements:
 \item required boolean, Whether this param is required.
 \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+\item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 }}
 \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+\item{isTemplate}{boolean, Whether others scripts use this one as a template.}
+\item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 \item{fromTemplateId}{integer, The ID of the template script.}
 \item{uiReportUrl}{integer, The url of the custom HTML.}
+\item{uiReportId}{integer, The id of the report with the custom HTML.}
+\item{uiReportProvideAPIKey}{boolean, Whether the ui report requests an API Key from the report viewer.}
 \item{templateScriptName}{string, The name of the template script.}
 \item{templateNote}{string, The template's note.}
 \item{remoteHostId}{integer, The remote host ID that this script will connect to.}

@@ -75,6 +75,10 @@ users_patch_me(preferences = NULL, last_checked_announcements = NULL)
 \item workflowIndexOrderField string, Order field for the workflows page.
 \item workflowIndexOrderDir string, Order direction for the workflows page.
 \item workflowIndexAuthorFilter string, Author filter for the workflows page.
+\item serviceOrderField string, Order field for the services page.
+\item serviceOrderDir string, Order direction for the services page.
+\item serviceAuthorFilter string, Author filter for the services page.
+\item serviceArchivedFilter string, Archived filter for the services page.
 }}
 
 \item{last_checked_announcements}{string optional. The date and time at which the user last checked their announcements.}

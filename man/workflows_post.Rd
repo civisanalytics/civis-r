@@ -4,12 +4,14 @@
 \alias{workflows_post}
 \title{Create a Workflow}
 \usage{
-workflows_post(name, from_job_chain = NULL, definition = NULL,
-  schedule = NULL, time_zone = NULL, notifications = NULL,
-  hidden = NULL)
+workflows_post(name, description = NULL, from_job_chain = NULL,
+  definition = NULL, schedule = NULL, time_zone = NULL,
+  notifications = NULL, hidden = NULL)
 }
 \arguments{
 \item{name}{string required. The name of this workflow.}
+
+\item{description}{string optional. A description of the workflow.}
 
 \item{from_job_chain}{integer optional. If specified, create a workflow from the job chain this job is in, and inherit the schedule from the root of the chain.}
 
@@ -43,6 +45,7 @@ workflows_post(name, from_job_chain = NULL, definition = NULL,
 A list containing the following elements:
 \item{id}{integer, The ID for this workflow.}
 \item{name}{string, The name of this workflow.}
+\item{description}{string, A description of the workflow.}
 \item{definition}{string, The definition of the workflow in YAML format. Must not be specified if `fromJobChain` is specified.}
 \item{valid}{boolean, The validity of the workflow definition.}
 \item{validationErrors}{string, The errors encountered when validating the workflow definition.}

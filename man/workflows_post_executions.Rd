@@ -4,12 +4,14 @@
 \alias{workflows_post_executions}
 \title{Execute a workflow}
 \usage{
-workflows_post_executions(id, target_task = NULL)
+workflows_post_executions(id, target_task = NULL, input = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID for the workflow.}
 
 \item{target_task}{string optional. For a reverse workflow, the name of the task to target.}
+
+\item{input}{object optional. The dictionary of name/value input pairs defined for this execution.}
 }
 \value{
 A list containing the following elements:
@@ -26,10 +28,11 @@ A list containing the following elements:
 \item online boolean, Whether this user is online.
 }}
 \item{definition}{string, The definition of the workflow for this execution.}
+\item{input}{object, The dictionary of name/value input pairs defined for this execution.}
 \item{tasks}{array, An array containing the following fields: 
 \itemize{
 \item name string, The name of the task.
-\item mistralState string, The state of this task. One of idle, waiting, running, running_delayed, success, or error
+\item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, or error
 \item mistralStateInfo string, Extra info associated with the state of the task.
 \item runs array, The runs associated with this task, in descending order by id.
 }}
