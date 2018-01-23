@@ -13,7 +13,7 @@ features and defaults:
 	- Nulls are permitted in single-column dependent variables, and
     will be dropped before modeling.
 	- Hyperband is enabled for stacking models.
-	- MLPs can be run without hyperband.
+	- MLPs can be run without hyperband (and R checks removed)
 	- `n_jobs` is dynamically calculated by default for training as
     well as prediction.
 	- `feather-format` is now allowed as an input format.
@@ -25,6 +25,7 @@ error, and fetches the job logs automatically.
 
 - `civis_ml_fetch_existing` can handle runs with missing
   `metrics.json` files.
+- `civis_ml` will use the most recent CivisML version available, falling back to CivisML 1.1.
 
 ## [1.1.1] - 2017-11-20
 
