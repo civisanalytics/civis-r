@@ -97,3 +97,12 @@ test_that("get_predict_template_id returns correct template for train/predict ve
   expect_equal(get_predict_template_id(fake_model), 9113)
 })
 
+test_that("get_train_template_id reverts to last id if others not available", {
+    id <- with_mock(
+        `civis:::api_key` = function(...) "key",
+        `civis::scripts_list_custom` = function(...) list(),
+        get_train_template_id())
+    ans <- CIVIS_ML_TEMPLATE_IDS[1, "id"]
+    expect_equal(id, ans)
+})
+
