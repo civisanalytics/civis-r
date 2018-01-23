@@ -128,7 +128,8 @@
       <th>dependent_variable</th>
       <td><p>The dependent variable of the training dataset.
 For a multi-target problem, this should be a vector of column names of
-dependent variables.</p></td>
+dependent variables. Nulls in a single dependent variable will
+automatically be dropped.</p></td>
     </tr>
     <tr>
       <th>primary_key</th>
@@ -256,8 +257,8 @@ logs and make prediction child jobs visible.</p></td>
 
     
     <p>For building models with <code>civis_ml</code>, the training data can reside in
-four different places, a file in the Civis Platform, a CSV file on the local
-disk, a <code>data.frame</code> resident in local the R environment, and finally,
+four different places, a file in the Civis Platform, a CSV or feather-format file
+on the local disk, a <code>data.frame</code> resident in local the R environment, and finally,
 a table in the Civis Platform. Use the following helpers to specify the
 data source when calling <code>civis_ml</code>:</p><dl class='dl-horizontal'>
   <dt><code>data.frame</code></dt><dd><p><code>civis_ml(x = df, ...)</code></p></dd>

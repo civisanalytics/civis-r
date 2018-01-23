@@ -103,7 +103,7 @@
     <div class="page-header">
       <h1>
         Reference
-        <small>version&nbsp;1.1.0</small>
+        <small>version&nbsp;1.2.0</small>
       </h1>
     </div>
 
@@ -437,15 +437,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="apps_list_instances.html">apps_list_instances</a></code> </p>
-          </td>
-          <td><p>List the instances of a Decision Application</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="apps_list_instances_shares.html">apps_list_instances_shares</a></code> </p>
           </td>
           <td><p>List users and groups permissioned on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="apps_list_instances.html">apps_list_instances</a></code> </p>
+          </td>
+          <td><p>List the instances of a Decision Application</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -581,15 +581,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="credentials_list.html">credentials_list</a></code> </p>
-          </td>
-          <td><p>List credentials</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="credentials_list_shares.html">credentials_list_shares</a></code> </p>
           </td>
           <td><p>List users and groups permissioned on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="credentials_list.html">credentials_list</a></code> </p>
+          </td>
+          <td><p>List credentials</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -599,21 +599,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="credentials_post.html">credentials_post</a></code> </p>
-          </td>
-          <td><p>Create a credential</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="credentials_post_temporary.html">credentials_post_temporary</a></code> </p>
           </td>
           <td><p>Generate a temporary credential for accessing S3</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="credentials_put.html">credentials_put</a></code> </p>
+            <p><code><a href="credentials_post.html">credentials_post</a></code> </p>
           </td>
-          <td><p>Update an existing credential</p></td>
+          <td><p>Create a credential</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -629,6 +623,12 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="credentials_put.html">credentials_put</a></code> </p>
+          </td>
+          <td><p>Update an existing credential</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="databases_delete_whitelist_ips.html">databases_delete_whitelist_ips</a></code> </p>
           </td>
           <td><p>Remove a whitelisted IP address</p></td>
@@ -641,21 +641,9 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="databases_list.html">databases_list</a></code> </p>
-          </td>
-          <td><p>List databases</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="databases_list_schemas.html">databases_list_schemas</a></code> </p>
           </td>
           <td><p>List schemas in this database</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="databases_list_tables.html">databases_list_tables</a></code> </p>
-          </td>
-          <td><p>List tables in the specified database, deprecated use "GET /tables" instead</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -665,9 +653,21 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="databases_list_tables.html">databases_list_tables</a></code> </p>
+          </td>
+          <td><p>List tables in the specified database, deprecated use "GET /tables" instead</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="databases_list_whitelist_ips.html">databases_list_whitelist_ips</a></code> </p>
           </td>
           <td><p>List whitelisted IPs for the specified database</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="databases_list.html">databases_list</a></code> </p>
+          </td>
+          <td><p>List databases</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -707,15 +707,33 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="enhancements_get_cass_ncoa.html">enhancements_get_cass_ncoa</a></code> </p>
+            <p><code><a href="enhancements_delete_person_matching_projects.html">enhancements_delete_person_matching_projects</a></code> </p>
           </td>
-          <td><p>Get a CASS/NCOA Enhancement</p></td>
+          <td><p>Remove a container docker from a project</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="enhancements_delete_person_matching_shares_groups.html">enhancements_delete_person_matching_shares_groups</a></code> </p>
+          </td>
+          <td><p>Revoke the permissions a group has on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="enhancements_delete_person_matching_shares_users.html">enhancements_delete_person_matching_shares_users</a></code> </p>
+          </td>
+          <td><p>Revoke the permissions a user has on this object</p></td>
         </tr><tr>
           <!--  -->
           <td>
             <p><code><a href="enhancements_get_cass_ncoa_runs.html">enhancements_get_cass_ncoa_runs</a></code> </p>
           </td>
           <td><p>Check status of a run</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="enhancements_get_cass_ncoa.html">enhancements_get_cass_ncoa</a></code> </p>
+          </td>
+          <td><p>Get a CASS/NCOA Enhancement</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -749,15 +767,27 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="enhancements_list.html">enhancements_list</a></code> </p>
+            <p><code><a href="enhancements_list_person_matching_projects.html">enhancements_list_person_matching_projects</a></code> </p>
           </td>
-          <td><p>List Enhancements</p></td>
+          <td><p>List the projects a container docker belongs to</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="enhancements_list_person_matching_shares.html">enhancements_list_person_matching_shares</a></code> </p>
+          </td>
+          <td><p>List users and groups permissioned on this object</p></td>
         </tr><tr>
           <!--  -->
           <td>
             <p><code><a href="enhancements_list_types.html">enhancements_list_types</a></code> </p>
           </td>
           <td><p>List available enhancement types</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="enhancements_list.html">enhancements_list</a></code> </p>
+          </td>
+          <td><p>List Enhancements</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -773,15 +803,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="enhancements_post_cass_ncoa.html">enhancements_post_cass_ncoa</a></code> </p>
-          </td>
-          <td><p>Create a CASS/NCOA Enhancement</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="enhancements_post_cass_ncoa_runs.html">enhancements_post_cass_ncoa_runs</a></code> </p>
           </td>
           <td><p>Start a run</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="enhancements_post_cass_ncoa.html">enhancements_post_cass_ncoa</a></code> </p>
+          </td>
+          <td><p>Create a CASS/NCOA Enhancement</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -797,12 +827,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="enhancements_put_cass_ncoa.html">enhancements_put_cass_ncoa</a></code> </p>
-          </td>
-          <td><p>Replace all attributes of this CASS/NCOA Enhancement</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="enhancements_put_cass_ncoa_shares_groups.html">enhancements_put_cass_ncoa_shares_groups</a></code> </p>
           </td>
           <td><p>Set the permissions groups has on this object</p></td>
@@ -810,6 +834,36 @@
           <!--  -->
           <td>
             <p><code><a href="enhancements_put_cass_ncoa_shares_users.html">enhancements_put_cass_ncoa_shares_users</a></code> </p>
+          </td>
+          <td><p>Set the permissions users have on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="enhancements_put_cass_ncoa.html">enhancements_put_cass_ncoa</a></code> </p>
+          </td>
+          <td><p>Replace all attributes of this CASS/NCOA Enhancement</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="enhancements_put_person_matching_archive.html">enhancements_put_person_matching_archive</a></code> </p>
+          </td>
+          <td><p>Update the archive status of this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="enhancements_put_person_matching_projects.html">enhancements_put_person_matching_projects</a></code> </p>
+          </td>
+          <td><p>Add a container docker to a project</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="enhancements_put_person_matching_shares_groups.html">enhancements_put_person_matching_shares_groups</a></code> </p>
+          </td>
+          <td><p>Set the permissions groups has on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="enhancements_put_person_matching_shares_users.html">enhancements_put_person_matching_shares_users</a></code> </p>
           </td>
           <td><p>Set the permissions users have on this object</p></td>
         </tr><tr>
@@ -971,12 +1025,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="imports_list.html">imports_list</a></code> </p>
-          </td>
-          <td><p>List</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="imports_list_runs_logs.html">imports_list_runs_logs</a></code> </p>
           </td>
           <td><p>Get the logs for a run</p></td>
@@ -995,6 +1043,12 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="imports_list.html">imports_list</a></code> </p>
+          </td>
+          <td><p>List</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="imports_post_batches.html">imports_post_batches</a></code> </p>
           </td>
           <td><p>Upload multiple files to Redshift</p></td>
@@ -1007,21 +1061,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="imports_post_files.html">imports_post_files</a></code> </p>
-          </td>
-          <td><p>Initate an import of a tabular file into the platform</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="imports_post_files_runs.html">imports_post_files_runs</a></code> </p>
           </td>
           <td><p>Start a run</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="imports_post.html">imports_post</a></code> </p>
+            <p><code><a href="imports_post_files.html">imports_post_files</a></code> </p>
           </td>
-          <td><p>Create a new import configuration</p></td>
+          <td><p>Initate an import of a tabular file into the platform</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1037,6 +1085,12 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="imports_post.html">imports_post</a></code> </p>
+          </td>
+          <td><p>Create a new import configuration</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="imports_put_archive.html">imports_put_archive</a></code> </p>
           </td>
           <td><p>Update the archive status of this object</p></td>
@@ -1046,12 +1100,6 @@
             <p><code><a href="imports_put_projects.html">imports_put_projects</a></code> </p>
           </td>
           <td><p>Add a JobTypes::Import to a project</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="imports_put.html">imports_put</a></code> </p>
-          </td>
-          <td><p>Update an import</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1079,6 +1127,12 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="imports_put.html">imports_put</a></code> </p>
+          </td>
+          <td><p>Update an import</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="jobs_delete_projects.html">jobs_delete_projects</a></code> </p>
           </td>
           <td><p>Remove a Job from a project</p></td>
@@ -1097,15 +1151,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="jobs_get.html">jobs_get</a></code> </p>
-          </td>
-          <td><p>Show basic job info</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="jobs_get_runs.html">jobs_get_runs</a></code> </p>
           </td>
           <td><p>Check status of a job</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="jobs_get.html">jobs_get</a></code> </p>
+          </td>
+          <td><p>Show basic job info</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1127,15 +1181,21 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="jobs_list.html">jobs_list</a></code> </p>
-          </td>
-          <td><p>List</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="jobs_list_shares.html">jobs_list_shares</a></code> </p>
           </td>
           <td><p>List users and groups permissioned on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="jobs_list_workflows.html">jobs_list_workflows</a></code> </p>
+          </td>
+          <td><p>List the workflows a job belongs to</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="jobs_list.html">jobs_list</a></code> </p>
+          </td>
+          <td><p>List</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1175,6 +1235,18 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="match_targets_patch.html">match_targets_patch</a></code> </p>
+          </td>
+          <td><p>Update a match target</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="match_targets_post.html">match_targets_post</a></code> </p>
+          </td>
+          <td><p>Create a new match target</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="media_delete_optimizations_runs.html">media_delete_optimizations_runs</a></code> </p>
           </td>
           <td><p>Cancel a run</p></td>
@@ -1205,15 +1277,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="media_get_optimizations.html">media_get_optimizations</a></code> </p>
-          </td>
-          <td><p>Show a single optimization</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="media_get_optimizations_runs.html">media_get_optimizations_runs</a></code> </p>
           </td>
           <td><p>Check status of a run</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="media_get_optimizations.html">media_get_optimizations</a></code> </p>
+          </td>
+          <td><p>Show a single optimization</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1226,12 +1298,6 @@
             <p><code><a href="media_list_dmas.html">media_list_dmas</a></code> </p>
           </td>
           <td><p>List all Designated Market Areas</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="media_list_optimizations.html">media_list_optimizations</a></code> </p>
-          </td>
-          <td><p>List all optimizations</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1253,21 +1319,27 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="media_list_optimizations.html">media_list_optimizations</a></code> </p>
+          </td>
+          <td><p>List all optimizations</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="media_list_ratecards.html">media_list_ratecards</a></code> </p>
           </td>
           <td><p>List all ratecards</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="media_list_spot_orders.html">media_list_spot_orders</a></code> </p>
-          </td>
-          <td><p>List all spot orders</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="media_list_spot_orders_shares.html">media_list_spot_orders_shares</a></code> </p>
           </td>
           <td><p>List users and groups permissioned on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="media_list_spot_orders.html">media_list_spot_orders</a></code> </p>
+          </td>
+          <td><p>List all spot orders</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1289,15 +1361,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="media_post_optimizations.html">media_post_optimizations</a></code> </p>
-          </td>
-          <td><p>Create a new optimization</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="media_post_optimizations_runs.html">media_post_optimizations_runs</a></code> </p>
           </td>
           <td><p>Start a run</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="media_post_optimizations.html">media_post_optimizations</a></code> </p>
+          </td>
+          <td><p>Create a new optimization</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1331,12 +1403,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="media_put_spot_orders.html">media_put_spot_orders</a></code> </p>
-          </td>
-          <td><p>Edit the specified spot order</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="media_put_spot_orders_shares_groups.html">media_put_spot_orders_shares_groups</a></code> </p>
           </td>
           <td><p>Set the permissions groups has on this object</p></td>
@@ -1346,6 +1412,12 @@
             <p><code><a href="media_put_spot_orders_shares_users.html">media_put_spot_orders_shares_users</a></code> </p>
           </td>
           <td><p>Set the permissions users have on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="media_put_spot_orders.html">media_put_spot_orders</a></code> </p>
+          </td>
+          <td><p>Edit the specified spot order</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1403,12 +1475,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="models_list.html">models_list</a></code> </p>
-          </td>
-          <td><p>List</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="models_list_schedules.html">models_list_schedules</a></code> </p>
           </td>
           <td><p>Show the model build schedule</p></td>
@@ -1424,6 +1490,12 @@
             <p><code><a href="models_list_types.html">models_list_types</a></code> </p>
           </td>
           <td><p>List all available model types</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="models_list.html">models_list</a></code> </p>
+          </td>
+          <td><p>List</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1493,12 +1565,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="notebooks_delete.html">notebooks_delete</a></code> </p>
-          </td>
-          <td><p>Archive a Notebook (deprecated, use archiving endpoints instead)</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="notebooks_delete_shares_groups.html">notebooks_delete_shares_groups</a></code> </p>
           </td>
           <td><p>Revoke the permissions a group has on this object</p></td>
@@ -1508,6 +1574,12 @@
             <p><code><a href="notebooks_delete_shares_users.html">notebooks_delete_shares_users</a></code> </p>
           </td>
           <td><p>Revoke the permissions a user has on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="notebooks_delete.html">notebooks_delete</a></code> </p>
+          </td>
+          <td><p>Archive a Notebook (deprecated, use archiving endpoints instead)</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1535,12 +1607,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="notebooks_list.html">notebooks_list</a></code> </p>
-          </td>
-          <td><p>List Notebooks</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="notebooks_list_shares.html">notebooks_list_shares</a></code> </p>
           </td>
           <td><p>List users and groups permissioned on this object</p></td>
@@ -1550,6 +1616,12 @@
             <p><code><a href="notebooks_list_update_links.html">notebooks_list_update_links</a></code> </p>
           </td>
           <td><p>Get URLs to update notebook</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="notebooks_list.html">notebooks_list</a></code> </p>
+          </td>
+          <td><p>List Notebooks</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1589,12 +1661,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="notebooks_put.html">notebooks_put</a></code> </p>
-          </td>
-          <td><p>Replace all attributes of this Notebook</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="notebooks_put_shares_groups.html">notebooks_put_shares_groups</a></code> </p>
           </td>
           <td><p>Set the permissions groups has on this object</p></td>
@@ -1604,6 +1670,12 @@
             <p><code><a href="notebooks_put_shares_users.html">notebooks_put_shares_users</a></code> </p>
           </td>
           <td><p>Set the permissions users have on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="notebooks_put.html">notebooks_put</a></code> </p>
+          </td>
+          <td><p>Replace all attributes of this Notebook</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1625,21 +1697,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="predictions_get.html">predictions_get</a></code> </p>
-          </td>
-          <td><p>Show the specified prediction</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="predictions_get_runs.html">predictions_get_runs</a></code> </p>
           </td>
           <td><p>Check status of a run</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="predictions_list.html">predictions_list</a></code> </p>
+            <p><code><a href="predictions_get.html">predictions_get</a></code> </p>
           </td>
-          <td><p>List predictions</p></td>
+          <td><p>Show the specified prediction</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1661,6 +1727,12 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="predictions_list.html">predictions_list</a></code> </p>
+          </td>
+          <td><p>List predictions</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="predictions_patch.html">predictions_patch</a></code> </p>
           </td>
           <td><p>Update a prediction</p></td>
@@ -1679,12 +1751,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="projects_delete.html">projects_delete</a></code> </p>
-          </td>
-          <td><p>Archive a project (deprecated, use the /archive endpoint instead)</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="projects_delete_shares_groups.html">projects_delete_shares_groups</a></code> </p>
           </td>
           <td><p>Revoke the permissions a group has on this object</p></td>
@@ -1697,21 +1763,27 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="projects_delete.html">projects_delete</a></code> </p>
+          </td>
+          <td><p>Archive a project (deprecated, use the /archive endpoint instead)</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="projects_get.html">projects_get</a></code> </p>
           </td>
           <td><p>Get a detailed view of a project and the objects in it</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="projects_list.html">projects_list</a></code> </p>
-          </td>
-          <td><p>List projects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="projects_list_shares.html">projects_list_shares</a></code> </p>
           </td>
           <td><p>List users and groups permissioned on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="projects_list.html">projects_list</a></code> </p>
+          </td>
+          <td><p>List projects</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1727,12 +1799,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="projects_put.html">projects_put</a></code> </p>
-          </td>
-          <td><p>Update a project</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="projects_put_shares_groups.html">projects_put_shares_groups</a></code> </p>
           </td>
           <td><p>Set the permissions groups has on this object</p></td>
@@ -1745,15 +1811,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="queries_delete_runs.html">queries_delete_runs</a></code> </p>
+            <p><code><a href="projects_put.html">projects_put</a></code> </p>
           </td>
-          <td><p>Cancel a run</p></td>
+          <td><p>Update a project</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="queries_get.html">queries_get</a></code> </p>
+            <p><code><a href="queries_delete_runs.html">queries_delete_runs</a></code> </p>
           </td>
-          <td><p>Get details about a query</p></td>
+          <td><p>Cancel a run</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1763,9 +1829,9 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="queries_list.html">queries_list</a></code> </p>
+            <p><code><a href="queries_get.html">queries_get</a></code> </p>
           </td>
-          <td><p>List</p></td>
+          <td><p>Get details about a query</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1781,15 +1847,21 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="queries_post.html">queries_post</a></code> </p>
+            <p><code><a href="queries_list.html">queries_list</a></code> </p>
           </td>
-          <td><p>Execute a query</p></td>
+          <td><p>List</p></td>
         </tr><tr>
           <!--  -->
           <td>
             <p><code><a href="queries_post_runs.html">queries_post_runs</a></code> </p>
           </td>
           <td><p>Start a run</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="queries_post.html">queries_post</a></code> </p>
+          </td>
+          <td><p>Execute a query</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1859,27 +1931,21 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="reports_get.html">reports_get</a></code> </p>
-          </td>
-          <td><p>Show a single report</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="reports_get_solutions.html">reports_get_solutions</a></code> </p>
           </td>
           <td><p>Show a single solutions report</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="reports_list_projects.html">reports_list_projects</a></code> </p>
+            <p><code><a href="reports_get.html">reports_get</a></code> </p>
           </td>
-          <td><p>List the projects a Report belongs to</p></td>
+          <td><p>Show a single report</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="reports_list.html">reports_list</a></code> </p>
+            <p><code><a href="reports_list_projects.html">reports_list_projects</a></code> </p>
           </td>
-          <td><p>List</p></td>
+          <td><p>List the projects a Report belongs to</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1901,9 +1967,9 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="reports_patch.html">reports_patch</a></code> </p>
+            <p><code><a href="reports_list.html">reports_list</a></code> </p>
           </td>
-          <td><p>Update a report</p></td>
+          <td><p>List</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1913,21 +1979,33 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="reports_patch_solutions.html">reports_patch_solutions</a></code> </p>
+          </td>
+          <td><p>Update some attributes of this solutions report</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="reports_patch.html">reports_patch</a></code> </p>
+          </td>
+          <td><p>Update a report</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="reports_post_grants.html">reports_post_grants</a></code> </p>
           </td>
           <td><p>Grant this report the ability to perform Civis platform API operations on your behalf</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="reports_post.html">reports_post</a></code> </p>
-          </td>
-          <td><p>Create a report</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="reports_post_snapshots.html">reports_post_snapshots</a></code> </p>
           </td>
           <td><p>Generate and optionally email a snapshot of the specified report</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="reports_post.html">reports_post</a></code> </p>
+          </td>
+          <td><p>Create a report</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2003,27 +2081,21 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="results_get.html">results_get</a></code> </p>
-          </td>
-          <td><p>Show a single report</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="results_get_solutions.html">results_get_solutions</a></code> </p>
           </td>
           <td><p>Show a single solutions report</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="results_list_projects.html">results_list_projects</a></code> </p>
+            <p><code><a href="results_get.html">results_get</a></code> </p>
           </td>
-          <td><p>List the projects a Report belongs to</p></td>
+          <td><p>Show a single report</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="results_list.html">results_list</a></code> </p>
+            <p><code><a href="results_list_projects.html">results_list_projects</a></code> </p>
           </td>
-          <td><p>List</p></td>
+          <td><p>List the projects a Report belongs to</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2045,9 +2117,9 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="results_patch.html">results_patch</a></code> </p>
+            <p><code><a href="results_list.html">results_list</a></code> </p>
           </td>
-          <td><p>Update a report</p></td>
+          <td><p>List</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2057,21 +2129,33 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="results_patch_solutions.html">results_patch_solutions</a></code> </p>
+          </td>
+          <td><p>Update some attributes of this solutions report</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="results_patch.html">results_patch</a></code> </p>
+          </td>
+          <td><p>Update a report</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="results_post_grants.html">results_post_grants</a></code> </p>
           </td>
           <td><p>Grant this report the ability to perform Civis platform API operations on your behalf</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="results_post.html">results_post</a></code> </p>
-          </td>
-          <td><p>Create a report</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="results_post_snapshots.html">results_post_snapshots</a></code> </p>
           </td>
           <td><p>Generate and optionally email a snapshot of the specified report</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="results_post.html">results_post</a></code> </p>
+          </td>
+          <td><p>Create a report</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2117,12 +2201,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_delete_containers.html">scripts_delete_containers</a></code> </p>
-          </td>
-          <td><p>Archive a container (deprecated, use archive endpoints)</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="scripts_delete_containers_runs.html">scripts_delete_containers_runs</a></code> </p>
           </td>
           <td><p>Cancel a run</p></td>
@@ -2141,15 +2219,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_delete_custom_projects.html">scripts_delete_custom_projects</a></code> </p>
+            <p><code><a href="scripts_delete_containers.html">scripts_delete_containers</a></code> </p>
           </td>
-          <td><p>Remove a Job from a project</p></td>
+          <td><p>Archive a container (deprecated, use archive endpoints)</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_delete_custom.html">scripts_delete_custom</a></code> </p>
+            <p><code><a href="scripts_delete_custom_projects.html">scripts_delete_custom_projects</a></code> </p>
           </td>
-          <td><p>Archive a Custom Script (deprecated, use archiving endpoints instead)</p></td>
+          <td><p>Remove a Job from a project</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2171,15 +2249,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_delete_javascript_projects.html">scripts_delete_javascript_projects</a></code> </p>
+            <p><code><a href="scripts_delete_custom.html">scripts_delete_custom</a></code> </p>
           </td>
-          <td><p>Remove a scripted sql from a project</p></td>
+          <td><p>Archive a Custom Script (deprecated, use archiving endpoints instead)</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_delete_javascript.html">scripts_delete_javascript</a></code> </p>
+            <p><code><a href="scripts_delete_javascript_projects.html">scripts_delete_javascript_projects</a></code> </p>
           </td>
-          <td><p>Archive a JavaScript Script (deprecated, use archiving endpoints instead)</p></td>
+          <td><p>Remove a scripted sql from a project</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2201,15 +2279,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_delete_python3_projects.html">scripts_delete_python3_projects</a></code> </p>
+            <p><code><a href="scripts_delete_javascript.html">scripts_delete_javascript</a></code> </p>
           </td>
-          <td><p>Remove a python docker from a project</p></td>
+          <td><p>Archive a JavaScript Script (deprecated, use archiving endpoints instead)</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_delete_python3.html">scripts_delete_python3</a></code> </p>
+            <p><code><a href="scripts_delete_python3_projects.html">scripts_delete_python3_projects</a></code> </p>
           </td>
-          <td><p>Archive a Python Script (deprecated, use archiving endpoints instead)</p></td>
+          <td><p>Remove a python docker from a project</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2231,21 +2309,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_delete.html">scripts_delete</a></code> </p>
+            <p><code><a href="scripts_delete_python3.html">scripts_delete_python3</a></code> </p>
           </td>
-          <td><p>Archive a script (deprecated, use archive endpoints instead)</p></td>
+          <td><p>Archive a Python Script (deprecated, use archiving endpoints instead)</p></td>
         </tr><tr>
           <!--  -->
           <td>
             <p><code><a href="scripts_delete_r_projects.html">scripts_delete_r_projects</a></code> </p>
           </td>
           <td><p>Remove a r docker from a project</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="scripts_delete_r.html">scripts_delete_r</a></code> </p>
-          </td>
-          <td><p>Archive an R Script (deprecated, use archiving endpoints instead)</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2267,15 +2339,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_delete_sql_projects.html">scripts_delete_sql_projects</a></code> </p>
+            <p><code><a href="scripts_delete_r.html">scripts_delete_r</a></code> </p>
           </td>
-          <td><p>Remove a scripts from a project</p></td>
+          <td><p>Archive an R Script (deprecated, use archiving endpoints instead)</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_delete_sql.html">scripts_delete_sql</a></code> </p>
+            <p><code><a href="scripts_delete_sql_projects.html">scripts_delete_sql_projects</a></code> </p>
           </td>
-          <td><p>Archive a SQL script (deprecated, use archiving endpoints instead)</p></td>
+          <td><p>Remove a scripts from a project</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2297,13 +2369,31 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="scripts_delete_sql.html">scripts_delete_sql</a></code> </p>
+          </td>
+          <td><p>Archive a SQL script (deprecated, use archiving endpoints instead)</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="scripts_delete.html">scripts_delete</a></code> </p>
+          </td>
+          <td><p>Archive a script (deprecated, use archive endpoints instead)</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="scripts_get_containers_runs.html">scripts_get_containers_runs</a></code> </p>
+          </td>
+          <td><p>Check status of a run</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="scripts_get_containers.html">scripts_get_containers</a></code> </p>
           </td>
           <td><p>View a container</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_get_containers_runs.html">scripts_get_containers_runs</a></code> </p>
+            <p><code><a href="scripts_get_custom_runs.html">scripts_get_custom_runs</a></code> </p>
           </td>
           <td><p>Check status of a run</p></td>
         </tr><tr>
@@ -2315,7 +2405,7 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_get_custom_runs.html">scripts_get_custom_runs</a></code> </p>
+            <p><code><a href="scripts_get_javascript_runs.html">scripts_get_javascript_runs</a></code> </p>
           </td>
           <td><p>Check status of a run</p></td>
         </tr><tr>
@@ -2327,7 +2417,7 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_get_javascript_runs.html">scripts_get_javascript_runs</a></code> </p>
+            <p><code><a href="scripts_get_python3_runs.html">scripts_get_python3_runs</a></code> </p>
           </td>
           <td><p>Check status of a run</p></td>
         </tr><tr>
@@ -2339,15 +2429,9 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_get_python3_runs.html">scripts_get_python3_runs</a></code> </p>
+            <p><code><a href="scripts_get_r_runs.html">scripts_get_r_runs</a></code> </p>
           </td>
           <td><p>Check status of a run</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="scripts_get.html">scripts_get</a></code> </p>
-          </td>
-          <td><p>Get details about a script</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2357,7 +2441,7 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_get_r_runs.html">scripts_get_r_runs</a></code> </p>
+            <p><code><a href="scripts_get_sql_runs.html">scripts_get_sql_runs</a></code> </p>
           </td>
           <td><p>Check status of a run</p></td>
         </tr><tr>
@@ -2369,9 +2453,9 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_get_sql_runs.html">scripts_get_sql_runs</a></code> </p>
+            <p><code><a href="scripts_get.html">scripts_get</a></code> </p>
           </td>
-          <td><p>Check status of a run</p></td>
+          <td><p>Get details about a script</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2411,12 +2495,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_list_custom.html">scripts_list_custom</a></code> </p>
-          </td>
-          <td><p>List Custom Scripts</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="scripts_list_custom_runs_logs.html">scripts_list_custom_runs_logs</a></code> </p>
           </td>
           <td><p>Get the logs for a run</p></td>
@@ -2438,6 +2516,12 @@
             <p><code><a href="scripts_list_custom_shares.html">scripts_list_custom_shares</a></code> </p>
           </td>
           <td><p>List users and groups permissioned on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="scripts_list_custom.html">scripts_list_custom</a></code> </p>
+          </td>
+          <td><p>List Custom Scripts</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2507,12 +2591,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_list.html">scripts_list</a></code> </p>
-          </td>
-          <td><p>List scripts</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="scripts_list_r_projects.html">scripts_list_r_projects</a></code> </p>
           </td>
           <td><p>List the projects a r docker belongs to</p></td>
@@ -2579,6 +2657,12 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="scripts_list.html">scripts_list</a></code> </p>
+          </td>
+          <td><p>List scripts</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="scripts_patch_containers.html">scripts_patch_containers</a></code> </p>
           </td>
           <td><p>Update a container</p></td>
@@ -2603,12 +2687,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_patch.html">scripts_patch</a></code> </p>
-          </td>
-          <td><p>Update a script</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="scripts_patch_r.html">scripts_patch_r</a></code> </p>
           </td>
           <td><p>Update some attributes of this R Script</p></td>
@@ -2618,6 +2696,12 @@
             <p><code><a href="scripts_patch_sql.html">scripts_patch_sql</a></code> </p>
           </td>
           <td><p>Update some attributes of this SQL script</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="scripts_patch.html">scripts_patch</a></code> </p>
+          </td>
+          <td><p>Update a script</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2633,12 +2717,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_post_containers.html">scripts_post_containers</a></code> </p>
-          </td>
-          <td><p>Create a container</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="scripts_post_containers_runs_outputs.html">scripts_post_containers_runs_outputs</a></code> </p>
           </td>
           <td><p>Add an output for a run</p></td>
@@ -2651,15 +2729,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_post_custom_clone.html">scripts_post_custom_clone</a></code> </p>
+            <p><code><a href="scripts_post_containers.html">scripts_post_containers</a></code> </p>
           </td>
-          <td><p>Clone this Custom Script</p></td>
+          <td><p>Create a container</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_post_custom.html">scripts_post_custom</a></code> </p>
+            <p><code><a href="scripts_post_custom_clone.html">scripts_post_custom_clone</a></code> </p>
           </td>
-          <td><p>Create a Custom Script</p></td>
+          <td><p>Clone this Custom Script</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2675,15 +2753,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_post_javascript_clone.html">scripts_post_javascript_clone</a></code> </p>
+            <p><code><a href="scripts_post_custom.html">scripts_post_custom</a></code> </p>
           </td>
-          <td><p>Clone this JavaScript Script</p></td>
+          <td><p>Create a Custom Script</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_post_javascript.html">scripts_post_javascript</a></code> </p>
+            <p><code><a href="scripts_post_javascript_clone.html">scripts_post_javascript_clone</a></code> </p>
           </td>
-          <td><p>Create a JavaScript Script</p></td>
+          <td><p>Clone this JavaScript Script</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2699,15 +2777,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_post_python3_clone.html">scripts_post_python3_clone</a></code> </p>
+            <p><code><a href="scripts_post_javascript.html">scripts_post_javascript</a></code> </p>
           </td>
-          <td><p>Clone this Python Script</p></td>
+          <td><p>Create a JavaScript Script</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_post_python3.html">scripts_post_python3</a></code> </p>
+            <p><code><a href="scripts_post_python3_clone.html">scripts_post_python3_clone</a></code> </p>
           </td>
-          <td><p>Create a Python Script</p></td>
+          <td><p>Clone this Python Script</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2723,21 +2801,15 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="scripts_post_python3.html">scripts_post_python3</a></code> </p>
+          </td>
+          <td><p>Create a Python Script</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="scripts_post_r_clone.html">scripts_post_r_clone</a></code> </p>
           </td>
           <td><p>Clone this R Script</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="scripts_post.html">scripts_post</a></code> </p>
-          </td>
-          <td><p>Create a script</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="scripts_post_r.html">scripts_post_r</a></code> </p>
-          </td>
-          <td><p>Create an R Script</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2753,6 +2825,12 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="scripts_post_r.html">scripts_post_r</a></code> </p>
+          </td>
+          <td><p>Create an R Script</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="scripts_post_run.html">scripts_post_run</a></code> </p>
           </td>
           <td><p>Run a script</p></td>
@@ -2765,15 +2843,21 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="scripts_post_sql_runs.html">scripts_post_sql_runs</a></code> </p>
+          </td>
+          <td><p>Start a run</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="scripts_post_sql.html">scripts_post_sql</a></code> </p>
           </td>
           <td><p>Create a SQL script</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_post_sql_runs.html">scripts_post_sql_runs</a></code> </p>
+            <p><code><a href="scripts_post.html">scripts_post</a></code> </p>
           </td>
-          <td><p>Start a run</p></td>
+          <td><p>Create a script</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2789,12 +2873,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_put_containers.html">scripts_put_containers</a></code> </p>
-          </td>
-          <td><p>Edit a container</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="scripts_put_containers_shares_groups.html">scripts_put_containers_shares_groups</a></code> </p>
           </td>
           <td><p>Set the permissions groups has on this object</p></td>
@@ -2804,6 +2882,12 @@
             <p><code><a href="scripts_put_containers_shares_users.html">scripts_put_containers_shares_users</a></code> </p>
           </td>
           <td><p>Set the permissions users have on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="scripts_put_containers.html">scripts_put_containers</a></code> </p>
+          </td>
+          <td><p>Edit a container</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2819,12 +2903,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_put_custom.html">scripts_put_custom</a></code> </p>
-          </td>
-          <td><p>Replace all attributes of this Custom Script</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="scripts_put_custom_shares_groups.html">scripts_put_custom_shares_groups</a></code> </p>
           </td>
           <td><p>Set the permissions groups has on this object</p></td>
@@ -2834,6 +2912,12 @@
             <p><code><a href="scripts_put_custom_shares_users.html">scripts_put_custom_shares_users</a></code> </p>
           </td>
           <td><p>Set the permissions users have on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="scripts_put_custom.html">scripts_put_custom</a></code> </p>
+          </td>
+          <td><p>Replace all attributes of this Custom Script</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2849,12 +2933,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_put_javascript.html">scripts_put_javascript</a></code> </p>
-          </td>
-          <td><p>Replace all attributes of this JavaScript Script</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="scripts_put_javascript_shares_groups.html">scripts_put_javascript_shares_groups</a></code> </p>
           </td>
           <td><p>Set the permissions groups has on this object</p></td>
@@ -2864,6 +2942,12 @@
             <p><code><a href="scripts_put_javascript_shares_users.html">scripts_put_javascript_shares_users</a></code> </p>
           </td>
           <td><p>Set the permissions users have on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="scripts_put_javascript.html">scripts_put_javascript</a></code> </p>
+          </td>
+          <td><p>Replace all attributes of this JavaScript Script</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2879,12 +2963,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_put_python3.html">scripts_put_python3</a></code> </p>
-          </td>
-          <td><p>Replace all attributes of this Python Script</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="scripts_put_python3_shares_groups.html">scripts_put_python3_shares_groups</a></code> </p>
           </td>
           <td><p>Set the permissions groups has on this object</p></td>
@@ -2894,6 +2972,12 @@
             <p><code><a href="scripts_put_python3_shares_users.html">scripts_put_python3_shares_users</a></code> </p>
           </td>
           <td><p>Set the permissions users have on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="scripts_put_python3.html">scripts_put_python3</a></code> </p>
+          </td>
+          <td><p>Replace all attributes of this Python Script</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2909,12 +2993,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_put_r.html">scripts_put_r</a></code> </p>
-          </td>
-          <td><p>Replace all attributes of this R Script</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="scripts_put_r_shares_groups.html">scripts_put_r_shares_groups</a></code> </p>
           </td>
           <td><p>Set the permissions groups has on this object</p></td>
@@ -2924,6 +3002,12 @@
             <p><code><a href="scripts_put_r_shares_users.html">scripts_put_r_shares_users</a></code> </p>
           </td>
           <td><p>Set the permissions users have on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="scripts_put_r.html">scripts_put_r</a></code> </p>
+          </td>
+          <td><p>Replace all attributes of this R Script</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -2939,12 +3023,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="scripts_put_sql.html">scripts_put_sql</a></code> </p>
-          </td>
-          <td><p>Replace all attributes of this SQL script</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="scripts_put_sql_shares_groups.html">scripts_put_sql_shares_groups</a></code> </p>
           </td>
           <td><p>Set the permissions groups has on this object</p></td>
@@ -2957,15 +3035,21 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="search_list.html">search_list</a></code> </p>
+            <p><code><a href="scripts_put_sql.html">scripts_put_sql</a></code> </p>
           </td>
-          <td><p>Perform a search</p></td>
+          <td><p>Replace all attributes of this SQL script</p></td>
         </tr><tr>
           <!--  -->
           <td>
             <p><code><a href="search_list_types.html">search_list_types</a></code> </p>
           </td>
           <td><p>List available search types</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="search_list.html">search_list</a></code> </p>
+          </td>
+          <td><p>Perform a search</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -3017,6 +3101,12 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="tables_post_enhance.html">tables_post_enhance</a></code> </p>
+          </td>
+          <td><p>Run an enhancement on a table, deprecated use "POST /tables/:source_table_id/enhancements/&lt;enhancement-type&gt;" instead</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="tables_post_enhancements_cass_ncoa.html">tables_post_enhancements_cass_ncoa</a></code> </p>
           </td>
           <td><p>Standardize addresses in a table</p></td>
@@ -3041,27 +3131,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="tables_post_enhance.html">tables_post_enhance</a></code> </p>
-          </td>
-          <td><p>Run an enhancement on a table, deprecated use "POST /tables/:source_table_id/enhancements/&lt;enhancement-type&gt;" instead</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tables_post.html">tables_post</a></code> </p>
-          </td>
-          <td><p>Import a file into a table</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="tables_post_refresh.html">tables_post_refresh</a></code> </p>
           </td>
           <td><p>Request a refresh for column and table statistics</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="templates_delete_reports.html">templates_delete_reports</a></code> </p>
+            <p><code><a href="tables_post.html">tables_post</a></code> </p>
           </td>
-          <td><p>Archive a Report Template (deprecated, use archiving endpoints instead)</p></td>
+          <td><p>Import a file into a table</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -3077,15 +3155,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="templates_delete_scripts_projects.html">templates_delete_scripts_projects</a></code> </p>
+            <p><code><a href="templates_delete_reports.html">templates_delete_reports</a></code> </p>
           </td>
-          <td><p>Remove a Template::Script from a project</p></td>
+          <td><p>Archive a Report Template (deprecated, use archiving endpoints instead)</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="templates_delete_scripts.html">templates_delete_scripts</a></code> </p>
+            <p><code><a href="templates_delete_scripts_projects.html">templates_delete_scripts_projects</a></code> </p>
           </td>
-          <td><p>Archive a Script Template (deprecated, use archiving endpoints instead)</p></td>
+          <td><p>Remove a Template::Script from a project</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -3101,6 +3179,12 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="templates_delete_scripts.html">templates_delete_scripts</a></code> </p>
+          </td>
+          <td><p>Archive a Script Template (deprecated, use archiving endpoints instead)</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="templates_get_reports.html">templates_get_reports</a></code> </p>
           </td>
           <td><p>Get a Report Template</p></td>
@@ -3113,15 +3197,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="templates_list_reports.html">templates_list_reports</a></code> </p>
-          </td>
-          <td><p>List Report Templates</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="templates_list_reports_shares.html">templates_list_reports_shares</a></code> </p>
           </td>
           <td><p>List users and groups permissioned on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="templates_list_reports.html">templates_list_reports</a></code> </p>
+          </td>
+          <td><p>List Report Templates</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -3131,15 +3215,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="templates_list_scripts.html">templates_list_scripts</a></code> </p>
-          </td>
-          <td><p>List Script Templates</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="templates_list_scripts_shares.html">templates_list_scripts_shares</a></code> </p>
           </td>
           <td><p>List users and groups permissioned on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="templates_list_scripts.html">templates_list_scripts</a></code> </p>
+          </td>
+          <td><p>List Script Templates</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -3167,12 +3251,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="templates_put_reports.html">templates_put_reports</a></code> </p>
-          </td>
-          <td><p>Replace all attributes of this Report Template</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="templates_put_reports_shares_groups.html">templates_put_reports_shares_groups</a></code> </p>
           </td>
           <td><p>Set the permissions groups has on this object</p></td>
@@ -3185,15 +3263,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="templates_put_scripts_projects.html">templates_put_scripts_projects</a></code> </p>
+            <p><code><a href="templates_put_reports.html">templates_put_reports</a></code> </p>
           </td>
-          <td><p>Add a Template::Script to a project</p></td>
+          <td><p>Replace all attributes of this Report Template</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="templates_put_scripts.html">templates_put_scripts</a></code> </p>
+            <p><code><a href="templates_put_scripts_projects.html">templates_put_scripts_projects</a></code> </p>
           </td>
-          <td><p>Replace all attributes of this Script Template</p></td>
+          <td><p>Add a Template::Script to a project</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -3206,6 +3284,12 @@
             <p><code><a href="templates_put_scripts_shares_users.html">templates_put_scripts_shares_users</a></code> </p>
           </td>
           <td><p>Set the permissions users have on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="templates_put_scripts.html">templates_put_scripts</a></code> </p>
+          </td>
+          <td><p>Replace all attributes of this Script Template</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -3299,15 +3383,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="workflows_list.html">workflows_list</a></code> </p>
-          </td>
-          <td><p>List Workflows</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="workflows_list_shares.html">workflows_list_shares</a></code> </p>
           </td>
           <td><p>List users and groups permissioned on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="workflows_list.html">workflows_list</a></code> </p>
+          </td>
+          <td><p>List Workflows</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -3329,12 +3413,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="workflows_post_executions.html">workflows_post_executions</a></code> </p>
-          </td>
-          <td><p>Execute a workflow</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="workflows_post_executions_resume.html">workflows_post_executions_resume</a></code> </p>
           </td>
           <td><p>Resume a paused workflow execution</p></td>
@@ -3344,6 +3422,12 @@
             <p><code><a href="workflows_post_executions_retry.html">workflows_post_executions_retry</a></code> </p>
           </td>
           <td><p>Retry a failed task, or all failed tasks in an execution</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="workflows_post_executions.html">workflows_post_executions</a></code> </p>
+          </td>
+          <td><p>Execute a workflow</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -3365,12 +3449,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="workflows_put.html">workflows_put</a></code> </p>
-          </td>
-          <td><p>Replace all attributes of this Workflow</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="workflows_put_shares_groups.html">workflows_put_shares_groups</a></code> </p>
           </td>
           <td><p>Set the permissions groups has on this object</p></td>
@@ -3380,6 +3458,12 @@
             <p><code><a href="workflows_put_shares_users.html">workflows_put_shares_users</a></code> </p>
           </td>
           <td><p>Set the permissions users have on this object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="workflows_put.html">workflows_put</a></code> </p>
+          </td>
+          <td><p>Replace all attributes of this Workflow</p></td>
         </tr>
       </tbody>
       </table>

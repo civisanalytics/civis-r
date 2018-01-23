@@ -138,7 +138,8 @@ using a set of Scikit-Learn estimators.</p>
       <th>dependent_variable</th>
       <td><p>The dependent variable of the training dataset.
 For a multi-target problem, this should be a vector of column names of
-dependent variables.</p></td>
+dependent variables. Nulls in a single dependent variable will
+automatically be dropped.</p></td>
     </tr>
     <tr>
       <th>model_type</th>
@@ -240,7 +241,10 @@ data for validation, and <code>skip</code>, which skips the validation step.</p>
     <tr>
       <th>n_jobs</th>
       <td><p>Number of concurrent Platform jobs to use for training and
-validation, or multi-file / large table prediction.</p></td>
+validation, or multi-file / large table prediction. Defaults to
+<code>NULL</code>, which allows CivisML to dynamically calculate an
+appropriate number of workers to use (in general, as many as
+possible without using all resources in the cluster).</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -319,9 +323,7 @@ column. The <code>"sparse_*"</code> models include a LASSO regression step
 (using <code>glmnet</code>) to do feature selection before passing data to the
 final model. In some models, CivisML uses default parameters from those in
 <a href='http://scikit-learn.org/stable/'>Scikit-Learn</a>, as indicated in the "Altered Defaults" column.
-All models also have <code>random_state=42</code>. Note that <code>"multilayer_perceptron_classifier"</code>
-and <code>"multilayer_perceptron_regressor"</code> can only be used with
-hyperband.</p>
+All models also have <code>random_state=42</code>.</p>
 <p>Specific workflows can also be called directly using the R workflow functions.</p><table><tr><td>
  Name </td>
 <td> R Workflow </td>
@@ -422,7 +424,12 @@ with <code>penalty='l2'</code> and <code>tol=1e-08</code>. The
 <code>"stacking_regressor"</code> works similarly, stacking together the
 <code>"sparse_linear_regressor"</code>, <code>"gradient_boosting_regressor"</code>,
 and <code>"random_forest_regressor"</code> models, and combining them using
-<a href='https://github.com/civisanalytics/civisml-extensions'>NonNegativeLinearRegression</a>.</p>
+<a href='https://github.com/civisanalytics/civisml-extensions'>NonNegativeLinearRegression</a>.
+ The estimators that are being stacked have the same names as the
+associated pre-defined models, and the meta-estimator steps are named
+"meta-estimator". Note that although default parameters are provided
+for multilayer perceptron models, it is highly recommended that
+multilayer perceptrons be run using hyperband.</p>
     
     <h2 class="hasAnchor" id="hyperparameter-tuning"><a class="anchor" href="#hyperparameter-tuning"></a>Hyperparameter Tuning</h2>
 
@@ -434,7 +441,9 @@ hyperparameter names, and the values are vectors of hyperparameter
 values to grid search over. You can run hyperparameter optimization in parallel by
 setting the <code>n_jobs</code>
 parameter to however many jobs you would like to run in
-parallel. <code>n_jobs</code> defaults to 1 (no parallelization).</p>
+parallel. By default, <code>n_jobs</code> is dynamically calculated based on
+the resources available on your cluster, such that a modeling job will
+never take up more than 90<!-- % of the cluster resources at once. --></p>
 <p><a href='https://arxiv.org/abs/1603.06560'>Hyperband</a>
 is an efficient approach to hyperparameter optimization, and
 recommended over grid search where possible. CivisML will perform
@@ -442,15 +451,24 @@ hyperband optimization if you pass the string <code>"hyperband"</code> to
 <code>cross_validation_parameters</code>. Hyperband is currently only supported for the following models:
 <code>"gradient_boosting_classifier"</code>, <code>"random_forest_classifier"</code>,
 <code>"extra_trees_classifier"</code>, <code>"multilayer_perceptron_classifier"</code>,
+<code>"stacking_classifier"</code>,
 <code>"gradient_boosting_regressor"</code>, <code>"random_forest_regressor"</code>,
-<code>"extra_trees_regressor"</code>, and <code>"multilayer_perceptron_regressor"</code>.</p>
+<code>"extra_trees_regressor"</code>, <code>"multilayer_perceptron_regressor"</code>,
+and <code>"stacking_regressor"</code>.</p>
+<p>Hyperband cannot be used to tune GLMs. For this reason, preset GLMs do
+not have a hyperband option. Similarly, when
+<code>cross_validation_parameters='hyperband'</code> and the model is
+<code>stacking_classifier</code> or <code>stacking_regressor</code>, only the GBT and
+random forest steps of the stacker are tuned using hyperband. For the specific
+distributions used in the predefined hyperband models, see
+<a href='https://civis-python.readthedocs.io/en/stable/ml.html#hyperparameter-tuning'>the detailed table in the Python client documentation</a>.</p>
     
     <h2 class="hasAnchor" id="data-sources"><a class="anchor" href="#data-sources"></a>Data Sources</h2>
 
     
     <p>For building models with <code>civis_ml</code>, the training data can reside in
-four different places, a file in the Civis Platform, a CSV file on the local
-disk, a <code>data.frame</code> resident in local the R environment, and finally,
+four different places, a file in the Civis Platform, a CSV or feather-format file
+on the local disk, a <code>data.frame</code> resident in local the R environment, and finally,
 a table in the Civis Platform. Use the following helpers to specify the
 data source when calling <code>civis_ml</code>:</p><dl class='dl-horizontal'>
   <dt><code>data.frame</code></dt><dd><p><code>civis_ml(x = df, ...)</code></p></dd>

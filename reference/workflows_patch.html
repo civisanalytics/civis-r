@@ -108,8 +108,8 @@
     <p>Update some attributes of this Workflow</p>
     
 
-    <pre class="usage"><span class='fu'>workflows_patch</span>(<span class='no'>id</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>definition</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>schedule</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>time_zone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>workflows_patch</span>(<span class='no'>id</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>definition</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>schedule</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>time_zone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -121,6 +121,10 @@
     <tr>
       <th>name</th>
       <td><p>string optional. The name of this workflow.</p></td>
+    </tr>
+    <tr>
+      <th>description</th>
+      <td><p>string optional. A description of the workflow.</p></td>
     </tr>
     <tr>
       <th>definition</th>
@@ -159,6 +163,7 @@
     <p>A list containing the following elements:</p>
 <dt>id</dt><dd><p>integer, The ID for this workflow.</p></dd>
 <dt>name</dt><dd><p>string, The name of this workflow.</p></dd>
+<dt>description</dt><dd><p>string, A description of the workflow.</p></dd>
 <dt>definition</dt><dd><p>string, The definition of the workflow in YAML format. Must not be specified if `fromJobChain` is specified.</p></dd>
 <dt>valid</dt><dd><p>boolean, The validity of the workflow definition.</p></dd>
 <dt>validationErrors</dt><dd><p>string, The errors encountered when validating the workflow definition.</p></dd>

@@ -79,22 +79,22 @@
   <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Machine Learning in R with CivisML</h1>
-                        <h4 class="author">Patrick Miller</h4>
+                        <h4 class="author">Patrick Miller and Liz Sander</h4>
             
-            <h4 class="date">2017-08-30</h4>
+            <h4 class="date">2018-1-18</h4>
           </div>
 
     
     
 <div class="contents">
 <p>There are so many models to build! When this becomes challenging on a local machine, offloading model building to the cloud can save a lot of time and effort.</p>
-<p><a href="https://www.civisanalytics.com/blog/civisml-scikit-learn-at-scale/">CivisML</a> is a machine learning service on Civis Platform that makes this as painless as possible. You can fit many different models, do extensive metaparameter tuning, and score data sets with millions of observations stored in remote databases. Once these models are built, they live in Civis Platform permanently and can be included into production pipelines. Results can be easily incorporated into reports and dashboards.</p>
+<p><a href="https://www.civisanalytics.com/blog/civisml-scikit-learn-at-scale/">CivisML</a> is a machine learning service on Civis Platform that makes this as painless as possible. You can fit many different models, do extensive hyperparameter tuning, and score data sets with millions of observations stored in remote databases. Once these models are built, they live in Civis Platform permanently and can be included into production pipelines. Results can be easily incorporated into reports and dashboards.</p>
 <p>CivisML is built in Python using <a href="http://scikit-learn.org/stable/">scikit-learn</a>, and leverages AWS behind the scenes for efficient distributed computing. However, most of its features can be used through R without knowledge of Python or AWS with the <code>civis_ml</code> function in <code>civis</code>.</p>
-<p>While <code>civis_ml</code> is a complex function with many arguments, basic machine learning modeling and scoring can be easily carried out. We illustrate several features of <code>civis_ml</code> with data from a fictious company called Brandable, who is looking to predict which customers are likely to upgrade from the free to the premium service.</p>
+<p>While <code>civis_ml</code> is a complex function with many arguments, basic machine learning modeling and scoring can be easily carried out. We illustrate several features of <code>civis_ml</code> with data from a fictitious company called Brandable, who is looking to predict which customers are likely to upgrade from the free to the premium service.</p>
 <div id="data-sources" class="section level2">
 <h2 class="hasAnchor">
 <a href="#data-sources" class="anchor"></a>Data sources</h2>
-<p>The first step of modeling with <code>civis_ml</code> is to specify the data source, which is the first argument. <code>civis_ml</code> works with local data frames, a CSV on local disk, tables in Redshift, and files on S3 (the files endpoint):</p>
+<p>The first step of modeling with <code>civis_ml</code> is to specify the data source, which is the first argument. <code>civis_ml</code> works with local data frames, a CSV on local disk, <a href="https://github.com/wesm/feather">feather-format</a> files, tables in Redshift, and files on S3 (the files endpoint):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(civis)
 
 <span class="kw">civis_ml</span>(df, ...)
@@ -109,7 +109,7 @@ tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_t
 <div id="modeling" class="section level2">
 <h2 class="hasAnchor">
 <a href="#modeling" class="anchor"></a>Modeling</h2>
-<p>After the data source is specified, we next choose the model type. There are 9 named CivisML models that can be called from <code>civis_ml</code>, 4 for classification and 5 for regression. The name of the model corresponds to the name of the estimator in scikit-learn. It can be given in the <code>model_type</code> argument of <code>civis_ml</code>, or called directly using a <code>civis_ml_*</code> function such as <code>civis_ml_sparse_logistic</code>.</p>
+<p>After the data source is specified, we next choose the model type. There are 13 named CivisML models that can be called from <code>civis_ml</code>, 6 for classification and 7 for regression. The name of the model corresponds to the name of the estimator in scikit-learn. It can be given in the <code>model_type</code> argument of <code>civis_ml</code>, or called directly using a <code>civis_ml_*</code> function such as <code>civis_ml_sparse_logistic</code>.</p>
 <table style="width:89%;" class="table">
 <colgroup>
 <col width="9%">
@@ -155,6 +155,19 @@ tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_t
 <td></td>
 </tr>
 <tr class="odd">
+<td><code>multilayer_perceptron_classifier</code></td>
+<td align="left"></td>
+<td>classification</td>
+<td><a href="https://github.com/civisanalytics/muffnn">MLPClassifier</a></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>stacking_classifier</code></td>
+<td align="left"></td>
+<td>classification</td>
+<td><a href="https://github.com/civisanalytics/civisml-extensions">StackedClassifier</a></td>
+</tr>
+<tr class="odd">
 <td><code>sparse_linear_regressor</code></td>
 <td align="left"><code>civis_ml_sparse_linear_regressor</code></td>
 <td>regression</td>
@@ -187,6 +200,20 @@ tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_t
 <td align="left"><code>civis_ml_extra_trees_regressor</code></td>
 <td>regression</td>
 <td><a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html">ExtraTreesRegressor</a></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>multilayer_perceptron_regressor</code></td>
+<td align="left"></td>
+<td>regression</td>
+<td><a href="https://github.com/civisanalytics/muffnn">MLPRegressor</a></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>stacking_regressor</code></td>
+<td align="left"></td>
+<td>regression</td>
+<td><a href="https://github.com/civisanalytics/civisml-extensions">StackedRegressor</a></td>
 </tr>
 </tbody>
 </table>
@@ -202,25 +229,93 @@ m   &lt;-<span class="st"> </span><span class="kw">civis_ml</span>(tab, <span cl
 m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml_random_forest_classifier.html">civis_ml_random_forest_classifier</a></span>(tab,
       <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
       <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)</code></pre></div>
-<div id="metaparameter-tuning" class="section level3">
+<p>Note that if the dependent variables have null values, those rows will be removed before modeling.</p>
+<div id="hyperparameter-tuning" class="section level3">
 <h3 class="hasAnchor">
-<a href="#metaparameter-tuning" class="anchor"></a>Metaparameter Tuning</h3>
-<p>CivisML takes care of metaparameter tuning by evaluating the performance of the classifier over the grid created from all combinations of candidate values. Any metaparameter provided by scikit-learn can be included in this search. Evaluation is carried out in parallel using 4-fold CV.</p>
-<p>For the <code>random_forest_classifier</code> in the Brandable data, we specify a search grid over <code>max_depth</code> and <code>n_estimators</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab       &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="st">"sample_project.premium_training_set"</span>)
-cv_params &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="st">"max_depth"</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>), 
-                  <span class="st">"n_estimators"</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>))
-  
-m &lt;-<span class="st"> </span><span class="kw">civis_ml</span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
+<a href="#hyperparameter-tuning" class="anchor"></a>Hyperparameter Tuning</h3>
+<p>You can tune hyperparameters using one of two methods: grid search or hyperband. CivisML will perform grid search if you pass a named list of hyperparameters and candidate values to <code>cross_validation_parameters</code>. By default, hyperparameter tuning will run in parallel, using as many jobs as possible without overloading your computing cluster. If you wish to have more control over the number of jobs running at once, you can set it using the <code>n_jobs</code> parameter.</p>
+<p><a href="https://arxiv.org/abs/1603.06560">Hyperband</a> is an efficient approach to hyperparameter optimization, and recommended over grid search where possible. CivisML will perform hyperband optimization if you pass the string <code>"hyperband"</code> to <code>cross_validation_parameters</code>. Hyperband cannot be used to tune GLMs. For this reason, preset GLMs do not have a hyperband option. Hyperband is supported for random forests, gradient boosted trees, extra trees, multilayer perceptrons, and the random forest and gradient boosted tree steps of stacking. It is highly recommended that multilayer perceptron models only be used with hyperband.</p>
+<p>For the <code>random_forest_classifier</code> in the Brandable data, we try both <code>"hyperband"</code> and grid search for hyperparameter optimization.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="st">"sample_project.premium_training_set"</span>)
+
+<span class="co"># hyperband</span>
+m_hyper &lt;-<span class="st"> </span><span class="kw">civis_ml</span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
               <span class="dt">model_type =</span> <span class="st">"random_forest_classifier"</span>, 
               <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
               <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>, 
-              <span class="dt">cross_validation_parameters =</span> cv_params)
+              <span class="dt">cross_validation_parameters =</span> <span class="st">'hyperband'</span>)
 
-m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml_random_forest_classifier.html">civis_ml_random_forest_classifier</a></span>(tab,
-      <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
-      <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>, 
-      <span class="dt">cross_validation_parameters =</span> cv_params)</code></pre></div>
+<span class="co"># grid search</span>
+cv_params &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="st">"max_depth"</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>), 
+                  <span class="st">"n_estimators"</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>))
+  
+m_grid &lt;-<span class="st"> </span><span class="kw">civis_ml</span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
+              <span class="dt">model_type =</span> <span class="st">"random_forest_classifier"</span>, 
+              <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
+              <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>, 
+              <span class="dt">cross_validation_parameters =</span> cv_params)</code></pre></div>
+<p>CivisML runs pre-defined models with hyperband using the following distributions:</p>
+<table class="table">
+<colgroup>
+<col width="26%">
+<col width="14%">
+<col width="58%">
+</colgroup>
+<thead><tr class="header">
+<th>Models</th>
+<th>Cost Parameter</th>
+<th>Hyperband Distributions</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>gradient_boosting_classifier <br> gradient_boosting_regressor <br> GBT step in stacking_classifier <br> GBT step in stacking_regressor</td>
+<td>
+<code>n_estimators</code> <br><code>min = 100,</code> <br><code>max = 1000</code>
+</td>
+<td>
+<code>max_depth: randint(low=1, high=5)</code> <br><code>max_features: [None, 'sqrt', 'log2', 0.5, 0.3, 0.1, 0.05, 0.01]</code> <br><code>learning_rate: truncexpon(b=5, loc=.0003, scale=1./167.)</code>
+</td>
+</tr>
+<tr class="even">
+<td>———————————-</td>
+<td>——————</td>
+<td>—————————————————————————</td>
+</tr>
+<tr class="odd">
+<td>random_forest_classifier <br> random_forest_regressor <br> extra_trees_classifier <br> extra_trees_regressor <br> RF step in stacking_classifier <br> RF step in stacking_regressor</td>
+<td>
+<code>n_estimators</code> <br><code>min = 100,</code> <br><code>max = 1000</code>
+</td>
+<td>
+<code>criterion: ['gini', 'entropy']</code> <br><code>max_features: truncexpon(b=10., loc=.01, scale=1./10.11)</code> <br><code>max_depth: [1, 2, 3, 4, 6, 10, None]</code>
+</td>
+</tr>
+<tr class="even">
+<td>———————————-</td>
+<td>——————</td>
+<td>—————————————————————————</td>
+</tr>
+<tr class="odd">
+<td>multilayer_perceptron_classifier <br> multilayer_perceptron_regressor</td>
+<td>
+<code>n_epochs</code> <br><code>min = 5,</code> <br><code>max = 50</code>
+</td>
+<td>
+<code>keep_prob: uniform()</code> <br> `<code>hidden_units: [(), (16,), (32,), (64,), (64, 64), (64, 64, 64),</code> <br><code>(128,), (128, 128), (128, 128, 128), (256,),</code> <br><code>(256, 256), (256, 256, 256), (512, 256, 128, 64),</code> <br><code>(1024, 512, 256, 128)]</code> <br><code>learning_rate: [1e-2, 2e-2, 5e-2, 8e-2, 1e-3, 2e-3, 5e-3, 8e-3, 1e-4]</code>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The truncated exponential distribution for the gradient boosting classifier and regressor was chosen to skew the distribution toward small values, ranging between .0003 and .03, with a mean close to .006. Similarly, the truncated exponential distribution for the random forest and extra trees models skews toward small values, ranging between .01 and 1, and with a mean close to .1.</p>
+</div>
+<div id="stacking" class="section level3">
+<h3 class="hasAnchor">
+<a href="#stacking" class="anchor"></a>Stacking</h3>
+<p>The <code>"stacking_classifier"</code> model stacks together the <code>"sparse_logistic"</code>, <code>"gradient_boosting_classifier"</code>, and <code>"random_forest_classifier"</code> models using defaults documented in <code>?civis_ml</code>. Each column is first <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">standardized</a>, and then the model predictions are combined using <a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html">LogisticRegressionCV</a> with <code>penalty='l2'</code> and <code>tol=1e-08</code>. The <code>"stacking_regressor"</code> works similarly, stacking together the <code>"sparse_linear_regressor"</code>, <code>"gradient_boosting_regressor"</code>, and <code>"random_forest_regressor"</code> models, and combining them using <a href="https://github.com/civisanalytics/civisml-extensions">NonNegativeLinearRegression</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m_stack &lt;-<span class="st"> </span><span class="kw">civis_ml</span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
+              <span class="dt">model_type =</span> <span class="st">"stacking_classifier"</span>, 
+              <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
+              <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)</code></pre></div>
 </div>
 </div>
 <div id="results" class="section level2">
@@ -261,11 +356,11 @@ m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml_
 <a href="#diagnostics" class="anchor"></a>Diagnostics</h2>
 <p>For classification problems, <code>plot</code> produces a a decile plot using <code>ggplot2</code>. For the premium upgrade model, the decile plot shows that the top-scoring 10% of individuals contain 2.20 times as many targets (people who upgraded) as a randomly selected list of the same size.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(m)</code></pre></div>
-<p><img src="civis_ml_files/figure-html/unnamed-chunk-10-1.png" width="480"></p>
+<p><img src="civis_ml_files/figure-html/unnamed-chunk-11-1.png" width="480"></p>
 <p>For regression problems, <code>plot</code> produces a binned scatter-plot of <span class="math inline">\(y\)</span> against <span class="math inline">\(\hat{y}\)</span>.</p>
 <p><code>hist</code> shows the histogram of out of sample (out of fold scores), also using <code>ggplot2</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(m)</code></pre></div>
-<p><img src="civis_ml_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
+<p><img src="civis_ml_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
 </div>
 <div id="prediction-and-scoring" class="section level2">
 <h2 class="hasAnchor">
@@ -274,7 +369,7 @@ m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml_
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred_tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="dt">table_name =</span> <span class="st">"sample_project.brandable_all_users"</span>)
 pred_job &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> pred_tab, 
                     <span class="dt">output_table =</span> <span class="st">"sample_project.brandable_user_scores"</span>)</code></pre></div>
-<p>For very large scoring jobs, the scoring can be distributed using <code>n_jobs</code>:</p>
+<p>Like training and validation, scoring is distributed by default, using up to 90 percent of your computing cluster resources. If you would like to have more control over the number of jobs that are run at once, you can set a maximum using <code>n_jobs</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred_job &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> pred_tab, 
                     <span class="dt">output_table =</span> <span class="st">"sample_project.brandable_user_scores"</span>, 
                     <span class="dt">n_jobs =</span> <span class="dv">25</span>)</code></pre></div>
@@ -370,7 +465,7 @@ m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.
 <h3 class="hasAnchor">
 <a href="#more-information" class="anchor"></a>More information</h3>
 <p>Custom estimators can be written in Python and included in CivisML if they follow the scikit-learn API. For example, the <code>sparse_logistic</code>, <code>sparse_linear_regressor</code>, and <code>sparse_ridge_regressor</code> models all use the public Civis Analytics <a href="https://github.com/civisanalytics/python-glmnet">glmnet</a> wrapper in Python.</p>
-<p>Browse <a href="https://civis-python.readthedocs.io/en/v1.6.1/ml.html">the CivisML documentation</a> for more details!</p>
+<p>Browse <a href="https://civis-python.readthedocs.io/en/stable/ml.html">the CivisML documentation</a> for more details!</p>
 </div>
 </div>
 </div>

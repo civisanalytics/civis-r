@@ -109,9 +109,10 @@
     
 
     <pre class="usage"><span class='fu'>imports_post_files</span>(<span class='no'>schema</span>, <span class='no'>name</span>, <span class='no'>remote_host_id</span>, <span class='no'>credential_id</span>,
-  <span class='kw'>max_errors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>existing_table_rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>distkey</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sortkey1</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sortkey2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>column_delimiter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>first_row_is_header</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>multipart</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>max_errors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>existing_table_rows</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>diststyle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>distkey</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sortkey1</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sortkey2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>column_delimiter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>first_row_is_header</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>multipart</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -139,6 +140,10 @@
     <tr>
       <th>existing_table_rows</th>
       <td><p>string optional. The behaviour if a table with the requested name already exists.  One of "fail", "truncate", "append", or "drop".Defaults to "fail".</p></td>
+    </tr>
+    <tr>
+      <th>diststyle</th>
+      <td><p>string optional. The diststyle to use for the table. One of "even", "all", or "key".</p></td>
     </tr>
     <tr>
       <th>distkey</th>

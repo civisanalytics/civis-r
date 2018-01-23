@@ -109,8 +109,8 @@
     
 
     <pre class="usage"><span class='fu'>queries_list</span>(<span class='kw'>database_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>author_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>created_before</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>page_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>order_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>exclude_results</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>page_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -126,6 +126,10 @@
     <tr>
       <th>created_before</th>
       <td><p>string optional. An upper bound for the creation date of the query.</p></td>
+    </tr>
+    <tr>
+      <th>exclude_results</th>
+      <td><p>boolean optional. If true, does not return cached query results.</p></td>
     </tr>
     <tr>
       <th>hidden</th>

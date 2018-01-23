@@ -127,8 +127,33 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
  <span class='fu'>plan</span>(<span class='no'>civis_platform</span>)
- <span class='no'>fut</span> <span class='kw'>&lt;-</span> <span class='fu'>future</span>({<span class='fl'>2</span> + <span class='fl'>2</span>}, <span class='kw'>required_resources</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>cpu</span> <span class='kw'>=</span> <span class='fl'>1024</span>, <span class='kw'>memory</span> <span class='kw'>=</span> <span class='fl'>2048</span>))
+
+ <span class='co'># Specify required resources, image, and tag.</span>
+ <span class='no'>fut</span> <span class='kw'>&lt;-</span> <span class='fu'>future</span>({<span class='fl'>2</span> + <span class='fl'>2</span>},
+   <span class='kw'>required_resources</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>cpu</span> <span class='kw'>=</span> <span class='fl'>1024</span>, <span class='kw'>memory</span> <span class='kw'>=</span> <span class='fl'>2048</span>),
+   <span class='kw'>docker_image_name</span> <span class='kw'>=</span> <span class='st'>"civisanalytics/datascience-r"</span>,
+   <span class='kw'>docker_image_tag</span> <span class='kw'>=</span> <span class='st'>"2.2.0"</span>)
+
+ <span class='co'># Evaluate the future later</span>
+ <span class='no'>fut</span> <span class='kw'>&lt;-</span> <span class='fu'>future</span>({<span class='fl'>2</span> + <span class='fl'>2</span>}, <span class='kw'>lazy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+ <span class='fu'>run</span>(<span class='no'>fut</span>)
+
+ <span class='co'># check if a future has resolved</span>
+ <span class='fu'>resolved</span>(<span class='no'>fut</span>)
+
+ <span class='co'># block until the future resolves, and return the value or throw error</span>
  <span class='fu'>value</span>(<span class='no'>fut</span>)
+
+ <span class='co'># cancel the job</span>
+ <span class='fu'><a href='cancel.html'>cancel</a></span>(<span class='no'>fut</span>)
+
+ <span class='co'># grab the run logs</span>
+ <span class='fu'><a href='fetch_logs.html'>fetch_logs</a></span>(<span class='no'>fut</span>)
+
+ <span class='co'># handle errors</span>
+ <span class='no'>fut</span> <span class='kw'>&lt;-</span> <span class='fu'>future</span>({<span class='fu'>stop</span>(<span class='st'>"Error!"</span>)})
+ <span class='no'>e</span> <span class='kw'>&lt;-</span> <span class='fu'>tryCatch</span>(<span class='fu'>value</span>(<span class='no'>fut</span>), <span class='kw'>error</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>e</span>) <span class='no'>e</span>)
+ <span class='fu'><a href='get_error.html'>get_error</a></span>(<span class='no'>e</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
