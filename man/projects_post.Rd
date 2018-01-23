@@ -90,6 +90,14 @@ A list containing the following elements:
 \item name string, 
 \item currentDeploymentId integer, 
 }}
+\item{services}{array, An array containing the following fields: 
+\itemize{
+\item id integer, The object ID.
+\item createdAt string, 
+\item updatedAt string, 
+\item name string, 
+\item currentDeploymentId integer, 
+}}
 \item{workflows}{array, An array containing the following fields: 
 \itemize{
 \item id integer, The object ID.

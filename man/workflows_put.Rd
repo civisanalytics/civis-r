@@ -4,13 +4,15 @@
 \alias{workflows_put}
 \title{Replace all attributes of this Workflow}
 \usage{
-workflows_put(id, name, definition = NULL, schedule = NULL,
-  time_zone = NULL, notifications = NULL)
+workflows_put(id, name, description = NULL, definition = NULL,
+  schedule = NULL, time_zone = NULL, notifications = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID for this workflow.}
 
 \item{name}{string required. The name of this workflow.}
+
+\item{description}{string optional. A description of the workflow.}
 
 \item{definition}{string optional. The definition of the workflow in YAML format. Must not be specified if `fromJobChain` is specified.}
 
@@ -40,6 +42,7 @@ workflows_put(id, name, definition = NULL, schedule = NULL,
 A list containing the following elements:
 \item{id}{integer, The ID for this workflow.}
 \item{name}{string, The name of this workflow.}
+\item{description}{string, A description of the workflow.}
 \item{definition}{string, The definition of the workflow in YAML format. Must not be specified if `fromJobChain` is specified.}
 \item{valid}{boolean, The validity of the workflow definition.}
 \item{validationErrors}{string, The errors encountered when validating the workflow definition.}

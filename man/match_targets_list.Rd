@@ -8,9 +8,9 @@ match_targets_list()
 }
 \value{
 An array containing the following fields:
-\item{id}{integer, }
-\item{name}{string, }
-\item{table}{string, }
+\item{id}{integer, The ID of the match target}
+\item{name}{string, The name of the match target}
+\item{table}{string, The name of the DynamoDB table}
 }
 \description{
 List match targets

@@ -2771,6 +2771,357 @@ enhancements_put_cass_ncoa_archive <- function(id, status) {
  }
 
 
+#' List users and groups permissioned on this object
+#' @param id integer required. The ID of the object.
+#' 
+#' @return  An array containing the following fields:
+#' \item{readers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+enhancements_list_person_matching_shares <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/person-matching/{id}/shares"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions users have on this object
+#' @param id integer required. ID of the resource to be shared
+#' @param user_ids array required. An array of one or more user IDs
+#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+enhancements_put_person_matching_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/person-matching/{id}/shares/users"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a user has on this object
+#' @param id integer required. ID of the resource to be revoked
+#' @param user_id integer required. ID of the user
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_delete_person_matching_shares_users <- function(id, user_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/person-matching/{id}/shares/users/{user_id}"
+  path_params  <- list(id = id, user_id = user_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions groups has on this object
+#' @param id integer required. ID of the resource to be shared
+#' @param group_ids array required. An array of one or more group IDs
+#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+enhancements_put_person_matching_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/person-matching/{id}/shares/groups"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a group has on this object
+#' @param id integer required. ID of the resource to be revoked
+#' @param group_id integer required. ID of the group
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_delete_person_matching_shares_groups <- function(id, group_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/person-matching/{id}/shares/groups/{group_id}"
+  path_params  <- list(id = id, group_id = group_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the projects a container docker belongs to
+#' @param id integer required. The ID of the resource.
+#' @param hidden boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID for this project.}
+#' \item{author}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{name}{string, The name of this project.}
+#' \item{description}{string, A description of the project}
+#' \item{users}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{autoShare}{boolean, }
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{archived}{string, The archival status of the requested object(s).}
+#' @export
+enhancements_list_person_matching_projects <- function(id, hidden = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/person-matching/{id}/projects"
+  path_params  <- list(id = id)
+  query_params <- list(hidden = hidden)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Add a container docker to a project
+#' @param id integer required. ID of the resource
+#' @param project_id integer required. The ID of the project
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_put_person_matching_projects <- function(id, project_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/person-matching/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Remove a container docker from a project
+#' @param id integer required. ID of the resource
+#' @param project_id integer required. The ID of the project
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_delete_person_matching_projects <- function(id, project_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/person-matching/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update the archive status of this object
+#' @param id integer required. The ID of the object.
+#' @param status boolean required. The desired archived status of the object.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{object, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the object is scheduled
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
+#' \item scheduledHours array, Hours of the day it is scheduled on
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{object, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{configuration}{object, A list containing the following elements: 
+#' \itemize{
+#' \item task string, The type of person matching task. Options are: "table_to_table", "dedupe_table", or "table_to_civis_data".
+#' \item source string, The input source of your data. Options are: "redshift" or "s3".
+#' \item inputDatabase string, The Redshift database name for input data.
+#' \item inputSchema string, The schema name for the input data.
+#' \item inputTable string, The table name for the input data.
+#' \item inputFileId string, The ID of the input S3 file.
+#' \item inputFieldMapping string, The column mapping for the input in JSON or YAML.
+#' \item inputFileHeaders string, Provide your headers in a list if the first row of your input does not have the headers, and make them JSON-decodable. For example: ["col1","col2","col3"].
+#' \item targetDatabase string, The Redshift database for target data.
+#' \item targetSchema string, The schema for target data.
+#' \item targetTable string, The table for target data.
+#' \item targetFieldMapping string, The column mapping for the target in JSON or YAML.
+#' \item targetFileId string, The ID of the target S3 file.
+#' \item targetDynamoTableName string, The target DynamoDB table name.
+#' \item targetDynamoAwsRegion string, The target DynamoDB AWS Region.
+#' \item maxMatches integer, The maximum number of matches to return.
+#' \item threshold number, The score threshold (between 0 and 1).
+#' \item useGoBlocker boolean, If True, uses blocker for old Go targets. If False, uses blocker for new Python targets.
+#' }}
+#' @export
+enhancements_put_person_matching_archive <- function(id, status) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/person-matching/{id}/archive"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(status = status)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List 
 #' @param type string optional. If specified, return exports of these types. It accepts a comma-separated list, possible values are 'database' and 'gdoc'.
 #' @param author string optional. If specified, return exports from this author. It accepts a comma-separated list of author ids.
@@ -4479,7 +4830,7 @@ imports_post_cancel <- function(id) {
 #' \item sortkey1 string, 
 #' \item sortkey2 string, 
 #' \item columnDelimiter string, 
-#' \item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the current name of the column being overridden.
+#' \item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the index of the column being overridden.
 #' \item identityColumn string, 
 #' \item rowChunkSize integer, 
 #' \item wipeDestinationTable boolean, 
@@ -4528,7 +4879,7 @@ imports_post_cancel <- function(id) {
 #' \item sortkey1 string, 
 #' \item sortkey2 string, 
 #' \item columnDelimiter string, 
-#' \item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the current name of the column being overridden.
+#' \item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the index of the column being overridden.
 #' \item identityColumn string, 
 #' \item rowChunkSize integer, 
 #' \item wipeDestinationTable boolean, 
@@ -4594,7 +4945,7 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' \item sortkey1 string, 
 #' \item sortkey2 string, 
 #' \item columnDelimiter string, 
-#' \item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the current name of the column being overridden.
+#' \item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the index of the column being overridden.
 #' \item identityColumn string, 
 #' \item rowChunkSize integer, 
 #' \item wipeDestinationTable boolean, 
@@ -4643,7 +4994,7 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' \item sortkey1 string, 
 #' \item sortkey2 string, 
 #' \item columnDelimiter string, 
-#' \item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the current name of the column being overridden.
+#' \item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the index of the column being overridden.
 #' \item identityColumn string, 
 #' \item rowChunkSize integer, 
 #' \item wipeDestinationTable boolean, 
@@ -4737,7 +5088,7 @@ imports_delete_syncs <- function(id, sync_id) {
 #' \item sortkey1 string, 
 #' \item sortkey2 string, 
 #' \item columnDelimiter string, 
-#' \item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the current name of the column being overridden.
+#' \item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the index of the column being overridden.
 #' \item identityColumn string, 
 #' \item rowChunkSize integer, 
 #' \item wipeDestinationTable boolean, 
@@ -5046,6 +5397,56 @@ jobs_get_runs <- function(id, run_id) {
  }
 
 
+#' List the workflows a job belongs to
+#' @param id integer required. 
+#' @param archived string optional. The archival status of the requested object(s).
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID for this workflow.}
+#' \item{name}{string, The name of this workflow.}
+#' \item{description}{string, A description of the workflow.}
+#' \item{valid}{boolean, The validity of the workflow definition.}
+#' \item{fileId}{string, The file id for the s3 file containing the workflow configuration.}
+#' \item{user}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
+#' \item{schedule}{object, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the object is scheduled
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
+#' \item scheduledHours array, Hours of the day it is scheduled on
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+#' }}
+#' \item{timeZone}{string, The time zone of this workflow.}
+#' \item{nextExecutionAt}{string, The time of the next scheduled execution.}
+#' \item{archived}{string, The archival status of the requested object(s).}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' @export
+jobs_list_workflows <- function(id, archived = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/jobs/{id}/workflows"
+  path_params  <- list(id = id)
+  query_params <- list(archived = archived)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List users and groups permissioned on this object
 #' @param id integer required. The ID of the object.
 #' 
@@ -5312,9 +5713,9 @@ jobs_delete_projects <- function(id, project_id) {
 #' List match targets
 #' 
 #' @return  An array containing the following fields:
-#' \item{id}{integer, }
-#' \item{name}{string, }
-#' \item{table}{string, }
+#' \item{id}{integer, The ID of the match target}
+#' \item{name}{string, The name of the match target}
+#' \item{table}{string, The name of the DynamoDB table}
 #' @export
 match_targets_list <- function() {
 
@@ -5327,6 +5728,64 @@ match_targets_list <- function() {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a new match target
+#' @param name string required. The name of the match target
+#' @param table string required. The name of the DynamoDB table
+#' @param id integer optional. The ID of the match target
+#' @param region string optional. The AWS region of the DynamoDB table. By default, us-east-1.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the match target}
+#' \item{name}{string, The name of the match target}
+#' \item{table}{string, The name of the DynamoDB table}
+#' \item{region}{string, The AWS region of the DynamoDB table. By default, us-east-1.}
+#' @export
+match_targets_post <- function(name, table, id = NULL, region = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/match_targets/"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(name = name, table = table, id = id, region = region)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update a match target
+#' @param id integer required. The ID of the match target
+#' @param name string optional. The name of the match target
+#' @param table string optional. The name of the DynamoDB table
+#' @param region string optional. The AWS region of the DynamoDB table. By default, us-east-1.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the match target}
+#' \item{name}{string, The name of the match target}
+#' \item{table}{string, The name of the DynamoDB table}
+#' \item{region}{string, The AWS region of the DynamoDB table. By default, us-east-1.}
+#' @export
+match_targets_patch <- function(id, name = NULL, table = NULL, region = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/match_targets/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, table = table, region = region)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("patch", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7539,12 +7998,9 @@ notebooks_list <- function(hidden = NULL, archived = NULL, author = NULL, status
 #' @param credentials array optional. A list of credential IDs to pass to the notebook.
 #' @param environment_variables object optional. Environment variables to be passed into the Notebook.
 #' @param idle_timeout integer optional. How long the notebook will stay alive without any kernel activity.
+#' @param git_repo_url string optional. The url of the git repository
 #' @param git_ref string optional. The git reference if git repo is specified
 #' @param git_path string optional. The path to the .ipynb file in the git repo that will be started up on notebook launch
-#' @param git_repo object optional. A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of the git repository.
-#' }
 #' @param hidden boolean optional. The hidden status of the object.
 #' 
 #' @return  A list containing the following elements:
@@ -7592,23 +8048,20 @@ notebooks_list <- function(hidden = NULL, archived = NULL, author = NULL, status
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
 #' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
+#' \item{gitRepoId}{integer, The ID of the git repository.}
+#' \item{gitRepoUrl}{string, The url of the git repository}
 #' \item{gitRef}{string, The git reference if git repo is specified}
 #' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
-#' \item{gitRepo}{object, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of the git repository.
-#' \item repoUrl string, The url of the git repository
-#' }}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' @export
-notebooks_post <- function(name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, memory = NULL, cpu = NULL, credentials = NULL, environment_variables = NULL, idle_timeout = NULL, git_ref = NULL, git_path = NULL, git_repo = NULL, hidden = NULL) {
+notebooks_post <- function(name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, memory = NULL, cpu = NULL, credentials = NULL, environment_variables = NULL, idle_timeout = NULL, git_repo_url = NULL, git_ref = NULL, git_path = NULL, hidden = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/notebooks/"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, memory = memory, cpu = cpu, credentials = credentials, environmentVariables = environment_variables, idleTimeout = idle_timeout, gitRef = git_ref, gitPath = git_path, gitRepo = git_repo, hidden = hidden)
+  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, memory = memory, cpu = cpu, credentials = credentials, environmentVariables = environment_variables, idleTimeout = idle_timeout, gitRepoUrl = git_repo_url, gitRef = git_ref, gitPath = git_path, hidden = hidden)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -7667,13 +8120,10 @@ notebooks_post <- function(name = NULL, language = NULL, description = NULL, fil
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
 #' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
+#' \item{gitRepoId}{integer, The ID of the git repository.}
+#' \item{gitRepoUrl}{string, The url of the git repository}
 #' \item{gitRef}{string, The git reference if git repo is specified}
 #' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
-#' \item{gitRepo}{object, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of the git repository.
-#' \item repoUrl string, The url of the git repository
-#' }}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' @export
@@ -7709,9 +8159,9 @@ notebooks_get <- function(id) {
 #' @param credentials array optional. A list of credential IDs to pass to the notebook.
 #' @param environment_variables object optional. Environment variables to be passed into the Notebook.
 #' @param idle_timeout integer optional. How long the notebook will stay alive without any kernel activity.
+#' @param git_repo_url string optional. The url of the git repository
 #' @param git_ref string optional. The git reference if git repo is specified
 #' @param git_path string optional. The path to the .ipynb file in the git repo that will be started up on notebook launch
-#' @param git_repo object optional. 
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this notebook.}
@@ -7758,23 +8208,20 @@ notebooks_get <- function(id) {
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
 #' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
+#' \item{gitRepoId}{integer, The ID of the git repository.}
+#' \item{gitRepoUrl}{string, The url of the git repository}
 #' \item{gitRef}{string, The git reference if git repo is specified}
 #' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
-#' \item{gitRepo}{object, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of the git repository.
-#' \item repoUrl string, The url of the git repository
-#' }}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' @export
-notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, memory = NULL, cpu = NULL, credentials = NULL, environment_variables = NULL, idle_timeout = NULL, git_ref = NULL, git_path = NULL, git_repo = NULL) {
+notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, memory = NULL, cpu = NULL, credentials = NULL, environment_variables = NULL, idle_timeout = NULL, git_repo_url = NULL, git_ref = NULL, git_path = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/notebooks/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, memory = memory, cpu = cpu, credentials = credentials, environmentVariables = environment_variables, idleTimeout = idle_timeout, gitRef = git_ref, gitPath = git_path, gitRepo = git_repo)
+  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, memory = memory, cpu = cpu, credentials = credentials, environmentVariables = environment_variables, idleTimeout = idle_timeout, gitRepoUrl = git_repo_url, gitRef = git_ref, gitPath = git_path)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -7800,9 +8247,9 @@ notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, 
 #' @param credentials array optional. A list of credential IDs to pass to the notebook.
 #' @param environment_variables object optional. Environment variables to be passed into the Notebook.
 #' @param idle_timeout integer optional. How long the notebook will stay alive without any kernel activity.
+#' @param git_repo_url string optional. The url of the git repository
 #' @param git_ref string optional. The git reference if git repo is specified
 #' @param git_path string optional. The path to the .ipynb file in the git repo that will be started up on notebook launch
-#' @param git_repo object optional. 
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this notebook.}
@@ -7849,23 +8296,20 @@ notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, 
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
 #' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
+#' \item{gitRepoId}{integer, The ID of the git repository.}
+#' \item{gitRepoUrl}{string, The url of the git repository}
 #' \item{gitRef}{string, The git reference if git repo is specified}
 #' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
-#' \item{gitRepo}{object, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of the git repository.
-#' \item repoUrl string, The url of the git repository
-#' }}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' @export
-notebooks_patch <- function(id, name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, memory = NULL, cpu = NULL, credentials = NULL, environment_variables = NULL, idle_timeout = NULL, git_ref = NULL, git_path = NULL, git_repo = NULL) {
+notebooks_patch <- function(id, name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, memory = NULL, cpu = NULL, credentials = NULL, environment_variables = NULL, idle_timeout = NULL, git_repo_url = NULL, git_ref = NULL, git_path = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/notebooks/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, memory = memory, cpu = cpu, credentials = credentials, environmentVariables = environment_variables, idleTimeout = idle_timeout, gitRef = git_ref, gitPath = git_path, gitRepo = git_repo)
+  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, memory = memory, cpu = cpu, credentials = credentials, environmentVariables = environment_variables, idleTimeout = idle_timeout, gitRepoUrl = git_repo_url, gitRef = git_ref, gitPath = git_path)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -7970,13 +8414,10 @@ notebooks_list_update_links <- function(id) {
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
 #' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
+#' \item{gitRepoId}{integer, The ID of the git repository.}
+#' \item{gitRepoUrl}{string, The url of the git repository}
 #' \item{gitRef}{string, The git reference if git repo is specified}
 #' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
-#' \item{gitRepo}{object, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of the git repository.
-#' \item repoUrl string, The url of the git repository
-#' }}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' @export
@@ -8217,13 +8658,10 @@ notebooks_delete_shares_groups <- function(id, group_id) {
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
 #' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
+#' \item{gitRepoId}{integer, The ID of the git repository.}
+#' \item{gitRepoUrl}{string, The url of the git repository}
 #' \item{gitRef}{string, The git reference if git repo is specified}
 #' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
-#' \item{gitRepo}{object, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of the git repository.
-#' \item repoUrl string, The url of the git repository
-#' }}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' @export
@@ -9056,6 +9494,14 @@ projects_list <- function(author = NULL, permission = NULL, hidden = NULL, archi
 #' \item name string, 
 #' \item currentDeploymentId integer, 
 #' }}
+#' \item{services}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The object ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item currentDeploymentId integer, 
+#' }}
 #' \item{workflows}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The object ID.
@@ -9199,6 +9645,14 @@ projects_post <- function(name, description, note = NULL, hidden = NULL) {
 #' \item state string, 
 #' }}
 #' \item{notebooks}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The object ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item currentDeploymentId integer, 
+#' }}
+#' \item{services}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The object ID.
 #' \item createdAt string, 
@@ -9352,6 +9806,14 @@ projects_get <- function(project_id) {
 #' \item state string, 
 #' }}
 #' \item{notebooks}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The object ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item currentDeploymentId integer, 
+#' }}
+#' \item{services}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The object ID.
 #' \item createdAt string, 
@@ -9703,6 +10165,14 @@ projects_delete_shares_groups <- function(id, group_id) {
 #' \item name string, 
 #' \item currentDeploymentId integer, 
 #' }}
+#' \item{services}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The object ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item currentDeploymentId integer, 
+#' }}
 #' \item{workflows}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The object ID.
@@ -9780,6 +10250,7 @@ projects_put_archive <- function(id, status) {
 #' @param database_id integer optional. The database ID.
 #' @param author_id integer optional. The author of the query.
 #' @param created_before string optional. An upper bound for the creation date of the query.
+#' @param exclude_results boolean optional. If true, does not return cached query results.
 #' @param hidden boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.
 #' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
@@ -9804,12 +10275,12 @@ projects_put_archive <- function(id, status) {
 #' \item{startedAt}{string, The start time of the last run.}
 #' \item{reportId}{integer, The ID of the report associated with this query.}
 #' @export
-queries_list <- function(database_id = NULL, author_id = NULL, created_before = NULL, hidden = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+queries_list <- function(database_id = NULL, author_id = NULL, created_before = NULL, exclude_results = NULL, hidden = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/queries/"
   path_params  <- list()
-  query_params <- list(database_id = database_id, author_id = author_id, created_before = created_before, hidden = hidden, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(database_id = database_id, author_id = author_id, created_before = created_before, exclude_results = exclude_results, hidden = hidden, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -12028,6 +12499,44 @@ results_get_solutions <- function(id) {
  }
 
 
+#' Update some attributes of this solutions report
+#' @param id integer required. The ID of this report.
+#' @param name string optional. The name of the solution report.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this report.}
+#' \item{name}{string, The name of the report.}
+#' \item{user}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{host}{string, The host for the solution}
+#' \item{displayUrl}{string, The URL to display the solution report.}
+#' \item{serviceId}{integer, The id of the backing service}
+#' @export
+results_patch_solutions <- function(id, name = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/results/solutions/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("patch", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Show a single solutions report
 #' @param id integer required. The ID of this report.
 #' 
@@ -12059,6 +12568,44 @@ reports_get_solutions <- function(id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update some attributes of this solutions report
+#' @param id integer required. The ID of this report.
+#' @param name string optional. The name of the solution report.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this report.}
+#' \item{name}{string, The name of the report.}
+#' \item{user}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{host}{string, The host for the solution}
+#' \item{displayUrl}{string, The URL to display the solution report.}
+#' \item{serviceId}{integer, The id of the backing service}
+#' @export
+reports_patch_solutions <- function(id, name = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/solutions/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("patch", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12477,6 +13024,7 @@ scripts_list_history <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param template_script_id integer optional. The ID of the template script, if any.  A script cannot both have a template script and be a template for other scripts.
@@ -12528,6 +13076,7 @@ scripts_list_history <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -12686,6 +13235,7 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param template_script_id integer optional. The ID of the template script, if any.  A script cannot both have a template script and be a template for other scripts.
@@ -12745,6 +13295,7 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -12879,6 +13430,7 @@ scripts_delete <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -13023,6 +13575,7 @@ scripts_post_cancel <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param schedule object optional. A list containing the following elements: 
@@ -13089,6 +13642,7 @@ scripts_post_cancel <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -13211,6 +13765,7 @@ scripts_post_containers <- function(required_resources, docker_command, docker_i
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -13319,6 +13874,7 @@ scripts_get_containers <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param schedule object optional. A list containing the following elements: 
@@ -13384,6 +13940,7 @@ scripts_get_containers <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -13484,6 +14041,7 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param schedule object optional. A list containing the following elements: 
@@ -13557,6 +14115,7 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -13681,6 +14240,7 @@ scripts_delete_containers <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param schedule object optional. A list containing the following elements: 
@@ -13751,6 +14311,7 @@ scripts_delete_containers <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -13874,6 +14435,7 @@ scripts_post_sql <- function(name, sql, remote_host_id, credential_id, parent_id
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -13978,6 +14540,7 @@ scripts_get_sql <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param schedule object optional. A list containing the following elements: 
@@ -14047,6 +14610,7 @@ scripts_get_sql <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -14148,6 +14712,7 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param schedule object optional. A list containing the following elements: 
@@ -14220,6 +14785,7 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -14343,6 +14909,7 @@ scripts_delete_sql <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param schedule object optional. A list containing the following elements: 
@@ -14411,6 +14978,7 @@ scripts_delete_sql <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -14528,6 +15096,7 @@ scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = 
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -14624,6 +15193,7 @@ scripts_get_python3 <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param schedule object optional. A list containing the following elements: 
@@ -14691,6 +15261,7 @@ scripts_get_python3 <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -14786,6 +15357,7 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param schedule object optional. A list containing the following elements: 
@@ -14854,6 +15426,7 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -14971,6 +15544,7 @@ scripts_delete_python3 <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param schedule object optional. A list containing the following elements: 
@@ -15039,6 +15613,7 @@ scripts_delete_python3 <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -15156,6 +15731,7 @@ scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, 
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -15252,6 +15828,7 @@ scripts_get_r <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param schedule object optional. A list containing the following elements: 
@@ -15319,6 +15896,7 @@ scripts_get_r <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -15414,6 +15992,7 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param schedule object optional. A list containing the following elements: 
@@ -15482,6 +16061,7 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -15601,6 +16181,7 @@ scripts_delete_r <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param schedule object optional. A list containing the following elements: 
@@ -15662,6 +16243,7 @@ scripts_delete_r <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -15774,6 +16356,7 @@ scripts_post_javascript <- function(name, source, remote_host_id, credential_id,
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -15867,6 +16450,7 @@ scripts_get_javascript <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param schedule object optional. A list containing the following elements: 
@@ -15927,6 +16511,7 @@ scripts_get_javascript <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -16017,6 +16602,7 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
 #' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param schedule object optional. A list containing the following elements: 
@@ -16080,6 +16666,7 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -16305,10 +16892,15 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
+#' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
 #' \item{uiReportUrl}{integer, The url of the custom HTML.}
+#' \item{uiReportId}{integer, The id of the report with the custom HTML.}
+#' \item{uiReportProvideAPIKey}{boolean, Whether the ui report requests an API Key from the report viewer.}
 #' \item{templateScriptName}{string, The name of the template script.}
 #' \item{templateNote}{string, The template's note.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
@@ -16409,10 +17001,15 @@ scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL,
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
+#' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
 #' \item{uiReportUrl}{integer, The url of the custom HTML.}
+#' \item{uiReportId}{integer, The id of the report with the custom HTML.}
+#' \item{uiReportProvideAPIKey}{boolean, Whether the ui report requests an API Key from the report viewer.}
 #' \item{templateScriptName}{string, The name of the template script.}
 #' \item{templateNote}{string, The template's note.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
@@ -16541,10 +17138,15 @@ scripts_get_custom <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
+#' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
 #' \item{uiReportUrl}{integer, The url of the custom HTML.}
+#' \item{uiReportId}{integer, The id of the report with the custom HTML.}
+#' \item{uiReportProvideAPIKey}{boolean, Whether the ui report requests an API Key from the report viewer.}
 #' \item{templateScriptName}{string, The name of the template script.}
 #' \item{templateNote}{string, The template's note.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
@@ -16673,10 +17275,15 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
+#' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
 #' \item{uiReportUrl}{integer, The url of the custom HTML.}
+#' \item{uiReportId}{integer, The id of the report with the custom HTML.}
+#' \item{uiReportProvideAPIKey}{boolean, Whether the ui report requests an API Key from the report viewer.}
 #' \item{templateScriptName}{string, The name of the template script.}
 #' \item{templateNote}{string, The template's note.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
@@ -18277,6 +18884,7 @@ scripts_delete_sql_projects <- function(id, project_id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -18664,6 +19272,7 @@ scripts_delete_containers_projects <- function(id, project_id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -19050,6 +19659,7 @@ scripts_delete_python3_projects <- function(id, project_id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -19431,6 +20041,7 @@ scripts_delete_r_projects <- function(id, project_id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -19812,6 +20423,7 @@ scripts_delete_javascript_projects <- function(id, project_id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -20187,10 +20799,15 @@ scripts_delete_custom_projects <- function(id, project_id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
+#' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
 #' \item{uiReportUrl}{integer, The url of the custom HTML.}
+#' \item{uiReportId}{integer, The id of the report with the custom HTML.}
+#' \item{uiReportProvideAPIKey}{boolean, Whether the ui report requests an API Key from the report viewer.}
 #' \item{templateScriptName}{string, The name of the template script.}
 #' \item{templateNote}{string, The template's note.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
@@ -20295,6 +20912,7 @@ scripts_put_custom_archive <- function(id, status) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -20421,6 +21039,7 @@ scripts_post_sql_clone <- function(id, clone_schedule = NULL, clone_triggers = N
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -20536,6 +21155,7 @@ scripts_post_javascript_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -20656,6 +21276,7 @@ scripts_post_python3_clone <- function(id, clone_schedule = NULL, clone_triggers
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -20775,10 +21396,15 @@ scripts_post_r_clone <- function(id, clone_schedule = NULL, clone_triggers = NUL
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
+#' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
 #' \item{uiReportUrl}{integer, The url of the custom HTML.}
+#' \item{uiReportId}{integer, The id of the report with the custom HTML.}
+#' \item{uiReportProvideAPIKey}{boolean, Whether the ui report requests an API Key from the report viewer.}
 #' \item{templateScriptName}{string, The name of the template script.}
 #' \item{templateNote}{string, The template's note.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
@@ -20883,6 +21509,7 @@ scripts_post_custom_clone <- function(id, clone_schedule = NULL, clone_triggers 
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
 #' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -22721,6 +23348,10 @@ users_list_me <- function() {
 #' \item workflowIndexOrderField string, Order field for the workflows page.
 #' \item workflowIndexOrderDir string, Order direction for the workflows page.
 #' \item workflowIndexAuthorFilter string, Author filter for the workflows page.
+#' \item serviceOrderField string, Order field for the services page.
+#' \item serviceOrderDir string, Order direction for the services page.
+#' \item serviceAuthorFilter string, Author filter for the services page.
+#' \item serviceArchivedFilter string, Archived filter for the services page.
 #' }
 #' @param last_checked_announcements string optional. The date and time at which the user last checked their announcements.
 #' 
@@ -23001,6 +23632,7 @@ users_delete_api_keys <- function(id, key_id) {
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this workflow.}
 #' \item{name}{string, The name of this workflow.}
+#' \item{description}{string, A description of the workflow.}
 #' \item{valid}{boolean, The validity of the workflow definition.}
 #' \item{fileId}{string, The file id for the s3 file containing the workflow configuration.}
 #' \item{user}{object, A list containing the following elements: 
@@ -23012,6 +23644,14 @@ users_delete_api_keys <- function(id, key_id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
+#' \item{schedule}{object, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the object is scheduled
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
+#' \item scheduledHours array, Hours of the day it is scheduled on
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+#' }}
 #' \item{timeZone}{string, The time zone of this workflow.}
 #' \item{nextExecutionAt}{string, The time of the next scheduled execution.}
 #' \item{archived}{string, The archival status of the requested object(s).}
@@ -23037,6 +23677,7 @@ workflows_list <- function(hidden = NULL, archived = NULL, author = NULL, limit 
 
 #' Create a Workflow
 #' @param name string required. The name of this workflow.
+#' @param description string optional. A description of the workflow.
 #' @param from_job_chain integer optional. If specified, create a workflow from the job chain this job is in, and inherit the schedule from the root of the chain.
 #' @param definition string optional. The definition of the workflow in YAML format. Must not be specified if `fromJobChain` is specified.
 #' @param schedule object optional. A list containing the following elements: 
@@ -23063,6 +23704,7 @@ workflows_list <- function(hidden = NULL, archived = NULL, author = NULL, limit 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this workflow.}
 #' \item{name}{string, The name of this workflow.}
+#' \item{description}{string, A description of the workflow.}
 #' \item{definition}{string, The definition of the workflow in YAML format. Must not be specified if `fromJobChain` is specified.}
 #' \item{valid}{boolean, The validity of the workflow definition.}
 #' \item{validationErrors}{string, The errors encountered when validating the workflow definition.}
@@ -23101,13 +23743,13 @@ workflows_list <- function(hidden = NULL, archived = NULL, author = NULL, limit 
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' @export
-workflows_post <- function(name, from_job_chain = NULL, definition = NULL, schedule = NULL, time_zone = NULL, notifications = NULL, hidden = NULL) {
+workflows_post <- function(name, description = NULL, from_job_chain = NULL, definition = NULL, schedule = NULL, time_zone = NULL, notifications = NULL, hidden = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/workflows/"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, fromJobChain = from_job_chain, definition = definition, schedule = schedule, timeZone = time_zone, notifications = notifications, hidden = hidden)
+  body_params  <- list(name = name, description = description, fromJobChain = from_job_chain, definition = definition, schedule = schedule, timeZone = time_zone, notifications = notifications, hidden = hidden)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -23124,6 +23766,7 @@ workflows_post <- function(name, from_job_chain = NULL, definition = NULL, sched
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this workflow.}
 #' \item{name}{string, The name of this workflow.}
+#' \item{description}{string, A description of the workflow.}
 #' \item{definition}{string, The definition of the workflow in YAML format. Must not be specified if `fromJobChain` is specified.}
 #' \item{valid}{boolean, The validity of the workflow definition.}
 #' \item{validationErrors}{string, The errors encountered when validating the workflow definition.}
@@ -23182,6 +23825,7 @@ workflows_get <- function(id) {
 #' Replace all attributes of this Workflow
 #' @param id integer required. The ID for this workflow.
 #' @param name string required. The name of this workflow.
+#' @param description string optional. A description of the workflow.
 #' @param definition string optional. The definition of the workflow in YAML format. Must not be specified if `fromJobChain` is specified.
 #' @param schedule object optional. A list containing the following elements: 
 #' \itemize{
@@ -23206,6 +23850,7 @@ workflows_get <- function(id) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this workflow.}
 #' \item{name}{string, The name of this workflow.}
+#' \item{description}{string, A description of the workflow.}
 #' \item{definition}{string, The definition of the workflow in YAML format. Must not be specified if `fromJobChain` is specified.}
 #' \item{valid}{boolean, The validity of the workflow definition.}
 #' \item{validationErrors}{string, The errors encountered when validating the workflow definition.}
@@ -23244,13 +23889,13 @@ workflows_get <- function(id) {
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' @export
-workflows_put <- function(id, name, definition = NULL, schedule = NULL, time_zone = NULL, notifications = NULL) {
+workflows_put <- function(id, name, description = NULL, definition = NULL, schedule = NULL, time_zone = NULL, notifications = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/workflows/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, definition = definition, schedule = schedule, timeZone = time_zone, notifications = notifications)
+  body_params  <- list(name = name, description = description, definition = definition, schedule = schedule, timeZone = time_zone, notifications = notifications)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -23264,6 +23909,7 @@ workflows_put <- function(id, name, definition = NULL, schedule = NULL, time_zon
 #' Update some attributes of this Workflow
 #' @param id integer required. The ID for this workflow.
 #' @param name string optional. The name of this workflow.
+#' @param description string optional. A description of the workflow.
 #' @param definition string optional. The definition of the workflow in YAML format. Must not be specified if `fromJobChain` is specified.
 #' @param schedule object optional. A list containing the following elements: 
 #' \itemize{
@@ -23288,6 +23934,7 @@ workflows_put <- function(id, name, definition = NULL, schedule = NULL, time_zon
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this workflow.}
 #' \item{name}{string, The name of this workflow.}
+#' \item{description}{string, A description of the workflow.}
 #' \item{definition}{string, The definition of the workflow in YAML format. Must not be specified if `fromJobChain` is specified.}
 #' \item{valid}{boolean, The validity of the workflow definition.}
 #' \item{validationErrors}{string, The errors encountered when validating the workflow definition.}
@@ -23326,13 +23973,13 @@ workflows_put <- function(id, name, definition = NULL, schedule = NULL, time_zon
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' @export
-workflows_patch <- function(id, name = NULL, definition = NULL, schedule = NULL, time_zone = NULL, notifications = NULL) {
+workflows_patch <- function(id, name = NULL, description = NULL, definition = NULL, schedule = NULL, time_zone = NULL, notifications = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/workflows/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, definition = definition, schedule = schedule, timeZone = time_zone, notifications = notifications)
+  body_params  <- list(name = name, description = description, definition = definition, schedule = schedule, timeZone = time_zone, notifications = notifications)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -23521,6 +24168,7 @@ workflows_delete_shares_groups <- function(id, group_id) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this workflow.}
 #' \item{name}{string, The name of this workflow.}
+#' \item{description}{string, A description of the workflow.}
 #' \item{definition}{string, The definition of the workflow in YAML format. Must not be specified if `fromJobChain` is specified.}
 #' \item{valid}{boolean, The validity of the workflow definition.}
 #' \item{validationErrors}{string, The errors encountered when validating the workflow definition.}
@@ -23676,6 +24324,7 @@ workflows_delete_projects <- function(id, project_id) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this workflow.}
 #' \item{name}{string, The name of this workflow.}
+#' \item{description}{string, A description of the workflow.}
 #' \item{definition}{string, The definition of the workflow in YAML format. Must not be specified if `fromJobChain` is specified.}
 #' \item{valid}{boolean, The validity of the workflow definition.}
 #' \item{validationErrors}{string, The errors encountered when validating the workflow definition.}
@@ -23776,6 +24425,7 @@ workflows_list_executions <- function(id, limit = NULL, page_num = NULL, order =
 #' Execute a workflow
 #' @param id integer required. The ID for the workflow.
 #' @param target_task string optional. For a reverse workflow, the name of the task to target.
+#' @param input object optional. The dictionary of name/value input pairs defined for this execution.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this workflow execution.}
@@ -23791,10 +24441,11 @@ workflows_list_executions <- function(id, limit = NULL, page_num = NULL, order =
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{definition}{string, The definition of the workflow for this execution.}
+#' \item{input}{object, The dictionary of name/value input pairs defined for this execution.}
 #' \item{tasks}{array, An array containing the following fields: 
 #' \itemize{
 #' \item name string, The name of the task.
-#' \item mistralState string, The state of this task. One of idle, waiting, running, running_delayed, success, or error
+#' \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, or error
 #' \item mistralStateInfo string, Extra info associated with the state of the task.
 #' \item runs array, The runs associated with this task, in descending order by id.
 #' }}
@@ -23803,13 +24454,13 @@ workflows_list_executions <- function(id, limit = NULL, page_num = NULL, order =
 #' \item{createdAt}{string, The time this execution was created.}
 #' \item{updatedAt}{string, The time this execution was last updated.}
 #' @export
-workflows_post_executions <- function(id, target_task = NULL) {
+workflows_post_executions <- function(id, target_task = NULL, input = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/workflows/{id}/executions"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(targetTask = target_task)
+  body_params  <- list(targetTask = target_task, input = input)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -23838,10 +24489,11 @@ workflows_post_executions <- function(id, target_task = NULL) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{definition}{string, The definition of the workflow for this execution.}
+#' \item{input}{object, The dictionary of name/value input pairs defined for this execution.}
 #' \item{tasks}{array, An array containing the following fields: 
 #' \itemize{
 #' \item name string, The name of the task.
-#' \item mistralState string, The state of this task. One of idle, waiting, running, running_delayed, success, or error
+#' \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, or error
 #' \item mistralStateInfo string, Extra info associated with the state of the task.
 #' \item runs array, The runs associated with this task, in descending order by id.
 #' }}
@@ -23885,10 +24537,11 @@ workflows_get_executions <- function(id, execution_id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{definition}{string, The definition of the workflow for this execution.}
+#' \item{input}{object, The dictionary of name/value input pairs defined for this execution.}
 #' \item{tasks}{array, An array containing the following fields: 
 #' \itemize{
 #' \item name string, The name of the task.
-#' \item mistralState string, The state of this task. One of idle, waiting, running, running_delayed, success, or error
+#' \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, or error
 #' \item mistralStateInfo string, Extra info associated with the state of the task.
 #' \item runs array, The runs associated with this task, in descending order by id.
 #' }}
@@ -23932,10 +24585,11 @@ workflows_post_executions_cancel <- function(id, execution_id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{definition}{string, The definition of the workflow for this execution.}
+#' \item{input}{object, The dictionary of name/value input pairs defined for this execution.}
 #' \item{tasks}{array, An array containing the following fields: 
 #' \itemize{
 #' \item name string, The name of the task.
-#' \item mistralState string, The state of this task. One of idle, waiting, running, running_delayed, success, or error
+#' \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, or error
 #' \item mistralStateInfo string, Extra info associated with the state of the task.
 #' \item runs array, The runs associated with this task, in descending order by id.
 #' }}
@@ -23980,10 +24634,11 @@ workflows_post_executions_resume <- function(id, execution_id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{definition}{string, The definition of the workflow for this execution.}
+#' \item{input}{object, The dictionary of name/value input pairs defined for this execution.}
 #' \item{tasks}{array, An array containing the following fields: 
 #' \itemize{
 #' \item name string, The name of the task.
-#' \item mistralState string, The state of this task. One of idle, waiting, running, running_delayed, success, or error
+#' \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, or error
 #' \item mistralStateInfo string, Extra info associated with the state of the task.
 #' \item runs array, The runs associated with this task, in descending order by id.
 #' }}

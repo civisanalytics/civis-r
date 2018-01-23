@@ -57,13 +57,10 @@ A list containing the following elements:
 \item{credentials}{array, A list of credential IDs to pass to the notebook.}
 \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
 \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
+\item{gitRepoId}{integer, The ID of the git repository.}
+\item{gitRepoUrl}{string, The url of the git repository}
 \item{gitRef}{string, The git reference if git repo is specified}
 \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
-\item{gitRepo}{object, A list containing the following elements: 
-\itemize{
-\item id integer, The ID of the git repository.
-\item repoUrl string, The url of the git repository
-}}
 \item{archived}{string, The archival status of the requested object(s).}
 \item{hidden}{boolean, The hidden status of the object.}
 }

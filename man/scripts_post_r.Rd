@@ -28,6 +28,7 @@ scripts_post_r(name, source, parent_id = NULL, user_context = NULL,
 \item required boolean, Whether this param is required.
 \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+\item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 }}
 
 \item{arguments}{object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
@@ -106,6 +107,7 @@ A list containing the following elements:
 \item required boolean, Whether this param is required.
 \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+\item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 }}
 \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 \item{isTemplate}{boolean, Whether others scripts use this one as a template.}

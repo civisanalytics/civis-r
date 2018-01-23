@@ -35,7 +35,7 @@ imports_post_syncs(id, source, destination, advanced_options = NULL)
 \item sortkey1 string, 
 \item sortkey2 string, 
 \item columnDelimiter string, 
-\item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the current name of the column being overridden.
+\item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the index of the column being overridden.
 \item identityColumn string, 
 \item rowChunkSize integer, 
 \item wipeDestinationTable boolean, 
@@ -85,7 +85,7 @@ A list containing the following elements:
 \item sortkey1 string, 
 \item sortkey2 string, 
 \item columnDelimiter string, 
-\item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the current name of the column being overridden.
+\item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the index of the column being overridden.
 \item identityColumn string, 
 \item rowChunkSize integer, 
 \item wipeDestinationTable boolean, 

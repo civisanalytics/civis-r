@@ -675,14 +675,10 @@ test_that("exceptions with hyperband correct", {
   with_mock(
     `civis::run_model` = fake_run_model,
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
-    err1 <-  "cross_validation_parameters = \"hyperband\" not supported for sparse_logistic",
+    err <-  "cross_validation_parameters = \"hyperband\" not supported for sparse_logistic",
     expect_error(create_and_run_model(file_id = civis_file(132),
                                       model_type = "sparse_logistic",
-                                      cross_validation_parameters = "hyperband"), err1),
-    err2 <-  "cross_validation_parameters = \"hyperband\" is required for multilayer_perceptron_regressor",
-    expect_error(create_and_run_model(file_id = civis_file(132),
-                                      model_type = "multilayer_perceptron_regressor",
-                                      cross_validation_parameters = list(a = 5)), err2)
+                                      cross_validation_parameters = "hyperband"), err)
   )
 })
 
