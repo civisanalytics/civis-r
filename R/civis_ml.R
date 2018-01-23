@@ -154,7 +154,7 @@
 #' distributions used in the predefined hyperband models, see
 #' \href{https://civis-python.readthedocs.io/en/stable/ml.html#hyperparameter-tuning}{the detailed table in the Python client documentation}.
 #'
-#' 
+#'
 #' @section Data Sources:
 #'
 #' For building models with \code{civis_ml}, the training data can reside in
@@ -566,10 +566,6 @@ create_and_run_model <- function(file_id = NULL,
                                                  "stacking_regressor")
     if (hyperband & hyperband_not_supported) {
       stop(paste0("cross_validation_parameters = \"hyperband\" not supported for ", model_type))
-    }
-    is_mlp <- model_type %in% c("multilayer_perceptron_regressor", "multilayer_perceptron_classifier")
-    if (is_mlp & !hyperband) {
-      stop("cross_validation_parameters = \"hyperband\" is required for ", model_type)
     }
     if (hyperband) {
       # need to escape quotes to get the string to work
