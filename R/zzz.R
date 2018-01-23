@@ -19,7 +19,7 @@ get_train_template_id <- function() {
       # use the previous version; assume that only the latest version is in internal release
       prev <- versions[length(versions) - i]
       id <- CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$version == prev &
-                                    CIVIS_ML_TEMPLATE_IDS$name == "train", "id"]
+                                  CIVIS_ML_TEMPLATE_IDS$name == "train", "id"]
       i <- i + 1
     }
   }
