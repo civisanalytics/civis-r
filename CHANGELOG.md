@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.0] - Unreleased
+
+### Fixed
+
+- `read_civis.numeric`, `write_civis.numeric`, `download_civis.numeric`, and `query_civis.numeric` now fail with a better error message for `NA` of type numeric.
+
 ## [1.2.0] - 2018-01-23
 
 ### Fixed

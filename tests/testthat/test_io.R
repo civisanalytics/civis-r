@@ -87,6 +87,11 @@ test_that("read_civis.numeric reads a csv", {
   )
 })
 
+test_that("read_civis.numeric fails for NA", {
+  msg <- "File ID cannot be NA."
+  expect_error(read_civis(as.numeric(NA)), msg)
+})
+
 # write_civis -----------------------------------------------------------------
 
 test_that("write_civis.character returns meta data if successful", {
@@ -185,6 +190,11 @@ test_that("write_civis fails if no db given and default not provided", {
   )
 })
 
+test_that("write_civis.numeric fails for NA", {
+  msg <- "File ID cannot be NA."
+  expect_error(write_civis(as.numeric(NA)), msg)
+})
+
 test_that("write_civis_file fails if file doesn't exist", {
   msg <- "file.exists(x) is not TRUE"
   err_msg <- tryCatch(write_civis_file("asdf"), error = function(e) e$message)
@@ -241,6 +251,12 @@ test_that("download_civis raises an error if destination file already exists", {
   file.remove(local_file) # Clean up after testing
 })
 
+test_that("download_civis.numeric fails for NA", {
+  msg <- "File ID cannot be NA."
+  expect_error(write_civis(as.numeric(NA)), msg)
+})
+
+
 # query_civis -----------------------------------------------------------------
 
 test_that("query_civis returns object from await", {
@@ -252,6 +268,12 @@ test_that("query_civis returns object from await", {
     expect_equal(get_status(query_civis("query", "database")), 'succeeded')
   )
 })
+
+test_that("query_civis.numeric fails for NA", {
+  msg <- "Query ID cannot be NA."
+  expect_error(query_civis(as.numeric(NA)), msg)
+})
+
 
 test_that("transfer_table succeeds", {
   res <- with_mock(
