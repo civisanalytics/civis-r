@@ -59,6 +59,7 @@ read_civis <- function(x, ...) {
 #' @export
 read_civis.numeric <- function(x, using = readRDS, verbose = FALSE, ...) {
   stopifnot(is.function(using))
+  if (is.na(x)) stop("File ID cannot be NA.")
   fn <- tempfile()
   tryCatch({
     download_civis(x, fn)
@@ -221,6 +222,7 @@ write_civis.numeric <- function(x, tablename, database = NULL, if_exists = "fail
                                 distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
                                 max_errors = NULL, verbose = FALSE,
                                 delimiter = ",", hidden = TRUE, ...) {
+  if (is.na(x)) stop("File ID cannot be NA.")
   db <- get_db(database)
   db_id <- get_database_id(db)
   cred_id <- default_credential()
@@ -456,6 +458,7 @@ download_civis.sql <- function(x, database = NULL, file,
 download_civis.numeric <- function(x, file,
                                    overwrite = FALSE, progress = FALSE,
                                    ...) {
+  if (is.na(x)) stop("File ID cannot be NA.")
   if (!overwrite & file.exists(file)) {
     stop("File already exists. To overwrite, set overwrite = TRUE.")
   }
@@ -591,6 +594,7 @@ query_civis.sql <- function(x, database = NULL, verbose = FALSE, ...) {
 #' @export
 #' @describeIn query_civis Run a SQL query from a previous SQL query id.
 query_civis.numeric <- function(x, verbose = FALSE, ...) {
+  if (is.na(x)) stop("Query ID cannot be NA.")
   r <- queries_post_runs(x)
   await(queries_get_runs, id = r$queryId, run_id = r$id, .verbose = verbose)
 }
