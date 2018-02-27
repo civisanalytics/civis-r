@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.0] - Unreleased
+
+### Changed
+
+- `write_civis_file` now has a defaults to the file path for the `name` argument instead of requiring it.
+
 ## [1.2.0] - 2018-01-23
 
 ### Fixed
