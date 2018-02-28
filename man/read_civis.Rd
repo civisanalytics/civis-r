@@ -88,6 +88,7 @@ mean_x <- tryCatch({
 }
 \seealso{
 Other io: \code{\link{download_civis}},
+  \code{\link{query_civis_file}},
   \code{\link{query_civis}},
   \code{\link{write_civis_file}}, \code{\link{write_civis}}
 }

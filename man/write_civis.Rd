@@ -96,6 +96,7 @@ write_civis(id, "schema.my_table", "my_database")
 \code{\link{refresh_table}} to update table meta-data.
 
 Other io: \code{\link{download_civis}},
+  \code{\link{query_civis_file}},
   \code{\link{query_civis}}, \code{\link{read_civis}},
   \code{\link{write_civis_file}}
 }
