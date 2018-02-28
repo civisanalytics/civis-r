@@ -622,12 +622,14 @@ query_civis.character <- function(x, database = NULL, verbose = FALSE, ...) {
 #' @param hidden bool, Whether the job is hidden.
 #' @param verbose bool, Set to TRUE to print intermediate progress indicators.
 #' @param csv_settings See \code{\link{scripts_post_sql}} for details.
+#' @param ... unused.
 #' @export
 #' @family io
 #' @details
 #' By default, the export uses the default csv_settings in \code{\link{scripts_post_sql}},
 #' which is a gzipped csv.
 #' @examples
+#' \dontrun{
 #' id <- query_civis_file("schema.tablename", database = "my_database")
 #' df <- read_civis(id, using = read.csv)
 #'
@@ -637,6 +639,7 @@ query_civis.character <- function(x, database = NULL, verbose = FALSE, ...) {
 #'
 #' id <- query_civis_file(query_id)
 #' df <- read_civis(id, using = read.csv)
+#' }
 query_civis_file <- function(x, ...){
   UseMethod("query_civis_file")
 }
@@ -644,7 +647,7 @@ query_civis_file <- function(x, ...){
 #' @export
 #' @describeIn query_civis_file Export a \code{"schema.table"} to a file id.
 query_civis_file.character <- function(x, database = NULL, job_name = NULL, hidden = TRUE,
-                                       verbose = verbose, csv_settings = NULL) {
+                                       verbose = verbose, csv_settings = NULL, ...) {
   if (stringr::str_detect(tolower(x), "\\bselect\\b")) {
     msg <- c("Argument x should be \"schema.tablename\". Did you mean x = sql(\"...\")?")
     stop(msg)
@@ -656,7 +659,7 @@ query_civis_file.character <- function(x, database = NULL, job_name = NULL, hidd
 #' @export
 #' @describeIn query_civis_file Export results of a query to a file id.
 query_civis_file.sql <- function(x, database = NULL, job_name = NULL, hidden = TRUE,
-                                 verbose = FALSE, csv_settings = NULL) {
+                                 verbose = FALSE, csv_settings = NULL, ...) {
   x <- as.character(x)
   db <- get_db(database)
   cred_id <- default_credential()

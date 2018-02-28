@@ -10,15 +10,17 @@
 query_civis_file(x, ...)
 
 \method{query_civis_file}{character}(x, database = NULL, job_name = NULL,
-  hidden = TRUE, verbose = verbose, csv_settings = NULL)
+  hidden = TRUE, verbose = verbose, csv_settings = NULL, ...)
 
 \method{query_civis_file}{sql}(x, database = NULL, job_name = NULL,
-  hidden = TRUE, verbose = FALSE, csv_settings = NULL)
+  hidden = TRUE, verbose = FALSE, csv_settings = NULL, ...)
 
 \method{query_civis_file}{numeric}(x, database = NULL, verbose = FALSE, ...)
 }
 \arguments{
 \item{x}{"schema.table", \code{sql("query")}, or a query id.}
+
+\item{...}{unused.}
 
 \item{database}{string, Name of database where data frame is to be uploaded.
 If no database is specified, uses \code{options(civis.default_db)}.}
@@ -49,6 +51,7 @@ which is a gzipped csv.
 }}
 
 \examples{
+\dontrun{
 id <- query_civis_file("schema.tablename", database = "my_database")
 df <- read_civis(id, using = read.csv)
 
@@ -58,6 +61,7 @@ df <- read_civis(id, using = read.csv)
 
 id <- query_civis_file(query_id)
 df <- read_civis(id, using = read.csv)
+}
 }
 \seealso{
 Other io: \code{\link{download_civis}},
