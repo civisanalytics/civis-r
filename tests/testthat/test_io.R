@@ -274,6 +274,36 @@ test_that("query_civis.numeric fails for NA", {
   expect_error(query_civis(as.numeric(NA)), msg)
 })
 
+test_that("query_civis_file.sql works", {
+  with_mock(
+    `civis::get_database_id` = function(...) TRUE,
+    `civis::get_db` = function(...) "asdf",
+    `civis::default_credential` = function(...) TRUE,
+    `civis:::start_scripted_sql_job` = function(...) list(script_id = 1, run_id = 1),
+    `civis::scripts_get_sql_runs` = function(...) list(state = "succeeded",
+                                                       output = list(list(fileId = 1))),
+    expect_equal(query_civis_file(sql("asdf")), 1)
+  )
+})
+
+test_that("query_civis_file.character errors if not schema.tablename", {
+  msg <- 'Argument x should be "schema.tablename". Did you mean x = sql("...")?'
+  expect_error(query_civis_file("select asdf"), msg)
+})
+
+test_that("query_civis_file.numeric works", {
+  with_mock(
+    `civis::scripts_post_sql_runs` = function(...) list(id = 333),
+    `civis::scripts_get_sql_runs` = function(...) list(state = "succeeded",
+                                                       output = list(list(fileId = 1))),
+    expect_equal(query_civis_file(234), 1)
+  )
+})
+
+test_that("query_civis_file.numeric fails for NA", {
+  msg <- "Query ID cannot be NA"
+  expect_error(query_civis(as.numeric(NA), msg))
+})
 
 test_that("transfer_table succeeds", {
   res <- with_mock(

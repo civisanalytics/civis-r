@@ -610,8 +610,12 @@ query_civis.character <- function(x, database = NULL, verbose = FALSE, ...) {
   await(queries_get, id = q_id, .verbose = verbose)
 }
 
-#' Run a query and return a file id.
-#' @param x "schema.table", \code{sql("query")}, or a file id.
+#' Export results from a query to S3 and return a file id.
+#'
+#' Exports results from a Redshift SQL query, and returns the id of the file on S3 for use
+#' with \code{\link{read_civis}} or \code{\link{download_civis}}.
+#'
+#' @param x "schema.table", \code{sql("query")}, or a query id.
 #' @param database string, Name of database where data frame is to be uploaded.
 #' If no database is specified, uses \code{options(civis.default_db)}.
 #' @param job_name string, Name of the job (default: \code{"Civis S3 Export Via R Client"}).
@@ -638,7 +642,7 @@ query_civis_file <- function(x, ...){
 }
 
 #' @export
-#' @describeIn query_civis_file Export a \code{"schema.tablename"} to a file id.
+#' @describeIn query_civis_file Export a \code{"schema.table"} to a file id.
 query_civis_file.character <- function(x, database = NULL, job_name = NULL, hidden = TRUE,
                                        verbose = verbose, csv_settings = NULL) {
   if (stringr::str_detect(tolower(x), "\\bselect\\b")) {
@@ -668,7 +672,7 @@ query_civis_file.sql <- function(x, database = NULL, job_name = NULL, hidden = T
 }
 
 #' @export
-#' @describeIn query_civis_file Run an existing sql script id, exporting results to a file id.
+#' @describeIn query_civis_file Run an existing script and return the file id of the results on S3.
 query_civis_file.numeric <- function(x, database = NULL, verbose = FALSE, ...) {
   if (is.na(x)) stop("Query ID cannot be NA.")
   run <- scripts_post_sql_runs(x)

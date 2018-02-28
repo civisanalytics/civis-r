@@ -5,7 +5,7 @@
 \alias{query_civis_file.character}
 \alias{query_civis_file.sql}
 \alias{query_civis_file.numeric}
-\title{Run a query and return a file id.}
+\title{Export results from a query to S3 and return a file id.}
 \usage{
 query_civis_file(x, ...)
 
@@ -18,7 +18,7 @@ query_civis_file(x, ...)
 \method{query_civis_file}{numeric}(x, database = NULL, verbose = FALSE, ...)
 }
 \arguments{
-\item{x}{"schema.table", \code{sql("query")}, or a file id.}
+\item{x}{"schema.table", \code{sql("query")}, or a query id.}
 
 \item{database}{string, Name of database where data frame is to be uploaded.
 If no database is specified, uses \code{options(civis.default_db)}.}
@@ -32,7 +32,8 @@ If no database is specified, uses \code{options(civis.default_db)}.}
 \item{csv_settings}{See \code{\link{scripts_post_sql}} for details.}
 }
 \description{
-Run a query and return a file id.
+Exports results from a Redshift SQL query, and returns the id of the file on S3 for use
+with \code{\link{read_civis}} or \code{\link{download_civis}}.
 }
 \details{
 By default, the export uses the default csv_settings in \code{\link{scripts_post_sql}},
@@ -40,11 +41,11 @@ which is a gzipped csv.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{character}: Export a \code{"schema.tablename"} to a file id.
+\item \code{character}: Export a \code{"schema.table"} to a file id.
 
 \item \code{sql}: Export results of a query to a file id.
 
-\item \code{numeric}: Run an existing sql script id, exporting results to a file id.
+\item \code{numeric}: Run an existing script and return the file id of the results on S3.
 }}
 
 \examples{
