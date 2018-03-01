@@ -49,7 +49,9 @@ query_civis("GRANT ALL ON schema.my_table TO GROUP admin", "database")
 \seealso{
 \code{\link{read_civis}} for downloading results of SQL scripts from Civis Platform as a data frame.
 
+io
+
 Other io: \code{\link{download_civis}},
-  \code{\link{read_civis}}, \code{\link{write_civis_file}},
-  \code{\link{write_civis}}
+  \code{\link{query_civis_file}}, \code{\link{read_civis}},
+  \code{\link{write_civis_file}}, \code{\link{write_civis}}
 }

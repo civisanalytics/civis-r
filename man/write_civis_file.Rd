@@ -11,7 +11,7 @@ write_civis_file(x, ...)
 \method{write_civis_file}{default}(x, name = "r-object.rds",
   expires_at = NULL, ...)
 
-\method{write_civis_file}{character}(x, name, expires_at = NULL, ...)
+\method{write_civis_file}{character}(x, name = x, expires_at = NULL, ...)
 }
 \arguments{
 \item{x}{R object or path of file to upload.}
@@ -73,6 +73,7 @@ file_id <- write_civis_file("my_large_file")
 }
 \seealso{
 Other io: \code{\link{download_civis}},
+  \code{\link{query_civis_file}},
   \code{\link{query_civis}}, \code{\link{read_civis}},
   \code{\link{write_civis}}
 }

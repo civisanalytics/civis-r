@@ -538,7 +538,7 @@ civis_to_multifile_csv <- function(sql, database, job_name = NULL, hidden = TRUE
   }
 
   column_delimiter <- delimiter_name_from_string(delimiter)
-  job_name <- ifelse(is.null(job_name), "civis Export", job_name)
+  job_name <- ifelse(is.null(job_name), "Civis Export", job_name)
   filename_prefix <- if (is.null(prefix)) "" else prefix
   csv_settings = list(include_header = include_header,
                       compression = compression,
@@ -578,6 +578,7 @@ civis_to_multifile_csv <- function(sql, database, job_name = NULL, hidden = TRUE
 #' }
 #'
 #' @export
+#' @seealso io
 query_civis <- function(x, ...) {
   UseMethod("query_civis")
 }
@@ -607,6 +608,79 @@ query_civis.character <- function(x, database = NULL, verbose = FALSE, ...) {
   cred_id <- default_credential()
   q_id <- queries_post(db_id, x, preview_rows = 0, credential = cred_id, ...)[["id"]]
   await(queries_get, id = q_id, .verbose = verbose)
+}
+
+#' Export results from a query to S3 and return a file id.
+#'
+#' Exports results from a Redshift SQL query, and returns the id of the file on S3 for use
+#' with \code{\link{read_civis}} or \code{\link{download_civis}}.
+#'
+#' @param x "schema.table", \code{sql("query")}, or a sql script job id.
+#' @param database string, Name of database where data frame is to be uploaded.
+#' If no database is specified, uses \code{options(civis.default_db)}.
+#' @param job_name string, Name of the job (default: \code{"Civis S3 Export Via R Client"}).
+#' @param hidden bool, Whether the job is hidden.
+#' @param verbose bool, Set to TRUE to print intermediate progress indicators.
+#' @param csv_settings See \code{\link{scripts_post_sql}} for details.
+#' @param ... Currently ignored.
+#' @export
+#' @family io
+#' @details
+#' By default, the export uses the default csv_settings in \code{\link{scripts_post_sql}},
+#' which is a gzipped csv.
+#' @examples
+#' \dontrun{
+#' id <- query_civis_file("schema.tablename", database = "my_database")
+#' df <- read_civis(id, using = read.csv)
+#'
+#' query <- sql("SELECT * FROM table JOIN other_table USING id WHERE var1 < 23")
+#' id <- query_civis_file(query)
+#' df <- read_civis(id, using = read.csv)
+#'
+#' id <- query_civis_file(query_id)
+#' df <- read_civis(id, using = read.csv)
+#' }
+query_civis_file <- function(x, ...){
+  UseMethod("query_civis_file")
+}
+
+#' @export
+#' @describeIn query_civis_file Export a \code{"schema.table"} to a file id.
+query_civis_file.character <- function(x, database = NULL, job_name = NULL, hidden = TRUE,
+                                       verbose = verbose, csv_settings = NULL, ...) {
+  if (stringr::str_detect(tolower(x), "\\bselect\\b")) {
+    msg <- c("Argument x should be \"schema.tablename\". Did you mean x = sql(\"...\")?")
+    stop(msg)
+  }
+  sql_str <- sql(paste0("SELECT * FROM ", x))
+  query_civis_file.sql(sql_str, database = database)
+}
+
+#' @export
+#' @describeIn query_civis_file Export results of a query to a file id.
+query_civis_file.sql <- function(x, database = NULL, job_name = NULL, hidden = TRUE,
+                                 verbose = FALSE, csv_settings = NULL, ...) {
+  x <- as.character(x)
+  db <- get_db(database)
+  cred_id <- default_credential()
+  if (is.null(job_name)) job_name <- "Civis S3 Export Via R Client"
+  run <- start_scripted_sql_job(database = db,
+                                sql = x,
+                                job_name = job_name,
+                                hidden = hidden,
+                                csv_settings = csv_settings)
+  res <- await(scripts_get_sql_runs,
+               id = run$script_id, run_id = run$run_id, .verbose = verbose)
+  res$output[[1]]$fileId
+}
+
+#' @export
+#' @describeIn query_civis_file Run an existing sql script and return the file id of the results on S3.
+query_civis_file.numeric <- function(x, database = NULL, verbose = FALSE, ...) {
+  if (is.na(x)) stop("Query ID cannot be NA.")
+  run <- scripts_post_sql_runs(x)
+  res <- await(scripts_get_sql_runs, id = x, run_id = run$id, .verbose = verbose)
+  res$output[[1]]$fileId
 }
 
 # Kick off a scripted sql job

@@ -2,6 +2,10 @@
 
 ## [1.3.0] - Unreleased
 
+### Added
+
+- `query_civis_file` exports a `"schema.tablename"`, `sql("query")`, or existing sql script id to S3 and returns the file id.
+
 ### Changed
 
 - `write_civis_file` now has a defaults to the file path for the `name` argument instead of requiring it.
