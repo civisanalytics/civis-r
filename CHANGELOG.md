@@ -4,8 +4,7 @@
 
 ### Added
 
-- `query_civis_file` exports a `"schema.tablename"`, `sql("query")`, or existing query id to S3 and returns
-the file id.
+- `query_civis_file` exports a `"schema.tablename"`, `sql("query")`, or existing sql script id to S3 and returns the file id.
 
 ### Changed
 

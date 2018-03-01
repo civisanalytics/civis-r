@@ -18,7 +18,7 @@ query_civis_file(x, ...)
 \method{query_civis_file}{numeric}(x, database = NULL, verbose = FALSE, ...)
 }
 \arguments{
-\item{x}{"schema.table", \code{sql("query")}, or a query id.}
+\item{x}{"schema.table", \code{sql("query")}, or a sql script job id.}
 
 \item{...}{unused.}
 
@@ -47,7 +47,7 @@ which is a gzipped csv.
 
 \item \code{sql}: Export results of a query to a file id.
 
-\item \code{numeric}: Run an existing script and return the file id of the results on S3.
+\item \code{numeric}: Run an existing sql script and return the file id of the results on S3.
 }}
 
 \examples{
