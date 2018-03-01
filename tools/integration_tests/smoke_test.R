@@ -108,6 +108,14 @@ test_that("files can be uploaded", {
   system.time(id <- write_civis_file(fn, name = "a"))
 })
 
+test_that("query_civis_file", {
+  id <- query_civis_file(sql("SELECT * FROM datascience.iris"), database = database)
+  id2 <- query_civis_file("datascience.iris", database = database)
+  df1 <- read_civis(id, using = read.csv)
+  df2 <- read_civis(id2, using = read.csv)
+  expect_equal(df1, df2)
+})
+
 test_that("DBI Read-Only connections forbid writes", {
   tryCatch({
     conn <- dbConnect(dbi_driver(), database = database, read_only = TRUE)
