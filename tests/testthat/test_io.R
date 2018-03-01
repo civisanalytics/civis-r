@@ -175,6 +175,7 @@ test_that("write_civis.numeric calls imports_post_syncs correctly", {
                 advanced_options = list(max_errors = NULL,
                      existing_table_rows = "fail",
                      distkey = NULL,
+                     diststyle = NULL,
                      sortkey1 = NULL,
                      sortkey2 = NULL,
                      column_delimiter = "comma"))
@@ -397,7 +398,7 @@ test_that("start_import_job parses table correctly", {
     },
     expect_equal(
       start_import_job("mockdb", "mock.table", if_exists = "append",
-                       NULL, NULL, NULL, NULL),
+                       NULL, NULL, NULL, NULL, NULL, NULL),
       list(schema = "mock", table = "table")
     )
   )

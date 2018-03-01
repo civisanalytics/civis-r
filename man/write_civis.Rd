@@ -11,7 +11,8 @@ write_civis(x, ...)
 
 \method{write_civis}{data.frame}(x, tablename, database = NULL,
   if_exists = "fail", distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
-  max_errors = NULL, verbose = FALSE, hidden = TRUE, ...)
+  max_errors = NULL, verbose = FALSE, hidden = TRUE, diststyle = NULL,
+  ...)
 
 \method{write_civis}{character}(x, tablename, database = NULL,
   if_exists = "fail", distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
@@ -21,7 +22,7 @@ write_civis(x, ...)
 \method{write_civis}{numeric}(x, tablename, database = NULL,
   if_exists = "fail", distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
   max_errors = NULL, verbose = FALSE, delimiter = ",", hidden = TRUE,
-  ...)
+  diststyle = NULL, ...)
 }
 \arguments{
 \item{x}{data frame, file path of a csv, or the id of a csv file on S3 to upload to platform.}
