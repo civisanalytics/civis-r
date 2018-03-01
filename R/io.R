@@ -146,6 +146,7 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
 #' @param delimiter string, optional. Which delimiter to use. One of
 #' \code{','}, \code{'\\t'} or \code{'|'}.
 #' @param hidden bool, if \code{TRUE} (default), this job will not appear in the Civis UI.
+#' @param diststyle string optional. The diststyle to use for the table. One of "even", "all", or "key".
 #' @param ... arguments passed to \code{write.csv}.
 #' @seealso \code{\link{refresh_table}} to update table meta-data.
 #'
@@ -182,14 +183,22 @@ write_civis <- function(x, ...) {
 #' @export
 write_civis.data.frame <- function(x, tablename, database = NULL, if_exists="fail",
                         distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
-                        max_errors = NULL, verbose = FALSE, ...) {
+                        max_errors = NULL, verbose = FALSE, hidden = TRUE, diststyle = NULL, ...) {
   db <- get_db(database)
   tryCatch({
     filename <- tempfile(fileext = ".csv")
     utils::write.csv(x, filename, row.names = FALSE, na = "", ...)
-    write_civis.character(filename, tablename, database = db, if_exists,
-                 distkey, sortkey1, sortkey2, max_errors,
-                 verbose)
+    write_civis.character(x = filename,
+                          tablename = tablename,
+                          database = db,
+                          if_exists = if_exists,
+                          distkey = distkey,
+                          sortkey1 = sortkey1,
+                          sortkey2 = sortkey2,
+                          max_errors = max_errors,
+                          verbose = verbose,
+                          hidden = hidden,
+                          diststyle = diststyle)
   }, finally = {
     unlink(filename)
   })
@@ -199,11 +208,18 @@ write_civis.data.frame <- function(x, tablename, database = NULL, if_exists="fai
 #' @export
 write_civis.character <- function(x, tablename, database = NULL, if_exists = "fail",
                          distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
-                         max_errors = NULL, verbose = FALSE, ...) {
+                         max_errors = NULL, verbose = FALSE, hidden = TRUE, diststyle = NULL, ...) {
     db <- get_db(database)
     stopifnot(file.exists(x))
-    job_r <- start_import_job(db, tablename, if_exists, distkey,
-                              sortkey1, sortkey2, max_errors)
+    job_r <- start_import_job(database = db,
+                              tablename = tablename,
+                              if_exists = if_exists,
+                              diststyle = diststyle,
+                              distkey = distkey,
+                              sortkey1 = sortkey1,
+                              sortkey2 = sortkey2,
+                              max_errors = max_errors,
+                              hidden = hidden)
     put_r <- httr::PUT(job_r[["uploadUri"]], body = httr::upload_file(x))
     if (put_r$status_code != 200) {
       msg <- httr::content(put_r)
@@ -221,7 +237,7 @@ write_civis.character <- function(x, tablename, database = NULL, if_exists = "fa
 write_civis.numeric <- function(x, tablename, database = NULL, if_exists = "fail",
                                 distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
                                 max_errors = NULL, verbose = FALSE,
-                                delimiter = ",", hidden = TRUE, ...) {
+                                delimiter = ",", hidden = TRUE, diststyle = NULL, ...) {
   if (is.na(x)) stop("File ID cannot be NA.")
   db <- get_db(database)
   db_id <- get_database_id(db)
@@ -239,6 +255,7 @@ write_civis.numeric <- function(x, tablename, database = NULL, if_exists = "fail
   options <- list(max_errors = max_errors,
                   existing_table_rows = if_exists,
                   distkey = distkey,
+                  diststyle = diststyle,
                   sortkey1 = sortkey1,
                   sortkey2 = sortkey2,
                   column_delimiter = delimiter)
@@ -246,7 +263,7 @@ write_civis.numeric <- function(x, tablename, database = NULL, if_exists = "fail
   imports_post_syncs(job$id,
                      source = list(file = list(id = x)),
                      destination = list(database_table =
-                                          list(schema = parts$schema, table = parts$table)),
+                                        list(schema = parts$schema, table = parts$table)),
                      advanced_options = options)
   run <- jobs_post_runs(job$id)
   await(jobs_get_runs, id = job$id, run_id = run$id, .verbose = verbose)
@@ -754,7 +771,7 @@ write_chunks <- function(file, chunk_size) {
 
 # Kick off a job to send data to the civis platform
 start_import_job <- function(database, tablename, if_exists, distkey,
-                             sortkey1, sortkey2, max_errors) {
+                             sortkey1, sortkey2, max_errors, hidden, diststyle) {
   if (!if_exists %in% c("fail", "truncate", "append", "drop")) {
     stop('if_exists must be set to "fail", "truncate", "append", or "drop"')
   }
@@ -773,11 +790,13 @@ start_import_job <- function(database, tablename, if_exists, distkey,
                                      credential_id = creds,
                                      max_errors = max_errors,
                                      existing_table_rows = if_exists,
+                                     diststyle = diststyle,
                                      distkey = distkey,
                                      sortkey1 = sortkey1,
                                      sortkey2 = sortkey2,
                                      column_delimiter = "comma",
-                                     first_row_is_header = TRUE)
+                                     first_row_is_header = TRUE,
+                                     hidden = hidden)
   job_response
 }
 

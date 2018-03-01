@@ -5,14 +5,16 @@
 ### Added
 
 - `query_civis_file` exports a `"schema.tablename"`, `sql("query")`, or existing sql script id to S3 and returns the file id.
+- `write_civis` gains a `diststyle` argument for controlling the distribution of tables on Redshift.
 
 ### Changed
 
-- `write_civis_file` now has a defaults to the file path for the `name` argument instead of requiring it.
+- `write_civis_file` now defaults to the file path for the `name` argument instead of requiring it.
 
 ### Fixed
 
 - `read_civis.numeric`, `write_civis.numeric`, `download_civis.numeric`, and `query_civis.numeric` now fail with a better error message for `NA` of type numeric.
+- The `hidden` argument of `write_civis` now works.
 
 ## [1.2.0] - 2018-01-23
 
