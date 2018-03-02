@@ -11,16 +11,18 @@ write_civis(x, ...)
 
 \method{write_civis}{data.frame}(x, tablename, database = NULL,
   if_exists = "fail", distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
-  max_errors = NULL, verbose = FALSE, ...)
+  max_errors = NULL, verbose = FALSE, hidden = TRUE, diststyle = NULL,
+  ...)
 
 \method{write_civis}{character}(x, tablename, database = NULL,
   if_exists = "fail", distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
-  max_errors = NULL, verbose = FALSE, ...)
+  max_errors = NULL, verbose = FALSE, hidden = TRUE, diststyle = NULL,
+  ...)
 
 \method{write_civis}{numeric}(x, tablename, database = NULL,
   if_exists = "fail", distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
   max_errors = NULL, verbose = FALSE, delimiter = ",", hidden = TRUE,
-  ...)
+  diststyle = NULL, ...)
 }
 \arguments{
 \item{x}{data frame, file path of a csv, or the id of a csv file on S3 to upload to platform.}
@@ -47,10 +49,12 @@ to remove before failing.}
 
 \item{verbose}{bool, Set to TRUE to print intermediate progress indicators.}
 
+\item{hidden}{bool, if \code{TRUE} (default), this job will not appear in the Civis UI.}
+
+\item{diststyle}{string optional. The diststyle to use for the table. One of "even", "all", or "key".}
+
 \item{delimiter}{string, optional. Which delimiter to use. One of
 \code{','}, \code{'\\t'} or \code{'|'}.}
-
-\item{hidden}{bool, if \code{TRUE} (default), this job will not appear in the Civis UI.}
 }
 \description{
 Uploads a data frame, a csv file, or file on S3 to Redshift based
