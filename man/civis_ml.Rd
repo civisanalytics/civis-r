@@ -22,7 +22,7 @@ civis_ml_fetch_existing(model_id, run_id = NULL)
   output_table = NULL, output_db = NULL, if_output_exists = c("fail",
   "append", "drop", "truncate"), n_jobs = NULL, cpu_requested = NULL,
   memory_requested = NULL, disk_requested = NULL, polling_interval = NULL,
-  verbose = FALSE, ...)
+  verbose = FALSE, dvs_to_predict = NULL, ...)
 }
 \arguments{
 \item{x, newdata}{See the Data Sources section below.}
@@ -119,6 +119,14 @@ the model was built.}
 
 \item{if_output_exists}{Action to take if the prediction table already exists. One of \code{"fail"}, \code{"append"}, \code{"drop"}, or \code{"truncate"}.
 The default is \code{"fail"}.}
+
+\item{dvs_to_predict}{Optional, For scoring, this should be a vector of column
+names of dependent variables to include in the output table. It must be a
+subset of the \code{dependent_variable} vector provided for training.
+The scores for the returned subset will be identical to the scores which
+those outputs would have had if all outputs were written, but ignoring some
+of the model's outputs will let predictions complete faster and use less disk space.
+If not provided, the entire model output will be written to the output table.}
 
 \item{\dots}{Unused}
 }

@@ -8,6 +8,7 @@ Authors@R: c(
   person("Anh", "Le", email = "ale@civisanalytics.com", role = "ctb"),
   person("Michelangelo", "D'Agostino", email = "mdagostino@civisanalytics.com", role = "ctb"),
   person("Sam", "Weiss", email = "sweiss@civisanalytics.com", role = "ctb"),
+  person("Stephen", "Hoover", email = "shoover@civisanalytics.com", role = "ctb"),
   person("Danning", "Chen", email = "dchen@civisanalytics.com", role = "ctb"))
 Description: A set of tools around common workflows and a convenient interface to make
   requests directly to the 'Civis data science API' <https://www.civisanalytics.com/platform/>.
@@ -45,7 +46,7 @@ Suggests:
     yaml
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
-Collate: 
+Collate:
     'await.R'
     'civis_future.R'
     'civis_ml.R'
