@@ -71,6 +71,13 @@
 #'   data for validation, and \code{skip}, which skips the validation step.
 #' @param verbose Optional, If \code{TRUE}, supply debug outputs in Platform
 #'   logs and make prediction child jobs visible.
+#' @param dvs_to_predict Optional, For scoring, this should be a vector of column
+#'   names of dependent variables to include in the output table. It must be a
+#'   subset of the \code{dependent_variable} vector provided for training.
+#'   The scores for the returned subset will be identical to the scores which
+#'   those outputs would have had if all outputs were written, but ignoring some
+#'   of the model's outputs will let predictions complete faster and use less disk space.
+#'   If not provided, the entire model output will be written to the output table.
 #' @param \dots Unused
 #'
 #' @section CivisML Workflows:
@@ -752,6 +759,7 @@ predict.civis_ml <- function(object,
                              disk_requested = NULL,
                              polling_interval = NULL,
                              verbose = FALSE,
+                             dvs_to_predict = NULL,
                              ...) {
 
   output_db_id <- NULL
@@ -811,6 +819,10 @@ predict.civis_ml <- function(object,
     pred_args[["sql_limit"]] <- newdata$sql_limit
   }
 
+  if (!is.null(dvs_to_predict)) {
+    pred_args[["dvs_to_predict"]] <- paste(dvs_to_predict, collapse = " ")
+  }
+
   do.call(create_and_run_pred, pred_args)
 }
 
@@ -834,7 +846,8 @@ create_and_run_pred <- function(train_job_id = NULL,
                                 disk_requested = NULL,
                                 polling_interval = NULL,
                                 notifications = NULL,
-                                verbose = FALSE) {
+                                verbose = FALSE,
+                                dvs_to_predict = NULL) {
   args <- list(
     TRAIN_JOB = train_job_id,
     TRAIN_RUN = train_run_id,
@@ -881,6 +894,10 @@ create_and_run_pred <- function(train_job_id = NULL,
 
   if (!is.null(disk_requested)) {
     args[["DISK_SPACE"]] <- disk_requested
+  }
+
+  if (!is.null(dvs_to_predict)) {
+    args[["TARGET_COLUMN"]] <- paste(dvs_to_predict, collapse = " ")
   }
 
   args <- I(args)
