@@ -50,14 +50,14 @@ After the data source is specified, we next choose the model type. There are 13 
   `gradient_boosting_classifier` |	`civis_ml_gradient_boosting_classifier` | classification |	[GradientBoostingClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html) |
   `random_forest_classifier` |	`civis_ml_random_forest_classifier` | classification |	[RandomForestClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html) | 
   `extra_trees_classifier` |	`civis_ml_extra_trees_classifier` | classification |	[ExtraTreesClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html)|
-  `multilayer_perceptron_classifier` | | classification | [MLPClassifier](https://github.com/civisanalytics/muffnn) |
+  `multilayer_perceptron_classifier` | | classification | [muffnn.MLPClassifier](https://github.com/civisanalytics/muffnn) |
   `stacking_classifier` | | classification | [StackedClassifier](https://github.com/civisanalytics/civisml-extensions)
   `sparse_linear_regressor` | `civis_ml_sparse_linear_regressor` |	regression |	[LinearRegression](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html) |
   `sparse_ridge_regressor` |	`civis_ml_sparse_ridge_regressor` | regression |	[Ridge](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html) |
   `gradient_boosting_regressor`	| `civis_ml_gradient_boosting_regressor` | regression | [GradientBoostingRegressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html) |
   `random_forest_regressor`	| `civis_ml_random_forest_regressor` | regression | [RandomForestRegressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)|
   `extra_trees_regressor` | `civis_ml_extra_trees_regressor` | regression	| [ExtraTreesRegressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html)| 
-`multilayer_perceptron_regressor` | | regression | [MLPRegressor](https://github.com/civisanalytics/muffnn) |
+`multilayer_perceptron_regressor` | | regression | [muffnn.MLPRegressor](https://github.com/civisanalytics/muffnn) |
 `stacking_regressor` | | regression | [StackedRegressor](https://github.com/civisanalytics/civisml-extensions)
 
 Documentation on the meta parameters specific to each estimator are provided in `?civis_ml_*`. For example, the regularization strength parameter `C` of `sparse_logistic` is documented in `?civis_ml_sparse_logistic`.
@@ -130,7 +130,10 @@ between .01 and 1, and with a mean close to .1.
 
 ### Stacking 
 
-The `"stacking_classifier"` model stacks together the `"sparse_logistic"`, `"gradient_boosting_classifier"`, and `"random_forest_classifier"` models using defaults documented in `?civis_ml`. Each column is first [standardized](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html), and then the model predictions are combined using [LogisticRegressionCV](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html) with `penalty='l2'` and `tol=1e-08`. The `"stacking_regressor"` works similarly, stacking together the `"sparse_linear_regressor"`, `"gradient_boosting_regressor"`, and `"random_forest_regressor"` models, and combining them using [NonNegativeLinearRegression](https://github.com/civisanalytics/civisml-extensions).
+The `"stacking_classifier"` model stacks together the `"gradient_boosting_classifier"` and `"random_forest_classifier"` predefined models together with a
+`glmnet.LogitNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5,
+scoring='log_loss')`. Defaults for the predefined models are documented in `?civis_ml`. Each column is first [standardized](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html), and then the model predictions are combined using [LogisticRegressionCV](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html) with `penalty='l2'` and `tol=1e-08`. The `"stacking_regressor"` works similarly, stacking together the `"gradient_boosting_regressor"` and `"random_forest_regressor"` models and a `glmnet.ElasticNet(alpha=0, n_splits=4, max_iter=10000,
+tol=1e-5, scoring='r2')`, combining them using [NonNegativeLinearRegression](https://github.com/civisanalytics/civisml-extensions).
 
 ```{r, eval = FALSE}
 m_stack <- civis_ml(tab, dependent_variable = "upgrade", 

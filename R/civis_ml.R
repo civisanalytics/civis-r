@@ -98,30 +98,29 @@
 #'  \code{gradient_boosting_classifier} \tab	\code{\link{civis_ml_gradient_boosting_classifier}} \tab classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html}{GradientBoostingClassifier} \tab	\code{n_estimators=500, max_depth=2} \cr
 #'  \code{random_forest_classifier} \tab	\code{\link{civis_ml_random_forest_classifier}} \tab classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}{RandomForestClassifier} \tab	\code{n_estimators=500} \cr
 #'  \code{extra_trees_classifier} \tab	\code{\link{civis_ml_extra_trees_classifier}} \tab classification \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html}{ExtraTreesClassifier} \tab	\code{n_estimators=500} \cr
-#'  \code{multilayer_perceptron_classifier} \tab \tab classification \tab \href{https://github.com/civisanalytics/muffnn}{MLPClassifier} \tab \cr
+#'  \code{multilayer_perceptron_classifier} \tab \tab classification \tab \href{https://github.com/civisanalytics/muffnn}{muffnn.MLPClassifier} \tab \cr
 #'  \code{stacking_classifier} \tab \tab classification  \tab \href{https://github.com/civisanalytics/civisml-extensions}{StackedClassifier}\tab \cr
 #'  \code{sparse_linear_regressor} \tab \code{\link{civis_ml_sparse_linear_regressor}} \tab	regression \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html}{LinearRegression} \tab \cr
 #'  \code{sparse_ridge_regressor} \tab	\code{\link{civis_ml_sparse_ridge_regressor}} \tab regression \tab	\href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html}{Ridge} \tab \cr
 #'  \code{gradient_boosting_regressor}	\tab \code{\link{civis_ml_gradient_boosting_regressor}} \tab regression \tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html}{GradientBoostingRegressor} \tab \code{n_estimators=500, max_depth=2} \cr
 #'  \code{random_forest_regressor}	\tab \code{\link{civis_ml_random_forest_regressor}} \tab regression \tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html}{RandomForestRegressor} \tab \code{n_estimators=500} \cr
 #'  \code{extra_trees_regressor} \tab \code{\link{civis_ml_extra_trees_regressor}} \tab regression	\tab \href{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html}{ExtraTreesRegressor} \tab \code{n_estimators=500} \cr
-#'  \code{multilayer_perceptron_regressor} \tab \tab regression \tab \href{https://github.com/civisanalytics/muffnn}{MLPRegressor} \tab \cr
+#'  \code{multilayer_perceptron_regressor} \tab \tab regression \tab \href{https://github.com/civisanalytics/muffnn}{muffnn.MLPRegressor} \tab \cr
 #'  \code{stacking_regressor} \tab \tab regression  \tab \href{https://github.com/civisanalytics/civisml-extensions}{StackedRegressor}\tab \cr
 #' }
 #' Model names can be easily accessed using the global variables \code{CIVIS_ML_REGRESSORS} and \code{CIVIS_ML_CLASSIFIERS}.
 #' @section Stacking:
 #'
-#' The \code{"stacking_classifier"} model stacks
-#' together the \code{"sparse_logistic"}, \code{"gradient_boosting_classifier"},
-#' and \code{"random_forest_classifier"} models, using altered defaults as
-#' listed for each in the \code{"Altered Defaults"} column of the table
-#' above. The models are combined using a pipeline
-#' containing a \href{http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.Normalizer.html#sklearn.preprocessing.Normalizer}{Normalizer}
-#' step, followed by a \href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html}{LogisticRegressionCV}
-#' with \code{penalty='l2'} and \code{tol=1e-08}. The
-#' \code{"stacking_regressor"} works similarly, stacking together the
-#' \code{"sparse_linear_regressor"}, \code{"gradient_boosting_regressor"},
-#' and \code{"random_forest_regressor"} models, and combining them using
+#' The \code{"stacking_classifier"} model stacks together the \code{"gradient_boosting_classifier"} and
+#' \code{"random_forest_classifier"} predefined models together with a
+#' \code{glmnet.LogitNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5, scoring='log_loss')}.
+#' Defaults for the predefined models are documented in \code{?civis_ml}. Each column is first
+#' \href{http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html}{standardized},
+#' and then the model predictions are combined using
+#' \href{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html}{LogisticRegressionCV}
+#' with \code{penalty='l2'} and \code{tol=1e-08}. The \code{"stacking_regressor"} works similarly, stacking together
+#' the \code{"gradient_boosting_regressor"} and \code{"random_forest_regressor"} models and a
+#' \code{glmnet.ElasticNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5, scoring='r2')}, combining them using
 #' \href{https://github.com/civisanalytics/civisml-extensions}{NonNegativeLinearRegression}.
 #'  The estimators that are being stacked have the same names as the
 #' associated pre-defined models, and the meta-estimator steps are named
