@@ -4,6 +4,7 @@
 
 ### Added
 
+- Print CivisML training warnings when model results are fetched from Platform.
 - `query_civis_file` exports a `"schema.tablename"`, `sql("query")`, or existing sql script id to S3 and returns the file id.
 - `write_civis` gains a `diststyle` argument for controlling the distribution of tables on Redshift.
 - `predict.civis_ml` and `create_and_run_pred` gain a `dvs_to_predict` argument which allows users to restrict output predictions to a subset of targets from a multi-output model.
