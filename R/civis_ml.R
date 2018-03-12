@@ -693,13 +693,11 @@ civis_ml_fetch_existing <- function(model_id, run_id = NULL) {
     metrics <- tryCatch(must_fetch_output_json(outputs, "metrics.json"),
                         error = function(e) NULL)
     model_info <- must_fetch_output_json(outputs, "model_info.json")
+    # re-raise any CivisML warnings
+    tryCatch( {for (warn in model_info$warnings) cat(warn)},
+             error = function(err) { return(NULL) })
   }
 
-  # re-raise any CivisML warnings
-  for(warn in model_info$warnings){
-    cat(warn)
-  }
-  
   type <- model_type(job)
 
   structure(
@@ -927,9 +925,8 @@ fetch_predict_results <- function(job_id, run_id) {
   model_info <- must_fetch_output_json(outputs, "model_info.json")
 
   # re-raise any CivisML warnings
-  for(warn in model_info$warnings){
-    cat(warn)
-  }
+  tryCatch( {for (warn in model_info$warnings) cat(warn)},
+           error = function(err) { return(NULL) })
 
   structure(
     list(
