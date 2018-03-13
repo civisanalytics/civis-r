@@ -692,7 +692,12 @@ civis_ml_fetch_existing <- function(model_id, run_id = NULL) {
     metrics <- tryCatch(must_fetch_output_json(outputs, "metrics.json"),
                         error = function(e) NULL)
     model_info <- must_fetch_output_json(outputs, "model_info.json")
+    # re-raise any CivisML warnings
+    if (length(model_info$warnings) > 0) {
+      warning("CivisML issued the following warnings during training:\n", unlist(model_info$warnings))
+    }
   }
+
   type <- model_type(job)
 
   structure(
@@ -918,6 +923,11 @@ fetch_predict_results <- function(job_id, run_id) {
   run <- scripts_get_custom_runs(job_id, run_id)
   outputs <- scripts_list_custom_runs_outputs(job_id, run_id)
   model_info <- must_fetch_output_json(outputs, "model_info.json")
+
+  # re-raise any CivisML warnings
+  if (length(model_info$warnings) > 0) {
+    warning("CivisML issued the following warnings during training:\n", unlist(model_info$warnings))
+  }
 
   structure(
     list(

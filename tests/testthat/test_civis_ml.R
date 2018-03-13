@@ -684,7 +684,7 @@ test_that("exceptions with hyperband correct", {
 
 test_that("robust if metrics.json not present", {
   fn <- tempfile()
-  cat(jsonlite::toJSON(c("a,b,c")), file = fn)
+  cat(jsonlite::toJSON(list(a=1, b=letters[1:3])), file = fn)
 
   fake_outputs <- mock(list(list(objectType = "File", objectId = 1, name = "model_info.json")))
   fake_download <- mock(fn)
@@ -699,7 +699,7 @@ test_that("robust if metrics.json not present", {
     `civis::model_type` = fake_model_type,
     civis_ml_fetch_existing(123, 1)
   )
-  expect_equal(res$model_info, c("a,b,c"))
+  expect_equal(res$model_info, list(a=1, b=letters[1:3]))
   expect_null(res$metrics)
 })
 
