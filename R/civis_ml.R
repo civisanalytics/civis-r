@@ -515,6 +515,10 @@ civis_ml.character <- function(x,
 #' Try to stash a dataframe in feather format, for applicable CivisML versions.
 #' Otherwise, stash as csv. If any columns are factor, require feather format,
 #' to avoid incorrect type inference reading from csv.
+#'
+#' @param x data.frame to stash
+#'
+#' @return file id where dataframe is stored
 stash_local_dataframe <- function(x) {
   # Try to stash a dataframe in feather format.
   tmpl_id <- getOption("civis.ml_train_template_id")
