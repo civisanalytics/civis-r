@@ -518,7 +518,7 @@ civis_ml.character <- function(x,
 #'
 #' @return file id where dataframe is stored
 stash_local_dataframe <- function(x) {
-  # Try to stash a dataframe in feathenr format.
+  # Try to stash a dataframe in feather format.
   tmpl_id <- getOption("civis.ml_train_template_id")
   tmp_path <- tempfile()
 
