@@ -4,6 +4,7 @@
 
 ### Added
 
+- Local dataframes can now be sent to CivisML as feather files
 - Print CivisML training warnings when model results are fetched from Platform.
 - `query_civis_file` exports a `"schema.tablename"`, `sql("query")`, or existing sql script id to S3 and returns the file id.
 - `write_civis` gains a `diststyle` argument for controlling the distribution of tables on Redshift.

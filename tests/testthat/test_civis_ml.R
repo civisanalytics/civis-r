@@ -1,4 +1,5 @@
 library(mockery)
+
 context("civis_ml")
 
 test_that("jsonlite works", {
@@ -555,6 +556,47 @@ test_that("passes table info", {
               database_id = 999,
               sql_where = "row_number in (1, 2, 4)",
               sql_limit = 11)
+})
+
+################################################################################
+context("stash_local_dataframe")
+
+test_that("newer CivisML versions use feather", {
+  # enforce newer CivisML version
+  temp_id <- getOption('civis.ml_train_template_id')
+  options(civis.ml_train_template_id = 10582)
+  # factor should not cause errors when using feather
+  x <- data.frame(a = 1:3, b = letters[1:3])
+  fake_file <- mock(1)
+  with_mock(
+    `civis::write_civis_file` = fake_file,
+    {
+      stash_local_dataframe(x)
+      args <- mock_args(fake_file)
+      expect_equal(args[[1]]$name, "modelpipeline_data.feather")
+    }
+  )
+  # cleanup
+  options(civis.ml_train_template_id = temp_id)
+})
+
+test_that("older CivisML versions use csv", {
+  # enforce older CivisML version
+  temp_id <- getOption('civis.ml_train_template_id')
+  options(civis.ml_train_template_id = 9969)
+  # factor type should not matter for older version
+  x <- data.frame(a = 1:3, b = letters[1:3], stringsAsFactors = FALSE)
+  fake_file <- mock(1)
+  with_mock(
+    `civis::write_civis_file` = fake_file,
+    {
+      stash_local_dataframe(x)
+      args <- mock_args(fake_file)
+      expect_equal(args[[1]]$name, "modelpipeline_data.csv")
+    }
+  )
+  # cleanup
+  options(civis.ml_train_template_id = temp_id)
 })
 
 ################################################################################

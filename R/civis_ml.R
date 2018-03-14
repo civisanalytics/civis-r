@@ -326,9 +326,7 @@ civis_ml.data.frame <- function(x,
     oos_scores_db_id <- get_database_id(oos_scores_db)
   }
 
-  tmp_path <- tempfile()
-  utils::write.csv(x, file = tmp_path, row.names = FALSE)
-  file_id <- write_civis_file(tmp_path, "modelpipeline_data.csv")
+  file_id <- stash_local_dataframe(x)
   create_and_run_model(file_id = file_id,
                        dependent_variable = dependent_variable,
                        excluded_columns = excluded_columns,
@@ -512,6 +510,30 @@ civis_ml.character <- function(x,
                        n_jobs = n_jobs,
                        notifications = notifications,
                        verbose = verbose)
+}
+
+#' Stash a data frame in feather or csv format, depending on CivisML version.
+#'
+#' @param x data.frame to stash
+#'
+#' @return file id where dataframe is stored
+stash_local_dataframe <- function(x) {
+  # Try to stash a dataframe in feather format.
+  tmpl_id <- getOption("civis.ml_train_template_id")
+  tmp_path <- tempfile()
+
+  if (tmpl_id > 9969) {
+    # newer versions use feather
+    feather::write_feather(x, tmp_path)
+    civis_path <- "modelpipeline_data.feather"
+  } else {
+    # older versions can't use feather
+    utils::write.csv(x, file = tmp_path, row.names = FALSE)
+    civis_path <- "modelpipeline_data.csv"
+  }
+
+  file_id <- write_civis_file(tmp_path, name = civis_path)
+  return(file_id)
 }
 
 create_and_run_model <- function(file_id = NULL,
