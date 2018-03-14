@@ -520,29 +520,20 @@ civis_ml.character <- function(x,
 #'
 #' @return file id where dataframe is stored
 stash_local_dataframe <- function(x) {
-  # Try to stash a dataframe in feather format.
+  # Try to stash a dataframe in feathenr format.
   tmpl_id <- getOption("civis.ml_train_template_id")
   tmp_path <- tempfile()
 
-  civis_path <- tryCatch({
-    if (tmpl_id > 9969) {
-      # newer versions preferentially use feather
-      feather::write_feather(x, tmp_path)
-      civis_path <- "modelpipeline_data.feather"
-    } else {
-      # older versions can't use feather
-      utils::write.csv(x, file = tmp_path, row.names = FALSE)
-      civis_path <- "modelpipeline_data.csv"
-    }
-  }, error = function(e) {
-    # don't allow new versions to write to csv if there are factors
-    if (any(sapply(x, is.factor))) {
-      stop('Factor columns can only be handled with "feather" installed')
-    }
-    # fall back to writing to csv
+  if (tmpl_id > 9969) {
+    # newer versions use feather
+    feather::write_feather(x, tmp_path)
+    civis_path <- "modelpipeline_data.feather"
+  } else {
+    # older versions can't use feather
     utils::write.csv(x, file = tmp_path, row.names = FALSE)
-    return("modelpipeline_data.csv")
-  })
+    civis_path <- "modelpipeline_data.csv"
+  }
+
   file_id <- write_civis_file(tmp_path, name = civis_path)
   return(file_id)
 }

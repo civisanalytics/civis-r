@@ -599,43 +599,6 @@ test_that("older CivisML versions use csv", {
   options(civis.ml_train_template_id = temp_id)
 })
 
-test_that("newer CivisML version without feather falls back to csv", {
-  # enforce newer CivisML version
-  temp_id <- getOption('civis.ml_train_template_id')
-  options(civis.ml_train_template_id = 10582)
-  # can't include factors here
-  x <- data.frame(a = 1:3, b = letters[1:3], stringsAsFactors = FALSE)
-  fake_file <- mock(1)
-  fake_feather <- mock(stop('feather is gone now'))
-  with_mock(
-    `civis::write_civis_file` = fake_file,
-    `feather::write_feather` = fake_feather,
-    {
-      stash_local_dataframe(x)
-      args <- mock_args(fake_file)
-      expect_equal(args[[1]]$name, "modelpipeline_data.csv")
-    }
-  )
-  # cleanup
-  options(civis.ml_train_template_id = temp_id)
-})
-
-test_that("raises error without feather when df has factors", {
-  # enforce newer CivisML version
-  temp_id <- getOption('civis.ml_train_template_id')
-  options(civis.ml_train_template_id = 10582)
-  # b will be a factor, which should cause errors without feather
-  x <- data.frame(a = 1:3, b = letters[1:3])
-  fake_feather <- mock(stop('feather is gone now'))
-  err_msg <- 'Factor columns can only be handled with "feather" installed'
-  with_mock(
-    `feather::write_feather` = fake_feather,
-    expect_error(stash_local_dataframe(x), err_msg)
-  )
-  # cleanup
-  options(civis.ml_train_template_id = temp_id)
-})
-
 ################################################################################
 # run build model
 context("create_and_run_model")
