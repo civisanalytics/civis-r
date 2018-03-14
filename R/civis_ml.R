@@ -512,9 +512,7 @@ civis_ml.character <- function(x,
                        verbose = verbose)
 }
 
-#' Try to stash a dataframe in feather format, for applicable CivisML versions.
-#' Otherwise, stash as csv. If any columns are factor, require feather format,
-#' to avoid incorrect type inference reading from csv.
+#' Stash a data frame in feather or csv format, depending on CivisML version.
 #'
 #' @param x data.frame to stash
 #'
