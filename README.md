@@ -23,7 +23,9 @@ All API keys have a set expiration date and so a new key will need to be
 created at least every 30 days.
 
 Once you have created an API key, you will then need to add it to your
-`.Renviron` so the `civis` package can access it:
+`.Renviron` so the `civis` package can access it.
+
+#### Linux/MacOS
 
 ```bash
 touch ~/.Renviron
@@ -36,6 +38,10 @@ Then add the following line replacing the fake key `sadf8sadf9jasdf` with the AP
 CIVIS_API_KEY=sadf8sadf9jasdf
 ```
 After saving the `.Renviron` file, you'll need to restart R/Rstudio.
+
+#### Windows
+
+A `.Renviron` file can be created in the R user home directory, `Sys.getenv("R_USER")`. Typically this is `"C:/username/Documents"`. Open or create `.Renviron` with `notepad` and add the key as above. Save with type `all files`, not `.txt`. Restart R/Rstudio.
 
 :heavy_exclamation_mark: You must keep your API key secret. If you use version
 control tools, ensure you do not commit `.Renviron` or any scripts in which
