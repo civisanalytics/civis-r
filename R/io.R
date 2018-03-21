@@ -331,10 +331,12 @@ write_civis_file.default <- function(x, name = 'r-object.rds', expires_at = NULL
 #' @describeIn write_civis_file Upload a text file to Civis Platform (Files endpoint).
 #' @export
 write_civis_file.character <- function(x, name = x, expires_at = NULL, ...) {
-  if (!file.exists(x)) {
-    msg <- paste("File 'x' does not exist. If 'x' is a vector of characters",
-                 "to be uploaded rather than a filename, try",
-                 "write_civis_file(as.list(x), ...)")
+  if (length(x) > 1 || !file.exists(x)) {
+    err <- ifelse(length(x) > 1,
+                  "'x' has length > 1.",
+                  "File 'x' does not exist.")
+    msg <- paste(err, "If 'x' is a character vector to be uploaded rather",
+                 "than a filename, try write_civis_file(as.list(x), ...)")
     stop(msg)
   }
   size <- file.size(x)
