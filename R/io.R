@@ -333,7 +333,7 @@ write_civis_file.default <- function(x, name = 'r-object.rds', expires_at = NULL
 write_civis_file.character <- function(x, name = x, expires_at = NULL, ...) {
   if (!file.exists(x)) {
     msg <- paste("File 'x' does not exist. If 'x' is a vector of characters",
-                 "to be uploaded rather than a filename, try ",
+                 "to be uploaded rather than a filename, try",
                  "write_civis_file(as.list(x), ...)")
     stop(msg)
   }
