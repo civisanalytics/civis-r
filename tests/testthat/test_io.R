@@ -197,9 +197,13 @@ test_that("write_civis.numeric fails for NA", {
 })
 
 test_that("write_civis_file fails if file doesn't exist", {
-  msg <- "file.exists(x) is not TRUE"
-  err_msg <- tryCatch(write_civis_file("asdf"), error = function(e) e$message)
-  expect_equal(msg, err_msg)
+  regexp <- "File 'x' does not exist.*"
+  expect_error(write_civis_file("asdf"), regexp)
+})
+
+test_that("write_civis_file fails if character vector length 2 is passed", {
+  regexp <- "'x' has length > 1.*"
+  expect_error(write_civis_file(c('fake', 'paths')), regexp)
 })
 
 test_that("write_civis_file.character returns a file id", {
