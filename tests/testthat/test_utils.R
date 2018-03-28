@@ -56,15 +56,13 @@ test_that("get_default_database sets package option for db_list of length 1", {
   expect_equal(get_default_database(), "the_only_db")
 })
 
-test_that("r_env_vars_", {
-  e <- r_env_vars_()
-  ans <- c("R_LIBS", "CYGWIN", "R_TESTS", "R_BROWSER", "R_PDFVIEWER", "TAR", "NOT_CRAN")
-  expect_equal(names(e), ans)
-})
-
 test_that("fetch_and_generate_client", {
   msg <- c("Using default Civis API Client")
   expect_message(
     withr::with_envvar(list(R_CLIENT_DEV = 'TRUE'),
                      fetch_and_generate_client()), msg)
+
+  expect_message(
+    withr::with_envvar(list(CIVIS_API_KEY = ''),
+                       fetch_and_generate_client()), msg)
 })
