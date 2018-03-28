@@ -29,7 +29,7 @@ fetch_and_generate_client <- function() {
                        roxygen2::roxygenise(".",
                          load_code = function(...) pkgload::load_all(".")$env))
   } else {
-    message("Using default CIVIS API client.")
+    message("Using default Civis API Client")
   }
 }
 

@@ -13,8 +13,8 @@ Fetches and generates the client.
 Skips autogeneration if:
 
 \itemize{
-\item 1. R_CLIENT_DEV == "TRUE"
-\item 2. if api_key not present
+\item 1. If the environment variable R_CLIENT_DEV == "TRUE"
+\item 2. If CIVIS_API_KEY not present
 \item 3. On windows with R < 3.4.0.
 }
 }
