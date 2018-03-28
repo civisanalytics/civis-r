@@ -40,7 +40,6 @@ Imports:
     utils,
     withr
 Suggests:
-    devtools,
     knitr,
     rmarkdown,
     DBItest,
