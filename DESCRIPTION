@@ -31,6 +31,7 @@ Imports:
     lubridate,
     methods,
     memoise,
+    pkgload,
     purrr,
     roxygen2,
     stats,

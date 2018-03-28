@@ -12,11 +12,13 @@ FILENAME <- c("R/generated_client.R")
 #' }
 #'
 #' @importFrom roxygen2 roxygenize
+#' @importFrom pkgload load_all
+#' @importFrom withr with_envvar
 #' @export
 fetch_and_generate_client <- function() {
   if (Sys.getenv("R_CLIENT_DEV") != "TRUE" &&
       windows_r_version_is_valid() &&
-      !inherits(try(api_key(), silent = TRUE),"try-error")) {
+      !inherits(try(api_key(), silent = TRUE), "try-error")) {
 
     message("Generating API")
     spec <- get_spec()
