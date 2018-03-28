@@ -36,7 +36,8 @@ Imports:
     stats,
     stringr,
     testthat,
-    utils
+    utils,
+    withr
 Suggests:
     devtools,
     knitr,
