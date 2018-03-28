@@ -61,22 +61,26 @@ A list containing the following elements:
 \itemize{
 \item task string, The type of person matching task. Options are: "table_to_table", "dedupe_table", or "table_to_civis_data".
 \item source string, The input source of your data. Options are: "redshift" or "s3".
-\item inputDatabase string, The Redshift database name for input data.
+\item inputDatabaseName string, The Redshift database name for input data.
 \item inputSchema string, The schema name for the input data.
 \item inputTable string, The table name for the input data.
 \item inputFileId string, The ID of the input S3 file.
 \item inputFieldMapping string, The column mapping for the input in JSON or YAML.
 \item inputFileHeaders string, Provide your headers in a list if the first row of your input does not have the headers, and make them JSON-decodable. For example: ["col1","col2","col3"].
-\item targetDatabase string, The Redshift database for target data.
+\item targetDatabaseName string, The Redshift database for target data.
 \item targetSchema string, The schema for target data.
 \item targetTable string, The table for target data.
 \item targetFieldMapping string, The column mapping for the target in JSON or YAML.
 \item targetFileId string, The ID of the target S3 file.
-\item targetDynamoTableName string, The target DynamoDB table name.
-\item targetDynamoAwsRegion string, The target DynamoDB AWS Region.
+\item matchTargetId integer, The ID of the match target.
+\item matchDatabaseName string, The Redshift database for the match output table.
+\item matchSchema string, The schema for the match output table.
+\item matchTable string, The name of the match output table.
+\item matchCsvFilename string, The name of the match output file.
+\item matchSourceIdCol string, The name of the column in the output table that will hold the id from the source for each match.
+\item matchTargetIdCol string, The name the column in the output table that will hold the id from the target for each match.
 \item maxMatches integer, The maximum number of matches to return.
 \item threshold number, The score threshold (between 0 and 1).
-\item useGoBlocker boolean, If True, uses blocker for old Go targets. If False, uses blocker for new Python targets.
 }}
 }
 \description{

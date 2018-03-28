@@ -4,7 +4,9 @@
 \alias{media_post_optimizations}
 \title{Create a new optimization}
 \usage{
-media_post_optimizations(runs, name = NULL)
+media_post_optimizations(runs, name = NULL, programs = NULL,
+  networks = NULL, exclude_programs = NULL, exclude_networks = NULL,
+  time_slot_percentages = NULL)
 }
 \arguments{
 \item{runs}{array required. An array containing the following fields: 
@@ -12,12 +14,23 @@ media_post_optimizations(runs, name = NULL)
 \item marketId integer, The market ID.
 \item startDate string, The start date for the media run.
 \item endDate string, The end date for the media run.
+\item forceCpm boolean, Whether to force optimization to use CPM data even if partition data is available.
 \item syscodes array, The syscodes for the media run.
 \item rateCards array, The ratecards for the media run.
 \item constraints array, The constraints for the media run.
 }}
 
 \item{name}{string optional. The name of the optimization.}
+
+\item{programs}{array optional. An array of programs that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_programs is not also set.}
+
+\item{networks}{array optional. An array of networks that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_networks is not also set.}
+
+\item{exclude_programs}{boolean optional. If Civis Media Optimizer should exclude the programs in the programs parameter.If this value is set to false, it will make the optimization limit itself to the programs supplied through the programs parameter.An error will be thrown if programs is not also set.}
+
+\item{exclude_networks}{boolean optional. If Civis Media Optimizer should exclude the networks in the networks parameter.If this value is set to false, it will make the optimization limit itself to the networks supplied through the networks.An error will be thrown if networks is not also set.}
+
+\item{time_slot_percentages}{object optional. The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.}
 }
 \value{
 A list containing the following elements:
@@ -46,10 +59,16 @@ A list containing the following elements:
 \item marketId integer, The market ID.
 \item startDate string, The start date for the media run.
 \item endDate string, The end date for the media run.
+\item forceCpm boolean, Whether to force optimization to use CPM data even if partition data is available.
 \item syscodes array, The syscodes for the media run.
 \item rateCards array, The ratecards for the media run.
 \item constraints array, The constraints for the media run.
 }}
+\item{programs}{array, An array of programs that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_programs is not also set.}
+\item{networks}{array, An array of networks that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_networks is not also set.}
+\item{excludePrograms}{boolean, If Civis Media Optimizer should exclude the programs in the programs parameter.If this value is set to false, it will make the optimization limit itself to the programs supplied through the programs parameter.An error will be thrown if programs is not also set.}
+\item{excludeNetworks}{boolean, If Civis Media Optimizer should exclude the networks in the networks parameter.If this value is set to false, it will make the optimization limit itself to the networks supplied through the networks.An error will be thrown if networks is not also set.}
+\item{timeSlotPercentages}{object, The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.}
 }
 \description{
 Create a new optimization

@@ -6,10 +6,10 @@
 \usage{
 notebooks_put(id, name = NULL, language = NULL, description = NULL,
   file_id = NULL, requirements_file_id = NULL, requirements = NULL,
-  docker_image_name = NULL, docker_image_tag = NULL, memory = NULL,
-  cpu = NULL, credentials = NULL, environment_variables = NULL,
-  idle_timeout = NULL, git_repo_url = NULL, git_ref = NULL,
-  git_path = NULL)
+  docker_image_name = NULL, docker_image_tag = NULL, instance_type = NULL,
+  memory = NULL, cpu = NULL, credentials = NULL,
+  environment_variables = NULL, idle_timeout = NULL, git_repo_url = NULL,
+  git_ref = NULL, git_path = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID for this notebook.}
@@ -29,6 +29,8 @@ notebooks_put(id, name = NULL, language = NULL, description = NULL,
 \item{docker_image_name}{string optional. The name of the docker image to pull from DockerHub.}
 
 \item{docker_image_tag}{string optional. The tag of the docker image to pull from DockerHub (default: latest).}
+
+\item{instance_type}{string optional. The EC2 instance type to deploy to.}
 
 \item{memory}{integer optional. The amount of memory allocated to the notebook.}
 
@@ -67,6 +69,7 @@ A list containing the following elements:
 }}
 \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+\item{instanceType}{string, The EC2 instance type to deploy to.}
 \item{memory}{integer, The amount of memory allocated to the notebook.}
 \item{cpu}{integer, The amount of cpu allocated to the the notebook.}
 \item{createdAt}{string, }
@@ -80,6 +83,7 @@ A list containing the following elements:
 \item dockerImageName string, The name of the docker image to pull from DockerHub.
 \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 \item displayUrl string, URL that displays the deployed platform object and includes auth token.
+\item instanceType string, The EC2 instance type requested for the deployment.
 \item memory integer, The memory allocated to the deployment.
 \item cpu integer, The cpu allocated to the deployment.
 \item state string, The state of the deployment.

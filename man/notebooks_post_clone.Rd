@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{notebooks_post_clone}
 \alias{notebooks_post_clone}
-\title{Clone this notebook}
+\title{Clone this Notebook}
 \usage{
 notebooks_post_clone(id)
 }
@@ -30,6 +30,7 @@ A list containing the following elements:
 }}
 \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+\item{instanceType}{string, The EC2 instance type to deploy to.}
 \item{memory}{integer, The amount of memory allocated to the notebook.}
 \item{cpu}{integer, The amount of cpu allocated to the the notebook.}
 \item{createdAt}{string, }
@@ -43,6 +44,7 @@ A list containing the following elements:
 \item dockerImageName string, The name of the docker image to pull from DockerHub.
 \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 \item displayUrl string, URL that displays the deployed platform object and includes auth token.
+\item instanceType string, The EC2 instance type requested for the deployment.
 \item memory integer, The memory allocated to the deployment.
 \item cpu integer, The cpu allocated to the deployment.
 \item state string, The state of the deployment.
@@ -63,5 +65,5 @@ A list containing the following elements:
 \item{hidden}{boolean, The hidden status of the object.}
 }
 \description{
-Clone this notebook
+Clone this Notebook
 }

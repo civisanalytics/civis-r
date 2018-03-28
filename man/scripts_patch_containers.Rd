@@ -63,6 +63,7 @@ scripts_patch_containers(id, name = NULL, parent_id = NULL,
 \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares.
 \item memory integer, The amount of RAM to allocate for the container (in MiB).
 \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
+\item wholeInstance boolean, Whether or not to use the entire instance. If true, cpu, memory, and disk space are not required and will be set to an instance's max.
 }}
 
 \item{repo_http_uri}{string optional. The location of a github repo to clone into the container, e.g. github.com/my-user/my-repo.git.}
