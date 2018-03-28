@@ -1,14 +1,18 @@
 FILENAME <- c("R/generated_client.R")
 
-#' Fetches and generates the client in generated_client.R
+#' Fetches and generates the client.
 #'
 #' @details
 #' Skips autogeneration if:
-#' 1. R_CLIENT_DEV == "TRUE"
-#' 2. if api_key not present
-#' 3. On windows with R < 3.4.0.
+#'
+#' \itemize{
+#' \item 1. R_CLIENT_DEV == "TRUE"
+#' \item 2. if api_key not present
+#' \item 3. On windows with R < 3.4.0.
+#' }
 #'
 #' @importFrom roxygen2 roxygenize
+#' @export
 fetch_and_generate_client <- function() {
   if (Sys.getenv("R_CLIENT_DEV") != "TRUE" &&
       windows_r_version_is_valid() &&
