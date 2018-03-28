@@ -134,3 +134,22 @@ toggle_dev <- function() {
     Sys.setenv(R_CLIENT_DEV = "TRUE")
   }
 }
+
+r_env_vars_ <- function () {
+  vars <- c(R_LIBS = paste(.libPaths(), collapse = .Platform$path.sep),
+            CYGWIN = "nodosfilewarning", R_TESTS = "", R_BROWSER = "false",
+            R_PDFVIEWER = "false", TAR = auto_tar_())
+  if (is.na(Sys.getenv("NOT_CRAN", unset = NA))) {
+    vars[["NOT_CRAN"]] <- "true"
+  }
+  vars
+}
+
+auto_tar_ <- function() {
+  if (on_windows()) "internal" else Sys.getenv("TAR")
+}
+
+on_windows <- function() {
+  .Platform$OS.type == "windows"
+}
+
