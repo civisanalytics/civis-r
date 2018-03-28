@@ -1,28 +1,43 @@
 FILENAME <- c("R/generated_client.R")
 
-#' Fetches and generates the client in generated_client.R
+#' Fetches and generates the client.
 #'
 #' @details
-#' Skips autogeneration on windows with R < 3.4.0 and if R_CLIENT_DEV == "TRUE".
-#' Skips downloading a fresh spec if CIVIS_API_KEY is not set.
-#' @importFrom devtools document
+#' Skips autogeneration if:
+#'
+#' \itemize{
+#' \item 1. If the environment variable R_CLIENT_DEV == "TRUE"
+#' \item 2. If CIVIS_API_KEY not present
+#' \item 3. On windows with R < 3.4.0.
+#' }
+#'
 #' @importFrom roxygen2 roxygenize
+#' @importFrom pkgload load_all
+#' @importFrom withr with_envvar
+#' @export
 fetch_and_generate_client <- function() {
-  if (Sys.getenv("R_CLIENT_DEV") != "TRUE" && windows_r_version_is_valid()) {
+  if (Sys.getenv("R_CLIENT_DEV") != "TRUE" &&
+      windows_r_version_is_valid() &&
+      !inherits(try(api_key(), silent = TRUE), "try-error")) {
+
     message("Generating API")
     spec <- get_spec()
     client_str <- generate_client(spec)
+
     message(paste0("Writing API to ", FILENAME))
     write_client(client_str, FILENAME = FILENAME)
-    devtools::document()
+
+    withr::with_envvar(r_env_vars_(),
+                       roxygen2::roxygenise(".",
+                         load_code = function(...) pkgload::load_all(".")$env))
   } else {
-    message("Skipping client generation")
+    message("Using default Civis API Client")
   }
 }
 
 windows_r_version_is_valid <- function(major = 3, minor = 3.4) {
   valid <- TRUE
-  if (.Platform$OS.type == "windows") {
+  if (on_windows()) {
     valid <- as.numeric(R.version$major) >= major && as.numeric(R.version$minor) >= minor
   }
   if (!valid) message("Autogenerating API on Windows requires R > 3.4.0")
@@ -345,21 +360,13 @@ returns_array <- function(verb, verb_name, path_name) {
 
 # ---- Main ----
 get_spec <- function() {
-
-  # Skip retries whenever api_key not set (e.g. Travis, Appveyor, CRAN)
-  if (!inherits(try(api_key(), silent = TRUE), "try-error")) {
-    api_spec <- try(call_api("get", path = "/endpoints/", list(), list(), list()))
-    if (inherits(api_spec, "try-error")) {
-      message("Downloading API specification from Civis failed, using cached API specification.")
-
-      # loads cached spec generated from 'tools/generate_default_client.R'
-      load("R/sysdata.rda")
-    } else {
-      message("Downloading API specification from Civis successful.")
-    }
-  } else {
-    message("The environment variable CIVIS_API_KEY is not set, using cached API specification.")
+  api_spec <- try(call_api("get", path = "/endpoints/", list(), list(), list()))
+  if (inherits(api_spec, "try-error")) {
+    message("Downloading API specification from Civis failed, using cached API specification.")
+    # loads cached spec generated from 'tools/generate_default_client.R'
     load("R/sysdata.rda")
+  } else {
+    message("Downloading API specification from Civis successful.")
   }
   api_spec
 }

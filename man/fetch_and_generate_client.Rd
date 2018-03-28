@@ -2,14 +2,19 @@
 % Please edit documentation in R/generate_client.R
 \name{fetch_and_generate_client}
 \alias{fetch_and_generate_client}
-\title{Fetches and generates the client in generated_client.R}
+\title{Fetches and generates the client.}
 \usage{
 fetch_and_generate_client()
 }
 \description{
-Fetches and generates the client in generated_client.R
+Fetches and generates the client.
 }
 \details{
-Skips autogeneration on windows with R < 3.4.0 and if R_CLIENT_DEV == "TRUE".
-Skips downloading a fresh spec if CIVIS_API_KEY is not set.
+Skips autogeneration if:
+
+\itemize{
+\item 1. If the environment variable R_CLIENT_DEV == "TRUE"
+\item 2. If CIVIS_API_KEY not present
+\item 3. On windows with R < 3.4.0.
+}
 }

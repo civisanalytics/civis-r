@@ -22,10 +22,11 @@ enhancements_list_cass_ncoa_runs_outputs(id, run_id, limit = NULL,
 }
 \value{
 An array containing the following fields:
-\item{objectType}{string, The type of the output. Valid values are File, Table, Report, Project, or Credential}
+\item{objectType}{string, The type of the output. Valid values are File, Table, Report, Project, Credential, or JSONValue}
 \item{objectId}{integer, The ID of the output object.}
 \item{name}{string, The name of the output object.}
 \item{link}{string, The link to retrieve the output object.}
+\item{value}{string, }
 }
 \description{
 List the outputs for a run

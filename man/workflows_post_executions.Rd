@@ -4,7 +4,8 @@
 \alias{workflows_post_executions}
 \title{Execute a workflow}
 \usage{
-workflows_post_executions(id, target_task = NULL, input = NULL)
+workflows_post_executions(id, target_task = NULL, input = NULL,
+  included_tasks = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID for the workflow.}
@@ -12,6 +13,8 @@ workflows_post_executions(id, target_task = NULL, input = NULL)
 \item{target_task}{string optional. For a reverse workflow, the name of the task to target.}
 
 \item{input}{object optional. The dictionary of name/value input pairs defined for this execution.}
+
+\item{included_tasks}{array optional. If specified, executes only the subset of workflow tasks included.}
 }
 \value{
 A list containing the following elements:
@@ -29,12 +32,14 @@ A list containing the following elements:
 }}
 \item{definition}{string, The definition of the workflow for this execution.}
 \item{input}{object, The dictionary of name/value input pairs defined for this execution.}
+\item{includedTasks}{array, The subset of workflow tasks selected to execute.}
 \item{tasks}{array, An array containing the following fields: 
 \itemize{
 \item name string, The name of the task.
 \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, or error
 \item mistralStateInfo string, Extra info associated with the state of the task.
 \item runs array, The runs associated with this task, in descending order by id.
+\item executions array, The executions run by this task, in descending order by id.
 }}
 \item{startedAt}{string, The time this execution started.}
 \item{finishedAt}{string, The time this execution finished.}

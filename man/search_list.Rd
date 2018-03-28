@@ -35,6 +35,7 @@ An array containing the following fields:
 \item typeName string, The verbose name of the type.
 \item updatedAt string, The time the item was last updated.
 \item owner string, The owner of the item.
+\item useCount integer, The use count of the item, if the item is a template.
 }}
 }
 \description{

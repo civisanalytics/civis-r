@@ -14,6 +14,8 @@
 
 - Update CivisML stacking documentation.
 - `write_civis_file` now defaults to the file path for the `name` argument instead of requiring it.
+- `civis` no longer depends on `devtools`.
+- Client is generated only if an API key has been set.
 
 ### Fixed
 

@@ -25,6 +25,7 @@ A list containing the following elements:
 \item organizationId integer, The organization associated with this group.
 }}
 \item{organizationName}{string, The name of the organization the user belongs to.}
+\item{organizationSlug}{string, The slug of the organization the user belongs to.}
 \item{createdAt}{string, The date and time when the user was created.}
 \item{signInCount}{integer, The number of times the user has signed in.}
 }

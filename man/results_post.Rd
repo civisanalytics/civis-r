@@ -53,6 +53,7 @@ A list containing the following elements:
 }}
 \item{jobPath}{string, The link to details of the job that backs this report.}
 \item{tableauId}{integer, }
+\item{type}{string, }
 \item{templateId}{integer, The ID of the template used for this report.}
 \item{authThumbnailUrl}{string, URL for a thumbnail of the report.}
 \item{lastRun}{object, A list containing the following elements: 

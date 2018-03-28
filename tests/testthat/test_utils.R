@@ -55,3 +55,14 @@ test_that("get_default_database sets package option for db_list of length 1", {
   # test that the option is set as a side-effect
   expect_equal(get_default_database(), "the_only_db")
 })
+
+test_that("fetch_and_generate_client", {
+  msg <- c("Using default Civis API Client")
+  expect_message(
+    withr::with_envvar(list(R_CLIENT_DEV = 'TRUE'),
+                     fetch_and_generate_client()), msg)
+
+  expect_message(
+    withr::with_envvar(list(CIVIS_API_KEY = ''),
+                       fetch_and_generate_client()), msg)
+})
