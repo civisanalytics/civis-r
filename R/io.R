@@ -532,7 +532,7 @@ download_civis.numeric <- function(x, file,
 #'   \item query: the executed query
 #'   \item entries: a list containing presigned urls for each csv part
 #'   \item compression: the type of compression on each csv part
-#'   \item delimiter: the delimiter used to seperate fields
+#'   \item delimiter: the delimiter used to separate fields
 #'   \item unquoted: whether fields are quoted
 #' }
 #'

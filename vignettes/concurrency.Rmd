@@ -42,7 +42,7 @@ As all function calls in `civis` block, `civis` relies on the mature
 R ecosystem for parallel programming to enable multiple simultaneous
 tasks. The three packages we introduce are `future`, `foreach`, and
 `parallel` (included in base R). For all packages, simultaneous tasks are
-enabled by starting each task in a seperate R process. Examples for building
+enabled by starting each task in a separate R process. Examples for building
 several models in parallel with different libraries are included below. The
 libraries have strengths and weaknesses and choosing which library to use is
 often a matter of preference.
