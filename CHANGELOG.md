@@ -1,25 +1,26 @@
 # Changelog
 
-## [1.3.0] - Unreleased
+## [1.3.0] - 2018-03-30
 
 ### Added
 
-- Local dataframes can now be sent to CivisML as feather files
+- Local dataframes can now be sent to CivisML as feather files.
 - Print CivisML training warnings when model results are fetched from Platform.
+- `predict.civis_ml` and `create_and_run_pred` gain a `dvs_to_predict` argument which allows users to restrict output predictions to a subset of targets from a multi-output model.
+
 - `query_civis_file` exports a `"schema.tablename"`, `sql("query")`, or existing sql script id to S3 and returns the file id.
 - `write_civis` gains a `diststyle` argument for controlling the distribution of tables on Redshift.
-- `predict.civis_ml` and `create_and_run_pred` gain a `dvs_to_predict` argument which allows users to restrict output predictions to a subset of targets from a multi-output model.
 
 ### Changed
 
-- Update CivisML stacking documentation.
+- CivisML stacking documentation has been updated.
 - `write_civis_file` now defaults to the file path for the `name` argument instead of requiring it.
 
 ### Fixed
 
-- `read_civis.numeric`, `write_civis.numeric`, `download_civis.numeric`, and `query_civis.numeric` now fail with a better error message for `NA` of type numeric.
+- `read_civis.numeric`, `write_civis.numeric`, `download_civis.numeric`, and `query_civis.numeric` now fail with a better error message when called with `x = NA` of type numeric.
 - The `hidden` argument of `write_civis` now works.
-- Remove new lines from parameter descriptions in generated docs.
+- New lines are removed from parameter descriptions in generated docs.
 
 ## [1.2.0] - 2018-01-23
 
