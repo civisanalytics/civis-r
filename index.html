@@ -84,27 +84,70 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p><code>civis</code> is an R package that helps analysts and developers interact with the Civis Platform. The package includes a set of tools around common workflows as well as a convenient interface to make requests directly to the Civis Data Science API. See the <a href="https://civisanalytics.github.io/civis-r">full documentation</a> and the <a href="https://civisanalytics.github.io/civis-r/articles/quick_start.html">getting started guide</a> for more details.</p>
+<p><code>civis</code> is an R package that helps analysts and developers interact with the Civis Platform. The package includes a set of tools around common workflows as well as a convenient interface to make requests directly to the Civis Data Science API.</p>
 </div>
-<div id="installation" class="section level2">
+<div id="documentation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<a href="#documentation" class="anchor"></a>Documentation</h2>
+<p>The full documentation is hosted <a href="https://civisanalytics.github.io/civis-r">here</a>. The fastest way to get started is with the <a href="https://civisanalytics.github.io/civis-r/articles/quick_start.html">getting started guide</a>.</p>
+</div>
+<div id="api-keys" class="section level2">
+<h2 class="hasAnchor">
+<a href="#api-keys" class="anchor"></a>API Keys</h2>
 <p>Installing and using <code>civis</code> requires an API key. Instructions for creating an API key can be found <a href="https://civis.zendesk.com/hc/en-us/articles/216341583-Generating-an-API-Key">here</a>. All API keys have a set expiration date and so a new key will need to be created at least every 30 days.</p>
-<p>Once you have created an API key, you will then need to add it to your environment so <code>civis</code> can access it. To do this, add the following line to your <code>.Renviron</code> file:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">CIVIS_API_KEY=</span>adlfk942l2ka0dd0232</code></pre></div>
-<p>Be sure to replace the fake key <code>adlfk942l2ka0dd0232</code> with your newly created key.</p>
-<p>With an API key in place, you can now install <code>civis</code> using devtools:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"civisanalytics/civis-r"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Once you have created an API key, you will then need to add it to your <code>.Renviron</code> so the <code>civis</code> package can access it.</p>
+<div id="linuxmacos" class="section level4">
+<h4 class="hasAnchor">
+<a href="#linuxmacos" class="anchor"></a>Linux/MacOS</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">touch</span> ~/.Renviron
+<span class="ex">open</span> -t ~/.Renviron</code></pre></div>
+<p>Then add the following line replacing the fake key <code>sadf8sadf9jasdf</code> with the API key from your Civis Platform Profile:</p>
+<pre><code>CIVIS_API_KEY=sadf8sadf9jasdf</code></pre>
+<p>After saving the <code>.Renviron</code> file, you’ll need to restart R/Rstudio.</p>
+</div>
+<div id="windows" class="section level4">
+<h4 class="hasAnchor">
+<a href="#windows" class="anchor"></a>Windows</h4>
+<p>A <code>.Renviron</code> file can be created in the R user home directory, <code>Sys.getenv("R_USER")</code>. Typically this is <code>"C:/username/Documents"</code>. Open or create <code>.Renviron</code> with <code>notepad</code> and add the key as above. Save with type <code>all files</code>, not <code>.txt</code>. Restart R/Rstudio.</p>
 <p>❗ You must keep your API key secret. If you use version control tools, ensure you do not commit <code>.Renviron</code> or any scripts in which you have hard-coded an API key.</p>
+</div>
+</div>
+<div id="install" class="section level2">
+<h2 class="hasAnchor">
+<a href="#install" class="anchor"></a>Install</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"civis"</span>)</code></pre></div>
+<div id="updating" class="section level3">
+<h3 class="hasAnchor">
+<a href="#updating" class="anchor"></a>Updating</h3>
+<p>The <code>civis</code> package automatically generates R functions and documentation to interact with the Civis Platform when the package installs. From time to time, new API functions are added. These can be obtained immediately by re-installing the package from github:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"civisanalytics/civis-r"</span>)</code></pre></div>
+<p>If the dependencies are already installed (such as in docker containers), skipping dependency upgrades will be considerably faster:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"civisanalytics/civis-r"</span>, <span class="dt">upgrade_dependencies =</span> <span class="ot">FALSE</span>)</code></pre></div>
+</div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
 <p><code>civis</code> includes functionality for both</p>
 <ol>
-<li>Making direct calls to the API</li>
 <li>Making single calls to accomplish a specific task (which may involve making multiple calls to the API)</li>
+<li>Making direct calls to the API</li>
 </ol>
+<p>Many useful tasks will require making multiple direct calls to the API. <code>civis</code> includes a number of wrapper functions to make common tasks like IO and modeling easier. For example, reading data from a table in Platform is as easy as</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(civis)
+
+<span class="co"># Read an entire table in to memory</span>
+my_table &lt;-<span class="st"> "schema.tablename"</span>
+df &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_civis.html">read_civis</a></span>(my_table, <span class="dt">database=</span><span class="st">"my_database"</span>)
+
+<span class="co"># Run a query and read the results into memory</span>
+query &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(<span class="st">"SELECT a, b, c FROM schema.tablename WHERE b &gt; 42"</span>)
+df2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_civis.html">read_civis</a></span>(query, <span class="dt">database=</span><span class="st">"my_database"</span>)</code></pre></div>
+<p><code>civis</code> includes many more functions for tasks like writing data to tables and files as well as for creating reports. For more detailed documentation, see the included vignettes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">browseVignettes</span>(<span class="st">'civis'</span>)</code></pre></div>
+<div id="direct-calls-to-api" class="section level3">
+<h3 class="hasAnchor">
+<a href="#direct-calls-to-api" class="anchor"></a>Direct calls to API</h3>
 <p>Functions which make direct calls to the API are prefixed with the name of the resource that the function accesses. For example, the <code>users</code> resource encapsulates all the functionality of Platform regarding users. We can make various calls to the <code>users</code> resource to get information about ourselves and our team.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Data about me</span>
 civis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/civis/topics/users_list_me">users_list_me</a></span>()
@@ -123,23 +166,7 @@ team_members &lt;-<span class="st"> </span><span class="kw">sapply</span>(my_tea
 <span class="kw">print</span>(team_members)
 
 [<span class="dv">1</span>] <span class="st">"Jean-Luc Picard"</span>      <span class="st">"Beverly Crusher"</span>     <span class="st">"Q"</span></code></pre></div>
-<p>Many useful tasks will require making multiple direct calls to the API. In order to make this easier, <code>civis</code> includes a number of wrapper functions to make common tasks easier. For example, reading data from a table in Platform is as easy as</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(civis)
-
-<span class="co"># Read an entire table in to memory</span>
-my_table &lt;-<span class="st"> "schema.tablename"</span>
-df &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_civis.html">read_civis</a></span>(my_table, <span class="dt">database=</span><span class="st">"my_database"</span>)
-
-<span class="co"># Run a query and read the results into memory</span>
-query &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(<span class="st">"SELECT a, b, c FROM schema.tablename WHERE b &gt; 42"</span>)
-df2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_civis.html">read_civis</a></span>(query, <span class="dt">database=</span><span class="st">"my_database"</span>)</code></pre></div>
-<p><code>civis</code> includes many more functions for tasks like writing data to tables and files as well as for creating reports. For more detailed documentation, see the included vignettes:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">browseVignettes</span>(<span class="st">'civis'</span>)</code></pre></div>
 </div>
-<div id="updating" class="section level2">
-<h2 class="hasAnchor">
-<a href="#updating" class="anchor"></a>Updating</h2>
-<p>The <code>civis</code> package automatically generates R functions and documentation to interact with the Civis Platform when the package installs. Periodically, the Civis Data Science API is updated with new functionality. New functions can be generated to access these features automatically by reinstalling the <code>civis</code> package from CRAN.</p>
 </div>
 <div id="api-documentation" class="section level2">
 <h2 class="hasAnchor">
@@ -149,13 +176,36 @@ df2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_civis
 <div id="contributing" class="section level2">
 <h2 class="hasAnchor">
 <a href="#contributing" class="anchor"></a>Contributing</h2>
-<p>Contributions to the code are very welcome! Issues and bug reports can filed through the standard Github issue interface. In order to submit a pull request, please fork the repo and make a pull request from the fork to the master branch of the main repo. Unit tests must pass before merging and writing tests for new code is highly encouraged! Unit tests can be run with <code>Rscript tests/testthat.R</code>. For major, potentially breaking changes, integration tests should be run with</p>
+<p>Contributions to the code are very welcome! Issues and bug reports can filed through the standard Github issue interface.</p>
+<div id="git-flow" class="section level3">
+<h3 class="hasAnchor">
+<a href="#git-flow" class="anchor"></a>git-flow</h3>
+<ol>
+<li>Fork the repo, make changes in your branch.</li>
+<li>Unit tests must pass, and can be run with <code><a href="http://www.rdocumentation.org/packages/devtools/topics/test">devtools::test()</a></code> or <code>cmd-shift-t</code> in Rstudio.</li>
+<li>New code must be backed with tests, mocking all API calls.</li>
+<li>
+<code>R CMD check</code> must pass, i.e. using <code><a href="http://www.rdocumentation.org/packages/devtools/topics/check">devtools::check()</a></code>.</li>
+<li>Make a pull request from the fork to the master branch of the main repo. In your pull request, link to the issue the pull request addresses.</li>
+<li>Tag a maintainer for review. Once it has been approved, squash and merge!</li>
+</ol>
+<p>Adding the environment variable <code>R_CLIENT_DEV = "TRUE"</code> to <code>.Renviron</code> will prevent new API functions and documentation from being generated based on your API Key. The default generated API functions included in the package are only updated when this package releases to CRAN.</p>
+</div>
+<div id="integration-tests" class="section level3">
+<h3 class="hasAnchor">
+<a href="#integration-tests" class="anchor"></a>Integration tests</h3>
+<p>For major, potentially breaking changes, integration tests should be run with</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="bu">cd</span> tools/integration_tests
 <span class="ex">Rscript</span> smoke_test.R</code></pre></div>
 <p>Note, integration tests require a valid API key to run, and my be slow.</p>
+</div>
+<div id="authorship" class="section level3">
+<h3 class="hasAnchor">
+<a href="#authorship" class="anchor"></a>Authorship</h3>
 <p>All contributors of code should include themselves in <code>DESCRIPTION</code> by adding the following object in the <code>Authors@R</code> section:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">person</span>(<span class="st">"FirstName"</span>, <span class="st">"LastName"</span>, <span class="dt">email =</span> <span class="st">"email@email.com"</span>, <span class="dt">role =</span> <span class="st">"ctb"</span>)</code></pre></div>
 <p>This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the <a href="http://contributor-covenant.org">Contributor Covenant</a> code of conduct.</p>
+</div>
 </div>
 </div>
   </div>

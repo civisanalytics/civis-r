@@ -183,6 +183,7 @@
 <li><p>cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares.</p></li>
 <li><p>memory integer, The amount of RAM to allocate for the container (in MiB).</p></li>
 <li><p>diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.</p></li>
+<li><p>wholeInstance boolean, Whether or not to use the entire instance. If true, cpu, memory, and disk space are not required and will be set to an instance's max.</p></li>
 </ul></td>
     </tr>
     <tr>

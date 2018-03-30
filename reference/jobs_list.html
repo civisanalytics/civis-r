@@ -109,8 +109,8 @@
     
 
     <pre class="usage"><span class='fu'>jobs_list</span>(<span class='kw'>state</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>q</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>permission</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>archived</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>page_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>scheduled</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>archived</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>page_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -130,6 +130,10 @@
     <tr>
       <th>permission</th>
       <td><p>string optional. A permissions string, one of "read", "write", or "manage". Lists only jobs for which the current user has that permission.</p></td>
+    </tr>
+    <tr>
+      <th>scheduled</th>
+      <td><p>boolean optional. If the object is scheduled.</p></td>
     </tr>
     <tr>
       <th>hidden</th>
@@ -163,6 +167,7 @@
 <dt>id</dt><dd><p>integer,</p></dd>
 <dt>name</dt><dd><p>string,</p></dd>
 <dt>type</dt><dd><p>string,</p></dd>
+<dt>fromTemplateId</dt><dd><p>integer,</p></dd>
 <dt>state</dt><dd><p>string, Whether the job is idle, queued, running, cancelled, or failed.</p></dd>
 <dt>createdAt</dt><dd><p>string,</p></dd>
 <dt>updatedAt</dt><dd><p>string,</p></dd>
@@ -176,6 +181,14 @@
 <li><p>error string, The error message for this run, if present.</p></li>
 </ul></p></dd>
 <dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
+<dt>schedule</dt><dd><p>object, A list containing the following elements: 
+<ul>
+<li><p>scheduled boolean, If the object is scheduled</p></li>
+<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday</p></li>
+<li><p>scheduledHours array, Hours of the day it is scheduled on</p></li>
+<li><p>scheduledMinutes array, Minutes of the day it is scheduled on</p></li>
+<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour</p></li>
+</ul></p></dd>
 
     
 

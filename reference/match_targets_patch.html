@@ -108,7 +108,8 @@
     <p>Update a match target</p>
     
 
-    <pre class="usage"><span class='fu'>match_targets_patch</span>(<span class='no'>id</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>region</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>match_targets_patch</span>(<span class='no'>id</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>region</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>encryption_key_credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -129,6 +130,10 @@
       <th>region</th>
       <td><p>string optional. The AWS region of the DynamoDB table. By default, us-east-1.</p></td>
     </tr>
+    <tr>
+      <th>encryption_key_credential_id</th>
+      <td><p>integer optional. The ID of the encryption key credential.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -138,6 +143,7 @@
 <dt>name</dt><dd><p>string, The name of the match target</p></dd>
 <dt>table</dt><dd><p>string, The name of the DynamoDB table</p></dd>
 <dt>region</dt><dd><p>string, The AWS region of the DynamoDB table. By default, us-east-1.</p></dd>
+<dt>encryptionKeyCredentialId</dt><dd><p>integer, The ID of the encryption key credential.</p></dd>
 
     
 

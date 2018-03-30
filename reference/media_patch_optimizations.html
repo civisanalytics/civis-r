@@ -108,7 +108,9 @@
     <p>Edit an existing optimization</p>
     
 
-    <pre class="usage"><span class='fu'>media_patch_optimizations</span>(<span class='no'>id</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>runs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>media_patch_optimizations</span>(<span class='no'>id</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>runs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>programs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>networks</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude_programs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude_networks</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>time_slot_percentages</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -127,10 +129,31 @@
 <li><p>marketId integer, The market ID.</p></li>
 <li><p>startDate string, The start date for the media run.</p></li>
 <li><p>endDate string, The end date for the media run.</p></li>
+<li><p>forceCpm boolean, Whether to force optimization to use CPM data even if partition data is available.</p></li>
 <li><p>syscodes array, The syscodes for the media run.</p></li>
 <li><p>rateCards array, The ratecards for the media run.</p></li>
 <li><p>constraints array, The constraints for the media run.</p></li>
 </ul></td>
+    </tr>
+    <tr>
+      <th>programs</th>
+      <td><p>array optional. An array of programs that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_programs is not also set.</p></td>
+    </tr>
+    <tr>
+      <th>networks</th>
+      <td><p>array optional. An array of networks that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_networks is not also set.</p></td>
+    </tr>
+    <tr>
+      <th>exclude_programs</th>
+      <td><p>boolean optional. If Civis Media Optimizer should exclude the programs in the programs parameter.If this value is set to false, it will make the optimization limit itself to the programs supplied through the programs parameter.An error will be thrown if programs is not also set.</p></td>
+    </tr>
+    <tr>
+      <th>exclude_networks</th>
+      <td><p>boolean optional. If Civis Media Optimizer should exclude the networks in the networks parameter.If this value is set to false, it will make the optimization limit itself to the networks supplied through the networks.An error will be thrown if networks is not also set.</p></td>
+    </tr>
+    <tr>
+      <th>time_slot_percentages</th>
+      <td><p>object optional. The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.</p></td>
     </tr>
     </table>
     
@@ -162,10 +185,16 @@
 <li><p>marketId integer, The market ID.</p></li>
 <li><p>startDate string, The start date for the media run.</p></li>
 <li><p>endDate string, The end date for the media run.</p></li>
+<li><p>forceCpm boolean, Whether to force optimization to use CPM data even if partition data is available.</p></li>
 <li><p>syscodes array, The syscodes for the media run.</p></li>
 <li><p>rateCards array, The ratecards for the media run.</p></li>
 <li><p>constraints array, The constraints for the media run.</p></li>
 </ul></p></dd>
+<dt>programs</dt><dd><p>array, An array of programs that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_programs is not also set.</p></dd>
+<dt>networks</dt><dd><p>array, An array of networks that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_networks is not also set.</p></dd>
+<dt>excludePrograms</dt><dd><p>boolean, If Civis Media Optimizer should exclude the programs in the programs parameter.If this value is set to false, it will make the optimization limit itself to the programs supplied through the programs parameter.An error will be thrown if programs is not also set.</p></dd>
+<dt>excludeNetworks</dt><dd><p>boolean, If Civis Media Optimizer should exclude the networks in the networks parameter.If this value is set to false, it will make the optimization limit itself to the networks supplied through the networks.An error will be thrown if networks is not also set.</p></dd>
+<dt>timeSlotPercentages</dt><dd><p>object, The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.</p></dd>
 
     
 
