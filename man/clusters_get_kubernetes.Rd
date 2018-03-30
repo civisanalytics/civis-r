@@ -12,11 +12,15 @@ clusters_get_kubernetes(id)
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID of this cluster.}
-\item{instanceType}{string, The EC2 instance types in this cluster.}
-\item{minInstances}{integer, The minimum number of instances in this cluster.}
-\item{maxInstances}{integer, The maximum number of instances in this cluster.}
-\item{instanceMaxMemory}{integer, The amount of memory available to a single instance.}
-\item{instanceMaxCpu}{integer, The number of processor shares available to a single instance.}
+\item{instanceTypes}{array, An array containing the following fields: 
+\itemize{
+\item type string, An EC2 instance type.
+\item minInstances integer, The minimum number of instances of that type in this cluster.
+\item maxInstances integer, The maximum number of instances of that type in this cluster.
+\item instanceMaxMemory integer, The amount of memory available to a single instance of that type.
+\item instanceMaxCpu integer, The number of processor shares available to a single instance of that type.
+}}
+\item{defaultInstanceType}{string, The default EC2 instance type in this cluster.}
 \item{organizationId}{string, The id of this cluster's organization.}
 \item{organizationSlug}{string, The slug of this cluster's organization.}
 \item{securityGroupId}{string, The security group to be added to the nodes of this cluster}

@@ -7,13 +7,13 @@
 remote_hosts_list(type = NULL)
 }
 \arguments{
-\item{type}{string optional. The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Redshift, RemoteHostTypes::Salesforce, and RemoteHostTypes::Van}
+\item{type}{string optional. The type of remote host. One of:}
 }
 \value{
 An array containing the following fields:
 \item{id}{integer, The ID of the remote host.}
 \item{name}{string, The name of the remote host.}
-\item{type}{string, The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Redshift, RemoteHostTypes::Salesforce, and RemoteHostTypes::Van}
+\item{type}{string, The type of remote host. One of: }
 \item{url}{string, The URL for remote host.}
 }
 \description{

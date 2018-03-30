@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{workflows_post_clone}
 \alias{workflows_post_clone}
-\title{Clone this workflow}
+\title{Clone this Workflow}
 \usage{
 workflows_post_clone(id, clone_schedule = NULL, clone_notifications = NULL)
 }
@@ -57,5 +57,5 @@ A list containing the following elements:
 \item{updatedAt}{string, }
 }
 \description{
-Clone this workflow
+Clone this Workflow
 }
