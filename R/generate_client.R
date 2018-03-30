@@ -317,7 +317,7 @@ is_obj <- function(x) {
 
 get_descr_str <- function(x) {
   desc <- if (!is.null(x$description)) x$description else ""
-  gsub("\n[[:space:]]+", " ", desc)
+  gsub("\n[[:space:]]*", " ", desc)
 }
 
 get_req_str <- function(x) {
