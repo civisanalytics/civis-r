@@ -11,6 +11,7 @@ An array containing the following fields:
 \item{id}{integer, The ID of the match target}
 \item{name}{string, The name of the match target}
 \item{table}{string, The name of the DynamoDB table}
+\item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
 }
 \description{
 List match targets

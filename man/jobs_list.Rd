@@ -5,8 +5,8 @@
 \title{List}
 \usage{
 jobs_list(state = NULL, type = NULL, q = NULL, permission = NULL,
-  hidden = NULL, archived = NULL, limit = NULL, page_num = NULL,
-  order = NULL, order_dir = NULL)
+  scheduled = NULL, hidden = NULL, archived = NULL, limit = NULL,
+  page_num = NULL, order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{state}{string optional. The job's state. One or more of queued, running, succeeded, failed, and cancelled. Specify multiple values as a comma-separated list (e.g., "A,B").}
@@ -16,6 +16,8 @@ jobs_list(state = NULL, type = NULL, q = NULL, permission = NULL,
 \item{q}{string optional. Query string to search on the id, name, and job type}
 
 \item{permission}{string optional. A permissions string, one of "read", "write", or "manage". Lists only jobs for which the current user has that permission.}
+
+\item{scheduled}{boolean optional. If the object is scheduled.}
 
 \item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
 
@@ -34,6 +36,7 @@ An array containing the following fields:
 \item{id}{integer, }
 \item{name}{string, }
 \item{type}{string, }
+\item{fromTemplateId}{integer, }
 \item{state}{string, Whether the job is idle, queued, running, cancelled, or failed.}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
@@ -47,6 +50,14 @@ An array containing the following fields:
 \item error string, The error message for this run, if present.
 }}
 \item{archived}{string, The archival status of the requested object(s).}
+\item{schedule}{object, A list containing the following elements: 
+\itemize{
+\item scheduled boolean, If the object is scheduled
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday
+\item scheduledHours array, Hours of the day it is scheduled on
+\item scheduledMinutes array, Minutes of the day it is scheduled on
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+}}
 }
 \description{
 List

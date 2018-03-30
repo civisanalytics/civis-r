@@ -14,6 +14,7 @@ A list containing the following elements:
 \item{id}{integer, }
 \item{name}{string, }
 \item{type}{string, }
+\item{fromTemplateId}{integer, }
 \item{state}{string, Whether the job is idle, queued, running, cancelled, or failed.}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
@@ -37,6 +38,14 @@ A list containing the following elements:
 }}
 \item{hidden}{boolean, The hidden status of the object.}
 \item{archived}{string, The archival status of the requested object(s).}
+\item{schedule}{object, A list containing the following elements: 
+\itemize{
+\item scheduled boolean, If the object is scheduled
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday
+\item scheduledHours array, Hours of the day it is scheduled on
+\item scheduledMinutes array, Minutes of the day it is scheduled on
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+}}
 }
 \description{
 Show chain of parents as a list that this job triggers from

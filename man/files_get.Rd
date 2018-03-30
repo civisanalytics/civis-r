@@ -4,12 +4,14 @@
 \alias{files_get}
 \title{Get details about a file}
 \usage{
-files_get(id, link_expires_at = NULL)
+files_get(id, link_expires_at = NULL, inline = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the file object.}
 
 \item{link_expires_at}{string optional. The date and time the download link will expire. Must be a time between now and 36 hours from now. Defaults to 30 minutes from now.}
+
+\item{inline}{boolean optional. If true, will return a url that can be displayed inline in HTML}
 }
 \value{
 A list containing the following elements:

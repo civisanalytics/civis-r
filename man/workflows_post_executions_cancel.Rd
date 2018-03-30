@@ -27,12 +27,14 @@ A list containing the following elements:
 }}
 \item{definition}{string, The definition of the workflow for this execution.}
 \item{input}{object, The dictionary of name/value input pairs defined for this execution.}
+\item{includedTasks}{array, The subset of workflow tasks selected to execute.}
 \item{tasks}{array, An array containing the following fields: 
 \itemize{
 \item name string, The name of the task.
 \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, or error
 \item mistralStateInfo string, Extra info associated with the state of the task.
 \item runs array, The runs associated with this task, in descending order by id.
+\item executions array, The executions run by this task, in descending order by id.
 }}
 \item{startedAt}{string, The time this execution started.}
 \item{finishedAt}{string, The time this execution finished.}

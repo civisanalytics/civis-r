@@ -4,9 +4,11 @@
 \alias{media_list_ratecards}
 \title{List all ratecards}
 \usage{
-media_list_ratecards(filename = NULL, dma_number = NULL)
+media_list_ratecards(archived = NULL, filename = NULL, dma_number = NULL)
 }
 \arguments{
+\item{archived}{string optional. The archival status of the requested object(s).}
+
 \item{filename}{string optional. If specified, will be used to filter the ratecards returned. Substring matching is supported with "\%" and "*" wildcards (e.g., "filename=\%ratecard\%" will return both "ratecard 1" and "my ratecard").}
 
 \item{dma_number}{integer optional. If specified, will be used to filter the ratecards by DMA.}
@@ -18,6 +20,7 @@ An array containing the following fields:
 \item{startOn}{string, First day to which the ratecard applies.}
 \item{endOn}{string, Last day to which the ratecard applies.}
 \item{dmaNumber}{integer, Number of the DMA associated with the ratecard.}
+\item{archived}{string, The archival status of the requested object(s).}
 }
 \description{
 List all ratecards

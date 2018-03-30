@@ -14,6 +14,7 @@ A list containing the following elements:
 \item{id}{integer, }
 \item{name}{string, }
 \item{type}{string, }
+\item{fromTemplateId}{integer, }
 \item{state}{string, }
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
