@@ -174,22 +174,26 @@
 <ul>
 <li><p>task string, The type of person matching task. Options are: "table_to_table", "dedupe_table", or "table_to_civis_data".</p></li>
 <li><p>source string, The input source of your data. Options are: "redshift" or "s3".</p></li>
-<li><p>inputDatabase string, The Redshift database name for input data.</p></li>
+<li><p>inputDatabaseName string, The Redshift database name for input data.</p></li>
 <li><p>inputSchema string, The schema name for the input data.</p></li>
 <li><p>inputTable string, The table name for the input data.</p></li>
 <li><p>inputFileId string, The ID of the input S3 file.</p></li>
 <li><p>inputFieldMapping string, The column mapping for the input in JSON or YAML.</p></li>
 <li><p>inputFileHeaders string, Provide your headers in a list if the first row of your input does not have the headers, and make them JSON-decodable. For example: ["col1","col2","col3"].</p></li>
-<li><p>targetDatabase string, The Redshift database for target data.</p></li>
+<li><p>targetDatabaseName string, The Redshift database for target data.</p></li>
 <li><p>targetSchema string, The schema for target data.</p></li>
 <li><p>targetTable string, The table for target data.</p></li>
 <li><p>targetFieldMapping string, The column mapping for the target in JSON or YAML.</p></li>
 <li><p>targetFileId string, The ID of the target S3 file.</p></li>
-<li><p>targetDynamoTableName string, The target DynamoDB table name.</p></li>
-<li><p>targetDynamoAwsRegion string, The target DynamoDB AWS Region.</p></li>
+<li><p>matchTargetId integer, The ID of the match target.</p></li>
+<li><p>matchDatabaseName string, The Redshift database for the match output table.</p></li>
+<li><p>matchSchema string, The schema for the match output table.</p></li>
+<li><p>matchTable string, The name of the match output table.</p></li>
+<li><p>matchCsvFilename string, The name of the match output file.</p></li>
+<li><p>matchSourceIdCol string, The name of the column in the output table that will hold the id from the source for each match.</p></li>
+<li><p>matchTargetIdCol string, The name the column in the output table that will hold the id from the target for each match.</p></li>
 <li><p>maxMatches integer, The maximum number of matches to return.</p></li>
 <li><p>threshold number, The score threshold (between 0 and 1).</p></li>
-<li><p>useGoBlocker boolean, If True, uses blocker for old Go targets. If False, uses blocker for new Python targets.</p></li>
 </ul></p></dd>
 
     

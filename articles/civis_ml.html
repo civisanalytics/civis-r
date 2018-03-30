@@ -158,7 +158,7 @@ tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_t
 <td><code>multilayer_perceptron_classifier</code></td>
 <td align="left"></td>
 <td>classification</td>
-<td><a href="https://github.com/civisanalytics/muffnn">MLPClassifier</a></td>
+<td><a href="https://github.com/civisanalytics/muffnn">muffnn.MLPClassifier</a></td>
 <td></td>
 </tr>
 <tr class="even">
@@ -206,7 +206,7 @@ tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_t
 <td><code>multilayer_perceptron_regressor</code></td>
 <td align="left"></td>
 <td>regression</td>
-<td><a href="https://github.com/civisanalytics/muffnn">MLPRegressor</a></td>
+<td><a href="https://github.com/civisanalytics/muffnn">muffnn.MLPRegressor</a></td>
 <td></td>
 </tr>
 <tr class="odd">
@@ -311,7 +311,7 @@ m_grid &lt;-<span class="st"> </span><span class="kw">civis_ml</span>(tab, <span
 <div id="stacking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#stacking" class="anchor"></a>Stacking</h3>
-<p>The <code>"stacking_classifier"</code> model stacks together the <code>"sparse_logistic"</code>, <code>"gradient_boosting_classifier"</code>, and <code>"random_forest_classifier"</code> models using defaults documented in <code>?civis_ml</code>. Each column is first <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">standardized</a>, and then the model predictions are combined using <a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html">LogisticRegressionCV</a> with <code>penalty='l2'</code> and <code>tol=1e-08</code>. The <code>"stacking_regressor"</code> works similarly, stacking together the <code>"sparse_linear_regressor"</code>, <code>"gradient_boosting_regressor"</code>, and <code>"random_forest_regressor"</code> models, and combining them using <a href="https://github.com/civisanalytics/civisml-extensions">NonNegativeLinearRegression</a>.</p>
+<p>The <code>"stacking_classifier"</code> model stacks together the <code>"gradient_boosting_classifier"</code> and <code>"random_forest_classifier"</code> predefined models together with a <code>glmnet.LogitNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5, scoring='log_loss')</code>. Defaults for the predefined models are documented in <code>?civis_ml</code>. Each column is first <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">standardized</a>, and then the model predictions are combined using <a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html">LogisticRegressionCV</a> with <code>penalty='l2'</code> and <code>tol=1e-08</code>. The <code>"stacking_regressor"</code> works similarly, stacking together the <code>"gradient_boosting_regressor"</code> and <code>"random_forest_regressor"</code> models and a <code>glmnet.ElasticNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5, scoring='r2')</code>, combining them using <a href="https://github.com/civisanalytics/civisml-extensions">NonNegativeLinearRegression</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m_stack &lt;-<span class="st"> </span><span class="kw">civis_ml</span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
               <span class="dt">model_type =</span> <span class="st">"stacking_classifier"</span>, 
               <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 

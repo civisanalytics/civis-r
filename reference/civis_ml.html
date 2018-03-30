@@ -125,7 +125,7 @@ using a set of Scikit-Learn estimators.</p>
   <span class='kw'>output_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>output_db</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>if_output_exists</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fail"</span>,
   <span class='st'>"append"</span>, <span class='st'>"drop"</span>, <span class='st'>"truncate"</span>), <span class='kw'>n_jobs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cpu_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>memory_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>disk_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>polling_interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>dvs_to_predict</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -280,6 +280,16 @@ the model was built.</p></td>
 The default is <code>"fail"</code>.</p></td>
     </tr>
     <tr>
+      <th>dvs_to_predict</th>
+      <td><p>Optional, For scoring, this should be a vector of column
+names of dependent variables to include in the output table. It must be a
+subset of the <code>dependent_variable</code> vector provided for training.
+The scores for the returned subset will be identical to the scores which
+those outputs would have had if all outputs were written, but ignoring some
+of the model's outputs will let predictions complete faster and use less disk space.
+If not provided, the entire model output will be written to the output table.</p></td>
+    </tr>
+    <tr>
       <th>&#8230;</th>
       <td><p>Unused</p></td>
     </tr>
@@ -358,7 +368,7 @@ All models also have <code>random_state=42</code>.</p>
  <code>multilayer_perceptron_classifier</code> </td>
 <td> </td>
 <td> classification </td>
-<td> <a href='https://github.com/civisanalytics/muffnn'>MLPClassifier</a> </td>
+<td> <a href='https://github.com/civisanalytics/muffnn'>muffnn.MLPClassifier</a> </td>
 <td> </td>
 </tr><tr><td>
  <code>stacking_classifier</code> </td>
@@ -400,7 +410,7 @@ All models also have <code>random_state=42</code>.</p>
  <code>multilayer_perceptron_regressor</code> </td>
 <td> </td>
 <td> regression </td>
-<td> <a href='https://github.com/civisanalytics/muffnn'>MLPRegressor</a> </td>
+<td> <a href='https://github.com/civisanalytics/muffnn'>muffnn.MLPRegressor</a> </td>
 <td> </td>
 </tr><tr><td>
  <code>stacking_regressor</code> </td>
@@ -413,17 +423,16 @@ All models also have <code>random_state=42</code>.</p>
     <h2 class="hasAnchor" id="stacking"><a class="anchor" href="#stacking"></a>Stacking</h2>
 
     
-    <p>The <code>"stacking_classifier"</code> model stacks
-together the <code>"sparse_logistic"</code>, <code>"gradient_boosting_classifier"</code>,
-and <code>"random_forest_classifier"</code> models, using altered defaults as
-listed for each in the <code>"Altered Defaults"</code> column of the table
-above. The models are combined using a pipeline
-containing a <a href='http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.Normalizer.html#sklearn.preprocessing.Normalizer'>Normalizer</a>
-step, followed by a <a href='http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html'>LogisticRegressionCV</a>
-with <code>penalty='l2'</code> and <code>tol=1e-08</code>. The
-<code>"stacking_regressor"</code> works similarly, stacking together the
-<code>"sparse_linear_regressor"</code>, <code>"gradient_boosting_regressor"</code>,
-and <code>"random_forest_regressor"</code> models, and combining them using
+    <p>The <code>"stacking_classifier"</code> model stacks together the <code>"gradient_boosting_classifier"</code> and
+<code>"random_forest_classifier"</code> predefined models together with a
+<code>glmnet.LogitNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5, scoring='log_loss')</code>.
+Defaults for the predefined models are documented in <code>?civis_ml</code>. Each column is first
+<a href='http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html'>standardized</a>,
+and then the model predictions are combined using
+<a href='http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html'>LogisticRegressionCV</a>
+with <code>penalty='l2'</code> and <code>tol=1e-08</code>. The <code>"stacking_regressor"</code> works similarly, stacking together
+the <code>"gradient_boosting_regressor"</code> and <code>"random_forest_regressor"</code> models and a
+<code>glmnet.ElasticNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5, scoring='r2')</code>, combining them using
 <a href='https://github.com/civisanalytics/civisml-extensions'>NonNegativeLinearRegression</a>.
  The estimators that are being stacked have the same names as the
 associated pre-defined models, and the meta-estimator steps are named

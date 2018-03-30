@@ -144,12 +144,14 @@
 </ul></p></dd>
 <dt>definition</dt><dd><p>string, The definition of the workflow for this execution.</p></dd>
 <dt>input</dt><dd><p>object, The dictionary of name/value input pairs defined for this execution.</p></dd>
+<dt>includedTasks</dt><dd><p>array, The subset of workflow tasks selected to execute.</p></dd>
 <dt>tasks</dt><dd><p>array, An array containing the following fields: 
 <ul>
 <li><p>name string, The name of the task.</p></li>
 <li><p>mistralState string, The state of this task. One of idle, waiting, running, delayed, success, or error</p></li>
 <li><p>mistralStateInfo string, Extra info associated with the state of the task.</p></li>
 <li><p>runs array, The runs associated with this task, in descending order by id.</p></li>
+<li><p>executions array, The executions run by this task, in descending order by id.</p></li>
 </ul></p></dd>
 <dt>startedAt</dt><dd><p>string, The time this execution started.</p></dd>
 <dt>finishedAt</dt><dd><p>string, The time this execution finished.</p></dd>

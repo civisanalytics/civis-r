@@ -140,11 +140,15 @@
 
     <p>An array containing the following fields:</p>
 <dt>id</dt><dd><p>integer, The ID of this cluster.</p></dd>
-<dt>instanceType</dt><dd><p>string, The EC2 instance types in this cluster.</p></dd>
-<dt>minInstances</dt><dd><p>integer, The minimum number of instances in this cluster.</p></dd>
-<dt>maxInstances</dt><dd><p>integer, The maximum number of instances in this cluster.</p></dd>
-<dt>instanceMaxMemory</dt><dd><p>integer, The amount of memory available to a single instance.</p></dd>
-<dt>instanceMaxCpu</dt><dd><p>integer, The number of processor shares available to a single instance.</p></dd>
+<dt>instanceTypes</dt><dd><p>array, An array containing the following fields: 
+<ul>
+<li><p>type string, An EC2 instance type.</p></li>
+<li><p>minInstances integer, The minimum number of instances of that type in this cluster.</p></li>
+<li><p>maxInstances integer, The maximum number of instances of that type in this cluster.</p></li>
+<li><p>instanceMaxMemory integer, The amount of memory available to a single instance of that type.</p></li>
+<li><p>instanceMaxCpu integer, The number of processor shares available to a single instance of that type.</p></li>
+</ul></p></dd>
+<dt>defaultInstanceType</dt><dd><p>string, The default EC2 instance type in this cluster.</p></dd>
 <dt>organizationId</dt><dd><p>string, The id of this cluster's organization.</p></dd>
 <dt>organizationSlug</dt><dd><p>string, The slug of this cluster's organization.</p></dd>
 <dt>securityGroupId</dt><dd><p>string, The security group to be added to the nodes of this cluster</p></dd>

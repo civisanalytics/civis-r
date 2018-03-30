@@ -108,11 +108,15 @@
     <p>List all ratecards</p>
     
 
-    <pre class="usage"><span class='fu'>media_list_ratecards</span>(<span class='kw'>filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dma_number</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>media_list_ratecards</span>(<span class='kw'>archived</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dma_number</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>archived</th>
+      <td><p>string optional. The archival status of the requested object(s).</p></td>
+    </tr>
     <tr>
       <th>filename</th>
       <td><p>string optional. If specified, will be used to filter the ratecards returned. Substring matching is supported with "%" and "*" wildcards (e.g., "filename=%ratecard%" will return both "ratecard 1" and "my ratecard").</p></td>
@@ -131,6 +135,7 @@
 <dt>startOn</dt><dd><p>string, First day to which the ratecard applies.</p></dd>
 <dt>endOn</dt><dd><p>string, Last day to which the ratecard applies.</p></dd>
 <dt>dmaNumber</dt><dd><p>integer, Number of the DMA associated with the ratecard.</p></dd>
+<dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
 
     
 
