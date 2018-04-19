@@ -27,6 +27,11 @@ reference:
       desc: Named workflows for CivisML models
       contents:
       - matches("^civis_ml_(extra|random|sparse|gradient)")
+    - title: Parallel Computing
+      desc: Executing custom tasks in the Civis Platform in parallel
+      contents:
+      - civis_platform
+      - CivisFuture
     - title: dplyr
       desc: dplyr backend for remote data manipulation
       contents:
