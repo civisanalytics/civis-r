@@ -564,7 +564,7 @@ context("stash_local_dataframe")
 test_that("newer CivisML versions use feather", {
   # enforce newer CivisML version
   temp_id <- getOption('civis.ml_train_template_id')
-  options(civis.ml_train_template_id = 10582)
+  options(civis.ml_train_template_id = 11219)
   # factor should not cause errors when using feather
   x <- data.frame(a = 1:3, b = letters[1:3])
   fake_file <- mock(1)

@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+- Add v2.2 CivisML templates.
+
+
 ## [1.3.0] - 2018-03-30
 
 ### Added
