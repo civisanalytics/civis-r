@@ -15,6 +15,7 @@
 
 - CivisML stacking documentation has been updated.
 - `write_civis_file` now defaults to the file path for the `name` argument instead of requiring it.
+- Add v2.2 CivisML templates.
 
 ### Fixed
 
