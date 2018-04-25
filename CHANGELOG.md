@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+- Add v2.2 CivisML templates.
+
+
 ## [1.3.0] - 2018-03-30
 
 ### Added
@@ -15,7 +21,6 @@
 
 - CivisML stacking documentation has been updated.
 - `write_civis_file` now defaults to the file path for the `name` argument instead of requiring it.
-- Add v2.2 CivisML templates.
 
 ### Fixed
 
