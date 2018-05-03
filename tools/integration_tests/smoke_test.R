@@ -31,6 +31,12 @@ test_that("read_civis reads from redshift", {
   expect_equal(d, d2)
 })
 
+test_that("read_civis reads from spectrum",{
+  expect_success(
+    res <- read_civis(sql('select * from spectrum_civis_gfk.apparel_2017_model_info'))
+  )
+})
+
 test_that("write_civis writes to redshift", {
   # Tests both write_civis.character and write_civis.default
   iris$id <- 1:nrow(iris)
