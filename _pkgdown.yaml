@@ -32,10 +32,6 @@ reference:
       contents:
       - civis_platform
       - CivisFuture
-    - title: dplyr
-      desc: dplyr backend for remote data manipulation
-      contents:
-      - DBI
     - title: Reports
       desc: Publishing reports to the Civis Platform
       contents:

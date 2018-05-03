@@ -8,6 +8,7 @@ dbi_driver()
 }
 \description{
 This is a DBI-compliant interface for the Civis Platform.
+The DBI connectors for Civis Platform are no longer maintained.
 }
 \examples{
 \dontrun{

@@ -1,11 +1,14 @@
 # Changelog
 
-## Unreleased
+## [1.4.0] - 2018-05-04
 
 ### Changed
 - Add v2.2 CivisML templates.
 - Removed read-only restriction for queries from `read_civis` and `download_civis`. 
+- The DBI connectors are provided on an as-is basis and are no longer maintained.
 
+### Fixed
+- Fix CRAN check failures for dev DBI-test.
 
 ## [1.3.0] - 2018-03-30
 
