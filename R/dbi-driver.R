@@ -1,6 +1,8 @@
 #' DBI methods
 #'
 #' Implementations of pure virtual functions defined in the `DBI` package.
+#' The DBI connectors for Civis Platform are no longer maintained.
+#'
 #' @name DBI
 #' @param database The name of a database on the Civis Platform.
 NULL
@@ -8,6 +10,7 @@ NULL
 #' Civis DBI driver
 #'
 #' This is a DBI-compliant interface for the Civis Platform.
+#' The DBI connectors for Civis Platform are no longer maintained.
 #'
 #' @export
 #' @import methods DBI
