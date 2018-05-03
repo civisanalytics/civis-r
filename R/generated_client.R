@@ -2486,714 +2486,6 @@ enhancements_list_cass_ncoa_runs_outputs <- function(id, run_id, limit = NULL, p
  }
 
 
-#' Create a Person Matching Enhancement
-#' @param name string required. The name of the enhancement.
-#' @param configuration object required. A list containing the following elements: 
-#' \itemize{
-#' \item task string, The type of person matching task. Options are: "table_to_table", "dedupe_table", or "table_to_civis_data".
-#' \item source string, The input source of your data. Options are: "redshift" or "s3".
-#' \item inputDatabaseName string, The Redshift database name for input data.
-#' \item inputSchema string, The schema name for the input data.
-#' \item inputTable string, The table name for the input data.
-#' \item inputFileId string, The ID of the input S3 file.
-#' \item inputFieldMapping string, The column mapping for the input in JSON or YAML.
-#' \item inputFileHeaders string, Provide your headers in a list if the first row of your input does not have the headers, and make them JSON-decodable. For example: ["col1","col2","col3"].
-#' \item targetDatabaseName string, The Redshift database for target data.
-#' \item targetSchema string, The schema for target data.
-#' \item targetTable string, The table for target data.
-#' \item targetFieldMapping string, The column mapping for the target in JSON or YAML.
-#' \item targetFileId string, The ID of the target S3 file.
-#' \item matchTargetId integer, The ID of the match target.
-#' \item matchDatabaseName string, The Redshift database for the match output table.
-#' \item matchSchema string, The schema for the match output table.
-#' \item matchTable string, The name of the match output table.
-#' \item matchCsvFilename string, The name of the match output file.
-#' \item matchSourceIdCol string, The name of the column in the output table that will hold the id from the source for each match.
-#' \item matchTargetIdCol string, The name the column in the output table that will hold the id from the target for each match.
-#' \item maxMatches integer, The maximum number of matches to return.
-#' \item threshold number, The score threshold (between 0 and 1).
-#' }
-#' @param schedule object optional. A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the object is scheduled
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-#' \item scheduledHours array, Hours of the day it is scheduled on
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
-#' }
-#' @param parent_id integer optional. Parent ID that triggers this enhancement.
-#' @param notifications object optional. A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for the enhancement.}
-#' \item{name}{string, The name of the enhancement.}
-#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
-#' \item{createdAt}{string, The time this enhancement was created.}
-#' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{object, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{object, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the object is scheduled
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-#' \item scheduledHours array, Hours of the day it is scheduled on
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
-#' }}
-#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{object, A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }}
-#' \item{runningAs}{object, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{configuration}{object, A list containing the following elements: 
-#' \itemize{
-#' \item task string, The type of person matching task. Options are: "table_to_table", "dedupe_table", or "table_to_civis_data".
-#' \item source string, The input source of your data. Options are: "redshift" or "s3".
-#' \item inputDatabaseName string, The Redshift database name for input data.
-#' \item inputSchema string, The schema name for the input data.
-#' \item inputTable string, The table name for the input data.
-#' \item inputFileId string, The ID of the input S3 file.
-#' \item inputFieldMapping string, The column mapping for the input in JSON or YAML.
-#' \item inputFileHeaders string, Provide your headers in a list if the first row of your input does not have the headers, and make them JSON-decodable. For example: ["col1","col2","col3"].
-#' \item targetDatabaseName string, The Redshift database for target data.
-#' \item targetSchema string, The schema for target data.
-#' \item targetTable string, The table for target data.
-#' \item targetFieldMapping string, The column mapping for the target in JSON or YAML.
-#' \item targetFileId string, The ID of the target S3 file.
-#' \item matchTargetId integer, The ID of the match target.
-#' \item matchDatabaseName string, The Redshift database for the match output table.
-#' \item matchSchema string, The schema for the match output table.
-#' \item matchTable string, The name of the match output table.
-#' \item matchCsvFilename string, The name of the match output file.
-#' \item matchSourceIdCol string, The name of the column in the output table that will hold the id from the source for each match.
-#' \item matchTargetIdCol string, The name the column in the output table that will hold the id from the target for each match.
-#' \item maxMatches integer, The maximum number of matches to return.
-#' \item threshold number, The score threshold (between 0 and 1).
-#' }}
-#' @export
-enhancements_post_person_matching <- function(name, configuration, schedule = NULL, parent_id = NULL, notifications = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching"
-  path_params  <- list()
-  query_params <- list()
-  body_params  <- list(name = name, configuration = configuration, schedule = schedule, parentId = parent_id, notifications = notifications)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get a Person Matching Enhancement
-#' @param id integer required. 
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for the enhancement.}
-#' \item{name}{string, The name of the enhancement.}
-#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
-#' \item{createdAt}{string, The time this enhancement was created.}
-#' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{object, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{object, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the object is scheduled
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-#' \item scheduledHours array, Hours of the day it is scheduled on
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
-#' }}
-#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{object, A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }}
-#' \item{runningAs}{object, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{configuration}{object, A list containing the following elements: 
-#' \itemize{
-#' \item task string, The type of person matching task. Options are: "table_to_table", "dedupe_table", or "table_to_civis_data".
-#' \item source string, The input source of your data. Options are: "redshift" or "s3".
-#' \item inputDatabaseName string, The Redshift database name for input data.
-#' \item inputSchema string, The schema name for the input data.
-#' \item inputTable string, The table name for the input data.
-#' \item inputFileId string, The ID of the input S3 file.
-#' \item inputFieldMapping string, The column mapping for the input in JSON or YAML.
-#' \item inputFileHeaders string, Provide your headers in a list if the first row of your input does not have the headers, and make them JSON-decodable. For example: ["col1","col2","col3"].
-#' \item targetDatabaseName string, The Redshift database for target data.
-#' \item targetSchema string, The schema for target data.
-#' \item targetTable string, The table for target data.
-#' \item targetFieldMapping string, The column mapping for the target in JSON or YAML.
-#' \item targetFileId string, The ID of the target S3 file.
-#' \item matchTargetId integer, The ID of the match target.
-#' \item matchDatabaseName string, The Redshift database for the match output table.
-#' \item matchSchema string, The schema for the match output table.
-#' \item matchTable string, The name of the match output table.
-#' \item matchCsvFilename string, The name of the match output file.
-#' \item matchSourceIdCol string, The name of the column in the output table that will hold the id from the source for each match.
-#' \item matchTargetIdCol string, The name the column in the output table that will hold the id from the target for each match.
-#' \item maxMatches integer, The maximum number of matches to return.
-#' \item threshold number, The score threshold (between 0 and 1).
-#' }}
-#' @export
-enhancements_get_person_matching <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Replace all attributes of this Person Matching Enhancement
-#' @param id integer required. The ID for the enhancement.
-#' @param name string required. The name of the enhancement.
-#' @param configuration object required. A list containing the following elements: 
-#' \itemize{
-#' \item task string, The type of person matching task. Options are: "table_to_table", "dedupe_table", or "table_to_civis_data".
-#' \item source string, The input source of your data. Options are: "redshift" or "s3".
-#' \item inputDatabaseName string, The Redshift database name for input data.
-#' \item inputSchema string, The schema name for the input data.
-#' \item inputTable string, The table name for the input data.
-#' \item inputFileId string, The ID of the input S3 file.
-#' \item inputFieldMapping string, The column mapping for the input in JSON or YAML.
-#' \item inputFileHeaders string, Provide your headers in a list if the first row of your input does not have the headers, and make them JSON-decodable. For example: ["col1","col2","col3"].
-#' \item targetDatabaseName string, The Redshift database for target data.
-#' \item targetSchema string, The schema for target data.
-#' \item targetTable string, The table for target data.
-#' \item targetFieldMapping string, The column mapping for the target in JSON or YAML.
-#' \item targetFileId string, The ID of the target S3 file.
-#' \item matchTargetId integer, The ID of the match target.
-#' \item matchDatabaseName string, The Redshift database for the match output table.
-#' \item matchSchema string, The schema for the match output table.
-#' \item matchTable string, The name of the match output table.
-#' \item matchCsvFilename string, The name of the match output file.
-#' \item matchSourceIdCol string, The name of the column in the output table that will hold the id from the source for each match.
-#' \item matchTargetIdCol string, The name the column in the output table that will hold the id from the target for each match.
-#' \item maxMatches integer, The maximum number of matches to return.
-#' \item threshold number, The score threshold (between 0 and 1).
-#' }
-#' @param schedule object optional. A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the object is scheduled
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-#' \item scheduledHours array, Hours of the day it is scheduled on
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
-#' }
-#' @param parent_id integer optional. Parent ID that triggers this enhancement.
-#' @param notifications object optional. A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for the enhancement.}
-#' \item{name}{string, The name of the enhancement.}
-#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
-#' \item{createdAt}{string, The time this enhancement was created.}
-#' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{object, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{object, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the object is scheduled
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-#' \item scheduledHours array, Hours of the day it is scheduled on
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
-#' }}
-#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{object, A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }}
-#' \item{runningAs}{object, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{configuration}{object, A list containing the following elements: 
-#' \itemize{
-#' \item task string, The type of person matching task. Options are: "table_to_table", "dedupe_table", or "table_to_civis_data".
-#' \item source string, The input source of your data. Options are: "redshift" or "s3".
-#' \item inputDatabaseName string, The Redshift database name for input data.
-#' \item inputSchema string, The schema name for the input data.
-#' \item inputTable string, The table name for the input data.
-#' \item inputFileId string, The ID of the input S3 file.
-#' \item inputFieldMapping string, The column mapping for the input in JSON or YAML.
-#' \item inputFileHeaders string, Provide your headers in a list if the first row of your input does not have the headers, and make them JSON-decodable. For example: ["col1","col2","col3"].
-#' \item targetDatabaseName string, The Redshift database for target data.
-#' \item targetSchema string, The schema for target data.
-#' \item targetTable string, The table for target data.
-#' \item targetFieldMapping string, The column mapping for the target in JSON or YAML.
-#' \item targetFileId string, The ID of the target S3 file.
-#' \item matchTargetId integer, The ID of the match target.
-#' \item matchDatabaseName string, The Redshift database for the match output table.
-#' \item matchSchema string, The schema for the match output table.
-#' \item matchTable string, The name of the match output table.
-#' \item matchCsvFilename string, The name of the match output file.
-#' \item matchSourceIdCol string, The name of the column in the output table that will hold the id from the source for each match.
-#' \item matchTargetIdCol string, The name the column in the output table that will hold the id from the target for each match.
-#' \item maxMatches integer, The maximum number of matches to return.
-#' \item threshold number, The score threshold (between 0 and 1).
-#' }}
-#' @export
-enhancements_put_person_matching <- function(id, name, configuration, schedule = NULL, parent_id = NULL, notifications = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(name = name, configuration = configuration, schedule = schedule, parentId = parent_id, notifications = notifications)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Update some attributes of this Person Matching Enhancement
-#' @param id integer required. The ID for the enhancement.
-#' @param name string optional. The name of the enhancement.
-#' @param schedule object optional. A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the object is scheduled
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-#' \item scheduledHours array, Hours of the day it is scheduled on
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
-#' }
-#' @param parent_id integer optional. Parent ID that triggers this enhancement.
-#' @param notifications object optional. A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }
-#' @param configuration object optional. A list containing the following elements: 
-#' \itemize{
-#' \item task string, The type of person matching task. Options are: "table_to_table", "dedupe_table", or "table_to_civis_data".
-#' \item source string, The input source of your data. Options are: "redshift" or "s3".
-#' \item inputDatabaseName string, The Redshift database name for input data.
-#' \item inputSchema string, The schema name for the input data.
-#' \item inputTable string, The table name for the input data.
-#' \item inputFileId string, The ID of the input S3 file.
-#' \item inputFieldMapping string, The column mapping for the input in JSON or YAML.
-#' \item inputFileHeaders string, Provide your headers in a list if the first row of your input does not have the headers, and make them JSON-decodable. For example: ["col1","col2","col3"].
-#' \item targetDatabaseName string, The Redshift database for target data.
-#' \item targetSchema string, The schema for target data.
-#' \item targetTable string, The table for target data.
-#' \item targetFieldMapping string, The column mapping for the target in JSON or YAML.
-#' \item targetFileId string, The ID of the target S3 file.
-#' \item matchTargetId integer, The ID of the match target.
-#' \item matchDatabaseName string, The Redshift database for the match output table.
-#' \item matchSchema string, The schema for the match output table.
-#' \item matchTable string, The name of the match output table.
-#' \item matchCsvFilename string, The name of the match output file.
-#' \item matchSourceIdCol string, The name of the column in the output table that will hold the id from the source for each match.
-#' \item matchTargetIdCol string, The name the column in the output table that will hold the id from the target for each match.
-#' \item maxMatches integer, The maximum number of matches to return.
-#' \item threshold number, The score threshold (between 0 and 1).
-#' }
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for the enhancement.}
-#' \item{name}{string, The name of the enhancement.}
-#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
-#' \item{createdAt}{string, The time this enhancement was created.}
-#' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{object, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{object, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the object is scheduled
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-#' \item scheduledHours array, Hours of the day it is scheduled on
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
-#' }}
-#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{object, A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }}
-#' \item{runningAs}{object, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{configuration}{object, A list containing the following elements: 
-#' \itemize{
-#' \item task string, The type of person matching task. Options are: "table_to_table", "dedupe_table", or "table_to_civis_data".
-#' \item source string, The input source of your data. Options are: "redshift" or "s3".
-#' \item inputDatabaseName string, The Redshift database name for input data.
-#' \item inputSchema string, The schema name for the input data.
-#' \item inputTable string, The table name for the input data.
-#' \item inputFileId string, The ID of the input S3 file.
-#' \item inputFieldMapping string, The column mapping for the input in JSON or YAML.
-#' \item inputFileHeaders string, Provide your headers in a list if the first row of your input does not have the headers, and make them JSON-decodable. For example: ["col1","col2","col3"].
-#' \item targetDatabaseName string, The Redshift database for target data.
-#' \item targetSchema string, The schema for target data.
-#' \item targetTable string, The table for target data.
-#' \item targetFieldMapping string, The column mapping for the target in JSON or YAML.
-#' \item targetFileId string, The ID of the target S3 file.
-#' \item matchTargetId integer, The ID of the match target.
-#' \item matchDatabaseName string, The Redshift database for the match output table.
-#' \item matchSchema string, The schema for the match output table.
-#' \item matchTable string, The name of the match output table.
-#' \item matchCsvFilename string, The name of the match output file.
-#' \item matchSourceIdCol string, The name of the column in the output table that will hold the id from the source for each match.
-#' \item matchTargetIdCol string, The name the column in the output table that will hold the id from the target for each match.
-#' \item maxMatches integer, The maximum number of matches to return.
-#' \item threshold number, The score threshold (between 0 and 1).
-#' }}
-#' @export
-enhancements_patch_person_matching <- function(id, name = NULL, schedule = NULL, parent_id = NULL, notifications = NULL, configuration = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(name = name, schedule = schedule, parentId = parent_id, notifications = notifications, configuration = configuration)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Start a run
-#' @param id integer required. The ID of the person_matching.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the run.}
-#' \item{personMatchingId}{integer, The ID of the person_matching.}
-#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{startedAt}{string, The time the last run started at.}
-#' \item{finishedAt}{string, The time the last run completed.}
-#' \item{error}{string, The error, if any, returned by the run.}
-#' @export
-enhancements_post_person_matching_runs <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}/runs"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List runs for the given person_matching
-#' @param id integer required. The ID of the person_matching.
-#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID of the run.}
-#' \item{personMatchingId}{integer, The ID of the person_matching.}
-#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{startedAt}{string, The time the last run started at.}
-#' \item{finishedAt}{string, The time the last run completed.}
-#' \item{error}{string, The error, if any, returned by the run.}
-#' @export
-enhancements_list_person_matching_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}/runs"
-  path_params  <- list(id = id)
-  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Check status of a run
-#' @param id integer required. The ID of the person_matching.
-#' @param run_id integer required. The ID of the run.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the run.}
-#' \item{personMatchingId}{integer, The ID of the person_matching.}
-#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{startedAt}{string, The time the last run started at.}
-#' \item{finishedAt}{string, The time the last run completed.}
-#' \item{error}{string, The error, if any, returned by the run.}
-#' @export
-enhancements_get_person_matching_runs <- function(id, run_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Cancel a run
-#' @param id integer required. The ID of the person_matching.
-#' @param run_id integer required. The ID of the run.
-#' 
-#' @return  An empty HTTP response
-#' @export
-enhancements_delete_person_matching_runs <- function(id, run_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get the logs for a run
-#' @param id integer required. The ID of the person_matching.
-#' @param run_id integer required. The ID of the run.
-#' @param last_id integer optional. The ID of the last log message received. Log entries with this ID value or lower will be omitted.Logs are sorted by ID if this value is provided, and are otherwise sorted by createdAt.
-#' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID of the log.}
-#' \item{createdAt}{string, The time the log was created.}
-#' \item{message}{string, The log message.}
-#' \item{level}{string, The level of the log. One of unknown,fatal,error,warn,info,debug.}
-#' @export
-enhancements_list_person_matching_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}/runs/{run_id}/logs"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list(last_id = last_id, limit = limit)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Cancel a run
-#' @param id integer required. The ID of the job.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the run.}
-#' \item{state}{string, The state of the run, one of 'queued', 'running' or 'cancelled'.}
-#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' @export
-enhancements_post_person_matching_cancel <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}/cancel"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List the outputs for a run
-#' @param id integer required. The ID of the job.
-#' @param run_id integer required. The ID of the run.
-#' @param limit integer optional. Number of results to return. Defaults to its maximum of 50.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at, id.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, The type of the output. Valid values are File, Table, Report, Project, Credential, or JSONValue}
-#' \item{objectId}{integer, The ID of the output object.}
-#' \item{name}{string, The name of the output object.}
-#' \item{link}{string, The link to retrieve the output object.}
-#' \item{value}{string, }
-#' @export
-enhancements_list_person_matching_runs_outputs <- function(id, run_id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}/runs/{run_id}/outputs"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List users and groups permissioned on this object
 #' @param id integer required. The ID of the object.
 #' 
@@ -6311,6 +5603,29 @@ jobs_get_runs <- function(id, run_id) {
  }
 
 
+#' Cancel a run
+#' @param id integer required. The ID of the Job.
+#' @param run_id integer required. The ID of the Run.
+#' 
+#' @return  An empty HTTP response
+#' @export
+jobs_delete_runs <- function(id, run_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/jobs/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List the workflows a job belongs to
 #' @param id integer required. 
 #' @param archived string optional. The archival status of the requested object(s).
@@ -7140,6 +6455,7 @@ media_delete_optimizations_shares_groups <- function(id, group_id) {
 #' \item startDate string, The start date for the media run.
 #' \item endDate string, The end date for the media run.
 #' \item forceCpm boolean, Whether to force optimization to use CPM data even if partition data is available.
+#' \item reachAlpha number, A tuning parameter used to adjust RF.
 #' \item syscodes array, The syscodes for the media run.
 #' \item rateCards array, The ratecards for the media run.
 #' \item constraints array, The constraints for the media run.
@@ -7417,6 +6733,7 @@ media_list_optimizations <- function(archived = NULL, limit = NULL, page_num = N
 #' \item startDate string, The start date for the media run.
 #' \item endDate string, The end date for the media run.
 #' \item forceCpm boolean, Whether to force optimization to use CPM data even if partition data is available.
+#' \item reachAlpha number, A tuning parameter used to adjust RF.
 #' \item syscodes array, The syscodes for the media run.
 #' \item rateCards array, The ratecards for the media run.
 #' \item constraints array, The constraints for the media run.
@@ -7455,6 +6772,7 @@ media_list_optimizations <- function(archived = NULL, limit = NULL, page_num = N
 #' \item startDate string, The start date for the media run.
 #' \item endDate string, The end date for the media run.
 #' \item forceCpm boolean, Whether to force optimization to use CPM data even if partition data is available.
+#' \item reachAlpha number, A tuning parameter used to adjust RF.
 #' \item syscodes array, The syscodes for the media run.
 #' \item rateCards array, The ratecards for the media run.
 #' \item constraints array, The constraints for the media run.
@@ -7512,6 +6830,7 @@ media_post_optimizations <- function(runs, name = NULL, programs = NULL, network
 #' \item startDate string, The start date for the media run.
 #' \item endDate string, The end date for the media run.
 #' \item forceCpm boolean, Whether to force optimization to use CPM data even if partition data is available.
+#' \item reachAlpha number, A tuning parameter used to adjust RF.
 #' \item syscodes array, The syscodes for the media run.
 #' \item rateCards array, The ratecards for the media run.
 #' \item constraints array, The constraints for the media run.
@@ -7548,6 +6867,7 @@ media_get_optimizations <- function(id) {
 #' \item startDate string, The start date for the media run.
 #' \item endDate string, The end date for the media run.
 #' \item forceCpm boolean, Whether to force optimization to use CPM data even if partition data is available.
+#' \item reachAlpha number, A tuning parameter used to adjust RF.
 #' \item syscodes array, The syscodes for the media run.
 #' \item rateCards array, The ratecards for the media run.
 #' \item constraints array, The constraints for the media run.
@@ -7585,6 +6905,7 @@ media_get_optimizations <- function(id) {
 #' \item startDate string, The start date for the media run.
 #' \item endDate string, The end date for the media run.
 #' \item forceCpm boolean, Whether to force optimization to use CPM data even if partition data is available.
+#' \item reachAlpha number, A tuning parameter used to adjust RF.
 #' \item syscodes array, The syscodes for the media run.
 #' \item rateCards array, The ratecards for the media run.
 #' \item constraints array, The constraints for the media run.
@@ -7642,6 +6963,7 @@ media_patch_optimizations <- function(id, name = NULL, runs = NULL, programs = N
 #' \item startDate string, The start date for the media run.
 #' \item endDate string, The end date for the media run.
 #' \item forceCpm boolean, Whether to force optimization to use CPM data even if partition data is available.
+#' \item reachAlpha number, A tuning parameter used to adjust RF.
 #' \item syscodes array, The syscodes for the media run.
 #' \item rateCards array, The ratecards for the media run.
 #' \item constraints array, The constraints for the media run.
@@ -10241,6 +9563,35 @@ notebooks_delete_deployments <- function(notebook_id, deployment_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get the logs for a Notebook deployment
+#' @param id integer required. The ID of the owning Notebook.
+#' @param deployment_id integer required. The ID for this deployment.
+#' @param start_at string optional. Log entries with a lower timestamp will be omitted.
+#' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
+#' 
+#' @return  An array containing the following fields:
+#' \item{message}{string, The log message.}
+#' \item{stream}{string, The stream of the log. One of "stdout", "stderr".}
+#' \item{createdAt}{string, The time the log was created.}
+#' \item{source}{string, The source of the log. One of "system", "user".}
+#' @export
+notebooks_list_deployments_logs <- function(id, deployment_id, start_at = NULL, limit = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/notebooks/{id}/deployments/{deployment_id}/logs"
+  path_params  <- list(id = id, deployment_id = deployment_id)
+  query_params <- list(start_at = start_at, limit = limit)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14400,6 +13751,80 @@ reports_patch_services <- function(id, name = NULL) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("patch", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a service report
+#' @param service_id integer required. The id of the backing service
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this report.}
+#' \item{name}{string, The name of the report.}
+#' \item{user}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{host}{string, The host for the service report}
+#' \item{displayUrl}{string, The URL to display the service report.}
+#' \item{serviceId}{integer, The id of the backing service}
+#' @export
+results_post_services <- function(service_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/results/services"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(serviceId = service_id)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a service report
+#' @param service_id integer required. The id of the backing service
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this report.}
+#' \item{name}{string, The name of the report.}
+#' \item{user}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{host}{string, The host for the service report}
+#' \item{displayUrl}{string, The URL to display the service report.}
+#' \item{serviceId}{integer, The id of the backing service}
+#' @export
+reports_post_services <- function(service_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/services"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(serviceId = service_id)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24093,6 +23518,1349 @@ search_list_types <- function() {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List Services
+#' @param hidden boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.
+#' @param archived string optional. The archival status of the requested object(s).
+#' @param author string optional. If specified, return imports from this author. It accepts a comma-separated list of author IDs.
+#' @param status string optional. If specified, returns Services with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'idle'.
+#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to updated_at. Must be one of: updated_at, name, created_at.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID for this Service.}
+#' \item{name}{string, The name of this Service.}
+#' \item{description}{string, The description of this Service.}
+#' \item{user}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
+#' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
+#' \item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
+#' \item{currentDeployment}{object, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{previewDeployment}{object, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{archived}{string, The archival status of the requested object(s).}
+#' @export
+services_list <- function(hidden = NULL, archived = NULL, author = NULL, status = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/"
+  path_params  <- list()
+  query_params <- list(hidden = hidden, archived = archived, author = author, status = status, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a Service
+#' @param name string optional. The name of this Service.
+#' @param description string optional. The description of this Service.
+#' @param docker_image_name string optional. The name of the docker image to pull from DockerHub.
+#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub (default: latest).
+#' @param schedule object optional. A list containing the following elements: 
+#' \itemize{
+#' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
+#' \item recurrences array, List of day-hour combinations this object is scheduled for
+#' }
+#' @param replicas integer optional. The number of Service replicas to deploy. When maxReplicas is set, this field defines the minimum number of replicas to deploy.
+#' @param max_replicas integer optional. The maximum number of Service replicas to deploy. Defining this field enables autoscaling.
+#' @param instance_type string optional. The EC2 instance type to deploy to.
+#' @param memory integer optional. The amount of memory allocated to each replica of the Service.
+#' @param cpu integer optional. The amount of cpu allocated to each replica of the the Service.
+#' @param credentials array optional. A list of credential IDs to pass to the Service.
+#' @param api_key_id integer optional. API key id of user
+#' @param git_repo_url string optional. The url for the git repo where the Service code lives.
+#' @param git_repo_ref string optional. The git reference to use when pulling code from the repo.
+#' @param git_path_dir string optional. The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.
+#' @param environment_variables object optional. Environment Variables to be passed into the Service.
+#' @param notifications object optional. A list containing the following elements: 
+#' \itemize{
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
+#' \item failureOn boolean, If failure email notifications are on
+#' }
+#' @param hidden boolean optional. The hidden status of the object.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for this Service.}
+#' \item{name}{string, The name of this Service.}
+#' \item{description}{string, The description of this Service.}
+#' \item{user}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{schedule}{object, A list containing the following elements: 
+#' \itemize{
+#' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
+#' \item recurrences array, List of day-hour combinations this object is scheduled for
+#' }}
+#' \item{timeZone}{string, }
+#' \item{replicas}{integer, The number of Service replicas to deploy. When maxReplicas is set, this field defines the minimum number of replicas to deploy.}
+#' \item{maxReplicas}{integer, The maximum number of Service replicas to deploy. Defining this field enables autoscaling.}
+#' \item{instanceType}{string, The EC2 instance type to deploy to.}
+#' \item{memory}{integer, The amount of memory allocated to each replica of the Service.}
+#' \item{cpu}{integer, The amount of cpu allocated to each replica of the the Service.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{apiKeyId}{integer, API key id of user}
+#' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
+#' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
+#' \item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
+#' \item{reportId}{integer, The ID of the associated report.}
+#' \item{currentDeployment}{object, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, URL that displays the deployed platform object and includes auth token.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{previewDeployment}{object, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, URL that displays the deployed platform object and includes auth token.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{currentUrl}{string, The URL that the service is hosted at.}
+#' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
+#' \item{environmentVariables}{object, Environment Variables to be passed into the Service.}
+#' \item{notifications}{object, A list containing the following elements: 
+#' \itemize{
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
+#' \item failureOn boolean, If failure email notifications are on
+#' }}
+#' \item{archived}{string, The archival status of the requested object(s).}
+#' \item{hidden}{boolean, The hidden status of the object.}
+#' @export
+services_post <- function(name = NULL, description = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL, hidden = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(name = name, description = description, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, apiKeyId = api_key_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications, hidden = hidden)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get a Service
+#' @param id integer required. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for this Service.}
+#' \item{name}{string, The name of this Service.}
+#' \item{description}{string, The description of this Service.}
+#' \item{user}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{schedule}{object, A list containing the following elements: 
+#' \itemize{
+#' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
+#' \item recurrences array, List of day-hour combinations this object is scheduled for
+#' }}
+#' \item{timeZone}{string, }
+#' \item{replicas}{integer, The number of Service replicas to deploy. When maxReplicas is set, this field defines the minimum number of replicas to deploy.}
+#' \item{maxReplicas}{integer, The maximum number of Service replicas to deploy. Defining this field enables autoscaling.}
+#' \item{instanceType}{string, The EC2 instance type to deploy to.}
+#' \item{memory}{integer, The amount of memory allocated to each replica of the Service.}
+#' \item{cpu}{integer, The amount of cpu allocated to each replica of the the Service.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{apiKeyId}{integer, API key id of user}
+#' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
+#' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
+#' \item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
+#' \item{reportId}{integer, The ID of the associated report.}
+#' \item{currentDeployment}{object, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, URL that displays the deployed platform object and includes auth token.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{previewDeployment}{object, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, URL that displays the deployed platform object and includes auth token.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{currentUrl}{string, The URL that the service is hosted at.}
+#' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
+#' \item{environmentVariables}{object, Environment Variables to be passed into the Service.}
+#' \item{notifications}{object, A list containing the following elements: 
+#' \itemize{
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
+#' \item failureOn boolean, If failure email notifications are on
+#' }}
+#' \item{archived}{string, The archival status of the requested object(s).}
+#' \item{hidden}{boolean, The hidden status of the object.}
+#' @export
+services_get <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Replace all attributes of this Service
+#' @param id integer required. The ID for this Service.
+#' @param name string optional. The name of this Service.
+#' @param description string optional. The description of this Service.
+#' @param docker_image_name string optional. The name of the docker image to pull from DockerHub.
+#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub (default: latest).
+#' @param schedule object optional. A list containing the following elements: 
+#' \itemize{
+#' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
+#' \item recurrences array, List of day-hour combinations this object is scheduled for
+#' }
+#' @param replicas integer optional. The number of Service replicas to deploy. When maxReplicas is set, this field defines the minimum number of replicas to deploy.
+#' @param max_replicas integer optional. The maximum number of Service replicas to deploy. Defining this field enables autoscaling.
+#' @param instance_type string optional. The EC2 instance type to deploy to.
+#' @param memory integer optional. The amount of memory allocated to each replica of the Service.
+#' @param cpu integer optional. The amount of cpu allocated to each replica of the the Service.
+#' @param credentials array optional. A list of credential IDs to pass to the Service.
+#' @param api_key_id integer optional. API key id of user
+#' @param git_repo_url string optional. The url for the git repo where the Service code lives.
+#' @param git_repo_ref string optional. The git reference to use when pulling code from the repo.
+#' @param git_path_dir string optional. The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.
+#' @param environment_variables object optional. Environment Variables to be passed into the Service.
+#' @param notifications object optional. A list containing the following elements: 
+#' \itemize{
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
+#' \item failureOn boolean, If failure email notifications are on
+#' }
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for this Service.}
+#' \item{name}{string, The name of this Service.}
+#' \item{description}{string, The description of this Service.}
+#' \item{user}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{schedule}{object, A list containing the following elements: 
+#' \itemize{
+#' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
+#' \item recurrences array, List of day-hour combinations this object is scheduled for
+#' }}
+#' \item{timeZone}{string, }
+#' \item{replicas}{integer, The number of Service replicas to deploy. When maxReplicas is set, this field defines the minimum number of replicas to deploy.}
+#' \item{maxReplicas}{integer, The maximum number of Service replicas to deploy. Defining this field enables autoscaling.}
+#' \item{instanceType}{string, The EC2 instance type to deploy to.}
+#' \item{memory}{integer, The amount of memory allocated to each replica of the Service.}
+#' \item{cpu}{integer, The amount of cpu allocated to each replica of the the Service.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{apiKeyId}{integer, API key id of user}
+#' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
+#' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
+#' \item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
+#' \item{reportId}{integer, The ID of the associated report.}
+#' \item{currentDeployment}{object, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, URL that displays the deployed platform object and includes auth token.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{previewDeployment}{object, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, URL that displays the deployed platform object and includes auth token.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{currentUrl}{string, The URL that the service is hosted at.}
+#' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
+#' \item{environmentVariables}{object, Environment Variables to be passed into the Service.}
+#' \item{notifications}{object, A list containing the following elements: 
+#' \itemize{
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
+#' \item failureOn boolean, If failure email notifications are on
+#' }}
+#' \item{archived}{string, The archival status of the requested object(s).}
+#' \item{hidden}{boolean, The hidden status of the object.}
+#' @export
+services_put <- function(id, name = NULL, description = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, description = description, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, apiKeyId = api_key_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update some attributes of this Service
+#' @param id integer required. The ID for this Service.
+#' @param name string optional. The name of this Service.
+#' @param description string optional. The description of this Service.
+#' @param docker_image_name string optional. The name of the docker image to pull from DockerHub.
+#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub (default: latest).
+#' @param schedule object optional. A list containing the following elements: 
+#' \itemize{
+#' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
+#' \item recurrences array, List of day-hour combinations this object is scheduled for
+#' }
+#' @param replicas integer optional. The number of Service replicas to deploy. When maxReplicas is set, this field defines the minimum number of replicas to deploy.
+#' @param max_replicas integer optional. The maximum number of Service replicas to deploy. Defining this field enables autoscaling.
+#' @param instance_type string optional. The EC2 instance type to deploy to.
+#' @param memory integer optional. The amount of memory allocated to each replica of the Service.
+#' @param cpu integer optional. The amount of cpu allocated to each replica of the the Service.
+#' @param credentials array optional. A list of credential IDs to pass to the Service.
+#' @param api_key_id integer optional. API key id of user
+#' @param git_repo_url string optional. The url for the git repo where the Service code lives.
+#' @param git_repo_ref string optional. The git reference to use when pulling code from the repo.
+#' @param git_path_dir string optional. The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.
+#' @param environment_variables object optional. Environment Variables to be passed into the Service.
+#' @param notifications object optional. A list containing the following elements: 
+#' \itemize{
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
+#' \item failureOn boolean, If failure email notifications are on
+#' }
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for this Service.}
+#' \item{name}{string, The name of this Service.}
+#' \item{description}{string, The description of this Service.}
+#' \item{user}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{schedule}{object, A list containing the following elements: 
+#' \itemize{
+#' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
+#' \item recurrences array, List of day-hour combinations this object is scheduled for
+#' }}
+#' \item{timeZone}{string, }
+#' \item{replicas}{integer, The number of Service replicas to deploy. When maxReplicas is set, this field defines the minimum number of replicas to deploy.}
+#' \item{maxReplicas}{integer, The maximum number of Service replicas to deploy. Defining this field enables autoscaling.}
+#' \item{instanceType}{string, The EC2 instance type to deploy to.}
+#' \item{memory}{integer, The amount of memory allocated to each replica of the Service.}
+#' \item{cpu}{integer, The amount of cpu allocated to each replica of the the Service.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{apiKeyId}{integer, API key id of user}
+#' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
+#' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
+#' \item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
+#' \item{reportId}{integer, The ID of the associated report.}
+#' \item{currentDeployment}{object, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, URL that displays the deployed platform object and includes auth token.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{previewDeployment}{object, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, URL that displays the deployed platform object and includes auth token.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{currentUrl}{string, The URL that the service is hosted at.}
+#' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
+#' \item{environmentVariables}{object, Environment Variables to be passed into the Service.}
+#' \item{notifications}{object, A list containing the following elements: 
+#' \itemize{
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
+#' \item failureOn boolean, If failure email notifications are on
+#' }}
+#' \item{archived}{string, The archival status of the requested object(s).}
+#' \item{hidden}{boolean, The hidden status of the object.}
+#' @export
+services_patch <- function(id, name = NULL, description = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, description = description, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, apiKeyId = api_key_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("patch", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Archive a Service (deprecated, use archiving endpoints instead)
+#' @param id integer required. 
+#' 
+#' @return  An empty HTTP response
+#' @export
+services_delete <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List users and groups permissioned on this object
+#' @param id integer required. The ID of the object.
+#' 
+#' @return  An array containing the following fields:
+#' \item{readers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+services_list_shares <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}/shares"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions users have on this object
+#' @param id integer required. ID of the resource to be shared
+#' @param user_ids array required. An array of one or more user IDs
+#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+services_put_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}/shares/users"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a user has on this object
+#' @param id integer required. ID of the resource to be revoked
+#' @param user_id integer required. ID of the user
+#' 
+#' @return  An empty HTTP response
+#' @export
+services_delete_shares_users <- function(id, user_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}/shares/users/{user_id}"
+  path_params  <- list(id = id, user_id = user_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions groups has on this object
+#' @param id integer required. ID of the resource to be shared
+#' @param group_ids array required. An array of one or more group IDs
+#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{object, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+services_put_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}/shares/groups"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a group has on this object
+#' @param id integer required. ID of the resource to be revoked
+#' @param group_id integer required. ID of the group
+#' 
+#' @return  An empty HTTP response
+#' @export
+services_delete_shares_groups <- function(id, group_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}/shares/groups/{group_id}"
+  path_params  <- list(id = id, group_id = group_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update the archive status of this object
+#' @param id integer required. The ID of the object.
+#' @param status boolean required. The desired archived status of the object.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for this Service.}
+#' \item{name}{string, The name of this Service.}
+#' \item{description}{string, The description of this Service.}
+#' \item{user}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{schedule}{object, A list containing the following elements: 
+#' \itemize{
+#' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
+#' \item recurrences array, List of day-hour combinations this object is scheduled for
+#' }}
+#' \item{timeZone}{string, }
+#' \item{replicas}{integer, The number of Service replicas to deploy. When maxReplicas is set, this field defines the minimum number of replicas to deploy.}
+#' \item{maxReplicas}{integer, The maximum number of Service replicas to deploy. Defining this field enables autoscaling.}
+#' \item{instanceType}{string, The EC2 instance type to deploy to.}
+#' \item{memory}{integer, The amount of memory allocated to each replica of the Service.}
+#' \item{cpu}{integer, The amount of cpu allocated to each replica of the the Service.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{apiKeyId}{integer, API key id of user}
+#' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
+#' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
+#' \item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
+#' \item{reportId}{integer, The ID of the associated report.}
+#' \item{currentDeployment}{object, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, URL that displays the deployed platform object and includes auth token.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{previewDeployment}{object, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, URL that displays the deployed platform object and includes auth token.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{currentUrl}{string, The URL that the service is hosted at.}
+#' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
+#' \item{environmentVariables}{object, Environment Variables to be passed into the Service.}
+#' \item{notifications}{object, A list containing the following elements: 
+#' \itemize{
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
+#' \item failureOn boolean, If failure email notifications are on
+#' }}
+#' \item{archived}{string, The archival status of the requested object(s).}
+#' \item{hidden}{boolean, The hidden status of the object.}
+#' @export
+services_put_archive <- function(id, status) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}/archive"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(status = status)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the projects a ShinyApp belongs to
+#' @param id integer required. The ID of the resource.
+#' @param hidden boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID for this project.}
+#' \item{author}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{name}{string, The name of this project.}
+#' \item{description}{string, A description of the project}
+#' \item{users}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{autoShare}{boolean, }
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{archived}{string, The archival status of the requested object(s).}
+#' @export
+services_list_projects <- function(id, hidden = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}/projects"
+  path_params  <- list(id = id)
+  query_params <- list(hidden = hidden)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Add a ShinyApp to a project
+#' @param id integer required. ID of the resource
+#' @param project_id integer required. The ID of the project
+#' 
+#' @return  An empty HTTP response
+#' @export
+services_put_projects <- function(id, project_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Remove a ShinyApp from a project
+#' @param id integer required. ID of the resource
+#' @param project_id integer required. The ID of the project
+#' 
+#' @return  An empty HTTP response
+#' @export
+services_delete_projects <- function(id, project_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List deployments for a ShinyApp
+#' @param service_id integer required. The ID of the owning ShinyApp
+#' @param deployment_id integer optional. The ID for this deployment
+#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{deploymentId}{integer, The ID for this deployment.}
+#' \item{userId}{integer, The ID of the owner.}
+#' \item{host}{string, Domain of the deployment.}
+#' \item{name}{string, Name of the deployment.}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{instanceType}{string, The EC2 instance type requested for the deployment.}
+#' \item{memory}{integer, The memory allocated to the deployment.}
+#' \item{cpu}{integer, The cpu allocated to the deployment.}
+#' \item{state}{string, The state of the deployment.}
+#' \item{stateMessage}{string, A detailed description of the state.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{published}{boolean, }
+#' \item{serviceId}{integer, The ID of owning Service}
+#' @export
+services_list_deployments <- function(service_id, deployment_id = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{service_id}/deployments"
+  path_params  <- list(service_id = service_id)
+  query_params <- list(deployment_id = deployment_id, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Deploy a ShinyApp
+#' @param service_id integer required. The ID of the owning ShinyApp
+#' @param deployment_id integer optional. The ID for this deployment
+#' @param published boolean optional. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{deploymentId}{integer, The ID for this deployment.}
+#' \item{userId}{integer, The ID of the owner.}
+#' \item{host}{string, Domain of the deployment.}
+#' \item{name}{string, Name of the deployment.}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{displayUrl}{string, URL that displays the deployed platform object and includes auth token.}
+#' \item{instanceType}{string, The EC2 instance type requested for the deployment.}
+#' \item{memory}{integer, The memory allocated to the deployment.}
+#' \item{cpu}{integer, The cpu allocated to the deployment.}
+#' \item{state}{string, The state of the deployment.}
+#' \item{stateMessage}{string, A detailed description of the state.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{published}{boolean, }
+#' \item{serviceId}{integer, The ID of owning Service}
+#' @export
+services_post_deployments <- function(service_id, deployment_id = NULL, published = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{service_id}/deployments"
+  path_params  <- list(service_id = service_id)
+  query_params <- list()
+  body_params  <- list(deploymentId = deployment_id, published = published)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get details about a ShinyApp deployment
+#' @param service_id integer required. The ID of the owning ShinyApp
+#' @param deployment_id integer required. The ID for this deployment
+#' 
+#' @return  A list containing the following elements:
+#' \item{deploymentId}{integer, The ID for this deployment.}
+#' \item{userId}{integer, The ID of the owner.}
+#' \item{host}{string, Domain of the deployment.}
+#' \item{name}{string, Name of the deployment.}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{displayUrl}{string, URL that displays the deployed platform object and includes auth token.}
+#' \item{instanceType}{string, The EC2 instance type requested for the deployment.}
+#' \item{memory}{integer, The memory allocated to the deployment.}
+#' \item{cpu}{integer, The cpu allocated to the deployment.}
+#' \item{state}{string, The state of the deployment.}
+#' \item{stateMessage}{string, A detailed description of the state.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{published}{boolean, }
+#' \item{serviceId}{integer, The ID of owning Service}
+#' @export
+services_get_deployments <- function(service_id, deployment_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{service_id}/deployments/{deployment_id}"
+  path_params  <- list(service_id = service_id, deployment_id = deployment_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Delete a ShinyApp deployment
+#' @param service_id integer required. The ID of the owning ShinyApp
+#' @param deployment_id integer required. The ID for this deployment
+#' 
+#' @return  An empty HTTP response
+#' @export
+services_delete_deployments <- function(service_id, deployment_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{service_id}/deployments/{deployment_id}"
+  path_params  <- list(service_id = service_id, deployment_id = deployment_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Redeploy a ShinyApp
+#' @param service_id integer required. The ID of the owning ShinyApp
+#' @param deployment_id integer optional. The ID for this deployment
+#' @param published boolean optional. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{deploymentId}{integer, The ID for this deployment.}
+#' \item{userId}{integer, The ID of the owner.}
+#' \item{host}{string, Domain of the deployment.}
+#' \item{name}{string, Name of the deployment.}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{displayUrl}{string, URL that displays the deployed platform object and includes auth token.}
+#' \item{instanceType}{string, The EC2 instance type requested for the deployment.}
+#' \item{memory}{integer, The memory allocated to the deployment.}
+#' \item{cpu}{integer, The cpu allocated to the deployment.}
+#' \item{state}{string, The state of the deployment.}
+#' \item{stateMessage}{string, A detailed description of the state.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{published}{boolean, }
+#' \item{serviceId}{integer, The ID of owning Service}
+#' @export
+services_post_redeploy <- function(service_id, deployment_id = NULL, published = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{service_id}/redeploy"
+  path_params  <- list(service_id = service_id)
+  query_params <- list()
+  body_params  <- list(deploymentId = deployment_id, published = published)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get the logs for a Service deployment
+#' @param id integer required. The ID of the owning Service.
+#' @param deployment_id integer required. The ID for this deployment.
+#' @param start_at string optional. Log entries with a lower timestamp will be omitted.
+#' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
+#' 
+#' @return  An array containing the following fields:
+#' \item{message}{string, The log message.}
+#' \item{stream}{string, The stream of the log. One of "stdout", "stderr".}
+#' \item{createdAt}{string, The time the log was created.}
+#' \item{source}{string, The source of the log. One of "system", "user".}
+#' @export
+services_list_deployments_logs <- function(id, deployment_id, start_at = NULL, limit = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}/deployments/{deployment_id}/logs"
+  path_params  <- list(id = id, deployment_id = deployment_id)
+  query_params <- list(start_at = start_at, limit = limit)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Clone this Service
+#' @param id integer required. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for this Service.}
+#' \item{name}{string, The name of this Service.}
+#' \item{description}{string, The description of this Service.}
+#' \item{user}{object, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{schedule}{object, A list containing the following elements: 
+#' \itemize{
+#' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
+#' \item recurrences array, List of day-hour combinations this object is scheduled for
+#' }}
+#' \item{timeZone}{string, }
+#' \item{replicas}{integer, The number of Service replicas to deploy. When maxReplicas is set, this field defines the minimum number of replicas to deploy.}
+#' \item{maxReplicas}{integer, The maximum number of Service replicas to deploy. Defining this field enables autoscaling.}
+#' \item{instanceType}{string, The EC2 instance type to deploy to.}
+#' \item{memory}{integer, The amount of memory allocated to each replica of the Service.}
+#' \item{cpu}{integer, The amount of cpu allocated to each replica of the the Service.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{apiKeyId}{integer, API key id of user}
+#' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
+#' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
+#' \item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
+#' \item{reportId}{integer, The ID of the associated report.}
+#' \item{currentDeployment}{object, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, URL that displays the deployed platform object and includes auth token.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{previewDeployment}{object, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, URL that displays the deployed platform object and includes auth token.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{currentUrl}{string, The URL that the service is hosted at.}
+#' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
+#' \item{environmentVariables}{object, Environment Variables to be passed into the Service.}
+#' \item{notifications}{object, A list containing the following elements: 
+#' \itemize{
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
+#' \item failureOn boolean, If failure email notifications are on
+#' }}
+#' \item{archived}{string, The archival status of the requested object(s).}
+#' \item{hidden}{boolean, The hidden status of the object.}
+#' @export
+services_post_clone <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}/clone"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a new long-lived service token
+#' @param id integer required. The ID of token.
+#' @param name string required. The name of token.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of token.}
+#' \item{name}{string, The name of token.}
+#' \item{createdAt}{string, The date and time when the token was created.}
+#' \item{token}{string, The value for a long-lived arproxy service token.}
+#' @export
+services_post_tokens <- function(id, name) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}/tokens"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List tokens
+#' @param id integer required. 
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID of token.}
+#' \item{name}{string, The name of token.}
+#' \item{createdAt}{string, The date and time when the token was created.}
+#' @export
+services_list_tokens <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}/tokens"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke a token by id
+#' @param id integer required. The ID of service.
+#' @param token_id integer required. The ID of the token.
+#' 
+#' @return  An empty HTTP response
+#' @export
+services_delete_tokens <- function(id, token_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}/tokens/{token_id}"
+  path_params  <- list(id = id, token_id = token_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
 
   return(resp)
 
