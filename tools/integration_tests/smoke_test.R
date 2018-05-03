@@ -116,30 +116,6 @@ test_that("query_civis_file", {
   expect_equal(df1, df2)
 })
 
-test_that("DBI Read-Only connections forbid writes", {
-  tryCatch({
-    conn <- dbConnect(dbi_driver(), database = database, read_only = TRUE)
-    expect_error(dbWriteTable(conn, tablename = tablename, mpg))
-  }, finally = {
-    db_id <- get_database_id(database)
-    q <- queries_post(db_id, paste("DROP TABLE IF EXISTS", tablename), 1)
-  })
-})
-
-test_that("dplyr pipeline works", {
-  redshift <- dbConnect(dbi_driver(), database = database)
-  query <- tbl(redshift, "datascience.iris") %>%
-    select(-sepal_width) %>%
-    filter(petal_width < 3) %>%
-    group_by(type) %>%
-    summarize(mlength = mean(sepal_length), n = n()) %>%
-    mutate(n2 = log(n), n3 = n * 3, n4 = n - 10, n5 = n + 5)
-  show_query(query)
-  x <- collect(query)
-  expect_equal(nrow(x), 3)
-})
-
-
 ###############################################################################
 # Reports
 ###############################################################################

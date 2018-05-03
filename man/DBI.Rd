@@ -165,4 +165,5 @@ special values.}
 }
 \description{
 Implementations of pure virtual functions defined in the `DBI` package.
+The DBI connectors for Civis Platform are no longer maintained.
 }
