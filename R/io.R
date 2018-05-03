@@ -87,7 +87,7 @@ read_civis.character <- function(x, database = NULL, ...) {
 read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
                            job_name = NULL, hidden = TRUE, verbose = FALSE, ...) {
   db <- get_db(database)
-  sql_str <- declare_statement_read_only(x)
+  sql_str <- as.character(x)
   job_name <- if (is.null(job_name)) "Civis Export Via R Client"
   if (!is.character(job_name)) stop("job_name must be a string.")
   run <- start_scripted_sql_job(db, sql_str, job_name, hidden)
@@ -438,7 +438,7 @@ download_civis.sql <- function(x, database = NULL, file,
   }
 
   db <- get_db(database)
-  sql_str <- declare_statement_read_only(x)
+  sql_str <- as.character(x)
   job_name <- if (is.null(job_name)) "Civis Download Via R Client"
   if (!is.character(job_name)) stop("job_name must be a string.")
 

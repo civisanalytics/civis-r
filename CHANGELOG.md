@@ -4,6 +4,7 @@
 
 ### Changed
 - Add v2.2 CivisML templates.
+- Removed read-only restriction for queries from `read_civis` and `download_civis`. 
 - The DBI connectors are provided on an as-is basis and are no longer maintained.
 
 ### Fixed
