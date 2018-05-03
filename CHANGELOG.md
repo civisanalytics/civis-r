@@ -4,6 +4,7 @@
 
 ### Changed
 - Add v2.2 CivisML templates.
+- Removed read-only restriction for queries from `read_civis` and `download_civis`. 
 
 
 ## [1.3.0] - 2018-03-30
