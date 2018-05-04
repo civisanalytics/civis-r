@@ -1,6 +1,7 @@
 library(testthat)
 library(civis)
 library(dplyr)
+library(future)
 
 # Smoke test for testing general end to end functions.  These tests hit
 # outside resources (Civis API, Redshift), so necessary credentials are
@@ -163,7 +164,8 @@ test_that("futures work", {
   d2 <- future({read_civis("datascience.iris", "redshift-general")})
   d <- read_civis("datascience.iris", verbose = TRUE)
   expect_is(d2, "CivisFuture")
-  expect_equal(d, value(d2))
+  d2 <- value(d2)
+  expect_equal(d[order(d$index), ], d2[order(d2$index), ], check.attributes = FALSE)
 })
 
 test_that("additional packages get installed", {
