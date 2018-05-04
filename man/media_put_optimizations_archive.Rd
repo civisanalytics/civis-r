@@ -39,6 +39,7 @@ A list containing the following elements:
 \item startDate string, The start date for the media run.
 \item endDate string, The end date for the media run.
 \item forceCpm boolean, Whether to force optimization to use CPM data even if partition data is available.
+\item reachAlpha number, A tuning parameter used to adjust RF.
 \item syscodes array, The syscodes for the media run.
 \item rateCards array, The ratecards for the media run.
 \item constraints array, The constraints for the media run.
