@@ -18,13 +18,22 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="CivisML Gradient Boosting Regressor — civis_ml_gradient_boosting_regressor" />
+
+<meta property="og:description" content="CivisML Gradient Boosting Regressor" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,12 +56,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">civis</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">civis</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -91,6 +104,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -98,15 +112,19 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>CivisML Gradient Boosting Regressor</h1>
+    <small class="dont-index">Source: <a href='https://github.com/civisanalytics/civis-r/blob/master/R/civis_ml_workflows.R'><code>R/civis_ml_workflows.R</code></a></small>
+    <div class="hidden name"><code>civis_ml_gradient_boosting_regressor.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>CivisML Gradient Boosting Regressor</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>civis_ml_gradient_boosting_regressor</span>(<span class='no'>x</span>, <span class='no'>dependent_variable</span>,
   <span class='kw'>primary_key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>excluded_columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>loss</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ls"</span>, <span class='st'>"lad"</span>,
@@ -123,7 +141,7 @@
   <span class='kw'>disk_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>polling_interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -355,7 +373,8 @@ logs and make prediction child jobs visible.</p></td>
 four different places, a file in the Civis Platform, a CSV or feather-format file
 on the local disk, a <code>data.frame</code> resident in local the R environment, and finally,
 a table in the Civis Platform. Use the following helpers to specify the
-data source when calling <code>civis_ml</code>:</p><dl class='dl-horizontal'>
+data source when calling <code>civis_ml</code>:</p>
+<dl class='dl-horizontal'>
   <dt><code>data.frame</code></dt><dd><p><code>civis_ml(x = df, ...)</code></p></dd>
   <dt>local csv file</dt><dd><p><code>civis_ml(x = "path/to/data.csv", ...)</code></p></dd>
   <dt>file in Civis Platform</dt><dd><p><code>civis_ml(x = civis_file(1234))</code></p></dd>
@@ -413,11 +432,14 @@ data source when calling <code>civis_ml</code>:</p><dl class='dl-horizontal'>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

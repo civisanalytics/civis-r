@@ -18,13 +18,27 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Upload a R object or file to Civis Platform (Files endpoint) — write_civis_file" />
+
+<meta property="og:description" content="Uploads a R object or file to the files endpoint on Civis
+Platform (Amazon S3). It returns the id of the file for use with read_civis
+or download_civis.
+R objects are serialized with saveRDS, files are unserialized.
+Objects or files larger than 50mb are chunked and can be uploaded in parallel
+if a plan has been set. Files larger than 5TB cannot be uploaded." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,12 +61,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">civis</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">civis</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -91,6 +109,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -98,12 +117,15 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Upload a R object or file to Civis Platform (Files endpoint)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/civisanalytics/civis-r/blob/master/R/io.R'><code>R/io.R</code></a></small>
+    <div class="hidden name"><code>write_civis_file.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Uploads a R object or file to the files endpoint on Civis
 Platform (Amazon S3). It returns the id of the file for use with <code><a href='read_civis.html'>read_civis</a></code>
@@ -112,6 +134,7 @@ or <code><a href='download_civis.html'>download_civis</a></code>.</p>
 Objects or files larger than 50mb are chunked and can be uploaded in parallel
 if a <code>plan</code> has been set. Files larger than 5TB cannot be uploaded.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>write_civis_file</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
@@ -122,7 +145,7 @@ if a <code>plan</code> has been set. Files larger than 5TB cannot be uploaded.</
 <span class='co'># S3 method for character</span>
 <span class='fu'>write_civis_file</span>(<span class='no'>x</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>expires_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -163,10 +186,10 @@ to the files endpoint. If given a filepath, the file is uploaded as-is.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other io: <code><a href='download_civis.html'>download_civis</a></code>,
+    <div class='dont-index'><p>Other io: <code><a href='download_civis.html'>download_civis</a></code>,
   <code><a href='query_civis_file.html'>query_civis_file</a></code>,
   <code><a href='query_civis.html'>query_civis</a></code>, <code><a href='read_civis.html'>read_civis</a></code>,
-  <code><a href='write_civis.html'>write_civis</a></code></p>
+  <code><a href='write_civis.html'>write_civis</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -218,11 +241,14 @@ to the files endpoint. If given a filepath, the file is uploaded as-is.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
