@@ -1,9 +1,12 @@
-urls:
-  reference: https://civisanalytics.github.io/civis-r/reference
-  article: https://civisanalytics.github.io/civis-r/articles
+pandoc: 1.19.2.4
+pkgdown: 1.0.0
+pkgdown_sha: ~
 articles:
   civis_ml: civis_ml.html
   concurrency: concurrency.html
   data_import_and_export: data_import_and_export.html
   quick_start: quick_start.html
+urls:
+  reference: https://civisanalytics.github.io/civis-r/reference
+  article: https://civisanalytics.github.io/civis-r/articles
 

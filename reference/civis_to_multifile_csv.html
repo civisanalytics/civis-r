@@ -18,13 +18,23 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Split a Redshift table into multiple CSV parts on S3 — civis_to_multifile_csv" />
+
+<meta property="og:description" content="Split a Redshift table into multiple CSV parts on S3 and return their
+locations as file IDs and presigned S3 urls." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,12 +57,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">civis</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">civis</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -91,6 +105,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -98,22 +113,26 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Split a Redshift table into multiple CSV parts on S3</h1>
+    <small class="dont-index">Source: <a href='https://github.com/civisanalytics/civis-r/blob/master/R/io.R'><code>R/io.R</code></a></small>
+    <div class="hidden name"><code>civis_to_multifile_csv.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Split a Redshift table into multiple CSV parts on S3 and return their
 locations as file IDs and presigned S3 urls.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>civis_to_multifile_csv</span>(<span class='no'>sql</span>, <span class='no'>database</span>, <span class='kw'>job_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>include_header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>compression</span> <span class='kw'>=</span> <span class='st'>"gzip"</span>, <span class='kw'>delimiter</span> <span class='kw'>=</span> <span class='st'>","</span>,
   <span class='kw'>unquoted</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -165,7 +184,7 @@ the output files to have.</p></td>
 <li><p>query: the executed query</p></li>
 <li><p>entries: a list containing presigned urls for each csv part</p></li>
 <li><p>compression: the type of compression on each csv part</p></li>
-<li><p>delimiter: the delimiter used to seperate fields</p></li>
+<li><p>delimiter: the delimiter used to separate fields</p></li>
 <li><p>unquoted: whether fields are quoted</p></li>
 </ul>
 
@@ -216,11 +235,14 @@ returned by Amazon S3 UNLOAD statements.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
