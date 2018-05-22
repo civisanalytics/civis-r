@@ -24,7 +24,7 @@ CivisFuture(expr = NULL, envir = parent.frame(), substitute = FALSE,
 
 \method{resolved}{CivisFuture}(future, ...)
 
-\method{fetch_logs}{CivisFuture}(object, limit, ...)
+\method{fetch_logs}{CivisFuture}(object, ...)
 }
 \arguments{
 \item{expr}{An R \link[base]{expression}.}
@@ -66,6 +66,10 @@ future.}
 \item{docker_image_tag}{the tag for the Docker image.}
 
 \item{...}{arguments to \code{\link{scripts_post_containers}}}
+
+\item{future}{CivisFuture object.}
+
+\item{object}{CivisFuture}
 }
 \value{
 A \code{CivisFuture} inheriting from \code{\link{Future}} that evaluates \code{expr} on the given container.

@@ -100,6 +100,7 @@ CivisFuture <- function(expr = NULL,
 }
 
 #' @export
+#' @param future CivisFuture object.
 #' @describeIn CivisFuture Run a CivisFuture
 run.CivisFuture <- function(future, ...) {
   if (is.null(future$job$containerId)) {
@@ -142,7 +143,7 @@ value.CivisFuture <- function(future, ...) {
 }
 
 #' Cancel the evaluation of a CivisFuture.
-#' @param future CivisFuture object to be cancelled.
+#' @param future CivisFuture object.
 #' @param ... unused for CivisFuture.
 #' @export
 cancel <- function(future, ...) {
@@ -167,8 +168,9 @@ resolved.CivisFuture <- function(future, ...){
 }
 
 #' @export
+#' @param object CivisFuture
 #' @describeIn CivisFuture Fetch logs from a CivisFuture
-fetch_logs.CivisFuture <- function(object, limit, ...){
+fetch_logs.CivisFuture <- function(object, ...){
   object$logs
 }
 
