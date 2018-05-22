@@ -7,7 +7,7 @@
 cancel(future, ...)
 }
 \arguments{
-\item{future}{CivisFuture object to be cancelled.}
+\item{future}{CivisFuture object.}
 
 \item{...}{unused for CivisFuture.}
 }

@@ -8,25 +8,29 @@ reference:
     - title: IO
       desc: Moving data to and from the Civis Platform
       contents:
+      - download_civis
+      - query_civis
+      - query_civis_file
       - read_civis
+      - sql
       - write_civis
       - write_civis_file
-      - query_civis
-      - sql
-      - download_civis
     - title: CivisML
       desc: Training and scoring models with CivisML
       contents:
       - civis_ml
       - civis_file
-      - civis_table
       - civis_file_manifest
+      - civis_table
       - fetch_logs
       - get_metric
+      - hist.civis_ml
+      - plot.civis_ml_classifier
+      - plot.civis_ml_regressor
     - title: CivisML Workflows
       desc: Named workflows for CivisML models
       contents:
-      - matches("^civis_ml_(extra|random|sparse|gradient)")
+      - matches("^civis_ml_(extra|gradient|random|sparse)")
     - title: Parallel Computing
       desc: Executing custom tasks in the Civis Platform in parallel
       contents:
@@ -37,6 +41,12 @@ reference:
       contents:
       - publish_rmd
       - publish_html
+    - title: Tables
+      desc: Utilities for working with Redshift Tables
+      contents:
+      - get_table_id
+      - refresh_table
+      - transfer_table
     - title: Pagination
       desc: Retrieve data from paginated endpoints
       contents:
@@ -57,7 +67,6 @@ reference:
       contents:
       - default_credential
       - get_database_id
-      - get_table_id
     - title: API
       desc: Direct API calls to the Civis Platform
       contents:
