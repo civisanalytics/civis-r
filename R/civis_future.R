@@ -100,6 +100,7 @@ CivisFuture <- function(expr = NULL,
 }
 
 #' @export
+#' @describeIn CivisFuture Run a CivisFuture
 run.CivisFuture <- function(future, ...) {
   if (is.null(future$job$containerId)) {
     cargo <- c(expr = future$expr, envir = future$envir,
@@ -118,6 +119,7 @@ run.CivisFuture <- function(future, ...) {
 }
 
 #' @export
+#' @describeIn CivisFuture Return the value of a CivisFuture
 value.CivisFuture <- function(future, ...) {
   if (future$state == "created") {
     future <- run(future)
@@ -148,12 +150,14 @@ cancel <- function(future, ...) {
 }
 
 #' @export
+#' @describeIn CivisFuture Cancel a CivisFuture
 cancel.CivisFuture <- function(future, ...) {
   scripts_delete_containers_runs(id = future$job$containerId, run_id = future$job$id)
   future$state <- "cancelled"
 }
 
 #' @export
+#' @describeIn CivisFuture Check if a CivisFutre has resolved
 resolved.CivisFuture <- function(future, ...){
   if (!is.null(future$job$containerId)) {
     future$state <- scripts_get_containers_runs(id = future$job$containerId,
@@ -163,6 +167,7 @@ resolved.CivisFuture <- function(future, ...){
 }
 
 #' @export
+#' @describeIn CivisFuture Fetch logs from a CivisFuture
 fetch_logs.CivisFuture <- function(object, limit, ...){
   object$logs
 }

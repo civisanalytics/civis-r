@@ -2,6 +2,11 @@
 % Please edit documentation in R/civis_future.R
 \name{CivisFuture}
 \alias{CivisFuture}
+\alias{run.CivisFuture}
+\alias{value.CivisFuture}
+\alias{cancel.CivisFuture}
+\alias{resolved.CivisFuture}
+\alias{fetch_logs.CivisFuture}
 \title{Evaluate an expression in Civis Platform}
 \usage{
 CivisFuture(expr = NULL, envir = parent.frame(), substitute = FALSE,
@@ -10,6 +15,16 @@ CivisFuture(expr = NULL, envir = parent.frame(), substitute = FALSE,
   required_resources = list(cpu = 1024, memory = 2048, diskSpace = 4),
   docker_image_name = "civisanalytics/datascience-r",
   docker_image_tag = "2.3.0", ...)
+
+\method{run}{CivisFuture}(future, ...)
+
+\method{value}{CivisFuture}(future, ...)
+
+\method{cancel}{CivisFuture}(future, ...)
+
+\method{resolved}{CivisFuture}(future, ...)
+
+\method{fetch_logs}{CivisFuture}(object, limit, ...)
 }
 \arguments{
 \item{expr}{An R \link[base]{expression}.}
@@ -58,3 +73,16 @@ A \code{CivisFuture} inheriting from \code{\link{Future}} that evaluates \code{e
 \description{
 Evaluate an expression in Civis Platform
 }
+\section{Methods (by generic)}{
+\itemize{
+\item \code{run}: Run a CivisFuture
+
+\item \code{value}: Return the value of a CivisFuture
+
+\item \code{cancel}: Cancel a CivisFuture
+
+\item \code{resolved}: Check if a CivisFutre has resolved
+
+\item \code{fetch_logs}: Fetch logs from a CivisFuture
+}}
+
