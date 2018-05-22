@@ -37,6 +37,11 @@ reference:
       contents:
       - publish_rmd
       - publish_html
+    - title: Tables
+      desc: Utilities for working with Redshift Tables
+      - transfer_table
+      - get_table_id
+      - refresh_table
     - title: Pagination
       desc: Retrieve data from paginated endpoints
       contents:
