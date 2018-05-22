@@ -36,11 +36,6 @@ reference:
       contents:
       - civis_platform
       - CivisFuture
-      - cancel.CivisFuture
-      - fetch_logs.CivisFuture
-      - resolved.CivisFuture
-      - run.CivisFuture
-      - value.CivisFuture
     - title: Reports
       desc: Publishing reports to the Civis Platform
       contents:
