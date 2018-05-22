@@ -17,7 +17,7 @@ test_that("decile plot for classification is produced", {
   expect_true(all(sapply(ps, plot_has_bars)))
 
   plot_has_x_decile <- function(p) {
-    all(p$data[[as.character(p$mapping$x)]] %in% 1:10)
+    all(p$data[["decile"]] %in% 1:10)
   }
   expect_true(all(sapply(ps, plot_has_x_decile)))
 })
@@ -45,9 +45,8 @@ test_that("y_yhat plot for reg is produced", {
   expect_true(all(sapply(ps, plot_has_bins)))
 
   plot_vals_correct <- function(p, m) {
-    var_name <- as.character(p$mapping$fill)
     all.equal(c(m$metrics$metrics$y_yhat_plot$values),
-              p$data[[var_name]])
+              p$data[["values"]])
   }
   ms <- plotable_mods[!is_classif]
   expect_true(all(mapply(plot_vals_correct, ps, ms), fill = T))
