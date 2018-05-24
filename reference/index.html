@@ -132,9 +132,33 @@
       <tr>
         <!--  -->
         <td>
+          <p><code><a href="download_civis.html">download_civis()</a></code> </p>
+        </td>
+        <td><p>Download a table or a file from the Civis Platform to local disk</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="query_civis.html">query_civis()</a></code> </p>
+        </td>
+        <td><p>Run a Query on Platform</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="query_civis_file.html">query_civis_file()</a></code> </p>
+        </td>
+        <td><p>Export results from a query to S3 and return a file id.</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
           <p><code><a href="read_civis.html">read_civis()</a></code> </p>
         </td>
         <td><p>Read a table or file from the Civis Platform as a data frame</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="reexports.html">reexports</a></code> </p>
+        </td>
+        <td><p>Objects exported from other packages</p></td>
       </tr><tr>
         <!--  -->
         <td>
@@ -147,24 +171,6 @@
           <p><code><a href="write_civis_file.html">write_civis_file()</a></code> </p>
         </td>
         <td><p>Upload a R object or file to Civis Platform (Files endpoint)</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
-          <p><code><a href="query_civis.html">query_civis()</a></code> </p>
-        </td>
-        <td><p>Run a Query on Platform</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
-          <p><code><a href="reexports.html">reexports</a></code> </p>
-        </td>
-        <td><p>Objects exported from other packages</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
-          <p><code><a href="download_civis.html">download_civis()</a></code> </p>
-        </td>
-        <td><p>Download a table or a file from the Civis Platform to local disk</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -188,15 +194,15 @@
       </tr><tr>
         <!--  -->
         <td>
-          <p><code><a href="civis_table.html">civis_table()</a></code> </p>
-        </td>
-        <td><p>A table in the Civis Platform</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
           <p><code><a href="civis_file_manifest.html">civis_file_manifest()</a></code> </p>
         </td>
         <td><p>A manifest file in the Civis Platform</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="civis_table.html">civis_table()</a></code> </p>
+        </td>
+        <td><p>A table in the Civis Platform</p></td>
       </tr><tr>
         <!--  -->
         <td>
@@ -209,6 +215,24 @@
           <p><code><a href="get_metric.html">get_metric()</a></code> </p>
         </td>
         <td><p>Get model metrics</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="hist.civis_ml.html">hist(<i>&lt;civis_ml&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot a histogram of the predicted scores or probabilities for a CivisML object</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plot.civis_ml_classifier.html">plot(<i>&lt;civis_ml_classifier&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Decile plot for classification with civis_ml</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plot.civis_ml_regressor.html">plot(<i>&lt;civis_ml_regressor&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Y-yhat plot for regression with civis_ml</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -288,7 +312,7 @@
       </tr><tr>
         <!--  -->
         <td>
-          <p><code><a href="CivisFuture.html">CivisFuture()</a></code> </p>
+          <p><code><a href="CivisFuture.html">CivisFuture()</a></code> <code><a href="CivisFuture.html">run(<i>&lt;CivisFuture&gt;</i>)</a></code> <code><a href="CivisFuture.html">value(<i>&lt;CivisFuture&gt;</i>)</a></code> <code><a href="CivisFuture.html">cancel(<i>&lt;CivisFuture&gt;</i>)</a></code> <code><a href="CivisFuture.html">resolved(<i>&lt;CivisFuture&gt;</i>)</a></code> <code><a href="CivisFuture.html">fetch_logs(<i>&lt;CivisFuture&gt;</i>)</a></code> </p>
         </td>
         <td><p>Evaluate an expression in Civis Platform</p></td>
       </tr>
@@ -311,6 +335,32 @@
           <p><code><a href="publish_html.html">publish_html()</a></code> </p>
         </td>
         <td><p>Publish HTML to Platform Reports</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-tables" class="hasAnchor"><a href="#section-tables" class="anchor"></a>Tables</h2>
+          <p class="section-desc"><p>Utilities for working with Redshift Tables</p></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="get_table_id.html">get_table_id()</a></code> </p>
+        </td>
+        <td><p>Return the table id for a given table</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="refresh_table.html">refresh_table()</a></code> </p>
+        </td>
+        <td><p>Refresh a table</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="transfer_table.html">transfer_table()</a></code> </p>
+        </td>
+        <td><p>Transfer a table from one location to another.</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -391,12 +441,6 @@
           <p><code><a href="get_database_id.html">get_database_id()</a></code> </p>
         </td>
         <td><p>Return the database id for a given database name</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
-          <p><code><a href="get_table_id.html">get_table_id()</a></code> </p>
-        </td>
-        <td><p>Return the table id for a given table</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -4012,6 +4056,7 @@
       <li><a href="#section-civisml-workflows">CivisML Workflows</a></li>
       <li><a href="#section-parallel-computing">Parallel Computing</a></li>
       <li><a href="#section-reports">Reports</a></li>
+      <li><a href="#section-tables">Tables</a></li>
       <li><a href="#section-pagination">Pagination</a></li>
       <li><a href="#section-polling">Polling</a></li>
       <li><a href="#section-debugging">Debugging</a></li>
