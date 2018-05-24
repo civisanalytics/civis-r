@@ -175,7 +175,9 @@ write_properties <- function(x, req_str="", fmt="#' @param %s %s %s. %s",
       descr_str <- get_descr_str(x[[j]])
     }
     name <- transform_name(names(x)[j])
-    doc_str <- paste0(doc_str, sprintf(fmt, name, x[[j]]$type, req_str, descr_str), "\n")
+    type <- translate_type(x[[j]]$type)
+    doc_str <- paste0(doc_str,
+                      sprintf(fmt, name, type, req_str, descr_str), "\n")
   }
   doc_str
 }
@@ -271,6 +273,10 @@ replace_ref <- function(x, spec, previous_ref = "") {
     }
   }
   return(x_replaced)
+}
+
+translate_type <- function(type_string) {
+  if (type_string == "object") "list" else type_string
 }
 
 is_ref <- function(x) {
