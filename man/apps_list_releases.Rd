@@ -25,7 +25,7 @@ An array containing the following fields:
 \item{id}{integer, The unique id of the release.}
 \item{appId}{integer, The id of the app the release belongs to.}
 \item{reportTemplateId}{integer, ID of the report template for this release.}
-\item{resources}{object, A hash of resources associated with this release.}
+\item{resources}{list, A hash of resources associated with this release.}
 }
 \description{
 List the releases of a particular Decision Application

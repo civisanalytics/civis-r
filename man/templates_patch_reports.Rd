@@ -29,7 +29,7 @@ A list containing the following elements:
 \item{updatedAt}{string, }
 \item{useCount}{integer, The number of uses of this template.}
 \item{archived}{boolean, Whether the template has been archived.}
-\item{author}{object, A list containing the following elements: 
+\item{author}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.

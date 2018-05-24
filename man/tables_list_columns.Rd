@@ -32,13 +32,13 @@ An array containing the following fields:
 \item{maxValue}{string, Largest value in the column.}
 \item{avgValue}{number, Average value of the column, where applicable.}
 \item{stddev}{number, Stddev of the column, where applicable.}
-\item{valueDistributionPercent}{object, A mapping between each value in the column and the percentage of rows with that value.Only present for tables with fewer than approximately 25,000,000 rows and for columns with fewer than twenty distinct values.}
+\item{valueDistributionPercent}{list, A mapping between each value in the column and the percentage of rows with that value.Only present for tables with fewer than approximately 25,000,000 rows and for columns with fewer than twenty distinct values.}
 \item{coverageCount}{integer, Number of non-null values in the column.}
 \item{nullCount}{integer, Number of null values in the column.}
 \item{possibleDependentVariableTypes}{array, Possible dependent variable types the column may be used to model.  Null if it may not be used as a dependent variable.}
 \item{useableAsIndependentVariable}{boolean, Whether the column may be used as an independent variable to train a model.}
 \item{useableAsPrimaryKey}{boolean, Whether the column may be used as an primary key to identify table rows.}
-\item{valueDistribution}{object, An object mapping distinct values in the column to the number of times they appear in the column}
+\item{valueDistribution}{list, An object mapping distinct values in the column to the number of times they appear in the column}
 \item{distinctCount}{integer, Number of distinct values in the column.}
 }
 \description{

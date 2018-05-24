@@ -18,7 +18,7 @@ A list containing the following elements:
 \item{appReleaseId}{integer, The id of the app release the instance belongs to.}
 \item{reportId}{integer, The id of the report the instance belongs to.}
 \item{createdAt}{string, The time the instance was created at.}
-\item{user}{object, A list containing the following elements: 
+\item{user}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.

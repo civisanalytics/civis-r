@@ -9,7 +9,7 @@ tables_patch(id, ontology_mapping = NULL, description = NULL)
 \arguments{
 \item{id}{integer required. The ID of the table.}
 
-\item{ontology_mapping}{object optional. The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
+\item{ontology_mapping}{list optional. The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
 
 \item{description}{string optional. The user-defined description of the table.}
 }
@@ -30,7 +30,7 @@ A list containing the following elements:
 \item{refreshStatus}{string, How up-to-date the table's statistics on row counts, null counts, distinct counts, and values distributions are. One of: refreshing, stale, or current.}
 \item{lastRefresh}{string, The time of the last statistics refresh.}
 \item{refreshId}{string, The ID of the most recent statistics refresh.}
-\item{lastRun}{object, A list containing the following elements: 
+\item{lastRun}{list, A list containing the following elements: 
 \itemize{
 \item id integer, 
 \item state string, 
@@ -39,7 +39,7 @@ A list containing the following elements:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
-\item{ontologyMapping}{object, The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
+\item{ontologyMapping}{list, The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
 }
 \description{
 Update a table

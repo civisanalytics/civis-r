@@ -20,17 +20,17 @@ jobs_put_shares_users(id, user_ids, permission_level, share_email_body = NULL,
 }
 \value{
 A list containing the following elements:
-\item{readers}{object, A list containing the following elements: 
+\item{readers}{list, A list containing the following elements: 
 \itemize{
 \item users array, 
 \item groups array, 
 }}
-\item{writers}{object, A list containing the following elements: 
+\item{writers}{list, A list containing the following elements: 
 \itemize{
 \item users array, 
 \item groups array, 
 }}
-\item{owners}{object, A list containing the following elements: 
+\item{owners}{list, A list containing the following elements: 
 \itemize{
 \item users array, 
 \item groups array, 

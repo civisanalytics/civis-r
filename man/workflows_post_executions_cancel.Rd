@@ -17,7 +17,7 @@ A list containing the following elements:
 \item{state}{string, The state of this workflow execution.}
 \item{mistralState}{string, The state of this workflow as reported by mistral. One of running, paused, success, error, or cancelled}
 \item{mistralStateInfo}{string, The state info of this workflow as reported by mistral.}
-\item{user}{object, A list containing the following elements: 
+\item{user}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.
@@ -26,7 +26,7 @@ A list containing the following elements:
 \item online boolean, Whether this user is online.
 }}
 \item{definition}{string, The definition of the workflow for this execution.}
-\item{input}{object, The dictionary of name/value input pairs defined for this execution.}
+\item{input}{list, The dictionary of name/value input pairs defined for this execution.}
 \item{includedTasks}{array, The subset of workflow tasks selected to execute.}
 \item{tasks}{array, An array containing the following fields: 
 \itemize{

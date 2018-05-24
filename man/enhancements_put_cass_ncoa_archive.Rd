@@ -18,7 +18,7 @@ A list containing the following elements:
 \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
 \item{createdAt}{string, The time this enhancement was created.}
 \item{updatedAt}{string, The time the enhancement was last updated.}
-\item{author}{object, A list containing the following elements: 
+\item{author}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.
@@ -27,7 +27,7 @@ A list containing the following elements:
 \item online boolean, Whether this user is online.
 }}
 \item{state}{string, The status of the enhancement's last run}
-\item{schedule}{object, A list containing the following elements: 
+\item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the object is scheduled
 \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -36,7 +36,7 @@ A list containing the following elements:
 \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 }}
 \item{parentId}{integer, Parent ID that triggers this enhancement.}
-\item{notifications}{object, A list containing the following elements: 
+\item{notifications}{list, A list containing the following elements: 
 \itemize{
 \item urls array, URLs to receive a POST request at job completion
 \item successEmailSubject string, Custom subject line for success e-mail.
@@ -49,7 +49,7 @@ A list containing the following elements:
 \item successOn boolean, If success email notifications are on.
 \item failureOn boolean, If failure email notifications are on.
 }}
-\item{runningAs}{object, A list containing the following elements: 
+\item{runningAs}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.
@@ -57,15 +57,15 @@ A list containing the following elements:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
-\item{source}{object, A list containing the following elements: 
+\item{source}{list, A list containing the following elements: 
 \itemize{
 \item databaseTable object, 
 }}
-\item{destination}{object, A list containing the following elements: 
+\item{destination}{list, A list containing the following elements: 
 \itemize{
 \item databaseTable object, 
 }}
-\item{columnMapping}{object, A list containing the following elements: 
+\item{columnMapping}{list, A list containing the following elements: 
 \itemize{
 \item address1 string, The first address line.
 \item address2 string, The second address line.

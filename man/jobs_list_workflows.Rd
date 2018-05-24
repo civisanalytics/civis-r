@@ -18,7 +18,7 @@ An array containing the following fields:
 \item{description}{string, A description of the workflow.}
 \item{valid}{boolean, The validity of the workflow definition.}
 \item{fileId}{string, The file id for the s3 file containing the workflow configuration.}
-\item{user}{object, A list containing the following elements: 
+\item{user}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.
@@ -27,7 +27,7 @@ An array containing the following fields:
 \item online boolean, Whether this user is online.
 }}
 \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
-\item{schedule}{object, A list containing the following elements: 
+\item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the object is scheduled
 \item scheduledDays array, Day based on numeric value starting at 0 for Sunday

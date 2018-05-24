@@ -20,17 +20,17 @@ scripts_put_r_shares_groups(id, group_ids, permission_level,
 }
 \value{
 A list containing the following elements:
-\item{readers}{object, A list containing the following elements: 
+\item{readers}{list, A list containing the following elements: 
 \itemize{
 \item users array, 
 \item groups array, 
 }}
-\item{writers}{object, A list containing the following elements: 
+\item{writers}{list, A list containing the following elements: 
 \itemize{
 \item users array, 
 \item groups array, 
 }}
-\item{owners}{object, A list containing the following elements: 
+\item{owners}{list, A list containing the following elements: 
 \itemize{
 \item users array, 
 \item groups array, 

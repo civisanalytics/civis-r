@@ -34,7 +34,7 @@ An array containing the following fields:
 \item{type}{string, The type of the script (e.g Custom)}
 \item{createdAt}{string, The time this script was created.}
 \item{updatedAt}{string, The time the script was last updated.}
-\item{author}{object, A list containing the following elements: 
+\item{author}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.
@@ -52,7 +52,7 @@ An array containing the following fields:
 \item{parentId}{integer, The ID of the parent job that will trigger this script}
 \item{fromTemplateId}{integer, The ID of the template script.}
 \item{timeZone}{string, The time zone of this script.}
-\item{lastRun}{object, A list containing the following elements: 
+\item{lastRun}{list, A list containing the following elements: 
 \itemize{
 \item id integer, 
 \item state string, 

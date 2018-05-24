@@ -18,7 +18,7 @@ projects_put(project_id, name = NULL, description = NULL, note = NULL)
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID for this project.}
-\item{author}{object, A list containing the following elements: 
+\item{author}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.

@@ -48,9 +48,9 @@ An array containing the following fields:
 \item{dependentVariableOrder}{array, The order of dependent variables, especially useful for Ordinal Modeling.}
 \item{excludedColumns}{array, A list of columns which will be considered ineligible to be independent variables.}
 \item{limitingSQL}{string, A custom SQL WHERE clause used to filter the rows used to build the model. (e.g., "id > 105").}
-\item{crossValidationParameters}{object, Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.}
+\item{crossValidationParameters}{list, Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.}
 \item{numberOfFolds}{integer, Number of folds for cross validation. Default value is 5.}
-\item{schedule}{object, A list containing the following elements: 
+\item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the object is scheduled
 \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -60,7 +60,7 @@ An array containing the following fields:
 }}
 \item{parentId}{integer, The ID of the parent job that will trigger this model.}
 \item{timeZone}{string, The time zone of this model.}
-\item{lastRun}{object, A list containing the following elements: 
+\item{lastRun}{list, A list containing the following elements: 
 \itemize{
 \item id integer, 
 \item state string, 
@@ -69,7 +69,7 @@ An array containing the following fields:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
-\item{user}{object, A list containing the following elements: 
+\item{user}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.

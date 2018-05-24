@@ -15,7 +15,7 @@ results_put_archive(id, status)
 A list containing the following elements:
 \item{id}{integer, The ID of this report.}
 \item{name}{string, The name of the report.}
-\item{user}{object, A list containing the following elements: 
+\item{user}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.
@@ -33,7 +33,7 @@ A list containing the following elements:
 \item{state}{string, The status of the report's last run.}
 \item{finishedAt}{string, The time that the report's last run finished.}
 \item{vizUpdatedAt}{string, The time that the report's visualization was last updated.}
-\item{script}{object, A list containing the following elements: 
+\item{script}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID for the script.
 \item name string, The name of the script.
@@ -44,7 +44,7 @@ A list containing the following elements:
 \item{type}{string, }
 \item{templateId}{integer, The ID of the template used for this report.}
 \item{authThumbnailUrl}{string, URL for a thumbnail of the report.}
-\item{lastRun}{object, A list containing the following elements: 
+\item{lastRun}{list, A list containing the following elements: 
 \itemize{
 \item id integer, 
 \item state string, 
@@ -62,7 +62,7 @@ A list containing the following elements:
 \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
 \item{apiKey}{string, A Civis API key that can be used by this report.}
 \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
-\item{appState}{object, Any application state blob for this report.}
+\item{appState}{list, Any application state blob for this report.}
 \item{useViewersTableauUsername}{boolean, Apply user level filtering on Tableau reports.}
 }
 \description{

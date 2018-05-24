@@ -15,7 +15,7 @@ reports_patch_services(id, name = NULL)
 A list containing the following elements:
 \item{id}{integer, The ID of this report.}
 \item{name}{string, The name of the report.}
-\item{user}{object, A list containing the following elements: 
+\item{user}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.

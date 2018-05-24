@@ -27,7 +27,7 @@ A list containing the following elements:
 \item{error}{string, The error, if any, of the last run of this prediction.}
 \item{startedAt}{string, The start time of the last run of this prediction.}
 \item{finishedAt}{string, The end time of the last run of this prediction.}
-\item{lastRun}{object, A list containing the following elements: 
+\item{lastRun}{list, A list containing the following elements: 
 \itemize{
 \item id integer, 
 \item state string, 
@@ -44,7 +44,7 @@ A list containing the following elements:
 \item createdAt string, The time when the table with created predictions was created.
 \item scoreStats array, An array of metrics on the created predictions.
 }}
-\item{schedule}{object, A list containing the following elements: 
+\item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the object is scheduled
 \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
