@@ -15,14 +15,14 @@ A list containing the following elements:
 \item{id}{integer, The unique id of the application.}
 \item{instanceName}{string, A word that describes an instance of this app.}
 \item{name}{string, The name of the application.}
-\item{currentRelease}{object, A list containing the following elements: 
+\item{currentRelease}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The unique id of the release.
 \item appId integer, The id of the app the release belongs to.
 \item reportTemplateId integer, ID of the report template for this release.
 \item resources object, A hash of resources associated with this release.
 }}
-\item{features}{object, App features.}
+\item{features}{list, App features.}
 }
 \description{
 List details of a Decision Application

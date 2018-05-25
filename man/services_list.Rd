@@ -30,7 +30,7 @@ An array containing the following fields:
 \item{id}{integer, The ID for this Service.}
 \item{name}{string, The name of this Service.}
 \item{description}{string, The description of this Service.}
-\item{user}{object, A list containing the following elements: 
+\item{user}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.
@@ -43,7 +43,7 @@ An array containing the following fields:
 \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
 \item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
-\item{currentDeployment}{object, A list containing the following elements: 
+\item{currentDeployment}{list, A list containing the following elements: 
 \itemize{
 \item deploymentId integer, The ID for this deployment.
 \item userId integer, The ID of the owner.
@@ -61,7 +61,7 @@ An array containing the following fields:
 \item published boolean, 
 \item serviceId integer, The ID of owning Service
 }}
-\item{previewDeployment}{object, A list containing the following elements: 
+\item{previewDeployment}{list, A list containing the following elements: 
 \itemize{
 \item deploymentId integer, The ID for this deployment.
 \item userId integer, The ID of the owner.

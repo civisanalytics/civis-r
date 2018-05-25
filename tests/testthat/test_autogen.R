@@ -201,7 +201,7 @@ test_that("build_params_docs", {
   expect_true(all(str_detect_multiple(arg_str[9:15], check)))
 
   #   obj args
-  expect_true(stringr::str_detect(arg_str[18], "A list containing"))
+  expect_true(stringr::str_detect(arg_str[18], "list optional. A list containing"))
   check <-  names(ex_param$schema$properties$schedule$properties)
   expect_true(all(str_detect_multiple(arg_str[20:24], check)))
 

@@ -9,7 +9,7 @@ imports_post_syncs(id, source, destination, advanced_options = NULL)
 \arguments{
 \item{id}{integer required.}
 
-\item{source}{object required. A list containing the following elements: 
+\item{source}{list required. A list containing the following elements: 
 \itemize{
 \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce, silverpop
 \item databaseTable object, 
@@ -19,14 +19,14 @@ imports_post_syncs(id, source, destination, advanced_options = NULL)
 \item silverpop object, 
 }}
 
-\item{destination}{object required. A list containing the following elements: 
+\item{destination}{list required. A list containing the following elements: 
 \itemize{
 \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
 \item databaseTable object, 
 \item googleWorksheet object, 
 }}
 
-\item{advanced_options}{object optional. A list containing the following elements: 
+\item{advanced_options}{list optional. A list containing the following elements: 
 \itemize{
 \item maxErrors integer, 
 \item existingTableRows string, 
@@ -60,7 +60,7 @@ imports_post_syncs(id, source, destination, advanced_options = NULL)
 \value{
 A list containing the following elements:
 \item{id}{integer, }
-\item{source}{object, A list containing the following elements: 
+\item{source}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of the table or file, if available.
 \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce, silverpop
@@ -70,13 +70,13 @@ A list containing the following elements:
 \item salesforce object, 
 \item silverpop object, 
 }}
-\item{destination}{object, A list containing the following elements: 
+\item{destination}{list, A list containing the following elements: 
 \itemize{
 \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
 \item databaseTable object, 
 \item googleWorksheet object, 
 }}
-\item{advancedOptions}{object, A list containing the following elements: 
+\item{advancedOptions}{list, A list containing the following elements: 
 \itemize{
 \item maxErrors integer, 
 \item existingTableRows string, 

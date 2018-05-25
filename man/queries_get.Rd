@@ -26,7 +26,7 @@ A list containing the following elements:
 \item{lastRunId}{integer, The ID of the last run.}
 \item{hidden}{boolean, The hidden status of the object.}
 \item{name}{string, The name of the query.}
-\item{author}{object, A list containing the following elements: 
+\item{author}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.

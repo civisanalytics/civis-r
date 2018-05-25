@@ -12,7 +12,7 @@ models_list_schedules(id)
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID of the model associated with this schedule.}
-\item{schedule}{object, A list containing the following elements: 
+\item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the object is scheduled
 \item scheduledDays array, Day based on numeric value starting at 0 for Sunday

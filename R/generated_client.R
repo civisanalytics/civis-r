@@ -62,14 +62,14 @@ apps_list <- function() {
 #' \item{id}{integer, The unique id of the application.}
 #' \item{instanceName}{string, A word that describes an instance of this app.}
 #' \item{name}{string, The name of the application.}
-#' \item{currentRelease}{object, A list containing the following elements: 
+#' \item{currentRelease}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The unique id of the release.
 #' \item appId integer, The id of the app the release belongs to.
 #' \item reportTemplateId integer, ID of the report template for this release.
 #' \item resources object, A hash of resources associated with this release.
 #' }}
-#' \item{features}{object, App features.}
+#' \item{features}{list, App features.}
 #' @export
 apps_get <- function(slug) {
 
@@ -103,7 +103,7 @@ apps_get <- function(slug) {
 #' \item{appReleaseId}{integer, The id of the app release the instance belongs to.}
 #' \item{reportId}{integer, The id of the report the instance belongs to.}
 #' \item{createdAt}{string, The time the instance was created at.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -140,7 +140,7 @@ apps_list_instances <- function(slug, archived = NULL, app_release_id = NULL, li
 #' \item{appReleaseId}{integer, The id of the app release the instance belongs to.}
 #' \item{reportId}{integer, The id of the report the instance belongs to.}
 #' \item{createdAt}{string, The time the instance was created at.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -181,7 +181,7 @@ apps_post_instances <- function(slug, name = NULL) {
 #' \item{id}{integer, The unique id of the release.}
 #' \item{appId}{integer, The id of the app the release belongs to.}
 #' \item{reportTemplateId}{integer, ID of the report template for this release.}
-#' \item{resources}{object, A hash of resources associated with this release.}
+#' \item{resources}{list, A hash of resources associated with this release.}
 #' @export
 apps_list_releases <- function(slug, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
@@ -208,7 +208,7 @@ apps_list_releases <- function(slug, archived = NULL, limit = NULL, page_num = N
 #' \item{id}{integer, The unique id of the release.}
 #' \item{appId}{integer, The id of the app the release belongs to.}
 #' \item{reportTemplateId}{integer, ID of the report template for this release.}
-#' \item{resources}{object, A hash of resources associated with this release.}
+#' \item{resources}{list, A hash of resources associated with this release.}
 #' @export
 apps_get_releases <- function(id, slug) {
 
@@ -237,7 +237,7 @@ apps_get_releases <- function(id, slug) {
 #' \item{appReleaseId}{integer, The id of the app release the instance belongs to.}
 #' \item{reportId}{integer, The id of the report the instance belongs to.}
 #' \item{createdAt}{string, The time the instance was created at.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -277,7 +277,7 @@ apps_get_instances <- function(id, slug) {
 #' \item{appReleaseId}{integer, The id of the app release the instance belongs to.}
 #' \item{reportId}{integer, The id of the report the instance belongs to.}
 #' \item{createdAt}{string, The time the instance was created at.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -311,17 +311,17 @@ apps_patch_instances <- function(id, slug, name = NULL) {
 #' @param slug string required. The slug for the application.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -355,17 +355,17 @@ apps_list_instances_shares <- function(id, slug) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -423,17 +423,17 @@ apps_delete_instances_shares_users <- function(id, user_id, slug) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -493,7 +493,7 @@ apps_delete_instances_shares_groups <- function(id, group_id, slug) {
 #' \item{appReleaseId}{integer, The id of the app release the instance belongs to.}
 #' \item{reportId}{integer, The id of the report the instance belongs to.}
 #' \item{createdAt}{string, The time the instance was created at.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -529,7 +529,7 @@ apps_put_instances_archive <- function(id, slug, status) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -702,7 +702,7 @@ clusters_get_workers <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -715,7 +715,7 @@ clusters_get_workers <- function(id) {
 #' \item{requiredCpu}{integer, The CPU shares required by the script.}
 #' \item{requiredDiskSpace}{integer, The disk space in GB required by the script.}
 #' \item{requiredMemory}{integer, The memory in MB required by the script.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -723,7 +723,7 @@ clusters_get_workers <- function(id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -769,7 +769,7 @@ clusters_list_workers_active_jobs <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -782,7 +782,7 @@ clusters_list_workers_active_jobs <- function(id) {
 #' \item{requiredCpu}{integer, The CPU shares required by the script.}
 #' \item{requiredDiskSpace}{integer, The disk space in GB required by the script.}
 #' \item{requiredMemory}{integer, The memory in MB required by the script.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -790,7 +790,7 @@ clusters_list_workers_active_jobs <- function(id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -1275,17 +1275,17 @@ credentials_post_temporary <- function(id, duration = NULL) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -1318,17 +1318,17 @@ credentials_list_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -1384,17 +1384,17 @@ credentials_delete_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -1512,7 +1512,7 @@ databases_list_schemas <- function(id) {
 #' \item{refreshStatus}{string, How up-to-date the table's statistics on row counts, null counts, distinct counts, and values distributions are. One of: refreshing, stale, or current.}
 #' \item{lastRefresh}{string, The time of the last statistics refresh.}
 #' \item{refreshId}{string, The ID of the most recent statistics refresh.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -1560,7 +1560,7 @@ databases_list_tables <- function(id, name = NULL, limit = NULL, page_num = NULL
 #' \item{refreshStatus}{string, How up-to-date the table's statistics on row counts, null counts, distinct counts, and values distributions are. One of: refreshing, stale, or current.}
 #' \item{lastRefresh}{string, The time of the last statistics refresh.}
 #' \item{refreshId}{string, The ID of the most recent statistics refresh.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -1760,7 +1760,7 @@ enhancements_list_types <- function() {
 #' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
 #' \item{createdAt}{string, The time this enhancement was created.}
 #' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -1790,11 +1790,11 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 
 #' Create a CASS/NCOA Enhancement
 #' @param name string required. The name of the enhancement.
-#' @param source object required. A list containing the following elements: 
+#' @param source list required. A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable object, 
 #' }
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -1803,7 +1803,7 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
 #' @param parent_id integer optional. Parent ID that triggers this enhancement.
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -1816,11 +1816,11 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }
-#' @param destination object optional. A list containing the following elements: 
+#' @param destination list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable object, 
 #' }
-#' @param column_mapping object optional. A list containing the following elements: 
+#' @param column_mapping list optional. A list containing the following elements: 
 #' \itemize{
 #' \item address1 string, The first address line.
 #' \item address2 string, The second address line.
@@ -1842,7 +1842,7 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
 #' \item{createdAt}{string, The time this enhancement was created.}
 #' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -1851,7 +1851,7 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -1860,7 +1860,7 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -1873,7 +1873,7 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -1881,15 +1881,15 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{source}{object, A list containing the following elements: 
+#' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable object, 
 #' }}
-#' \item{destination}{object, A list containing the following elements: 
+#' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable object, 
 #' }}
-#' \item{columnMapping}{object, A list containing the following elements: 
+#' \item{columnMapping}{list, A list containing the following elements: 
 #' \itemize{
 #' \item address1 string, The first address line.
 #' \item address2 string, The second address line.
@@ -1932,7 +1932,7 @@ enhancements_post_cass_ncoa <- function(name, source, schedule = NULL, parent_id
 #' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
 #' \item{createdAt}{string, The time this enhancement was created.}
 #' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -1941,7 +1941,7 @@ enhancements_post_cass_ncoa <- function(name, source, schedule = NULL, parent_id
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -1950,7 +1950,7 @@ enhancements_post_cass_ncoa <- function(name, source, schedule = NULL, parent_id
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -1963,7 +1963,7 @@ enhancements_post_cass_ncoa <- function(name, source, schedule = NULL, parent_id
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -1971,15 +1971,15 @@ enhancements_post_cass_ncoa <- function(name, source, schedule = NULL, parent_id
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{source}{object, A list containing the following elements: 
+#' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable object, 
 #' }}
-#' \item{destination}{object, A list containing the following elements: 
+#' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable object, 
 #' }}
-#' \item{columnMapping}{object, A list containing the following elements: 
+#' \item{columnMapping}{list, A list containing the following elements: 
 #' \itemize{
 #' \item address1 string, The first address line.
 #' \item address2 string, The second address line.
@@ -2016,11 +2016,11 @@ enhancements_get_cass_ncoa <- function(id) {
 #' Replace all attributes of this CASS/NCOA Enhancement
 #' @param id integer required. The ID for the enhancement.
 #' @param name string required. The name of the enhancement.
-#' @param source object required. A list containing the following elements: 
+#' @param source list required. A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable object, 
 #' }
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -2029,7 +2029,7 @@ enhancements_get_cass_ncoa <- function(id) {
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
 #' @param parent_id integer optional. Parent ID that triggers this enhancement.
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -2042,11 +2042,11 @@ enhancements_get_cass_ncoa <- function(id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }
-#' @param destination object optional. A list containing the following elements: 
+#' @param destination list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable object, 
 #' }
-#' @param column_mapping object optional. A list containing the following elements: 
+#' @param column_mapping list optional. A list containing the following elements: 
 #' \itemize{
 #' \item address1 string, The first address line.
 #' \item address2 string, The second address line.
@@ -2068,7 +2068,7 @@ enhancements_get_cass_ncoa <- function(id) {
 #' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
 #' \item{createdAt}{string, The time this enhancement was created.}
 #' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -2077,7 +2077,7 @@ enhancements_get_cass_ncoa <- function(id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -2086,7 +2086,7 @@ enhancements_get_cass_ncoa <- function(id) {
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -2099,7 +2099,7 @@ enhancements_get_cass_ncoa <- function(id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -2107,15 +2107,15 @@ enhancements_get_cass_ncoa <- function(id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{source}{object, A list containing the following elements: 
+#' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable object, 
 #' }}
-#' \item{destination}{object, A list containing the following elements: 
+#' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable object, 
 #' }}
-#' \item{columnMapping}{object, A list containing the following elements: 
+#' \item{columnMapping}{list, A list containing the following elements: 
 #' \itemize{
 #' \item address1 string, The first address line.
 #' \item address2 string, The second address line.
@@ -2152,7 +2152,7 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' Update some attributes of this CASS/NCOA Enhancement
 #' @param id integer required. The ID for the enhancement.
 #' @param name string optional. The name of the enhancement.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -2161,7 +2161,7 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
 #' @param parent_id integer optional. Parent ID that triggers this enhancement.
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -2174,15 +2174,15 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }
-#' @param source object optional. A list containing the following elements: 
+#' @param source list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable object, 
 #' }
-#' @param destination object optional. A list containing the following elements: 
+#' @param destination list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable object, 
 #' }
-#' @param column_mapping object optional. A list containing the following elements: 
+#' @param column_mapping list optional. A list containing the following elements: 
 #' \itemize{
 #' \item address1 string, The first address line.
 #' \item address2 string, The second address line.
@@ -2204,7 +2204,7 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
 #' \item{createdAt}{string, The time this enhancement was created.}
 #' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -2213,7 +2213,7 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -2222,7 +2222,7 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -2235,7 +2235,7 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -2243,15 +2243,15 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{source}{object, A list containing the following elements: 
+#' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable object, 
 #' }}
-#' \item{destination}{object, A list containing the following elements: 
+#' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable object, 
 #' }}
-#' \item{columnMapping}{object, A list containing the following elements: 
+#' \item{columnMapping}{list, A list containing the following elements: 
 #' \itemize{
 #' \item address1 string, The first address line.
 #' \item address2 string, The second address line.
@@ -2490,17 +2490,17 @@ enhancements_list_cass_ncoa_runs_outputs <- function(id, run_id, limit = NULL, p
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -2533,17 +2533,17 @@ enhancements_list_cass_ncoa_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -2599,17 +2599,17 @@ enhancements_delete_cass_ncoa_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -2663,7 +2663,7 @@ enhancements_delete_cass_ncoa_shares_groups <- function(id, group_id) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -2759,7 +2759,7 @@ enhancements_delete_cass_ncoa_projects <- function(id, project_id) {
 #' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
 #' \item{createdAt}{string, The time this enhancement was created.}
 #' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -2768,7 +2768,7 @@ enhancements_delete_cass_ncoa_projects <- function(id, project_id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -2777,7 +2777,7 @@ enhancements_delete_cass_ncoa_projects <- function(id, project_id) {
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -2790,7 +2790,7 @@ enhancements_delete_cass_ncoa_projects <- function(id, project_id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -2798,15 +2798,15 @@ enhancements_delete_cass_ncoa_projects <- function(id, project_id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{source}{object, A list containing the following elements: 
+#' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable object, 
 #' }}
-#' \item{destination}{object, A list containing the following elements: 
+#' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable object, 
 #' }}
-#' \item{columnMapping}{object, A list containing the following elements: 
+#' \item{columnMapping}{list, A list containing the following elements: 
 #' \itemize{
 #' \item address1 string, The first address line.
 #' \item address2 string, The second address line.
@@ -2844,17 +2844,17 @@ enhancements_put_cass_ncoa_archive <- function(id, status) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -2887,17 +2887,17 @@ enhancements_list_person_matching_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -2953,17 +2953,17 @@ enhancements_delete_person_matching_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -3017,7 +3017,7 @@ enhancements_delete_person_matching_shares_groups <- function(id, group_id) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -3113,7 +3113,7 @@ enhancements_delete_person_matching_projects <- function(id, project_id) {
 #' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
 #' \item{createdAt}{string, The time this enhancement was created.}
 #' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -3122,7 +3122,7 @@ enhancements_delete_person_matching_projects <- function(id, project_id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -3131,7 +3131,7 @@ enhancements_delete_person_matching_projects <- function(id, project_id) {
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -3144,7 +3144,7 @@ enhancements_delete_person_matching_projects <- function(id, project_id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -3152,7 +3152,7 @@ enhancements_delete_person_matching_projects <- function(id, project_id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{configuration}{object, A list containing the following elements: 
+#' \item{configuration}{list, A list containing the following elements: 
 #' \itemize{
 #' \item task string, The type of person matching task. Options are: "table_to_table", "dedupe_table", or "table_to_civis_data".
 #' \item source string, The input source of your data. Options are: "redshift" or "s3".
@@ -3213,7 +3213,7 @@ enhancements_put_person_matching_archive <- function(id, status) {
 #' \item{createdAt}{string, The creation time for this export.}
 #' \item{updatedAt}{string, The last modification time for this export.}
 #' \item{state}{string, }
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -3222,7 +3222,7 @@ enhancements_put_person_matching_archive <- function(id, status) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -3254,7 +3254,7 @@ exports_list <- function(type = NULL, author = NULL, status = NULL, hidden = NUL
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -3351,7 +3351,7 @@ files_delete_projects <- function(id, project_id) {
 #' \item{fileSize}{integer, The file size.}
 #' \item{expiresAt}{string, The date and time the file will expire. If not specified, the file will expire in 30 days. To keep a file indefinitely, specify null.}
 #' \item{uploadUrl}{string, The URL that may be used to upload a file. To use the upload URL, initiate a POST request to the given URL with the file you wish to import as the "file" form field.}
-#' \item{uploadFields}{object, A hash containing the form fields to be included with the POST request.}
+#' \item{uploadFields}{list, A hash containing the form fields to be included with the POST request.}
 #' @export
 files_post <- function(name, expires_at = NULL) {
 
@@ -3457,17 +3457,17 @@ files_get <- function(id, link_expires_at = NULL, inline = NULL) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -3500,17 +3500,17 @@ files_list_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -3566,17 +3566,17 @@ files_delete_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -3763,17 +3763,17 @@ groups_list <- function(query = NULL, permission = NULL, limit = NULL, page_num 
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -3806,17 +3806,17 @@ imports_list_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -3872,17 +3872,17 @@ imports_delete_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -3936,7 +3936,7 @@ imports_delete_shares_groups <- function(id, group_id) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -4029,21 +4029,21 @@ imports_delete_projects <- function(id, project_id) {
 #' @return  A list containing the following elements:
 #' \item{name}{string, The name of the import.}
 #' \item{syncType}{string, The type of sync to perform; one of Dbsync, AutoImport, SilverpopDataImport, SilverpopContactImport, GdocImport, GdocExport, and Salesforce.}
-#' \item{source}{object, A list containing the following elements: 
+#' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item remoteHostId integer, 
 #' \item credentialId integer, 
 #' \item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.
 #' \item name string, 
 #' }}
-#' \item{destination}{object, A list containing the following elements: 
+#' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item remoteHostId integer, 
 #' \item credentialId integer, 
 #' \item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.
 #' \item name string, 
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -4051,7 +4051,7 @@ imports_delete_projects <- function(id, project_id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -4078,7 +4078,7 @@ imports_delete_projects <- function(id, project_id) {
 #' \item{state}{string, }
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -4087,7 +4087,7 @@ imports_delete_projects <- function(id, project_id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -4095,7 +4095,7 @@ imports_delete_projects <- function(id, project_id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -4140,21 +4140,21 @@ imports_put_archive <- function(id, status) {
 #' @return  An array containing the following fields:
 #' \item{name}{string, The name of the import.}
 #' \item{syncType}{string, The type of sync to perform; one of Dbsync, AutoImport, SilverpopDataImport, SilverpopContactImport, GdocImport, GdocExport, and Salesforce.}
-#' \item{source}{object, A list containing the following elements: 
+#' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item remoteHostId integer, 
 #' \item credentialId integer, 
 #' \item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.
 #' \item name string, 
 #' }}
-#' \item{destination}{object, A list containing the following elements: 
+#' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item remoteHostId integer, 
 #' \item credentialId integer, 
 #' \item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.
 #' \item name string, 
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -4168,7 +4168,7 @@ imports_put_archive <- function(id, status) {
 #' \item{state}{string, }
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -4177,7 +4177,7 @@ imports_put_archive <- function(id, status) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -4209,19 +4209,19 @@ imports_list <- function(type = NULL, author = NULL, destination = NULL, status 
 #' @param name string required. The name of the import.
 #' @param sync_type string required. The type of sync to perform; one of Dbsync, AutoImport, SilverpopDataImport, SilverpopContactImport, GdocImport, GdocExport, and Salesforce.
 #' @param is_outbound boolean required. 
-#' @param source object optional. A list containing the following elements: 
+#' @param source list optional. A list containing the following elements: 
 #' \itemize{
 #' \item remoteHostId integer, 
 #' \item credentialId integer, 
 #' \item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.
 #' }
-#' @param destination object optional. A list containing the following elements: 
+#' @param destination list optional. A list containing the following elements: 
 #' \itemize{
 #' \item remoteHostId integer, 
 #' \item credentialId integer, 
 #' \item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.
 #' }
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -4229,7 +4229,7 @@ imports_list <- function(type = NULL, author = NULL, destination = NULL, status 
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -4250,21 +4250,21 @@ imports_list <- function(type = NULL, author = NULL, destination = NULL, status 
 #' @return  A list containing the following elements:
 #' \item{name}{string, The name of the import.}
 #' \item{syncType}{string, The type of sync to perform; one of Dbsync, AutoImport, SilverpopDataImport, SilverpopContactImport, GdocImport, GdocExport, and Salesforce.}
-#' \item{source}{object, A list containing the following elements: 
+#' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item remoteHostId integer, 
 #' \item credentialId integer, 
 #' \item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.
 #' \item name string, 
 #' }}
-#' \item{destination}{object, A list containing the following elements: 
+#' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item remoteHostId integer, 
 #' \item credentialId integer, 
 #' \item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.
 #' \item name string, 
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -4272,7 +4272,7 @@ imports_list <- function(type = NULL, author = NULL, destination = NULL, status 
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -4299,7 +4299,7 @@ imports_list <- function(type = NULL, author = NULL, destination = NULL, status 
 #' \item{state}{string, }
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -4308,7 +4308,7 @@ imports_list <- function(type = NULL, author = NULL, destination = NULL, status 
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -4316,7 +4316,7 @@ imports_list <- function(type = NULL, author = NULL, destination = NULL, status 
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -4366,7 +4366,7 @@ imports_post <- function(name, sync_type, is_outbound, source = NULL, destinatio
 #' \item{id}{integer, The id of the import.}
 #' \item{uploadUri}{string, The URI which may be used to upload a tabular file for import. You must use this URI to upload the file you wish imported and then inform the Civis API when your upload is complete using the URI given by the runUri field of this reponse.}
 #' \item{runUri}{string, The URI to POST to once the file upload is complete. After uploading the file using the URI given in the uploadUri attribute of the reponse, POST to this URI to initiate the import of your uploaded file into the platform.}
-#' \item{uploadFields}{object, If multipart was set to true, these fields should be included in the multipart upload.}
+#' \item{uploadFields}{list, If multipart was set to true, these fields should be included in the multipart upload.}
 #' @export
 imports_post_files <- function(schema, name, remote_host_id, credential_id, max_errors = NULL, existing_table_rows = NULL, diststyle = NULL, distkey = NULL, sortkey1 = NULL, sortkey2 = NULL, column_delimiter = NULL, first_row_is_header = NULL, multipart = NULL, hidden = NULL) {
 
@@ -4668,21 +4668,21 @@ imports_get_batches <- function(id) {
 #' @return  A list containing the following elements:
 #' \item{name}{string, The name of the import.}
 #' \item{syncType}{string, The type of sync to perform; one of Dbsync, AutoImport, SilverpopDataImport, SilverpopContactImport, GdocImport, GdocExport, and Salesforce.}
-#' \item{source}{object, A list containing the following elements: 
+#' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item remoteHostId integer, 
 #' \item credentialId integer, 
 #' \item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.
 #' \item name string, 
 #' }}
-#' \item{destination}{object, A list containing the following elements: 
+#' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item remoteHostId integer, 
 #' \item credentialId integer, 
 #' \item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.
 #' \item name string, 
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -4690,7 +4690,7 @@ imports_get_batches <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -4717,7 +4717,7 @@ imports_get_batches <- function(id) {
 #' \item{state}{string, }
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -4726,7 +4726,7 @@ imports_get_batches <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -4734,7 +4734,7 @@ imports_get_batches <- function(id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -4769,19 +4769,19 @@ imports_get <- function(id) {
 #' @param name string required. The name of the import.
 #' @param sync_type string required. The type of sync to perform; one of Dbsync, AutoImport, SilverpopDataImport, SilverpopContactImport, GdocImport, GdocExport, and Salesforce.
 #' @param is_outbound boolean required. 
-#' @param source object optional. A list containing the following elements: 
+#' @param source list optional. A list containing the following elements: 
 #' \itemize{
 #' \item remoteHostId integer, 
 #' \item credentialId integer, 
 #' \item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.
 #' }
-#' @param destination object optional. A list containing the following elements: 
+#' @param destination list optional. A list containing the following elements: 
 #' \itemize{
 #' \item remoteHostId integer, 
 #' \item credentialId integer, 
 #' \item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.
 #' }
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -4789,7 +4789,7 @@ imports_get <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -4809,21 +4809,21 @@ imports_get <- function(id) {
 #' @return  A list containing the following elements:
 #' \item{name}{string, The name of the import.}
 #' \item{syncType}{string, The type of sync to perform; one of Dbsync, AutoImport, SilverpopDataImport, SilverpopContactImport, GdocImport, GdocExport, and Salesforce.}
-#' \item{source}{object, A list containing the following elements: 
+#' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item remoteHostId integer, 
 #' \item credentialId integer, 
 #' \item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.
 #' \item name string, 
 #' }}
-#' \item{destination}{object, A list containing the following elements: 
+#' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item remoteHostId integer, 
 #' \item credentialId integer, 
 #' \item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.
 #' \item name string, 
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -4831,7 +4831,7 @@ imports_get <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -4858,7 +4858,7 @@ imports_get <- function(id) {
 #' \item{state}{string, }
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -4867,7 +4867,7 @@ imports_get <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -4875,7 +4875,7 @@ imports_get <- function(id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -4983,7 +4983,7 @@ imports_post_cancel <- function(id) {
 
 #' Create a sync
 #' @param id integer required. 
-#' @param source object required. A list containing the following elements: 
+#' @param source list required. A list containing the following elements: 
 #' \itemize{
 #' \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce, silverpop
 #' \item databaseTable object, 
@@ -4992,13 +4992,13 @@ imports_post_cancel <- function(id) {
 #' \item salesforce object, 
 #' \item silverpop object, 
 #' }
-#' @param destination object required. A list containing the following elements: 
+#' @param destination list required. A list containing the following elements: 
 #' \itemize{
 #' \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
 #' \item databaseTable object, 
 #' \item googleWorksheet object, 
 #' }
-#' @param advanced_options object optional. A list containing the following elements: 
+#' @param advanced_options list optional. A list containing the following elements: 
 #' \itemize{
 #' \item maxErrors integer, 
 #' \item existingTableRows string, 
@@ -5031,7 +5031,7 @@ imports_post_cancel <- function(id) {
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, }
-#' \item{source}{object, A list containing the following elements: 
+#' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of the table or file, if available.
 #' \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce, silverpop
@@ -5041,13 +5041,13 @@ imports_post_cancel <- function(id) {
 #' \item salesforce object, 
 #' \item silverpop object, 
 #' }}
-#' \item{destination}{object, A list containing the following elements: 
+#' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
 #' \item databaseTable object, 
 #' \item googleWorksheet object, 
 #' }}
-#' \item{advancedOptions}{object, A list containing the following elements: 
+#' \item{advancedOptions}{list, A list containing the following elements: 
 #' \itemize{
 #' \item maxErrors integer, 
 #' \item existingTableRows string, 
@@ -5098,7 +5098,7 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' Update a sync
 #' @param id integer required. The ID of the import to fetch.
 #' @param sync_id integer required. The ID of the sync to fetch.
-#' @param source object required. A list containing the following elements: 
+#' @param source list required. A list containing the following elements: 
 #' \itemize{
 #' \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce, silverpop
 #' \item databaseTable object, 
@@ -5107,13 +5107,13 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' \item salesforce object, 
 #' \item silverpop object, 
 #' }
-#' @param destination object required. A list containing the following elements: 
+#' @param destination list required. A list containing the following elements: 
 #' \itemize{
 #' \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
 #' \item databaseTable object, 
 #' \item googleWorksheet object, 
 #' }
-#' @param advanced_options object optional. A list containing the following elements: 
+#' @param advanced_options list optional. A list containing the following elements: 
 #' \itemize{
 #' \item maxErrors integer, 
 #' \item existingTableRows string, 
@@ -5146,7 +5146,7 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, }
-#' \item{source}{object, A list containing the following elements: 
+#' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of the table or file, if available.
 #' \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce, silverpop
@@ -5156,13 +5156,13 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' \item salesforce object, 
 #' \item silverpop object, 
 #' }}
-#' \item{destination}{object, A list containing the following elements: 
+#' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
 #' \item databaseTable object, 
 #' \item googleWorksheet object, 
 #' }}
-#' \item{advancedOptions}{object, A list containing the following elements: 
+#' \item{advancedOptions}{list, A list containing the following elements: 
 #' \itemize{
 #' \item maxErrors integer, 
 #' \item existingTableRows string, 
@@ -5240,7 +5240,7 @@ imports_delete_syncs <- function(id, sync_id) {
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, }
-#' \item{source}{object, A list containing the following elements: 
+#' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of the table or file, if available.
 #' \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce, silverpop
@@ -5250,13 +5250,13 @@ imports_delete_syncs <- function(id, sync_id) {
 #' \item salesforce object, 
 #' \item silverpop object, 
 #' }}
-#' \item{destination}{object, A list containing the following elements: 
+#' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
 #' \item databaseTable object, 
 #' \item googleWorksheet object, 
 #' }}
-#' \item{advancedOptions}{object, A list containing the following elements: 
+#' \item{advancedOptions}{list, A list containing the following elements: 
 #' \itemize{
 #' \item maxErrors integer, 
 #' \item existingTableRows string, 
@@ -5325,7 +5325,7 @@ imports_put_syncs_archive <- function(id, sync_id, status = NULL) {
 #' \item{state}{string, Whether the job is idle, queued, running, cancelled, or failed.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -5335,7 +5335,7 @@ imports_put_syncs_archive <- function(id, sync_id, status = NULL) {
 #' \item error string, The error message for this run, if present.
 #' }}
 #' \item{archived}{string, The archival status of the requested object(s).}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -5381,7 +5381,7 @@ jobs_list <- function(state = NULL, type = NULL, q = NULL, permission = NULL, sc
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -5392,7 +5392,7 @@ jobs_list <- function(state = NULL, type = NULL, q = NULL, permission = NULL, sc
 #' }}
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' \item{archived}{string, The archival status of the requested object(s).}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -5461,7 +5461,7 @@ jobs_post_trigger_email <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -5472,7 +5472,7 @@ jobs_post_trigger_email <- function(id) {
 #' }}
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' \item{archived}{string, The archival status of the requested object(s).}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -5518,7 +5518,7 @@ jobs_list_parents <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -5636,7 +5636,7 @@ jobs_delete_runs <- function(id, run_id) {
 #' \item{description}{string, A description of the workflow.}
 #' \item{valid}{boolean, The validity of the workflow definition.}
 #' \item{fileId}{string, The file id for the s3 file containing the workflow configuration.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -5645,7 +5645,7 @@ jobs_delete_runs <- function(id, run_id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -5680,17 +5680,17 @@ jobs_list_workflows <- function(id, archived = NULL) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -5723,17 +5723,17 @@ jobs_list_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -5789,17 +5789,17 @@ jobs_delete_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -5853,7 +5853,7 @@ jobs_delete_shares_groups <- function(id, group_id) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -6057,17 +6057,17 @@ match_targets_patch <- function(id, name = NULL, table = NULL, region = NULL, en
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -6100,17 +6100,17 @@ media_list_spot_orders_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -6166,17 +6166,17 @@ media_delete_spot_orders_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -6257,17 +6257,17 @@ media_put_spot_orders_archive <- function(id, status) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -6300,17 +6300,17 @@ media_list_optimizations_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -6366,17 +6366,17 @@ media_delete_optimizations_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -6430,7 +6430,7 @@ media_delete_optimizations_shares_groups <- function(id, group_id) {
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The optimization ID.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -6464,7 +6464,7 @@ media_delete_optimizations_shares_groups <- function(id, group_id) {
 #' \item{networks}{array, An array of networks that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_networks is not also set.}
 #' \item{excludePrograms}{boolean, If Civis Media Optimizer should exclude the programs in the programs parameter.If this value is set to false, it will make the optimization limit itself to the programs supplied through the programs parameter.An error will be thrown if programs is not also set.}
 #' \item{excludeNetworks}{boolean, If Civis Media Optimizer should exclude the networks in the networks parameter.If this value is set to false, it will make the optimization limit itself to the networks supplied through the networks.An error will be thrown if networks is not also set.}
-#' \item{timeSlotPercentages}{object, The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.}
+#' \item{timeSlotPercentages}{list, The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.}
 #' @export
 media_put_optimizations_archive <- function(id, status) {
 
@@ -6487,17 +6487,17 @@ media_put_optimizations_archive <- function(id, status) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -6530,17 +6530,17 @@ media_list_ratecards_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -6596,17 +6596,17 @@ media_delete_ratecards_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -6692,7 +6692,7 @@ media_put_ratecards_archive <- function(id, status) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The optimization ID.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -6743,11 +6743,11 @@ media_list_optimizations <- function(archived = NULL, limit = NULL, page_num = N
 #' @param networks array optional. An array of networks that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_networks is not also set.
 #' @param exclude_programs boolean optional. If Civis Media Optimizer should exclude the programs in the programs parameter.If this value is set to false, it will make the optimization limit itself to the programs supplied through the programs parameter.An error will be thrown if programs is not also set.
 #' @param exclude_networks boolean optional. If Civis Media Optimizer should exclude the networks in the networks parameter.If this value is set to false, it will make the optimization limit itself to the networks supplied through the networks.An error will be thrown if networks is not also set.
-#' @param time_slot_percentages object optional. The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.
+#' @param time_slot_percentages list optional. The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The optimization ID.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -6781,7 +6781,7 @@ media_list_optimizations <- function(archived = NULL, limit = NULL, page_num = N
 #' \item{networks}{array, An array of networks that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_networks is not also set.}
 #' \item{excludePrograms}{boolean, If Civis Media Optimizer should exclude the programs in the programs parameter.If this value is set to false, it will make the optimization limit itself to the programs supplied through the programs parameter.An error will be thrown if programs is not also set.}
 #' \item{excludeNetworks}{boolean, If Civis Media Optimizer should exclude the networks in the networks parameter.If this value is set to false, it will make the optimization limit itself to the networks supplied through the networks.An error will be thrown if networks is not also set.}
-#' \item{timeSlotPercentages}{object, The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.}
+#' \item{timeSlotPercentages}{list, The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.}
 #' @export
 media_post_optimizations <- function(runs, name = NULL, programs = NULL, networks = NULL, exclude_programs = NULL, exclude_networks = NULL, time_slot_percentages = NULL) {
 
@@ -6805,7 +6805,7 @@ media_post_optimizations <- function(runs, name = NULL, programs = NULL, network
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The optimization ID.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -6839,7 +6839,7 @@ media_post_optimizations <- function(runs, name = NULL, programs = NULL, network
 #' \item{networks}{array, An array of networks that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_networks is not also set.}
 #' \item{excludePrograms}{boolean, If Civis Media Optimizer should exclude the programs in the programs parameter.If this value is set to false, it will make the optimization limit itself to the programs supplied through the programs parameter.An error will be thrown if programs is not also set.}
 #' \item{excludeNetworks}{boolean, If Civis Media Optimizer should exclude the networks in the networks parameter.If this value is set to false, it will make the optimization limit itself to the networks supplied through the networks.An error will be thrown if networks is not also set.}
-#' \item{timeSlotPercentages}{object, The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.}
+#' \item{timeSlotPercentages}{list, The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.}
 #' @export
 media_get_optimizations <- function(id) {
 
@@ -6876,11 +6876,11 @@ media_get_optimizations <- function(id) {
 #' @param networks array optional. An array of networks that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_networks is not also set.
 #' @param exclude_programs boolean optional. If Civis Media Optimizer should exclude the programs in the programs parameter.If this value is set to false, it will make the optimization limit itself to the programs supplied through the programs parameter.An error will be thrown if programs is not also set.
 #' @param exclude_networks boolean optional. If Civis Media Optimizer should exclude the networks in the networks parameter.If this value is set to false, it will make the optimization limit itself to the networks supplied through the networks.An error will be thrown if networks is not also set.
-#' @param time_slot_percentages object optional. The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.
+#' @param time_slot_percentages list optional. The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The optimization ID.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -6914,7 +6914,7 @@ media_get_optimizations <- function(id) {
 #' \item{networks}{array, An array of networks that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_networks is not also set.}
 #' \item{excludePrograms}{boolean, If Civis Media Optimizer should exclude the programs in the programs parameter.If this value is set to false, it will make the optimization limit itself to the programs supplied through the programs parameter.An error will be thrown if programs is not also set.}
 #' \item{excludeNetworks}{boolean, If Civis Media Optimizer should exclude the networks in the networks parameter.If this value is set to false, it will make the optimization limit itself to the networks supplied through the networks.An error will be thrown if networks is not also set.}
-#' \item{timeSlotPercentages}{object, The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.}
+#' \item{timeSlotPercentages}{list, The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.}
 #' @export
 media_patch_optimizations <- function(id, name = NULL, runs = NULL, programs = NULL, networks = NULL, exclude_programs = NULL, exclude_networks = NULL, time_slot_percentages = NULL) {
 
@@ -6938,7 +6938,7 @@ media_patch_optimizations <- function(id, name = NULL, runs = NULL, programs = N
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The optimization ID.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -6972,7 +6972,7 @@ media_patch_optimizations <- function(id, name = NULL, runs = NULL, programs = N
 #' \item{networks}{array, An array of networks that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_networks is not also set.}
 #' \item{excludePrograms}{boolean, If Civis Media Optimizer should exclude the programs in the programs parameter.If this value is set to false, it will make the optimization limit itself to the programs supplied through the programs parameter.An error will be thrown if programs is not also set.}
 #' \item{excludeNetworks}{boolean, If Civis Media Optimizer should exclude the networks in the networks parameter.If this value is set to false, it will make the optimization limit itself to the networks supplied through the networks.An error will be thrown if networks is not also set.}
-#' \item{timeSlotPercentages}{object, The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.}
+#' \item{timeSlotPercentages}{list, The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.}
 #' @export
 media_post_optimizations_clone <- function(id) {
 
@@ -7490,9 +7490,9 @@ models_list_types <- function() {
 #' @param excluded_columns array optional. A list of columns which will be considered ineligible to be independent variables.
 #' @param limiting_sql string optional. A custom SQL WHERE clause used to filter the rows used to build the model. (e.g., "id > 105").
 #' @param active_build_id integer optional. The ID of the current active build, the build used to score predictions.
-#' @param cross_validation_parameters object optional. Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.
+#' @param cross_validation_parameters list optional. Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.
 #' @param number_of_folds integer optional. Number of folds for cross validation. Default value is 5.
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -7505,7 +7505,7 @@ models_list_types <- function() {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -7533,9 +7533,9 @@ models_list_types <- function() {
 #' \item{excludedColumns}{array, A list of columns which will be considered ineligible to be independent variables.}
 #' \item{limitingSQL}{string, A custom SQL WHERE clause used to filter the rows used to build the model. (e.g., "id > 105").}
 #' \item{activeBuildId}{integer, The ID of the current active build, the build used to score predictions.}
-#' \item{crossValidationParameters}{object, Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.}
+#' \item{crossValidationParameters}{list, Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.}
 #' \item{numberOfFolds}{integer, Number of folds for cross validation. Default value is 5.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -7548,7 +7548,7 @@ models_list_types <- function() {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -7557,7 +7557,7 @@ models_list_types <- function() {
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
 #' \item{parentId}{integer, The ID of the parent job that will trigger this model.}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -7566,7 +7566,7 @@ models_list_types <- function() {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{timeZone}{string, The time zone of this model.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -7576,7 +7576,7 @@ models_list_types <- function() {
 #' \item error string, The error message for this run, if present.
 #' }}
 #' \item{hidden}{boolean, The hidden status of the object.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -7656,9 +7656,9 @@ models_post <- function(table_name = NULL, database_id = NULL, credential_id = N
 #' \item{dependentVariableOrder}{array, The order of dependent variables, especially useful for Ordinal Modeling.}
 #' \item{excludedColumns}{array, A list of columns which will be considered ineligible to be independent variables.}
 #' \item{limitingSQL}{string, A custom SQL WHERE clause used to filter the rows used to build the model. (e.g., "id > 105").}
-#' \item{crossValidationParameters}{object, Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.}
+#' \item{crossValidationParameters}{list, Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.}
 #' \item{numberOfFolds}{integer, Number of folds for cross validation. Default value is 5.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -7668,7 +7668,7 @@ models_post <- function(table_name = NULL, database_id = NULL, credential_id = N
 #' }}
 #' \item{parentId}{integer, The ID of the parent job that will trigger this model.}
 #' \item{timeZone}{string, The time zone of this model.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -7677,7 +7677,7 @@ models_post <- function(table_name = NULL, database_id = NULL, credential_id = N
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -7744,9 +7744,9 @@ models_list <- function(model_name = NULL, training_table_name = NULL, dependent
 #' @param excluded_columns array optional. A list of columns which will be considered ineligible to be independent variables.
 #' @param limiting_sql string optional. A custom SQL WHERE clause used to filter the rows used to build the model. (e.g., "id > 105").
 #' @param active_build_id integer optional. The ID of the current active build, the build used to score predictions.
-#' @param cross_validation_parameters object optional. Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.
+#' @param cross_validation_parameters list optional. Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.
 #' @param number_of_folds integer optional. Number of folds for cross validation. Default value is 5.
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -7759,7 +7759,7 @@ models_list <- function(model_name = NULL, training_table_name = NULL, dependent
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -7808,9 +7808,9 @@ models_patch <- function(id, table_name = NULL, database_id = NULL, credential_i
 #' \item{excludedColumns}{array, A list of columns which will be considered ineligible to be independent variables.}
 #' \item{limitingSQL}{string, A custom SQL WHERE clause used to filter the rows used to build the model. (e.g., "id > 105").}
 #' \item{activeBuildId}{integer, The ID of the current active build, the build used to score predictions.}
-#' \item{crossValidationParameters}{object, Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.}
+#' \item{crossValidationParameters}{list, Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.}
 #' \item{numberOfFolds}{integer, Number of folds for cross validation. Default value is 5.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -7823,7 +7823,7 @@ models_patch <- function(id, table_name = NULL, database_id = NULL, credential_i
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -7832,7 +7832,7 @@ models_patch <- function(id, table_name = NULL, database_id = NULL, credential_i
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
 #' \item{parentId}{integer, The ID of the parent job that will trigger this model.}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -7841,7 +7841,7 @@ models_patch <- function(id, table_name = NULL, database_id = NULL, credential_i
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{timeZone}{string, The time zone of this model.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -7851,7 +7851,7 @@ models_patch <- function(id, table_name = NULL, database_id = NULL, credential_i
 #' \item error string, The error message for this run, if present.
 #' }}
 #' \item{hidden}{boolean, The hidden status of the object.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -8066,17 +8066,17 @@ models_list_builds_logs <- function(id, build_id, last_id = NULL, limit = NULL) 
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -8109,17 +8109,17 @@ models_list_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -8175,17 +8175,17 @@ models_delete_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -8239,7 +8239,7 @@ models_delete_shares_groups <- function(id, group_id) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -8345,9 +8345,9 @@ models_delete_projects <- function(id, project_id) {
 #' \item{excludedColumns}{array, A list of columns which will be considered ineligible to be independent variables.}
 #' \item{limitingSQL}{string, A custom SQL WHERE clause used to filter the rows used to build the model. (e.g., "id > 105").}
 #' \item{activeBuildId}{integer, The ID of the current active build, the build used to score predictions.}
-#' \item{crossValidationParameters}{object, Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.}
+#' \item{crossValidationParameters}{list, Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.}
 #' \item{numberOfFolds}{integer, Number of folds for cross validation. Default value is 5.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -8360,7 +8360,7 @@ models_delete_projects <- function(id, project_id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -8369,7 +8369,7 @@ models_delete_projects <- function(id, project_id) {
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
 #' \item{parentId}{integer, The ID of the parent job that will trigger this model.}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -8378,7 +8378,7 @@ models_delete_projects <- function(id, project_id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{timeZone}{string, The time zone of this model.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -8388,7 +8388,7 @@ models_delete_projects <- function(id, project_id) {
 #' \item error string, The error message for this run, if present.
 #' }}
 #' \item{hidden}{boolean, The hidden status of the object.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -8446,7 +8446,7 @@ models_put_archive <- function(id, status) {
 #' @param primary_key array required. The primary key or composite keys of the table being predicted.
 #' @param limiting_sql string optional. A SQL WHERE clause used to scope the rows to be predicted.
 #' @param output_table string optional. The qualified name of the table to be created which will contain the model's predictions.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -8461,7 +8461,7 @@ models_put_archive <- function(id, status) {
 #' \item{primaryKey}{array, The primary key or composite keys of the table being predicted.}
 #' \item{limitingSQL}{string, A SQL WHERE clause used to scope the rows to be predicted.}
 #' \item{outputTable}{string, The qualified name of the table to be created which will contain the model's predictions.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -8493,7 +8493,7 @@ models_put_predictions <- function(id, table_name, primary_key, limiting_sql = N
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of the model associated with this schedule.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -8521,7 +8521,7 @@ models_list_schedules <- function(id) {
 
 #' Schedule the model build
 #' @param id integer required. The ID of the model associated with this schedule.
-#' @param schedule object required. A list containing the following elements: 
+#' @param schedule list required. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -8532,7 +8532,7 @@ models_list_schedules <- function(id) {
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of the model associated with this schedule.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -8573,7 +8573,7 @@ models_put_schedules <- function(id, schedule) {
 #' \item{name}{string, The name of this notebook.}
 #' \item{language}{string, The kernel language of this notebook.}
 #' \item{description}{string, The description of this notebook.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -8583,7 +8583,7 @@ models_put_schedules <- function(id, schedule) {
 #' }}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{mostRecentDeployment}{object, A list containing the following elements: 
+#' \item{mostRecentDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -8633,7 +8633,7 @@ notebooks_list <- function(hidden = NULL, archived = NULL, author = NULL, status
 #' @param memory integer optional. The amount of memory allocated to the notebook.
 #' @param cpu integer optional. The amount of cpu allocated to the the notebook.
 #' @param credentials array optional. A list of credential IDs to pass to the notebook.
-#' @param environment_variables object optional. Environment variables to be passed into the Notebook.
+#' @param environment_variables list optional. Environment variables to be passed into the Notebook.
 #' @param idle_timeout integer optional. How long the notebook will stay alive without any kernel activity.
 #' @param git_repo_url string optional. The url of the git repository
 #' @param git_ref string optional. The git reference if git repo is specified
@@ -8650,7 +8650,7 @@ notebooks_list <- function(hidden = NULL, archived = NULL, author = NULL, status
 #' \item{requirementsUrl}{string, Time-limited URL to get the requirements.txt file for this notebook.}
 #' \item{fileId}{string, The file ID for the S3 file containing the .ipynb file.}
 #' \item{requirementsFileId}{string, The file ID for the S3 file containing the requirements.txt file.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -8665,7 +8665,7 @@ notebooks_list <- function(hidden = NULL, archived = NULL, author = NULL, status
 #' \item{cpu}{integer, The amount of cpu allocated to the the notebook.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{mostRecentDeployment}{object, A list containing the following elements: 
+#' \item{mostRecentDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -8685,7 +8685,7 @@ notebooks_list <- function(hidden = NULL, archived = NULL, author = NULL, status
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
-#' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
+#' \item{environmentVariables}{list, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
 #' \item{gitRepoId}{integer, The ID of the git repository.}
 #' \item{gitRepoUrl}{string, The url of the git repository}
@@ -8724,7 +8724,7 @@ notebooks_post <- function(name = NULL, language = NULL, description = NULL, fil
 #' \item{requirementsUrl}{string, Time-limited URL to get the requirements.txt file for this notebook.}
 #' \item{fileId}{string, The file ID for the S3 file containing the .ipynb file.}
 #' \item{requirementsFileId}{string, The file ID for the S3 file containing the requirements.txt file.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -8739,7 +8739,7 @@ notebooks_post <- function(name = NULL, language = NULL, description = NULL, fil
 #' \item{cpu}{integer, The amount of cpu allocated to the the notebook.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{mostRecentDeployment}{object, A list containing the following elements: 
+#' \item{mostRecentDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -8759,7 +8759,7 @@ notebooks_post <- function(name = NULL, language = NULL, description = NULL, fil
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
-#' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
+#' \item{environmentVariables}{list, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
 #' \item{gitRepoId}{integer, The ID of the git repository.}
 #' \item{gitRepoUrl}{string, The url of the git repository}
@@ -8799,7 +8799,7 @@ notebooks_get <- function(id) {
 #' @param memory integer optional. The amount of memory allocated to the notebook.
 #' @param cpu integer optional. The amount of cpu allocated to the the notebook.
 #' @param credentials array optional. A list of credential IDs to pass to the notebook.
-#' @param environment_variables object optional. Environment variables to be passed into the Notebook.
+#' @param environment_variables list optional. Environment variables to be passed into the Notebook.
 #' @param idle_timeout integer optional. How long the notebook will stay alive without any kernel activity.
 #' @param git_repo_url string optional. The url of the git repository
 #' @param git_ref string optional. The git reference if git repo is specified
@@ -8815,7 +8815,7 @@ notebooks_get <- function(id) {
 #' \item{requirementsUrl}{string, Time-limited URL to get the requirements.txt file for this notebook.}
 #' \item{fileId}{string, The file ID for the S3 file containing the .ipynb file.}
 #' \item{requirementsFileId}{string, The file ID for the S3 file containing the requirements.txt file.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -8830,7 +8830,7 @@ notebooks_get <- function(id) {
 #' \item{cpu}{integer, The amount of cpu allocated to the the notebook.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{mostRecentDeployment}{object, A list containing the following elements: 
+#' \item{mostRecentDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -8850,7 +8850,7 @@ notebooks_get <- function(id) {
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
-#' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
+#' \item{environmentVariables}{list, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
 #' \item{gitRepoId}{integer, The ID of the git repository.}
 #' \item{gitRepoUrl}{string, The url of the git repository}
@@ -8890,7 +8890,7 @@ notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, 
 #' @param memory integer optional. The amount of memory allocated to the notebook.
 #' @param cpu integer optional. The amount of cpu allocated to the the notebook.
 #' @param credentials array optional. A list of credential IDs to pass to the notebook.
-#' @param environment_variables object optional. Environment variables to be passed into the Notebook.
+#' @param environment_variables list optional. Environment variables to be passed into the Notebook.
 #' @param idle_timeout integer optional. How long the notebook will stay alive without any kernel activity.
 #' @param git_repo_url string optional. The url of the git repository
 #' @param git_ref string optional. The git reference if git repo is specified
@@ -8906,7 +8906,7 @@ notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, 
 #' \item{requirementsUrl}{string, Time-limited URL to get the requirements.txt file for this notebook.}
 #' \item{fileId}{string, The file ID for the S3 file containing the .ipynb file.}
 #' \item{requirementsFileId}{string, The file ID for the S3 file containing the requirements.txt file.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -8921,7 +8921,7 @@ notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, 
 #' \item{cpu}{integer, The amount of cpu allocated to the the notebook.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{mostRecentDeployment}{object, A list containing the following elements: 
+#' \item{mostRecentDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -8941,7 +8941,7 @@ notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, 
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
-#' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
+#' \item{environmentVariables}{list, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
 #' \item{gitRepoId}{integer, The ID of the git repository.}
 #' \item{gitRepoUrl}{string, The url of the git repository}
@@ -9026,7 +9026,7 @@ notebooks_list_update_links <- function(id) {
 #' \item{requirementsUrl}{string, Time-limited URL to get the requirements.txt file for this notebook.}
 #' \item{fileId}{string, The file ID for the S3 file containing the .ipynb file.}
 #' \item{requirementsFileId}{string, The file ID for the S3 file containing the requirements.txt file.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -9041,7 +9041,7 @@ notebooks_list_update_links <- function(id) {
 #' \item{cpu}{integer, The amount of cpu allocated to the the notebook.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{mostRecentDeployment}{object, A list containing the following elements: 
+#' \item{mostRecentDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -9061,7 +9061,7 @@ notebooks_list_update_links <- function(id) {
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
-#' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
+#' \item{environmentVariables}{list, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
 #' \item{gitRepoId}{integer, The ID of the git repository.}
 #' \item{gitRepoUrl}{string, The url of the git repository}
@@ -9091,17 +9091,17 @@ notebooks_post_clone <- function(id) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -9134,17 +9134,17 @@ notebooks_list_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -9200,17 +9200,17 @@ notebooks_delete_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -9272,7 +9272,7 @@ notebooks_delete_shares_groups <- function(id, group_id) {
 #' \item{requirementsUrl}{string, Time-limited URL to get the requirements.txt file for this notebook.}
 #' \item{fileId}{string, The file ID for the S3 file containing the .ipynb file.}
 #' \item{requirementsFileId}{string, The file ID for the S3 file containing the requirements.txt file.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -9287,7 +9287,7 @@ notebooks_delete_shares_groups <- function(id, group_id) {
 #' \item{cpu}{integer, The amount of cpu allocated to the the notebook.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{mostRecentDeployment}{object, A list containing the following elements: 
+#' \item{mostRecentDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -9307,7 +9307,7 @@ notebooks_delete_shares_groups <- function(id, group_id) {
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
-#' \item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
+#' \item{environmentVariables}{list, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
 #' \item{gitRepoId}{integer, The ID of the git repository.}
 #' \item{gitRepoUrl}{string, The url of the git repository}
@@ -9339,7 +9339,7 @@ notebooks_put_archive <- function(id, status) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -9605,7 +9605,7 @@ notebooks_list_deployments_logs <- function(id, deployment_id, start_at = NULL, 
 #' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{object, A list containing the following elements: 
+#' \item{gitRepo}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for this git repository.
 #' \item repoUrl string, The URL for this git repository.
@@ -9641,7 +9641,7 @@ notebooks_list_git <- function(id) {
 #' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{object, A list containing the following elements: 
+#' \item{gitRepo}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for this git repository.
 #' \item repoUrl string, The URL for this git repository.
@@ -9811,7 +9811,7 @@ ontology_list <- function(subset = NULL) {
 #' \item{error}{string, The error, if any, of the last run of this prediction.}
 #' \item{startedAt}{string, The start time of the last run of this prediction.}
 #' \item{finishedAt}{string, The end time of the last run of this prediction.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -9851,7 +9851,7 @@ predictions_list <- function(model_id = NULL) {
 #' \item{error}{string, The error, if any, of the last run of this prediction.}
 #' \item{startedAt}{string, The start time of the last run of this prediction.}
 #' \item{finishedAt}{string, The end time of the last run of this prediction.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -9868,7 +9868,7 @@ predictions_list <- function(model_id = NULL) {
 #' \item createdAt string, The time when the table with created predictions was created.
 #' \item scoreStats array, An array of metrics on the created predictions.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -9912,7 +9912,7 @@ predictions_get <- function(id) {
 #' \item{error}{string, The error, if any, of the last run of this prediction.}
 #' \item{startedAt}{string, The start time of the last run of this prediction.}
 #' \item{finishedAt}{string, The end time of the last run of this prediction.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -9929,7 +9929,7 @@ predictions_get <- function(id) {
 #' \item createdAt string, The time when the table with created predictions was created.
 #' \item scoreStats array, An array of metrics on the created predictions.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -9962,7 +9962,7 @@ predictions_patch <- function(id, output_table_name = NULL, limiting_sql = NULL,
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, ID of the prediction associated with this schedule.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -9991,7 +9991,7 @@ predictions_list_schedules <- function(id) {
 
 #' Schedule the prediction
 #' @param id integer required. ID of the prediction associated with this schedule.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -10003,7 +10003,7 @@ predictions_list_schedules <- function(id) {
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, ID of the prediction associated with this schedule.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -10207,7 +10207,7 @@ predictions_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL)
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -10255,7 +10255,7 @@ projects_list <- function(author = NULL, permission = NULL, hidden = NULL, archi
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -10413,7 +10413,7 @@ projects_post <- function(name, description, note = NULL, hidden = NULL) {
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -10574,7 +10574,7 @@ projects_get <- function(project_id) {
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -10753,17 +10753,17 @@ projects_delete <- function(project_id) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -10796,17 +10796,17 @@ projects_list_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -10862,17 +10862,17 @@ projects_delete_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -10926,7 +10926,7 @@ projects_delete_shares_groups <- function(id, group_id) {
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -11344,7 +11344,7 @@ queries_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' \item{lastRunId}{integer, The ID of the last run.}
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' \item{name}{string, The name of the query.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -11391,7 +11391,7 @@ queries_put_scripts <- function(id, script_id) {
 #' \item{lastRunId}{integer, The ID of the last run.}
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' \item{name}{string, The name of the query.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -11541,7 +11541,7 @@ remote_hosts_list_data_sets <- function(id, credential_id = NULL, username = NUL
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -11559,7 +11559,7 @@ remote_hosts_list_data_sets <- function(id, credential_id = NULL, username = NUL
 #' \item{state}{string, The status of the report's last run.}
 #' \item{finishedAt}{string, The time that the report's last run finished.}
 #' \item{vizUpdatedAt}{string, The time that the report's visualization was last updated.}
-#' \item{script}{object, A list containing the following elements: 
+#' \item{script}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for the script.
 #' \item name string, The name of the script.
@@ -11570,7 +11570,7 @@ remote_hosts_list_data_sets <- function(id, credential_id = NULL, username = NUL
 #' \item{type}{string, }
 #' \item{templateId}{integer, The ID of the template used for this report.}
 #' \item{authThumbnailUrl}{string, URL for a thumbnail of the report.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -11602,7 +11602,7 @@ results_list <- function(type = NULL, author = NULL, template_id = NULL, hidden 
 #' @param script_id integer optional. The ID of the job (a script or a query) used to create this report.
 #' @param name string optional. The name of the report.
 #' @param code_body string optional. The code for the report visualization.
-#' @param app_state object optional. Any application state blob for this report.
+#' @param app_state list optional. Any application state blob for this report.
 #' @param provide_api_key boolean optional. Allow the report to provide an API key to front-end code.
 #' @param template_id integer optional. The ID of the template used for this report.
 #' @param hidden boolean optional. The hidden status of the object.
@@ -11610,7 +11610,7 @@ results_list <- function(type = NULL, author = NULL, template_id = NULL, hidden 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -11628,7 +11628,7 @@ results_list <- function(type = NULL, author = NULL, template_id = NULL, hidden 
 #' \item{state}{string, The status of the report's last run.}
 #' \item{finishedAt}{string, The time that the report's last run finished.}
 #' \item{vizUpdatedAt}{string, The time that the report's visualization was last updated.}
-#' \item{script}{object, A list containing the following elements: 
+#' \item{script}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for the script.
 #' \item name string, The name of the script.
@@ -11639,7 +11639,7 @@ results_list <- function(type = NULL, author = NULL, template_id = NULL, hidden 
 #' \item{type}{string, }
 #' \item{templateId}{integer, The ID of the template used for this report.}
 #' \item{authThumbnailUrl}{string, URL for a thumbnail of the report.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -11657,7 +11657,7 @@ results_list <- function(type = NULL, author = NULL, template_id = NULL, hidden 
 #' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
 #' \item{apiKey}{string, A Civis API key that can be used by this report.}
 #' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
-#' \item{appState}{object, Any application state blob for this report.}
+#' \item{appState}{list, Any application state blob for this report.}
 #' \item{useViewersTableauUsername}{boolean, Apply user level filtering on Tableau reports.}
 #' @export
 results_post <- function(script_id = NULL, name = NULL, code_body = NULL, app_state = NULL, provide_api_key = NULL, template_id = NULL, hidden = NULL) {
@@ -11691,7 +11691,7 @@ results_post <- function(script_id = NULL, name = NULL, code_body = NULL, app_st
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -11709,7 +11709,7 @@ results_post <- function(script_id = NULL, name = NULL, code_body = NULL, app_st
 #' \item{state}{string, The status of the report's last run.}
 #' \item{finishedAt}{string, The time that the report's last run finished.}
 #' \item{vizUpdatedAt}{string, The time that the report's visualization was last updated.}
-#' \item{script}{object, A list containing the following elements: 
+#' \item{script}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for the script.
 #' \item name string, The name of the script.
@@ -11720,7 +11720,7 @@ results_post <- function(script_id = NULL, name = NULL, code_body = NULL, app_st
 #' \item{type}{string, }
 #' \item{templateId}{integer, The ID of the template used for this report.}
 #' \item{authThumbnailUrl}{string, URL for a thumbnail of the report.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -11752,7 +11752,7 @@ reports_list <- function(type = NULL, author = NULL, template_id = NULL, hidden 
 #' @param script_id integer optional. The ID of the job (a script or a query) used to create this report.
 #' @param name string optional. The name of the report.
 #' @param code_body string optional. The code for the report visualization.
-#' @param app_state object optional. Any application state blob for this report.
+#' @param app_state list optional. Any application state blob for this report.
 #' @param provide_api_key boolean optional. Allow the report to provide an API key to front-end code.
 #' @param template_id integer optional. The ID of the template used for this report.
 #' @param hidden boolean optional. The hidden status of the object.
@@ -11760,7 +11760,7 @@ reports_list <- function(type = NULL, author = NULL, template_id = NULL, hidden 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -11778,7 +11778,7 @@ reports_list <- function(type = NULL, author = NULL, template_id = NULL, hidden 
 #' \item{state}{string, The status of the report's last run.}
 #' \item{finishedAt}{string, The time that the report's last run finished.}
 #' \item{vizUpdatedAt}{string, The time that the report's visualization was last updated.}
-#' \item{script}{object, A list containing the following elements: 
+#' \item{script}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for the script.
 #' \item name string, The name of the script.
@@ -11789,7 +11789,7 @@ reports_list <- function(type = NULL, author = NULL, template_id = NULL, hidden 
 #' \item{type}{string, }
 #' \item{templateId}{integer, The ID of the template used for this report.}
 #' \item{authThumbnailUrl}{string, URL for a thumbnail of the report.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -11807,7 +11807,7 @@ reports_list <- function(type = NULL, author = NULL, template_id = NULL, hidden 
 #' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
 #' \item{apiKey}{string, A Civis API key that can be used by this report.}
 #' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
-#' \item{appState}{object, Any application state blob for this report.}
+#' \item{appState}{list, Any application state blob for this report.}
 #' \item{useViewersTableauUsername}{boolean, Apply user level filtering on Tableau reports.}
 #' @export
 reports_post <- function(script_id = NULL, name = NULL, code_body = NULL, app_state = NULL, provide_api_key = NULL, template_id = NULL, hidden = NULL) {
@@ -11834,7 +11834,7 @@ reports_post <- function(script_id = NULL, name = NULL, code_body = NULL, app_st
 #' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{object, A list containing the following elements: 
+#' \item{gitRepo}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for this git repository.
 #' \item repoUrl string, The URL for this git repository.
@@ -11870,7 +11870,7 @@ results_list_git <- function(id) {
 #' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{object, A list containing the following elements: 
+#' \item{gitRepo}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for this git repository.
 #' \item repoUrl string, The URL for this git repository.
@@ -11902,7 +11902,7 @@ results_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NU
 #' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{object, A list containing the following elements: 
+#' \item{gitRepo}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for this git repository.
 #' \item repoUrl string, The URL for this git repository.
@@ -11938,7 +11938,7 @@ reports_list_git <- function(id) {
 #' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{object, A list containing the following elements: 
+#' \item{gitRepo}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for this git repository.
 #' \item repoUrl string, The URL for this git repository.
@@ -12133,7 +12133,7 @@ reports_get_git_commits <- function(id, commit_hash) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -12151,7 +12151,7 @@ reports_get_git_commits <- function(id, commit_hash) {
 #' \item{state}{string, The status of the report's last run.}
 #' \item{finishedAt}{string, The time that the report's last run finished.}
 #' \item{vizUpdatedAt}{string, The time that the report's visualization was last updated.}
-#' \item{script}{object, A list containing the following elements: 
+#' \item{script}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for the script.
 #' \item name string, The name of the script.
@@ -12162,7 +12162,7 @@ reports_get_git_commits <- function(id, commit_hash) {
 #' \item{type}{string, }
 #' \item{templateId}{integer, The ID of the template used for this report.}
 #' \item{authThumbnailUrl}{string, URL for a thumbnail of the report.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -12180,7 +12180,7 @@ reports_get_git_commits <- function(id, commit_hash) {
 #' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
 #' \item{apiKey}{string, A Civis API key that can be used by this report.}
 #' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
-#' \item{appState}{object, Any application state blob for this report.}
+#' \item{appState}{list, Any application state blob for this report.}
 #' \item{useViewersTableauUsername}{boolean, Apply user level filtering on Tableau reports.}
 #' @export
 results_get <- function(id) {
@@ -12206,7 +12206,7 @@ results_get <- function(id) {
 #' @param script_id integer optional. The ID of the job (a script or a query) used to create this report.
 #' @param code_body string optional. The code for the report visualization.
 #' @param config string optional. 
-#' @param app_state object optional. The application state blob for this report.
+#' @param app_state list optional. The application state blob for this report.
 #' @param provide_api_key boolean optional. Allow the report to provide an API key to front-end code.
 #' @param template_id integer optional. The ID of the template used for this report. If null is passed, no template will back this report. Changes to the backing template will reset the report appState.
 #' @param use_viewers_tableau_username boolean optional. Apply user level filtering on Tableau reports.
@@ -12214,7 +12214,7 @@ results_get <- function(id) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -12232,7 +12232,7 @@ results_get <- function(id) {
 #' \item{state}{string, The status of the report's last run.}
 #' \item{finishedAt}{string, The time that the report's last run finished.}
 #' \item{vizUpdatedAt}{string, The time that the report's visualization was last updated.}
-#' \item{script}{object, A list containing the following elements: 
+#' \item{script}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for the script.
 #' \item name string, The name of the script.
@@ -12243,7 +12243,7 @@ results_get <- function(id) {
 #' \item{type}{string, }
 #' \item{templateId}{integer, The ID of the template used for this report.}
 #' \item{authThumbnailUrl}{string, URL for a thumbnail of the report.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -12261,7 +12261,7 @@ results_get <- function(id) {
 #' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
 #' \item{apiKey}{string, A Civis API key that can be used by this report.}
 #' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
-#' \item{appState}{object, Any application state blob for this report.}
+#' \item{appState}{list, Any application state blob for this report.}
 #' \item{useViewersTableauUsername}{boolean, Apply user level filtering on Tableau reports.}
 #' @export
 results_patch <- function(id, name = NULL, script_id = NULL, code_body = NULL, config = NULL, app_state = NULL, provide_api_key = NULL, template_id = NULL, use_viewers_tableau_username = NULL) {
@@ -12287,7 +12287,7 @@ results_patch <- function(id, name = NULL, script_id = NULL, code_body = NULL, c
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -12305,7 +12305,7 @@ results_patch <- function(id, name = NULL, script_id = NULL, code_body = NULL, c
 #' \item{state}{string, The status of the report's last run.}
 #' \item{finishedAt}{string, The time that the report's last run finished.}
 #' \item{vizUpdatedAt}{string, The time that the report's visualization was last updated.}
-#' \item{script}{object, A list containing the following elements: 
+#' \item{script}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for the script.
 #' \item name string, The name of the script.
@@ -12316,7 +12316,7 @@ results_patch <- function(id, name = NULL, script_id = NULL, code_body = NULL, c
 #' \item{type}{string, }
 #' \item{templateId}{integer, The ID of the template used for this report.}
 #' \item{authThumbnailUrl}{string, URL for a thumbnail of the report.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -12334,7 +12334,7 @@ results_patch <- function(id, name = NULL, script_id = NULL, code_body = NULL, c
 #' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
 #' \item{apiKey}{string, A Civis API key that can be used by this report.}
 #' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
-#' \item{appState}{object, Any application state blob for this report.}
+#' \item{appState}{list, Any application state blob for this report.}
 #' \item{useViewersTableauUsername}{boolean, Apply user level filtering on Tableau reports.}
 #' @export
 reports_get <- function(id) {
@@ -12360,7 +12360,7 @@ reports_get <- function(id) {
 #' @param script_id integer optional. The ID of the job (a script or a query) used to create this report.
 #' @param code_body string optional. The code for the report visualization.
 #' @param config string optional. 
-#' @param app_state object optional. The application state blob for this report.
+#' @param app_state list optional. The application state blob for this report.
 #' @param provide_api_key boolean optional. Allow the report to provide an API key to front-end code.
 #' @param template_id integer optional. The ID of the template used for this report. If null is passed, no template will back this report. Changes to the backing template will reset the report appState.
 #' @param use_viewers_tableau_username boolean optional. Apply user level filtering on Tableau reports.
@@ -12368,7 +12368,7 @@ reports_get <- function(id) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -12386,7 +12386,7 @@ reports_get <- function(id) {
 #' \item{state}{string, The status of the report's last run.}
 #' \item{finishedAt}{string, The time that the report's last run finished.}
 #' \item{vizUpdatedAt}{string, The time that the report's visualization was last updated.}
-#' \item{script}{object, A list containing the following elements: 
+#' \item{script}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for the script.
 #' \item name string, The name of the script.
@@ -12397,7 +12397,7 @@ reports_get <- function(id) {
 #' \item{type}{string, }
 #' \item{templateId}{integer, The ID of the template used for this report.}
 #' \item{authThumbnailUrl}{string, URL for a thumbnail of the report.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -12415,7 +12415,7 @@ reports_get <- function(id) {
 #' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
 #' \item{apiKey}{string, A Civis API key that can be used by this report.}
 #' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
-#' \item{appState}{object, Any application state blob for this report.}
+#' \item{appState}{list, Any application state blob for this report.}
 #' \item{useViewersTableauUsername}{boolean, Apply user level filtering on Tableau reports.}
 #' @export
 reports_patch <- function(id, name = NULL, script_id = NULL, code_body = NULL, config = NULL, app_state = NULL, provide_api_key = NULL, template_id = NULL, use_viewers_tableau_username = NULL) {
@@ -12441,7 +12441,7 @@ reports_patch <- function(id, name = NULL, script_id = NULL, code_body = NULL, c
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -12459,7 +12459,7 @@ reports_patch <- function(id, name = NULL, script_id = NULL, code_body = NULL, c
 #' \item{state}{string, The status of the report's last run.}
 #' \item{finishedAt}{string, The time that the report's last run finished.}
 #' \item{vizUpdatedAt}{string, The time that the report's visualization was last updated.}
-#' \item{script}{object, A list containing the following elements: 
+#' \item{script}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for the script.
 #' \item name string, The name of the script.
@@ -12470,7 +12470,7 @@ reports_patch <- function(id, name = NULL, script_id = NULL, code_body = NULL, c
 #' \item{type}{string, }
 #' \item{templateId}{integer, The ID of the template used for this report.}
 #' \item{authThumbnailUrl}{string, URL for a thumbnail of the report.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -12488,7 +12488,7 @@ reports_patch <- function(id, name = NULL, script_id = NULL, code_body = NULL, c
 #' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
 #' \item{apiKey}{string, A Civis API key that can be used by this report.}
 #' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
-#' \item{appState}{object, Any application state blob for this report.}
+#' \item{appState}{list, Any application state blob for this report.}
 #' \item{useViewersTableauUsername}{boolean, Apply user level filtering on Tableau reports.}
 #' @export
 results_post_grants <- function(id) {
@@ -12536,7 +12536,7 @@ results_delete_grants <- function(id) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -12554,7 +12554,7 @@ results_delete_grants <- function(id) {
 #' \item{state}{string, The status of the report's last run.}
 #' \item{finishedAt}{string, The time that the report's last run finished.}
 #' \item{vizUpdatedAt}{string, The time that the report's visualization was last updated.}
-#' \item{script}{object, A list containing the following elements: 
+#' \item{script}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for the script.
 #' \item name string, The name of the script.
@@ -12565,7 +12565,7 @@ results_delete_grants <- function(id) {
 #' \item{type}{string, }
 #' \item{templateId}{integer, The ID of the template used for this report.}
 #' \item{authThumbnailUrl}{string, URL for a thumbnail of the report.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -12583,7 +12583,7 @@ results_delete_grants <- function(id) {
 #' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
 #' \item{apiKey}{string, A Civis API key that can be used by this report.}
 #' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
-#' \item{appState}{object, Any application state blob for this report.}
+#' \item{appState}{list, Any application state blob for this report.}
 #' \item{useViewersTableauUsername}{boolean, Apply user level filtering on Tableau reports.}
 #' @export
 reports_post_grants <- function(id) {
@@ -12638,7 +12638,7 @@ reports_delete_grants <- function(id) {
 #' \item{emailSubject}{string, Subject for Email.}
 #' \item{height}{integer, The height of the cropped snapshot image in screen pixels. The default value is 900 pixels. Minimum value is 600 pixels.}
 #' \item{width}{integer, The width of the cropped snapshot image in screen pixels. The default value is 1440 pixels. Minimum value is 600 pixels.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -12675,7 +12675,7 @@ results_list_snapshots <- function(id) {
 #' @param email_subject string optional. Subject for Email.
 #' @param height integer optional. The height of the cropped snapshot image in screen pixels. The default value is 900 pixels. Minimum value is 600 pixels.
 #' @param width integer optional. The width of the cropped snapshot image in screen pixels. The default value is 1440 pixels. Minimum value is 600 pixels.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -12695,7 +12695,7 @@ results_list_snapshots <- function(id) {
 #' \item{emailSubject}{string, Subject for Email.}
 #' \item{height}{integer, The height of the cropped snapshot image in screen pixels. The default value is 900 pixels. Minimum value is 600 pixels.}
 #' \item{width}{integer, The width of the cropped snapshot image in screen pixels. The default value is 1440 pixels. Minimum value is 600 pixels.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -12732,7 +12732,7 @@ results_post_snapshots <- function(id, state = NULL, finished_at = NULL, send_em
 #' @param email_subject string optional. Subject for Email.
 #' @param height integer optional. The height of the cropped snapshot image in screen pixels. The default value is 900 pixels. Minimum value is 600 pixels.
 #' @param width integer optional. The width of the cropped snapshot image in screen pixels. The default value is 1440 pixels. Minimum value is 600 pixels.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -12752,7 +12752,7 @@ results_post_snapshots <- function(id, state = NULL, finished_at = NULL, send_em
 #' \item{emailSubject}{string, Subject for Email.}
 #' \item{height}{integer, The height of the cropped snapshot image in screen pixels. The default value is 900 pixels. Minimum value is 600 pixels.}
 #' \item{width}{integer, The width of the cropped snapshot image in screen pixels. The default value is 1440 pixels. Minimum value is 600 pixels.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -12792,7 +12792,7 @@ results_patch_snapshots <- function(id, state = NULL, finished_at = NULL, send_e
 #' \item{emailSubject}{string, Subject for Email.}
 #' \item{height}{integer, The height of the cropped snapshot image in screen pixels. The default value is 900 pixels. Minimum value is 600 pixels.}
 #' \item{width}{integer, The width of the cropped snapshot image in screen pixels. The default value is 1440 pixels. Minimum value is 600 pixels.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -12829,7 +12829,7 @@ reports_list_snapshots <- function(id) {
 #' @param email_subject string optional. Subject for Email.
 #' @param height integer optional. The height of the cropped snapshot image in screen pixels. The default value is 900 pixels. Minimum value is 600 pixels.
 #' @param width integer optional. The width of the cropped snapshot image in screen pixels. The default value is 1440 pixels. Minimum value is 600 pixels.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -12849,7 +12849,7 @@ reports_list_snapshots <- function(id) {
 #' \item{emailSubject}{string, Subject for Email.}
 #' \item{height}{integer, The height of the cropped snapshot image in screen pixels. The default value is 900 pixels. Minimum value is 600 pixels.}
 #' \item{width}{integer, The width of the cropped snapshot image in screen pixels. The default value is 1440 pixels. Minimum value is 600 pixels.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -12886,7 +12886,7 @@ reports_post_snapshots <- function(id, state = NULL, finished_at = NULL, send_em
 #' @param email_subject string optional. Subject for Email.
 #' @param height integer optional. The height of the cropped snapshot image in screen pixels. The default value is 900 pixels. Minimum value is 600 pixels.
 #' @param width integer optional. The width of the cropped snapshot image in screen pixels. The default value is 1440 pixels. Minimum value is 600 pixels.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -12906,7 +12906,7 @@ reports_post_snapshots <- function(id, state = NULL, finished_at = NULL, send_em
 #' \item{emailSubject}{string, Subject for Email.}
 #' \item{height}{integer, The height of the cropped snapshot image in screen pixels. The default value is 900 pixels. Minimum value is 600 pixels.}
 #' \item{width}{integer, The width of the cropped snapshot image in screen pixels. The default value is 1440 pixels. Minimum value is 600 pixels.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -12937,17 +12937,17 @@ reports_patch_snapshots <- function(id, state = NULL, finished_at = NULL, send_e
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -12976,17 +12976,17 @@ results_list_shares <- function(id) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -13019,17 +13019,17 @@ reports_list_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -13062,17 +13062,17 @@ results_put_shares_users <- function(id, user_ids, permission_level, share_email
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -13151,17 +13151,17 @@ reports_delete_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -13194,17 +13194,17 @@ results_put_shares_groups <- function(id, group_ids, permission_level, share_ema
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -13281,7 +13281,7 @@ reports_delete_shares_groups <- function(id, group_id) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -13327,7 +13327,7 @@ results_list_projects <- function(id, hidden = NULL) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -13466,7 +13466,7 @@ reports_delete_projects <- function(id, project_id) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -13484,7 +13484,7 @@ reports_delete_projects <- function(id, project_id) {
 #' \item{state}{string, The status of the report's last run.}
 #' \item{finishedAt}{string, The time that the report's last run finished.}
 #' \item{vizUpdatedAt}{string, The time that the report's visualization was last updated.}
-#' \item{script}{object, A list containing the following elements: 
+#' \item{script}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for the script.
 #' \item name string, The name of the script.
@@ -13495,7 +13495,7 @@ reports_delete_projects <- function(id, project_id) {
 #' \item{type}{string, }
 #' \item{templateId}{integer, The ID of the template used for this report.}
 #' \item{authThumbnailUrl}{string, URL for a thumbnail of the report.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -13513,7 +13513,7 @@ reports_delete_projects <- function(id, project_id) {
 #' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
 #' \item{apiKey}{string, A Civis API key that can be used by this report.}
 #' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
-#' \item{appState}{object, Any application state blob for this report.}
+#' \item{appState}{list, Any application state blob for this report.}
 #' \item{useViewersTableauUsername}{boolean, Apply user level filtering on Tableau reports.}
 #' @export
 results_put_archive <- function(id, status) {
@@ -13540,7 +13540,7 @@ results_put_archive <- function(id, status) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -13558,7 +13558,7 @@ results_put_archive <- function(id, status) {
 #' \item{state}{string, The status of the report's last run.}
 #' \item{finishedAt}{string, The time that the report's last run finished.}
 #' \item{vizUpdatedAt}{string, The time that the report's visualization was last updated.}
-#' \item{script}{object, A list containing the following elements: 
+#' \item{script}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for the script.
 #' \item name string, The name of the script.
@@ -13569,7 +13569,7 @@ results_put_archive <- function(id, status) {
 #' \item{type}{string, }
 #' \item{templateId}{integer, The ID of the template used for this report.}
 #' \item{authThumbnailUrl}{string, URL for a thumbnail of the report.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -13587,7 +13587,7 @@ results_put_archive <- function(id, status) {
 #' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
 #' \item{apiKey}{string, A Civis API key that can be used by this report.}
 #' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
-#' \item{appState}{object, Any application state blob for this report.}
+#' \item{appState}{list, Any application state blob for this report.}
 #' \item{useViewersTableauUsername}{boolean, Apply user level filtering on Tableau reports.}
 #' @export
 reports_put_archive <- function(id, status) {
@@ -13613,7 +13613,7 @@ reports_put_archive <- function(id, status) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -13651,7 +13651,7 @@ results_get_services <- function(id) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -13688,7 +13688,7 @@ results_patch_services <- function(id, name = NULL) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -13726,7 +13726,7 @@ reports_get_services <- function(id) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -13763,7 +13763,7 @@ reports_patch_services <- function(id, name = NULL) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -13800,7 +13800,7 @@ results_post_services <- function(service_id) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
 #' \item{name}{string, The name of the report.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -13835,17 +13835,17 @@ reports_post_services <- function(service_id) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -13874,17 +13874,17 @@ results_list_services_shares <- function(id) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -13917,17 +13917,17 @@ reports_list_services_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -13960,17 +13960,17 @@ results_put_services_shares_users <- function(id, user_ids, permission_level, sh
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -14049,17 +14049,17 @@ reports_delete_services_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -14092,17 +14092,17 @@ results_put_services_shares_groups <- function(id, group_ids, permission_level, 
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -14245,9 +14245,9 @@ scripts_list_history <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param template_script_id integer optional. The ID of the template script, if any.  A script cannot both have a template script and be a template for other scripts.
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -14268,7 +14268,7 @@ scripts_list_history <- function(id) {
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -14297,18 +14297,18 @@ scripts_list_history <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -14316,7 +14316,7 @@ scripts_list_history <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -14329,7 +14329,7 @@ scripts_list_history <- function(id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -14339,7 +14339,7 @@ scripts_list_history <- function(id) {
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -14388,7 +14388,7 @@ scripts_post <- function(name, remote_host_id, credential_id, sql, params = NULL
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -14406,13 +14406,13 @@ scripts_post <- function(name, remote_host_id, credential_id, sql, params = NULL
 #' \item{parentId}{integer, The ID of the parent job that will trigger this script}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -14456,9 +14456,9 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param template_script_id integer optional. The ID of the template script, if any.  A script cannot both have a template script and be a template for other scripts.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -14466,7 +14466,7 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -14487,7 +14487,7 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item{type}{string, The type of script.}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time this script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -14516,18 +14516,18 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -14535,7 +14535,7 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -14548,7 +14548,7 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -14558,7 +14558,7 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -14571,7 +14571,7 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{sql}{string, The raw SQL query for the script.}
-#' \item{expandedArguments}{object, Expanded arguments for use in injecting into different environments.}
+#' \item{expandedArguments}{list, Expanded arguments for use in injecting into different environments.}
 #' \item{templateScriptId}{integer, The ID of the template script, if any.}
 #' @export
 scripts_patch <- function(id, name = NULL, sql = NULL, params = NULL, arguments = NULL, template_script_id = NULL, schedule = NULL, notifications = NULL, parent_id = NULL) {
@@ -14622,7 +14622,7 @@ scripts_delete <- function(id) {
 #' \item{type}{string, The type of script.}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time this script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -14651,18 +14651,18 @@ scripts_delete <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -14670,7 +14670,7 @@ scripts_delete <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -14683,7 +14683,7 @@ scripts_delete <- function(id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -14693,7 +14693,7 @@ scripts_delete <- function(id) {
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -14706,7 +14706,7 @@ scripts_delete <- function(id) {
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{sql}{string, The raw SQL query for the script.}
-#' \item{expandedArguments}{object, Expanded arguments for use in injecting into different environments.}
+#' \item{expandedArguments}{list, Expanded arguments for use in injecting into different environments.}
 #' \item{templateScriptId}{integer, The ID of the template script, if any.}
 #' @export
 scripts_get <- function(id) {
@@ -14774,7 +14774,7 @@ scripts_post_cancel <- function(id) {
 
 
 #' Create a container
-#' @param required_resources object required. A list containing the following elements: 
+#' @param required_resources list required. A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB).
@@ -14797,8 +14797,8 @@ scripts_post_cancel <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -14806,7 +14806,7 @@ scripts_post_cancel <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -14835,7 +14835,7 @@ scripts_post_cancel <- function(id) {
 #' \item{type}{string, The type of the script (e.g Container)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -14864,18 +14864,18 @@ scripts_post_cancel <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -14883,7 +14883,7 @@ scripts_post_cancel <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -14896,7 +14896,7 @@ scripts_post_cancel <- function(id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -14904,7 +14904,7 @@ scripts_post_cancel <- function(id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB).
@@ -14918,7 +14918,7 @@ scripts_post_cancel <- function(id) {
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -14958,7 +14958,7 @@ scripts_post_containers <- function(required_resources, docker_command, docker_i
 #' \item{type}{string, The type of the script (e.g Container)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -14987,18 +14987,18 @@ scripts_post_containers <- function(required_resources, docker_command, docker_i
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -15006,7 +15006,7 @@ scripts_post_containers <- function(required_resources, docker_command, docker_i
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -15019,7 +15019,7 @@ scripts_post_containers <- function(required_resources, docker_command, docker_i
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -15027,7 +15027,7 @@ scripts_post_containers <- function(required_resources, docker_command, docker_i
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB).
@@ -15041,7 +15041,7 @@ scripts_post_containers <- function(required_resources, docker_command, docker_i
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -15074,7 +15074,7 @@ scripts_get_containers <- function(id) {
 
 #' Edit a container
 #' @param id integer required. The ID for the script.
-#' @param required_resources object required. A list containing the following elements: 
+#' @param required_resources list required. A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB).
@@ -15097,8 +15097,8 @@ scripts_get_containers <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -15106,7 +15106,7 @@ scripts_get_containers <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -15134,7 +15134,7 @@ scripts_get_containers <- function(id) {
 #' \item{type}{string, The type of the script (e.g Container)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -15163,18 +15163,18 @@ scripts_get_containers <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -15182,7 +15182,7 @@ scripts_get_containers <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -15195,7 +15195,7 @@ scripts_get_containers <- function(id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -15203,7 +15203,7 @@ scripts_get_containers <- function(id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB).
@@ -15217,7 +15217,7 @@ scripts_get_containers <- function(id) {
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -15264,8 +15264,8 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -15273,7 +15273,7 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -15286,7 +15286,7 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }
-#' @param required_resources object optional. A list containing the following elements: 
+#' @param required_resources list optional. A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB).
@@ -15310,7 +15310,7 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' \item{type}{string, The type of the script (e.g Container)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -15339,18 +15339,18 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -15358,7 +15358,7 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -15371,7 +15371,7 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -15379,7 +15379,7 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB).
@@ -15393,7 +15393,7 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -15525,8 +15525,8 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -15534,7 +15534,7 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -15551,7 +15551,7 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' @param time_zone string optional. The time zone of this script.
 #' @param hidden boolean optional. The hidden status of the object.
 #' @param target_project_id integer optional. Target project to which script outputs will be added.
-#' @param csv_settings object optional. A list containing the following elements: 
+#' @param csv_settings list optional. A list containing the following elements: 
 #' \itemize{
 #' \item includeHeader boolean, Whether or not to include headers in the output data. Default: true
 #' \item compression string, The type of compression to use, if any, one of "none", "zip", or "gzip". Default: gzip
@@ -15567,7 +15567,7 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -15596,18 +15596,18 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -15615,7 +15615,7 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -15628,7 +15628,7 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -15638,7 +15638,7 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -15651,11 +15651,11 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{sql}{string, The raw SQL query for the script.}
-#' \item{expandedArguments}{object, Expanded arguments for use in injecting into different environments.}
+#' \item{expandedArguments}{list, Expanded arguments for use in injecting into different environments.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
 #' \item{codePreview}{string, The code that this script will run with arguments inserted.}
-#' \item{csvSettings}{object, A list containing the following elements: 
+#' \item{csvSettings}{list, A list containing the following elements: 
 #' \itemize{
 #' \item includeHeader boolean, Whether or not to include headers in the output data. Default: true
 #' \item compression string, The type of compression to use, if any, one of "none", "zip", or "gzip". Default: gzip
@@ -15691,7 +15691,7 @@ scripts_post_sql <- function(name, sql, remote_host_id, credential_id, parent_id
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -15720,18 +15720,18 @@ scripts_post_sql <- function(name, sql, remote_host_id, credential_id, parent_id
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -15739,7 +15739,7 @@ scripts_post_sql <- function(name, sql, remote_host_id, credential_id, parent_id
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -15752,7 +15752,7 @@ scripts_post_sql <- function(name, sql, remote_host_id, credential_id, parent_id
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -15762,7 +15762,7 @@ scripts_post_sql <- function(name, sql, remote_host_id, credential_id, parent_id
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -15775,11 +15775,11 @@ scripts_post_sql <- function(name, sql, remote_host_id, credential_id, parent_id
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{sql}{string, The raw SQL query for the script.}
-#' \item{expandedArguments}{object, Expanded arguments for use in injecting into different environments.}
+#' \item{expandedArguments}{list, Expanded arguments for use in injecting into different environments.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
 #' \item{codePreview}{string, The code that this script will run with arguments inserted.}
-#' \item{csvSettings}{object, A list containing the following elements: 
+#' \item{csvSettings}{list, A list containing the following elements: 
 #' \itemize{
 #' \item includeHeader boolean, Whether or not to include headers in the output data. Default: true
 #' \item compression string, The type of compression to use, if any, one of "none", "zip", or "gzip". Default: gzip
@@ -15825,8 +15825,8 @@ scripts_get_sql <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -15834,7 +15834,7 @@ scripts_get_sql <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -15850,7 +15850,7 @@ scripts_get_sql <- function(id) {
 #' @param next_run_at string optional. The time of the next scheduled run.
 #' @param time_zone string optional. The time zone of this script.
 #' @param target_project_id integer optional. Target project to which script outputs will be added.
-#' @param csv_settings object optional. A list containing the following elements: 
+#' @param csv_settings list optional. A list containing the following elements: 
 #' \itemize{
 #' \item includeHeader boolean, Whether or not to include headers in the output data. Default: true
 #' \item compression string, The type of compression to use, if any, one of "none", "zip", or "gzip". Default: gzip
@@ -15866,7 +15866,7 @@ scripts_get_sql <- function(id) {
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -15895,18 +15895,18 @@ scripts_get_sql <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -15914,7 +15914,7 @@ scripts_get_sql <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -15927,7 +15927,7 @@ scripts_get_sql <- function(id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -15937,7 +15937,7 @@ scripts_get_sql <- function(id) {
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -15950,11 +15950,11 @@ scripts_get_sql <- function(id) {
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{sql}{string, The raw SQL query for the script.}
-#' \item{expandedArguments}{object, Expanded arguments for use in injecting into different environments.}
+#' \item{expandedArguments}{list, Expanded arguments for use in injecting into different environments.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
 #' \item{codePreview}{string, The code that this script will run with arguments inserted.}
-#' \item{csvSettings}{object, A list containing the following elements: 
+#' \item{csvSettings}{list, A list containing the following elements: 
 #' \itemize{
 #' \item includeHeader boolean, Whether or not to include headers in the output data. Default: true
 #' \item compression string, The type of compression to use, if any, one of "none", "zip", or "gzip". Default: gzip
@@ -15997,8 +15997,8 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -16006,7 +16006,7 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -16025,7 +16025,7 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' @param sql string optional. The raw SQL query for the script.
 #' @param remote_host_id integer optional. The remote host ID that this script will connect to.
 #' @param credential_id integer optional. The credential that this script will use.
-#' @param csv_settings object optional. A list containing the following elements: 
+#' @param csv_settings list optional. A list containing the following elements: 
 #' \itemize{
 #' \item includeHeader boolean, Whether or not to include headers in the output data. Default: true
 #' \item compression string, The type of compression to use, if any, one of "none", "zip", or "gzip". Default: gzip
@@ -16041,7 +16041,7 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -16070,18 +16070,18 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -16089,7 +16089,7 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -16102,7 +16102,7 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -16112,7 +16112,7 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -16125,11 +16125,11 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{sql}{string, The raw SQL query for the script.}
-#' \item{expandedArguments}{object, Expanded arguments for use in injecting into different environments.}
+#' \item{expandedArguments}{list, Expanded arguments for use in injecting into different environments.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
 #' \item{codePreview}{string, The code that this script will run with arguments inserted.}
-#' \item{csvSettings}{object, A list containing the following elements: 
+#' \item{csvSettings}{list, A list containing the following elements: 
 #' \itemize{
 #' \item includeHeader boolean, Whether or not to include headers in the output data. Default: true
 #' \item compression string, The type of compression to use, if any, one of "none", "zip", or "gzip". Default: gzip
@@ -16194,8 +16194,8 @@ scripts_delete_sql <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -16203,7 +16203,7 @@ scripts_delete_sql <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -16220,7 +16220,7 @@ scripts_delete_sql <- function(id) {
 #' @param time_zone string optional. The time zone of this script.
 #' @param hidden boolean optional. The hidden status of the object.
 #' @param target_project_id integer optional. Target project to which script outputs will be added.
-#' @param required_resources object optional. A list containing the following elements: 
+#' @param required_resources list optional. A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -16234,7 +16234,7 @@ scripts_delete_sql <- function(id) {
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -16263,18 +16263,18 @@ scripts_delete_sql <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -16282,7 +16282,7 @@ scripts_delete_sql <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -16295,7 +16295,7 @@ scripts_delete_sql <- function(id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -16305,7 +16305,7 @@ scripts_delete_sql <- function(id) {
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -16317,7 +16317,7 @@ scripts_delete_sql <- function(id) {
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -16352,7 +16352,7 @@ scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = 
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -16381,18 +16381,18 @@ scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = 
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -16400,7 +16400,7 @@ scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = 
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -16413,7 +16413,7 @@ scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = 
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -16423,7 +16423,7 @@ scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = 
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -16435,7 +16435,7 @@ scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = 
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -16478,8 +16478,8 @@ scripts_get_python3 <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -16487,7 +16487,7 @@ scripts_get_python3 <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -16503,7 +16503,7 @@ scripts_get_python3 <- function(id) {
 #' @param next_run_at string optional. The time of the next scheduled run.
 #' @param time_zone string optional. The time zone of this script.
 #' @param target_project_id integer optional. Target project to which script outputs will be added.
-#' @param required_resources object optional. A list containing the following elements: 
+#' @param required_resources list optional. A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -16517,7 +16517,7 @@ scripts_get_python3 <- function(id) {
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -16546,18 +16546,18 @@ scripts_get_python3 <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -16565,7 +16565,7 @@ scripts_get_python3 <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -16578,7 +16578,7 @@ scripts_get_python3 <- function(id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -16588,7 +16588,7 @@ scripts_get_python3 <- function(id) {
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -16600,7 +16600,7 @@ scripts_get_python3 <- function(id) {
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -16642,8 +16642,8 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -16651,7 +16651,7 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -16667,7 +16667,7 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' @param next_run_at string optional. The time of the next scheduled run.
 #' @param time_zone string optional. The time zone of this script.
 #' @param target_project_id integer optional. Target project to which script outputs will be added.
-#' @param required_resources object optional. A list containing the following elements: 
+#' @param required_resources list optional. A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -16682,7 +16682,7 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -16711,18 +16711,18 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -16730,7 +16730,7 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -16743,7 +16743,7 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -16753,7 +16753,7 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -16765,7 +16765,7 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -16829,8 +16829,8 @@ scripts_delete_python3 <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -16838,7 +16838,7 @@ scripts_delete_python3 <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -16855,7 +16855,7 @@ scripts_delete_python3 <- function(id) {
 #' @param time_zone string optional. The time zone of this script.
 #' @param hidden boolean optional. The hidden status of the object.
 #' @param target_project_id integer optional. Target project to which script outputs will be added.
-#' @param required_resources object optional. A list containing the following elements: 
+#' @param required_resources list optional. A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -16869,7 +16869,7 @@ scripts_delete_python3 <- function(id) {
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -16898,18 +16898,18 @@ scripts_delete_python3 <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -16917,7 +16917,7 @@ scripts_delete_python3 <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -16930,7 +16930,7 @@ scripts_delete_python3 <- function(id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -16940,7 +16940,7 @@ scripts_delete_python3 <- function(id) {
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -16952,7 +16952,7 @@ scripts_delete_python3 <- function(id) {
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -16987,7 +16987,7 @@ scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, 
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -17016,18 +17016,18 @@ scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, 
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -17035,7 +17035,7 @@ scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, 
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -17048,7 +17048,7 @@ scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, 
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -17058,7 +17058,7 @@ scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, 
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -17070,7 +17070,7 @@ scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, 
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -17113,8 +17113,8 @@ scripts_get_r <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -17122,7 +17122,7 @@ scripts_get_r <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -17138,7 +17138,7 @@ scripts_get_r <- function(id) {
 #' @param next_run_at string optional. The time of the next scheduled run.
 #' @param time_zone string optional. The time zone of this script.
 #' @param target_project_id integer optional. Target project to which script outputs will be added.
-#' @param required_resources object optional. A list containing the following elements: 
+#' @param required_resources list optional. A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -17152,7 +17152,7 @@ scripts_get_r <- function(id) {
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -17181,18 +17181,18 @@ scripts_get_r <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -17200,7 +17200,7 @@ scripts_get_r <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -17213,7 +17213,7 @@ scripts_get_r <- function(id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -17223,7 +17223,7 @@ scripts_get_r <- function(id) {
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -17235,7 +17235,7 @@ scripts_get_r <- function(id) {
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -17277,8 +17277,8 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -17286,7 +17286,7 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -17302,7 +17302,7 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' @param next_run_at string optional. The time of the next scheduled run.
 #' @param time_zone string optional. The time zone of this script.
 #' @param target_project_id integer optional. Target project to which script outputs will be added.
-#' @param required_resources object optional. A list containing the following elements: 
+#' @param required_resources list optional. A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -17317,7 +17317,7 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -17346,18 +17346,18 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -17365,7 +17365,7 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -17378,7 +17378,7 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -17388,7 +17388,7 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -17400,7 +17400,7 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -17466,8 +17466,8 @@ scripts_delete_r <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -17475,7 +17475,7 @@ scripts_delete_r <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -17499,7 +17499,7 @@ scripts_delete_r <- function(id) {
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -17528,18 +17528,18 @@ scripts_delete_r <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -17547,7 +17547,7 @@ scripts_delete_r <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -17560,7 +17560,7 @@ scripts_delete_r <- function(id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -17570,7 +17570,7 @@ scripts_delete_r <- function(id) {
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -17612,7 +17612,7 @@ scripts_post_javascript <- function(name, source, remote_host_id, credential_id,
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -17641,18 +17641,18 @@ scripts_post_javascript <- function(name, source, remote_host_id, credential_id,
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -17660,7 +17660,7 @@ scripts_post_javascript <- function(name, source, remote_host_id, credential_id,
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -17673,7 +17673,7 @@ scripts_post_javascript <- function(name, source, remote_host_id, credential_id,
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -17683,7 +17683,7 @@ scripts_post_javascript <- function(name, source, remote_host_id, credential_id,
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -17735,8 +17735,8 @@ scripts_get_javascript <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -17744,7 +17744,7 @@ scripts_get_javascript <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -17767,7 +17767,7 @@ scripts_get_javascript <- function(id) {
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -17796,18 +17796,18 @@ scripts_get_javascript <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -17815,7 +17815,7 @@ scripts_get_javascript <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -17828,7 +17828,7 @@ scripts_get_javascript <- function(id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -17838,7 +17838,7 @@ scripts_get_javascript <- function(id) {
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -17887,8 +17887,8 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -17896,7 +17896,7 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -17922,7 +17922,7 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -17951,18 +17951,18 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -17970,7 +17970,7 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -17983,7 +17983,7 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -17993,7 +17993,7 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -18065,7 +18065,7 @@ scripts_delete_javascript <- function(id) {
 #' \item{type}{string, The type of the script (e.g Custom)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -18083,7 +18083,7 @@ scripts_delete_javascript <- function(id) {
 #' \item{parentId}{integer, The ID of the parent job that will trigger this script}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -18115,10 +18115,10 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' @param from_template_id integer required. The ID of the template script.
 #' @param name string optional. The name of the script.
 #' @param parent_id integer optional. The ID of the parent job that will trigger this script
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param remote_host_id integer optional. The remote host ID that this script will connect to.
 #' @param credential_id integer optional. The credential that this script will use.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -18126,7 +18126,7 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -18149,7 +18149,7 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' \item{type}{string, The type of the script (e.g Custom)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -18177,7 +18177,7 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
@@ -18189,7 +18189,7 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
 #' \item{codePreview}{string, The code that this script will run with arguments inserted.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -18197,7 +18197,7 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -18210,7 +18210,7 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -18219,7 +18219,7 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -18258,7 +18258,7 @@ scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL,
 #' \item{type}{string, The type of the script (e.g Custom)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -18286,7 +18286,7 @@ scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL,
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
@@ -18298,7 +18298,7 @@ scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL,
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
 #' \item{codePreview}{string, The code that this script will run with arguments inserted.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -18306,7 +18306,7 @@ scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL,
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -18319,7 +18319,7 @@ scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL,
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -18328,7 +18328,7 @@ scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL,
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -18362,10 +18362,10 @@ scripts_get_custom <- function(id) {
 #' @param id integer required. The ID for the script.
 #' @param name string optional. The name of the script.
 #' @param parent_id integer optional. The ID of the parent job that will trigger this script
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param remote_host_id integer optional. The remote host ID that this script will connect to.
 #' @param credential_id integer optional. The credential that this script will use.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -18373,7 +18373,7 @@ scripts_get_custom <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -18395,7 +18395,7 @@ scripts_get_custom <- function(id) {
 #' \item{type}{string, The type of the script (e.g Custom)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -18423,7 +18423,7 @@ scripts_get_custom <- function(id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
@@ -18435,7 +18435,7 @@ scripts_get_custom <- function(id) {
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
 #' \item{codePreview}{string, The code that this script will run with arguments inserted.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -18443,7 +18443,7 @@ scripts_get_custom <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -18456,7 +18456,7 @@ scripts_get_custom <- function(id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -18465,7 +18465,7 @@ scripts_get_custom <- function(id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -18499,10 +18499,10 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' @param id integer required. The ID for the script.
 #' @param name string optional. The name of the script.
 #' @param parent_id integer optional. The ID of the parent job that will trigger this script
-#' @param arguments object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
+#' @param arguments list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.
 #' @param remote_host_id integer optional. The remote host ID that this script will connect to.
 #' @param credential_id integer optional. The credential that this script will use.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -18510,7 +18510,7 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -18532,7 +18532,7 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' \item{type}{string, The type of the script (e.g Custom)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -18560,7 +18560,7 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
@@ -18572,7 +18572,7 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
 #' \item{codePreview}{string, The code that this script will run with arguments inserted.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -18580,7 +18580,7 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -18593,7 +18593,7 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -18602,7 +18602,7 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -19856,7 +19856,7 @@ scripts_post_custom_runs_outputs <- function(id, run_id, object_type, object_id)
 #' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{object, A list containing the following elements: 
+#' \item{gitRepo}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for this git repository.
 #' \item repoUrl string, The URL for this git repository.
@@ -19892,7 +19892,7 @@ scripts_list_sql_git <- function(id) {
 #' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{object, A list containing the following elements: 
+#' \item{gitRepo}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for this git repository.
 #' \item repoUrl string, The URL for this git repository.
@@ -20006,7 +20006,7 @@ scripts_get_sql_git_commits <- function(id, commit_hash) {
 #' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{object, A list containing the following elements: 
+#' \item{gitRepo}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for this git repository.
 #' \item repoUrl string, The URL for this git repository.
@@ -20042,7 +20042,7 @@ scripts_list_javascript_git <- function(id) {
 #' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{object, A list containing the following elements: 
+#' \item{gitRepo}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for this git repository.
 #' \item repoUrl string, The URL for this git repository.
@@ -20156,7 +20156,7 @@ scripts_get_javascript_git_commits <- function(id, commit_hash) {
 #' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{object, A list containing the following elements: 
+#' \item{gitRepo}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for this git repository.
 #' \item repoUrl string, The URL for this git repository.
@@ -20192,7 +20192,7 @@ scripts_list_python3_git <- function(id) {
 #' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{object, A list containing the following elements: 
+#' \item{gitRepo}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for this git repository.
 #' \item repoUrl string, The URL for this git repository.
@@ -20306,7 +20306,7 @@ scripts_get_python3_git_commits <- function(id, commit_hash) {
 #' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{object, A list containing the following elements: 
+#' \item{gitRepo}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for this git repository.
 #' \item repoUrl string, The URL for this git repository.
@@ -20342,7 +20342,7 @@ scripts_list_r_git <- function(id) {
 #' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{object, A list containing the following elements: 
+#' \item{gitRepo}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for this git repository.
 #' \item repoUrl string, The URL for this git repository.
@@ -20453,17 +20453,17 @@ scripts_get_r_git_commits <- function(id, commit_hash) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -20496,17 +20496,17 @@ scripts_list_sql_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -20562,17 +20562,17 @@ scripts_delete_sql_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -20626,7 +20626,7 @@ scripts_delete_sql_shares_groups <- function(id, group_id) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -20722,7 +20722,7 @@ scripts_delete_sql_projects <- function(id, project_id) {
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -20751,18 +20751,18 @@ scripts_delete_sql_projects <- function(id, project_id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -20770,7 +20770,7 @@ scripts_delete_sql_projects <- function(id, project_id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -20783,7 +20783,7 @@ scripts_delete_sql_projects <- function(id, project_id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -20793,7 +20793,7 @@ scripts_delete_sql_projects <- function(id, project_id) {
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -20806,11 +20806,11 @@ scripts_delete_sql_projects <- function(id, project_id) {
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{sql}{string, The raw SQL query for the script.}
-#' \item{expandedArguments}{object, Expanded arguments for use in injecting into different environments.}
+#' \item{expandedArguments}{list, Expanded arguments for use in injecting into different environments.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
 #' \item{codePreview}{string, The code that this script will run with arguments inserted.}
-#' \item{csvSettings}{object, A list containing the following elements: 
+#' \item{csvSettings}{list, A list containing the following elements: 
 #' \itemize{
 #' \item includeHeader boolean, Whether or not to include headers in the output data. Default: true
 #' \item compression string, The type of compression to use, if any, one of "none", "zip", or "gzip". Default: gzip
@@ -20841,17 +20841,17 @@ scripts_put_sql_archive <- function(id, status) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -20884,17 +20884,17 @@ scripts_list_containers_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -20950,17 +20950,17 @@ scripts_delete_containers_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -21014,7 +21014,7 @@ scripts_delete_containers_shares_groups <- function(id, group_id) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -21110,7 +21110,7 @@ scripts_delete_containers_projects <- function(id, project_id) {
 #' \item{type}{string, The type of the script (e.g Container)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -21139,18 +21139,18 @@ scripts_delete_containers_projects <- function(id, project_id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -21158,7 +21158,7 @@ scripts_delete_containers_projects <- function(id, project_id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -21171,7 +21171,7 @@ scripts_delete_containers_projects <- function(id, project_id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -21179,7 +21179,7 @@ scripts_delete_containers_projects <- function(id, project_id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB).
@@ -21193,7 +21193,7 @@ scripts_delete_containers_projects <- function(id, project_id) {
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -21228,17 +21228,17 @@ scripts_put_containers_archive <- function(id, status) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -21271,17 +21271,17 @@ scripts_list_python3_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -21337,17 +21337,17 @@ scripts_delete_python3_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -21401,7 +21401,7 @@ scripts_delete_python3_shares_groups <- function(id, group_id) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -21497,7 +21497,7 @@ scripts_delete_python3_projects <- function(id, project_id) {
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -21526,18 +21526,18 @@ scripts_delete_python3_projects <- function(id, project_id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -21545,7 +21545,7 @@ scripts_delete_python3_projects <- function(id, project_id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -21558,7 +21558,7 @@ scripts_delete_python3_projects <- function(id, project_id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -21568,7 +21568,7 @@ scripts_delete_python3_projects <- function(id, project_id) {
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -21580,7 +21580,7 @@ scripts_delete_python3_projects <- function(id, project_id) {
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -21610,17 +21610,17 @@ scripts_put_python3_archive <- function(id, status) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -21653,17 +21653,17 @@ scripts_list_r_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -21719,17 +21719,17 @@ scripts_delete_r_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -21783,7 +21783,7 @@ scripts_delete_r_shares_groups <- function(id, group_id) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -21879,7 +21879,7 @@ scripts_delete_r_projects <- function(id, project_id) {
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -21908,18 +21908,18 @@ scripts_delete_r_projects <- function(id, project_id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -21927,7 +21927,7 @@ scripts_delete_r_projects <- function(id, project_id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -21940,7 +21940,7 @@ scripts_delete_r_projects <- function(id, project_id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -21950,7 +21950,7 @@ scripts_delete_r_projects <- function(id, project_id) {
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -21962,7 +21962,7 @@ scripts_delete_r_projects <- function(id, project_id) {
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -21992,17 +21992,17 @@ scripts_put_r_archive <- function(id, status) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -22035,17 +22035,17 @@ scripts_list_javascript_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -22101,17 +22101,17 @@ scripts_delete_javascript_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -22165,7 +22165,7 @@ scripts_delete_javascript_shares_groups <- function(id, group_id) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -22261,7 +22261,7 @@ scripts_delete_javascript_projects <- function(id, project_id) {
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -22290,18 +22290,18 @@ scripts_delete_javascript_projects <- function(id, project_id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -22309,7 +22309,7 @@ scripts_delete_javascript_projects <- function(id, project_id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -22322,7 +22322,7 @@ scripts_delete_javascript_projects <- function(id, project_id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -22332,7 +22332,7 @@ scripts_delete_javascript_projects <- function(id, project_id) {
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -22369,17 +22369,17 @@ scripts_put_javascript_archive <- function(id, status) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -22412,17 +22412,17 @@ scripts_list_custom_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -22478,17 +22478,17 @@ scripts_delete_custom_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -22542,7 +22542,7 @@ scripts_delete_custom_shares_groups <- function(id, group_id) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -22638,7 +22638,7 @@ scripts_delete_custom_projects <- function(id, project_id) {
 #' \item{type}{string, The type of the script (e.g Custom)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -22666,7 +22666,7 @@ scripts_delete_custom_projects <- function(id, project_id) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
@@ -22678,7 +22678,7 @@ scripts_delete_custom_projects <- function(id, project_id) {
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
 #' \item{codePreview}{string, The code that this script will run with arguments inserted.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -22686,7 +22686,7 @@ scripts_delete_custom_projects <- function(id, project_id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -22699,7 +22699,7 @@ scripts_delete_custom_projects <- function(id, project_id) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -22708,7 +22708,7 @@ scripts_delete_custom_projects <- function(id, project_id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -22750,7 +22750,7 @@ scripts_put_custom_archive <- function(id, status) {
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -22779,18 +22779,18 @@ scripts_put_custom_archive <- function(id, status) {
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -22798,7 +22798,7 @@ scripts_put_custom_archive <- function(id, status) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -22811,7 +22811,7 @@ scripts_put_custom_archive <- function(id, status) {
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -22821,7 +22821,7 @@ scripts_put_custom_archive <- function(id, status) {
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -22834,11 +22834,11 @@ scripts_put_custom_archive <- function(id, status) {
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
 #' \item{sql}{string, The raw SQL query for the script.}
-#' \item{expandedArguments}{object, Expanded arguments for use in injecting into different environments.}
+#' \item{expandedArguments}{list, Expanded arguments for use in injecting into different environments.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
 #' \item{codePreview}{string, The code that this script will run with arguments inserted.}
-#' \item{csvSettings}{object, A list containing the following elements: 
+#' \item{csvSettings}{list, A list containing the following elements: 
 #' \itemize{
 #' \item includeHeader boolean, Whether or not to include headers in the output data. Default: true
 #' \item compression string, The type of compression to use, if any, one of "none", "zip", or "gzip". Default: gzip
@@ -22877,7 +22877,7 @@ scripts_post_sql_clone <- function(id, clone_schedule = NULL, clone_triggers = N
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -22906,18 +22906,18 @@ scripts_post_sql_clone <- function(id, clone_schedule = NULL, clone_triggers = N
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -22925,7 +22925,7 @@ scripts_post_sql_clone <- function(id, clone_schedule = NULL, clone_triggers = N
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -22938,7 +22938,7 @@ scripts_post_sql_clone <- function(id, clone_schedule = NULL, clone_triggers = N
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -22948,7 +22948,7 @@ scripts_post_sql_clone <- function(id, clone_schedule = NULL, clone_triggers = N
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -22993,7 +22993,7 @@ scripts_post_javascript_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -23022,18 +23022,18 @@ scripts_post_javascript_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -23041,7 +23041,7 @@ scripts_post_javascript_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -23054,7 +23054,7 @@ scripts_post_javascript_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -23064,7 +23064,7 @@ scripts_post_javascript_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -23076,7 +23076,7 @@ scripts_post_javascript_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -23114,7 +23114,7 @@ scripts_post_python3_clone <- function(id, clone_schedule = NULL, clone_triggers
 #' \item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -23143,18 +23143,18 @@ scripts_post_python3_clone <- function(id, clone_schedule = NULL, clone_triggers
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -23162,7 +23162,7 @@ scripts_post_python3_clone <- function(id, clone_schedule = NULL, clone_triggers
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -23175,7 +23175,7 @@ scripts_post_python3_clone <- function(id, clone_schedule = NULL, clone_triggers
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -23185,7 +23185,7 @@ scripts_post_python3_clone <- function(id, clone_schedule = NULL, clone_triggers
 #' }}
 #' \item{nextRunAt}{string, The time of the next scheduled run.}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -23197,7 +23197,7 @@ scripts_post_python3_clone <- function(id, clone_schedule = NULL, clone_triggers
 #' \item{hidden}{boolean, The hidden status of the object.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested object(s).}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
@@ -23235,7 +23235,7 @@ scripts_post_r_clone <- function(id, clone_schedule = NULL, clone_triggers = NUL
 #' \item{type}{string, The type of the script (e.g Custom)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -23263,7 +23263,7 @@ scripts_post_r_clone <- function(id, clone_schedule = NULL, clone_triggers = NUL
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
@@ -23275,7 +23275,7 @@ scripts_post_r_clone <- function(id, clone_schedule = NULL, clone_triggers = NUL
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
 #' \item{codePreview}{string, The code that this script will run with arguments inserted.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -23283,7 +23283,7 @@ scripts_post_r_clone <- function(id, clone_schedule = NULL, clone_triggers = NUL
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -23296,7 +23296,7 @@ scripts_post_r_clone <- function(id, clone_schedule = NULL, clone_triggers = NUL
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -23305,7 +23305,7 @@ scripts_post_r_clone <- function(id, clone_schedule = NULL, clone_triggers = NUL
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -23347,7 +23347,7 @@ scripts_post_custom_clone <- function(id, clone_schedule = NULL, clone_triggers 
 #' \item{type}{string, The type of the script (e.g Container)}
 #' \item{createdAt}{string, The time this script was created.}
 #' \item{updatedAt}{string, The time the script was last updated.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -23376,18 +23376,18 @@ scripts_post_custom_clone <- function(id, clone_schedule = NULL, clone_triggers 
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 #' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 #' }}
-#' \item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+#' \item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 #' \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 #' \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 #' \item{fromTemplateId}{integer, The ID of the template script.}
 #' \item{templateScriptName}{string, The name of the template script.}
-#' \item{links}{object, A list containing the following elements: 
+#' \item{links}{list, A list containing the following elements: 
 #' \itemize{
 #' \item details string, The details link to get more information about the script.
 #' \item runs string, The runs link to get the run information list for this script.
 #' }}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -23395,7 +23395,7 @@ scripts_post_custom_clone <- function(id, clone_schedule = NULL, clone_triggers 
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -23408,7 +23408,7 @@ scripts_post_custom_clone <- function(id, clone_schedule = NULL, clone_triggers 
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }}
-#' \item{runningAs}{object, A list containing the following elements: 
+#' \item{runningAs}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -23416,7 +23416,7 @@ scripts_post_custom_clone <- function(id, clone_schedule = NULL, clone_triggers 
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{requiredResources}{object, A list containing the following elements: 
+#' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
 #' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares.
 #' \item memory integer, The amount of RAM to allocate for the container (in MiB).
@@ -23430,7 +23430,7 @@ scripts_post_custom_clone <- function(id, clone_schedule = NULL, clone_triggers 
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -23472,7 +23472,7 @@ scripts_post_containers_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' 
 #' @return  An array containing the following fields:
 #' \item{totalResults}{integer, The number of items matching the search query.}
-#' \item{aggregations}{object, Aggregations by owner and type for the search results.}
+#' \item{aggregations}{list, Aggregations by owner and type for the search results.}
 #' \item{results}{array, An array containing the following fields: 
 #' \itemize{
 #' \item score number, The relevance score from the search request.
@@ -23538,7 +23538,7 @@ search_list_types <- function() {
 #' \item{id}{integer, The ID for this Service.}
 #' \item{name}{string, The name of this Service.}
 #' \item{description}{string, The description of this Service.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -23551,7 +23551,7 @@ search_list_types <- function() {
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
 #' \item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
-#' \item{currentDeployment}{object, A list containing the following elements: 
+#' \item{currentDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -23569,7 +23569,7 @@ search_list_types <- function() {
 #' \item published boolean, 
 #' \item serviceId integer, The ID of owning Service
 #' }}
-#' \item{previewDeployment}{object, A list containing the following elements: 
+#' \item{previewDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -23611,7 +23611,7 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' @param description string optional. The description of this Service.
 #' @param docker_image_name string optional. The name of the docker image to pull from DockerHub.
 #' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub (default: latest).
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
 #' \item recurrences array, List of day-hour combinations this object is scheduled for
@@ -23626,8 +23626,8 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' @param git_repo_url string optional. The url for the git repo where the Service code lives.
 #' @param git_repo_ref string optional. The git reference to use when pulling code from the repo.
 #' @param git_path_dir string optional. The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.
-#' @param environment_variables object optional. Environment Variables to be passed into the Service.
-#' @param notifications object optional. A list containing the following elements: 
+#' @param environment_variables list optional. Environment Variables to be passed into the Service.
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
@@ -23638,7 +23638,7 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' \item{id}{integer, The ID for this Service.}
 #' \item{name}{string, The name of this Service.}
 #' \item{description}{string, The description of this Service.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -23648,7 +23648,7 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' }}
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
 #' \item recurrences array, List of day-hour combinations this object is scheduled for
@@ -23667,7 +23667,7 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
 #' \item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
 #' \item{reportId}{integer, The ID of the associated report.}
-#' \item{currentDeployment}{object, A list containing the following elements: 
+#' \item{currentDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -23686,7 +23686,7 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' \item published boolean, 
 #' \item serviceId integer, The ID of owning Service
 #' }}
-#' \item{previewDeployment}{object, A list containing the following elements: 
+#' \item{previewDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -23707,8 +23707,8 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' }}
 #' \item{currentUrl}{string, The URL that the service is hosted at.}
 #' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
-#' \item{environmentVariables}{object, Environment Variables to be passed into the Service.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{environmentVariables}{list, Environment Variables to be passed into the Service.}
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
@@ -23740,7 +23740,7 @@ services_post <- function(name = NULL, description = NULL, docker_image_name = N
 #' \item{id}{integer, The ID for this Service.}
 #' \item{name}{string, The name of this Service.}
 #' \item{description}{string, The description of this Service.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -23750,7 +23750,7 @@ services_post <- function(name = NULL, description = NULL, docker_image_name = N
 #' }}
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
 #' \item recurrences array, List of day-hour combinations this object is scheduled for
@@ -23769,7 +23769,7 @@ services_post <- function(name = NULL, description = NULL, docker_image_name = N
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
 #' \item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
 #' \item{reportId}{integer, The ID of the associated report.}
-#' \item{currentDeployment}{object, A list containing the following elements: 
+#' \item{currentDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -23788,7 +23788,7 @@ services_post <- function(name = NULL, description = NULL, docker_image_name = N
 #' \item published boolean, 
 #' \item serviceId integer, The ID of owning Service
 #' }}
-#' \item{previewDeployment}{object, A list containing the following elements: 
+#' \item{previewDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -23809,8 +23809,8 @@ services_post <- function(name = NULL, description = NULL, docker_image_name = N
 #' }}
 #' \item{currentUrl}{string, The URL that the service is hosted at.}
 #' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
-#' \item{environmentVariables}{object, Environment Variables to be passed into the Service.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{environmentVariables}{list, Environment Variables to be passed into the Service.}
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
@@ -23841,7 +23841,7 @@ services_get <- function(id) {
 #' @param description string optional. The description of this Service.
 #' @param docker_image_name string optional. The name of the docker image to pull from DockerHub.
 #' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub (default: latest).
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
 #' \item recurrences array, List of day-hour combinations this object is scheduled for
@@ -23856,8 +23856,8 @@ services_get <- function(id) {
 #' @param git_repo_url string optional. The url for the git repo where the Service code lives.
 #' @param git_repo_ref string optional. The git reference to use when pulling code from the repo.
 #' @param git_path_dir string optional. The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.
-#' @param environment_variables object optional. Environment Variables to be passed into the Service.
-#' @param notifications object optional. A list containing the following elements: 
+#' @param environment_variables list optional. Environment Variables to be passed into the Service.
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
@@ -23867,7 +23867,7 @@ services_get <- function(id) {
 #' \item{id}{integer, The ID for this Service.}
 #' \item{name}{string, The name of this Service.}
 #' \item{description}{string, The description of this Service.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -23877,7 +23877,7 @@ services_get <- function(id) {
 #' }}
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
 #' \item recurrences array, List of day-hour combinations this object is scheduled for
@@ -23896,7 +23896,7 @@ services_get <- function(id) {
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
 #' \item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
 #' \item{reportId}{integer, The ID of the associated report.}
-#' \item{currentDeployment}{object, A list containing the following elements: 
+#' \item{currentDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -23915,7 +23915,7 @@ services_get <- function(id) {
 #' \item published boolean, 
 #' \item serviceId integer, The ID of owning Service
 #' }}
-#' \item{previewDeployment}{object, A list containing the following elements: 
+#' \item{previewDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -23936,8 +23936,8 @@ services_get <- function(id) {
 #' }}
 #' \item{currentUrl}{string, The URL that the service is hosted at.}
 #' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
-#' \item{environmentVariables}{object, Environment Variables to be passed into the Service.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{environmentVariables}{list, Environment Variables to be passed into the Service.}
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
@@ -23968,7 +23968,7 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' @param description string optional. The description of this Service.
 #' @param docker_image_name string optional. The name of the docker image to pull from DockerHub.
 #' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub (default: latest).
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
 #' \item recurrences array, List of day-hour combinations this object is scheduled for
@@ -23983,8 +23983,8 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' @param git_repo_url string optional. The url for the git repo where the Service code lives.
 #' @param git_repo_ref string optional. The git reference to use when pulling code from the repo.
 #' @param git_path_dir string optional. The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.
-#' @param environment_variables object optional. Environment Variables to be passed into the Service.
-#' @param notifications object optional. A list containing the following elements: 
+#' @param environment_variables list optional. Environment Variables to be passed into the Service.
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
@@ -23994,7 +23994,7 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' \item{id}{integer, The ID for this Service.}
 #' \item{name}{string, The name of this Service.}
 #' \item{description}{string, The description of this Service.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -24004,7 +24004,7 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' }}
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
 #' \item recurrences array, List of day-hour combinations this object is scheduled for
@@ -24023,7 +24023,7 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
 #' \item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
 #' \item{reportId}{integer, The ID of the associated report.}
-#' \item{currentDeployment}{object, A list containing the following elements: 
+#' \item{currentDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -24042,7 +24042,7 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' \item published boolean, 
 #' \item serviceId integer, The ID of owning Service
 #' }}
-#' \item{previewDeployment}{object, A list containing the following elements: 
+#' \item{previewDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -24063,8 +24063,8 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' }}
 #' \item{currentUrl}{string, The URL that the service is hosted at.}
 #' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
-#' \item{environmentVariables}{object, Environment Variables to be passed into the Service.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{environmentVariables}{list, Environment Variables to be passed into the Service.}
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
@@ -24115,17 +24115,17 @@ services_delete <- function(id) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -24158,17 +24158,17 @@ services_list_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -24224,17 +24224,17 @@ services_delete_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -24290,7 +24290,7 @@ services_delete_shares_groups <- function(id, group_id) {
 #' \item{id}{integer, The ID for this Service.}
 #' \item{name}{string, The name of this Service.}
 #' \item{description}{string, The description of this Service.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -24300,7 +24300,7 @@ services_delete_shares_groups <- function(id, group_id) {
 #' }}
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
 #' \item recurrences array, List of day-hour combinations this object is scheduled for
@@ -24319,7 +24319,7 @@ services_delete_shares_groups <- function(id, group_id) {
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
 #' \item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
 #' \item{reportId}{integer, The ID of the associated report.}
-#' \item{currentDeployment}{object, A list containing the following elements: 
+#' \item{currentDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -24338,7 +24338,7 @@ services_delete_shares_groups <- function(id, group_id) {
 #' \item published boolean, 
 #' \item serviceId integer, The ID of owning Service
 #' }}
-#' \item{previewDeployment}{object, A list containing the following elements: 
+#' \item{previewDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -24359,8 +24359,8 @@ services_delete_shares_groups <- function(id, group_id) {
 #' }}
 #' \item{currentUrl}{string, The URL that the service is hosted at.}
 #' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
-#' \item{environmentVariables}{object, Environment Variables to be passed into the Service.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{environmentVariables}{list, Environment Variables to be passed into the Service.}
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
@@ -24391,7 +24391,7 @@ services_put_archive <- function(id, status) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -24697,7 +24697,7 @@ services_list_deployments_logs <- function(id, deployment_id, start_at = NULL, l
 #' \item{id}{integer, The ID for this Service.}
 #' \item{name}{string, The name of this Service.}
 #' \item{description}{string, The description of this Service.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -24707,7 +24707,7 @@ services_list_deployments_logs <- function(id, deployment_id, start_at = NULL, l
 #' }}
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
 #' \item recurrences array, List of day-hour combinations this object is scheduled for
@@ -24726,7 +24726,7 @@ services_list_deployments_logs <- function(id, deployment_id, start_at = NULL, l
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
 #' \item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
 #' \item{reportId}{integer, The ID of the associated report.}
-#' \item{currentDeployment}{object, A list containing the following elements: 
+#' \item{currentDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -24745,7 +24745,7 @@ services_list_deployments_logs <- function(id, deployment_id, start_at = NULL, l
 #' \item published boolean, 
 #' \item serviceId integer, The ID of owning Service
 #' }}
-#' \item{previewDeployment}{object, A list containing the following elements: 
+#' \item{previewDeployment}{list, A list containing the following elements: 
 #' \itemize{
 #' \item deploymentId integer, The ID for this deployment.
 #' \item userId integer, The ID of the owner.
@@ -24766,8 +24766,8 @@ services_list_deployments_logs <- function(id, deployment_id, start_at = NULL, l
 #' }}
 #' \item{currentUrl}{string, The URL that the service is hosted at.}
 #' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
-#' \item{environmentVariables}{object, Environment Variables to be passed into the Service.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{environmentVariables}{list, Environment Variables to be passed into the Service.}
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
@@ -24924,7 +24924,7 @@ tables_post <- function(database_id, schema, name, data) {
 #' \item{refreshStatus}{string, How up-to-date the table's statistics on row counts, null counts, distinct counts, and values distributions are. One of: refreshing, stale, or current.}
 #' \item{lastRefresh}{string, The time of the last statistics refresh.}
 #' \item{refreshId}{string, The ID of the most recent statistics refresh.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -25241,7 +25241,7 @@ tables_get_enhancements_table_matchings <- function(id, source_table_id) {
 #' \item{refreshStatus}{string, How up-to-date the table's statistics on row counts, null counts, distinct counts, and values distributions are. One of: refreshing, stale, or current.}
 #' \item{lastRefresh}{string, The time of the last statistics refresh.}
 #' \item{refreshId}{string, The ID of the most recent statistics refresh.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -25250,7 +25250,7 @@ tables_get_enhancements_table_matchings <- function(id, source_table_id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{ontologyMapping}{object, The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
+#' \item{ontologyMapping}{list, The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
 #' \item{columns}{array, An array containing the following fields: 
 #' \itemize{
 #' \item name string, Name of the column.
@@ -25339,7 +25339,7 @@ tables_post_refresh <- function(id) {
 #' \item{refreshStatus}{string, How up-to-date the table's statistics on row counts, null counts, distinct counts, and values distributions are. One of: refreshing, stale, or current.}
 #' \item{lastRefresh}{string, The time of the last statistics refresh.}
 #' \item{refreshId}{string, The ID of the most recent statistics refresh.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -25348,7 +25348,7 @@ tables_post_refresh <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{ontologyMapping}{object, The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
+#' \item{ontologyMapping}{list, The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
 #' \item{columns}{array, An array containing the following fields: 
 #' \itemize{
 #' \item name string, Name of the column.
@@ -25420,7 +25420,7 @@ tables_get <- function(id) {
 
 #' Update a table
 #' @param id integer required. The ID of the table.
-#' @param ontology_mapping object optional. The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.
+#' @param ontology_mapping list optional. The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.
 #' @param description string optional. The user-defined description of the table.
 #' 
 #' @return  A list containing the following elements:
@@ -25439,7 +25439,7 @@ tables_get <- function(id) {
 #' \item{refreshStatus}{string, How up-to-date the table's statistics on row counts, null counts, distinct counts, and values distributions are. One of: refreshing, stale, or current.}
 #' \item{lastRefresh}{string, The time of the last statistics refresh.}
 #' \item{refreshId}{string, The ID of the most recent statistics refresh.}
-#' \item{lastRun}{object, A list containing the following elements: 
+#' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, 
 #' \item state string, 
@@ -25448,7 +25448,7 @@ tables_get <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{ontologyMapping}{object, The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
+#' \item{ontologyMapping}{list, The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
 #' @export
 tables_patch <- function(id, ontology_mapping = NULL, description = NULL) {
 
@@ -25486,13 +25486,13 @@ tables_patch <- function(id, ontology_mapping = NULL, description = NULL) {
 #' \item{maxValue}{string, Largest value in the column.}
 #' \item{avgValue}{number, Average value of the column, where applicable.}
 #' \item{stddev}{number, Stddev of the column, where applicable.}
-#' \item{valueDistributionPercent}{object, A mapping between each value in the column and the percentage of rows with that value.Only present for tables with fewer than approximately 25,000,000 rows and for columns with fewer than twenty distinct values.}
+#' \item{valueDistributionPercent}{list, A mapping between each value in the column and the percentage of rows with that value.Only present for tables with fewer than approximately 25,000,000 rows and for columns with fewer than twenty distinct values.}
 #' \item{coverageCount}{integer, Number of non-null values in the column.}
 #' \item{nullCount}{integer, Number of null values in the column.}
 #' \item{possibleDependentVariableTypes}{array, Possible dependent variable types the column may be used to model.  Null if it may not be used as a dependent variable.}
 #' \item{useableAsIndependentVariable}{boolean, Whether the column may be used as an independent variable to train a model.}
 #' \item{useableAsPrimaryKey}{boolean, Whether the column may be used as an primary key to identify table rows.}
-#' \item{valueDistribution}{object, An object mapping distinct values in the column to the number of times they appear in the column}
+#' \item{valueDistribution}{list, An object mapping distinct values in the column to the number of times they appear in the column}
 #' \item{distinctCount}{integer, Number of distinct values in the column.}
 #' @export
 tables_list_columns <- function(id, name = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
@@ -25516,17 +25516,17 @@ tables_list_columns <- function(id, name = NULL, limit = NULL, page_num = NULL, 
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -25559,17 +25559,17 @@ templates_list_reports_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -25625,17 +25625,17 @@ templates_delete_reports_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -25699,7 +25699,7 @@ templates_delete_reports_shares_groups <- function(id, group_id) {
 #' \item{updatedAt}{string, }
 #' \item{useCount}{integer, The number of uses of this template.}
 #' \item{archived}{boolean, Whether the template has been archived.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -25742,7 +25742,7 @@ templates_list_reports <- function(hidden = NULL, category = NULL, limit = NULL,
 #' \item{updatedAt}{string, }
 #' \item{useCount}{integer, The number of uses of this template.}
 #' \item{archived}{boolean, Whether the template has been archived.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -25783,7 +25783,7 @@ templates_post_reports <- function(name, code_body, category = NULL, archived = 
 #' \item{updatedAt}{string, }
 #' \item{useCount}{integer, The number of uses of this template.}
 #' \item{archived}{boolean, Whether the template has been archived.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -25829,7 +25829,7 @@ templates_get_reports <- function(id) {
 #' \item{updatedAt}{string, }
 #' \item{useCount}{integer, The number of uses of this template.}
 #' \item{archived}{boolean, Whether the template has been archived.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -25875,7 +25875,7 @@ templates_put_reports <- function(id, name, code_body, category = NULL, archived
 #' \item{updatedAt}{string, }
 #' \item{useCount}{integer, The number of uses of this template.}
 #' \item{archived}{boolean, Whether the template has been archived.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -25931,17 +25931,17 @@ templates_delete_reports <- function(id) {
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -25974,17 +25974,17 @@ templates_list_scripts_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -26040,17 +26040,17 @@ templates_delete_scripts_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -26104,7 +26104,7 @@ templates_delete_scripts_shares_groups <- function(id, group_id) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -26457,9 +26457,9 @@ users_list <- function(feature_flag = NULL, account_status = NULL, query = NULL,
 #' \item{username}{string, This user's username.}
 #' \item{initials}{string, This user's initials.}
 #' \item{lastCheckedAnnouncements}{string, The date and time at which the user last checked their announcements.}
-#' \item{featureFlags}{object, The feature flag settings for this user.}
+#' \item{featureFlags}{list, The feature flag settings for this user.}
 #' \item{roles}{array, The roles this user has, listed by slug.}
-#' \item{preferences}{object, This user's preferences.}
+#' \item{preferences}{list, This user's preferences.}
 #' \item{customBranding}{string, The branding of Platform for this user.}
 #' \item{groups}{array, An array containing the following fields: 
 #' \itemize{
@@ -26490,7 +26490,7 @@ users_list_me <- function() {
 
 
 #' Update info about the logged-in user
-#' @param preferences object optional. A list containing the following elements: 
+#' @param preferences list optional. A list containing the following elements: 
 #' \itemize{
 #' \item appIndexOrderField string, Order field for the apps index pages.
 #' \item appIndexOrderDir string, Oder direction for the apps index pages.
@@ -26572,9 +26572,9 @@ users_list_me <- function() {
 #' \item{username}{string, This user's username.}
 #' \item{initials}{string, This user's initials.}
 #' \item{lastCheckedAnnouncements}{string, The date and time at which the user last checked their announcements.}
-#' \item{featureFlags}{object, The feature flag settings for this user.}
+#' \item{featureFlags}{list, The feature flag settings for this user.}
 #' \item{roles}{array, The roles this user has, listed by slug.}
-#' \item{preferences}{object, This user's preferences.}
+#' \item{preferences}{list, This user's preferences.}
 #' \item{customBranding}{string, The branding of Platform for this user.}
 #' \item{groups}{array, An array containing the following fields: 
 #' \itemize{
@@ -26846,7 +26846,7 @@ users_delete_api_keys <- function(id, key_id) {
 #' \item{description}{string, A description of the workflow.}
 #' \item{valid}{boolean, The validity of the workflow definition.}
 #' \item{fileId}{string, The file id for the s3 file containing the workflow configuration.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -26855,7 +26855,7 @@ users_delete_api_keys <- function(id, key_id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -26891,7 +26891,7 @@ workflows_list <- function(hidden = NULL, archived = NULL, author = NULL, limit 
 #' @param description string optional. A description of the workflow.
 #' @param from_job_chain integer optional. If specified, create a workflow from the job chain this job is in, and inherit the schedule from the root of the chain.
 #' @param definition string optional. The definition of the workflow in YAML format. Must not be specified if `fromJobChain` is specified.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -26900,7 +26900,7 @@ workflows_list <- function(hidden = NULL, archived = NULL, author = NULL, limit 
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
 #' @param time_zone string optional. The time zone of this workflow.
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -26920,7 +26920,7 @@ workflows_list <- function(hidden = NULL, archived = NULL, author = NULL, limit 
 #' \item{valid}{boolean, The validity of the workflow definition.}
 #' \item{validationErrors}{string, The errors encountered when validating the workflow definition.}
 #' \item{fileId}{string, The file id for the s3 file containing the workflow configuration.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -26929,7 +26929,7 @@ workflows_list <- function(hidden = NULL, archived = NULL, author = NULL, limit 
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -26939,7 +26939,7 @@ workflows_list <- function(hidden = NULL, archived = NULL, author = NULL, limit 
 #' }}
 #' \item{timeZone}{string, The time zone of this workflow.}
 #' \item{nextExecutionAt}{string, The time of the next scheduled execution.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -26982,7 +26982,7 @@ workflows_post <- function(name, description = NULL, from_job_chain = NULL, defi
 #' \item{valid}{boolean, The validity of the workflow definition.}
 #' \item{validationErrors}{string, The errors encountered when validating the workflow definition.}
 #' \item{fileId}{string, The file id for the s3 file containing the workflow configuration.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -26991,7 +26991,7 @@ workflows_post <- function(name, description = NULL, from_job_chain = NULL, defi
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -27001,7 +27001,7 @@ workflows_post <- function(name, description = NULL, from_job_chain = NULL, defi
 #' }}
 #' \item{timeZone}{string, The time zone of this workflow.}
 #' \item{nextExecutionAt}{string, The time of the next scheduled execution.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -27038,7 +27038,7 @@ workflows_get <- function(id) {
 #' @param name string required. The name of this workflow.
 #' @param description string optional. A description of the workflow.
 #' @param definition string optional. The definition of the workflow in YAML format. Must not be specified if `fromJobChain` is specified.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -27047,7 +27047,7 @@ workflows_get <- function(id) {
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
 #' @param time_zone string optional. The time zone of this workflow.
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -27066,7 +27066,7 @@ workflows_get <- function(id) {
 #' \item{valid}{boolean, The validity of the workflow definition.}
 #' \item{validationErrors}{string, The errors encountered when validating the workflow definition.}
 #' \item{fileId}{string, The file id for the s3 file containing the workflow configuration.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -27075,7 +27075,7 @@ workflows_get <- function(id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -27085,7 +27085,7 @@ workflows_get <- function(id) {
 #' }}
 #' \item{timeZone}{string, The time zone of this workflow.}
 #' \item{nextExecutionAt}{string, The time of the next scheduled execution.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -27122,7 +27122,7 @@ workflows_put <- function(id, name, description = NULL, definition = NULL, sched
 #' @param name string optional. The name of this workflow.
 #' @param description string optional. A description of the workflow.
 #' @param definition string optional. The definition of the workflow in YAML format. Must not be specified if `fromJobChain` is specified.
-#' @param schedule object optional. A list containing the following elements: 
+#' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -27131,7 +27131,7 @@ workflows_put <- function(id, name, description = NULL, definition = NULL, sched
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 #' }
 #' @param time_zone string optional. The time zone of this workflow.
-#' @param notifications object optional. A list containing the following elements: 
+#' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -27150,7 +27150,7 @@ workflows_put <- function(id, name, description = NULL, definition = NULL, sched
 #' \item{valid}{boolean, The validity of the workflow definition.}
 #' \item{validationErrors}{string, The errors encountered when validating the workflow definition.}
 #' \item{fileId}{string, The file id for the s3 file containing the workflow configuration.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -27159,7 +27159,7 @@ workflows_put <- function(id, name, description = NULL, definition = NULL, sched
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -27169,7 +27169,7 @@ workflows_put <- function(id, name, description = NULL, definition = NULL, sched
 #' }}
 #' \item{timeZone}{string, The time zone of this workflow.}
 #' \item{nextExecutionAt}{string, The time of the next scheduled execution.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -27205,17 +27205,17 @@ workflows_patch <- function(id, name = NULL, description = NULL, definition = NU
 #' @param id integer required. The ID of the object.
 #' 
 #' @return  An array containing the following fields:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -27248,17 +27248,17 @@ workflows_list_shares <- function(id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -27314,17 +27314,17 @@ workflows_delete_shares_users <- function(id, user_id) {
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
 #' @return  A list containing the following elements:
-#' \item{readers}{object, A list containing the following elements: 
+#' \item{readers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{writers}{object, A list containing the following elements: 
+#' \item{writers}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
 #' }}
-#' \item{owners}{object, A list containing the following elements: 
+#' \item{owners}{list, A list containing the following elements: 
 #' \itemize{
 #' \item users array, 
 #' \item groups array, 
@@ -27384,7 +27384,7 @@ workflows_delete_shares_groups <- function(id, group_id) {
 #' \item{valid}{boolean, The validity of the workflow definition.}
 #' \item{validationErrors}{string, The errors encountered when validating the workflow definition.}
 #' \item{fileId}{string, The file id for the s3 file containing the workflow configuration.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -27393,7 +27393,7 @@ workflows_delete_shares_groups <- function(id, group_id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -27403,7 +27403,7 @@ workflows_delete_shares_groups <- function(id, group_id) {
 #' }}
 #' \item{timeZone}{string, The time zone of this workflow.}
 #' \item{nextExecutionAt}{string, The time of the next scheduled execution.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -27441,7 +27441,7 @@ workflows_put_archive <- function(id, status) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for this project.}
-#' \item{author}{object, A list containing the following elements: 
+#' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -27534,7 +27534,7 @@ workflows_delete_projects <- function(id, project_id) {
 #' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{object, A list containing the following elements: 
+#' \item{gitRepo}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for this git repository.
 #' \item repoUrl string, The URL for this git repository.
@@ -27570,7 +27570,7 @@ workflows_list_git <- function(id) {
 #' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{object, A list containing the following elements: 
+#' \item{gitRepo}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID for this git repository.
 #' \item repoUrl string, The URL for this git repository.
@@ -27690,7 +27690,7 @@ workflows_get_git_commits <- function(id, commit_hash) {
 #' \item{valid}{boolean, The validity of the workflow definition.}
 #' \item{validationErrors}{string, The errors encountered when validating the workflow definition.}
 #' \item{fileId}{string, The file id for the s3 file containing the workflow configuration.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -27699,7 +27699,7 @@ workflows_get_git_commits <- function(id, commit_hash) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
-#' \item{schedule}{object, A list containing the following elements: 
+#' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the object is scheduled
 #' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -27709,7 +27709,7 @@ workflows_get_git_commits <- function(id, commit_hash) {
 #' }}
 #' \item{timeZone}{string, The time zone of this workflow.}
 #' \item{nextExecutionAt}{string, The time of the next scheduled execution.}
-#' \item{notifications}{object, A list containing the following elements: 
+#' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item urls array, URLs to receive a POST request at job completion
 #' \item successEmailSubject string, Custom subject line for success e-mail.
@@ -27753,7 +27753,7 @@ workflows_post_clone <- function(id, clone_schedule = NULL, clone_notifications 
 #' \item{state}{string, The state of this workflow execution.}
 #' \item{mistralState}{string, The state of this workflow as reported by mistral. One of running, paused, success, error, or cancelled}
 #' \item{mistralStateInfo}{string, The state info of this workflow as reported by mistral.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -27786,7 +27786,7 @@ workflows_list_executions <- function(id, limit = NULL, page_num = NULL, order =
 #' Execute a workflow
 #' @param id integer required. The ID for the workflow.
 #' @param target_task string optional. For a reverse workflow, the name of the task to target.
-#' @param input object optional. The dictionary of name/value input pairs defined for this execution.
+#' @param input list optional. The dictionary of name/value input pairs defined for this execution.
 #' @param included_tasks array optional. If specified, executes only the subset of workflow tasks included.
 #' 
 #' @return  A list containing the following elements:
@@ -27794,7 +27794,7 @@ workflows_list_executions <- function(id, limit = NULL, page_num = NULL, order =
 #' \item{state}{string, The state of this workflow execution.}
 #' \item{mistralState}{string, The state of this workflow as reported by mistral. One of running, paused, success, error, or cancelled}
 #' \item{mistralStateInfo}{string, The state info of this workflow as reported by mistral.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -27803,7 +27803,7 @@ workflows_list_executions <- function(id, limit = NULL, page_num = NULL, order =
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{definition}{string, The definition of the workflow for this execution.}
-#' \item{input}{object, The dictionary of name/value input pairs defined for this execution.}
+#' \item{input}{list, The dictionary of name/value input pairs defined for this execution.}
 #' \item{includedTasks}{array, The subset of workflow tasks selected to execute.}
 #' \item{tasks}{array, An array containing the following fields: 
 #' \itemize{
@@ -27844,7 +27844,7 @@ workflows_post_executions <- function(id, target_task = NULL, input = NULL, incl
 #' \item{state}{string, The state of this workflow execution.}
 #' \item{mistralState}{string, The state of this workflow as reported by mistral. One of running, paused, success, error, or cancelled}
 #' \item{mistralStateInfo}{string, The state info of this workflow as reported by mistral.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -27853,7 +27853,7 @@ workflows_post_executions <- function(id, target_task = NULL, input = NULL, incl
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{definition}{string, The definition of the workflow for this execution.}
-#' \item{input}{object, The dictionary of name/value input pairs defined for this execution.}
+#' \item{input}{list, The dictionary of name/value input pairs defined for this execution.}
 #' \item{includedTasks}{array, The subset of workflow tasks selected to execute.}
 #' \item{tasks}{array, An array containing the following fields: 
 #' \itemize{
@@ -27894,7 +27894,7 @@ workflows_get_executions <- function(id, execution_id) {
 #' \item{state}{string, The state of this workflow execution.}
 #' \item{mistralState}{string, The state of this workflow as reported by mistral. One of running, paused, success, error, or cancelled}
 #' \item{mistralStateInfo}{string, The state info of this workflow as reported by mistral.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -27903,7 +27903,7 @@ workflows_get_executions <- function(id, execution_id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{definition}{string, The definition of the workflow for this execution.}
-#' \item{input}{object, The dictionary of name/value input pairs defined for this execution.}
+#' \item{input}{list, The dictionary of name/value input pairs defined for this execution.}
 #' \item{includedTasks}{array, The subset of workflow tasks selected to execute.}
 #' \item{tasks}{array, An array containing the following fields: 
 #' \itemize{
@@ -27944,7 +27944,7 @@ workflows_post_executions_cancel <- function(id, execution_id) {
 #' \item{state}{string, The state of this workflow execution.}
 #' \item{mistralState}{string, The state of this workflow as reported by mistral. One of running, paused, success, error, or cancelled}
 #' \item{mistralStateInfo}{string, The state info of this workflow as reported by mistral.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -27953,7 +27953,7 @@ workflows_post_executions_cancel <- function(id, execution_id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{definition}{string, The definition of the workflow for this execution.}
-#' \item{input}{object, The dictionary of name/value input pairs defined for this execution.}
+#' \item{input}{list, The dictionary of name/value input pairs defined for this execution.}
 #' \item{includedTasks}{array, The subset of workflow tasks selected to execute.}
 #' \item{tasks}{array, An array containing the following fields: 
 #' \itemize{
@@ -27995,7 +27995,7 @@ workflows_post_executions_resume <- function(id, execution_id) {
 #' \item{state}{string, The state of this workflow execution.}
 #' \item{mistralState}{string, The state of this workflow as reported by mistral. One of running, paused, success, error, or cancelled}
 #' \item{mistralStateInfo}{string, The state info of this workflow as reported by mistral.}
-#' \item{user}{object, A list containing the following elements: 
+#' \item{user}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
 #' \item name string, This user's name.
@@ -28004,7 +28004,7 @@ workflows_post_executions_resume <- function(id, execution_id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{definition}{string, The definition of the workflow for this execution.}
-#' \item{input}{object, The dictionary of name/value input pairs defined for this execution.}
+#' \item{input}{list, The dictionary of name/value input pairs defined for this execution.}
 #' \item{includedTasks}{array, The subset of workflow tasks selected to execute.}
 #' \item{tasks}{array, An array containing the following fields: 
 #' \itemize{

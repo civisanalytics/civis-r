@@ -37,7 +37,7 @@ An array containing the following fields:
 \item{refreshStatus}{string, How up-to-date the table's statistics on row counts, null counts, distinct counts, and values distributions are. One of: refreshing, stale, or current.}
 \item{lastRefresh}{string, The time of the last statistics refresh.}
 \item{refreshId}{string, The ID of the most recent statistics refresh.}
-\item{lastRun}{object, A list containing the following elements: 
+\item{lastRun}{list, A list containing the following elements: 
 \itemize{
 \item id integer, 
 \item state string, 

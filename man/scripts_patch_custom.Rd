@@ -15,13 +15,13 @@ scripts_patch_custom(id, name = NULL, parent_id = NULL, arguments = NULL,
 
 \item{parent_id}{integer optional. The ID of the parent job that will trigger this script}
 
-\item{arguments}{object optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+\item{arguments}{list optional. Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 
 \item{remote_host_id}{integer optional. The remote host ID that this script will connect to.}
 
 \item{credential_id}{integer optional. The credential that this script will use.}
 
-\item{schedule}{object optional. A list containing the following elements: 
+\item{schedule}{list optional. A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the object is scheduled
 \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -30,7 +30,7 @@ scripts_patch_custom(id, name = NULL, parent_id = NULL, arguments = NULL,
 \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 }}
 
-\item{notifications}{object optional. A list containing the following elements: 
+\item{notifications}{list optional. A list containing the following elements: 
 \itemize{
 \item urls array, URLs to receive a POST request at job completion
 \item successEmailSubject string, Custom subject line for success e-mail.
@@ -55,7 +55,7 @@ A list containing the following elements:
 \item{type}{string, The type of the script (e.g Custom)}
 \item{createdAt}{string, The time this script was created.}
 \item{updatedAt}{string, The time the script was last updated.}
-\item{author}{object, A list containing the following elements: 
+\item{author}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.
@@ -83,7 +83,7 @@ A list containing the following elements:
 \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 }}
-\item{arguments}{object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+\item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
 \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 \item{fromTemplateId}{integer, The ID of the template script.}
@@ -95,7 +95,7 @@ A list containing the following elements:
 \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 \item{credentialId}{integer, The credential that this script will use.}
 \item{codePreview}{string, The code that this script will run with arguments inserted.}
-\item{schedule}{object, A list containing the following elements: 
+\item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the object is scheduled
 \item scheduledDays array, Day based on numeric value starting at 0 for Sunday
@@ -103,7 +103,7 @@ A list containing the following elements:
 \item scheduledMinutes array, Minutes of the day it is scheduled on
 \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
 }}
-\item{notifications}{object, A list containing the following elements: 
+\item{notifications}{list, A list containing the following elements: 
 \itemize{
 \item urls array, URLs to receive a POST request at job completion
 \item successEmailSubject string, Custom subject line for success e-mail.
@@ -116,7 +116,7 @@ A list containing the following elements:
 \item successOn boolean, If success email notifications are on.
 \item failureOn boolean, If failure email notifications are on.
 }}
-\item{runningAs}{object, A list containing the following elements: 
+\item{runningAs}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.
@@ -125,7 +125,7 @@ A list containing the following elements:
 \item online boolean, Whether this user is online.
 }}
 \item{timeZone}{string, The time zone of this script.}
-\item{lastRun}{object, A list containing the following elements: 
+\item{lastRun}{list, A list containing the following elements: 
 \itemize{
 \item id integer, 
 \item state string, 

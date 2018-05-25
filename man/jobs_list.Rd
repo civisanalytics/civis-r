@@ -40,7 +40,7 @@ An array containing the following fields:
 \item{state}{string, Whether the job is idle, queued, running, cancelled, or failed.}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
-\item{lastRun}{object, A list containing the following elements: 
+\item{lastRun}{list, A list containing the following elements: 
 \itemize{
 \item id integer, 
 \item state string, 
@@ -50,7 +50,7 @@ An array containing the following fields:
 \item error string, The error message for this run, if present.
 }}
 \item{archived}{string, The archival status of the requested object(s).}
-\item{schedule}{object, A list containing the following elements: 
+\item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the object is scheduled
 \item scheduledDays array, Day based on numeric value starting at 0 for Sunday

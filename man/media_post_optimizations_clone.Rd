@@ -12,7 +12,7 @@ media_post_optimizations_clone(id)
 \value{
 A list containing the following elements:
 \item{id}{integer, The optimization ID.}
-\item{author}{object, A list containing the following elements: 
+\item{author}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.
@@ -46,7 +46,7 @@ A list containing the following elements:
 \item{networks}{array, An array of networks that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_networks is not also set.}
 \item{excludePrograms}{boolean, If Civis Media Optimizer should exclude the programs in the programs parameter.If this value is set to false, it will make the optimization limit itself to the programs supplied through the programs parameter.An error will be thrown if programs is not also set.}
 \item{excludeNetworks}{boolean, If Civis Media Optimizer should exclude the networks in the networks parameter.If this value is set to false, it will make the optimization limit itself to the networks supplied through the networks.An error will be thrown if networks is not also set.}
-\item{timeSlotPercentages}{object, The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.}
+\item{timeSlotPercentages}{list, The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.}
 }
 \description{
 Clone an existing optimization

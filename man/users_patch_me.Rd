@@ -7,7 +7,7 @@
 users_patch_me(preferences = NULL, last_checked_announcements = NULL)
 }
 \arguments{
-\item{preferences}{object optional. A list containing the following elements: 
+\item{preferences}{list optional. A list containing the following elements: 
 \itemize{
 \item appIndexOrderField string, Order field for the apps index pages.
 \item appIndexOrderDir string, Oder direction for the apps index pages.
@@ -91,9 +91,9 @@ A list containing the following elements:
 \item{username}{string, This user's username.}
 \item{initials}{string, This user's initials.}
 \item{lastCheckedAnnouncements}{string, The date and time at which the user last checked their announcements.}
-\item{featureFlags}{object, The feature flag settings for this user.}
+\item{featureFlags}{list, The feature flag settings for this user.}
 \item{roles}{array, The roles this user has, listed by slug.}
-\item{preferences}{object, This user's preferences.}
+\item{preferences}{list, This user's preferences.}
 \item{customBranding}{string, The branding of Platform for this user.}
 \item{groups}{array, An array containing the following fields: 
 \itemize{

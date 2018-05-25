@@ -36,7 +36,7 @@ notebooks_post(name = NULL, language = NULL, description = NULL,
 
 \item{credentials}{array optional. A list of credential IDs to pass to the notebook.}
 
-\item{environment_variables}{object optional. Environment variables to be passed into the Notebook.}
+\item{environment_variables}{list optional. Environment variables to be passed into the Notebook.}
 
 \item{idle_timeout}{integer optional. How long the notebook will stay alive without any kernel activity.}
 
@@ -59,7 +59,7 @@ A list containing the following elements:
 \item{requirementsUrl}{string, Time-limited URL to get the requirements.txt file for this notebook.}
 \item{fileId}{string, The file ID for the S3 file containing the .ipynb file.}
 \item{requirementsFileId}{string, The file ID for the S3 file containing the requirements.txt file.}
-\item{user}{object, A list containing the following elements: 
+\item{user}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.
@@ -74,7 +74,7 @@ A list containing the following elements:
 \item{cpu}{integer, The amount of cpu allocated to the the notebook.}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
-\item{mostRecentDeployment}{object, A list containing the following elements: 
+\item{mostRecentDeployment}{list, A list containing the following elements: 
 \itemize{
 \item deploymentId integer, The ID for this deployment.
 \item userId integer, The ID of the owner.
@@ -94,7 +94,7 @@ A list containing the following elements:
 \item notebookId integer, The ID of owning Notebook
 }}
 \item{credentials}{array, A list of credential IDs to pass to the notebook.}
-\item{environmentVariables}{object, Environment variables to be passed into the Notebook.}
+\item{environmentVariables}{list, Environment variables to be passed into the Notebook.}
 \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
 \item{gitRepoId}{integer, The ID of the git repository.}
 \item{gitRepoUrl}{string, The url of the git repository}

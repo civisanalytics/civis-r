@@ -20,7 +20,7 @@ An array containing the following fields:
 \item{error}{string, The error, if any, of the last run of this prediction.}
 \item{startedAt}{string, The start time of the last run of this prediction.}
 \item{finishedAt}{string, The end time of the last run of this prediction.}
-\item{lastRun}{object, A list containing the following elements: 
+\item{lastRun}{list, A list containing the following elements: 
 \itemize{
 \item id integer, 
 \item state string, 

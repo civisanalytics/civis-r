@@ -13,17 +13,17 @@ apps_list_instances_shares(id, slug)
 }
 \value{
 An array containing the following fields:
-\item{readers}{object, A list containing the following elements: 
+\item{readers}{list, A list containing the following elements: 
 \itemize{
 \item users array, 
 \item groups array, 
 }}
-\item{writers}{object, A list containing the following elements: 
+\item{writers}{list, A list containing the following elements: 
 \itemize{
 \item users array, 
 \item groups array, 
 }}
-\item{owners}{object, A list containing the following elements: 
+\item{owners}{list, A list containing the following elements: 
 \itemize{
 \item users array, 
 \item groups array, 

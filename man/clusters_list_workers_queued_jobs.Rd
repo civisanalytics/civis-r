@@ -27,7 +27,7 @@ A list containing the following elements:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
-\item{lastRun}{object, A list containing the following elements: 
+\item{lastRun}{list, A list containing the following elements: 
 \itemize{
 \item id integer, 
 \item state string, 
@@ -40,7 +40,7 @@ A list containing the following elements:
 \item{requiredCpu}{integer, The CPU shares required by the script.}
 \item{requiredDiskSpace}{integer, The disk space in GB required by the script.}
 \item{requiredMemory}{integer, The memory in MB required by the script.}
-\item{author}{object, A list containing the following elements: 
+\item{author}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.
@@ -48,7 +48,7 @@ A list containing the following elements:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
-\item{runningAs}{object, A list containing the following elements: 
+\item{runningAs}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.

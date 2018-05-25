@@ -35,7 +35,7 @@ An array containing the following fields:
 \item{createdAt}{string, The creation time for this export.}
 \item{updatedAt}{string, The last modification time for this export.}
 \item{state}{string, }
-\item{lastRun}{object, A list containing the following elements: 
+\item{lastRun}{list, A list containing the following elements: 
 \itemize{
 \item id integer, 
 \item state string, 
@@ -44,7 +44,7 @@ An array containing the following fields:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
-\item{author}{object, A list containing the following elements: 
+\item{author}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.

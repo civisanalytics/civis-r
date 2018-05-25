@@ -31,7 +31,7 @@ An array containing the following fields:
 \item{name}{string, The name of this notebook.}
 \item{language}{string, The kernel language of this notebook.}
 \item{description}{string, The description of this notebook.}
-\item{user}{object, A list containing the following elements: 
+\item{user}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.
@@ -41,7 +41,7 @@ An array containing the following fields:
 }}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
-\item{mostRecentDeployment}{object, A list containing the following elements: 
+\item{mostRecentDeployment}{list, A list containing the following elements: 
 \itemize{
 \item deploymentId integer, The ID for this deployment.
 \item userId integer, The ID of the owner.

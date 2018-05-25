@@ -32,7 +32,7 @@ An array containing the following fields:
 \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
 \item{createdAt}{string, The time this enhancement was created.}
 \item{updatedAt}{string, The time the enhancement was last updated.}
-\item{author}{object, A list containing the following elements: 
+\item{author}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
 \item name string, This user's name.

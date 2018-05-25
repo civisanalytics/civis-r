@@ -25,7 +25,7 @@ search_list(query = NULL, type = NULL, offset = NULL, order = NULL,
 \value{
 An array containing the following fields:
 \item{totalResults}{integer, The number of items matching the search query.}
-\item{aggregations}{object, Aggregations by owner and type for the search results.}
+\item{aggregations}{list, Aggregations by owner and type for the search results.}
 \item{results}{array, An array containing the following fields: 
 \itemize{
 \item score number, The relevance score from the search request.
