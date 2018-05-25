@@ -93,32 +93,14 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
   run <- start_scripted_sql_job(db, sql_str, job_name, hidden)
   r <- await(scripts_get_sql_runs, id = run$script_id, run_id = run$run_id)
   stop_if_no_output(r)
-
-  # Read < 2gb in memory, > 2gb from a temp file.
-  #
-  # 2^31-1 comes from ?'Memory-limits':
-  # 2^31 is the limit to the number of bytes in a character string.
-  file_id <- r[["output"]][[1]][["fileId"]]
-  file_size <- files_get(file_id)$fileSize
-  if (file_size < 2^31 - 1) {
-    tryCatch({
-      resp <- download_script_results(run$script_id, run_id = run$run_id)
-      parsed <- httr::content(resp, as = "text", encoding = "UTF-8")
-      con <- textConnection(parsed)
-      using(con, ...)
-    }, finally = {
-      close(con)
-    })
-  } else {
-    tryCatch({
-      tmp <- tempfile()
-      resp <- download_script_results(run$script_id, run_id = run$run_id,
-                                      filename = tmp)
-      using(tmp, ...)
-    }, finally = {
-      unlink(tmp)
-    })
-  }
+  tryCatch({
+    tmp <- tempfile()
+    resp <- download_script_results(run$script_id, run_id = run$run_id,
+                                    filename = tmp)
+    using(tmp, ...)
+  }, finally = {
+    unlink(tmp)
+  })
 }
 
 #' Upload a local data frame or csv file to the Civis Platform (Redshift)
