@@ -2,6 +2,9 @@
 
 ## [1.5.0] - Unreleased
 
+### Changed
+- `write_civis_file` automatically retries on upload failures.
+
 ### Fixed
 - `read_civis` now correctly reads exports from Redshift containing null values.
 
