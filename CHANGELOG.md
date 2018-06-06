@@ -4,6 +4,7 @@
 
 ### Changed
 - `write_civis_file` automatically retries on upload failures.
+- `library(civis)` now works even if the API key has expired or no API key is present.
 
 ### Fixed
 - `read_civis` now correctly reads exports from Redshift containing null values.
