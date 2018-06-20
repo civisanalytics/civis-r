@@ -9,9 +9,9 @@ services_list(hidden = NULL, archived = NULL, author = NULL,
   order_dir = NULL)
 }
 \arguments{
-\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
+\item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
 
-\item{archived}{string optional. The archival status of the requested object(s).}
+\item{archived}{string optional. The archival status of the requested item(s).}
 
 \item{author}{string optional. If specified, return imports from this author. It accepts a comma-separated list of author IDs.}
 
@@ -42,7 +42,7 @@ An array containing the following fields:
 \item{updatedAt}{string, }
 \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
-\item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
+\item{gitPathDir}{string, The path to the Service code within the git repo. If unspecified, the root directory will be used.}
 \item{currentDeployment}{list, A list containing the following elements: 
 \itemize{
 \item deploymentId integer, The ID for this deployment.
@@ -79,7 +79,7 @@ An array containing the following fields:
 \item published boolean, 
 \item serviceId integer, The ID of owning Service
 }}
-\item{archived}{string, The archival status of the requested object(s).}
+\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
 List Services

@@ -13,9 +13,9 @@ projects_list(author = NULL, permission = NULL, hidden = NULL,
 
 \item{permission}{string optional. A permissions string, one of "read", "write", or "manage". Lists only projects for which the current user has that permission.}
 
-\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
+\item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
 
-\item{archived}{string optional. The archival status of the requested object(s).}
+\item{archived}{string optional. The archival status of the requested item(s).}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 20. Maximum allowed is 1000.}
 
@@ -37,7 +37,7 @@ An array containing the following fields:
 \item online boolean, Whether this user is online.
 }}
 \item{name}{string, The name of this project.}
-\item{description}{string, A description of the project}
+\item{description}{string, A description of the project.}
 \item{users}{array, An array containing the following fields: 
 \itemize{
 \item id integer, The ID of this user.
@@ -49,7 +49,7 @@ An array containing the following fields:
 \item{autoShare}{boolean, }
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
-\item{archived}{string, The archival status of the requested object(s).}
+\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
 List projects

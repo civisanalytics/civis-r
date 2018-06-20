@@ -8,7 +8,7 @@ imports_list_batches(hidden = NULL, limit = NULL, page_num = NULL,
   order = NULL, order_dir = NULL)
 }
 \arguments{
-\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
+\item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.}
 

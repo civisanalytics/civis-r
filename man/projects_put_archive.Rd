@@ -23,7 +23,7 @@ A list containing the following elements:
 \item online boolean, Whether this user is online.
 }}
 \item{name}{string, The name of this project.}
-\item{description}{string, A description of the project}
+\item{description}{string, A description of the project.}
 \item{users}{array, An array containing the following fields: 
 \itemize{
 \item id integer, The ID of this user.
@@ -46,13 +46,13 @@ A list containing the following elements:
 }}
 \item{surveys}{array, An array containing the following fields: 
 \itemize{
-\item id integer, The object ID.
+\item id integer, The item's ID.
 \item createdAt string, 
 \item updatedAt string, 
 }}
 \item{scripts}{array, An array containing the following fields: 
 \itemize{
-\item id integer, The object ID.
+\item id integer, The item's ID.
 \item createdAt string, 
 \item updatedAt string, 
 \item name string, 
@@ -62,7 +62,7 @@ A list containing the following elements:
 }}
 \item{imports}{array, An array containing the following fields: 
 \itemize{
-\item id integer, The object ID.
+\item id integer, The item's ID.
 \item createdAt string, 
 \item updatedAt string, 
 \item name string, 
@@ -72,7 +72,7 @@ A list containing the following elements:
 }}
 \item{models}{array, An array containing the following fields: 
 \itemize{
-\item id integer, The object ID.
+\item id integer, The item's ID.
 \item createdAt string, 
 \item updatedAt string, 
 \item name string, 
@@ -80,7 +80,7 @@ A list containing the following elements:
 }}
 \item{notebooks}{array, An array containing the following fields: 
 \itemize{
-\item id integer, The object ID.
+\item id integer, The item's ID.
 \item createdAt string, 
 \item updatedAt string, 
 \item name string, 
@@ -88,7 +88,7 @@ A list containing the following elements:
 }}
 \item{services}{array, An array containing the following fields: 
 \itemize{
-\item id integer, The object ID.
+\item id integer, The item's ID.
 \item createdAt string, 
 \item updatedAt string, 
 \item name string, 
@@ -96,7 +96,7 @@ A list containing the following elements:
 }}
 \item{workflows}{array, An array containing the following fields: 
 \itemize{
-\item id integer, The object ID.
+\item id integer, The item's ID.
 \item createdAt string, 
 \item updatedAt string, 
 \item name string, 
@@ -104,7 +104,7 @@ A list containing the following elements:
 }}
 \item{reports}{array, An array containing the following fields: 
 \itemize{
-\item id integer, The object ID.
+\item id integer, The item's ID.
 \item createdAt string, 
 \item updatedAt string, 
 \item name string, 
@@ -112,14 +112,14 @@ A list containing the following elements:
 }}
 \item{scriptTemplates}{array, An array containing the following fields: 
 \itemize{
-\item id integer, The object ID.
+\item id integer, The item's ID.
 \item createdAt string, 
 \item updatedAt string, 
 \item name string, 
 }}
 \item{files}{array, An array containing the following fields: 
 \itemize{
-\item id integer, The object ID.
+\item id integer, The item's ID.
 \item createdAt string, 
 \item updatedAt string, 
 \item fileName string, 
@@ -128,7 +128,7 @@ A list containing the following elements:
 }}
 \item{appInstances}{array, An array containing the following fields: 
 \itemize{
-\item id integer, The object ID.
+\item id integer, The item's ID.
 \item createdAt string, 
 \item updatedAt string, 
 \item name string, 
@@ -144,11 +144,11 @@ A list containing the following elements:
 \item name string, 
 \item icon string, 
 \item author string, 
-\item archived string, The archival status of the requested object(s).
+\item archived string, The archival status of the requested item(s).
 }}
 \item{note}{string, }
-\item{hidden}{boolean, The hidden status of the object.}
-\item{archived}{string, The archival status of the requested object(s).}
+\item{hidden}{boolean, The hidden status of the item.}
+\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
 Update the archive status of this object

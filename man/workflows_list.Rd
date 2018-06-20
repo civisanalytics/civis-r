@@ -8,9 +8,9 @@ workflows_list(hidden = NULL, archived = NULL, author = NULL,
   limit = NULL, page_num = NULL, order = NULL, order_dir = NULL)
 }
 \arguments{
-\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
+\item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
 
-\item{archived}{string optional. The archival status of the requested object(s).}
+\item{archived}{string optional. The archival status of the requested item(s).}
 
 \item{author}{string optional. If specified, return workflows from this author. It accepts a comma-separated list of author ids.}
 
@@ -40,15 +40,15 @@ An array containing the following fields:
 \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
-\item scheduled boolean, If the object is scheduled
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-\item scheduledHours array, Hours of the day it is scheduled on
-\item scheduledMinutes array, Minutes of the day it is scheduled on
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+\item scheduled boolean, If the item is scheduled.
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledHours array, Hours of the day it is scheduled on.
+\item scheduledMinutes array, Minutes of the day it is scheduled on.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 \item{timeZone}{string, The time zone of this workflow.}
 \item{nextExecutionAt}{string, The time of the next scheduled execution.}
-\item{archived}{string, The archival status of the requested object(s).}
+\item{archived}{string, The archival status of the requested item(s).}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
 }

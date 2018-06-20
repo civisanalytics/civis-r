@@ -26,7 +26,7 @@ A list containing the following elements:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
-\item{projectId}{integer, The id of the project collecting all the objects that belong to this app instance.}
+\item{projectId}{integer, The id of the project collecting all the items that belong to this app instance.}
 \item{authCodeUrl}{string, }
 \item{apiKey}{string, A Civis API key that can be used by this app instance.}
 }

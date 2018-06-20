@@ -39,11 +39,11 @@ A list containing the following elements:
 }}
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
-\item scheduled boolean, If the object is scheduled
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-\item scheduledHours array, Hours of the day it is scheduled on
-\item scheduledMinutes array, Minutes of the day it is scheduled on
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+\item scheduled boolean, If the item is scheduled.
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledHours array, Hours of the day it is scheduled on.
+\item scheduledMinutes array, Minutes of the day it is scheduled on.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 \item{limitingSQL}{string, A SQL WHERE clause used to scope the rows to be predicted.}
 \item{primaryKey}{array, The primary key or composite keys of the table being predicted.}

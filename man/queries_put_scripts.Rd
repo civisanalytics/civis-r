@@ -20,13 +20,14 @@ A list containing the following elements:
 \item{resultRows}{array, A preview of rows returned by the query.}
 \item{resultColumns}{array, A preview of columns returned by the query.}
 \item{scriptId}{integer, The ID of the script associated with this query.}
-\item{exception}{string, Exception returned from the query, null if the query was a success.}
+\item{exception}{string, Deprecated and not used.}
+\item{error}{string, The error message for this run, if present.}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
 \item{finishedAt}{string, The end time of the last run.}
 \item{state}{string, The state of the last run.}
 \item{lastRunId}{integer, The ID of the last run.}
-\item{hidden}{boolean, The hidden status of the object.}
+\item{hidden}{boolean, The hidden status of the item.}
 \item{name}{string, The name of the query.}
 \item{author}{list, A list containing the following elements: 
 \itemize{

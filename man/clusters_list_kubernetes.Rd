@@ -29,10 +29,19 @@ An array containing the following fields:
 \item instanceMaxMemory integer, The amount of memory available to a single instance of that type.
 \item instanceMaxCpu integer, The number of processor shares available to a single instance of that type.
 }}
-\item{defaultInstanceType}{string, The default EC2 instance type in this cluster.}
+\item{defaultInstanceType}{string, Deprecated. The default EC2 instance type in this cluster.}
 \item{organizationId}{string, The id of this cluster's organization.}
 \item{organizationSlug}{string, The slug of this cluster's organization.}
 \item{securityGroupId}{string, The security group to be added to the nodes of this cluster}
+\item{clusterPartitions}{array, An array containing the following fields: 
+\itemize{
+\item clusterPartitionId integer, The ID of this cluster partition.
+\item name string, The name of the cluster partition.
+\item labels array, Labels associated with this partition.
+\item instanceConfigs array, The instances configured for this cluster partition.
+\item defaultInstanceConfigId integer, The id of the InstanceConfig that is the default for this partition.
+}}
+\item{isNatEnabled}{boolean, Whether this cluster needs a NAT gateway or not.}
 }
 \description{
 List Kubernetes Clusters

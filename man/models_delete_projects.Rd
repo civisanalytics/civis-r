@@ -7,9 +7,9 @@
 models_delete_projects(id, project_id)
 }
 \arguments{
-\item{id}{integer required. ID of the resource}
+\item{id}{integer required. The ID of the resource.}
 
-\item{project_id}{integer required. The ID of the project}
+\item{project_id}{integer required. The ID of the project.}
 }
 \value{
 An empty HTTP response

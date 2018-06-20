@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.5.0] - Unreleased
+## [1.5.0] - 2018-05-20
 
 ### Changed
 - `write_civis_file` automatically retries on upload failures.

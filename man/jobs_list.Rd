@@ -13,15 +13,15 @@ jobs_list(state = NULL, type = NULL, q = NULL, permission = NULL,
 
 \item{type}{string optional. The job's type. Specify multiple values as a comma-separated list (e.g., "A,B").}
 
-\item{q}{string optional. Query string to search on the id, name, and job type}
+\item{q}{string optional. Query string to search on the id, name, and job type.}
 
 \item{permission}{string optional. A permissions string, one of "read", "write", or "manage". Lists only jobs for which the current user has that permission.}
 
-\item{scheduled}{boolean optional. If the object is scheduled.}
+\item{scheduled}{boolean optional. If the item is scheduled.}
 
-\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
+\item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
 
-\item{archived}{string optional. The archival status of the requested object(s).}
+\item{archived}{string optional. The archival status of the requested item(s).}
 
 \item{limit}{integer optional. Number of results to return. Defaults to its maximum of 50.}
 
@@ -49,14 +49,14 @@ An array containing the following fields:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
-\item{archived}{string, The archival status of the requested object(s).}
+\item{archived}{string, The archival status of the requested item(s).}
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
-\item scheduled boolean, If the object is scheduled
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-\item scheduledHours array, Hours of the day it is scheduled on
-\item scheduledMinutes array, Minutes of the day it is scheduled on
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+\item scheduled boolean, If the item is scheduled.
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledHours array, Hours of the day it is scheduled on.
+\item scheduledMinutes array, Minutes of the day it is scheduled on.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 }
 \description{

@@ -7,7 +7,7 @@
 results_get_git_commits(id, commit_hash)
 }
 \arguments{
-\item{id}{integer required. The ID of the object.}
+\item{id}{integer required. The ID of the file.}
 
 \item{commit_hash}{string required. The SHA (full or shortened) of the desired git commit.}
 }

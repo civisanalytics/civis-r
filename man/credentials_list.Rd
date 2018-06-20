@@ -30,6 +30,7 @@ An array containing the following fields:
 \item{owner}{string, The name of the user who this credential belongs to.}
 \item{remoteHostId}{integer, The ID of the remote host associated with this credential.}
 \item{remoteHostName}{string, The name of the remote host associated with this credential.}
+\item{state}{string, The U.S. state for the credential. Only for VAN credentials.}
 \item{createdAt}{string, The creation time for this credential.}
 \item{updatedAt}{string, The last modification time for this credential.}
 }

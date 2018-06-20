@@ -13,7 +13,7 @@ files_post(name, expires_at = NULL)
 }
 \value{
 A list containing the following elements:
-\item{id}{integer, The ID of the file object.}
+\item{id}{integer, The ID of the file.}
 \item{name}{string, The file name.}
 \item{createdAt}{string, The date and time the file was created.}
 \item{fileSize}{integer, The file size.}

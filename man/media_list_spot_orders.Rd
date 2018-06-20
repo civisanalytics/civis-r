@@ -9,12 +9,12 @@ media_list_spot_orders(id = NULL, archived = NULL)
 \arguments{
 \item{id}{integer optional. The ID for the spot order.}
 
-\item{archived}{string optional. The archival status of the requested object(s).}
+\item{archived}{string optional. The archival status of the requested item(s).}
 }
 \value{
 An array containing the following fields:
 \item{id}{integer, The ID for the spot order.}
-\item{archived}{string, The archival status of the requested object(s).}
+\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
 List all spot orders

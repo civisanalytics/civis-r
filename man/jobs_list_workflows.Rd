@@ -9,7 +9,7 @@ jobs_list_workflows(id, archived = NULL)
 \arguments{
 \item{id}{integer required.}
 
-\item{archived}{string optional. The archival status of the requested object(s).}
+\item{archived}{string optional. The archival status of the requested item(s).}
 }
 \value{
 An array containing the following fields:
@@ -29,15 +29,15 @@ An array containing the following fields:
 \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
-\item scheduled boolean, If the object is scheduled
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-\item scheduledHours array, Hours of the day it is scheduled on
-\item scheduledMinutes array, Minutes of the day it is scheduled on
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+\item scheduled boolean, If the item is scheduled.
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledHours array, Hours of the day it is scheduled on.
+\item scheduledMinutes array, Minutes of the day it is scheduled on.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 \item{timeZone}{string, The time zone of this workflow.}
 \item{nextExecutionAt}{string, The time of the next scheduled execution.}
-\item{archived}{string, The archival status of the requested object(s).}
+\item{archived}{string, The archival status of the requested item(s).}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
 }

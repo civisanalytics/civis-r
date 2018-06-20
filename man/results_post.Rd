@@ -21,7 +21,7 @@ results_post(script_id = NULL, name = NULL, code_body = NULL,
 
 \item{template_id}{integer optional. The ID of the template used for this report.}
 
-\item{hidden}{boolean optional. The hidden status of the object.}
+\item{hidden}{boolean optional. The hidden status of the item.}
 }
 \value{
 A list containing the following elements:
@@ -65,8 +65,8 @@ A list containing the following elements:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
-\item{archived}{string, The archival status of the requested object(s).}
-\item{hidden}{boolean, The hidden status of the object.}
+\item{archived}{string, The archival status of the requested item(s).}
+\item{hidden}{boolean, The hidden status of the item.}
 \item{authDataUrl}{string, }
 \item{authCodeUrl}{string, }
 \item{config}{string, Any configuration metadata for this report.}

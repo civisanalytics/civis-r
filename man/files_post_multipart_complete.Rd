@@ -7,7 +7,7 @@
 files_post_multipart_complete(id)
 }
 \arguments{
-\item{id}{integer required. The ID of the file object.}
+\item{id}{integer required. The ID of the file.}
 }
 \value{
 An empty HTTP response

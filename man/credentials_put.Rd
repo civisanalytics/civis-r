@@ -5,7 +5,8 @@
 \title{Update an existing credential}
 \usage{
 credentials_put(id, type, username, password, name = NULL,
-  description = NULL, remote_host_id = NULL, system_credential = NULL)
+  description = NULL, remote_host_id = NULL, state = NULL,
+  system_credential = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the credential.}
@@ -22,6 +23,8 @@ credentials_put(id, type, username, password, name = NULL,
 
 \item{remote_host_id}{integer optional. The ID of the remote host associated with the credential.}
 
+\item{state}{string optional. The U.S. state for the credential. Only for VAN credentials.}
+
 \item{system_credential}{boolean optional.}
 }
 \value{
@@ -34,6 +37,7 @@ A list containing the following elements:
 \item{owner}{string, The name of the user who this credential belongs to.}
 \item{remoteHostId}{integer, The ID of the remote host associated with this credential.}
 \item{remoteHostName}{string, The name of the remote host associated with this credential.}
+\item{state}{string, The U.S. state for the credential. Only for VAN credentials.}
 \item{createdAt}{string, The creation time for this credential.}
 \item{updatedAt}{string, The last modification time for this credential.}
 }

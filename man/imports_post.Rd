@@ -31,11 +31,11 @@ imports_post(name, sync_type, is_outbound, source = NULL,
 
 \item{schedule}{list optional. A list containing the following elements: 
 \itemize{
-\item scheduled boolean, If the object is scheduled
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-\item scheduledHours array, Hours of the day it is scheduled on
-\item scheduledMinutes array, Minutes of the day it is scheduled on
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+\item scheduled boolean, If the item is scheduled.
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledHours array, Hours of the day it is scheduled on.
+\item scheduledMinutes array, Minutes of the day it is scheduled on.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 
 \item{notifications}{list optional. A list containing the following elements: 
@@ -58,7 +58,7 @@ imports_post(name, sync_type, is_outbound, source = NULL,
 
 \item{time_zone}{string optional. The time zone of this import.}
 
-\item{hidden}{boolean optional. The hidden status of the object.}
+\item{hidden}{boolean optional. The hidden status of the item.}
 }
 \value{
 A list containing the following elements:
@@ -80,11 +80,11 @@ A list containing the following elements:
 }}
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
-\item scheduled boolean, If the object is scheduled
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-\item scheduledHours array, Hours of the day it is scheduled on
-\item scheduledMinutes array, Minutes of the day it is scheduled on
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+\item scheduled boolean, If the item is scheduled.
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledHours array, Hours of the day it is scheduled on.
+\item scheduledMinutes array, Minutes of the day it is scheduled on.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 \item{notifications}{list, A list containing the following elements: 
 \itemize{
@@ -140,8 +140,8 @@ A list containing the following elements:
 }}
 \item{nextRunAt}{string, The time of the next scheduled run.}
 \item{timeZone}{string, The time zone of this import.}
-\item{hidden}{boolean, The hidden status of the object.}
-\item{archived}{string, The archival status of the requested object(s).}
+\item{hidden}{boolean, The hidden status of the item.}
+\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
 Create a new import configuration

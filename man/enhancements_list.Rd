@@ -9,13 +9,13 @@ enhancements_list(type = NULL, author = NULL, status = NULL,
   order_dir = NULL)
 }
 \arguments{
-\item{type}{string optional. If specified, return objects of these types.}
+\item{type}{string optional. If specified, return items of these types.}
 
-\item{author}{string optional. If specified, return objects from this author. Must use user IDs. A comma separated list of IDs is also accepted to return objects from multiple authors.}
+\item{author}{string optional. If specified, return items from this author. Must use user IDs. A comma separated list of IDs is also accepted to return items from multiple authors.}
 
-\item{status}{string optional. If specified, returns objects with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.}
+\item{status}{string optional. If specified, returns items with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.}
 
-\item{archived}{string optional. The archival status of the requested object(s).}
+\item{archived}{string optional. The archival status of the requested item(s).}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.}
 
@@ -28,7 +28,7 @@ enhancements_list(type = NULL, author = NULL, status = NULL,
 \value{
 An array containing the following fields:
 \item{id}{integer, The ID for the enhancement.}
-\item{name}{string, The name of the enhancement.}
+\item{name}{string, The name of the enhancement job.}
 \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
 \item{createdAt}{string, The time this enhancement was created.}
 \item{updatedAt}{string, The time the enhancement was last updated.}
@@ -41,7 +41,7 @@ An array containing the following fields:
 \item online boolean, Whether this user is online.
 }}
 \item{state}{string, The status of the enhancement's last run}
-\item{archived}{string, The archival status of the requested object(s).}
+\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
 List Enhancements

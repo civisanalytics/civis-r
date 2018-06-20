@@ -12,7 +12,7 @@ enhancements_get_cass_ncoa(id)
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID for the enhancement.}
-\item{name}{string, The name of the enhancement.}
+\item{name}{string, The name of the enhancement job.}
 \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
 \item{createdAt}{string, The time this enhancement was created.}
 \item{updatedAt}{string, The time the enhancement was last updated.}
@@ -27,11 +27,11 @@ A list containing the following elements:
 \item{state}{string, The status of the enhancement's last run}
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
-\item scheduled boolean, If the object is scheduled
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-\item scheduledHours array, Hours of the day it is scheduled on
-\item scheduledMinutes array, Minutes of the day it is scheduled on
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+\item scheduled boolean, If the item is scheduled.
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledHours array, Hours of the day it is scheduled on.
+\item scheduledMinutes array, Minutes of the day it is scheduled on.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 \item{parentId}{integer, Parent ID that triggers this enhancement.}
 \item{notifications}{list, A list containing the following elements: 
@@ -78,7 +78,7 @@ A list containing the following elements:
 \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
 \item{limitingSQL}{string, The limiting sql.}
-\item{archived}{string, The archival status of the requested object(s).}
+\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
 Get a CASS/NCOA Enhancement

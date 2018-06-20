@@ -27,7 +27,7 @@ A list containing the following elements:
 \item{state}{string, The state of the last run.}
 \item{lastRunId}{integer, The ID of the last run.}
 \item{spotOrderId}{integer, The ID for the spot order produced by the optimization.}
-\item{archived}{string, The archival status of the requested object(s).}
+\item{archived}{string, The archival status of the requested item(s).}
 \item{reportLink}{string, A link to the visual report for the optimization.}
 \item{spotOrderLink}{string, A link to the json version of the spot order.}
 \item{fileLinks}{array, Links to the csv and xml versions of the spot order.}

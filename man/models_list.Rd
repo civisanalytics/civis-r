@@ -20,9 +20,9 @@ models_list(model_name = NULL, training_table_name = NULL,
 
 \item{status}{string optional. If specified, returns models with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.}
 
-\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
+\item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
 
-\item{archived}{string optional. The archival status of the requested object(s).}
+\item{archived}{string optional. The archival status of the requested item(s).}
 
 \item{limit}{integer optional. Number of results to return. Defaults to its maximum of 50.}
 
@@ -52,11 +52,11 @@ An array containing the following fields:
 \item{numberOfFolds}{integer, Number of folds for cross validation. Default value is 5.}
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
-\item scheduled boolean, If the object is scheduled
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-\item scheduledHours array, Hours of the day it is scheduled on
-\item scheduledMinutes array, Minutes of the day it is scheduled on
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+\item scheduled boolean, If the item is scheduled.
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledHours array, Hours of the day it is scheduled on.
+\item scheduledMinutes array, Minutes of the day it is scheduled on.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 \item{parentId}{integer, The ID of the parent job that will trigger this model.}
 \item{timeZone}{string, The time zone of this model.}
@@ -101,7 +101,7 @@ An array containing the following fields:
 \item state string, The status of the prediction. One of: "succeeded", "failed", "queued", or "running,"or "idle", if no build has been attempted.
 }}
 \item{lastOutputLocation}{string, The output JSON for the last build.}
-\item{archived}{string, The archival status of the requested object(s).}
+\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
 List

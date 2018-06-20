@@ -7,9 +7,9 @@
 apps_put_instances_projects(id, project_id, slug)
 }
 \arguments{
-\item{id}{integer required. ID of the resource}
+\item{id}{integer required. The ID of the resource.}
 
-\item{project_id}{integer required. The ID of the project}
+\item{project_id}{integer required. The ID of the project.}
 
 \item{slug}{string required. The slug for the application.}
 }

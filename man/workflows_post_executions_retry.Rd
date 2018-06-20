@@ -28,7 +28,7 @@ A list containing the following elements:
 \item online boolean, Whether this user is online.
 }}
 \item{definition}{string, The definition of the workflow for this execution.}
-\item{input}{list, The dictionary of name/value input pairs defined for this execution.}
+\item{input}{list, Key-value pairs defined for this execution.}
 \item{includedTasks}{array, The subset of workflow tasks selected to execute.}
 \item{tasks}{array, An array containing the following fields: 
 \itemize{

@@ -7,7 +7,7 @@
 media_list_ratecards(archived = NULL, filename = NULL, dma_number = NULL)
 }
 \arguments{
-\item{archived}{string optional. The archival status of the requested object(s).}
+\item{archived}{string optional. The archival status of the requested item(s).}
 
 \item{filename}{string optional. If specified, will be used to filter the ratecards returned. Substring matching is supported with "\%" and "*" wildcards (e.g., "filename=\%ratecard\%" will return both "ratecard 1" and "my ratecard").}
 
@@ -20,7 +20,7 @@ An array containing the following fields:
 \item{startOn}{string, First day to which the ratecard applies.}
 \item{endOn}{string, Last day to which the ratecard applies.}
 \item{dmaNumber}{integer, Number of the DMA associated with the ratecard.}
-\item{archived}{string, The archival status of the requested object(s).}
+\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
 List all ratecards

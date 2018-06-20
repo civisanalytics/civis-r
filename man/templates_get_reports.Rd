@@ -29,7 +29,7 @@ A list containing the following elements:
 \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 \item{authCodeUrl}{string, A URL to the template's stored code body.}
 \item{provideAPIKey}{boolean, Whether reports based on this template request an API Key from the report viewer.}
-\item{hidden}{boolean, The hidden status of the object.}
+\item{hidden}{boolean, The hidden status of the item.}
 }
 \description{
 Get a Report Template

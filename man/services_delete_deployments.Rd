@@ -2,12 +2,12 @@
 % Please edit documentation in R/generated_client.R
 \name{services_delete_deployments}
 \alias{services_delete_deployments}
-\title{Delete a ShinyApp deployment}
+\title{Delete a Service deployment}
 \usage{
 services_delete_deployments(service_id, deployment_id)
 }
 \arguments{
-\item{service_id}{integer required. The ID of the owning ShinyApp}
+\item{service_id}{integer required. The ID of the owning Service}
 
 \item{deployment_id}{integer required. The ID for this deployment}
 }
@@ -15,5 +15,5 @@ services_delete_deployments(service_id, deployment_id)
 An empty HTTP response
 }
 \description{
-Delete a ShinyApp deployment
+Delete a Service deployment
 }

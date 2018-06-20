@@ -1,6 +1,6 @@
 Package: civis
 Title: R Client for the 'Civis data science API'
-Version: 1.4.0
+Version: 1.5.0
 Authors@R: c(
   person("Patrick", "Miller", email = "pmiller@civisanalytics.com", role = c("cre", "aut")),
   person("Keith", "Ingersoll", email = "kingersoll@civisanalytics.com", role = "aut"),
