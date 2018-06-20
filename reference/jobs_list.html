@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -143,7 +143,7 @@
     </tr>
     <tr>
       <th>q</th>
-      <td><p>string optional. Query string to search on the id, name, and job type</p></td>
+      <td><p>string optional. Query string to search on the id, name, and job type.</p></td>
     </tr>
     <tr>
       <th>permission</th>
@@ -151,15 +151,15 @@
     </tr>
     <tr>
       <th>scheduled</th>
-      <td><p>boolean optional. If the object is scheduled.</p></td>
+      <td><p>boolean optional. If the item is scheduled.</p></td>
     </tr>
     <tr>
       <th>hidden</th>
-      <td><p>boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.</p></td>
+      <td><p>boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.</p></td>
     </tr>
     <tr>
       <th>archived</th>
-      <td><p>string optional. The archival status of the requested object(s).</p></td>
+      <td><p>string optional. The archival status of the requested item(s).</p></td>
     </tr>
     <tr>
       <th>limit</th>
@@ -189,7 +189,7 @@
 <dt>state</dt><dd><p>string, Whether the job is idle, queued, running, cancelled, or failed.</p></dd>
 <dt>createdAt</dt><dd><p>string,</p></dd>
 <dt>updatedAt</dt><dd><p>string,</p></dd>
-<dt>lastRun</dt><dd><p>object, A list containing the following elements: 
+<dt>lastRun</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer,</p></li>
 <li><p>state string,</p></li>
@@ -198,14 +198,14 @@
 <li><p>finishedAt string, The time that the run completed.</p></li>
 <li><p>error string, The error message for this run, if present.</p></li>
 </ul></p></dd>
-<dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
-<dt>schedule</dt><dd><p>object, A list containing the following elements: 
+<dt>archived</dt><dd><p>string, The archival status of the requested item(s).</p></dd>
+<dt>schedule</dt><dd><p>list, A list containing the following elements: 
 <ul>
-<li><p>scheduled boolean, If the object is scheduled</p></li>
-<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday</p></li>
-<li><p>scheduledHours array, Hours of the day it is scheduled on</p></li>
-<li><p>scheduledMinutes array, Minutes of the day it is scheduled on</p></li>
-<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour</p></li>
+<li><p>scheduled boolean, If the item is scheduled.</p></li>
+<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday.</p></li>
+<li><p>scheduledHours array, Hours of the day it is scheduled on.</p></li>
+<li><p>scheduledMinutes array, Minutes of the day it is scheduled on.</p></li>
+<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.</p></li>
 </ul></p></dd>
 
     

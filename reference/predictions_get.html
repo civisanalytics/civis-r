@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -149,7 +149,7 @@
 <dt>error</dt><dd><p>string, The error, if any, of the last run of this prediction.</p></dd>
 <dt>startedAt</dt><dd><p>string, The start time of the last run of this prediction.</p></dd>
 <dt>finishedAt</dt><dd><p>string, The end time of the last run of this prediction.</p></dd>
-<dt>lastRun</dt><dd><p>object, A list containing the following elements: 
+<dt>lastRun</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer,</p></li>
 <li><p>state string,</p></li>
@@ -166,13 +166,13 @@
 <li><p>createdAt string, The time when the table with created predictions was created.</p></li>
 <li><p>scoreStats array, An array of metrics on the created predictions.</p></li>
 </ul></p></dd>
-<dt>schedule</dt><dd><p>object, A list containing the following elements: 
+<dt>schedule</dt><dd><p>list, A list containing the following elements: 
 <ul>
-<li><p>scheduled boolean, If the object is scheduled</p></li>
-<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday</p></li>
-<li><p>scheduledHours array, Hours of the day it is scheduled on</p></li>
-<li><p>scheduledMinutes array, Minutes of the day it is scheduled on</p></li>
-<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour</p></li>
+<li><p>scheduled boolean, If the item is scheduled.</p></li>
+<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday.</p></li>
+<li><p>scheduledHours array, Hours of the day it is scheduled on.</p></li>
+<li><p>scheduledMinutes array, Minutes of the day it is scheduled on.</p></li>
+<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.</p></li>
 </ul></p></dd>
 <dt>limitingSQL</dt><dd><p>string, A SQL WHERE clause used to scope the rows to be predicted.</p></dd>
 <dt>primaryKey</dt><dd><p>array, The primary key or composite keys of the table being predicted.</p></dd>

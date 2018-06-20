@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -145,11 +145,11 @@
 
     <p>A list containing the following elements:</p>
 <dt>id</dt><dd><p>integer, The ID for the enhancement.</p></dd>
-<dt>name</dt><dd><p>string, The name of the enhancement.</p></dd>
+<dt>name</dt><dd><p>string, The name of the enhancement job.</p></dd>
 <dt>type</dt><dd><p>string, The type of the enhancement (e.g CASS-NCOA)</p></dd>
 <dt>createdAt</dt><dd><p>string, The time this enhancement was created.</p></dd>
 <dt>updatedAt</dt><dd><p>string, The time the enhancement was last updated.</p></dd>
-<dt>author</dt><dd><p>object, A list containing the following elements: 
+<dt>author</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>
@@ -158,16 +158,16 @@
 <li><p>online boolean, Whether this user is online.</p></li>
 </ul></p></dd>
 <dt>state</dt><dd><p>string, The status of the enhancement's last run</p></dd>
-<dt>schedule</dt><dd><p>object, A list containing the following elements: 
+<dt>schedule</dt><dd><p>list, A list containing the following elements: 
 <ul>
-<li><p>scheduled boolean, If the object is scheduled</p></li>
-<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday</p></li>
-<li><p>scheduledHours array, Hours of the day it is scheduled on</p></li>
-<li><p>scheduledMinutes array, Minutes of the day it is scheduled on</p></li>
-<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour</p></li>
+<li><p>scheduled boolean, If the item is scheduled.</p></li>
+<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday.</p></li>
+<li><p>scheduledHours array, Hours of the day it is scheduled on.</p></li>
+<li><p>scheduledMinutes array, Minutes of the day it is scheduled on.</p></li>
+<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.</p></li>
 </ul></p></dd>
 <dt>parentId</dt><dd><p>integer, Parent ID that triggers this enhancement.</p></dd>
-<dt>notifications</dt><dd><p>object, A list containing the following elements: 
+<dt>notifications</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>urls array, URLs to receive a POST request at job completion</p></li>
 <li><p>successEmailSubject string, Custom subject line for success e-mail.</p></li>
@@ -180,7 +180,7 @@
 <li><p>successOn boolean, If success email notifications are on.</p></li>
 <li><p>failureOn boolean, If failure email notifications are on.</p></li>
 </ul></p></dd>
-<dt>runningAs</dt><dd><p>object, A list containing the following elements: 
+<dt>runningAs</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>
@@ -188,7 +188,7 @@
 <li><p>initials string, This user's initials.</p></li>
 <li><p>online boolean, Whether this user is online.</p></li>
 </ul></p></dd>
-<dt>configuration</dt><dd><p>object, A list containing the following elements: 
+<dt>configuration</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>task string, The type of person matching task. Options are: "table_to_table", "dedupe_table", or "table_to_civis_data".</p></li>
 <li><p>source string, The input source of your data. Options are: "redshift" or "s3".</p></li>

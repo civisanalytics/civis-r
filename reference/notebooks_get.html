@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -149,7 +149,7 @@
 <dt>requirementsUrl</dt><dd><p>string, Time-limited URL to get the requirements.txt file for this notebook.</p></dd>
 <dt>fileId</dt><dd><p>string, The file ID for the S3 file containing the .ipynb file.</p></dd>
 <dt>requirementsFileId</dt><dd><p>string, The file ID for the S3 file containing the requirements.txt file.</p></dd>
-<dt>user</dt><dd><p>object, A list containing the following elements: 
+<dt>user</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>
@@ -164,7 +164,7 @@
 <dt>cpu</dt><dd><p>integer, The amount of cpu allocated to the the notebook.</p></dd>
 <dt>createdAt</dt><dd><p>string,</p></dd>
 <dt>updatedAt</dt><dd><p>string,</p></dd>
-<dt>mostRecentDeployment</dt><dd><p>object, A list containing the following elements: 
+<dt>mostRecentDeployment</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>deploymentId integer, The ID for this deployment.</p></li>
 <li><p>userId integer, The ID of the owner.</p></li>
@@ -172,7 +172,7 @@
 <li><p>name string, Name of the deployment.</p></li>
 <li><p>dockerImageName string, The name of the docker image to pull from DockerHub.</p></li>
 <li><p>dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).</p></li>
-<li><p>displayUrl string, URL that displays the deployed platform object and includes auth token.</p></li>
+<li><p>displayUrl string, A signed URL for viewing the deployed item.</p></li>
 <li><p>instanceType string, The EC2 instance type requested for the deployment.</p></li>
 <li><p>memory integer, The memory allocated to the deployment.</p></li>
 <li><p>cpu integer, The cpu allocated to the deployment.</p></li>
@@ -184,14 +184,14 @@
 <li><p>notebookId integer, The ID of owning Notebook</p></li>
 </ul></p></dd>
 <dt>credentials</dt><dd><p>array, A list of credential IDs to pass to the notebook.</p></dd>
-<dt>environmentVariables</dt><dd><p>object, Environment variables to be passed into the Notebook.</p></dd>
+<dt>environmentVariables</dt><dd><p>list, Environment variables to be passed into the Notebook.</p></dd>
 <dt>idleTimeout</dt><dd><p>integer, How long the notebook will stay alive without any kernel activity.</p></dd>
 <dt>gitRepoId</dt><dd><p>integer, The ID of the git repository.</p></dd>
 <dt>gitRepoUrl</dt><dd><p>string, The url of the git repository</p></dd>
 <dt>gitRef</dt><dd><p>string, The git reference if git repo is specified</p></dd>
 <dt>gitPath</dt><dd><p>string, The path to the .ipynb file in the git repo that will be started up on notebook launch</p></dd>
-<dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
-<dt>hidden</dt><dd><p>boolean, The hidden status of the object.</p></dd>
+<dt>archived</dt><dd><p>string, The archival status of the requested item(s).</p></dd>
+<dt>hidden</dt><dd><p>boolean, The hidden status of the item.</p></dd>
 
     
 

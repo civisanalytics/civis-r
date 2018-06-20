@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -158,7 +158,7 @@
 <dt>type</dt><dd><p>string, The type of the script (e.g SQL, Container, Python, R, JavaScript)</p></dd>
 <dt>createdAt</dt><dd><p>string, The time this script was created.</p></dd>
 <dt>updatedAt</dt><dd><p>string, The time the script was last updated.</p></dd>
-<dt>author</dt><dd><p>object, A list containing the following elements: 
+<dt>author</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>
@@ -187,26 +187,26 @@
 <li><p>default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.</p></li>
 <li><p>allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `label: 'Import', 'value': 'import'`</p></li>
 </ul></p></dd>
-<dt>arguments</dt><dd><p>object, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.</p></dd>
+<dt>arguments</dt><dd><p>list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.</p></dd>
 <dt>isTemplate</dt><dd><p>boolean, Whether others scripts use this one as a template.</p></dd>
 <dt>publishedAsTemplateId</dt><dd><p>integer, The ID of the template that this script is backing.</p></dd>
 <dt>fromTemplateId</dt><dd><p>integer, The ID of the template this script uses, if any.</p></dd>
 <dt>templateDependentsCount</dt><dd><p>integer, How many other scripts use this one as a template.</p></dd>
 <dt>templateScriptName</dt><dd><p>string, The name of the template script.</p></dd>
-<dt>links</dt><dd><p>object, A list containing the following elements: 
+<dt>links</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>details string, The details link to get more information about the script.</p></li>
 <li><p>runs string, The runs link to get the run information list for this script.</p></li>
 </ul></p></dd>
-<dt>schedule</dt><dd><p>object, A list containing the following elements: 
+<dt>schedule</dt><dd><p>list, A list containing the following elements: 
 <ul>
-<li><p>scheduled boolean, If the object is scheduled</p></li>
-<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday</p></li>
-<li><p>scheduledHours array, Hours of the day it is scheduled on</p></li>
-<li><p>scheduledMinutes array, Minutes of the day it is scheduled on</p></li>
-<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour</p></li>
+<li><p>scheduled boolean, If the item is scheduled.</p></li>
+<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday.</p></li>
+<li><p>scheduledHours array, Hours of the day it is scheduled on.</p></li>
+<li><p>scheduledMinutes array, Minutes of the day it is scheduled on.</p></li>
+<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.</p></li>
 </ul></p></dd>
-<dt>notifications</dt><dd><p>object, A list containing the following elements: 
+<dt>notifications</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>urls array, URLs to receive a POST request at job completion</p></li>
 <li><p>successEmailSubject string, Custom subject line for success e-mail.</p></li>
@@ -219,7 +219,7 @@
 <li><p>successOn boolean, If success email notifications are on.</p></li>
 <li><p>failureOn boolean, If failure email notifications are on.</p></li>
 </ul></p></dd>
-<dt>runningAs</dt><dd><p>object, A list containing the following elements: 
+<dt>runningAs</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>
@@ -229,7 +229,7 @@
 </ul></p></dd>
 <dt>nextRunAt</dt><dd><p>string, The time of the next scheduled run.</p></dd>
 <dt>timeZone</dt><dd><p>string, The time zone of this script.</p></dd>
-<dt>lastRun</dt><dd><p>object, A list containing the following elements: 
+<dt>lastRun</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer,</p></li>
 <li><p>state string,</p></li>
@@ -238,15 +238,16 @@
 <li><p>finishedAt string, The time that the run completed.</p></li>
 <li><p>error string, The error message for this run, if present.</p></li>
 </ul></p></dd>
-<dt>hidden</dt><dd><p>boolean, The hidden status of the object.</p></dd>
+<dt>hidden</dt><dd><p>boolean, The hidden status of the item.</p></dd>
 <dt>targetProjectId</dt><dd><p>integer, Target project to which script outputs will be added.</p></dd>
-<dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
-<dt>requiredResources</dt><dd><p>object, A list containing the following elements: 
+<dt>archived</dt><dd><p>string, The archival status of the requested item(s).</p></dd>
+<dt>requiredResources</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.</p></li>
 <li><p>memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.</p></li>
 <li><p>diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.</p></li>
 </ul></p></dd>
+<dt>instanceType</dt><dd><p>string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.</p></dd>
 <dt>source</dt><dd><p>string, The body/text of the script.</p></dd>
 <dt>cancelTimeout</dt><dd><p>integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.</p></dd>
 

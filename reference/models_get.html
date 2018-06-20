@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -155,9 +155,9 @@
 <dt>excludedColumns</dt><dd><p>array, A list of columns which will be considered ineligible to be independent variables.</p></dd>
 <dt>limitingSQL</dt><dd><p>string, A custom SQL WHERE clause used to filter the rows used to build the model. (e.g., "id &gt; 105").</p></dd>
 <dt>activeBuildId</dt><dd><p>integer, The ID of the current active build, the build used to score predictions.</p></dd>
-<dt>crossValidationParameters</dt><dd><p>object, Cross validation parameter grid for tree methods, e.g. "n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3].</p></dd>
+<dt>crossValidationParameters</dt><dd><p>list, Cross validation parameter grid for tree methods, e.g. "n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3].</p></dd>
 <dt>numberOfFolds</dt><dd><p>integer, Number of folds for cross validation. Default value is 5.</p></dd>
-<dt>notifications</dt><dd><p>object, A list containing the following elements: 
+<dt>notifications</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>urls array, URLs to receive a POST request at job completion</p></li>
 <li><p>successEmailSubject string, Custom subject line for success e-mail.</p></li>
@@ -170,16 +170,16 @@
 <li><p>successOn boolean, If success email notifications are on.</p></li>
 <li><p>failureOn boolean, If failure email notifications are on.</p></li>
 </ul></p></dd>
-<dt>schedule</dt><dd><p>object, A list containing the following elements: 
+<dt>schedule</dt><dd><p>list, A list containing the following elements: 
 <ul>
-<li><p>scheduled boolean, If the object is scheduled</p></li>
-<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday</p></li>
-<li><p>scheduledHours array, Hours of the day it is scheduled on</p></li>
-<li><p>scheduledMinutes array, Minutes of the day it is scheduled on</p></li>
-<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour</p></li>
+<li><p>scheduled boolean, If the item is scheduled.</p></li>
+<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday.</p></li>
+<li><p>scheduledHours array, Hours of the day it is scheduled on.</p></li>
+<li><p>scheduledMinutes array, Minutes of the day it is scheduled on.</p></li>
+<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.</p></li>
 </ul></p></dd>
 <dt>parentId</dt><dd><p>integer, The ID of the parent job that will trigger this model.</p></dd>
-<dt>runningAs</dt><dd><p>object, A list containing the following elements: 
+<dt>runningAs</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>
@@ -188,7 +188,7 @@
 <li><p>online boolean, Whether this user is online.</p></li>
 </ul></p></dd>
 <dt>timeZone</dt><dd><p>string, The time zone of this model.</p></dd>
-<dt>lastRun</dt><dd><p>object, A list containing the following elements: 
+<dt>lastRun</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer,</p></li>
 <li><p>state string,</p></li>
@@ -197,8 +197,8 @@
 <li><p>finishedAt string, The time that the run completed.</p></li>
 <li><p>error string, The error message for this run, if present.</p></li>
 </ul></p></dd>
-<dt>hidden</dt><dd><p>boolean, The hidden status of the object.</p></dd>
-<dt>user</dt><dd><p>object, A list containing the following elements: 
+<dt>hidden</dt><dd><p>boolean, The hidden status of the item.</p></dd>
+<dt>user</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>
@@ -231,7 +231,7 @@
 <li><p>state string, The status of the prediction. One of: "succeeded", "failed", "queued", or "running,"or "idle", if no build has been attempted.</p></li>
 </ul></p></dd>
 <dt>lastOutputLocation</dt><dd><p>string, The output JSON for the last build.</p></dd>
-<dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
+<dt>archived</dt><dd><p>string, The archival status of the requested item(s).</p></dd>
 
     
 

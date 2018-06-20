@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -142,7 +142,7 @@
     </tr>
     <tr>
       <th>input</th>
-      <td><p>object optional. The dictionary of name/value input pairs defined for this execution.</p></td>
+      <td><p>list optional. Key-value pairs to send to this execution as inputs.</p></td>
     </tr>
     <tr>
       <th>included_tasks</th>
@@ -157,7 +157,7 @@
 <dt>state</dt><dd><p>string, The state of this workflow execution.</p></dd>
 <dt>mistralState</dt><dd><p>string, The state of this workflow as reported by mistral. One of running, paused, success, error, or cancelled</p></dd>
 <dt>mistralStateInfo</dt><dd><p>string, The state info of this workflow as reported by mistral.</p></dd>
-<dt>user</dt><dd><p>object, A list containing the following elements: 
+<dt>user</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>
@@ -166,7 +166,7 @@
 <li><p>online boolean, Whether this user is online.</p></li>
 </ul></p></dd>
 <dt>definition</dt><dd><p>string, The definition of the workflow for this execution.</p></dd>
-<dt>input</dt><dd><p>object, The dictionary of name/value input pairs defined for this execution.</p></dd>
+<dt>input</dt><dd><p>list, Key-value pairs defined for this execution.</p></dd>
 <dt>includedTasks</dt><dd><p>array, The subset of workflow tasks selected to execute.</p></dd>
 <dt>tasks</dt><dd><p>array, An array containing the following fields: 
 <ul>

@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -168,7 +168,7 @@
     </tr>
     <tr>
       <th>time_slot_percentages</th>
-      <td><p>object optional. The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.</p></td>
+      <td><p>list optional. The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.</p></td>
     </tr>
     </table>
     
@@ -176,7 +176,7 @@
 
     <p>A list containing the following elements:</p>
 <dt>id</dt><dd><p>integer, The optimization ID.</p></dd>
-<dt>author</dt><dd><p>object, A list containing the following elements: 
+<dt>author</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>
@@ -191,7 +191,7 @@
 <dt>state</dt><dd><p>string, The state of the last run.</p></dd>
 <dt>lastRunId</dt><dd><p>integer, The ID of the last run.</p></dd>
 <dt>spotOrderId</dt><dd><p>integer, The ID for the spot order produced by the optimization.</p></dd>
-<dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
+<dt>archived</dt><dd><p>string, The archival status of the requested item(s).</p></dd>
 <dt>reportLink</dt><dd><p>string, A link to the visual report for the optimization.</p></dd>
 <dt>spotOrderLink</dt><dd><p>string, A link to the json version of the spot order.</p></dd>
 <dt>fileLinks</dt><dd><p>array, Links to the csv and xml versions of the spot order.</p></dd>
@@ -210,7 +210,7 @@
 <dt>networks</dt><dd><p>array, An array of networks that the Civis Media Optimizer either exclude or limit to.An error will be thrown if exclude_networks is not also set.</p></dd>
 <dt>excludePrograms</dt><dd><p>boolean, If Civis Media Optimizer should exclude the programs in the programs parameter.If this value is set to false, it will make the optimization limit itself to the programs supplied through the programs parameter.An error will be thrown if programs is not also set.</p></dd>
 <dt>excludeNetworks</dt><dd><p>boolean, If Civis Media Optimizer should exclude the networks in the networks parameter.If this value is set to false, it will make the optimization limit itself to the networks supplied through the networks.An error will be thrown if networks is not also set.</p></dd>
-<dt>timeSlotPercentages</dt><dd><p>object, The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.</p></dd>
+<dt>timeSlotPercentages</dt><dd><p>list, The maximum amount of the budget spent on that particular day of the week, daypart, or specific time slot for broadcast and cable.</p></dd>
 
     
 

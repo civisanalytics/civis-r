@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -141,11 +141,11 @@
     </tr>
     <tr>
       <th>description</th>
-      <td><p>string optional. A description of the project</p></td>
+      <td><p>string optional. A description of the project.</p></td>
     </tr>
     <tr>
       <th>note</th>
-      <td><p>string optional. Notes for the project</p></td>
+      <td><p>string optional. Notes for the project.</p></td>
     </tr>
     </table>
     
@@ -153,7 +153,7 @@
 
     <p>A list containing the following elements:</p>
 <dt>id</dt><dd><p>integer, The ID for this project.</p></dd>
-<dt>author</dt><dd><p>object, A list containing the following elements: 
+<dt>author</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>
@@ -162,7 +162,7 @@
 <li><p>online boolean, Whether this user is online.</p></li>
 </ul></p></dd>
 <dt>name</dt><dd><p>string, The name of this project.</p></dd>
-<dt>description</dt><dd><p>string, A description of the project</p></dd>
+<dt>description</dt><dd><p>string, A description of the project.</p></dd>
 <dt>users</dt><dd><p>array, An array containing the following fields: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
@@ -185,13 +185,13 @@
 </ul></p></dd>
 <dt>surveys</dt><dd><p>array, An array containing the following fields: 
 <ul>
-<li><p>id integer, The object ID.</p></li>
+<li><p>id integer, The item's ID.</p></li>
 <li><p>createdAt string,</p></li>
 <li><p>updatedAt string,</p></li>
 </ul></p></dd>
 <dt>scripts</dt><dd><p>array, An array containing the following fields: 
 <ul>
-<li><p>id integer, The object ID.</p></li>
+<li><p>id integer, The item's ID.</p></li>
 <li><p>createdAt string,</p></li>
 <li><p>updatedAt string,</p></li>
 <li><p>name string,</p></li>
@@ -201,7 +201,7 @@
 </ul></p></dd>
 <dt>imports</dt><dd><p>array, An array containing the following fields: 
 <ul>
-<li><p>id integer, The object ID.</p></li>
+<li><p>id integer, The item's ID.</p></li>
 <li><p>createdAt string,</p></li>
 <li><p>updatedAt string,</p></li>
 <li><p>name string,</p></li>
@@ -211,7 +211,7 @@
 </ul></p></dd>
 <dt>models</dt><dd><p>array, An array containing the following fields: 
 <ul>
-<li><p>id integer, The object ID.</p></li>
+<li><p>id integer, The item's ID.</p></li>
 <li><p>createdAt string,</p></li>
 <li><p>updatedAt string,</p></li>
 <li><p>name string,</p></li>
@@ -219,7 +219,7 @@
 </ul></p></dd>
 <dt>notebooks</dt><dd><p>array, An array containing the following fields: 
 <ul>
-<li><p>id integer, The object ID.</p></li>
+<li><p>id integer, The item's ID.</p></li>
 <li><p>createdAt string,</p></li>
 <li><p>updatedAt string,</p></li>
 <li><p>name string,</p></li>
@@ -227,7 +227,7 @@
 </ul></p></dd>
 <dt>services</dt><dd><p>array, An array containing the following fields: 
 <ul>
-<li><p>id integer, The object ID.</p></li>
+<li><p>id integer, The item's ID.</p></li>
 <li><p>createdAt string,</p></li>
 <li><p>updatedAt string,</p></li>
 <li><p>name string,</p></li>
@@ -235,7 +235,7 @@
 </ul></p></dd>
 <dt>workflows</dt><dd><p>array, An array containing the following fields: 
 <ul>
-<li><p>id integer, The object ID.</p></li>
+<li><p>id integer, The item's ID.</p></li>
 <li><p>createdAt string,</p></li>
 <li><p>updatedAt string,</p></li>
 <li><p>name string,</p></li>
@@ -243,7 +243,7 @@
 </ul></p></dd>
 <dt>reports</dt><dd><p>array, An array containing the following fields: 
 <ul>
-<li><p>id integer, The object ID.</p></li>
+<li><p>id integer, The item's ID.</p></li>
 <li><p>createdAt string,</p></li>
 <li><p>updatedAt string,</p></li>
 <li><p>name string,</p></li>
@@ -251,14 +251,14 @@
 </ul></p></dd>
 <dt>scriptTemplates</dt><dd><p>array, An array containing the following fields: 
 <ul>
-<li><p>id integer, The object ID.</p></li>
+<li><p>id integer, The item's ID.</p></li>
 <li><p>createdAt string,</p></li>
 <li><p>updatedAt string,</p></li>
 <li><p>name string,</p></li>
 </ul></p></dd>
 <dt>files</dt><dd><p>array, An array containing the following fields: 
 <ul>
-<li><p>id integer, The object ID.</p></li>
+<li><p>id integer, The item's ID.</p></li>
 <li><p>createdAt string,</p></li>
 <li><p>updatedAt string,</p></li>
 <li><p>fileName string,</p></li>
@@ -267,7 +267,7 @@
 </ul></p></dd>
 <dt>appInstances</dt><dd><p>array, An array containing the following fields: 
 <ul>
-<li><p>id integer, The object ID.</p></li>
+<li><p>id integer, The item's ID.</p></li>
 <li><p>createdAt string,</p></li>
 <li><p>updatedAt string,</p></li>
 <li><p>name string,</p></li>
@@ -283,11 +283,11 @@
 <li><p>name string,</p></li>
 <li><p>icon string,</p></li>
 <li><p>author string,</p></li>
-<li><p>archived string, The archival status of the requested object(s).</p></li>
+<li><p>archived string, The archival status of the requested item(s).</p></li>
 </ul></p></dd>
 <dt>note</dt><dd><p>string,</p></dd>
-<dt>hidden</dt><dd><p>boolean, The hidden status of the object.</p></dd>
-<dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
+<dt>hidden</dt><dd><p>boolean, The hidden status of the item.</p></dd>
+<dt>archived</dt><dd><p>string, The archival status of the requested item(s).</p></dd>
 
     
 
