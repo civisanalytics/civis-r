@@ -11,10 +11,10 @@ spec_id <- scripts_list_custom_runs_outputs(job$id, run$id)[[1]]$objectId
 fn <- tempfile(fileext = ".json")
 download_civis(spec_id, file = fn)
 
-stopifnot(Sys.getenv("R_CLIENT_DEV") == "")
+Sys.setenv("R_CLIENT_DEV" = "")
 Sys.setenv("CIVIS_API_KEY" = "")
 
-api_spec <- jsonlite::fromJSON(fn, simplifyVector=FALSE)
+api_spec <- jsonlite::fromJSON(fn, simplifyVector = FALSE)
 
 # To pass R CMD CHECK, this has to be an 'R Data file' (rda) produced by save.
 save(api_spec, file = "../R/sysdata.rda")
