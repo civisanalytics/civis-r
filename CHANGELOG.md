@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.5.0] - Unreleased
+## [1.5.0] - 2018-05-20
 
 ### Fixed
 - `read_civis` now correctly reads exports from Redshift containing null values.
