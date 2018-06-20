@@ -178,7 +178,7 @@ test_that("write_civis_file.character returns a file id", {
   with_mock(
     `civis::files_post` = function(...) list(uploadFields = list("fakeurl.com"), id = 5),
     `httr::upload_file` = function(...) "the file",
-    `httr::POST` = function(...) structure(list(status_code = 200), class = "response"),
+    `httr::RETRY` = function(...) structure(list(status_code = 200), class = "response"),
      expect_equal(write_civis_file("mockfile.txt", name = "mockfile.txt"), 5)
   )
   unlink("mockfile.txt")
@@ -189,7 +189,7 @@ test_that("write_civis_file.default returns a file id", {
   with_mock(
     `civis::files_post` = function(...) list(uploadFields = list("fakeurl.com"), id = 5),
     `httr::upload_file` = function(...) "the file",
-    `httr::POST` = function(...) structure(list(status_code = 200), class = "response"),
+    `httr::RETRY` = function(...) structure(list(status_code = 200), class = "response"),
     expect_equal(write_civis_file(mock_df), 5),
     expect_equal(write_civis_file(as.list(mock_df)), 5),
     expect_equal(write_civis_file(1:3), 5)

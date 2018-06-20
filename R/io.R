@@ -331,7 +331,7 @@ write_civis_file.character <- function(x, name = x, expires_at = NULL, ...) {
     u <- files_post(name = name, expires_at = expires_at)
     uploadFields <- u$uploadFields
     uploadFields$file <- httr::upload_file(x)
-    resp <- httr::POST(u$uploadUrl, body = uploadFields)
+    resp <- httr::RETRY("POST", url = u$uploadUrl, body = uploadFields)
     httr::stop_for_status(resp, task = "upload file to S3")
     id <- u$id
   }

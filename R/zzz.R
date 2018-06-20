@@ -12,7 +12,7 @@ get_train_template_id <- function() {
   id <- CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$version == latest &
                               CIVIS_ML_TEMPLATE_IDS$name == "train", "id"]
 
-  if (!inherits(try(api_key(), silent = TRUE), "try-error")) {
+  if (!inherits(try(scripts_list_custom(id), silent = TRUE), "try-error")) {
     i <- 1
     while (length(scripts_list_custom(id)) == 0 &&
            i < length(versions)) {
