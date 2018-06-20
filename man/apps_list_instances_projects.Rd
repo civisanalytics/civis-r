@@ -11,7 +11,7 @@ apps_list_instances_projects(id, slug, hidden = NULL)
 
 \item{slug}{string required. The slug for the application.}
 
-\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
+\item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
 }
 \value{
 An array containing the following fields:
@@ -25,7 +25,7 @@ An array containing the following fields:
 \item online boolean, Whether this user is online.
 }}
 \item{name}{string, The name of this project.}
-\item{description}{string, A description of the project}
+\item{description}{string, A description of the project.}
 \item{users}{array, An array containing the following fields: 
 \itemize{
 \item id integer, The ID of this user.
@@ -37,7 +37,7 @@ An array containing the following fields:
 \item{autoShare}{boolean, }
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
-\item{archived}{string, The archival status of the requested object(s).}
+\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
 List the projects a AppInstance belongs to

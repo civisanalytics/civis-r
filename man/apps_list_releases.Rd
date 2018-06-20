@@ -10,7 +10,7 @@ apps_list_releases(slug, archived = NULL, limit = NULL, page_num = NULL,
 \arguments{
 \item{slug}{string required. The slug for the application.}
 
-\item{archived}{string optional. The archival status of the requested object(s).}
+\item{archived}{string optional. The archival status of the requested item(s).}
 
 \item{limit}{integer optional. Number of results to return. Defaults to its maximum of 50.}
 

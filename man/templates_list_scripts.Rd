@@ -8,7 +8,7 @@ templates_list_scripts(hidden = NULL, category = NULL, limit = NULL,
   page_num = NULL, order = NULL, order_dir = NULL)
 }
 \arguments{
-\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
+\item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
 
 \item{category}{string optional. A category to filter results by, one of: import, export, enhancement, model, and script}
 

@@ -18,7 +18,7 @@ A list containing the following elements:
 \item{startOn}{string, First day to which the ratecard applies.}
 \item{endOn}{string, Last day to which the ratecard applies.}
 \item{dmaNumber}{integer, Number of the DMA associated with the ratecard.}
-\item{archived}{string, The archival status of the requested object(s).}
+\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
 Update the archive status of this object

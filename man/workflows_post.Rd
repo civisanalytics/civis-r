@@ -19,11 +19,11 @@ workflows_post(name, description = NULL, from_job_chain = NULL,
 
 \item{schedule}{list optional. A list containing the following elements: 
 \itemize{
-\item scheduled boolean, If the object is scheduled
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-\item scheduledHours array, Hours of the day it is scheduled on
-\item scheduledMinutes array, Minutes of the day it is scheduled on
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+\item scheduled boolean, If the item is scheduled.
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledHours array, Hours of the day it is scheduled on.
+\item scheduledMinutes array, Minutes of the day it is scheduled on.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 
 \item{time_zone}{string optional. The time zone of this workflow.}
@@ -39,7 +39,7 @@ workflows_post(name, description = NULL, from_job_chain = NULL,
 \item failureOn boolean, If failure email notifications are on
 }}
 
-\item{hidden}{boolean optional. The hidden status of the object.}
+\item{hidden}{boolean optional. The hidden status of the item.}
 }
 \value{
 A list containing the following elements:
@@ -61,11 +61,11 @@ A list containing the following elements:
 \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
-\item scheduled boolean, If the object is scheduled
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-\item scheduledHours array, Hours of the day it is scheduled on
-\item scheduledMinutes array, Minutes of the day it is scheduled on
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+\item scheduled boolean, If the item is scheduled.
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledHours array, Hours of the day it is scheduled on.
+\item scheduledMinutes array, Minutes of the day it is scheduled on.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 \item{timeZone}{string, The time zone of this workflow.}
 \item{nextExecutionAt}{string, The time of the next scheduled execution.}
@@ -79,8 +79,8 @@ A list containing the following elements:
 \item successOn boolean, If success email notifications are on
 \item failureOn boolean, If failure email notifications are on
 }}
-\item{archived}{string, The archival status of the requested object(s).}
-\item{hidden}{boolean, The hidden status of the object.}
+\item{archived}{string, The archival status of the requested item(s).}
+\item{hidden}{boolean, The hidden status of the item.}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
 }

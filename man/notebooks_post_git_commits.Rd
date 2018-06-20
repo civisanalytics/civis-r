@@ -7,7 +7,7 @@
 notebooks_post_git_commits(id, content, message, file_hash)
 }
 \arguments{
-\item{id}{integer required. The ID of the object.}
+\item{id}{integer required. The ID of the file.}
 
 \item{content}{string required. The contents to commit to the file.}
 

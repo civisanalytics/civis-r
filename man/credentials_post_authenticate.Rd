@@ -9,7 +9,7 @@ credentials_post_authenticate(url, remote_host_type, username, password)
 \arguments{
 \item{url}{string required. The URL to your host.}
 
-\item{remote_host_type}{string required. The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Redshift, RemoteHostTypes::Salesforce, and RemoteHostTypes::Van}
+\item{remote_host_type}{string required. The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::Salesforce, and RemoteHostTypes::Van}
 
 \item{username}{string required. The username for the credential.}
 
@@ -25,6 +25,7 @@ A list containing the following elements:
 \item{owner}{string, The name of the user who this credential belongs to.}
 \item{remoteHostId}{integer, The ID of the remote host associated with this credential.}
 \item{remoteHostName}{string, The name of the remote host associated with this credential.}
+\item{state}{string, The U.S. state for the credential. Only for VAN credentials.}
 \item{createdAt}{string, The creation time for this credential.}
 \item{updatedAt}{string, The last modification time for this credential.}
 }

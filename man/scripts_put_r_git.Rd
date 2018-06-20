@@ -8,7 +8,7 @@ scripts_put_r_git(id, git_ref = NULL, git_branch = NULL, git_path = NULL,
   git_repo_url = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of the object.}
+\item{id}{integer required. The ID of the file.}
 
 \item{git_ref}{string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 

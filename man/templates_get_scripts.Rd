@@ -23,7 +23,7 @@ A list containing the following elements:
 \item{uiReportId}{integer, The id of the report that this template uses.}
 \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 \item{archived}{boolean, Whether the template has been archived.}
-\item{hidden}{boolean, The hidden status of the object.}
+\item{hidden}{boolean, The hidden status of the item.}
 }
 \description{
 Get a Script Template

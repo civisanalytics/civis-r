@@ -27,7 +27,7 @@ A list containing the following elements:
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.
-\item recurrences array, List of day-hour combinations this object is scheduled for
+\item recurrences array, List of day-hour combinations this item is scheduled for
 }}
 \item{timeZone}{string, }
 \item{replicas}{integer, The number of Service replicas to deploy. When maxReplicas is set, this field defines the minimum number of replicas to deploy.}
@@ -41,7 +41,7 @@ A list containing the following elements:
 \item{apiKeyId}{integer, API key id of user}
 \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
-\item{gitPathDir}{string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.}
+\item{gitPathDir}{string, The path to the Service code within the git repo. If unspecified, the root directory will be used.}
 \item{reportId}{integer, The ID of the associated report.}
 \item{currentDeployment}{list, A list containing the following elements: 
 \itemize{
@@ -51,7 +51,7 @@ A list containing the following elements:
 \item name string, Name of the deployment.
 \item dockerImageName string, The name of the docker image to pull from DockerHub.
 \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
-\item displayUrl string, URL that displays the deployed platform object and includes auth token.
+\item displayUrl string, A signed URL for viewing the deployed item.
 \item instanceType string, The EC2 instance type requested for the deployment.
 \item memory integer, The memory allocated to the deployment.
 \item cpu integer, The cpu allocated to the deployment.
@@ -70,7 +70,7 @@ A list containing the following elements:
 \item name string, Name of the deployment.
 \item dockerImageName string, The name of the docker image to pull from DockerHub.
 \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
-\item displayUrl string, URL that displays the deployed platform object and includes auth token.
+\item displayUrl string, A signed URL for viewing the deployed item.
 \item instanceType string, The EC2 instance type requested for the deployment.
 \item memory integer, The memory allocated to the deployment.
 \item cpu integer, The cpu allocated to the deployment.
@@ -89,8 +89,8 @@ A list containing the following elements:
 \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 \item failureOn boolean, If failure email notifications are on
 }}
-\item{archived}{string, The archival status of the requested object(s).}
-\item{hidden}{boolean, The hidden status of the object.}
+\item{archived}{string, The archival status of the requested item(s).}
+\item{hidden}{boolean, The hidden status of the item.}
 }
 \description{
 Clone this Service

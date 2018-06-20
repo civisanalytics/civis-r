@@ -18,7 +18,7 @@ templates_post_scripts(script_id, name, note = NULL, ui_report_id = NULL,
 
 \item{archived}{boolean optional. Whether the template has been archived.}
 
-\item{hidden}{boolean optional. The hidden status of the object.}
+\item{hidden}{boolean optional. The hidden status of the item.}
 }
 \value{
 A list containing the following elements:
@@ -34,7 +34,7 @@ A list containing the following elements:
 \item{uiReportId}{integer, The id of the report that this template uses.}
 \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 \item{archived}{boolean, Whether the template has been archived.}
-\item{hidden}{boolean, The hidden status of the object.}
+\item{hidden}{boolean, The hidden status of the item.}
 }
 \description{
 Create a Script Template

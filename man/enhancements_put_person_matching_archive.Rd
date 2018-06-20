@@ -14,7 +14,7 @@ enhancements_put_person_matching_archive(id, status)
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID for the enhancement.}
-\item{name}{string, The name of the enhancement.}
+\item{name}{string, The name of the enhancement job.}
 \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
 \item{createdAt}{string, The time this enhancement was created.}
 \item{updatedAt}{string, The time the enhancement was last updated.}
@@ -29,11 +29,11 @@ A list containing the following elements:
 \item{state}{string, The status of the enhancement's last run}
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
-\item scheduled boolean, If the object is scheduled
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-\item scheduledHours array, Hours of the day it is scheduled on
-\item scheduledMinutes array, Minutes of the day it is scheduled on
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+\item scheduled boolean, If the item is scheduled.
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledHours array, Hours of the day it is scheduled on.
+\item scheduledMinutes array, Minutes of the day it is scheduled on.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 \item{parentId}{integer, Parent ID that triggers this enhancement.}
 \item{notifications}{list, A list containing the following elements: 

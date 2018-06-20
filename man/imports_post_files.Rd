@@ -37,13 +37,13 @@ imports_post_files(schema, name, remote_host_id, credential_id,
 
 \item{multipart}{boolean optional. If true, the upload URI will require a `multipart/form-data` POST request. Defaults to false.}
 
-\item{hidden}{boolean optional. The hidden status of the object.}
+\item{hidden}{boolean optional. The hidden status of the item.}
 }
 \value{
 A list containing the following elements:
 \item{id}{integer, The id of the import.}
-\item{uploadUri}{string, The URI which may be used to upload a tabular file for import. You must use this URI to upload the file you wish imported and then inform the Civis API when your upload is complete using the URI given by the runUri field of this reponse.}
-\item{runUri}{string, The URI to POST to once the file upload is complete. After uploading the file using the URI given in the uploadUri attribute of the reponse, POST to this URI to initiate the import of your uploaded file into the platform.}
+\item{uploadUri}{string, The URI which may be used to upload a tabular file for import. You must use this URI to upload the file you wish imported and then inform the Civis API when your upload is complete using the URI given by the runUri field of this response.}
+\item{runUri}{string, The URI to POST to once the file upload is complete. After uploading the file using the URI given in the uploadUri attribute of the response, POST to this URI to initiate the import of your uploaded file into the platform.}
 \item{uploadFields}{list, If multipart was set to true, these fields should be included in the multipart upload.}
 }
 \description{

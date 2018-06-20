@@ -13,14 +13,14 @@ scripts_post_containers_runs_outputs(id, run_id, object_type, object_id)
 
 \item{object_type}{string required. The type of the output. Valid values are File, Table, Report, Project, Credential, or JSONValue}
 
-\item{object_id}{integer required. The ID of the output object.}
+\item{object_id}{integer required. The ID of the output.}
 }
 \value{
 A list containing the following elements:
 \item{objectType}{string, The type of the output. Valid values are File, Table, Report, Project, Credential, or JSONValue}
-\item{objectId}{integer, The ID of the output object.}
-\item{name}{string, The name of the output object.}
-\item{link}{string, The link to retrieve the output object.}
+\item{objectId}{integer, The ID of the output.}
+\item{name}{string, The name of the output.}
+\item{link}{string, The hypermedia link to the output.}
 \item{value}{string, }
 }
 \description{

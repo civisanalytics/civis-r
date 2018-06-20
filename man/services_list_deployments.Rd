@@ -2,13 +2,13 @@
 % Please edit documentation in R/generated_client.R
 \name{services_list_deployments}
 \alias{services_list_deployments}
-\title{List deployments for a ShinyApp}
+\title{List deployments for a Service}
 \usage{
 services_list_deployments(service_id, deployment_id = NULL, limit = NULL,
   page_num = NULL, order = NULL, order_dir = NULL)
 }
 \arguments{
-\item{service_id}{integer required. The ID of the owning ShinyApp}
+\item{service_id}{integer required. The ID of the owning Service}
 
 \item{deployment_id}{integer optional. The ID for this deployment}
 
@@ -39,5 +39,5 @@ An array containing the following fields:
 \item{serviceId}{integer, The ID of owning Service}
 }
 \description{
-List deployments for a ShinyApp
+List deployments for a Service
 }

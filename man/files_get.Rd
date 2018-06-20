@@ -7,7 +7,7 @@
 files_get(id, link_expires_at = NULL, inline = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of the file object.}
+\item{id}{integer required. The ID of the file.}
 
 \item{link_expires_at}{string optional. The date and time the download link will expire. Must be a time between now and 36 hours from now. Defaults to 30 minutes from now.}
 
@@ -15,7 +15,7 @@ files_get(id, link_expires_at = NULL, inline = NULL)
 }
 \value{
 A list containing the following elements:
-\item{id}{integer, The ID of the file object.}
+\item{id}{integer, The ID of the file.}
 \item{name}{string, The file name.}
 \item{createdAt}{string, The date and time the file was created.}
 \item{fileSize}{integer, The file size.}

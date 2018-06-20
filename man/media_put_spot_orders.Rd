@@ -14,7 +14,7 @@ media_put_spot_orders(id, body = NULL)
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID for the spot order.}
-\item{archived}{string, The archival status of the requested object(s).}
+\item{archived}{string, The archival status of the requested item(s).}
 \item{csvS3Uri}{string, S3 URI for the spot order CSV file.}
 \item{jsonS3Uri}{string, S3 URI for the spot order JSON file.}
 \item{xmlArchiveS3Uri}{string, S3 URI for the spot order XML archive.}

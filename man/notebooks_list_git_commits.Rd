@@ -7,7 +7,7 @@
 notebooks_list_git_commits(id)
 }
 \arguments{
-\item{id}{integer required. The ID of the object.}
+\item{id}{integer required. The ID of the file.}
 }
 \value{
 A list containing the following elements:

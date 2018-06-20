@@ -17,7 +17,7 @@ queries_post(database, sql, preview_rows, credential = NULL, hidden = NULL,
 
 \item{credential}{integer optional. The credential ID.}
 
-\item{hidden}{boolean optional. The hidden status of the object.}
+\item{hidden}{boolean optional. The hidden status of the item.}
 
 \item{interactive}{boolean optional. Deprecated and not used.}
 
@@ -40,13 +40,14 @@ A list containing the following elements:
 \item{resultRows}{array, A preview of rows returned by the query.}
 \item{resultColumns}{array, A preview of columns returned by the query.}
 \item{scriptId}{integer, The ID of the script associated with this query.}
-\item{exception}{string, Exception returned from the query, null if the query was a success.}
+\item{exception}{string, Deprecated and not used.}
+\item{error}{string, The error message for this run, if present.}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
 \item{finishedAt}{string, The end time of the last run.}
 \item{state}{string, The state of the last run.}
 \item{lastRunId}{integer, The ID of the last run.}
-\item{hidden}{boolean, The hidden status of the object.}
+\item{hidden}{boolean, The hidden status of the item.}
 \item{interactive}{boolean, Deprecated and not used.}
 \item{previewRows}{integer, The number of rows to save from the query's result (maximum: 100).}
 \item{includeHeader}{boolean, Whether the CSV output should include a header row [default: true].}

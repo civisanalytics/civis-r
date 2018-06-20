@@ -19,7 +19,7 @@ A list containing the following elements:
 \item{startedAt}{string, The time the last run started at.}
 \item{finishedAt}{string, The time the last run completed.}
 \item{error}{string, The error returned by the run, if any.}
-\item{hidden}{boolean, The hidden status of the object.}
+\item{hidden}{boolean, The hidden status of the item.}
 }
 \description{
 Get details about a batch import

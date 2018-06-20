@@ -17,7 +17,7 @@ queries_list(database_id = NULL, author_id = NULL, created_before = NULL,
 
 \item{exclude_results}{boolean optional. If true, does not return cached query results.}
 
-\item{hidden}{boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.}
+\item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.}
 
@@ -36,7 +36,8 @@ An array containing the following fields:
 \item{resultRows}{array, A preview of rows returned by the query.}
 \item{resultColumns}{array, A preview of columns returned by the query.}
 \item{scriptId}{integer, The ID of the script associated with this query.}
-\item{exception}{string, Exception returned from the query, null if the query was a success.}
+\item{exception}{string, Deprecated and not used.}
+\item{error}{string, The error message for this run, if present.}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
 \item{finishedAt}{string, The end time of the last run.}

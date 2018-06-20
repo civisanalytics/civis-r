@@ -36,7 +36,7 @@ A list containing the following elements:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
-\item{hidden}{boolean, The hidden status of the object.}
+\item{hidden}{boolean, The hidden status of the item.}
 \item{requiredCpu}{integer, The CPU shares required by the script.}
 \item{requiredDiskSpace}{integer, The disk space in GB required by the script.}
 \item{requiredMemory}{integer, The memory in MB required by the script.}

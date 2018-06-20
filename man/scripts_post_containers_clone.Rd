@@ -52,7 +52,7 @@ A list containing the following elements:
 \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 }}
-\item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+\item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 \item{templateDependentsCount}{integer, How many other scripts use this one as a template.}
 \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
@@ -65,11 +65,11 @@ A list containing the following elements:
 }}
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
-\item scheduled boolean, If the object is scheduled
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-\item scheduledHours array, Hours of the day it is scheduled on
-\item scheduledMinutes array, Minutes of the day it is scheduled on
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+\item scheduled boolean, If the item is scheduled.
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledHours array, Hours of the day it is scheduled on.
+\item scheduledMinutes array, Minutes of the day it is scheduled on.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 \item{notifications}{list, A list containing the following elements: 
 \itemize{
@@ -105,6 +105,7 @@ A list containing the following elements:
 \item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]}
 \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+\item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 \item{lastRun}{list, A list containing the following elements: 
 \itemize{
@@ -116,8 +117,8 @@ A list containing the following elements:
 \item error string, The error message for this run, if present.
 }}
 \item{timeZone}{string, The time zone of this script.}
-\item{hidden}{boolean, The hidden status of the object.}
-\item{archived}{string, The archival status of the requested object(s).}
+\item{hidden}{boolean, The hidden status of the item.}
+\item{archived}{string, The archival status of the requested item(s).}
 \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 }
 \description{

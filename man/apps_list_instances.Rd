@@ -10,7 +10,7 @@ apps_list_instances(slug, archived = NULL, app_release_id = NULL,
 \arguments{
 \item{slug}{string required. The slug for the application.}
 
-\item{archived}{string optional. The archival status of the requested object(s).}
+\item{archived}{string optional. The archival status of the requested item(s).}
 
 \item{app_release_id}{integer optional. If supplied, return only instances matching this release.}
 
@@ -37,7 +37,7 @@ An array containing the following fields:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
-\item{projectId}{integer, The id of the project collecting all the objects that belong to this app instance.}
+\item{projectId}{integer, The id of the project collecting all the items that belong to this app instance.}
 }
 \description{
 List the instances of a Decision Application

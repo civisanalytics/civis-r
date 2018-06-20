@@ -47,7 +47,7 @@ A list containing the following elements:
 \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
 \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
 }}
-\item{arguments}{list, Dictionary of name/value pairs to use to run this script. Only settable if this script has defined params.}
+\item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
 \item{publishedAsTemplateId}{integer, The ID of the template that this script is backing.}
 \item{fromTemplateId}{integer, The ID of the template this script uses, if any.}
@@ -60,11 +60,11 @@ A list containing the following elements:
 }}
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
-\item scheduled boolean, If the object is scheduled
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday
-\item scheduledHours array, Hours of the day it is scheduled on
-\item scheduledMinutes array, Minutes of the day it is scheduled on
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour
+\item scheduled boolean, If the item is scheduled.
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledHours array, Hours of the day it is scheduled on.
+\item scheduledMinutes array, Minutes of the day it is scheduled on.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 \item{notifications}{list, A list containing the following elements: 
 \itemize{
@@ -98,15 +98,16 @@ A list containing the following elements:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
-\item{hidden}{boolean, The hidden status of the object.}
+\item{hidden}{boolean, The hidden status of the item.}
 \item{targetProjectId}{integer, Target project to which script outputs will be added.}
-\item{archived}{string, The archival status of the requested object(s).}
+\item{archived}{string, The archival status of the requested item(s).}
 \item{requiredResources}{list, A list containing the following elements: 
 \itemize{
 \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
 \item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
 \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
 }}
+\item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 \item{source}{string, The body/text of the script.}
 \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 }

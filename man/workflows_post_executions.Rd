@@ -12,7 +12,7 @@ workflows_post_executions(id, target_task = NULL, input = NULL,
 
 \item{target_task}{string optional. For a reverse workflow, the name of the task to target.}
 
-\item{input}{list optional. The dictionary of name/value input pairs defined for this execution.}
+\item{input}{list optional. Key-value pairs to send to this execution as inputs.}
 
 \item{included_tasks}{array optional. If specified, executes only the subset of workflow tasks included.}
 }
@@ -31,7 +31,7 @@ A list containing the following elements:
 \item online boolean, Whether this user is online.
 }}
 \item{definition}{string, The definition of the workflow for this execution.}
-\item{input}{list, The dictionary of name/value input pairs defined for this execution.}
+\item{input}{list, Key-value pairs defined for this execution.}
 \item{includedTasks}{array, The subset of workflow tasks selected to execute.}
 \item{tasks}{array, An array containing the following fields: 
 \itemize{
