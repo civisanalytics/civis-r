@@ -12,7 +12,6 @@ fn <- tempfile(fileext = ".json")
 download_civis(spec_id, file = fn)
 
 stopifnot(Sys.getenv("R_CLIENT_DEV") == "")
-key <- Sys.getenv("CIVIS_API_KEY")
 Sys.setenv("CIVIS_API_KEY" = "")
 
 api_spec <- jsonlite::fromJSON(fn, simplifyVector=FALSE)
@@ -22,4 +21,3 @@ save(api_spec, file = "../R/sysdata.rda")
 client_str <- civis:::generate_client(api_spec)
 civis:::write_client(client_str, FILENAME = paste0("../", civis:::FILENAME))
 devtools::document()
-Sys.setenv("CIVIS_API_KEY" = key)
