@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -154,12 +154,12 @@
     </tr>
     <tr>
       <th>schedule</th>
-      <td><p>object optional. A list containing the following elements:</p><ul>
-<li><p>scheduled boolean, If the object is scheduled</p></li>
-<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday</p></li>
-<li><p>scheduledHours array, Hours of the day it is scheduled on</p></li>
-<li><p>scheduledMinutes array, Minutes of the day it is scheduled on</p></li>
-<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour</p></li>
+      <td><p>list optional. A list containing the following elements:</p><ul>
+<li><p>scheduled boolean, If the item is scheduled.</p></li>
+<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday.</p></li>
+<li><p>scheduledHours array, Hours of the day it is scheduled on.</p></li>
+<li><p>scheduledMinutes array, Minutes of the day it is scheduled on.</p></li>
+<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.</p></li>
 </ul></td>
     </tr>
     </table>
@@ -172,13 +172,13 @@
 <dt>primaryKey</dt><dd><p>array, The primary key or composite keys of the table being predicted.</p></dd>
 <dt>limitingSQL</dt><dd><p>string, A SQL WHERE clause used to scope the rows to be predicted.</p></dd>
 <dt>outputTable</dt><dd><p>string, The qualified name of the table to be created which will contain the model's predictions.</p></dd>
-<dt>schedule</dt><dd><p>object, A list containing the following elements: 
+<dt>schedule</dt><dd><p>list, A list containing the following elements: 
 <ul>
-<li><p>scheduled boolean, If the object is scheduled</p></li>
-<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday</p></li>
-<li><p>scheduledHours array, Hours of the day it is scheduled on</p></li>
-<li><p>scheduledMinutes array, Minutes of the day it is scheduled on</p></li>
-<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour</p></li>
+<li><p>scheduled boolean, If the item is scheduled.</p></li>
+<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday.</p></li>
+<li><p>scheduledHours array, Hours of the day it is scheduled on.</p></li>
+<li><p>scheduledMinutes array, Minutes of the day it is scheduled on.</p></li>
+<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.</p></li>
 </ul></p></dd>
 <dt>state</dt><dd><p>string, The status of the prediction. One of: "succeeded", "failed", "queued", or "running,"or "idle", if no build has been attempted.</p></dd>
 

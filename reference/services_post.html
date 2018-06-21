@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -154,9 +154,9 @@
     </tr>
     <tr>
       <th>schedule</th>
-      <td><p>object optional. A list containing the following elements:</p><ul>
+      <td><p>list optional. A list containing the following elements:</p><ul>
 <li><p>runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.</p></li>
-<li><p>recurrences array, List of day-hour combinations this object is scheduled for</p></li>
+<li><p>recurrences array, List of day-hour combinations this item is scheduled for</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -197,22 +197,22 @@
     </tr>
     <tr>
       <th>git_path_dir</th>
-      <td><p>string optional. The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.</p></td>
+      <td><p>string optional. The path to the Service code within the git repo. If unspecified, the root directory will be used.</p></td>
     </tr>
     <tr>
       <th>environment_variables</th>
-      <td><p>object optional. Environment Variables to be passed into the Service.</p></td>
+      <td><p>list optional. Environment Variables to be passed into the Service.</p></td>
     </tr>
     <tr>
       <th>notifications</th>
-      <td><p>object optional. A list containing the following elements:</p><ul>
+      <td><p>list optional. A list containing the following elements:</p><ul>
 <li><p>failureEmailAddresses array, Addresses to notify by e-mail when the service fails.</p></li>
 <li><p>failureOn boolean, If failure email notifications are on</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>hidden</th>
-      <td><p>boolean optional. The hidden status of the object.</p></td>
+      <td><p>boolean optional. The hidden status of the item.</p></td>
     </tr>
     </table>
     
@@ -222,7 +222,7 @@
 <dt>id</dt><dd><p>integer, The ID for this Service.</p></dd>
 <dt>name</dt><dd><p>string, The name of this Service.</p></dd>
 <dt>description</dt><dd><p>string, The description of this Service.</p></dd>
-<dt>user</dt><dd><p>object, A list containing the following elements: 
+<dt>user</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>
@@ -232,10 +232,10 @@
 </ul></p></dd>
 <dt>dockerImageName</dt><dd><p>string, The name of the docker image to pull from DockerHub.</p></dd>
 <dt>dockerImageTag</dt><dd><p>string, The tag of the docker image to pull from DockerHub (default: latest).</p></dd>
-<dt>schedule</dt><dd><p>object, A list containing the following elements: 
+<dt>schedule</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>runtimePlan string, Only affects the service when deployed. On Demand means that the service will be turned on when viewed and automatically turned off after periods of inactivity.  Specific Times means the service will be on when scheduled. Always On means the deployed service will always be on.</p></li>
-<li><p>recurrences array, List of day-hour combinations this object is scheduled for</p></li>
+<li><p>recurrences array, List of day-hour combinations this item is scheduled for</p></li>
 </ul></p></dd>
 <dt>timeZone</dt><dd><p>string,</p></dd>
 <dt>replicas</dt><dd><p>integer, The number of Service replicas to deploy. When maxReplicas is set, this field defines the minimum number of replicas to deploy.</p></dd>
@@ -249,9 +249,9 @@
 <dt>apiKeyId</dt><dd><p>integer, API key id of user</p></dd>
 <dt>gitRepoUrl</dt><dd><p>string, The url for the git repo where the Service code lives.</p></dd>
 <dt>gitRepoRef</dt><dd><p>string, The git reference to use when pulling code from the repo.</p></dd>
-<dt>gitPathDir</dt><dd><p>string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.</p></dd>
+<dt>gitPathDir</dt><dd><p>string, The path to the Service code within the git repo. If unspecified, the root directory will be used.</p></dd>
 <dt>reportId</dt><dd><p>integer, The ID of the associated report.</p></dd>
-<dt>currentDeployment</dt><dd><p>object, A list containing the following elements: 
+<dt>currentDeployment</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>deploymentId integer, The ID for this deployment.</p></li>
 <li><p>userId integer, The ID of the owner.</p></li>
@@ -259,7 +259,7 @@
 <li><p>name string, Name of the deployment.</p></li>
 <li><p>dockerImageName string, The name of the docker image to pull from DockerHub.</p></li>
 <li><p>dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).</p></li>
-<li><p>displayUrl string, URL that displays the deployed platform object and includes auth token.</p></li>
+<li><p>displayUrl string, A signed URL for viewing the deployed item.</p></li>
 <li><p>instanceType string, The EC2 instance type requested for the deployment.</p></li>
 <li><p>memory integer, The memory allocated to the deployment.</p></li>
 <li><p>cpu integer, The cpu allocated to the deployment.</p></li>
@@ -270,7 +270,7 @@
 <li><p>published boolean,</p></li>
 <li><p>serviceId integer, The ID of owning Service</p></li>
 </ul></p></dd>
-<dt>previewDeployment</dt><dd><p>object, A list containing the following elements: 
+<dt>previewDeployment</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>deploymentId integer, The ID for this deployment.</p></li>
 <li><p>userId integer, The ID of the owner.</p></li>
@@ -278,7 +278,7 @@
 <li><p>name string, Name of the deployment.</p></li>
 <li><p>dockerImageName string, The name of the docker image to pull from DockerHub.</p></li>
 <li><p>dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).</p></li>
-<li><p>displayUrl string, URL that displays the deployed platform object and includes auth token.</p></li>
+<li><p>displayUrl string, A signed URL for viewing the deployed item.</p></li>
 <li><p>instanceType string, The EC2 instance type requested for the deployment.</p></li>
 <li><p>memory integer, The memory allocated to the deployment.</p></li>
 <li><p>cpu integer, The cpu allocated to the deployment.</p></li>
@@ -291,14 +291,14 @@
 </ul></p></dd>
 <dt>currentUrl</dt><dd><p>string, The URL that the service is hosted at.</p></dd>
 <dt>previewUrl</dt><dd><p>string, The URL that previews of the service are hosted at.</p></dd>
-<dt>environmentVariables</dt><dd><p>object, Environment Variables to be passed into the Service.</p></dd>
-<dt>notifications</dt><dd><p>object, A list containing the following elements: 
+<dt>environmentVariables</dt><dd><p>list, Environment Variables to be passed into the Service.</p></dd>
+<dt>notifications</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>failureEmailAddresses array, Addresses to notify by e-mail when the service fails.</p></li>
 <li><p>failureOn boolean, If failure email notifications are on</p></li>
 </ul></p></dd>
-<dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
-<dt>hidden</dt><dd><p>boolean, The hidden status of the object.</p></dd>
+<dt>archived</dt><dd><p>string, The archival status of the requested item(s).</p></dd>
+<dt>hidden</dt><dd><p>boolean, The hidden status of the item.</p></dd>
 
     
 

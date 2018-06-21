@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -146,29 +146,29 @@
     <p>A list containing the following elements:</p>
 <dt>name</dt><dd><p>string, The name of the import.</p></dd>
 <dt>syncType</dt><dd><p>string, The type of sync to perform; one of Dbsync, AutoImport, SilverpopDataImport, SilverpopContactImport, GdocImport, GdocExport, and Salesforce.</p></dd>
-<dt>source</dt><dd><p>object, A list containing the following elements: 
+<dt>source</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>remoteHostId integer,</p></li>
 <li><p>credentialId integer,</p></li>
 <li><p>additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.</p></li>
 <li><p>name string,</p></li>
 </ul></p></dd>
-<dt>destination</dt><dd><p>object, A list containing the following elements: 
+<dt>destination</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>remoteHostId integer,</p></li>
 <li><p>credentialId integer,</p></li>
 <li><p>additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.</p></li>
 <li><p>name string,</p></li>
 </ul></p></dd>
-<dt>schedule</dt><dd><p>object, A list containing the following elements: 
+<dt>schedule</dt><dd><p>list, A list containing the following elements: 
 <ul>
-<li><p>scheduled boolean, If the object is scheduled</p></li>
-<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday</p></li>
-<li><p>scheduledHours array, Hours of the day it is scheduled on</p></li>
-<li><p>scheduledMinutes array, Minutes of the day it is scheduled on</p></li>
-<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour</p></li>
+<li><p>scheduled boolean, If the item is scheduled.</p></li>
+<li><p>scheduledDays array, Day based on numeric value starting at 0 for Sunday.</p></li>
+<li><p>scheduledHours array, Hours of the day it is scheduled on.</p></li>
+<li><p>scheduledMinutes array, Minutes of the day it is scheduled on.</p></li>
+<li><p>scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.</p></li>
 </ul></p></dd>
-<dt>notifications</dt><dd><p>object, A list containing the following elements: 
+<dt>notifications</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>urls array, URLs to receive a POST request at job completion</p></li>
 <li><p>successEmailSubject string, Custom subject line for success e-mail.</p></li>
@@ -195,7 +195,7 @@
 <dt>state</dt><dd><p>string,</p></dd>
 <dt>createdAt</dt><dd><p>string,</p></dd>
 <dt>updatedAt</dt><dd><p>string,</p></dd>
-<dt>lastRun</dt><dd><p>object, A list containing the following elements: 
+<dt>lastRun</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer,</p></li>
 <li><p>state string,</p></li>
@@ -204,7 +204,7 @@
 <li><p>finishedAt string, The time that the run completed.</p></li>
 <li><p>error string, The error message for this run, if present.</p></li>
 </ul></p></dd>
-<dt>user</dt><dd><p>object, A list containing the following elements: 
+<dt>user</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>
@@ -212,7 +212,7 @@
 <li><p>initials string, This user's initials.</p></li>
 <li><p>online boolean, Whether this user is online.</p></li>
 </ul></p></dd>
-<dt>runningAs</dt><dd><p>object, A list containing the following elements: 
+<dt>runningAs</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>
@@ -222,8 +222,8 @@
 </ul></p></dd>
 <dt>nextRunAt</dt><dd><p>string, The time of the next scheduled run.</p></dd>
 <dt>timeZone</dt><dd><p>string, The time zone of this import.</p></dd>
-<dt>hidden</dt><dd><p>boolean, The hidden status of the object.</p></dd>
-<dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
+<dt>hidden</dt><dd><p>boolean, The hidden status of the item.</p></dd>
+<dt>archived</dt><dd><p>string, The archival status of the requested item(s).</p></dd>
 
     
 

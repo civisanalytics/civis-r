@@ -124,10 +124,16 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/clusters_get_kubernetes.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/clusters_get_kubernetes_partitions.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/clusters_get_workers.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/clusters_list_kubernetes.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/clusters_list_kubernetes_partitions.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/clusters_list_workers.html</loc>
@@ -275,6 +281,9 @@
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_cass_ncoa_shares.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_field_mapping.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_person_matching_projects.html</loc>

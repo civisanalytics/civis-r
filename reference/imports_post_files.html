@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -189,7 +189,7 @@
     </tr>
     <tr>
       <th>hidden</th>
-      <td><p>boolean optional. The hidden status of the object.</p></td>
+      <td><p>boolean optional. The hidden status of the item.</p></td>
     </tr>
     </table>
     
@@ -197,9 +197,9 @@
 
     <p>A list containing the following elements:</p>
 <dt>id</dt><dd><p>integer, The id of the import.</p></dd>
-<dt>uploadUri</dt><dd><p>string, The URI which may be used to upload a tabular file for import. You must use this URI to upload the file you wish imported and then inform the Civis API when your upload is complete using the URI given by the runUri field of this reponse.</p></dd>
-<dt>runUri</dt><dd><p>string, The URI to POST to once the file upload is complete. After uploading the file using the URI given in the uploadUri attribute of the reponse, POST to this URI to initiate the import of your uploaded file into the platform.</p></dd>
-<dt>uploadFields</dt><dd><p>object, If multipart was set to true, these fields should be included in the multipart upload.</p></dd>
+<dt>uploadUri</dt><dd><p>string, The URI which may be used to upload a tabular file for import. You must use this URI to upload the file you wish imported and then inform the Civis API when your upload is complete using the URI given by the runUri field of this response.</p></dd>
+<dt>runUri</dt><dd><p>string, The URI to POST to once the file upload is complete. After uploading the file using the URI given in the uploadUri attribute of the response, POST to this URI to initiate the import of your uploaded file into the platform.</p></dd>
+<dt>uploadFields</dt><dd><p>list, If multipart was set to true, these fields should be included in the multipart upload.</p></dd>
 
     
 

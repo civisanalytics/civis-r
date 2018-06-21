@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -135,11 +135,11 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>hidden</th>
-      <td><p>boolean optional. If specified to be true, returns hidden objects. Defaults to false, returning non-hidden objects.</p></td>
+      <td><p>boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.</p></td>
     </tr>
     <tr>
       <th>archived</th>
-      <td><p>string optional. The archival status of the requested object(s).</p></td>
+      <td><p>string optional. The archival status of the requested item(s).</p></td>
     </tr>
     <tr>
       <th>author</th>
@@ -173,7 +173,7 @@
 <dt>id</dt><dd><p>integer, The ID for this Service.</p></dd>
 <dt>name</dt><dd><p>string, The name of this Service.</p></dd>
 <dt>description</dt><dd><p>string, The description of this Service.</p></dd>
-<dt>user</dt><dd><p>object, A list containing the following elements: 
+<dt>user</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>
@@ -185,8 +185,8 @@
 <dt>updatedAt</dt><dd><p>string,</p></dd>
 <dt>gitRepoUrl</dt><dd><p>string, The url for the git repo where the Service code lives.</p></dd>
 <dt>gitRepoRef</dt><dd><p>string, The git reference to use when pulling code from the repo.</p></dd>
-<dt>gitPathDir</dt><dd><p>string, The path to the Shiny app code within the git repo. If unspecified, the root directory will be used.</p></dd>
-<dt>currentDeployment</dt><dd><p>object, A list containing the following elements: 
+<dt>gitPathDir</dt><dd><p>string, The path to the Service code within the git repo. If unspecified, the root directory will be used.</p></dd>
+<dt>currentDeployment</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>deploymentId integer, The ID for this deployment.</p></li>
 <li><p>userId integer, The ID of the owner.</p></li>
@@ -204,7 +204,7 @@
 <li><p>published boolean,</p></li>
 <li><p>serviceId integer, The ID of owning Service</p></li>
 </ul></p></dd>
-<dt>previewDeployment</dt><dd><p>object, A list containing the following elements: 
+<dt>previewDeployment</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>deploymentId integer, The ID for this deployment.</p></li>
 <li><p>userId integer, The ID of the owner.</p></li>
@@ -222,7 +222,7 @@
 <li><p>published boolean,</p></li>
 <li><p>serviceId integer, The ID of owning Service</p></li>
 </ul></p></dd>
-<dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
+<dt>archived</dt><dd><p>string, The archival status of the requested item(s).</p></dd>
 
     
 

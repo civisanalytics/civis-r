@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -151,15 +151,16 @@
 <dt>resultRows</dt><dd><p>array, A preview of rows returned by the query.</p></dd>
 <dt>resultColumns</dt><dd><p>array, A preview of columns returned by the query.</p></dd>
 <dt>scriptId</dt><dd><p>integer, The ID of the script associated with this query.</p></dd>
-<dt>exception</dt><dd><p>string, Exception returned from the query, null if the query was a success.</p></dd>
+<dt>exception</dt><dd><p>string, Deprecated and not used.</p></dd>
+<dt>error</dt><dd><p>string, The error message for this run, if present.</p></dd>
 <dt>createdAt</dt><dd><p>string,</p></dd>
 <dt>updatedAt</dt><dd><p>string,</p></dd>
 <dt>finishedAt</dt><dd><p>string, The end time of the last run.</p></dd>
 <dt>state</dt><dd><p>string, The state of the last run.</p></dd>
 <dt>lastRunId</dt><dd><p>integer, The ID of the last run.</p></dd>
-<dt>hidden</dt><dd><p>boolean, The hidden status of the object.</p></dd>
+<dt>hidden</dt><dd><p>boolean, The hidden status of the item.</p></dd>
 <dt>name</dt><dd><p>string, The name of the query.</p></dd>
-<dt>author</dt><dd><p>object, A list containing the following elements: 
+<dt>author</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>

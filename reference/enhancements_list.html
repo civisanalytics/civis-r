@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -135,19 +135,19 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>type</th>
-      <td><p>string optional. If specified, return objects of these types.</p></td>
+      <td><p>string optional. If specified, return items of these types.</p></td>
     </tr>
     <tr>
       <th>author</th>
-      <td><p>string optional. If specified, return objects from this author. Must use user IDs. A comma separated list of IDs is also accepted to return objects from multiple authors.</p></td>
+      <td><p>string optional. If specified, return items from this author. Must use user IDs. A comma separated list of IDs is also accepted to return items from multiple authors.</p></td>
     </tr>
     <tr>
       <th>status</th>
-      <td><p>string optional. If specified, returns objects with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.</p></td>
+      <td><p>string optional. If specified, returns items with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.</p></td>
     </tr>
     <tr>
       <th>archived</th>
-      <td><p>string optional. The archival status of the requested object(s).</p></td>
+      <td><p>string optional. The archival status of the requested item(s).</p></td>
     </tr>
     <tr>
       <th>limit</th>
@@ -171,11 +171,11 @@
 
     <p>An array containing the following fields:</p>
 <dt>id</dt><dd><p>integer, The ID for the enhancement.</p></dd>
-<dt>name</dt><dd><p>string, The name of the enhancement.</p></dd>
+<dt>name</dt><dd><p>string, The name of the enhancement job.</p></dd>
 <dt>type</dt><dd><p>string, The type of the enhancement (e.g CASS-NCOA)</p></dd>
 <dt>createdAt</dt><dd><p>string, The time this enhancement was created.</p></dd>
 <dt>updatedAt</dt><dd><p>string, The time the enhancement was last updated.</p></dd>
-<dt>author</dt><dd><p>object, A list containing the following elements: 
+<dt>author</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>
@@ -184,7 +184,7 @@
 <li><p>online boolean, Whether this user is online.</p></li>
 </ul></p></dd>
 <dt>state</dt><dd><p>string, The status of the enhancement's last run</p></dd>
-<dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
+<dt>archived</dt><dd><p>string, The archival status of the requested item(s).</p></dd>
 
     
 

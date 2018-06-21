@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -149,7 +149,7 @@
 
     <p>A list containing the following elements:</p>
 <dt>id</dt><dd><p>integer,</p></dd>
-<dt>source</dt><dd><p>object, A list containing the following elements: 
+<dt>source</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of the table or file, if available.</p></li>
 <li><p>path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce, silverpop</p></li>
@@ -159,13 +159,13 @@
 <li><p>salesforce object,</p></li>
 <li><p>silverpop object,</p></li>
 </ul></p></dd>
-<dt>destination</dt><dd><p>object, A list containing the following elements: 
+<dt>destination</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet</p></li>
 <li><p>databaseTable object,</p></li>
 <li><p>googleWorksheet object,</p></li>
 </ul></p></dd>
-<dt>advancedOptions</dt><dd><p>object, A list containing the following elements: 
+<dt>advancedOptions</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>maxErrors integer,</p></li>
 <li><p>existingTableRows string,</p></li>

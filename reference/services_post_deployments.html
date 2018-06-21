@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Deploy a ShinyApp — services_post_deployments • civis</title>
+<title>Deploy a Service — services_post_deployments • civis</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,9 +28,9 @@
 
 
 
-<meta property="og:title" content="Deploy a ShinyApp — services_post_deployments" />
+<meta property="og:title" content="Deploy a Service — services_post_deployments" />
 
-<meta property="og:description" content="Deploy a ShinyApp" />
+<meta property="og:description" content="Deploy a Service" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -115,14 +115,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Deploy a ShinyApp</h1>
+    <h1>Deploy a Service</h1>
     <small class="dont-index">Source: <a href='https://github.com/civisanalytics/civis-r/blob/master/R/generated_client.R'><code>R/generated_client.R</code></a></small>
     <div class="hidden name"><code>services_post_deployments.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Deploy a ShinyApp</p>
+    <p>Deploy a Service</p>
     
     </div>
 
@@ -134,7 +134,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>service_id</th>
-      <td><p>integer required. The ID of the owning ShinyApp</p></td>
+      <td><p>integer required. The ID of the owning Service</p></td>
     </tr>
     <tr>
       <th>deployment_id</th>
@@ -155,7 +155,7 @@
 <dt>name</dt><dd><p>string, Name of the deployment.</p></dd>
 <dt>dockerImageName</dt><dd><p>string, The name of the docker image to pull from DockerHub.</p></dd>
 <dt>dockerImageTag</dt><dd><p>string, The tag of the docker image to pull from DockerHub (default: latest).</p></dd>
-<dt>displayUrl</dt><dd><p>string, URL that displays the deployed platform object and includes auth token.</p></dd>
+<dt>displayUrl</dt><dd><p>string, A signed URL for viewing the deployed item.</p></dd>
 <dt>instanceType</dt><dd><p>string, The EC2 instance type requested for the deployment.</p></dd>
 <dt>memory</dt><dd><p>integer, The memory allocated to the deployment.</p></dd>
 <dt>cpu</dt><dd><p>integer, The cpu allocated to the deployment.</p></dd>

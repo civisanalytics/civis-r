@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
       </span>
     </div>
 
@@ -155,7 +155,7 @@
     </tr>
     <tr>
       <th>app_state</th>
-      <td><p>object optional. The application state blob for this report.</p></td>
+      <td><p>list optional. The application state blob for this report.</p></td>
     </tr>
     <tr>
       <th>provide_api_key</th>
@@ -176,7 +176,7 @@
     <p>A list containing the following elements:</p>
 <dt>id</dt><dd><p>integer, The ID of this report.</p></dd>
 <dt>name</dt><dd><p>string, The name of the report.</p></dd>
-<dt>user</dt><dd><p>object, A list containing the following elements: 
+<dt>user</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID of this user.</p></li>
 <li><p>name string, This user's name.</p></li>
@@ -194,7 +194,7 @@
 <dt>state</dt><dd><p>string, The status of the report's last run.</p></dd>
 <dt>finishedAt</dt><dd><p>string, The time that the report's last run finished.</p></dd>
 <dt>vizUpdatedAt</dt><dd><p>string, The time that the report's visualization was last updated.</p></dd>
-<dt>script</dt><dd><p>object, A list containing the following elements: 
+<dt>script</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer, The ID for the script.</p></li>
 <li><p>name string, The name of the script.</p></li>
@@ -205,7 +205,7 @@
 <dt>type</dt><dd><p>string,</p></dd>
 <dt>templateId</dt><dd><p>integer, The ID of the template used for this report.</p></dd>
 <dt>authThumbnailUrl</dt><dd><p>string, URL for a thumbnail of the report.</p></dd>
-<dt>lastRun</dt><dd><p>object, A list containing the following elements: 
+<dt>lastRun</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>id integer,</p></li>
 <li><p>state string,</p></li>
@@ -214,8 +214,8 @@
 <li><p>finishedAt string, The time that the run completed.</p></li>
 <li><p>error string, The error message for this run, if present.</p></li>
 </ul></p></dd>
-<dt>archived</dt><dd><p>string, The archival status of the requested object(s).</p></dd>
-<dt>hidden</dt><dd><p>boolean, The hidden status of the object.</p></dd>
+<dt>archived</dt><dd><p>string, The archival status of the requested item(s).</p></dd>
+<dt>hidden</dt><dd><p>boolean, The hidden status of the item.</p></dd>
 <dt>authDataUrl</dt><dd><p>string,</p></dd>
 <dt>authCodeUrl</dt><dd><p>string,</p></dd>
 <dt>config</dt><dd><p>string, Any configuration metadata for this report.</p></dd>
@@ -223,7 +223,7 @@
 <dt>provideAPIKey</dt><dd><p>boolean, Whether the report requests an API Key from the report viewer.</p></dd>
 <dt>apiKey</dt><dd><p>string, A Civis API key that can be used by this report.</p></dd>
 <dt>apiKeyId</dt><dd><p>integer, The ID of the API key. Can be used for auditing API use by this report.</p></dd>
-<dt>appState</dt><dd><p>object, Any application state blob for this report.</p></dd>
+<dt>appState</dt><dd><p>list, Any application state blob for this report.</p></dd>
 <dt>useViewersTableauUsername</dt><dd><p>boolean, Apply user level filtering on Tableau reports.</p></dd>
 
     
