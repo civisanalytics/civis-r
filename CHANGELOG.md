@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.1] - Unreleased
+
+### Changed
+
+- Hyperband is now supported for stacking estimators in `civis_ml`. Fixes #131.
+
 ## [1.5.0] - 2018-05-20
 
 ### Changed
