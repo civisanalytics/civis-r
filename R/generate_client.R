@@ -14,7 +14,7 @@ fetch_and_generate_client <- function() {
     client_str <- generate_client(spec)
     message(paste0("Writing API to ", FILENAME))
     write_client(client_str, FILENAME = FILENAME)
-    devtools::document()
+    roxygen2::roxygenize(".")
   } else {
     message("Skipping client generation")
   }
