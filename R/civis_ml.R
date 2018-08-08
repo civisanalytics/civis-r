@@ -590,8 +590,7 @@ create_and_run_model <- function(file_id = NULL,
 
   if (!is.null(cross_validation_parameters)) {
     hyperband <- identical(cross_validation_parameters, "hyperband")
-    hyperband_not_supported <- model_type %in% c("sparse_logistic", "sparse_linear_regressor",
-                                                 "stacking_regressor")
+    hyperband_not_supported <- model_type %in% c("sparse_logistic", "sparse_linear_regressor")
     if (hyperband & hyperband_not_supported) {
       stop(paste0("cross_validation_parameters = \"hyperband\" not supported for ", model_type))
     }
