@@ -199,7 +199,7 @@ is_multitarget <- function(model) {
 #' @param model civis_ml_classifier
 #' @return coefs a vector of coefficients or `NULL` if the classifier does not have coefficients
 #' @export
-coef <- function(object, ...) {
+coef <- function(model) {
   UseMethod("coef")
 }
 
