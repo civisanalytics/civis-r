@@ -106,3 +106,24 @@ test_that("get_train_template_id reverts to last id if others not available", {
   expect_equal(id, ans)
 })
 
+test_that("coef.civis_ml returns correct coefficients", {
+  lr <- civis_ml(mtcars,
+                        dependent_variable = "vs",
+                        model_type = "sparse_logistic")
+  coefs_from_function <- coef(lr)
+  intercept <- lr[["model_info"]][["model"]][["parameters"]][["intercept"]]
+  coefs_by_hand <-c(intercept, as.vector(lr[["model_info"]][["model"]][["parameters"]][["coef"]]))
+  attributes <- c("(Intercept)", as.vector(lr[["model_info"]][["model"]][["parameters"]][["relvars"]]))
+  names(coefs_by_hand) <- attributes
+  expect_true(is.vector(coefs_from_function))
+  expect_false(is.matrix(coefs_from_function))
+  expect_equal(coefs_by_hand, coefs_from_function)
+})
+
+test_that("coef.civis_ml returns NULL for models that don't have coefficients", {
+  et <- civis_ml(mtcars,
+                 dependent_variable = "vs",
+                 model_type = "extra_trees_classifier")
+  expect_equal(NULL, coef(et))
+})
+

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.6.0] - 2018-08-08
+
+### Added
+- `coef.civis_ml` which returns `civis_ml` model coefficients in the format of `stats::coef`
+- added tests for `coef.civis_ml`
+
 ## [1.5.0] - 2018-05-20
 
 ### Changed

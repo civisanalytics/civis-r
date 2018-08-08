@@ -193,3 +193,24 @@ is_multiclass <- function(model) {
 is_multitarget <- function(model) {
   length(get_model_data(model, "n_unique_targets")) > 1
 }
+
+#' @details Outputs coefficients with names in the style of `stats::coef`
+#' @param model civis_ml_classifier
+#' @return coefs a vector of coefficients
+#' @export
+coef.civis_ml <- function(model) {
+
+  # fields needed aren't present (i.e.: tree-based model)
+  if(is.null(model[["model_info"]][["model"]][["parameters"]][["coef"]])) {
+    return(NULL)
+  }
+
+  else {
+    intercept <- model[["model_info"]][["model"]][["parameters"]][["intercept"]]
+    coefs <-c(intercept, as.vector(model[["model_info"]][["model"]][["parameters"]][["coef"]]))
+    attributes <- c("(Intercept)", as.vector(model[["model_info"]][["model"]][["parameters"]][["relvars"]]))
+    names(coefs) <- attributes
+    return(coefs)
+  }
+
+}
