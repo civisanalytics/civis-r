@@ -209,6 +209,13 @@ coef.civis_ml <- function(model) {
     intercept <- model[["model_info"]][["model"]][["parameters"]][["intercept"]]
     coefs <-c(intercept, as.vector(model[["model_info"]][["model"]][["parameters"]][["coef"]]))
     attributes <- c("(Intercept)", as.vector(model[["model_info"]][["model"]][["parameters"]][["relvars"]]))
+
+    # we must have a multi-output model if this is true
+    if(length(attributes) < length(coefs)) {
+      num_classes <- length(coefs)/length(attributes)
+      attributes <- rep(attributes, each = num_classes)
+    }
+
     names(coefs) <- attributes
     return(coefs)
   }
