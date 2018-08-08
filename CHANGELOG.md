@@ -6,6 +6,17 @@
 - `coef.civis_ml` which returns `civis_ml` model coefficients in the format of `stats::coef`
 - added tests for `coef.civis_ml`
 
+## [1.5.1] - Unreleased
+
+### Changed
+
+- Hyperband is now supported for stacking estimators in `civis_ml`. Fixes #131.
+
+### Fixed
+
+- Added Encoding: UTF-8 to 'DESCRIPTION' to fix R CMD CHECK warning from changes to 
+roxygen2 6.1.0. Fixes #133.
+
 ## [1.5.0] - 2018-05-20
 
 ### Changed

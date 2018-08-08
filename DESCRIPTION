@@ -46,7 +46,7 @@ Suggests:
     R.utils,
     rstudioapi,
     yaml
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 VignetteBuilder: knitr
 Collate:
     'await.R'
@@ -70,3 +70,4 @@ Collate:
     'tables.R'
     'utils.R'
     'zzz.R'
+Encoding: UTF-8
