@@ -194,9 +194,16 @@ is_multitarget <- function(model) {
   length(get_model_data(model, "n_unique_targets")) > 1
 }
 
+#' coef
+#' @export
+coef <- function(object, ...) {
+  UseMethod("coef")
+}
+
+#' Function to get coefficients from a civis_ml_classifier
 #' @details Outputs coefficients with names in the style of `stats::coef`
 #' @param model civis_ml_classifier
-#' @return coefs a vector of coefficients
+#' @return coefs a vector of coefficients or `NULL` if the classifier does not have coefficients
 #' @export
 coef.civis_ml <- function(model) {
 
