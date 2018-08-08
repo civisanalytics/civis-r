@@ -1,11 +1,10 @@
 # Changelog
 
-## [1.6.0] - Unreleased
+## [1.5.1] - Unreleased
 
 ### Changed
 
 - Hyperband is now supported for stacking estimators in `civis_ml`. Fixes #131.
-- `devtools` is no longer a required dependency, but `roxygen2 (> 6.1.0)` is. Fixes #99.
 
 ### Fixed
 

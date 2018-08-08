@@ -23,6 +23,7 @@ Imports:
     DBI,
     dplyr (>= 0.7.0),
     dbplyr (>= 1.0.0),
+    devtools,
     feather,
     future (>= 1.6.1),
     ggplot2,
@@ -32,13 +33,12 @@ Imports:
     methods,
     memoise,
     purrr,
-    roxygen2 (>= 6.1.0),
+    roxygen2,
     stats,
     stringr,
     testthat,
     utils
 Suggests:
-    devtools,
     knitr,
     rmarkdown,
     mockery,

@@ -5,6 +5,7 @@ FILENAME <- c("R/generated_client.R")
 #' @details
 #' Skips autogeneration on windows with R < 3.4.0 and if R_CLIENT_DEV == "TRUE".
 #' Skips downloading a fresh spec if CIVIS_API_KEY is not set.
+#' @importFrom devtools document
 #' @importFrom roxygen2 roxygenize
 fetch_and_generate_client <- function() {
   if (Sys.getenv("R_CLIENT_DEV") != "TRUE" && windows_r_version_is_valid()) {
@@ -13,7 +14,7 @@ fetch_and_generate_client <- function() {
     client_str <- generate_client(spec)
     message(paste0("Writing API to ", FILENAME))
     write_client(client_str, FILENAME = FILENAME)
-    roxygen2::roxygenize(".")
+    devtools::document()
   } else {
     message("Skipping client generation")
   }
