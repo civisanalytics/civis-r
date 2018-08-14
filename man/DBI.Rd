@@ -75,8 +75,8 @@
 
 \S4method{dbQuoteIdentifier}{CivisConnection,character}(conn, x, ...)
 
-\S4method{dbWriteTable}{CivisConnection,character,data.frame}(conn, name, value,
-  overwrite = FALSE, append = FALSE, ...)
+\S4method{dbWriteTable}{CivisConnection,character,data.frame}(conn, name,
+  value, overwrite = FALSE, append = FALSE, ...)
 
 \S4method{dbReadTable}{CivisConnection,character}(conn, name, ...)
 

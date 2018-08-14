@@ -4,7 +4,8 @@
 \alias{services_post_redeploy}
 \title{Redeploy a Service}
 \usage{
-services_post_redeploy(service_id, deployment_id = NULL, published = NULL)
+services_post_redeploy(service_id, deployment_id = NULL,
+  published = NULL)
 }
 \arguments{
 \item{service_id}{integer required. The ID of the owning Service}

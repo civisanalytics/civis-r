@@ -8,7 +8,8 @@ enhancements_patch_cass_ncoa(id, name = NULL, schedule = NULL,
   parent_id = NULL, notifications = NULL, source = NULL,
   destination = NULL, column_mapping = NULL,
   use_default_column_mapping = NULL, perform_ncoa = NULL,
-  ncoa_credential_id = NULL, output_level = NULL, limiting_sql = NULL)
+  ncoa_credential_id = NULL, output_level = NULL,
+  limiting_sql = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID for the enhancement.}

@@ -5,10 +5,10 @@
 \title{Update some attributes of this JavaScript Script}
 \usage{
 scripts_patch_javascript(id, name = NULL, parent_id = NULL,
-  user_context = NULL, params = NULL, arguments = NULL, schedule = NULL,
-  notifications = NULL, next_run_at = NULL, time_zone = NULL,
-  target_project_id = NULL, source = NULL, remote_host_id = NULL,
-  credential_id = NULL)
+  user_context = NULL, params = NULL, arguments = NULL,
+  schedule = NULL, notifications = NULL, next_run_at = NULL,
+  time_zone = NULL, target_project_id = NULL, source = NULL,
+  remote_host_id = NULL, credential_id = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID for the script.}

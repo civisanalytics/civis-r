@@ -5,12 +5,13 @@
 \title{Edit a container}
 \usage{
 scripts_put_containers(id, required_resources, docker_command,
-  docker_image_name, name = NULL, parent_id = NULL, user_context = NULL,
-  params = NULL, arguments = NULL, schedule = NULL,
-  notifications = NULL, repo_http_uri = NULL, repo_ref = NULL,
-  remote_host_credential_id = NULL, git_credential_id = NULL,
-  docker_image_tag = NULL, instance_type = NULL, cancel_timeout = NULL,
-  time_zone = NULL, target_project_id = NULL)
+  docker_image_name, name = NULL, parent_id = NULL,
+  user_context = NULL, params = NULL, arguments = NULL,
+  schedule = NULL, notifications = NULL, repo_http_uri = NULL,
+  repo_ref = NULL, remote_host_credential_id = NULL,
+  git_credential_id = NULL, docker_image_tag = NULL,
+  instance_type = NULL, cancel_timeout = NULL, time_zone = NULL,
+  target_project_id = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID for the script.}

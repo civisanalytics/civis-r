@@ -4,8 +4,8 @@
 \alias{services_list_deployments}
 \title{List deployments for a Service}
 \usage{
-services_list_deployments(service_id, deployment_id = NULL, limit = NULL,
-  page_num = NULL, order = NULL, order_dir = NULL)
+services_list_deployments(service_id, deployment_id = NULL,
+  limit = NULL, page_num = NULL, order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{service_id}{integer required. The ID of the owning Service}

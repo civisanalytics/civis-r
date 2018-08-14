@@ -4,7 +4,8 @@
 \alias{imports_put_syncs}
 \title{Update a sync}
 \usage{
-imports_put_syncs(id, sync_id, source, destination, advanced_options = NULL)
+imports_put_syncs(id, sync_id, source, destination,
+  advanced_options = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the import to fetch.}

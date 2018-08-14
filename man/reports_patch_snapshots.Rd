@@ -6,8 +6,8 @@
 \usage{
 reports_patch_snapshots(id, state = NULL, finished_at = NULL,
   send_email_on_completion = NULL, email_template = NULL,
-  recipient_email_addresses = NULL, email_subject = NULL, height = NULL,
-  width = NULL, schedule = NULL, parent_id = NULL)
+  recipient_email_addresses = NULL, email_subject = NULL,
+  height = NULL, width = NULL, schedule = NULL, parent_id = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of this report.}

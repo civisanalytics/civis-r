@@ -4,8 +4,8 @@
 \alias{notebooks_list_deployments}
 \title{List deployments for a Notebook}
 \usage{
-notebooks_list_deployments(notebook_id, deployment_id = NULL, limit = NULL,
-  page_num = NULL, order = NULL, order_dir = NULL)
+notebooks_list_deployments(notebook_id, deployment_id = NULL,
+  limit = NULL, page_num = NULL, order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{notebook_id}{integer required. The ID of the owning Notebook}

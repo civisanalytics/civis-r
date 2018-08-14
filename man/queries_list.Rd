@@ -4,9 +4,9 @@
 \alias{queries_list}
 \title{List}
 \usage{
-queries_list(database_id = NULL, author_id = NULL, created_before = NULL,
-  exclude_results = NULL, hidden = NULL, limit = NULL, page_num = NULL,
-  order = NULL, order_dir = NULL)
+queries_list(database_id = NULL, author_id = NULL,
+  created_before = NULL, exclude_results = NULL, hidden = NULL,
+  limit = NULL, page_num = NULL, order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{database_id}{integer optional. The database ID.}

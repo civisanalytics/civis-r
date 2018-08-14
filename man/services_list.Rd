@@ -38,6 +38,7 @@ An array containing the following fields:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
+\item{type}{string, The type of this Service}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
 \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}

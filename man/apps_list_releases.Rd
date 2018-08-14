@@ -4,8 +4,8 @@
 \alias{apps_list_releases}
 \title{List the releases of a particular Decision Application}
 \usage{
-apps_list_releases(slug, archived = NULL, limit = NULL, page_num = NULL,
-  order = NULL, order_dir = NULL)
+apps_list_releases(slug, archived = NULL, limit = NULL,
+  page_num = NULL, order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{slug}{string required. The slug for the application.}
@@ -26,6 +26,7 @@ An array containing the following fields:
 \item{appId}{integer, The id of the app the release belongs to.}
 \item{reportTemplateId}{integer, ID of the report template for this release.}
 \item{resources}{list, A hash of resources associated with this release.}
+\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
 List the releases of a particular Decision Application

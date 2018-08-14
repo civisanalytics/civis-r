@@ -4,9 +4,10 @@
 \alias{transfer_table}
 \title{Transfer a table from one location to another.}
 \usage{
-transfer_table(source_db, dest_db, source_table, dest_table, job_name = NULL,
-  source_credential_id = NULL, dest_credential_id = NULL, interval = NULL,
-  verbose = FALSE, advanced_options = NULL)
+transfer_table(source_db, dest_db, source_table, dest_table,
+  job_name = NULL, source_credential_id = NULL,
+  dest_credential_id = NULL, interval = NULL, verbose = FALSE,
+  advanced_options = NULL)
 }
 \arguments{
 \item{source_db}{string or int, The name of the database where the source table is located. 
@@ -54,3 +55,4 @@ transfer_table(source_db='Cluster A', dest_db='Cluster B',
 Other tables: \code{\link{get_table_id}},
   \code{\link{refresh_table}}
 }
+\concept{tables}

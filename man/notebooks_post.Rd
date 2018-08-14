@@ -6,10 +6,11 @@
 \usage{
 notebooks_post(name = NULL, language = NULL, description = NULL,
   file_id = NULL, requirements_file_id = NULL, requirements = NULL,
-  docker_image_name = NULL, docker_image_tag = NULL, instance_type = NULL,
-  memory = NULL, cpu = NULL, credentials = NULL,
-  environment_variables = NULL, idle_timeout = NULL, git_repo_url = NULL,
-  git_ref = NULL, git_path = NULL, hidden = NULL)
+  docker_image_name = NULL, docker_image_tag = NULL,
+  instance_type = NULL, memory = NULL, cpu = NULL,
+  credentials = NULL, environment_variables = NULL,
+  idle_timeout = NULL, git_repo_url = NULL, git_ref = NULL,
+  git_path = NULL, hidden = NULL)
 }
 \arguments{
 \item{name}{string optional. The name of this notebook.}

@@ -68,6 +68,7 @@ apps_list <- function() {
 #' \item appId integer, The id of the app the release belongs to.
 #' \item reportTemplateId integer, ID of the report template for this release.
 #' \item resources object, A hash of resources associated with this release.
+#' \item archived string, The archival status of the requested item(s).
 #' }}
 #' \item{features}{list, App features.}
 #' @export
@@ -112,6 +113,7 @@ apps_get <- function(slug) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{projectId}{integer, The id of the project collecting all the items that belong to this app instance.}
+#' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 apps_list_instances <- function(slug, archived = NULL, app_release_id = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
@@ -151,6 +153,7 @@ apps_list_instances <- function(slug, archived = NULL, app_release_id = NULL, li
 #' \item{projectId}{integer, The id of the project collecting all the items that belong to this app instance.}
 #' \item{authCodeUrl}{string, }
 #' \item{apiKey}{string, A Civis API key that can be used by this app instance.}
+#' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 apps_post_instances <- function(slug, name = NULL) {
 
@@ -182,6 +185,7 @@ apps_post_instances <- function(slug, name = NULL) {
 #' \item{appId}{integer, The id of the app the release belongs to.}
 #' \item{reportTemplateId}{integer, ID of the report template for this release.}
 #' \item{resources}{list, A hash of resources associated with this release.}
+#' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 apps_list_releases <- function(slug, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
@@ -209,6 +213,7 @@ apps_list_releases <- function(slug, archived = NULL, limit = NULL, page_num = N
 #' \item{appId}{integer, The id of the app the release belongs to.}
 #' \item{reportTemplateId}{integer, ID of the report template for this release.}
 #' \item{resources}{list, A hash of resources associated with this release.}
+#' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 apps_get_releases <- function(id, slug) {
 
@@ -248,6 +253,7 @@ apps_get_releases <- function(id, slug) {
 #' \item{projectId}{integer, The id of the project collecting all the items that belong to this app instance.}
 #' \item{authCodeUrl}{string, }
 #' \item{apiKey}{string, A Civis API key that can be used by this app instance.}
+#' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 apps_get_instances <- function(id, slug) {
 
@@ -288,6 +294,7 @@ apps_get_instances <- function(id, slug) {
 #' \item{projectId}{integer, The id of the project collecting all the items that belong to this app instance.}
 #' \item{authCodeUrl}{string, }
 #' \item{apiKey}{string, A Civis API key that can be used by this app instance.}
+#' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 apps_patch_instances <- function(id, slug, name = NULL) {
 
@@ -504,6 +511,7 @@ apps_delete_instances_shares_groups <- function(id, group_id, slug) {
 #' \item{projectId}{integer, The id of the project collecting all the items that belong to this app instance.}
 #' \item{authCodeUrl}{string, }
 #' \item{apiKey}{string, A Civis API key that can be used by this app instance.}
+#' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 apps_put_instances_archive <- function(id, slug, status) {
 
@@ -825,18 +833,8 @@ clusters_list_workers_queued_jobs <- function(id) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID of this cluster.}
-#' \item{instanceTypes}{array, An array containing the following fields: 
-#' \itemize{
-#' \item type string, An EC2 instance type.
-#' \item minInstances integer, The minimum number of instances of that type in this cluster.
-#' \item maxInstances integer, The maximum number of instances of that type in this cluster.
-#' \item instanceMaxMemory integer, The amount of memory available to a single instance of that type.
-#' \item instanceMaxCpu integer, The number of processor shares available to a single instance of that type.
-#' }}
-#' \item{defaultInstanceType}{string, Deprecated. The default EC2 instance type in this cluster.}
 #' \item{organizationId}{string, The id of this cluster's organization.}
 #' \item{organizationSlug}{string, The slug of this cluster's organization.}
-#' \item{securityGroupId}{string, The security group to be added to the nodes of this cluster}
 #' \item{clusterPartitions}{array, An array containing the following fields: 
 #' \itemize{
 #' \item clusterPartitionId integer, The ID of this cluster partition.
@@ -869,18 +867,8 @@ clusters_list_kubernetes <- function(organization_slug = NULL, limit = NULL, pag
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this cluster.}
-#' \item{instanceTypes}{array, An array containing the following fields: 
-#' \itemize{
-#' \item type string, An EC2 instance type.
-#' \item minInstances integer, The minimum number of instances of that type in this cluster.
-#' \item maxInstances integer, The maximum number of instances of that type in this cluster.
-#' \item instanceMaxMemory integer, The amount of memory available to a single instance of that type.
-#' \item instanceMaxCpu integer, The number of processor shares available to a single instance of that type.
-#' }}
-#' \item{defaultInstanceType}{string, Deprecated. The default EC2 instance type in this cluster.}
 #' \item{organizationId}{string, The id of this cluster's organization.}
 #' \item{organizationSlug}{string, The slug of this cluster's organization.}
-#' \item{securityGroupId}{string, The security group to be added to the nodes of this cluster}
 #' \item{clusterPartitions}{array, An array containing the following fields: 
 #' \itemize{
 #' \item clusterPartitionId integer, The ID of this cluster partition.
@@ -937,6 +925,116 @@ clusters_list_kubernetes_partitions <- function(id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a Cluster Partition for given cluster
+#' @param id integer required. The ID of the cluster which this partition belongs to.
+#' @param instance_configs array required. An array containing the following fields: 
+#' \itemize{
+#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, and p2.xlarge.
+#' \item minInstances integer, The minimum number of instances of that type in this cluster.
+#' \item maxInstances integer, The maximum number of instances of that type in this cluster.
+#' }
+#' @param name string required. The name of the cluster partition.
+#' @param labels array required. Labels associated with this partition.
+#' 
+#' @return  A list containing the following elements:
+#' \item{clusterPartitionId}{integer, The ID of this cluster partition.}
+#' \item{name}{string, The name of the cluster partition.}
+#' \item{labels}{array, Labels associated with this partition.}
+#' \item{instanceConfigs}{array, An array containing the following fields: 
+#' \itemize{
+#' \item instanceConfigId integer, The ID of this InstanceConfig.
+#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, and p2.xlarge.
+#' \item minInstances integer, The minimum number of instances of that type in this cluster.
+#' \item maxInstances integer, The maximum number of instances of that type in this cluster.
+#' \item instanceMaxMemory number, The amount of memory (RAM) available to a single instance of that type in megabytes.
+#' \item instanceMaxCpu number, The number of processor shares available to a single instance of that type in millicores.
+#' }}
+#' \item{defaultInstanceConfigId}{integer, The id of the InstanceConfig that is the default for this partition.}
+#' @export
+clusters_post_kubernetes_partitions <- function(id, instance_configs, name, labels) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/clusters/kubernetes/{id}/partitions"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(instanceConfigs = instance_configs, name = name, labels = labels)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update a Cluster Partition
+#' @param id integer required. The ID of the cluster which this partition belongs to.
+#' @param cluster_partition_id integer required. The ID of this cluster partition.
+#' @param instance_configs array optional. An array containing the following fields: 
+#' \itemize{
+#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, and p2.xlarge.
+#' \item minInstances integer, The minimum number of instances of that type in this cluster.
+#' \item maxInstances integer, The maximum number of instances of that type in this cluster.
+#' }
+#' @param name string optional. The name of the cluster partition.
+#' @param labels array optional. Labels associated with this partition.
+#' 
+#' @return  A list containing the following elements:
+#' \item{clusterPartitionId}{integer, The ID of this cluster partition.}
+#' \item{name}{string, The name of the cluster partition.}
+#' \item{labels}{array, Labels associated with this partition.}
+#' \item{instanceConfigs}{array, An array containing the following fields: 
+#' \itemize{
+#' \item instanceConfigId integer, The ID of this InstanceConfig.
+#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, and p2.xlarge.
+#' \item minInstances integer, The minimum number of instances of that type in this cluster.
+#' \item maxInstances integer, The maximum number of instances of that type in this cluster.
+#' \item instanceMaxMemory number, The amount of memory (RAM) available to a single instance of that type in megabytes.
+#' \item instanceMaxCpu number, The number of processor shares available to a single instance of that type in millicores.
+#' }}
+#' \item{defaultInstanceConfigId}{integer, The id of the InstanceConfig that is the default for this partition.}
+#' @export
+clusters_patch_kubernetes_partitions <- function(id, cluster_partition_id, instance_configs = NULL, name = NULL, labels = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/clusters/kubernetes/{id}/partitions/{cluster_partition_id}"
+  path_params  <- list(id = id, cluster_partition_id = cluster_partition_id)
+  query_params <- list()
+  body_params  <- list(instanceConfigs = instance_configs, name = name, labels = labels)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("patch", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Delete a Cluster Partition
+#' @param id integer required. The ID of the cluster which this partition belongs to.
+#' @param cluster_partition_id integer required. The ID of this cluster partition.
+#' 
+#' @return  An empty HTTP response
+#' @export
+clusters_delete_kubernetes_partitions <- function(id, cluster_partition_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/clusters/kubernetes/{id}/partitions/{cluster_partition_id}"
+  path_params  <- list(id = id, cluster_partition_id = cluster_partition_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -2605,6 +2703,2025 @@ enhancements_list_cass_ncoa_runs_outputs <- function(id, run_id, limit = NULL, p
  }
 
 
+#' Create a Data Unification Enhancement
+#' @param name string required. The name of the enhancement job.
+#' @param field_mapping1 list required. The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.
+#' @param field_mapping2 list required. The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.
+#' @param schedule list optional. A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }
+#' @param parent_id integer optional. Parent ID that triggers this enhancement.
+#' @param notifications list optional. A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }
+#' @param table1 list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param file1_id integer optional. The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.
+#' @param table2 list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param file2_id integer optional. The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.
+#' @param output_table list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param output_filename string optional. The name of the output file. This should be set if and only if file1Id and file2Id are set.
+#' @param max_matches integer optional. The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.
+#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{fieldMapping1}{list, The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.}
+#' \item{table1}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{file1Id}{integer, The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.}
+#' \item{fieldMapping2}{list, The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.}
+#' \item{table2}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{file2Id}{integer, The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.}
+#' \item{outputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{outputFilename}{string, The name of the output file. This should be set if and only if file1Id and file2Id are set.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+#' @export
+enhancements_post_data_unification <- function(name, field_mapping1, field_mapping2, schedule = NULL, parent_id = NULL, notifications = NULL, table1 = NULL, file1_id = NULL, table2 = NULL, file2_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(name = name, fieldMapping1 = field_mapping1, fieldMapping2 = field_mapping2, schedule = schedule, parentId = parent_id, notifications = notifications, table1 = table1, file1Id = file1_id, table2 = table2, file2Id = file2_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get a Data Unification Enhancement
+#' @param id integer required. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{fieldMapping1}{list, The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.}
+#' \item{table1}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{file1Id}{integer, The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.}
+#' \item{fieldMapping2}{list, The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.}
+#' \item{table2}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{file2Id}{integer, The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.}
+#' \item{outputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{outputFilename}{string, The name of the output file. This should be set if and only if file1Id and file2Id are set.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+#' @export
+enhancements_get_data_unification <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Replace all attributes of this Data Unification Enhancement
+#' @param id integer required. The ID for the enhancement.
+#' @param name string required. The name of the enhancement job.
+#' @param field_mapping1 list required. The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.
+#' @param field_mapping2 list required. The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.
+#' @param schedule list optional. A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }
+#' @param parent_id integer optional. Parent ID that triggers this enhancement.
+#' @param notifications list optional. A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }
+#' @param table1 list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param file1_id integer optional. The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.
+#' @param table2 list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param file2_id integer optional. The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.
+#' @param output_table list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param output_filename string optional. The name of the output file. This should be set if and only if file1Id and file2Id are set.
+#' @param max_matches integer optional. The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.
+#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{fieldMapping1}{list, The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.}
+#' \item{table1}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{file1Id}{integer, The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.}
+#' \item{fieldMapping2}{list, The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.}
+#' \item{table2}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{file2Id}{integer, The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.}
+#' \item{outputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{outputFilename}{string, The name of the output file. This should be set if and only if file1Id and file2Id are set.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+#' @export
+enhancements_put_data_unification <- function(id, name, field_mapping1, field_mapping2, schedule = NULL, parent_id = NULL, notifications = NULL, table1 = NULL, file1_id = NULL, table2 = NULL, file2_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, fieldMapping1 = field_mapping1, fieldMapping2 = field_mapping2, schedule = schedule, parentId = parent_id, notifications = notifications, table1 = table1, file1Id = file1_id, table2 = table2, file2Id = file2_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update some attributes of this Data Unification Enhancement
+#' @param id integer required. The ID for the enhancement.
+#' @param name string optional. The name of the enhancement job.
+#' @param schedule list optional. A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }
+#' @param parent_id integer optional. Parent ID that triggers this enhancement.
+#' @param notifications list optional. A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }
+#' @param field_mapping1 list optional. The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.
+#' @param table1 list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param file1_id integer optional. The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.
+#' @param field_mapping2 list optional. The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.
+#' @param table2 list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param file2_id integer optional. The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.
+#' @param output_table list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param output_filename string optional. The name of the output file. This should be set if and only if file1Id and file2Id are set.
+#' @param max_matches integer optional. The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.
+#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{fieldMapping1}{list, The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.}
+#' \item{table1}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{file1Id}{integer, The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.}
+#' \item{fieldMapping2}{list, The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.}
+#' \item{table2}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{file2Id}{integer, The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.}
+#' \item{outputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{outputFilename}{string, The name of the output file. This should be set if and only if file1Id and file2Id are set.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+#' @export
+enhancements_patch_data_unification <- function(id, name = NULL, schedule = NULL, parent_id = NULL, notifications = NULL, field_mapping1 = NULL, table1 = NULL, file1_id = NULL, field_mapping2 = NULL, table2 = NULL, file2_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, schedule = schedule, parentId = parent_id, notifications = notifications, fieldMapping1 = field_mapping1, table1 = table1, file1Id = file1_id, fieldMapping2 = field_mapping2, table2 = table2, file2Id = file2_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("patch", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Start a run
+#' @param id integer required. The ID of the data_unification.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the run.}
+#' \item{dataUnificationId}{integer, The ID of the data_unification.}
+#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
+#' \item{error}{string, The error, if any, returned by the run.}
+#' @export
+enhancements_post_data_unification_runs <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}/runs"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List runs for the given data_unification
+#' @param id integer required. The ID of the data_unification.
+#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID of the run.}
+#' \item{dataUnificationId}{integer, The ID of the data_unification.}
+#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
+#' \item{error}{string, The error, if any, returned by the run.}
+#' @export
+enhancements_list_data_unification_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}/runs"
+  path_params  <- list(id = id)
+  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Check status of a run
+#' @param id integer required. The ID of the data_unification.
+#' @param run_id integer required. The ID of the run.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the run.}
+#' \item{dataUnificationId}{integer, The ID of the data_unification.}
+#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
+#' \item{error}{string, The error, if any, returned by the run.}
+#' @export
+enhancements_get_data_unification_runs <- function(id, run_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Cancel a run
+#' @param id integer required. The ID of the data_unification.
+#' @param run_id integer required. The ID of the run.
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_delete_data_unification_runs <- function(id, run_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get the logs for a run
+#' @param id integer required. The ID of the data_unification.
+#' @param run_id integer required. The ID of the run.
+#' @param last_id integer optional. The ID of the last log message received. Log entries with this ID value or lower will be omitted.Logs are sorted by ID if this value is provided, and are otherwise sorted by createdAt.
+#' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID of the log.}
+#' \item{createdAt}{string, The time the log was created.}
+#' \item{message}{string, The log message.}
+#' \item{level}{string, The level of the log. One of unknown,fatal,error,warn,info,debug.}
+#' @export
+enhancements_list_data_unification_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}/runs/{run_id}/logs"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list(last_id = last_id, limit = limit)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Cancel a run
+#' @param id integer required. The ID of the job.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the run.}
+#' \item{state}{string, The state of the run, one of 'queued', 'running' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' @export
+enhancements_post_data_unification_cancel <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}/cancel"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the outputs for a run
+#' @param id integer required. The ID of the job.
+#' @param run_id integer required. The ID of the run.
+#' @param limit integer optional. Number of results to return. Defaults to its maximum of 50.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at, id.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, The type of the output. Valid values are File, Table, Report, Project, Credential, or JSONValue}
+#' \item{objectId}{integer, The ID of the output.}
+#' \item{name}{string, The name of the output.}
+#' \item{link}{string, The hypermedia link to the output.}
+#' \item{value}{string, }
+#' @export
+enhancements_list_data_unification_runs_outputs <- function(id, run_id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}/runs/{run_id}/outputs"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a Table Deduplication Enhancement
+#' @param name string required. The name of the enhancement job.
+#' @param input_field_mapping list required. The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.
+#' @param schedule list optional. A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }
+#' @param parent_id integer optional. Parent ID that triggers this enhancement.
+#' @param notifications list optional. A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }
+#' @param input_table list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param input_file_id integer optional. The ID for the input file. This should be set if and only if inputTable and outputTable are not set.
+#' @param output_table list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param output_filename string optional. The name of the output file. This should be set if and only if inputFileId is set.
+#' @param max_matches integer optional. The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.
+#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
+#' \item{inputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
+#' \item{outputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+#' @export
+enhancements_post_table_deduplication <- function(name, input_field_mapping, schedule = NULL, parent_id = NULL, notifications = NULL, input_table = NULL, input_file_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(name = name, inputFieldMapping = input_field_mapping, schedule = schedule, parentId = parent_id, notifications = notifications, inputTable = input_table, inputFileId = input_file_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get a Table Deduplication Enhancement
+#' @param id integer required. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
+#' \item{inputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
+#' \item{outputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+#' @export
+enhancements_get_table_deduplication <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Replace all attributes of this Table Deduplication Enhancement
+#' @param id integer required. The ID for the enhancement.
+#' @param name string required. The name of the enhancement job.
+#' @param input_field_mapping list required. The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.
+#' @param schedule list optional. A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }
+#' @param parent_id integer optional. Parent ID that triggers this enhancement.
+#' @param notifications list optional. A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }
+#' @param input_table list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param input_file_id integer optional. The ID for the input file. This should be set if and only if inputTable and outputTable are not set.
+#' @param output_table list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param output_filename string optional. The name of the output file. This should be set if and only if inputFileId is set.
+#' @param max_matches integer optional. The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.
+#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
+#' \item{inputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
+#' \item{outputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+#' @export
+enhancements_put_table_deduplication <- function(id, name, input_field_mapping, schedule = NULL, parent_id = NULL, notifications = NULL, input_table = NULL, input_file_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, inputFieldMapping = input_field_mapping, schedule = schedule, parentId = parent_id, notifications = notifications, inputTable = input_table, inputFileId = input_file_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update some attributes of this Table Deduplication Enhancement
+#' @param id integer required. The ID for the enhancement.
+#' @param name string optional. The name of the enhancement job.
+#' @param schedule list optional. A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }
+#' @param parent_id integer optional. Parent ID that triggers this enhancement.
+#' @param notifications list optional. A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }
+#' @param input_field_mapping list optional. The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.
+#' @param input_table list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param input_file_id integer optional. The ID for the input file. This should be set if and only if inputTable and outputTable are not set.
+#' @param output_table list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param output_filename string optional. The name of the output file. This should be set if and only if inputFileId is set.
+#' @param max_matches integer optional. The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.
+#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
+#' \item{inputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
+#' \item{outputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+#' @export
+enhancements_patch_table_deduplication <- function(id, name = NULL, schedule = NULL, parent_id = NULL, notifications = NULL, input_field_mapping = NULL, input_table = NULL, input_file_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, schedule = schedule, parentId = parent_id, notifications = notifications, inputFieldMapping = input_field_mapping, inputTable = input_table, inputFileId = input_file_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("patch", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Start a run
+#' @param id integer required. The ID of the table_deduplication.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the run.}
+#' \item{tableDeduplicationId}{integer, The ID of the table_deduplication.}
+#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
+#' \item{error}{string, The error, if any, returned by the run.}
+#' @export
+enhancements_post_table_deduplication_runs <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}/runs"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List runs for the given table_deduplication
+#' @param id integer required. The ID of the table_deduplication.
+#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID of the run.}
+#' \item{tableDeduplicationId}{integer, The ID of the table_deduplication.}
+#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
+#' \item{error}{string, The error, if any, returned by the run.}
+#' @export
+enhancements_list_table_deduplication_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}/runs"
+  path_params  <- list(id = id)
+  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Check status of a run
+#' @param id integer required. The ID of the table_deduplication.
+#' @param run_id integer required. The ID of the run.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the run.}
+#' \item{tableDeduplicationId}{integer, The ID of the table_deduplication.}
+#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
+#' \item{error}{string, The error, if any, returned by the run.}
+#' @export
+enhancements_get_table_deduplication_runs <- function(id, run_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Cancel a run
+#' @param id integer required. The ID of the table_deduplication.
+#' @param run_id integer required. The ID of the run.
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_delete_table_deduplication_runs <- function(id, run_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get the logs for a run
+#' @param id integer required. The ID of the table_deduplication.
+#' @param run_id integer required. The ID of the run.
+#' @param last_id integer optional. The ID of the last log message received. Log entries with this ID value or lower will be omitted.Logs are sorted by ID if this value is provided, and are otherwise sorted by createdAt.
+#' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID of the log.}
+#' \item{createdAt}{string, The time the log was created.}
+#' \item{message}{string, The log message.}
+#' \item{level}{string, The level of the log. One of unknown,fatal,error,warn,info,debug.}
+#' @export
+enhancements_list_table_deduplication_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}/runs/{run_id}/logs"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list(last_id = last_id, limit = limit)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Cancel a run
+#' @param id integer required. The ID of the job.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the run.}
+#' \item{state}{string, The state of the run, one of 'queued', 'running' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' @export
+enhancements_post_table_deduplication_cancel <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}/cancel"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the outputs for a run
+#' @param id integer required. The ID of the job.
+#' @param run_id integer required. The ID of the run.
+#' @param limit integer optional. Number of results to return. Defaults to its maximum of 50.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at, id.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, The type of the output. Valid values are File, Table, Report, Project, Credential, or JSONValue}
+#' \item{objectId}{integer, The ID of the output.}
+#' \item{name}{string, The name of the output.}
+#' \item{link}{string, The hypermedia link to the output.}
+#' \item{value}{string, }
+#' @export
+enhancements_list_table_deduplication_runs_outputs <- function(id, run_id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}/runs/{run_id}/outputs"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a Civis Data Match Enhancement
+#' @param name string required. The name of the enhancement job.
+#' @param input_field_mapping list required. The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.
+#' @param match_target_id integer required. The ID of the Civis Data match target. See /match_targets for IDs.
+#' @param schedule list optional. A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }
+#' @param parent_id integer optional. Parent ID that triggers this enhancement.
+#' @param notifications list optional. A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }
+#' @param input_table list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param input_file_id integer optional. The ID for the input file. This should be set if and only if inputTable and outputTable are not set.
+#' @param output_table list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param output_filename string optional. The name of the output file. This should be set if and only if inputFileId is set.
+#' @param max_matches integer optional. The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.
+#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{inputFieldMapping}{list, The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.}
+#' \item{inputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
+#' \item{matchTargetId}{integer, The ID of the Civis Data match target. See /match_targets for IDs.}
+#' \item{outputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+#' @export
+enhancements_post_civis_data_match <- function(name, input_field_mapping, match_target_id, schedule = NULL, parent_id = NULL, notifications = NULL, input_table = NULL, input_file_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(name = name, inputFieldMapping = input_field_mapping, matchTargetId = match_target_id, schedule = schedule, parentId = parent_id, notifications = notifications, inputTable = input_table, inputFileId = input_file_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get a Civis Data Match Enhancement
+#' @param id integer required. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{inputFieldMapping}{list, The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.}
+#' \item{inputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
+#' \item{matchTargetId}{integer, The ID of the Civis Data match target. See /match_targets for IDs.}
+#' \item{outputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+#' @export
+enhancements_get_civis_data_match <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Replace all attributes of this Civis Data Match Enhancement
+#' @param id integer required. The ID for the enhancement.
+#' @param name string required. The name of the enhancement job.
+#' @param input_field_mapping list required. The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.
+#' @param match_target_id integer required. The ID of the Civis Data match target. See /match_targets for IDs.
+#' @param schedule list optional. A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }
+#' @param parent_id integer optional. Parent ID that triggers this enhancement.
+#' @param notifications list optional. A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }
+#' @param input_table list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param input_file_id integer optional. The ID for the input file. This should be set if and only if inputTable and outputTable are not set.
+#' @param output_table list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param output_filename string optional. The name of the output file. This should be set if and only if inputFileId is set.
+#' @param max_matches integer optional. The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.
+#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{inputFieldMapping}{list, The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.}
+#' \item{inputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
+#' \item{matchTargetId}{integer, The ID of the Civis Data match target. See /match_targets for IDs.}
+#' \item{outputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+#' @export
+enhancements_put_civis_data_match <- function(id, name, input_field_mapping, match_target_id, schedule = NULL, parent_id = NULL, notifications = NULL, input_table = NULL, input_file_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, inputFieldMapping = input_field_mapping, matchTargetId = match_target_id, schedule = schedule, parentId = parent_id, notifications = notifications, inputTable = input_table, inputFileId = input_file_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update some attributes of this Civis Data Match Enhancement
+#' @param id integer required. The ID for the enhancement.
+#' @param name string optional. The name of the enhancement job.
+#' @param schedule list optional. A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }
+#' @param parent_id integer optional. Parent ID that triggers this enhancement.
+#' @param notifications list optional. A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }
+#' @param input_field_mapping list optional. The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.
+#' @param input_table list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param input_file_id integer optional. The ID for the input file. This should be set if and only if inputTable and outputTable are not set.
+#' @param match_target_id integer optional. The ID of the Civis Data match target. See /match_targets for IDs.
+#' @param output_table list optional. A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }
+#' @param output_filename string optional. The name of the output file. This should be set if and only if inputFileId is set.
+#' @param max_matches integer optional. The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.
+#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{inputFieldMapping}{list, The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.}
+#' \item{inputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
+#' \item{matchTargetId}{integer, The ID of the Civis Data match target. See /match_targets for IDs.}
+#' \item{outputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+#' @export
+enhancements_patch_civis_data_match <- function(id, name = NULL, schedule = NULL, parent_id = NULL, notifications = NULL, input_field_mapping = NULL, input_table = NULL, input_file_id = NULL, match_target_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, schedule = schedule, parentId = parent_id, notifications = notifications, inputFieldMapping = input_field_mapping, inputTable = input_table, inputFileId = input_file_id, matchTargetId = match_target_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("patch", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Start a run
+#' @param id integer required. The ID of the civis_data_match.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the run.}
+#' \item{civisDataMatchId}{integer, The ID of the civis_data_match.}
+#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
+#' \item{error}{string, The error, if any, returned by the run.}
+#' @export
+enhancements_post_civis_data_match_runs <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/runs"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List runs for the given civis_data_match
+#' @param id integer required. The ID of the civis_data_match.
+#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID of the run.}
+#' \item{civisDataMatchId}{integer, The ID of the civis_data_match.}
+#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
+#' \item{error}{string, The error, if any, returned by the run.}
+#' @export
+enhancements_list_civis_data_match_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/runs"
+  path_params  <- list(id = id)
+  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Check status of a run
+#' @param id integer required. The ID of the civis_data_match.
+#' @param run_id integer required. The ID of the run.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the run.}
+#' \item{civisDataMatchId}{integer, The ID of the civis_data_match.}
+#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
+#' \item{error}{string, The error, if any, returned by the run.}
+#' @export
+enhancements_get_civis_data_match_runs <- function(id, run_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Cancel a run
+#' @param id integer required. The ID of the civis_data_match.
+#' @param run_id integer required. The ID of the run.
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_delete_civis_data_match_runs <- function(id, run_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get the logs for a run
+#' @param id integer required. The ID of the civis_data_match.
+#' @param run_id integer required. The ID of the run.
+#' @param last_id integer optional. The ID of the last log message received. Log entries with this ID value or lower will be omitted.Logs are sorted by ID if this value is provided, and are otherwise sorted by createdAt.
+#' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID of the log.}
+#' \item{createdAt}{string, The time the log was created.}
+#' \item{message}{string, The log message.}
+#' \item{level}{string, The level of the log. One of unknown,fatal,error,warn,info,debug.}
+#' @export
+enhancements_list_civis_data_match_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/runs/{run_id}/logs"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list(last_id = last_id, limit = limit)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Cancel a run
+#' @param id integer required. The ID of the job.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the run.}
+#' \item{state}{string, The state of the run, one of 'queued', 'running' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' @export
+enhancements_post_civis_data_match_cancel <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/cancel"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("post", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the outputs for a run
+#' @param id integer required. The ID of the job.
+#' @param run_id integer required. The ID of the run.
+#' @param limit integer optional. Number of results to return. Defaults to its maximum of 50.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at, id.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, The type of the output. Valid values are File, Table, Report, Project, Credential, or JSONValue}
+#' \item{objectId}{integer, The ID of the output.}
+#' \item{name}{string, The name of the output.}
+#' \item{link}{string, The hypermedia link to the output.}
+#' \item{value}{string, }
+#' @export
+enhancements_list_civis_data_match_runs_outputs <- function(id, run_id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/runs/{run_id}/outputs"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List users and groups permissioned on this object
 #' @param id integer required. The ID of the object.
 #' 
@@ -3314,6 +5431,1056 @@ enhancements_put_person_matching_archive <- function(id, status) {
  }
 
 
+#' List users and groups permissioned on this object
+#' @param id integer required. The ID of the object.
+#' 
+#' @return  An array containing the following fields:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+enhancements_list_data_unification_shares <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}/shares"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions users have on this object
+#' @param id integer required. ID of the resource to be shared
+#' @param user_ids array required. An array of one or more user IDs
+#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+enhancements_put_data_unification_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}/shares/users"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a user has on this object
+#' @param id integer required. ID of the resource to be revoked
+#' @param user_id integer required. ID of the user
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_delete_data_unification_shares_users <- function(id, user_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}/shares/users/{user_id}"
+  path_params  <- list(id = id, user_id = user_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions groups has on this object
+#' @param id integer required. ID of the resource to be shared
+#' @param group_ids array required. An array of one or more group IDs
+#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+enhancements_put_data_unification_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}/shares/groups"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a group has on this object
+#' @param id integer required. ID of the resource to be revoked
+#' @param group_id integer required. ID of the group
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_delete_data_unification_shares_groups <- function(id, group_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}/shares/groups/{group_id}"
+  path_params  <- list(id = id, group_id = group_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the projects a container docker belongs to
+#' @param id integer required. The ID of the resource.
+#' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID for this project.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{name}{string, The name of this project.}
+#' \item{description}{string, A description of the project.}
+#' \item{users}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{autoShare}{boolean, }
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+enhancements_list_data_unification_projects <- function(id, hidden = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}/projects"
+  path_params  <- list(id = id)
+  query_params <- list(hidden = hidden)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Add a container docker to a project
+#' @param id integer required. The ID of the resource.
+#' @param project_id integer required. The ID of the project.
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_put_data_unification_projects <- function(id, project_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Remove a container docker from a project
+#' @param id integer required. The ID of the resource.
+#' @param project_id integer required. The ID of the project.
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_delete_data_unification_projects <- function(id, project_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update the archive status of this object
+#' @param id integer required. The ID of the object.
+#' @param status boolean required. The desired archived status of the object.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{fieldMapping1}{list, The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.}
+#' \item{table1}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{file1Id}{integer, The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.}
+#' \item{fieldMapping2}{list, The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.}
+#' \item{table2}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{file2Id}{integer, The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.}
+#' \item{outputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{outputFilename}{string, The name of the output file. This should be set if and only if file1Id and file2Id are set.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+#' @export
+enhancements_put_data_unification_archive <- function(id, status) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/data-unification/{id}/archive"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(status = status)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List users and groups permissioned on this object
+#' @param id integer required. The ID of the object.
+#' 
+#' @return  An array containing the following fields:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+enhancements_list_table_deduplication_shares <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}/shares"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions users have on this object
+#' @param id integer required. ID of the resource to be shared
+#' @param user_ids array required. An array of one or more user IDs
+#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+enhancements_put_table_deduplication_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}/shares/users"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a user has on this object
+#' @param id integer required. ID of the resource to be revoked
+#' @param user_id integer required. ID of the user
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_delete_table_deduplication_shares_users <- function(id, user_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}/shares/users/{user_id}"
+  path_params  <- list(id = id, user_id = user_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions groups has on this object
+#' @param id integer required. ID of the resource to be shared
+#' @param group_ids array required. An array of one or more group IDs
+#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+enhancements_put_table_deduplication_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}/shares/groups"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a group has on this object
+#' @param id integer required. ID of the resource to be revoked
+#' @param group_id integer required. ID of the group
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_delete_table_deduplication_shares_groups <- function(id, group_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}/shares/groups/{group_id}"
+  path_params  <- list(id = id, group_id = group_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the projects a container docker belongs to
+#' @param id integer required. The ID of the resource.
+#' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID for this project.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{name}{string, The name of this project.}
+#' \item{description}{string, A description of the project.}
+#' \item{users}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{autoShare}{boolean, }
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+enhancements_list_table_deduplication_projects <- function(id, hidden = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}/projects"
+  path_params  <- list(id = id)
+  query_params <- list(hidden = hidden)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Add a container docker to a project
+#' @param id integer required. The ID of the resource.
+#' @param project_id integer required. The ID of the project.
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_put_table_deduplication_projects <- function(id, project_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Remove a container docker from a project
+#' @param id integer required. The ID of the resource.
+#' @param project_id integer required. The ID of the project.
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_delete_table_deduplication_projects <- function(id, project_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update the archive status of this object
+#' @param id integer required. The ID of the object.
+#' @param status boolean required. The desired archived status of the object.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
+#' \item{inputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
+#' \item{outputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+#' @export
+enhancements_put_table_deduplication_archive <- function(id, status) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/table-deduplication/{id}/archive"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(status = status)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List users and groups permissioned on this object
+#' @param id integer required. The ID of the object.
+#' 
+#' @return  An array containing the following fields:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+enhancements_list_civis_data_match_shares <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/shares"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions users have on this object
+#' @param id integer required. ID of the resource to be shared
+#' @param user_ids array required. An array of one or more user IDs
+#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+enhancements_put_civis_data_match_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/shares/users"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a user has on this object
+#' @param id integer required. ID of the resource to be revoked
+#' @param user_id integer required. ID of the user
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_delete_civis_data_match_shares_users <- function(id, user_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/shares/users/{user_id}"
+  path_params  <- list(id = id, user_id = user_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions groups has on this object
+#' @param id integer required. ID of the resource to be shared
+#' @param group_ids array required. An array of one or more group IDs
+#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+enhancements_put_civis_data_match_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/shares/groups"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a group has on this object
+#' @param id integer required. ID of the resource to be revoked
+#' @param group_id integer required. ID of the group
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_delete_civis_data_match_shares_groups <- function(id, group_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/shares/groups/{group_id}"
+  path_params  <- list(id = id, group_id = group_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the projects a container docker belongs to
+#' @param id integer required. The ID of the resource.
+#' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID for this project.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{name}{string, The name of this project.}
+#' \item{description}{string, A description of the project.}
+#' \item{users}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{autoShare}{boolean, }
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+enhancements_list_civis_data_match_projects <- function(id, hidden = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/projects"
+  path_params  <- list(id = id)
+  query_params <- list(hidden = hidden)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("get", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Add a container docker to a project
+#' @param id integer required. The ID of the resource.
+#' @param project_id integer required. The ID of the project.
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_put_civis_data_match_projects <- function(id, project_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Remove a container docker from a project
+#' @param id integer required. The ID of the resource.
+#' @param project_id integer required. The ID of the project.
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_delete_civis_data_match_projects <- function(id, project_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("delete", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update the archive status of this object
+#' @param id integer required. The ID of the object.
+#' @param status boolean required. The desired archived status of the object.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{inputFieldMapping}{list, The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.}
+#' \item{inputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
+#' \item{matchTargetId}{integer, The ID of the Civis Data match target. See /match_targets for IDs.}
+#' \item{outputTable}{list, A list containing the following elements: 
+#' \itemize{
+#' \item databaseName string, The Redshift database name for the table.
+#' \item schema string, The schema name for the table.
+#' \item table string, The table name.
+#' }}
+#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+#' @export
+enhancements_put_civis_data_match_archive <- function(id, status) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/archive"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(status = status)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("put", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List 
 #' @param type string optional. If specified, return exports of these types. It accepts a comma-separated list, possible values are 'database' and 'gdoc'.
 #' @param author string optional. If specified, return exports from this author. It accepts a comma-separated list of author ids.
@@ -3552,6 +6719,14 @@ files_post_multipart_complete <- function(id) {
 #' \item{createdAt}{string, The date and time the file was created.}
 #' \item{fileSize}{integer, The file size.}
 #' \item{expiresAt}{string, The date and time the file will expire. If not specified, the file will expire in 30 days. To keep a file indefinitely, specify null.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
 #' \item{downloadUrl}{string, A JSON string containing information about the URL of the file.}
 #' \item{fileUrl}{string, The URL that may be used to download the file.}
 #' @export
@@ -13749,6 +16924,9 @@ reports_put_archive <- function(id, status) {
 #' \item{host}{string, The host for the service report}
 #' \item{displayUrl}{string, The URL to display the service report.}
 #' \item{serviceId}{integer, The id of the backing service}
+#' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
+#' \item{apiKey}{string, A Civis API key that can be used by this report.}
+#' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
 #' @export
 results_get_services <- function(id) {
 
@@ -13770,6 +16948,7 @@ results_get_services <- function(id) {
 #' Update some attributes of this service report
 #' @param id integer required. The ID of this report.
 #' @param name string optional. The name of the service report.
+#' @param provide_api_key boolean optional. Whether the report requests an API Key from the report viewer.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
@@ -13787,14 +16966,17 @@ results_get_services <- function(id) {
 #' \item{host}{string, The host for the service report}
 #' \item{displayUrl}{string, The URL to display the service report.}
 #' \item{serviceId}{integer, The id of the backing service}
+#' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
+#' \item{apiKey}{string, A Civis API key that can be used by this report.}
+#' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
 #' @export
-results_patch_services <- function(id, name = NULL) {
+results_patch_services <- function(id, name = NULL, provide_api_key = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/results/services/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name)
+  body_params  <- list(name = name, provideAPIKey = provide_api_key)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -13824,6 +17006,9 @@ results_patch_services <- function(id, name = NULL) {
 #' \item{host}{string, The host for the service report}
 #' \item{displayUrl}{string, The URL to display the service report.}
 #' \item{serviceId}{integer, The id of the backing service}
+#' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
+#' \item{apiKey}{string, A Civis API key that can be used by this report.}
+#' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
 #' @export
 reports_get_services <- function(id) {
 
@@ -13845,6 +17030,7 @@ reports_get_services <- function(id) {
 #' Update some attributes of this service report
 #' @param id integer required. The ID of this report.
 #' @param name string optional. The name of the service report.
+#' @param provide_api_key boolean optional. Whether the report requests an API Key from the report viewer.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
@@ -13862,14 +17048,17 @@ reports_get_services <- function(id) {
 #' \item{host}{string, The host for the service report}
 #' \item{displayUrl}{string, The URL to display the service report.}
 #' \item{serviceId}{integer, The id of the backing service}
+#' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
+#' \item{apiKey}{string, A Civis API key that can be used by this report.}
+#' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
 #' @export
-reports_patch_services <- function(id, name = NULL) {
+reports_patch_services <- function(id, name = NULL, provide_api_key = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/reports/services/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name)
+  body_params  <- list(name = name, provideAPIKey = provide_api_key)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -13882,6 +17071,7 @@ reports_patch_services <- function(id, name = NULL) {
 
 #' Create a service report
 #' @param service_id integer required. The id of the backing service
+#' @param provide_api_key boolean optional. Whether the report requests an API Key from the report viewer.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
@@ -13899,14 +17089,17 @@ reports_patch_services <- function(id, name = NULL) {
 #' \item{host}{string, The host for the service report}
 #' \item{displayUrl}{string, The URL to display the service report.}
 #' \item{serviceId}{integer, The id of the backing service}
+#' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
+#' \item{apiKey}{string, A Civis API key that can be used by this report.}
+#' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
 #' @export
-results_post_services <- function(service_id) {
+results_post_services <- function(service_id, provide_api_key = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/results/services"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(serviceId = service_id)
+  body_params  <- list(serviceId = service_id, provideAPIKey = provide_api_key)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -13919,6 +17112,7 @@ results_post_services <- function(service_id) {
 
 #' Create a service report
 #' @param service_id integer required. The id of the backing service
+#' @param provide_api_key boolean optional. Whether the report requests an API Key from the report viewer.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this report.}
@@ -13936,14 +17130,17 @@ results_post_services <- function(service_id) {
 #' \item{host}{string, The host for the service report}
 #' \item{displayUrl}{string, The URL to display the service report.}
 #' \item{serviceId}{integer, The id of the backing service}
+#' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
+#' \item{apiKey}{string, A Civis API key that can be used by this report.}
+#' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
 #' @export
-reports_post_services <- function(service_id) {
+reports_post_services <- function(service_id, provide_api_key = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/reports/services"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(serviceId = service_id)
+  body_params  <- list(serviceId = service_id, provideAPIKey = provide_api_key)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -23619,6 +26816,7 @@ scripts_post_containers_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' @param owner string optional. The owner for the search.
 #' @param limit integer optional. Defaults to 10. Maximum allowed is 50.
 #' @param archived string optional. If specified, return only results with the chosen archived status; either 'true', 'false', or 'all'. Defaults to 'false'.
+#' @param last_run_state string optional. The last run state of the job being searched for; either: 'queued', 'running', 'succeeded', 'failed', or 'cancelled'.
 #' 
 #' @return  An array containing the following fields:
 #' \item{totalResults}{integer, The number of items matching the search query.}
@@ -23633,14 +26831,19 @@ scripts_post_containers_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' \item updatedAt string, The time the item was last updated.
 #' \item owner string, The owner of the item.
 #' \item useCount integer, The use count of the item, if the item is a template.
+#' \item lastRunId integer, The last run id of the item, if the item is a job.
+#' \item lastRunState string, The last run state of the item, if the item is a job.
+#' \item lastRunStart string, The last run start time of the item, if the item is a job.
+#' \item lastRunFinish string, The last run finish time of the item, if the item is a job.
+#' \item lastRunException string, The exception of the item after the last run, if the item is a job.
 #' }}
 #' @export
-search_list <- function(query = NULL, type = NULL, offset = NULL, order = NULL, owner = NULL, limit = NULL, archived = NULL) {
+search_list <- function(query = NULL, type = NULL, offset = NULL, order = NULL, owner = NULL, limit = NULL, archived = NULL, last_run_state = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/search/"
   path_params  <- list()
-  query_params <- list(query = query, type = type, offset = offset, order = order, owner = owner, limit = limit, archived = archived)
+  query_params <- list(query = query, type = type, offset = offset, order = order, owner = owner, limit = limit, archived = archived, last_run_state = last_run_state)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -23696,6 +26899,7 @@ search_list_types <- function() {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
+#' \item{type}{string, The type of this Service}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
@@ -23759,6 +26963,7 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' Create a Service
 #' @param name string optional. The name of this Service.
 #' @param description string optional. The description of this Service.
+#' @param type string optional. The type of this Service
 #' @param docker_image_name string optional. The name of the docker image to pull from DockerHub.
 #' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub (default: latest).
 #' @param schedule list optional. A list containing the following elements: 
@@ -23796,6 +27001,7 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
+#' \item{type}{string, The type of this Service}
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{schedule}{list, A list containing the following elements: 
@@ -23866,13 +27072,13 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' @export
-services_post <- function(name = NULL, description = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL, hidden = NULL) {
+services_post <- function(name = NULL, description = NULL, type = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL, hidden = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/services/"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, description = description, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, apiKeyId = api_key_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications, hidden = hidden)
+  body_params  <- list(name = name, description = description, type = type, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, apiKeyId = api_key_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications, hidden = hidden)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -23898,6 +27104,7 @@ services_post <- function(name = NULL, description = NULL, docker_image_name = N
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
+#' \item{type}{string, The type of this Service}
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{schedule}{list, A list containing the following elements: 
@@ -24025,6 +27232,7 @@ services_get <- function(id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
+#' \item{type}{string, The type of this Service}
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{schedule}{list, A list containing the following elements: 
@@ -24152,6 +27360,7 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
+#' \item{type}{string, The type of this Service}
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{schedule}{list, A list containing the following elements: 
@@ -24448,6 +27657,7 @@ services_delete_shares_groups <- function(id, group_id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
+#' \item{type}{string, The type of this Service}
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{schedule}{list, A list containing the following elements: 
@@ -24855,6 +28065,7 @@ services_list_deployments_logs <- function(id, deployment_id, start_at = NULL, l
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
+#' \item{type}{string, The type of this Service}
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{schedule}{list, A list containing the following elements: 
@@ -26779,6 +29990,7 @@ users_patch_me <- function(preferences = NULL, last_checked_announcements = NULL
 #' \item{githubUsername}{string, The GitHub username of this user.}
 #' \item{prefersSmsOtp}{string, The preference for phone authorization of this user}
 #' \item{vpnEnabled}{string, The availability of vpn for this user.}
+#' \item{ssoDisabled}{string, The availability of SSO for this user.}
 #' \item{otpRequiredForLogin}{string, The two factor authorization requirement for this user.}
 #' \item{phone}{string, The phone number of this user.}
 #' @export

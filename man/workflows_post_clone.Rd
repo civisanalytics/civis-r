@@ -4,7 +4,8 @@
 \alias{workflows_post_clone}
 \title{Clone this Workflow}
 \usage{
-workflows_post_clone(id, clone_schedule = NULL, clone_notifications = NULL)
+workflows_post_clone(id, clone_schedule = NULL,
+  clone_notifications = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID for the workflow.}

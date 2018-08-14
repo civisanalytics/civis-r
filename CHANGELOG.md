@@ -5,6 +5,7 @@
 ### Changed
 
 - Hyperband is now supported for stacking estimators in `civis_ml`. Fixes #131.
+- Now `tryCatch` when generating the client. Fixes #138.
 
 ### Fixed
 

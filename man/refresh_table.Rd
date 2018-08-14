@@ -25,3 +25,4 @@ table scanner and updates table meta-data.
 Other tables: \code{\link{get_table_id}},
   \code{\link{transfer_table}}
 }
+\concept{tables}

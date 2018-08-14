@@ -29,6 +29,7 @@ A list containing the following elements:
 \item{projectId}{integer, The id of the project collecting all the items that belong to this app instance.}
 \item{authCodeUrl}{string, }
 \item{apiKey}{string, A Civis API key that can be used by this app instance.}
+\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
 Create a new instance of an application of the given slug
