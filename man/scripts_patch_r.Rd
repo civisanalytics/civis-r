@@ -4,11 +4,12 @@
 \alias{scripts_patch_r}
 \title{Update some attributes of this R Script}
 \usage{
-scripts_patch_r(id, name = NULL, parent_id = NULL, user_context = NULL,
-  params = NULL, arguments = NULL, schedule = NULL,
-  notifications = NULL, next_run_at = NULL, time_zone = NULL,
-  target_project_id = NULL, required_resources = NULL,
-  instance_type = NULL, source = NULL, cancel_timeout = NULL)
+scripts_patch_r(id, name = NULL, parent_id = NULL,
+  user_context = NULL, params = NULL, arguments = NULL,
+  schedule = NULL, notifications = NULL, next_run_at = NULL,
+  time_zone = NULL, target_project_id = NULL,
+  required_resources = NULL, instance_type = NULL, source = NULL,
+  cancel_timeout = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID for the script.}

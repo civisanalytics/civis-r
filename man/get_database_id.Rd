@@ -15,3 +15,4 @@ database_id integer, id of the matching database.
 \description{
 Return the database id for a given database name
 }
+\concept{id}

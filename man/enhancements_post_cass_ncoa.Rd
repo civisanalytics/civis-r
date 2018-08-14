@@ -4,10 +4,11 @@
 \alias{enhancements_post_cass_ncoa}
 \title{Create a CASS/NCOA Enhancement}
 \usage{
-enhancements_post_cass_ncoa(name, source, schedule = NULL, parent_id = NULL,
-  notifications = NULL, destination = NULL, column_mapping = NULL,
-  use_default_column_mapping = NULL, perform_ncoa = NULL,
-  ncoa_credential_id = NULL, output_level = NULL, limiting_sql = NULL)
+enhancements_post_cass_ncoa(name, source, schedule = NULL,
+  parent_id = NULL, notifications = NULL, destination = NULL,
+  column_mapping = NULL, use_default_column_mapping = NULL,
+  perform_ncoa = NULL, ncoa_credential_id = NULL,
+  output_level = NULL, limiting_sql = NULL)
 }
 \arguments{
 \item{name}{string required. The name of the enhancement job.}

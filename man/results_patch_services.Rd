@@ -4,12 +4,14 @@
 \alias{results_patch_services}
 \title{Update some attributes of this service report}
 \usage{
-results_patch_services(id, name = NULL)
+results_patch_services(id, name = NULL, provide_api_key = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of this report.}
 
 \item{name}{string optional. The name of the service report.}
+
+\item{provide_api_key}{boolean optional. Whether the report requests an API Key from the report viewer.}
 }
 \value{
 A list containing the following elements:
@@ -28,6 +30,9 @@ A list containing the following elements:
 \item{host}{string, The host for the service report}
 \item{displayUrl}{string, The URL to display the service report.}
 \item{serviceId}{integer, The id of the backing service}
+\item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
+\item{apiKey}{string, A Civis API key that can be used by this report.}
+\item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
 }
 \description{
 Update some attributes of this service report

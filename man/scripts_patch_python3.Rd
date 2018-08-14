@@ -5,10 +5,11 @@
 \title{Update some attributes of this Python Script}
 \usage{
 scripts_patch_python3(id, name = NULL, parent_id = NULL,
-  user_context = NULL, params = NULL, arguments = NULL, schedule = NULL,
-  notifications = NULL, next_run_at = NULL, time_zone = NULL,
-  target_project_id = NULL, required_resources = NULL,
-  instance_type = NULL, source = NULL, cancel_timeout = NULL)
+  user_context = NULL, params = NULL, arguments = NULL,
+  schedule = NULL, notifications = NULL, next_run_at = NULL,
+  time_zone = NULL, target_project_id = NULL,
+  required_resources = NULL, instance_type = NULL, source = NULL,
+  cancel_timeout = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID for the script.}

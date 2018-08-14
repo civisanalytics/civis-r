@@ -5,7 +5,8 @@
 \title{Perform a search}
 \usage{
 search_list(query = NULL, type = NULL, offset = NULL, order = NULL,
-  owner = NULL, limit = NULL, archived = NULL)
+  owner = NULL, limit = NULL, archived = NULL,
+  last_run_state = NULL)
 }
 \arguments{
 \item{query}{string optional. The search query.}
@@ -21,6 +22,8 @@ search_list(query = NULL, type = NULL, offset = NULL, order = NULL,
 \item{limit}{integer optional. Defaults to 10. Maximum allowed is 50.}
 
 \item{archived}{string optional. If specified, return only results with the chosen archived status; either 'true', 'false', or 'all'. Defaults to 'false'.}
+
+\item{last_run_state}{string optional. The last run state of the job being searched for; either: 'queued', 'running', 'succeeded', 'failed', or 'cancelled'.}
 }
 \value{
 An array containing the following fields:
@@ -36,6 +39,11 @@ An array containing the following fields:
 \item updatedAt string, The time the item was last updated.
 \item owner string, The owner of the item.
 \item useCount integer, The use count of the item, if the item is a template.
+\item lastRunId integer, The last run id of the item, if the item is a job.
+\item lastRunState string, The last run state of the item, if the item is a job.
+\item lastRunStart string, The last run start time of the item, if the item is a job.
+\item lastRunFinish string, The last run finish time of the item, if the item is a job.
+\item lastRunException string, The exception of the item after the last run, if the item is a job.
 }}
 }
 \description{

@@ -69,6 +69,7 @@ A list containing the following elements:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
+\item{type}{string, The type of this Service}
 \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 \item{schedule}{list, A list containing the following elements: 

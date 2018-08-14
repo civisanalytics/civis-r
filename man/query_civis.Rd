@@ -13,7 +13,8 @@ query_civis(x, ...)
 
 \method{query_civis}{numeric}(x, verbose = FALSE, ...)
 
-\method{query_civis}{character}(x, database = NULL, verbose = FALSE, ...)
+\method{query_civis}{character}(x, database = NULL, verbose = FALSE,
+  ...)
 }
 \arguments{
 \item{x}{\code{sql("...")}, \code{"query"}, or id of an existing sql script.}
@@ -55,3 +56,4 @@ Other io: \code{\link{download_civis}},
   \code{\link{query_civis_file}}, \code{\link{read_civis}},
   \code{\link{write_civis_file}}, \code{\link{write_civis}}
 }
+\concept{io}

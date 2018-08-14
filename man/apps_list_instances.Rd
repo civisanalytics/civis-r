@@ -38,6 +38,7 @@ An array containing the following fields:
 \item online boolean, Whether this user is online.
 }}
 \item{projectId}{integer, The id of the project collecting all the items that belong to this app instance.}
+\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
 List the instances of a Decision Application

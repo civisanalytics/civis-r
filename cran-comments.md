@@ -1,9 +1,10 @@
-This is a patch release fixing a bug and doc error from changes in the Civis API.
+This is a patch release fixing a CRAN check warning from the new roxygen2 package,
+and the windows build failure on CRAN.
 
-The version has been bumped to 1.5.0.
+The version has been bumped to 1.5.1.
 
 ## Test environments
-* local OS X install, R 3.5.0
+* local OS X install, R 3.5.1
 * ubuntu 14.04 (oldrel, release, devel)
 * win-builder (devel)
 

@@ -4,10 +4,11 @@
 \alias{scripts_post_sql}
 \title{Create a SQL script}
 \usage{
-scripts_post_sql(name, sql, remote_host_id, credential_id, parent_id = NULL,
-  user_context = NULL, params = NULL, arguments = NULL, schedule = NULL,
-  notifications = NULL, next_run_at = NULL, time_zone = NULL,
-  hidden = NULL, target_project_id = NULL, csv_settings = NULL)
+scripts_post_sql(name, sql, remote_host_id, credential_id,
+  parent_id = NULL, user_context = NULL, params = NULL,
+  arguments = NULL, schedule = NULL, notifications = NULL,
+  next_run_at = NULL, time_zone = NULL, hidden = NULL,
+  target_project_id = NULL, csv_settings = NULL)
 }
 \arguments{
 \item{name}{string required. The name of the script.}

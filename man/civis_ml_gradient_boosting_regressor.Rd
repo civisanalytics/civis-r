@@ -9,15 +9,15 @@ civis_ml_gradient_boosting_regressor(x, dependent_variable,
   "huber", "quantile"), learning_rate = 0.1, n_estimators = 500,
   subsample = 1, criterion = c("friedman_mse", "mse", "mae"),
   min_samples_split = 2, min_samples_leaf = 1,
-  min_weight_fraction_leaf = 0, max_depth = 2, min_impurity_split = 1e-07,
-  random_state = 42, max_features = "sqrt", alpha = 0.9,
-  max_leaf_nodes = NULL, presort = c("auto", TRUE, FALSE),
-  fit_params = NULL, cross_validation_parameters = NULL,
-  oos_scores_table = NULL, oos_scores_db = NULL,
-  oos_scores_if_exists = c("fail", "append", "drop", "truncate"),
-  model_name = NULL, cpu_requested = NULL, memory_requested = NULL,
-  disk_requested = NULL, notifications = NULL, polling_interval = NULL,
-  verbose = FALSE)
+  min_weight_fraction_leaf = 0, max_depth = 2,
+  min_impurity_split = 1e-07, random_state = 42,
+  max_features = "sqrt", alpha = 0.9, max_leaf_nodes = NULL,
+  presort = c("auto", TRUE, FALSE), fit_params = NULL,
+  cross_validation_parameters = NULL, oos_scores_table = NULL,
+  oos_scores_db = NULL, oos_scores_if_exists = c("fail", "append",
+  "drop", "truncate"), model_name = NULL, cpu_requested = NULL,
+  memory_requested = NULL, disk_requested = NULL,
+  notifications = NULL, polling_interval = NULL, verbose = FALSE)
 }
 \arguments{
 \item{x}{See the Data Sources section below.}

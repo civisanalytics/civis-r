@@ -4,8 +4,8 @@
 \alias{templates_post_reports}
 \title{Create a Report Template}
 \usage{
-templates_post_reports(name, code_body, category = NULL, archived = NULL,
-  provide_api_key = NULL, hidden = NULL)
+templates_post_reports(name, code_body, category = NULL,
+  archived = NULL, provide_api_key = NULL, hidden = NULL)
 }
 \arguments{
 \item{name}{string required. The name of the template.}

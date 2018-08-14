@@ -4,10 +4,12 @@
 \alias{reports_post_services}
 \title{Create a service report}
 \usage{
-reports_post_services(service_id)
+reports_post_services(service_id, provide_api_key = NULL)
 }
 \arguments{
 \item{service_id}{integer required. The id of the backing service}
+
+\item{provide_api_key}{boolean optional. Whether the report requests an API Key from the report viewer.}
 }
 \value{
 A list containing the following elements:
@@ -26,6 +28,9 @@ A list containing the following elements:
 \item{host}{string, The host for the service report}
 \item{displayUrl}{string, The URL to display the service report.}
 \item{serviceId}{integer, The id of the backing service}
+\item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
+\item{apiKey}{string, A Civis API key that can be used by this report.}
+\item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
 }
 \description{
 Create a service report

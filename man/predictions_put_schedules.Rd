@@ -4,7 +4,8 @@
 \alias{predictions_put_schedules}
 \title{Schedule the prediction}
 \usage{
-predictions_put_schedules(id, schedule = NULL, score_on_model_build = NULL)
+predictions_put_schedules(id, schedule = NULL,
+  score_on_model_build = NULL)
 }
 \arguments{
 \item{id}{integer required. ID of the prediction associated with this schedule.}

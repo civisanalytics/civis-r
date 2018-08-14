@@ -4,8 +4,8 @@
 \alias{enhancements_put_person_matching_shares_groups}
 \title{Set the permissions groups has on this object}
 \usage{
-enhancements_put_person_matching_shares_groups(id, group_ids, permission_level,
-  share_email_body = NULL, send_shared_email = NULL)
+enhancements_put_person_matching_shares_groups(id, group_ids,
+  permission_level, share_email_body = NULL, send_shared_email = NULL)
 }
 \arguments{
 \item{id}{integer required. ID of the resource to be shared}

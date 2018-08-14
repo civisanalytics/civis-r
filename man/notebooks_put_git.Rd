@@ -4,8 +4,8 @@
 \alias{notebooks_put_git}
 \title{Attach this Notebook to a git repo/file}
 \usage{
-notebooks_put_git(id, git_ref = NULL, git_branch = NULL, git_path = NULL,
-  git_repo_url = NULL)
+notebooks_put_git(id, git_ref = NULL, git_branch = NULL,
+  git_path = NULL, git_repo_url = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the file.}

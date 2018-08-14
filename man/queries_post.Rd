@@ -4,9 +4,10 @@
 \alias{queries_post}
 \title{Execute a query}
 \usage{
-queries_post(database, sql, preview_rows, credential = NULL, hidden = NULL,
-  interactive = NULL, include_header = NULL, compression = NULL,
-  column_delimiter = NULL, unquoted = NULL, filename_prefix = NULL)
+queries_post(database, sql, preview_rows, credential = NULL,
+  hidden = NULL, interactive = NULL, include_header = NULL,
+  compression = NULL, column_delimiter = NULL, unquoted = NULL,
+  filename_prefix = NULL)
 }
 \arguments{
 \item{database}{integer required. The database ID.}

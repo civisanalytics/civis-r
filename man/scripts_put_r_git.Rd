@@ -4,8 +4,8 @@
 \alias{scripts_put_r_git}
 \title{Attach this r docker to a git repo/file}
 \usage{
-scripts_put_r_git(id, git_ref = NULL, git_branch = NULL, git_path = NULL,
-  git_repo_url = NULL)
+scripts_put_r_git(id, git_ref = NULL, git_branch = NULL,
+  git_path = NULL, git_repo_url = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the file.}

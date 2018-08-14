@@ -9,13 +9,15 @@
 \usage{
 query_civis_file(x, ...)
 
-\method{query_civis_file}{character}(x, database = NULL, job_name = NULL,
-  hidden = TRUE, verbose = verbose, csv_settings = NULL, ...)
+\method{query_civis_file}{character}(x, database = NULL,
+  job_name = NULL, hidden = TRUE, verbose = verbose,
+  csv_settings = NULL, ...)
 
 \method{query_civis_file}{sql}(x, database = NULL, job_name = NULL,
   hidden = TRUE, verbose = FALSE, csv_settings = NULL, ...)
 
-\method{query_civis_file}{numeric}(x, database = NULL, verbose = FALSE, ...)
+\method{query_civis_file}{numeric}(x, database = NULL, verbose = FALSE,
+  ...)
 }
 \arguments{
 \item{x}{"schema.table", \code{sql("query")}, or a sql script job id.}
@@ -68,3 +70,4 @@ Other io: \code{\link{download_civis}},
   \code{\link{query_civis}}, \code{\link{read_civis}},
   \code{\link{write_civis_file}}, \code{\link{write_civis}}
 }
+\concept{io}

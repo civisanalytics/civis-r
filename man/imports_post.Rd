@@ -6,7 +6,8 @@
 \usage{
 imports_post(name, sync_type, is_outbound, source = NULL,
   destination = NULL, schedule = NULL, notifications = NULL,
-  parent_id = NULL, next_run_at = NULL, time_zone = NULL, hidden = NULL)
+  parent_id = NULL, next_run_at = NULL, time_zone = NULL,
+  hidden = NULL)
 }
 \arguments{
 \item{name}{string required. The name of the import.}
