@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
       </span>
     </div>
 
@@ -107,10 +107,10 @@
 <p>The first step of modeling with <code>civis_ml</code> is to specify the data source, which is the first argument. <code>civis_ml</code> works with local data frames, a CSV on local disk, <a href="https://github.com/wesm/feather">feather-format</a> files, tables in Redshift, and files on S3 (the files endpoint):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(civis)
 
-<span class="kw">civis_ml</span>(df, ...)
-<span class="kw">civis_ml</span>(<span class="st">"path/to/data.csv"</span>, ...)
-<span class="kw">civis_ml</span>(<span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="dt">table_name =</span> <span class="st">"schema.table"</span>, <span class="dt">database_name =</span> <span class="st">"database"</span>), ...)
-<span class="kw">civis_ml</span>(<span class="kw"><a href="../reference/civis_file.html">civis_file</a></span>(<span class="dv">1234</span>), ...)</code></pre></div>
+<span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(df, ...)
+<span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(<span class="st">"path/to/data.csv"</span>, ...)
+<span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(<span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="dt">table_name =</span> <span class="st">"schema.table"</span>, <span class="dt">database_name =</span> <span class="st">"database"</span>), ...)
+<span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(<span class="kw"><a href="../reference/civis_file.html">civis_file</a></span>(<span class="dv">1234</span>), ...)</code></pre></div>
 <p>The Brandable data is located in a Redshift table called <code>sample_project.premium_training_set</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">civis.default_db =</span> <span class="st">"my_database"</span>)
 tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="dt">table_name =</span> <span class="st">"sample_project.premium_training_set"</span>)</code></pre></div>
@@ -231,7 +231,7 @@ tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_t
 <p>For the Brandable data, we use a <code>random_forest</code> classifier to predict the probability that a customer upgrades from free to premium services. For efficiency, we can also denote a <code>primary_key</code>, and a set of <code>excluded_columns</code> that are not included in the model:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(civis)
 tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="st">"sample_project.premium_training_set"</span>)
-m   &lt;-<span class="st"> </span><span class="kw">civis_ml</span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
+m   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
                 <span class="dt">model_type =</span> <span class="st">"random_forest_classifier"</span>, 
                 <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
                 <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)
@@ -249,7 +249,7 @@ m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml_
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="st">"sample_project.premium_training_set"</span>)
 
 <span class="co"># hyperband</span>
-m_hyper &lt;-<span class="st"> </span><span class="kw">civis_ml</span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
+m_hyper &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
               <span class="dt">model_type =</span> <span class="st">"random_forest_classifier"</span>, 
               <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
               <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>, 
@@ -259,7 +259,7 @@ m_hyper &lt;-<span class="st"> </span><span class="kw">civis_ml</span>(tab, <spa
 cv_params &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="st">"max_depth"</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>), 
                   <span class="st">"n_estimators"</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>))
   
-m_grid &lt;-<span class="st"> </span><span class="kw">civis_ml</span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
+m_grid &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
               <span class="dt">model_type =</span> <span class="st">"random_forest_classifier"</span>, 
               <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
               <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>, 
@@ -321,8 +321,8 @@ m_grid &lt;-<span class="st"> </span><span class="kw">civis_ml</span>(tab, <span
 <div id="stacking" class="section level3">
 <h3 class="hasAnchor">
 <a href="#stacking" class="anchor"></a>Stacking</h3>
-<p>The <code>"stacking_classifier"</code> model stacks together the <code>"gradient_boosting_classifier"</code> and <code>"random_forest_classifier"</code> predefined models together with a <code>glmnet.LogitNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5, scoring='log_loss')</code>. Defaults for the predefined models are documented in <code>?civis_ml</code>. Each column is first <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">standardized</a>, and then the model predictions are combined using <a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html">LogisticRegressionCV</a> with <code>penalty='l2'</code> and <code>tol=1e-08</code>. The <code>"stacking_regressor"</code> works similarly, stacking together the <code>"gradient_boosting_regressor"</code> and <code>"random_forest_regressor"</code> models and a <code>glmnet.ElasticNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5, scoring='r2')</code>, combining them using <a href="https://github.com/civisanalytics/civisml-extensions">NonNegativeLinearRegression</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m_stack &lt;-<span class="st"> </span><span class="kw">civis_ml</span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
+<p>The <code>"stacking_classifier"</code> model stacks together the <code>"gradient_boosting_classifier"</code> and <code>"random_forest_classifier"</code> predefined models together with a <code>glmnet.LogitNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5, scoring='log_loss')</code>. Defaults for the predefined models are documented in <code><a href="../reference/civis_ml.html">?civis_ml</a></code>. Each column is first <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">standardized</a>, and then the model predictions are combined using <a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html">LogisticRegressionCV</a> with <code>penalty='l2'</code> and <code>tol=1e-08</code>. The <code>"stacking_regressor"</code> works similarly, stacking together the <code>"gradient_boosting_regressor"</code> and <code>"random_forest_regressor"</code> models and a <code>glmnet.ElasticNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5, scoring='r2')</code>, combining them using <a href="https://github.com/civisanalytics/civisml-extensions">NonNegativeLinearRegression</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m_stack &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
               <span class="dt">model_type =</span> <span class="st">"stacking_classifier"</span>, 
               <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
               <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)</code></pre></div>
@@ -404,7 +404,7 @@ m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.
 <a href="#error-handling" class="anchor"></a>Error Handling</h2>
 <p>Unfortunately, many kinds of errors can occur. When an error occurs within CivisML, a <code>civis_ml_error</code> is thrown. By default, the log from the CivisML job is printed, which is useful for debugging.</p>
 <p>Here is an example error from misspelling the model type:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">civis_ml</span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
          <span class="dt">model_type =</span> <span class="st">"random_fest_classifier"</span>, 
          <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
          <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>, 
@@ -428,7 +428,7 @@ m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.
 </h2>
 <p>When programming with <code>civis_ml</code>, errors can be caught using the base R <code>try</code> or <code>tryCatch</code>. In <code>civis</code>, we provide functions for getting debugging information using <code>get_error</code> or just the logs using <code>fetch_logs</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">e &lt;-<span class="st"> </span><span class="kw">tryCatch</span>({
-  <span class="kw">civis_ml</span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
+  <span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
         <span class="dt">model_type =</span> <span class="st">"random_fest_classifier"</span>, 
         <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
         <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)
@@ -440,7 +440,7 @@ m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.
   i &lt;-<span class="st"> </span><span class="dv">1</span>
   <span class="cf">while</span> (i <span class="op">&lt;</span><span class="st"> </span>max_retries) {
     <span class="kw">tryCatch</span>({
-      m &lt;-<span class="st"> </span><span class="kw">civis_ml</span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
+      m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
                <span class="dt">model_type =</span> <span class="st">"random_forest_classifier"</span>, 
                <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
                <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)

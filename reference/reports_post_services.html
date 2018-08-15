@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
       </span>
     </div>
 
@@ -126,7 +126,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>reports_post_services</span>(<span class='no'>service_id</span>)</pre>
+    <pre class="usage"><span class='fu'>reports_post_services</span>(<span class='no'>service_id</span>, <span class='kw'>provide_api_key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -134,6 +134,10 @@
     <tr>
       <th>service_id</th>
       <td><p>integer required. The id of the backing service</p></td>
+    </tr>
+    <tr>
+      <th>provide_api_key</th>
+      <td><p>boolean optional. Whether the report requests an API Key from the report viewer.</p></td>
     </tr>
     </table>
     
@@ -155,6 +159,9 @@
 <dt>host</dt><dd><p>string, The host for the service report</p></dd>
 <dt>displayUrl</dt><dd><p>string, The URL to display the service report.</p></dd>
 <dt>serviceId</dt><dd><p>integer, The id of the backing service</p></dd>
+<dt>provideAPIKey</dt><dd><p>boolean, Whether the report requests an API Key from the report viewer.</p></dd>
+<dt>apiKey</dt><dd><p>string, A Civis API key that can be used by this report.</p></dd>
+<dt>apiKeyId</dt><dd><p>integer, The ID of the API key. Can be used for auditing API use by this report.</p></dd>
 
     
 

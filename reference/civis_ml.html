@@ -59,7 +59,7 @@ using a set of Scikit-Learn estimators." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
       </span>
     </div>
 
@@ -134,8 +134,9 @@ using a set of Scikit-Learn estimators.</p>
   <span class='kw'>oos_scores_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>oos_scores_db</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>oos_scores_if_exists</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fail"</span>, <span class='st'>"append"</span>, <span class='st'>"drop"</span>, <span class='st'>"truncate"</span>),
   <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cpu_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>memory_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>disk_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>polling_interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>validation_data</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"train"</span>, <span class='st'>"skip"</span>), <span class='kw'>n_jobs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>disk_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>polling_interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>validation_data</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"train"</span>, <span class='st'>"skip"</span>),
+  <span class='kw'>n_jobs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>civis_ml_fetch_existing</span>(<span class='no'>model_id</span>, <span class='kw'>run_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
@@ -143,8 +144,9 @@ using a set of Scikit-Learn estimators.</p>
 <span class='fu'>predict</span>(<span class='no'>object</span>, <span class='no'>newdata</span>, <span class='kw'>primary_key</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>output_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>output_db</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>if_output_exists</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fail"</span>,
   <span class='st'>"append"</span>, <span class='st'>"drop"</span>, <span class='st'>"truncate"</span>), <span class='kw'>n_jobs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cpu_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>memory_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>disk_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>polling_interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>dvs_to_predict</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>memory_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>disk_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>polling_interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>dvs_to_predict</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

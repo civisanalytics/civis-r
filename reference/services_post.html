@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
       </span>
     </div>
 
@@ -126,12 +126,12 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>services_post</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>docker_image_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>docker_image_tag</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>schedule</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>replicas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>max_replicas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>instance_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>memory</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cpu</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>credentials</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>api_key_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>git_repo_url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>git_repo_ref</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>git_path_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>environment_variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>services_post</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>docker_image_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>docker_image_tag</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>schedule</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>replicas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max_replicas</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>instance_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>memory</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cpu</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>credentials</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>api_key_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>git_repo_url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>git_repo_ref</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>git_path_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>environment_variables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,6 +143,10 @@
     <tr>
       <th>description</th>
       <td><p>string optional. The description of this Service.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>string optional. The type of this Service</p></td>
     </tr>
     <tr>
       <th>docker_image_name</th>
@@ -230,6 +234,7 @@
 <li><p>initials string, This user's initials.</p></li>
 <li><p>online boolean, Whether this user is online.</p></li>
 </ul></p></dd>
+<dt>type</dt><dd><p>string, The type of this Service</p></dd>
 <dt>dockerImageName</dt><dd><p>string, The name of the docker image to pull from DockerHub.</p></dd>
 <dt>dockerImageTag</dt><dd><p>string, The tag of the docker image to pull from DockerHub (default: latest).</p></dd>
 <dt>schedule</dt><dd><p>list, A list containing the following elements: 
