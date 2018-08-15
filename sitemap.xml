@@ -121,6 +121,9 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/civis_to_multifile_csv.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/clusters_delete_kubernetes_partitions.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/clusters_get_kubernetes.html</loc>
   </url>
   <url>
@@ -143,6 +146,12 @@
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/clusters_list_workers_queued_jobs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/clusters_patch_kubernetes_partitions.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/clusters_post_kubernetes_partitions.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/codes_delete.html</loc>
@@ -250,6 +259,30 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_cass_ncoa_shares_users.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_civis_data_match_projects.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_civis_data_match_runs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_civis_data_match_shares_groups.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_civis_data_match_shares_users.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_data_unification_projects.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_data_unification_runs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_data_unification_shares_groups.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_data_unification_shares_users.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_person_matching_projects.html</loc>
   </url>
   <url>
@@ -259,10 +292,40 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_person_matching_shares_users.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_table_deduplication_projects.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_table_deduplication_runs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_table_deduplication_shares_groups.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_table_deduplication_shares_users.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_get_cass_ncoa.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_get_cass_ncoa_runs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_get_civis_data_match.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_get_civis_data_match_runs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_get_data_unification.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_get_data_unification_runs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_get_table_deduplication.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_get_table_deduplication_runs.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list.html</loc>
@@ -283,6 +346,36 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_cass_ncoa_shares.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_civis_data_match_projects.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_civis_data_match_runs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_civis_data_match_runs_logs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_civis_data_match_runs_outputs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_civis_data_match_shares.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_data_unification_projects.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_data_unification_runs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_data_unification_runs_logs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_data_unification_runs_outputs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_data_unification_shares.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_field_mapping.html</loc>
   </url>
   <url>
@@ -292,10 +385,34 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_person_matching_shares.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_table_deduplication_projects.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_table_deduplication_runs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_table_deduplication_runs_logs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_table_deduplication_runs_outputs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_table_deduplication_shares.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_types.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_patch_cass_ncoa.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_patch_civis_data_match.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_patch_data_unification.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_patch_table_deduplication.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_post_cass_ncoa.html</loc>
@@ -305,6 +422,33 @@
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_post_cass_ncoa_runs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_post_civis_data_match.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_post_civis_data_match_cancel.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_post_civis_data_match_runs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_post_data_unification.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_post_data_unification_cancel.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_post_data_unification_runs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_post_table_deduplication.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_post_table_deduplication_cancel.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_post_table_deduplication_runs.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_cass_ncoa.html</loc>
@@ -322,6 +466,36 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_cass_ncoa_shares_users.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_civis_data_match.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_civis_data_match_archive.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_civis_data_match_projects.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_civis_data_match_shares_groups.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_civis_data_match_shares_users.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_data_unification.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_data_unification_archive.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_data_unification_projects.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_data_unification_shares_groups.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_data_unification_shares_users.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_person_matching_archive.html</loc>
   </url>
   <url>
@@ -332,6 +506,21 @@
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_person_matching_shares_users.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_table_deduplication.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_table_deduplication_archive.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_table_deduplication_projects.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_table_deduplication_shares_groups.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_table_deduplication_shares_users.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/exports_list.html</loc>

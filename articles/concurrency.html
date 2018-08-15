@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
       </span>
     </div>
 
@@ -133,8 +133,8 @@ airquality &lt;-<span class="st"> </span>airquality[<span class="op">!</span><sp
 
 <span class="co"># Create a future for each model, using the special %&lt;-% assignment operator.</span>
 <span class="co"># These futures are created immediately, kicking off the models.</span>
-air_model <span class="op">%&lt;-%</span><span class="st"> </span><span class="kw">civis_ml</span>(airquality, <span class="st">"Ozone"</span>, <span class="st">"gradient_boosting_regressor"</span>)
-iris_model <span class="op">%&lt;-%</span><span class="st"> </span><span class="kw">civis_ml</span>(iris, <span class="st">"Species"</span>, <span class="st">"sparse_logistic"</span>)
+air_model <span class="op">%&lt;-%</span><span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(airquality, <span class="st">"Ozone"</span>, <span class="st">"gradient_boosting_regressor"</span>)
+iris_model <span class="op">%&lt;-%</span><span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(iris, <span class="st">"Species"</span>, <span class="st">"sparse_logistic"</span>)
 
 <span class="co"># At this point, `air_model` has not finished training yet. That's okay,</span>
 <span class="co"># the program will just wait until `air_model` is done before printing it.</span>
@@ -168,7 +168,7 @@ model_types &lt;-<span class="st"> </span><span class="kw">c</span>(<span class=
 
 <span class="co"># Listen for multiple models to complete concurrently</span>
 model_results &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/foreach/topics/foreach">foreach</a></span>(<span class="dt">model_type=</span><span class="kw">iter</span>(model_types), <span class="dt">.packages=</span><span class="st">'civis'</span>) <span class="op">%dopar%</span><span class="st"> </span>{
-    <span class="kw">civis_ml</span>(iris, <span class="st">"Species"</span>, model_type)
+    <span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(iris, <span class="st">"Species"</span>, model_type)
 }
 <span class="kw"><a href="http://www.rdocumentation.org/packages/parallel/topics/makeCluster">stopCluster</a></span>(cluster)
 <span class="kw">print</span>(<span class="st">"ROC Results"</span>)
@@ -192,7 +192,7 @@ model_types &lt;-<span class="st"> </span><span class="kw">c</span>(<span class=
 
 <span class="co"># Loop over all models in parallel with a max of 10 processes</span>
 model_results &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/parallel/topics/mclapply">mclapply</a></span>(model_types, <span class="cf">function</span>(model_type) {
-  <span class="kw">civis_ml</span>(iris, <span class="st">"Species"</span>, model_type)
+  <span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(iris, <span class="st">"Species"</span>, model_type)
 }, <span class="dt">mc.cores=</span><span class="dv">10</span>)
 
 <span class="co"># Wait for all models simultaneously</span>
