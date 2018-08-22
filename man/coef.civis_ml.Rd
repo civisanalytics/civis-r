@@ -4,10 +4,14 @@
 \alias{coef.civis_ml}
 \title{Function to get coefficients from a civis_ml_classifier}
 \usage{
-\method{coef}{civis_ml}(model)
+\method{coef}{civis_ml}(object, complete = TRUE, ...)
 }
 \arguments{
-\item{model}{civis_ml_classifier}
+\item{object}{civis_ml_classifier}
+
+\item{complete}{see documentation for generic \code{coef()}}
+
+\item{...}{other arguments}
 }
 \value{
 coefs a vector of coefficients or `NULL` if the classifier does not have coefficients
