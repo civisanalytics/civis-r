@@ -7,12 +7,12 @@
 models_patch(id, table_name = NULL, database_id = NULL,
   credential_id = NULL, model_name = NULL, description = NULL,
   interaction_terms = NULL, box_cox_transformation = NULL,
-  model_type_id = NULL, primary_key = NULL, dependent_variable = NULL,
-  dependent_variable_order = NULL, excluded_columns = NULL,
-  limiting_sql = NULL, active_build_id = NULL,
-  cross_validation_parameters = NULL, number_of_folds = NULL,
-  notifications = NULL, schedule = NULL, parent_id = NULL,
-  time_zone = NULL)
+  model_type_id = NULL, primary_key = NULL,
+  dependent_variable = NULL, dependent_variable_order = NULL,
+  excluded_columns = NULL, limiting_sql = NULL,
+  active_build_id = NULL, cross_validation_parameters = NULL,
+  number_of_folds = NULL, notifications = NULL, schedule = NULL,
+  parent_id = NULL, time_zone = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the model.}

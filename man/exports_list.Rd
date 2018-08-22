@@ -4,9 +4,9 @@
 \alias{exports_list}
 \title{List}
 \usage{
-exports_list(type = NULL, author = NULL, status = NULL, hidden = NULL,
-  archived = NULL, limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+exports_list(type = NULL, author = NULL, status = NULL,
+  hidden = NULL, archived = NULL, limit = NULL, page_num = NULL,
+  order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{type}{string optional. If specified, return exports of these types. It accepts a comma-separated list, possible values are 'database' and 'gdoc'.}

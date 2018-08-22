@@ -4,8 +4,8 @@
 \alias{apps_list_releases}
 \title{List the releases of a particular Decision Application}
 \usage{
-apps_list_releases(slug, archived = NULL, limit = NULL, page_num = NULL,
-  order = NULL, order_dir = NULL)
+apps_list_releases(slug, archived = NULL, limit = NULL,
+  page_num = NULL, order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{slug}{string required. The slug for the application.}

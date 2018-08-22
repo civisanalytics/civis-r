@@ -4,8 +4,8 @@
 \alias{workflows_list_executions}
 \title{List workflow executions}
 \usage{
-workflows_list_executions(id, limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+workflows_list_executions(id, limit = NULL, page_num = NULL,
+  order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID for this workflow.}

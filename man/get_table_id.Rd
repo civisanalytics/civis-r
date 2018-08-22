@@ -22,3 +22,4 @@ Return the table id for a given table
 Other tables: \code{\link{refresh_table}},
   \code{\link{transfer_table}}
 }
+\concept{tables}

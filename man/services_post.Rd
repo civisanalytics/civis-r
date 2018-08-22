@@ -4,12 +4,12 @@
 \alias{services_post}
 \title{Create a Service}
 \usage{
-services_post(name = NULL, description = NULL, docker_image_name = NULL,
-  docker_image_tag = NULL, schedule = NULL, replicas = NULL,
-  max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL,
-  credentials = NULL, api_key_id = NULL, git_repo_url = NULL,
-  git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL,
-  notifications = NULL, hidden = NULL)
+services_post(name = NULL, description = NULL,
+  docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL,
+  replicas = NULL, max_replicas = NULL, instance_type = NULL,
+  memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL,
+  git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL,
+  environment_variables = NULL, notifications = NULL, hidden = NULL)
 }
 \arguments{
 \item{name}{string optional. The name of this Service.}

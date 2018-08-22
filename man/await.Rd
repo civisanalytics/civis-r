@@ -6,12 +6,13 @@
 \title{Call a function repeatedly until a status is reached.}
 \usage{
 await(f, ..., .status_key = "state", .success_states = c("succeeded",
-  "success"), .error_states = c("failed", "cancelled"), .timeout = NULL,
-  .interval = NULL, .verbose = FALSE)
+  "success"), .error_states = c("failed", "cancelled"),
+  .timeout = NULL, .interval = NULL, .verbose = FALSE)
 
 await_all(f, .x, ..., .status_key = "state",
-  .success_states = c("succeeded", "success"), .error_states = c("failed",
-  "cancelled"), .timeout = NULL, .interval = NULL, .verbose = FALSE)
+  .success_states = c("succeeded", "success"),
+  .error_states = c("failed", "cancelled"), .timeout = NULL,
+  .interval = NULL, .verbose = FALSE)
 }
 \arguments{
 \item{f}{function to be called repeatedly until a status is reached.}

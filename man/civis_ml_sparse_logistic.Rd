@@ -14,8 +14,8 @@ civis_ml_sparse_logistic(x, dependent_variable, primary_key = NULL,
   oos_scores_table = NULL, oos_scores_db = NULL,
   oos_scores_if_exists = c("fail", "append", "drop", "truncate"),
   model_name = NULL, cpu_requested = NULL, memory_requested = NULL,
-  disk_requested = NULL, notifications = NULL, polling_interval = NULL,
-  verbose = FALSE)
+  disk_requested = NULL, notifications = NULL,
+  polling_interval = NULL, verbose = FALSE)
 }
 \arguments{
 \item{x}{See the Data Sources section below.}

@@ -5,11 +5,12 @@
 \title{Update a container}
 \usage{
 scripts_patch_containers(id, name = NULL, parent_id = NULL,
-  user_context = NULL, params = NULL, arguments = NULL, schedule = NULL,
-  notifications = NULL, required_resources = NULL, repo_http_uri = NULL,
-  repo_ref = NULL, remote_host_credential_id = NULL,
-  git_credential_id = NULL, docker_command = NULL,
-  docker_image_name = NULL, docker_image_tag = NULL, instance_type = NULL,
+  user_context = NULL, params = NULL, arguments = NULL,
+  schedule = NULL, notifications = NULL, required_resources = NULL,
+  repo_http_uri = NULL, repo_ref = NULL,
+  remote_host_credential_id = NULL, git_credential_id = NULL,
+  docker_command = NULL, docker_image_name = NULL,
+  docker_image_tag = NULL, instance_type = NULL,
   cancel_timeout = NULL, time_zone = NULL, target_project_id = NULL)
 }
 \arguments{

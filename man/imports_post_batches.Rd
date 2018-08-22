@@ -4,9 +4,9 @@
 \alias{imports_post_batches}
 \title{Upload multiple files to Redshift}
 \usage{
-imports_post_batches(file_ids, schema, table, remote_host_id, credential_id,
-  column_delimiter = NULL, first_row_is_header = NULL, compression = NULL,
-  hidden = NULL)
+imports_post_batches(file_ids, schema, table, remote_host_id,
+  credential_id, column_delimiter = NULL, first_row_is_header = NULL,
+  compression = NULL, hidden = NULL)
 }
 \arguments{
 \item{file_ids}{array required. The file IDs for the import.}

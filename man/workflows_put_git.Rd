@@ -4,8 +4,8 @@
 \alias{workflows_put_git}
 \title{Attach this Workflow::Workflow to a git repo/file}
 \usage{
-workflows_put_git(id, git_ref = NULL, git_branch = NULL, git_path = NULL,
-  git_repo_url = NULL)
+workflows_put_git(id, git_ref = NULL, git_branch = NULL,
+  git_path = NULL, git_repo_url = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the file.}

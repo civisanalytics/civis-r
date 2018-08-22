@@ -4,9 +4,9 @@
 \alias{scripts_list_custom}
 \title{List Custom Scripts}
 \usage{
-scripts_list_custom(from_template_id = NULL, author = NULL, status = NULL,
-  hidden = NULL, archived = NULL, limit = NULL, page_num = NULL,
-  order = NULL, order_dir = NULL)
+scripts_list_custom(from_template_id = NULL, author = NULL,
+  status = NULL, hidden = NULL, archived = NULL, limit = NULL,
+  page_num = NULL, order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{from_template_id}{string optional. If specified, return scripts based on the template with this ID. Specify multiple IDs as a comma-separated list.}

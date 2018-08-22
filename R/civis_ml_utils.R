@@ -194,14 +194,6 @@ is_multitarget <- function(model) {
   length(get_model_data(model, "n_unique_targets")) > 1
 }
 
-#' coef
-#' @details Outputs coefficients with names in the style of `stats::coef`
-#' @param model civis_ml_classifier
-#' @return coefs a vector of coefficients or `NULL` if the classifier does not have coefficients
-#' @export
-coef <- function(model) {
-  UseMethod("coef")
-}
 
 #' Function to get coefficients from a civis_ml_classifier
 #' @details Outputs coefficients with names in the style of `stats::coef`
@@ -211,17 +203,15 @@ coef <- function(model) {
 coef.civis_ml <- function(model) {
 
   # fields needed aren't present (i.e.: tree-based model)
-  if(is.null(model[["model_info"]][["model"]][["parameters"]][["coef"]])) {
+  if (is.null(model[["model_info"]][["model"]][["parameters"]][["coef"]])) {
     return(NULL)
-  }
-
-  else {
+  } else {
     intercept <- model[["model_info"]][["model"]][["parameters"]][["intercept"]]
     coefs <-c(intercept, as.vector(model[["model_info"]][["model"]][["parameters"]][["coef"]]))
     attributes <- c("(Intercept)", as.vector(model[["model_info"]][["model"]][["parameters"]][["relvars"]]))
 
     # we must have a multi-output model if this is true
-    if(length(attributes) < length(coefs)) {
+    if (length(attributes) < length(coefs)) {
       num_classes <- length(coefs)/length(attributes)
       attributes <- rep(attributes, each = num_classes)
     }
