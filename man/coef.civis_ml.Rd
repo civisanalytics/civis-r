@@ -2,22 +2,22 @@
 % Please edit documentation in R/civis_ml_utils.R
 \name{coef.civis_ml}
 \alias{coef.civis_ml}
-\title{Function to get coefficients from a civis_ml_classifier}
+\title{Get civis_ml model coefficients}
 \usage{
 \method{coef}{civis_ml}(object, complete = TRUE, ...)
 }
 \arguments{
-\item{object}{civis_ml_classifier}
+\item{object}{civis_ml_model}
 
 \item{complete}{see documentation for generic \code{coef()}}
 
 \item{...}{other arguments}
 }
 \value{
-coefs a vector of coefficients or `NULL` if the classifier does not have coefficients
+a matrix of coefficients, or `NULL` if none available from CivisML
 }
 \description{
-Function to get coefficients from a civis_ml_classifier
+Get civis_ml model coefficients
 }
 \details{
 Outputs coefficients with names in the style of `stats::coef`
