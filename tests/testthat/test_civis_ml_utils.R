@@ -11,6 +11,10 @@ id_regex <- purrr:::map2(paste0("(", job_ids, ")*"), paste0("(", run_ids, ")"), 
 class_algo <- sapply(model_list[is_classif], function(x) x$model_info$model$model)
 reg_algo <- sapply(model_list[!is_classif], function(x) x$model_info$model$model)
 
+feat_imp_mods <- model_list[c(2, 3, 4, 10, 11, 12, 15, 16)]
+feat_imp_err_mods <- model_list[!(model_list %in% feat_imp_mods)]
+
+
 str_detect_multiple <- function(string, pattern) {
   mapply(function(string, pattern) stringr::str_detect(string, pattern),
          string = string, pattern = pattern)
@@ -104,5 +108,28 @@ test_that("get_train_template_id reverts to last id if others not available", {
     get_train_template_id())
   ans <- CIVIS_ML_TEMPLATE_IDS[1, "id"]
   expect_equal(id, ans)
+})
+
+test_that("get_feature_importance returns correct feature importance matrix", {
+  ans_function <- function(m){
+        variable_order <- order(m$metrics$model$parameters$feature_importances)
+        variable_name <- m$metrics$model$parameters$relvars[rev(variable_order)]
+        importance <- m$metrics$model$parameters$feature_importances[rev(variable_order)]
+        feature_importance_df <- data.frame('variable_name' = variable_name,
+                                            'importance' = importance)
+        feature_importance_df
+        }
+
+  test <- sapply(feat_imp_mods, get_feature_importance)
+  ans <- sapply(feat_imp_mods, ans_function)
+  expect_equal(test, ans)
+})
+
+test_that("models with no feature importance throw errors for get_feature_importance", {
+  msg <- "Feature importance data not available."
+  for (m in feat_imp_err_mods) {
+    e <- tryCatch(plot(m), error = function(e) e)
+    expect_equal(e$message, msg)
+  }
 })
 
