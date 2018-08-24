@@ -113,10 +113,11 @@ test_that("get_train_template_id reverts to last id if others not available", {
 test_that("get_feature_importance returns correct feature importance matrix", {
   ans_function <- function(m){
         variable_order <- order(m$metrics$model$parameters$feature_importances)
-        variable_name <- m$metrics$model$parameters$relvars[rev(variable_order)]
+        variable_names <- m$metrics$model$parameters$relvars[rev(variable_order)]
         importance <- m$metrics$model$parameters$feature_importances[rev(variable_order)]
-        feature_importance_df <- data.frame('variable_name' = variable_name,
-                                            'importance' = importance)
+
+        feature_importance_df <- data.frame('importance' = importance)
+        rownames(feature_importance_df) <- variable_names
         feature_importance_df
         }
 
@@ -128,7 +129,7 @@ test_that("get_feature_importance returns correct feature importance matrix", {
 test_that("models with no feature importance throw errors for get_feature_importance", {
   msg <- "Feature importance data not available."
   for (m in feat_imp_err_mods) {
-    e <- tryCatch(plot(m), error = function(e) e)
+    e <- tryCatch(get_feature_importance(m), error = function(e) e)
     expect_equal(e$message, msg)
   }
 })

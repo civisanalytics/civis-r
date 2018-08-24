@@ -163,6 +163,26 @@ get_metric <- function(model, name = NULL) {
   }
 }
 
+
+#' Get model feature importance
+#' @param model Object from \code{\link{civis_ml}}
+#' @return A matrix of features and their importance, ranked in descending order of importance
+#' @export
+get_feature_importance <- function(model){
+
+  if (is.null(model$metrics$model$parameters$feature_importances)) stop("Feature importance data not available.")
+
+  variable_order <- order(model$metrics$model$parameters$feature_importances)
+  variable_names <- model$metrics$model$parameters$relvars[rev(variable_order)]
+  importance <- model$metrics$model$parameters$feature_importances[rev(variable_order)]
+
+  feature_importance_df <- data.frame('importance' = importance)
+  rownames(feature_importance_df) <- variable_names
+  feature_importance_df
+}
+
+
+
 get_model_data <- function(model, name = NULL) {
   if (!is.null(name)) {
     model$model_info$data[[name]]
@@ -193,3 +213,6 @@ is_multiclass <- function(model) {
 is_multitarget <- function(model) {
   length(get_model_data(model, "n_unique_targets")) > 1
 }
+
+
+

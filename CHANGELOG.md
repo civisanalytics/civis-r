@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.2] - 2018-08-24
+
+### Changed
+
+- Added `get_feature_importance` to civis_ml_utils.
+
 ## [1.5.1] - 2018-08-15
 
 ### Changed
