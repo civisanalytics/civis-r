@@ -209,7 +209,7 @@ coef.civis_ml <- function(object, complete = TRUE, ...) {
     intercept <- as.data.frame(object$model_info$model$parameters$intercept)
     non_intercept_coefs <- as.data.frame(matrix(object$model_info$model$parameters$coef,
                                                 nrow=nrow(intercept)))
-    coefs <-cbind(intercept, non_intercept_coefs)
+    coefs <- cbind(intercept, non_intercept_coefs)
     colnames(coefs) <- c("(Intercept)", as.vector(object$model_info$model$parameters$relvars))
     if (length(object$model_info$data$class_names) > 2) {    # if multiclass
       rownames(coefs) <- object$model_info$data$class_names

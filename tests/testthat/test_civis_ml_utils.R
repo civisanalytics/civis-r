@@ -11,6 +11,9 @@ id_regex <- purrr:::map2(paste0("(", job_ids, ")*"), paste0("(", run_ids, ")"), 
 class_algo <- sapply(model_list[is_classif], function(x) x$model_info$model$model)
 reg_algo <- sapply(model_list[!is_classif], function(x) x$model_info$model$model)
 
+coef_mods <- model_list[c(1, 7, 8, 9, 18)]
+no_coef_mods <- model_list[!(model_list %in% coef_mods)]
+
 str_detect_multiple <- function(string, pattern) {
   mapply(function(string, pattern) stringr::str_detect(string, pattern),
          string = string, pattern = pattern)
@@ -107,36 +110,13 @@ test_that("get_train_template_id reverts to last id if others not available", {
 })
 
 test_that("coef.civis_ml returns correct coefficients when available", {
-
-  # civis_ml_models for which coefficients are available from CivisML
-  coef_models <- c(model_list[1], model_list[7], model_list[8],
-                   model_list[9], model_list[18])
-
-  for (object in coef_models) {
-    coefs_from_function <- coef(object)
-
-    intercept <- as.data.frame(object$model_info$model$parameters$intercept)
-    non_intercept_coefs <- as.data.frame(matrix(object$model_info$model$parameters$coef,
-                                                nrow=nrow(intercept)))
-    coefs_by_hand <-cbind(intercept, non_intercept_coefs)
-    colnames(coefs_by_hand) <- c("(Intercept)", as.vector(object$model_info$model$parameters$relvars))
-    if (length(object$model_info$data$class_names) > 2) {    # if multiclass
-      rownames(coefs_by_hand) <- object$model_info$data$class_names
-    }
-
-    expect_equal(coefs_by_hand, coefs_from_function)
-  }
+    true_coefs <- readRDS("data/model_coefficients.rds")
+    test_coefs <- lapply(coef_mods, coef)
+    expect_equal(true_coefs, test_coefs)
 })
 
 test_that("coef.civis_ml returns NULL when coefficients are unavailable", {
-
-  # the following models do not have coefficients, so coefs should return null
-  no_coef_models <- c(model_list[2], model_list[3], model_list[4], model_list[5],
-                      model_list[6], model_list[10], model_list[11], model_list[12],
-                      model_list[13], model_list[14], model_list[15], model_list[16],
-                      model_list[17])
-  for (model in no_coef_models) {
-    expect_null(coef(model))
+  for (m in no_coef_mods) {
+    expect_null(coef(m))
   }
 })
-
