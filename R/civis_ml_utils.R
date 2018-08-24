@@ -172,15 +172,16 @@ get_feature_importance <- function(model){
 
   if (is.null(model$metrics$model$parameters$feature_importances)) stop("Feature importance data not available.")
 
-  variable_order <- order(model$metrics$model$parameters$feature_importances)
-  variable_names <- model$metrics$model$parameters$relvars[rev(variable_order)]
-  importance <- model$metrics$model$parameters$feature_importances[rev(variable_order)]
+  params <- model$metrics$model$parameters
+  variable_order <- order(params$feature_importances,
+                          decreasing = TRUE)
+  variable_name <- params$relvars[variable_order]
+  importance <- params$feature_importances[variable_order]
 
-  feature_importance_df <- data.frame('importance' = importance)
-  rownames(feature_importance_df) <- variable_names
+  feature_importance_df <- data.frame('variable_name' = variable_name,
+                                      'importance' = importance)
   feature_importance_df
 }
-
 
 
 get_model_data <- function(model, name = NULL) {
@@ -213,6 +214,3 @@ is_multiclass <- function(model) {
 is_multitarget <- function(model) {
   length(get_model_data(model, "n_unique_targets")) > 1
 }
-
-
-
