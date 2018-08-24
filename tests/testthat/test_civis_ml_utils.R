@@ -110,22 +110,10 @@ test_that("get_train_template_id reverts to last id if others not available", {
   expect_equal(id, ans)
 })
 
-test_that("get_feature_importance returns correct feature importance matrix", {
-  ans_function <- function(m){
-        params <- m$metrics$model$parameters
-        variable_order <- order(params$feature_importances,
-                                decreasing = TRUE)
-        variable_name <- params$relvars[variable_order]
-        importance <- params$feature_importances[variable_order]
-
-        feature_importance_df <- data.frame("variable_name" = variable_name,
-                                            "importance" = importance)
-        feature_importance_df
-        }
-
-  test <- sapply(feat_imp_mods, get_feature_importance)
-  ans <- sapply(feat_imp_mods, ans_function)
-  expect_equal(test, ans)
+test_that("get_feature_importance returns correct feature importance matrix when available", {
+  true_feature_importances <- readRDS("data/feature_importances.rds")
+  test_feature_importances <- lapply(feat_imp_mods, get_feature_importance)
+  expect_equal(true_feature_importances, test_feature_importances)
 })
 
 test_that("models with no feature importance throw errors for get_feature_importance", {
