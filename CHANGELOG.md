@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Added `get_feature_importance` to civis_ml_utils
+- Added tests for `get_feature_importance` to test_civis_ml_utils
+- Added `feature_importances.rds` to tests/testthat/data
+
 ## [1.5.1] - 2018-08-15
 
 ### Changed
