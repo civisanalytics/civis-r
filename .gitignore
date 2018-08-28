@@ -8,3 +8,4 @@ inst/web
 .Rproj.user
 .*.swp
 .*.swo
+.DS_Store
