@@ -214,3 +214,27 @@ is_multiclass <- function(model) {
 is_multitarget <- function(model) {
   length(get_model_data(model, "n_unique_targets")) > 1
 }
+
+
+#' Get civis_ml model coefficients
+#' @details Outputs coefficients with names in the style of `stats::coef`
+#' @param object civis_ml_model
+#' @param complete see documentation for generic \code{coef()}
+#' @param ... other arguments
+#' @return a matrix of coefficients, or `NULL` if none available from CivisML
+#' @export
+coef.civis_ml <- function(object, complete = TRUE, ...) {
+  if (is.null(object$model_info$model$parameters$coef)) {
+    return(NULL)
+  } else {
+    intercept <- as.data.frame(object$model_info$model$parameters$intercept)
+    non_intercept_coefs <- as.data.frame(matrix(object$model_info$model$parameters$coef,
+                                                nrow=nrow(intercept)))
+    coefs <- cbind(intercept, non_intercept_coefs)
+    colnames(coefs) <- c("(Intercept)", as.vector(object$model_info$model$parameters$relvars))
+    if (length(object$model_info$data$class_names) > 2) {    # if multiclass
+      rownames(coefs) <- object$model_info$data$class_names
+    }
+  }
+  coefs
+}

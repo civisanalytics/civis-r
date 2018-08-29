@@ -13,6 +13,8 @@ reg_algo <- sapply(model_list[!is_classif], function(x) x$model_info$model$model
 
 feat_imp_mods <- model_list[c(2, 3, 4, 10, 11, 12, 15, 16)]
 feat_imp_err_mods <- model_list[!(model_list %in% feat_imp_mods)]
+coef_mods <- model_list[c(1, 7, 8, 9, 18)]
+no_coef_mods <- model_list[!(model_list %in% coef_mods)]
 
 
 str_detect_multiple <- function(string, pattern) {
@@ -122,3 +124,14 @@ test_that("models with no feature importance throw errors for get_feature_import
   }
 })
 
+test_that("coef.civis_ml returns correct coefficients when available", {
+    true_coefs <- readRDS("data/model_coefficients.rds")
+    test_coefs <- lapply(coef_mods, coef)
+    expect_equal(true_coefs, test_coefs)
+})
+
+test_that("coef.civis_ml returns NULL when coefficients are unavailable", {
+  for (m in no_coef_mods) {
+    expect_null(coef(m))
+  }
+})
