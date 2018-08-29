@@ -32,6 +32,7 @@ A list containing the following elements:
 \item{githubUsername}{string, The GitHub username of this user.}
 \item{prefersSmsOtp}{string, The preference for phone authorization of this user}
 \item{vpnEnabled}{string, The availability of vpn for this user.}
+\item{ssoDisabled}{string, The availability of SSO for this user.}
 \item{otpRequiredForLogin}{string, The two factor authorization requirement for this user.}
 \item{phone}{string, The phone number of this user.}
 }

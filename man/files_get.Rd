@@ -20,6 +20,14 @@ A list containing the following elements:
 \item{createdAt}{string, The date and time the file was created.}
 \item{fileSize}{integer, The file size.}
 \item{expiresAt}{string, The date and time the file will expire. If not specified, the file will expire in 30 days. To keep a file indefinitely, specify null.}
+\item{author}{list, A list containing the following elements: 
+\itemize{
+\item id integer, The ID of this user.
+\item name string, This user's name.
+\item username string, This user's username.
+\item initials string, This user's initials.
+\item online boolean, Whether this user is online.
+}}
 \item{downloadUrl}{string, A JSON string containing information about the URL of the file.}
 \item{fileUrl}{string, The URL that may be used to download the file.}
 }

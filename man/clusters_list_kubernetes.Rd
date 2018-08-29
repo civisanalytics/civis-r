@@ -21,18 +21,8 @@ clusters_list_kubernetes(organization_slug = NULL, limit = NULL,
 \value{
 An array containing the following fields:
 \item{id}{integer, The ID of this cluster.}
-\item{instanceTypes}{array, An array containing the following fields: 
-\itemize{
-\item type string, An EC2 instance type.
-\item minInstances integer, The minimum number of instances of that type in this cluster.
-\item maxInstances integer, The maximum number of instances of that type in this cluster.
-\item instanceMaxMemory integer, The amount of memory available to a single instance of that type.
-\item instanceMaxCpu integer, The number of processor shares available to a single instance of that type.
-}}
-\item{defaultInstanceType}{string, Deprecated. The default EC2 instance type in this cluster.}
 \item{organizationId}{string, The id of this cluster's organization.}
 \item{organizationSlug}{string, The slug of this cluster's organization.}
-\item{securityGroupId}{string, The security group to be added to the nodes of this cluster}
 \item{clusterPartitions}{array, An array containing the following fields: 
 \itemize{
 \item clusterPartitionId integer, The ID of this cluster partition.

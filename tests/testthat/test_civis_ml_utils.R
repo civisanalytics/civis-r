@@ -11,8 +11,11 @@ id_regex <- purrr:::map2(paste0("(", job_ids, ")*"), paste0("(", run_ids, ")"), 
 class_algo <- sapply(model_list[is_classif], function(x) x$model_info$model$model)
 reg_algo <- sapply(model_list[!is_classif], function(x) x$model_info$model$model)
 
+feat_imp_mods <- model_list[c(2, 3, 4, 10, 11, 12, 15, 16)]
+feat_imp_err_mods <- model_list[!(model_list %in% feat_imp_mods)]
 coef_mods <- model_list[c(1, 7, 8, 9, 18)]
 no_coef_mods <- model_list[!(model_list %in% coef_mods)]
+
 
 str_detect_multiple <- function(string, pattern) {
   mapply(function(string, pattern) stringr::str_detect(string, pattern),
@@ -107,6 +110,18 @@ test_that("get_train_template_id reverts to last id if others not available", {
     get_train_template_id())
   ans <- CIVIS_ML_TEMPLATE_IDS[1, "id"]
   expect_equal(id, ans)
+})
+
+test_that("get_feature_importance returns correct feature importance matrix when available", {
+  true_feature_importances <- readRDS("data/feature_importances.rds")
+  test_feature_importances <- lapply(feat_imp_mods, get_feature_importance)
+  expect_equal(true_feature_importances, test_feature_importances)
+})
+
+test_that("models with no feature importance throw errors for get_feature_importance", {
+  for (m in feat_imp_err_mods) {
+    expect_error(get_feature_importance(m), "Feature importance data not available.")
+  }
 })
 
 test_that("coef.civis_ml returns correct coefficients when available", {

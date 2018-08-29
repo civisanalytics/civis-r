@@ -4,7 +4,7 @@
 \alias{services_post}
 \title{Create a Service}
 \usage{
-services_post(name = NULL, description = NULL,
+services_post(name = NULL, description = NULL, type = NULL,
   docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL,
   replicas = NULL, max_replicas = NULL, instance_type = NULL,
   memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL,
@@ -15,6 +15,8 @@ services_post(name = NULL, description = NULL,
 \item{name}{string optional. The name of this Service.}
 
 \item{description}{string optional. The description of this Service.}
+
+\item{type}{string optional. The type of this Service}
 
 \item{docker_image_name}{string optional. The name of the docker image to pull from DockerHub.}
 
@@ -69,6 +71,7 @@ A list containing the following elements:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
+\item{type}{string, The type of this Service}
 \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 \item{schedule}{list, A list containing the following elements: 

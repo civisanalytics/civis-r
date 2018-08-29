@@ -9,12 +9,16 @@ FILENAME <- c("R/generated_client.R")
 #' @importFrom roxygen2 roxygenize
 fetch_and_generate_client <- function() {
   if (Sys.getenv("R_CLIENT_DEV") != "TRUE" && windows_r_version_is_valid()) {
-    message("Generating API")
-    spec <- get_spec()
-    client_str <- generate_client(spec)
-    message(paste0("Writing API to ", FILENAME))
-    write_client(client_str, FILENAME = FILENAME)
-    devtools::document()
+    tryCatch({
+      message("Generating API")
+      spec <- get_spec()
+      client_str <- generate_client(spec)
+      message(paste0("Writing API to ", FILENAME))
+      write_client(client_str, FILENAME = FILENAME)
+      devtools::document()
+    }, error = function(e) {
+      message("Generating API failed, reverting to default specification.")
+    })
   } else {
     message("Skipping client generation")
   }

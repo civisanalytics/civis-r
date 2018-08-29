@@ -21,6 +21,7 @@ A list containing the following elements:
 \item appId integer, The id of the app the release belongs to.
 \item reportTemplateId integer, ID of the report template for this release.
 \item resources object, A hash of resources associated with this release.
+\item archived string, The archival status of the requested item(s).
 }}
 \item{features}{list, App features.}
 }
