@@ -68,6 +68,7 @@ test_that("write_civis.character returns meta data if successful", {
     `civis::start_import_job` = function(...) {
       list(uploadUri = "fake", id = 1)
     },
+    `civis::default_credential` = function(...) 1234,
     `civis::tables_post_refresh` = function(id) "",
     `httr::PUT` = function(...) list(status_code = 200),
     `civis::imports_post_files_runs` = function(...) list(""),
@@ -124,28 +125,71 @@ test_that("write_civis.character warns under failure", {
   )
 })
 
-test_that("write_civis.numeric calls imports_post_syncs correctly", {
-  ips <- mock(imports_post_syncs)
+test_that("write_civis.character calls imports endpoints correctly", {
+  ipf <- mock(list(id = 4))
+  fn <- tempfile(fileext = ".csv")
+  file.create(fn)
   with_mock(
     `civis:::get_database_id` = function(...) 32,
     `civis:::default_credential` = function(...) 999,
-    `civis::imports_post` = function(...) list(id = 2),
-    `civis::imports_post_syncs` = ips,
+    `civis::imports_post_files` = ipf,
+    `civis::imports_post_files_runs` = function(...) list(id = 44),
+    `civis::imports_get_files_runs` = function(...) list(state = "succeeded"),
+    `httr::PUT` = mock(list(status_code = 200)),
+    res <- write_civis(fn, "mock.table", "mockdb", credential_id = 1),
+    expect_equal(get_status(res), "succeeded"),
+    expect_args(ipf, n = 1,
+                schema = 'mock',
+                name = 'table',
+                remote_host_id = 32,
+                credential_id = 1,
+                max_errors = NULL,
+                existing_table_rows = "fail",
+                diststyle = NULL,
+                distkey = NULL,
+                sortkey1 = NULL,
+                sortkey2 = NULL,
+                column_delimiter = "comma",
+                firstRowIsHeader = TRUE,
+                hidden = TRUE
+    )
+  )
+})
+
+test_that("write_civis.numeric calls imports endpoints correctly", {
+  ip <- mock(list(id = 4))
+  with_mock(
+    `civis:::get_database_id` = function(...) 32,
+    `civis:::default_credential` = function(...) 999,
+    `civis::imports_post` =  ip,
+    `civis::imports_post_syncs` = mock(),
     `civis::jobs_post_runs` = function(...) list(id = 4),
     `civis::jobs_get_runs` = function(...) list(state = "succeeded"),
-    res <- write_civis(1234, "mock.table", "mockdb"),
+    res <- write_civis(1234, "mock.table", "mockdb", credential_id = 1,
+                      import_args = list(verifyTableRowCounts = TRUE)),
     expect_equal(get_status(res), "succeeded"),
-    expect_args(ips, 1, 2,
+    expect_args(ip, n = 1,
+                 import_name = "CSV import to mock.table",
+                 sync_type = 'AutoImport',
+                 is_output = FALSE,
+                 destination = list(remote_host_id = 32, credential_id = 1),
+                 hidden = TRUE),
+    expect_args(civis::imports_post_syncs, n = 1,
+                id = 4,
                 list(file = list(id = 1234)),
                 destination = list(database_table =
                                      list(schema = "mock", table = "table")),
-                advanced_options = list(max_errors = NULL,
-                     existing_table_rows = "fail",
-                     distkey = NULL,
-                     diststyle = NULL,
-                     sortkey1 = NULL,
-                     sortkey2 = NULL,
-                     column_delimiter = "comma"))
+                advanced_options = list(
+                  max_errors = NULL,
+                  existing_table_rows = "fail",
+                  distkey = NULL,
+                  diststyle = NULL,
+                  sortkey1 = NULL,
+                  sortkey2 = NULL,
+                  column_delimiter = "comma",
+                  firstRowIsHeader = TRUE,
+                  verifyTableRowCounts = TRUE
+                ))
   )
 })
 
@@ -359,6 +403,7 @@ test_that("delimiter_name_from_string catches bad input", {
   expect_error(delimiter_name_from_string(":"), e)
 })
 
+
 test_that("start_import_job parses table correctly", {
   with_mock(
     `civis::get_database_id` = function(...) -999,
@@ -369,7 +414,7 @@ test_that("start_import_job parses table correctly", {
     },
     expect_equal(
       start_import_job("mockdb", "mock.table", if_exists = "append",
-                       NULL, NULL, NULL, NULL, NULL, NULL),
+                       NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
       list(schema = "mock", table = "table")
     )
   )
