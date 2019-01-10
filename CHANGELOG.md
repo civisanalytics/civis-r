@@ -1,15 +1,15 @@
 # Changelog
 
-## [1.6.0] - 2018-08-28
-
-### Added
-- `coef.civis_ml` which returns `civis_ml` model coefficients in the format of `stats::coef`
-- added tests for `coef.civis_ml`
-
 ## Unreleased
 
-### Changed
+### Fixed
+- `write_civis.numeric` now correctly syncs with headers [#150].
 
+### Added
+- `write_civis` gains `header`, `credential_id` and `import_args` arguments to more 
+flexibly import data ([#150, #149, #130]).
+- `coef.civis_ml` which returns `civis_ml` model coefficients in the format of `stats::coef`
+- added tests for `coef.civis_ml`
 - Added `get_feature_importance` to civis_ml_utils
 - Added tests for `get_feature_importance` to test_civis_ml_utils
 - Added `feature_importances.rds` to tests/testthat/data

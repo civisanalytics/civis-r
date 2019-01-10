@@ -12,17 +12,20 @@ write_civis(x, ...)
 \method{write_civis}{data.frame}(x, tablename, database = NULL,
   if_exists = "fail", distkey = NULL, sortkey1 = NULL,
   sortkey2 = NULL, max_errors = NULL, verbose = FALSE,
-  hidden = TRUE, diststyle = NULL, ...)
+  hidden = TRUE, diststyle = NULL, header = TRUE,
+  credential_id = NULL, import_args = NULL, ...)
 
 \method{write_civis}{character}(x, tablename, database = NULL,
   if_exists = "fail", distkey = NULL, sortkey1 = NULL,
   sortkey2 = NULL, max_errors = NULL, verbose = FALSE,
-  hidden = TRUE, diststyle = NULL, ...)
+  hidden = TRUE, diststyle = NULL, header = TRUE,
+  credential_id = NULL, import_args = NULL, ...)
 
 \method{write_civis}{numeric}(x, tablename, database = NULL,
   if_exists = "fail", distkey = NULL, sortkey1 = NULL,
   sortkey2 = NULL, max_errors = NULL, verbose = FALSE,
-  delimiter = ",", hidden = TRUE, diststyle = NULL, ...)
+  delimiter = ",", hidden = TRUE, diststyle = NULL, header = TRUE,
+  credential_id = NULL, import_args = NULL, ...)
 }
 \arguments{
 \item{x}{data frame, file path of a csv, or the id of a csv file on S3 to upload to platform.}
@@ -52,6 +55,14 @@ to remove before failing.}
 \item{hidden}{bool, if \code{TRUE} (default), this job will not appear in the Civis UI.}
 
 \item{diststyle}{string optional. The diststyle to use for the table. One of "even", "all", or "key".}
+
+\item{header}{bool, if \code{TRUE} (default) the first row is a header.}
+
+\item{credential_id}{integer, the id of the credential to be used when performing
+the database import. If \code{NULL} (default), the default credential of the
+current user will be used.}
+
+\item{import_args}{list of additional arguments for \code{\link{import_post_files}}.}
 
 \item{delimiter}{string, optional. Which delimiter to use. One of
 \code{','}, \code{'\\t'} or \code{'|'}.}
@@ -83,9 +94,12 @@ write_civis(df, "schema.my_table", "my_database")
 # Create new table, append if already exists
 write_civis(df, "schema.my_table", "my_database", if_exists="append")
 
-# Create new table with defined diskey / sortkeys for speed
-write_civis(df, "schema.my_table", "my_database", distkey="id",
-            sortkey1="added_date")
+# Create new table with additional options
+write_civis(df, "schema.my_table", "my_database",
+            distkey="id",
+            sortkey1="added_date",
+            credential_id = 1,
+            header = FALSE)
 
 # Create new table directly from a saved csv
 write_civis("my/file/path.csv", "schema.my_table", "my_database")
