@@ -129,6 +129,11 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
 #' \code{','}, \code{'\\t'} or \code{'|'}.
 #' @param hidden bool, if \code{TRUE} (default), this job will not appear in the Civis UI.
 #' @param diststyle string optional. The diststyle to use for the table. One of "even", "all", or "key".
+#' @param header bool, if \code{TRUE} (default) the first row is a header.
+#' @param credential_id integer, the id of the credential to be used when performing
+#' the database import. If \code{NULL} (default), the default credential of the
+#' current user will be used.
+#' @param import_args list of additional arguments for \code{\link{imports_post_files}}.
 #' @param ... arguments passed to \code{write.csv}.
 #' @seealso \code{\link{refresh_table}} to update table meta-data.
 #'
@@ -142,9 +147,12 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
 #' # Create new table, append if already exists
 #' write_civis(df, "schema.my_table", "my_database", if_exists="append")
 #'
-#' # Create new table with defined diskey / sortkeys for speed
-#' write_civis(df, "schema.my_table", "my_database", distkey="id",
-#'             sortkey1="added_date")
+#' # Create new table with additional options
+#' write_civis(df, "schema.my_table", "my_database",
+#'             distkey="id",
+#'             sortkey1="added_date",
+#'             credential_id = 1,
+#'             header = FALSE)
 #'
 #' # Create new table directly from a saved csv
 #' write_civis("my/file/path.csv", "schema.my_table", "my_database")
@@ -165,7 +173,9 @@ write_civis <- function(x, ...) {
 #' @export
 write_civis.data.frame <- function(x, tablename, database = NULL, if_exists="fail",
                         distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
-                        max_errors = NULL, verbose = FALSE, hidden = TRUE, diststyle = NULL, ...) {
+                        max_errors = NULL, verbose = FALSE, hidden = TRUE,
+                        diststyle = NULL, header = TRUE, credential_id = NULL,
+                        import_args = NULL, ...) {
   db <- get_db(database)
   tryCatch({
     filename <- tempfile(fileext = ".csv")
@@ -180,7 +190,11 @@ write_civis.data.frame <- function(x, tablename, database = NULL, if_exists="fai
                           max_errors = max_errors,
                           verbose = verbose,
                           hidden = hidden,
-                          diststyle = diststyle)
+                          diststyle = diststyle,
+                          header = header,
+                          credential_id = credential_id,
+                          import_args = import_args,
+                          ...)
   }, finally = {
     unlink(filename)
   })
@@ -190,18 +204,27 @@ write_civis.data.frame <- function(x, tablename, database = NULL, if_exists="fai
 #' @export
 write_civis.character <- function(x, tablename, database = NULL, if_exists = "fail",
                          distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
-                         max_errors = NULL, verbose = FALSE, hidden = TRUE, diststyle = NULL, ...) {
+                         max_errors = NULL, verbose = FALSE, hidden = TRUE,
+                         diststyle = NULL, header = TRUE,
+                         credential_id = NULL, import_args = NULL,
+                         ...) {
     db <- get_db(database)
     stopifnot(file.exists(x))
-    job_r <- start_import_job(database = db,
-                              tablename = tablename,
-                              if_exists = if_exists,
-                              diststyle = diststyle,
-                              distkey = distkey,
-                              sortkey1 = sortkey1,
-                              sortkey2 = sortkey2,
-                              max_errors = max_errors,
-                              hidden = hidden)
+    if (is.null(credential_id)) credential_id <- default_credential()
+    args <- append(
+      list(database = db,
+          tablename = tablename,
+          if_exists = if_exists,
+          diststyle = diststyle,
+          distkey = distkey,
+          sortkey1 = sortkey1,
+          sortkey2 = sortkey2,
+          max_errors = max_errors,
+          hidden = hidden,
+          header = header,
+          credential_id = credential_id),
+      import_args)
+    job_r <- do.call(start_import_job, args)
     put_r <- httr::PUT(job_r[["uploadUri"]], body = httr::upload_file(x))
     if (put_r$status_code != 200) {
       msg <- httr::content(put_r)
@@ -219,28 +242,34 @@ write_civis.character <- function(x, tablename, database = NULL, if_exists = "fa
 write_civis.numeric <- function(x, tablename, database = NULL, if_exists = "fail",
                                 distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
                                 max_errors = NULL, verbose = FALSE,
-                                delimiter = ",", hidden = TRUE, diststyle = NULL, ...) {
+                                delimiter = ",", hidden = TRUE, diststyle = NULL,
+                                header = TRUE, credential_id = NULL,
+                                import_args = NULL, ...) {
   if (is.na(x)) stop("File ID cannot be NA.")
   db <- get_db(database)
   db_id <- get_database_id(db)
-  cred_id <- default_credential()
   delimiter <- delimiter_name_from_string(delimiter)
 
   parts <- split_schema_name(tablename)
   import_name <- paste0("CSV import to ", tablename)
-  destination <- list(remote_host_id = db_id, credential_id = cred_id)
+  if (is.null(credential_id)) credential_id <- default_credential()
+  destination <- list(remote_host_id = db_id, credential_id = credential_id)
 
   job <- imports_post(import_name, 'AutoImport',
                      is_outbound = FALSE,
                      destination = destination,
                      hidden = hidden)
-  options <- list(max_errors = max_errors,
-                  existing_table_rows = if_exists,
-                  distkey = distkey,
-                  diststyle = diststyle,
-                  sortkey1 = sortkey1,
-                  sortkey2 = sortkey2,
-                  column_delimiter = delimiter)
+  options <- append(
+    list(max_errors = max_errors,
+         existing_table_rows = if_exists,
+         distkey = distkey,
+         diststyle = diststyle,
+         sortkey1 = sortkey1,
+         sortkey2 = sortkey2,
+         column_delimiter = delimiter,
+         firstRowIsHeader = header
+    ),
+    import_args)
 
   imports_post_syncs(job$id,
                      source = list(file = list(id = x)),
@@ -758,9 +787,9 @@ write_chunks <- function(file, chunk_size) {
 }
 
 
-# Kick off a job to send data to the civis platform
 start_import_job <- function(database, tablename, if_exists, distkey,
-                             sortkey1, sortkey2, max_errors, hidden, diststyle) {
+                             sortkey1, sortkey2, max_errors, hidden,
+                             diststyle, header, credential_id, ...) {
   if (!if_exists %in% c("fail", "truncate", "append", "drop")) {
     stop('if_exists must be set to "fail", "truncate", "append", or "drop"')
   }
@@ -772,20 +801,21 @@ start_import_job <- function(database, tablename, if_exists, distkey,
 
   # Instantiate table creation job
   db_id <- get_database_id(database)
-  creds <- default_credential()
-  job_response <- imports_post_files(schema = schema,
-                                     name = table,
-                                     remote_host_id = db_id,
-                                     credential_id = creds,
-                                     max_errors = max_errors,
-                                     existing_table_rows = if_exists,
-                                     diststyle = diststyle,
-                                     distkey = distkey,
-                                     sortkey1 = sortkey1,
-                                     sortkey2 = sortkey2,
-                                     column_delimiter = "comma",
-                                     first_row_is_header = TRUE,
-                                     hidden = hidden)
+  args <- list(schema = schema,
+               name = table,
+               remote_host_id = db_id,
+               credential_id = credential_id,
+               max_errors = max_errors,
+               existing_table_rows = if_exists,
+               diststyle = diststyle,
+               distkey = distkey,
+               sortkey1 = sortkey1,
+               sortkey2 = sortkey2,
+               column_delimiter = "comma",
+               first_row_is_header = header,
+               hidden = hidden,
+               ...)
+  job_response <- do.call(imports_post_files, args)
   job_response
 }
 
