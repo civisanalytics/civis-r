@@ -100,6 +100,7 @@ test_that("write_civis.data.frame returns meta data if successful", {
     `civis::start_import_job` = function(...) {
       list(uploadUri = "fake", id = 1)
     },
+    `civis::default_credential` = function(...) 1,
     `civis::tables_post_refresh` = function(id) "",
     `httr::PUT` = function(...) list(status_code = 200),
     `civis::imports_post_files_runs` = function(...) list(""),
