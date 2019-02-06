@@ -77,7 +77,7 @@ build_function_body <- function(verb, verb_name, path_name, params) {
     "  path_params  <- path_params[match_params(path_params, args)]\n",
     "  query_params <- query_params[match_params(query_params, args)]\n",
     "  body_params  <- body_params[match_params(body_params, args)]\n",
-    "  resp <- call_api(\"", verb_name, "\", path, path_params, query_params, body_params)\n\n",
+    "  resp <- call_api(\"", toupper(verb_name), "\", path, path_params, query_params, body_params)\n\n",
     "  return(resp)\n\n }\n"
   )
 }
