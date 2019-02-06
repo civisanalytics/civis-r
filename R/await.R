@@ -109,9 +109,10 @@ await <- function(f, ...,
 }
 
 #' @param .x a vector of values to be passed to \code{f}
+#' @param .y a vector of values to be passed to \code{f} (default \code{NULL})
 #' @export
 #' @describeIn await Call a function repeatedly for all values of a vector until all have reached a completed status
-await_all <- function(f, .x, .y = NULL, ...,
+await_all <- function(f, .x, .y = 0, ...,
                       .status_key = "state",
                       .success_states = c("succeeded", "success"),
                       .error_states = c("failed", "cancelled"),
@@ -141,8 +142,9 @@ await_all <- function(f, .x, .y = NULL, ...,
     if (!is.null(.timeout)) {
       running_time <- as.numeric(difftime(Sys.time(), start, units = "secs"))
       if (running_time > .timeout) {
-        args <- c(list(.x), list(...))
+        args <- c(list(.x), list(.y), list(...))
         names(args)[1] <- names(formals(f))[1]
+        names(args)[2] <- names(formals(f))[2]
         status <- unlist(lapply(responses, function(x) get_status(x$response)))
         stop(civis_timeout_error(fname, args, status))
       }

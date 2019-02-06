@@ -156,22 +156,22 @@ test_that("safe_call_once catches civis_await_error", {
   expect_is(e, c("civis_await_error", "civis_error", "error"))
 })
 
-f_rand <- function(id, job_id) {
+
+
+
+
+
+
+
+
+f_rand <- function(id, run_id, job_id) {
   x <- runif(1)
   if (x < .9) {
-    return(list(state = "succeeded", id = id, job_id = job_id))
+    return(list(state = "succeeded", id = id, run_id = run_id, job_id = job_id))
   } else {
-    return(list(state = "partying instead", id = id, job_id = job_id))
+    return(list(state = "partying instead", id = id, run_id = run_id, job_id = job_id))
   }
 }
-
-
-
-
-
-
-
-
 
 test_that("await_all calls f until completion", {
   fake_f <- mockery::mock(list(status = "running"),
@@ -183,7 +183,7 @@ test_that("await_all calls f until completion", {
 
 test_that("await_all returns list of completed responses", {
   set.seed(2)
-  x <- await_all(f_rand, .x = 1:2, job_id = 1)
+  x <- await_all(f_rand, .x = 1:2, .y = 1:2, job_id = 1)
   expect_is(x, "list")
   expect_equal(sapply(x, get_status), rep("succeeded", 2))
   expect_equal(sapply(x, function(x) x$id), 1:2)
@@ -193,6 +193,7 @@ test_that("await_all returns list of completed responses", {
 test_that("await_all vectorizes over any argument", {
   x <- await_all(f_rand, .x = 1:2, .y = 1:2, id = 1)
   expect_equal(sapply(x, function(x) x$job_id), 1:2)
+  expect_equal(sapply(x, function(x) x$run_id), 1:2)
 })
 
 test_that("await_all catches arbitrary status and keys", {
