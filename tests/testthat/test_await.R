@@ -156,14 +156,6 @@ test_that("safe_call_once catches civis_await_error", {
   expect_is(e, c("civis_await_error", "civis_error", "error"))
 })
 
-
-
-
-
-
-
-
-
 f_rand <- function(id, run_id, job_id) {
   x <- runif(1)
   if (x < .9) {
