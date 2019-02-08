@@ -112,7 +112,7 @@ await <- function(f, ...,
 #' @param .y a vector of values to be passed to \code{f} (default \code{NULL})
 #' @export
 #' @describeIn await Call a function repeatedly for all values of a vector until all have reached a completed status
-await_all <- function(f, .x, .y = 0, ...,
+await_all <- function(f, .x, .y = NULL, ...,
                       .status_key = "state",
                       .success_states = c("succeeded", "success"),
                       .error_states = c("failed", "cancelled"),
@@ -126,12 +126,20 @@ await_all <- function(f, .x, .y = 0, ...,
   fname <- as.character(substitute(f))
 
   repeat {
-    responses[!called] <- mapply(safe_call_once, .x[!called], .y[!called],
-                                 f = f, ..., .status_key = .status_key,
-                                 .success_states = .success_states,
-                                 .error_states = .error_states,
-                                 fname = fname)
-
+    if (is.null(.y)) {
+      responses[!called] <- lapply(.x[!called], safe_call_once,
+                                   f = f, ..., .status_key = .status_key,
+                                   .success_states = .success_states,
+                                   .error_states = .error_states,
+                                   fname = fname)
+    } else {
+      responses[!called] <- mapply(safe_call_once, .x[!called], .y[!called],
+                                   ..., MoreArgs = list(f = f), SIMPLIFY = FALSE,
+                                   .status_key = .status_key,
+                                   .success_states = .success_states,
+                                   .error_states = .error_states,
+                                   fname = fname)
+    }
 
     called <- unlist(lapply(responses, function(x) x$called))
 
