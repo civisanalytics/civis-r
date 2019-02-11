@@ -1,10 +1,7 @@
-This is a patch release fixing a CRAN check warning from the new roxygen2 package,
-and the windows build failure on CRAN.
-
-The version has been bumped to 1.5.1.
+The version has been bumped to 1.6.0, adding a few features and fixing an API issue.
 
 ## Test environments
-* local OS X install, R 3.5.1
+* local OS X install, R 3.5.2
 * ubuntu 14.04 (oldrel, release, devel)
 * win-builder (devel)
 
