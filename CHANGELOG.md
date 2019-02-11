@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [1.6.0] - 2019-02-11
 
 ### Fixed
 - `write_civis.numeric` now correctly syncs with headers [#150].
