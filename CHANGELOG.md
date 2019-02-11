@@ -4,6 +4,7 @@
 
 ### Fixed
 - `write_civis.numeric` now correctly syncs with headers [#150].
+- Use upper case for REST verb names. [#153].
 
 ### Added
 - `write_civis` gains `header`, `credential_id` and `import_args` arguments to more 

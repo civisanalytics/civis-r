@@ -124,7 +124,7 @@ test_that("build_function_body", {
   expect_true(stringr::str_detect(path, ex_path_names[[1]]))
   expect_true(stringr::str_detect(grep("body_params", body_lines, value = TRUE)[1],
                                   "hostName = host_name"))
-  check_call <- paste0("  resp <- call_api(\"", ex_verb_names[[1]], "\", ",
+  check_call <- paste0("  resp <- call_api(\"", toupper(ex_verb_names[[1]]), "\", ",
                        "path, path_params, query_params, body_params)")
   expect_equal(grep("resp <- ", body_lines, value = TRUE), check_call)
 })
