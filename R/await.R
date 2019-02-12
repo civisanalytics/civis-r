@@ -119,13 +119,19 @@ await_all <- function(f, .x, .y = NULL, ...,
                       .timeout = NULL, .interval = NULL,
                       .verbose = FALSE) {
 
+
   responses <- vector(mode = "list", length = length(.x))
   called <- rep(FALSE, length(.x))
   i <- 1
   start <- Sys.time()
   fname <- as.character(substitute(f))
 
-  zipped_parameters <- if (is.null(.y)) .x else as.list(paste(.x, .y))
+  if (!is.null(.y) & (length(.x) != length(.y))) {
+    error <- c("Lengths of input parameters (.x and .y) are not equal!")
+    stop(error)
+  }
+
+  zipped_parameters <- if (is.null(.y)) .x else lapply(strsplit(paste(.x, .y), ' '), as.integer)
 
   repeat {
     responses[!called] <- lapply(zipped_parameters[!called], safe_call_once,

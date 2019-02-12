@@ -178,22 +178,22 @@ test_that("await_all returns list of completed responses", {
   x <- await_all(f_rand, .x = 1:2, .y = 3:4, job_id = 1)
   expect_is(x, "list")
   expect_equal(sapply(x, get_status), rep("succeeded", 2))
-  expect_equal(sapply(x, function(x) x$id), 1:2)
+  expect_equal(sapply(x, function(x) x$args), list(c(1, 3), c(2, 4)))
   expect_equal(sapply(x, function(x) x$job_id), rep(1, 2))
 })
 
-test_that("await_all vectorizes over any argument", {
-  x <- await_all(f_rand, .x = 1:2, .y = 3:4, id = 1)
-  expect_equal(sapply(x, function(x) x$job_id), 1:2)
-  expect_equal(sapply(x, function(x) x$run_id), 1:2)
-})
+# test_that("await_all vectorizes over any argument", {
+#   x <- await_all(f_rand, .x = 1:2, .y = 3:4, id = 1)
+#   expect_equal(sapply(x, function(x) x$job_id), 1:2)
+#   expect_equal(sapply(x, function(x) x$run_id), 1:2)
+# })
 
 test_that("await_all catches arbitrary status and keys", {
-  f <- function(x) list(party_status = "going home", value = x)
+  f <- function(x, y) list(party_status = "going home", value = x)
   x <- await_all(f, .x = 1:2, .y = 3:4, .status_key = "party_status",
                  .success_states = "going home", .verbose = TRUE)
   expect_equal(sapply(x, get_status), rep("going home", 2))
-  expect_equal(sapply(x, function(x) x$value), 1:2)
+  expect_equal(sapply(x, function(x) x$value), cbind(c(1, 3), c(2, 4)))
 })
 
 test_that("await_all throws civis_timeout_error", {
@@ -212,12 +212,12 @@ test_that("await_all throws civis_timeout_error", {
 })
 
 test_that("await_all catches mixed failure states", {
-  f <- function(x) {
+  f <- function(x, y) {
     switch(x, list(state = "succeeded"),
            list(state = "failed", error = "platform error"),
            list(state = "succeeded"))
   }
-  r <- await_all(f, .x = 1:3, .y = 3:4)
+  r <- await_all(f, .x = 1:2)
   expect_true(is.civis_error(r[[2]]))
   expect_equal(get_error(r[[2]])$error, "platform error")
   expect_equal(get_error(r[[2]])$args, list(x = 2))
@@ -225,13 +225,13 @@ test_that("await_all catches mixed failure states", {
 
 test_that("await_all verbose prints all tasks and status", {
   set.seed(2)
-  msgs <- capture_messages(await_all(f_rand, .x = 1:5, .y = 3:4, job_id = 1, .verbose = TRUE))
+  msgs <- capture_messages(await_all(f_rand, .x = 1:5, job_id = 1, .verbose = TRUE))
   expect_true(any(grepl("partying instead", x = msgs)))
   expect_equal(length(msgs), 5)
 })
 
 test_that("await_all throws an error if lengths of .x and .y differ", {
-
+  expect_error(await_all(f, .x = 1:2, .y = 3:5))
 })
 
 
