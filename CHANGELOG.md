@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.6.1] - 2019-02-12
+
+### Fixed
+- Update link in CivisML vignette.
+
 ## [1.6.0] - 2019-02-11
 
 ### Fixed
