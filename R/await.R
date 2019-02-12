@@ -135,10 +135,10 @@ await_all <- function(f, .x, .y = NULL, ...,
 
   repeat {
     responses[!called] <- lapply(zipped_parameters[!called], safe_call_once,
-                                   f = f, ..., .status_key = .status_key,
-                                   .success_states = .success_states,
-                                   .error_states = .error_states,
-                                   fname = fname)
+                                 f = f, ..., .status_key = .status_key,
+                                 .success_states = .success_states,
+                                 .error_states = .error_states,
+                                 fname = fname)
 
     called <- unlist(lapply(responses, function(x) x$called))
 
