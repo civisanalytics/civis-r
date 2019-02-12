@@ -11,7 +11,7 @@ vignette: >
 
 There are so many models to build! When this becomes challenging on a local machine, offloading model building to the cloud can save a lot of time and effort.
 
-[CivisML](https://www.civisanalytics.com/blog/civisml-scikit-learn-at-scale/) is a machine learning service on Civis Platform that makes this as painless as possible. You can fit many different models, do extensive hyperparameter tuning, and score data sets with millions of observations stored in remote databases. Once these models are built, they live in Civis Platform permanently and can be included into production pipelines. Results can be easily incorporated into reports and dashboards.
+[CivisML](https://medium.com/civis-analytics/civisml-scikit-learn-at-scale-b01b496916ea) is a machine learning service on Civis Platform that makes this as painless as possible. You can fit many different models, do extensive hyperparameter tuning, and score data sets with millions of observations stored in remote databases. Once these models are built, they live in Civis Platform permanently and can be included into production pipelines. Results can be easily incorporated into reports and dashboards.
 
 CivisML is built in Python using [scikit-learn](http://scikit-learn.org/stable/), and leverages AWS behind the scenes for efficient distributed computing. However, most of its features can be used through R without knowledge of Python or AWS with the `civis_ml` function in `civis`.
 
