@@ -169,13 +169,13 @@ test_that("await_all calls f until completion", {
   fake_f <- mockery::mock(list(status = "running"),
                  list(status = "running"),
                  list(status = "succeeded"), cycle = TRUE)
-  await_all(fake_f, .x = 1:2, .y = 1:2, .status_key = "status", .interval = .001)
+  await_all(fake_f, .x = 1:2, .y = 3:4, .status_key = "status", .interval = .001)
   mockery::expect_called(fake_f, 6)
 })
 
 test_that("await_all returns list of completed responses", {
   set.seed(2)
-  x <- await_all(f_rand, .x = 1:2, .y = 1:2, job_id = 1)
+  x <- await_all(f_rand, .x = 1:2, .y = 3:4, job_id = 1)
   expect_is(x, "list")
   expect_equal(sapply(x, get_status), rep("succeeded", 2))
   expect_equal(sapply(x, function(x) x$id), 1:2)
@@ -183,14 +183,14 @@ test_that("await_all returns list of completed responses", {
 })
 
 test_that("await_all vectorizes over any argument", {
-  x <- await_all(f_rand, .x = 1:2, .y = 1:2, id = 1)
+  x <- await_all(f_rand, .x = 1:2, .y = 3:4, id = 1)
   expect_equal(sapply(x, function(x) x$job_id), 1:2)
   expect_equal(sapply(x, function(x) x$run_id), 1:2)
 })
 
 test_that("await_all catches arbitrary status and keys", {
   f <- function(x) list(party_status = "going home", value = x)
-  x <- await_all(f, .x = 1:2, .y = 1:2, .status_key = "party_status",
+  x <- await_all(f, .x = 1:2, .y = 3:4, .status_key = "party_status",
                  .success_states = "going home", .verbose = TRUE)
   expect_equal(sapply(x, get_status), rep("going home", 2))
   expect_equal(sapply(x, function(x) x$value), 1:2)
@@ -199,14 +199,14 @@ test_that("await_all catches arbitrary status and keys", {
 test_that("await_all throws civis_timeout_error", {
   f <- function(x) list(state = "at the party")
   msg <- c("Timeout exceeded. Current status: at the party, at the party")
-  expect_error(await_all(f, .x = 1:2, .y = 1:2, .timeout = .002, .interval = .001), msg)
+  expect_error(await_all(f, .x = 1:2, .y = 3:4, .timeout = .002, .interval = .001), msg)
 
-  e <- tryCatch(await_all(f, .x = 1:2, .y = 1:2, .timeout = .002, .interval = .001),
+  e <- tryCatch(await_all(f, .x = 1:2, .y = 3:4, .timeout = .002, .interval = .001),
            "civis_timeout_error" = function(e) e)
 
   get_error(e)
 
-  e2 <- tryCatch(await_all(f, .x = 1:2, .y = 1:2, .timeout = .002, .interval = .001),
+  e2 <- tryCatch(await_all(f, .x = 1:2, .y = 3:4, .timeout = .002, .interval = .001),
                 "civis_error" = function(e) e)
   expect_equal(e, e2)
 })
@@ -217,7 +217,7 @@ test_that("await_all catches mixed failure states", {
            list(state = "failed", error = "platform error"),
            list(state = "succeeded"))
   }
-  r <- await_all(f, .x = 1:3, .y = 1:2)
+  r <- await_all(f, .x = 1:3, .y = 3:4)
   expect_true(is.civis_error(r[[2]]))
   expect_equal(get_error(r[[2]])$error, "platform error")
   expect_equal(get_error(r[[2]])$args, list(x = 2))
@@ -225,7 +225,13 @@ test_that("await_all catches mixed failure states", {
 
 test_that("await_all verbose prints all tasks and status", {
   set.seed(2)
-  msgs <- capture_messages(await_all(f_rand, .x = 1:5, .y = 1:2, job_id = 1, .verbose = TRUE))
+  msgs <- capture_messages(await_all(f_rand, .x = 1:5, .y = 3:4, job_id = 1, .verbose = TRUE))
   expect_true(any(grepl("partying instead", x = msgs)))
   expect_equal(length(msgs), 5)
 })
+
+test_that("await_all throws an error if lengths of .x and .y differ", {
+
+})
+
+

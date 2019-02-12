@@ -125,21 +125,37 @@ await_all <- function(f, .x, .y = NULL, ...,
   start <- Sys.time()
   fname <- as.character(substitute(f))
 
+  # abstract that last bit so it can handles n number of variables --
+  # in python it would be list(zip(x,y))
+  # zipped_parameters <- if (is.null(.y)) .x else cbind(.x, .y)
+  # zipped_parameters <- if (is.null(.y)) list(.x) else list(.x, .y)
+  # names(zipped_parameters) <- if (is.null(.y)) c(".x") else c(".x", ".y")
+  zipped_parameters <- if (is.null(.y)) .x else as.list(paste(.x, .y))
+
+
+
+  # repeat {
+  #   if (is.null(.y)) {
+  #     responses[!called] <- lapply(q[!called], safe_call_once,
+  #                                  f = f, ..., .status_key = .status_key,
+  #                                  .success_states = .success_states,
+  #                                  .error_states = .error_states,
+  #                                  fname = fname)
+  #   } else {
+  #     responses[!called] <- mapply(safe_call_once, .x[!called], .y[!called],
+  #                                  ..., MoreArgs = list(f = f), SIMPLIFY = FALSE,
+  #                                  .status_key = .status_key,
+  #                                  .success_states = .success_states,
+  #                                  .error_states = .error_states,
+  #                                  fname = fname)
+  #   }
+
   repeat {
-    if (is.null(.y)) {
-      responses[!called] <- lapply(.x[!called], safe_call_once,
+    responses[!called] <- lapply(zipped_parameters[!called], safe_call_once,
                                    f = f, ..., .status_key = .status_key,
                                    .success_states = .success_states,
                                    .error_states = .error_states,
                                    fname = fname)
-    } else {
-      responses[!called] <- mapply(safe_call_once, .x[!called], .y[!called],
-                                   ..., MoreArgs = list(f = f), SIMPLIFY = FALSE,
-                                   .status_key = .status_key,
-                                   .success_states = .success_states,
-                                   .error_states = .error_states,
-                                   fname = fname)
-    }
 
     called <- unlist(lapply(responses, function(x) x$called))
 
@@ -152,7 +168,7 @@ await_all <- function(f, .x, .y = NULL, ...,
       if (running_time > .timeout) {
         args <- c(list(.x), list(.y), list(...))
         names(args)[1] <- names(formals(f))[1]
-        names(args)[2] <- names(formals(f))[2]
+        # names(args)[2] <- names(formals(f))[2]
         status <- unlist(lapply(responses, function(x) get_status(x$response)))
         stop(civis_timeout_error(fname, args, status))
       }
