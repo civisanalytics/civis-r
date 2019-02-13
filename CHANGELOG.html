@@ -55,7 +55,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.6.1</span>
       </span>
     </div>
 
@@ -119,7 +119,47 @@
 
 <div id="section" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section" class="anchor"></a>[1.5.1] - 2018-08-15</h2>
+<a href="#section" class="anchor"></a>[1.6.1] - 2019-02-12</h2>
+<div id="fixed" class="section level3">
+<h3 class="hasAnchor">
+<a href="#fixed" class="anchor"></a>Fixed</h3>
+<ul>
+<li>Update link in CivisML vignette.</li>
+</ul>
+</div>
+</div>
+<div id="section-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#section-1" class="anchor"></a>[1.6.0] - 2019-02-11</h2>
+<div id="fixed-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#fixed-1" class="anchor"></a>Fixed</h3>
+<ul>
+<li>
+<code>write_civis.numeric</code> now correctly syncs with headers [#150].</li>
+<li>Use upper case for REST verb names. [#153].</li>
+</ul>
+</div>
+<div id="added" class="section level3">
+<h3 class="hasAnchor">
+<a href="#added" class="anchor"></a>Added</h3>
+<ul>
+<li>
+<code>write_civis</code> gains <code>header</code>, <code>credential_id</code> and <code>import_args</code> arguments to more flexibly import data ([#150, #149, #130]).</li>
+<li>
+<code>coef.civis_ml</code> which returns <code>civis_ml</code> model coefficients in the format of <code><a href="http://www.rdocumentation.org/packages/stats/topics/coef">stats::coef</a></code>
+</li>
+<li>added tests for <code>coef.civis_ml</code>
+</li>
+<li>Added <code>get_feature_importance</code> to civis_ml_utils</li>
+<li>Added tests for <code>get_feature_importance</code> to test_civis_ml_utils</li>
+<li>Added <code>feature_importances.rds</code> to tests/testthat/data</li>
+</ul>
+</div>
+</div>
+<div id="section-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#section-2" class="anchor"></a>[1.5.1] - 2018-08-15</h2>
 <div id="changed" class="section level3">
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
@@ -128,17 +168,17 @@
 <li>Now <code>tryCatch</code> when generating the client. Fixes #138.</li>
 </ul>
 </div>
-<div id="fixed" class="section level3">
+<div id="fixed-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed" class="anchor"></a>Fixed</h3>
+<a href="#fixed-2" class="anchor"></a>Fixed</h3>
 <ul>
 <li>Added Encoding: UTF-8 to ‘DESCRIPTION’ to fix R CMD CHECK warning from changes to roxygen2 6.1.0. Fixes #133.</li>
 </ul>
 </div>
 </div>
-<div id="section-1" class="section level2">
+<div id="section-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-1" class="anchor"></a>[1.5.0] - 2018-05-20</h2>
+<a href="#section-3" class="anchor"></a>[1.5.0] - 2018-05-20</h2>
 <div id="changed-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#changed-1" class="anchor"></a>Changed</h3>
@@ -149,18 +189,18 @@
 <code>library(civis)</code> now works even if the API key has expired or no API key is present.</li>
 </ul>
 </div>
-<div id="fixed-1" class="section level3">
+<div id="fixed-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-1" class="anchor"></a>Fixed</h3>
+<a href="#fixed-3" class="anchor"></a>Fixed</h3>
 <ul>
 <li>
 <code>read_civis</code> now correctly reads exports from Redshift containing null values.</li>
 </ul>
 </div>
 </div>
-<div id="section-2" class="section level2">
+<div id="section-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-2" class="anchor"></a>[1.4.0] - 2018-05-04</h2>
+<a href="#section-4" class="anchor"></a>[1.4.0] - 2018-05-04</h2>
 <div id="changed-2" class="section level3">
 <h3 class="hasAnchor">
 <a href="#changed-2" class="anchor"></a>Changed</h3>
@@ -170,26 +210,26 @@
 <li>The DBI connectors are provided on an as-is basis and are no longer maintained.</li>
 </ul>
 </div>
-<div id="fixed-2" class="section level3">
+<div id="fixed-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-2" class="anchor"></a>Fixed</h3>
+<a href="#fixed-4" class="anchor"></a>Fixed</h3>
 <ul>
 <li>Fix CRAN check failures for dev DBI-test.</li>
 </ul>
 </div>
 </div>
-<div id="section-3" class="section level2">
+<div id="section-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-3" class="anchor"></a>[1.3.0] - 2018-03-30</h2>
-<div id="added" class="section level3">
+<a href="#section-5" class="anchor"></a>[1.3.0] - 2018-03-30</h2>
+<div id="added-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#added" class="anchor"></a>Added</h3>
+<a href="#added-1" class="anchor"></a>Added</h3>
 <ul>
 <li>Local dataframes can now be sent to CivisML as feather files.</li>
 <li>Print CivisML training warnings when model results are fetched from Platform.</li>
 <li><p><code>predict.civis_ml</code> and <code>create_and_run_pred</code> gain a <code>dvs_to_predict</code> argument which allows users to restrict output predictions to a subset of targets from a multi-output model.</p></li>
 <li>
-<code>query_civis_file</code> exports a <code>"schema.tablename"</code>, <code><a href="http://dplyr.tidyverse.org/reference/sql.html">sql("query")</a></code>, or existing sql script id to S3 and returns the file id.</li>
+<code>query_civis_file</code> exports a <code>"schema.tablename"</code>, <code><a href="https://dplyr.tidyverse.org/reference/sql.html">sql("query")</a></code>, or existing sql script id to S3 and returns the file id.</li>
 <li><p><code>write_civis</code> gains a <code>diststyle</code> argument for controlling the distribution of tables on Redshift.</p></li>
 </ul>
 </div>
@@ -202,9 +242,9 @@
 <code>write_civis_file</code> now defaults to the file path for the <code>name</code> argument instead of requiring it.</li>
 </ul>
 </div>
-<div id="fixed-3" class="section level3">
+<div id="fixed-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-3" class="anchor"></a>Fixed</h3>
+<a href="#fixed-5" class="anchor"></a>Fixed</h3>
 <ul>
 <li>
 <code>read_civis.numeric</code>, <code>write_civis.numeric</code>, <code>download_civis.numeric</code>, and <code>query_civis.numeric</code> now fail with a better error message when called with <code>x = NA</code> of type numeric.</li>
@@ -213,20 +253,20 @@
 </ul>
 </div>
 </div>
-<div id="section-4" class="section level2">
+<div id="section-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-4" class="anchor"></a>[1.2.0] - 2018-01-23</h2>
-<div id="fixed-4" class="section level3">
+<a href="#section-6" class="anchor"></a>[1.2.0] - 2018-01-23</h2>
+<div id="fixed-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-4" class="anchor"></a>Fixed</h3>
+<a href="#fixed-6" class="anchor"></a>Fixed</h3>
 <ul>
 <li>
 <code>resolved.CivisFuture</code> now gets the status of the platform job directly and updates the state of the future.</li>
 </ul>
 </div>
-<div id="added-1" class="section level3">
+<div id="added-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#added-1" class="anchor"></a>Added</h3>
+<a href="#added-2" class="anchor"></a>Added</h3>
 <ul>
 <li>Update <code>civis_ml</code> documentation with the following CivisML 2.1 features and defaults:
 <ul>
@@ -255,24 +295,24 @@
 </ul>
 </div>
 </div>
-<div id="section-5" class="section level2">
+<div id="section-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-5" class="anchor"></a>[1.1.1] - 2017-11-20</h2>
-<div id="fixed-5" class="section level3">
+<a href="#section-7" class="anchor"></a>[1.1.1] - 2017-11-20</h2>
+<div id="fixed-7" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-5" class="anchor"></a>Fixed</h3>
+<a href="#fixed-7" class="anchor"></a>Fixed</h3>
 <ul>
 <li>
 <code>write_civis</code> calls <code>imports_post_files</code> correctly after a change in the argument order.</li>
 </ul>
 </div>
 </div>
-<div id="section-6" class="section level2">
+<div id="section-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-6" class="anchor"></a>[1.1.0] - 2017-11-10</h2>
-<div id="fixed-6" class="section level3">
+<a href="#section-8" class="anchor"></a>[1.1.0] - 2017-11-10</h2>
+<div id="fixed-8" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-6" class="anchor"></a>Fixed</h3>
+<a href="#fixed-8" class="anchor"></a>Fixed</h3>
 <ul>
 <li>Corrected project_id type in <code>publish_rmd</code> and <code>publish_html</code>
 </li>
@@ -293,9 +333,9 @@
 <li>Files uploaded using <code>write_civis_file</code> now don’t expire by default.</li>
 </ul>
 </div>
-<div id="added-2" class="section level3">
+<div id="added-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#added-2" class="anchor"></a>Added</h3>
+<a href="#added-3" class="anchor"></a>Added</h3>
 <ul>
 <li>“Publish to Civis” Rstudio addin installed by default that publishes <code>.Rmd</code> and <code>.html</code> files as Civis Platform reports.</li>
 <li>
@@ -316,12 +356,12 @@
 </div>
 </div>
 </div>
-<div id="section-7" class="section level2">
+<div id="section-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-7" class="anchor"></a>[1.0.2] - 2017-09-21</h2>
-<div id="fixed-7" class="section level3">
+<a href="#section-9" class="anchor"></a>[1.0.2] - 2017-09-21</h2>
+<div id="fixed-9" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-7" class="anchor"></a>Fixed</h3>
+<a href="#fixed-9" class="anchor"></a>Fixed</h3>
 <ul>
 <li>roxygen2::roxygenize, devtools::build, and memoise::memoise included in NAMESPACE</li>
 <li>uuid dependency removed</li>
@@ -331,12 +371,12 @@
 </ul>
 </div>
 </div>
-<div id="section-8" class="section level2">
+<div id="section-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-8" class="anchor"></a>[1.0.1] - 2017-09-18</h2>
-<div id="fixed-8" class="section level3">
+<a href="#section-10" class="anchor"></a>[1.0.1] - 2017-09-18</h2>
+<div id="fixed-10" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-8" class="anchor"></a>Fixed</h3>
+<a href="#fixed-10" class="anchor"></a>Fixed</h3>
 <ul>
 <li>
 <code>configure</code> and <code>configure.win</code> now use <code>R_HOME</code> to find <code>Rscript</code> instead of assuming that <code>Rscript</code> is on the path.</li>
@@ -350,12 +390,12 @@
 </ul>
 </div>
 </div>
-<div id="section-9" class="section level2">
+<div id="section-11" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-9" class="anchor"></a>[1.0.0] - 2017-09-08</h2>
-<div id="added-3" class="section level3">
+<a href="#section-11" class="anchor"></a>[1.0.0] - 2017-09-08</h2>
+<div id="added-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#added-3" class="anchor"></a>Added</h3>
+<a href="#added-4" class="anchor"></a>Added</h3>
 <div id="civisml-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#civisml-1" class="anchor"></a>CivisML</h4>
@@ -401,21 +441,21 @@
 <li>If there is only one available database and a default database has not been set as a package option or provided, <code>get_default_database</code> uses that database.</li>
 </ul>
 </div>
-<div id="fixed-9" class="section level3">
+<div id="fixed-11" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-9" class="anchor"></a>Fixed</h3>
+<a href="#fixed-11" class="anchor"></a>Fixed</h3>
 <ul>
 <li>
 <code>read_civis</code> now reads from a temporary file when the file size is &gt; than 2^31-1 bytes.</li>
 </ul>
 </div>
 </div>
-<div id="section-10" class="section level2">
+<div id="section-12" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-10" class="anchor"></a>[0.9.1] - 2017-08-15</h2>
-<div id="added-4" class="section level3">
+<a href="#section-12" class="anchor"></a>[0.9.1] - 2017-08-15</h2>
+<div id="added-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#added-4" class="anchor"></a>Added</h3>
+<a href="#added-5" class="anchor"></a>Added</h3>
 <div id="civisml-2" class="section level4">
 <h4 class="hasAnchor">
 <a href="#civisml-2" class="anchor"></a>CivisML</h4>
@@ -441,7 +481,7 @@
 <a href="#io" class="anchor"></a>IO</h4>
 <ul>
 <li>
-<code>read_civis</code> reads a<code>"schema.table"</code>, a <code><a href="http://dplyr.tidyverse.org/reference/sql.html">sql("query")</a></code>, or a file id to a data frame.</li>
+<code>read_civis</code> reads a<code>"schema.table"</code>, a <code><a href="https://dplyr.tidyverse.org/reference/sql.html">sql("query")</a></code>, or a file id to a data frame.</li>
 <li>
 <code>read_civis</code> sql queries are read only.</li>
 <li>
@@ -449,11 +489,11 @@
 <li>
 <code>write_civis_file</code> uploads a serialized R object or an unserialized local file to the files endpoint (S3).</li>
 <li>
-<code>query_civis</code> runs an arbitrary <code>"query"</code>, <code><a href="http://dplyr.tidyverse.org/reference/sql.html">sql("query")</a></code>, or a query id.</li>
+<code>query_civis</code> runs an arbitrary <code>"query"</code>, <code><a href="https://dplyr.tidyverse.org/reference/sql.html">sql("query")</a></code>, or a query id.</li>
 <li>
 <code>query_civis</code> only returns query meta data.</li>
 <li>
-<code>download_civis</code> downloads a<code>"schema.table"</code>, a <code><a href="http://dplyr.tidyverse.org/reference/sql.html">sql("query")</a></code>, or a file id to a file.</li>
+<code>download_civis</code> downloads a<code>"schema.table"</code>, a <code><a href="https://dplyr.tidyverse.org/reference/sql.html">sql("query")</a></code>, or a file id to a file.</li>
 <li>
 <code>download_civis</code> can export in parallel using <code>split = TRUE</code>.</li>
 <li>A default database for all IO functions can be stored in <code>options(civis.default_db = "my_database")</code>.</li>
@@ -515,7 +555,7 @@
 <a href="#packaging" class="anchor"></a>Packaging</h4>
 <ul>
 <li>New endpoints can be generated by reinstalling the package.</li>
-<li>Naming scheme for generated endpoints matches the Python client, e.g. <code>scripts_post_sql</code>
+<li>Naming scheme for generated endpoints matches the Python client, e.g. <code>scripts_post_sql</code>
 </li>
 <li>
 <code>LICENCE</code> is now BSD-3.</li>

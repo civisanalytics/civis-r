@@ -63,7 +63,7 @@ if a plan has been set. Files larger than 5TB cannot be uploaded." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.6.1</span>
       </span>
     </div>
 
@@ -201,7 +201,7 @@ to the files endpoint. If given a filepath, the file is uploaded as-is.</p>
 
 <span class='no'>file_id</span> <span class='kw'>&lt;-</span> <span class='fu'>write_civis_file</span>(<span class='st'>"path/to/my.csv"</span>)
 <span class='fu'><a href='read_civis.html'>read_civis</a></span>(<span class='no'>file_id</span>, <span class='kw'>using</span> <span class='kw'>=</span> <span class='no'>read.csv</span>)
-<span class='fu'><a href='read_civis.html'>read_civis</a></span>(<span class='no'>file_id</span>, <span class='kw'>using</span> <span class='kw'>=</span> <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/readr/topics/read_delim'>read_csv</a></span>)
+<span class='fu'><a href='read_civis.html'>read_civis</a></span>(<span class='no'>file_id</span>, <span class='kw'>using</span> <span class='kw'>=</span> <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='no'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span>)
 
 <span class='co'># Does not expire</span>
 <span class='no'>file_id</span> <span class='kw'>&lt;-</span> <span class='fu'>write_civis_file</span>(<span class='no'>iris</span>, <span class='kw'>expires_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)

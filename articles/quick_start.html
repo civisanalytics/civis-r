@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.6.1</span>
       </span>
     </div>
 
@@ -100,63 +100,63 @@
 <h2 class="hasAnchor">
 <a href="#a-very-quick-start" class="anchor"></a>A (Very) Quick Start</h2>
 <p>To begin, make sure <code>civis</code> is installed and your <a href="https://civisanalytics.github.io/civis-r/#installation">API key is in your R environment</a>. You can quickly test that <code>civis</code> is working by invoking</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">name &lt;-<span class="st"> </span>civis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/civis/topics/users_list_me">users_list_me</a></span>()<span class="op">$</span>name
-<span class="kw">paste</span>(name, <span class="st">"is really awesome!"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">name &lt;-<span class="st"> </span>civis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/civis/topics/users_list_me">users_list_me</a></span>()<span class="op">$</span>name</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">paste</span>(name, <span class="st">"is really awesome!"</span>)</a></code></pre></div>
 <p>If <code>civis</code> is working, you’ll see a friendly message. Otherwise, you might see an error like this when <code>civis</code> wasn’t installed properly:</p>
 <pre><code>Error in loadNamespace(name) : there is no package called 'civis'</code></pre>
 <p>or like this if you haven’t set your API key correctly:</p>
 <pre><code>Error in api_key() : The environmental variable CIVIS_API_KEY is not set. Add this to your .Renviron or call Sys.setenv(CIVIS_API_KEY = '&lt;api_key&gt;')</code></pre>
 <p>With <code>civis</code>, moving data to and from the cloud takes only a few lines of code. Your data can be stored as rows in a table, CSVs on remote file system or even as serialized R objects like nested lists. For example,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(civis)
-
-<span class="co"># First we'll load a dataframe of the famous iris dataset</span>
-<span class="kw">data</span>(iris)
-
-<span class="co"># We'll set a default database and define the table where want to</span>
-<span class="co"># store our data</span>
-<span class="kw">options</span>(<span class="dt">civis.default_db =</span> <span class="st">"my_database"</span>)
-iris_tablename &lt;-<span class="st"> "my_schema.my_table"</span>
-
-<span class="co"># Next we'll push the data to the database table</span>
-<span class="kw"><a href="../reference/write_civis.html">write_civis</a></span>(iris, iris_tablename)
-
-<span class="co"># Great, now let's read it back</span>
-df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(iris_tablename)
-
-<span class="co"># Hmmm, I'm more partial to setosa myself. Let's write a custom sql query.</span>
-<span class="co"># We'll need to wrap our query string in `sql` to let read_civis know we</span>
-<span class="co"># are passing in a sql command rather than a tablename.</span>
-query_str &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"SELECT * FROM"</span>, iris_tablename, <span class="st">"WHERE Species = 'setosa'"</span>)
-iris_setosa &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="kw"><a href="http://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(query_str))
-
-<span class="co"># Now let's store this data along with a note as a serialized R object</span>
-<span class="co"># on a remote file system. We could store any object remotely this way.</span>
-data &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">data =</span> iris_setosa, <span class="dt">special_note =</span> <span class="st">"The best iris species"</span>)
-file_id &lt;-<span class="st"> </span><span class="kw"><a href="../reference/write_civis_file.html">write_civis_file</a></span>(data)
-
-<span class="co"># Finally, let's read back our data from the remote file system.</span>
-data2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(file_id)
-data2[[<span class="st">"special_note"</span>]]
-
-## [1] "The best iris species"</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">library</span>(civis)</a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co"># First we'll load a dataframe of the famous iris dataset</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="kw">data</span>(iris)</a>
+<a class="sourceLine" id="cb4-5" title="5"></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co"># We'll set a default database and define the table where want to</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co"># store our data</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="kw">options</span>(<span class="dt">civis.default_db =</span> <span class="st">"my_database"</span>)</a>
+<a class="sourceLine" id="cb4-9" title="9">iris_tablename &lt;-<span class="st"> "my_schema.my_table"</span></a>
+<a class="sourceLine" id="cb4-10" title="10"></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co"># Next we'll push the data to the database table</span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="kw"><a href="../reference/write_civis.html">write_civis</a></span>(iris, iris_tablename)</a>
+<a class="sourceLine" id="cb4-13" title="13"></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co"># Great, now let's read it back</span></a>
+<a class="sourceLine" id="cb4-15" title="15">df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(iris_tablename)</a>
+<a class="sourceLine" id="cb4-16" title="16"></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co"># Hmmm, I'm more partial to setosa myself. Let's write a custom sql query.</span></a>
+<a class="sourceLine" id="cb4-18" title="18"><span class="co"># We'll need to wrap our query string in `sql` to let read_civis know we</span></a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="co"># are passing in a sql command rather than a tablename.</span></a>
+<a class="sourceLine" id="cb4-20" title="20">query_str &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"SELECT * FROM"</span>, iris_tablename, <span class="st">"WHERE Species = 'setosa'"</span>)</a>
+<a class="sourceLine" id="cb4-21" title="21">iris_setosa &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(query_str))</a>
+<a class="sourceLine" id="cb4-22" title="22"></a>
+<a class="sourceLine" id="cb4-23" title="23"><span class="co"># Now let's store this data along with a note as a serialized R object</span></a>
+<a class="sourceLine" id="cb4-24" title="24"><span class="co"># on a remote file system. We could store any object remotely this way.</span></a>
+<a class="sourceLine" id="cb4-25" title="25">data &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">data =</span> iris_setosa, <span class="dt">special_note =</span> <span class="st">"The best iris species"</span>)</a>
+<a class="sourceLine" id="cb4-26" title="26">file_id &lt;-<span class="st"> </span><span class="kw"><a href="../reference/write_civis_file.html">write_civis_file</a></span>(data)</a>
+<a class="sourceLine" id="cb4-27" title="27"></a>
+<a class="sourceLine" id="cb4-28" title="28"><span class="co"># Finally, let's read back our data from the remote file system.</span></a>
+<a class="sourceLine" id="cb4-29" title="29">data2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(file_id)</a>
+<a class="sourceLine" id="cb4-30" title="30">data2[[<span class="st">"special_note"</span>]]</a>
+<a class="sourceLine" id="cb4-31" title="31"></a>
+<a class="sourceLine" id="cb4-32" title="32"><span class="co">## [1] "The best iris species"</span></a></code></pre></div>
 <p><code>civis</code> also includes functionality for working with CivisML, Civis’ machine learning ecosystem. With the combined power of CivisML and <code>civis</code>, you can build models in the cloud where the models can use as much memory as they need and there’s no chance of your laptop crashing.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(civis)
-
-<span class="co"># It really is a great dataset</span>
-<span class="kw">data</span>(iris)
-
-<span class="co"># Gradient boosting or random forest, who will win?</span>
-gb_model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml_gradient_boosting_classifier.html">civis_ml_gradient_boosting_classifier</a></span>(iris, <span class="st">"Species"</span>)
-rf_model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml_random_forest_classifier.html">civis_ml_random_forest_classifier</a></span>(iris, <span class="st">"Species"</span>)
-macroavgs &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">gb_model =</span> gb_model<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>roc_auc_macroavg,
-                  <span class="dt">rf_model =</span> rf_model<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>roc_auc_macroavg)
-macroavgs
-
-## $gb_model
-## [1] 0.9945333
-## 
-## $rf_model
-## [1] 0.9954667</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">library</span>(civis)</a>
+<a class="sourceLine" id="cb5-2" title="2"></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co"># It really is a great dataset</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="kw">data</span>(iris)</a>
+<a class="sourceLine" id="cb5-5" title="5"></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="co"># Gradient boosting or random forest, who will win?</span></a>
+<a class="sourceLine" id="cb5-7" title="7">gb_model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml_gradient_boosting_classifier.html">civis_ml_gradient_boosting_classifier</a></span>(iris, <span class="st">"Species"</span>)</a>
+<a class="sourceLine" id="cb5-8" title="8">rf_model &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml_random_forest_classifier.html">civis_ml_random_forest_classifier</a></span>(iris, <span class="st">"Species"</span>)</a>
+<a class="sourceLine" id="cb5-9" title="9">macroavgs &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">gb_model =</span> gb_model<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>roc_auc_macroavg,</a>
+<a class="sourceLine" id="cb5-10" title="10">                  <span class="dt">rf_model =</span> rf_model<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>roc_auc_macroavg)</a>
+<a class="sourceLine" id="cb5-11" title="11">macroavgs</a>
+<a class="sourceLine" id="cb5-12" title="12"></a>
+<a class="sourceLine" id="cb5-13" title="13"><span class="co">## $gb_model</span></a>
+<a class="sourceLine" id="cb5-14" title="14"><span class="co">## [1] 0.9945333</span></a>
+<a class="sourceLine" id="cb5-15" title="15"><span class="co">## </span></a>
+<a class="sourceLine" id="cb5-16" title="16"><span class="co">## $rf_model</span></a>
+<a class="sourceLine" id="cb5-17" title="17"><span class="co">## [1] 0.9954667</span></a></code></pre></div>
 <p>For a comprehensive list of functions in <code>civis</code>, see <a href="https://civisanalytics.github.io/civis-r/reference/index.html">Reference</a> in the <a href="https://civisanalytics.github.io/civis-r">full documentation</a>. The full documentation also includes a set of <code>Articles</code> for detailed documentation on common workflows, including <a href="https://civisanalytics.github.io/civis-r/articles/data_import_and_export.html">data manipulation</a> and <a href="https://civisanalytics.github.io/civis-r/articles/concurrency.html">building models in parallel</a>.</p>
 </div>
   </div>

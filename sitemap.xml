@@ -172,6 +172,9 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/codes_put.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/coef.civis_ml.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/credentials_delete_shares_groups.html</loc>
   </url>
   <url>
@@ -587,6 +590,9 @@
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/get_error.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/get_feature_importance.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/get_metric.html</loc>

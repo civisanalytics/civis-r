@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.6.1</span>
       </span>
     </div>
 
@@ -100,16 +100,16 @@
 <h2 class="hasAnchor">
 <a href="#concurrency-in-the-civis-r-client" class="anchor"></a>Concurrency in the Civis R Client</h2>
 <p>Just like most functions in R, all functions in <code>civis</code> block. This means that each function in a program must complete before the next function runs. For instance,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nap &lt;-<span class="st"> </span><span class="cf">function</span>(seconds) {
-    <span class="kw">Sys.sleep</span>(seconds)
-}
-
-start &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
-<span class="kw">nap</span>(<span class="dv">1</span>)
-<span class="kw">nap</span>(<span class="dv">2</span>)
-<span class="kw">nap</span>(<span class="dv">3</span>)
-end &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
-<span class="kw">print</span>(end <span class="op">-</span><span class="st"> </span>start)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">nap &lt;-<span class="st"> </span><span class="cf">function</span>(seconds) {</a>
+<a class="sourceLine" id="cb1-2" title="2">    <span class="kw">Sys.sleep</span>(seconds)</a>
+<a class="sourceLine" id="cb1-3" title="3">}</a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5">start &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()</a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw">nap</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="kw">nap</span>(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="kw">nap</span>(<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb1-9" title="9">end &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()</a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="kw">print</span>(end <span class="op">-</span><span class="st"> </span>start)</a></code></pre></div>
 <p>This program takes 6 seconds to complete, since it takes 1 second for the first <code>nap</code>, 2 for the second and 3 for the last. This program is easy to reason about because each function is sequentially executed. Usually, that is how we want our programs to run.</p>
 <p>There are some exceptions to this rule. Sequentially executing each function might be inconvenient if each <code>nap</code> took 30 minutes instead of a few seconds. In that case, we might like our program to perform all 3 naps simultaneously. In the above example, running all 3 naps simultaneously would take 3 seconds (the length of the longest nap) rather than 6 seconds.</p>
 <p>As all function calls in <code>civis</code> block, <code>civis</code> relies on the mature R ecosystem for parallel programming to enable multiple simultaneous tasks. The three packages we introduce are <code>future</code>, <code>foreach</code>, and <code>parallel</code> (included in base R). For all packages, simultaneous tasks are enabled by starting each task in a separate R process. Examples for building several models in parallel with different libraries are included below. The libraries have strengths and weaknesses and choosing which library to use is often a matter of preference.</p>
@@ -119,85 +119,85 @@ end &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
 <h2 class="hasAnchor">
 <a href="#building-many-models-with-future" class="anchor"></a>Building Many Models with <code>future</code>
 </h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(future)
-<span class="kw">library</span>(civis)
-
-<span class="co"># Define a concurrent backend with enough processes so each function</span>
-<span class="co"># we want to run concurrently has its own process. Here we'll need at least 2.</span>
-<span class="kw"><a href="http://www.rdocumentation.org/packages/future/topics/plan">plan</a></span>(<span class="st">"multiprocess"</span>, <span class="dt">workers=</span><span class="dv">10</span>)
-
-<span class="co"># Load data</span>
-<span class="kw">data</span>(iris)
-<span class="kw">data</span>(airquality)
-airquality &lt;-<span class="st"> </span>airquality[<span class="op">!</span><span class="kw">is.na</span>(airquality<span class="op">$</span>Ozone),]  <span class="co"># remove missing in dv</span>
-
-<span class="co"># Create a future for each model, using the special %&lt;-% assignment operator.</span>
-<span class="co"># These futures are created immediately, kicking off the models.</span>
-air_model <span class="op">%&lt;-%</span><span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(airquality, <span class="st">"Ozone"</span>, <span class="st">"gradient_boosting_regressor"</span>)
-iris_model <span class="op">%&lt;-%</span><span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(iris, <span class="st">"Species"</span>, <span class="st">"sparse_logistic"</span>)
-
-<span class="co"># At this point, `air_model` has not finished training yet. That's okay,</span>
-<span class="co"># the program will just wait until `air_model` is done before printing it.</span>
-<span class="kw">print</span>(<span class="st">"airquality R^2:"</span>)
-<span class="kw">print</span>(air_model<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>r_squared)
-<span class="kw">print</span>(<span class="st">"iris ROC:"</span>)
-<span class="kw">print</span>(iris_model<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>roc_auc)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(future)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">library</span>(civis)</a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="co"># Define a concurrent backend with enough processes so each function</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co"># we want to run concurrently has its own process. Here we'll need at least 2.</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="kw"><a href="http://www.rdocumentation.org/packages/future/topics/plan">plan</a></span>(<span class="st">"multiprocess"</span>, <span class="dt">workers=</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb2-7" title="7"></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="co"># Load data</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="kw">data</span>(iris)</a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="kw">data</span>(airquality)</a>
+<a class="sourceLine" id="cb2-11" title="11">airquality &lt;-<span class="st"> </span>airquality[<span class="op">!</span><span class="kw">is.na</span>(airquality<span class="op">$</span>Ozone),]  <span class="co"># remove missing in dv</span></a>
+<a class="sourceLine" id="cb2-12" title="12"></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co"># Create a future for each model, using the special %&lt;-% assignment operator.</span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co"># These futures are created immediately, kicking off the models.</span></a>
+<a class="sourceLine" id="cb2-15" title="15">air_model <span class="op">%&lt;-%</span><span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(airquality, <span class="st">"Ozone"</span>, <span class="st">"gradient_boosting_regressor"</span>)</a>
+<a class="sourceLine" id="cb2-16" title="16">iris_model <span class="op">%&lt;-%</span><span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(iris, <span class="st">"Species"</span>, <span class="st">"sparse_logistic"</span>)</a>
+<a class="sourceLine" id="cb2-17" title="17"></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co"># At this point, `air_model` has not finished training yet. That's okay,</span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="co"># the program will just wait until `air_model` is done before printing it.</span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="kw">print</span>(<span class="st">"airquality R^2:"</span>)</a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="kw">print</span>(air_model<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>r_squared)</a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="kw">print</span>(<span class="st">"iris ROC:"</span>)</a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="kw">print</span>(iris_model<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>roc_auc)</a></code></pre></div>
 </div>
 <div id="building-many-models-with-foreach" class="section level2">
 <h2 class="hasAnchor">
 <a href="#building-many-models-with-foreach" class="anchor"></a>Building Many Models with <code>foreach</code>
 </h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(parallel)
-<span class="kw">library</span>(doParallel)
-<span class="kw">library</span>(foreach)
-<span class="kw">library</span>(civis)
-
-<span class="co"># Register a local cluster with enough processes so each function</span>
-<span class="co"># we want to run concurrently has its own process. Here we'll</span>
-<span class="co"># need at least 3, with 1 for each model_type in model_types.</span>
-cluster &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/parallel/topics/makeCluster">makeCluster</a></span>(<span class="dv">10</span>)
-<span class="kw">registerDoParallel</span>(cluster)
-
-<span class="co"># Model types to build</span>
-model_types &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"sparse_logistic"</span>,
-                 <span class="st">"gradient_boosting_classifier"</span>,
-                 <span class="st">"random_forest_classifier"</span>)
-
-<span class="co"># Load data</span>
-<span class="kw">data</span>(iris)
-
-<span class="co"># Listen for multiple models to complete concurrently</span>
-model_results &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/foreach/topics/foreach">foreach</a></span>(<span class="dt">model_type=</span><span class="kw">iter</span>(model_types), <span class="dt">.packages=</span><span class="st">'civis'</span>) <span class="op">%dopar%</span><span class="st"> </span>{
-    <span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(iris, <span class="st">"Species"</span>, model_type)
-}
-<span class="kw"><a href="http://www.rdocumentation.org/packages/parallel/topics/makeCluster">stopCluster</a></span>(cluster)
-<span class="kw">print</span>(<span class="st">"ROC Results"</span>)
-<span class="kw">lapply</span>(model_results, <span class="cf">function</span>(result) result<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>roc_auc)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">library</span>(parallel)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">library</span>(doParallel)</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw">library</span>(foreach)</a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw">library</span>(civis)</a>
+<a class="sourceLine" id="cb3-5" title="5"></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co"># Register a local cluster with enough processes so each function</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co"># we want to run concurrently has its own process. Here we'll</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co"># need at least 3, with 1 for each model_type in model_types.</span></a>
+<a class="sourceLine" id="cb3-9" title="9">cluster &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/parallel/topics/makeCluster">makeCluster</a></span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="kw">registerDoParallel</span>(cluster)</a>
+<a class="sourceLine" id="cb3-11" title="11"></a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="co"># Model types to build</span></a>
+<a class="sourceLine" id="cb3-13" title="13">model_types &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"sparse_logistic"</span>,</a>
+<a class="sourceLine" id="cb3-14" title="14">                 <span class="st">"gradient_boosting_classifier"</span>,</a>
+<a class="sourceLine" id="cb3-15" title="15">                 <span class="st">"random_forest_classifier"</span>)</a>
+<a class="sourceLine" id="cb3-16" title="16"></a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="co"># Load data</span></a>
+<a class="sourceLine" id="cb3-18" title="18"><span class="kw">data</span>(iris)</a>
+<a class="sourceLine" id="cb3-19" title="19"></a>
+<a class="sourceLine" id="cb3-20" title="20"><span class="co"># Listen for multiple models to complete concurrently</span></a>
+<a class="sourceLine" id="cb3-21" title="21">model_results &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/foreach/topics/foreach">foreach</a></span>(<span class="dt">model_type=</span><span class="kw">iter</span>(model_types), <span class="dt">.packages=</span><span class="st">'civis'</span>) <span class="op">%dopar%</span><span class="st"> </span>{</a>
+<a class="sourceLine" id="cb3-22" title="22">    <span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(iris, <span class="st">"Species"</span>, model_type)</a>
+<a class="sourceLine" id="cb3-23" title="23">}</a>
+<a class="sourceLine" id="cb3-24" title="24"><span class="kw"><a href="http://www.rdocumentation.org/packages/parallel/topics/makeCluster">stopCluster</a></span>(cluster)</a>
+<a class="sourceLine" id="cb3-25" title="25"><span class="kw">print</span>(<span class="st">"ROC Results"</span>)</a>
+<a class="sourceLine" id="cb3-26" title="26"><span class="kw">lapply</span>(model_results, <span class="cf">function</span>(result) result<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>roc_auc)</a></code></pre></div>
 </div>
 <div id="building-many-models-with-mcparallel" class="section level2">
 <h2 class="hasAnchor">
 <a href="#building-many-models-with-mcparallel" class="anchor"></a>Building Many Models with <code>mcparallel</code>
 </h2>
 <p>Note: <code>mcparallel</code> relies on forking and thus is not available on Windows.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(civis)
-<span class="kw">library</span>(parallel)
-
-<span class="co"># Model types to build</span>
-model_types &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"sparse_logistic"</span>,
-                 <span class="st">"gradient_boosting_classifier"</span>,
-                 <span class="st">"random_forest_classifier"</span>)
-
-<span class="co"># Load data</span>
-<span class="kw">data</span>(iris)
-
-<span class="co"># Loop over all models in parallel with a max of 10 processes</span>
-model_results &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/parallel/topics/mclapply">mclapply</a></span>(model_types, <span class="cf">function</span>(model_type) {
-  <span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(iris, <span class="st">"Species"</span>, model_type)
-}, <span class="dt">mc.cores=</span><span class="dv">10</span>)
-
-<span class="co"># Wait for all models simultaneously</span>
-<span class="kw">print</span>(<span class="st">"ROC Results"</span>)
-<span class="kw">lapply</span>(model_results, <span class="cf">function</span>(result) result<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>roc_auc)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">library</span>(civis)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw">library</span>(parallel)</a>
+<a class="sourceLine" id="cb4-3" title="3"></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co"># Model types to build</span></a>
+<a class="sourceLine" id="cb4-5" title="5">model_types &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"sparse_logistic"</span>,</a>
+<a class="sourceLine" id="cb4-6" title="6">                 <span class="st">"gradient_boosting_classifier"</span>,</a>
+<a class="sourceLine" id="cb4-7" title="7">                 <span class="st">"random_forest_classifier"</span>)</a>
+<a class="sourceLine" id="cb4-8" title="8"></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co"># Load data</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="kw">data</span>(iris)</a>
+<a class="sourceLine" id="cb4-11" title="11"></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co"># Loop over all models in parallel with a max of 10 processes</span></a>
+<a class="sourceLine" id="cb4-13" title="13">model_results &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/parallel/topics/mclapply">mclapply</a></span>(model_types, <span class="cf">function</span>(model_type) {</a>
+<a class="sourceLine" id="cb4-14" title="14">  <span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(iris, <span class="st">"Species"</span>, model_type)</a>
+<a class="sourceLine" id="cb4-15" title="15">}, <span class="dt">mc.cores=</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb4-16" title="16"></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co"># Wait for all models simultaneously</span></a>
+<a class="sourceLine" id="cb4-18" title="18"><span class="kw">print</span>(<span class="st">"ROC Results"</span>)</a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="kw">lapply</span>(model_results, <span class="cf">function</span>(result) result<span class="op">$</span>metrics<span class="op">$</span>metrics<span class="op">$</span>roc_auc)</a></code></pre></div>
 </div>
 <div id="operating-system-environment-specific-errors" class="section level2">
 <h2 class="hasAnchor">

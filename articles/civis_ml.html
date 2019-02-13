@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.6.1</span>
       </span>
     </div>
 
@@ -98,35 +98,35 @@
     
     
 <p>There are so many models to build! When this becomes challenging on a local machine, offloading model building to the cloud can save a lot of time and effort.</p>
-<p><a href="https://www.civisanalytics.com/blog/civisml-scikit-learn-at-scale/">CivisML</a> is a machine learning service on Civis Platform that makes this as painless as possible. You can fit many different models, do extensive hyperparameter tuning, and score data sets with millions of observations stored in remote databases. Once these models are built, they live in Civis Platform permanently and can be included into production pipelines. Results can be easily incorporated into reports and dashboards.</p>
+<p><a href="https://medium.com/civis-analytics/civisml-scikit-learn-at-scale-b01b496916ea">CivisML</a> is a machine learning service on Civis Platform that makes this as painless as possible. You can fit many different models, do extensive hyperparameter tuning, and score data sets with millions of observations stored in remote databases. Once these models are built, they live in Civis Platform permanently and can be included into production pipelines. Results can be easily incorporated into reports and dashboards.</p>
 <p>CivisML is built in Python using <a href="http://scikit-learn.org/stable/">scikit-learn</a>, and leverages AWS behind the scenes for efficient distributed computing. However, most of its features can be used through R without knowledge of Python or AWS with the <code>civis_ml</code> function in <code>civis</code>.</p>
 <p>While <code>civis_ml</code> is a complex function with many arguments, basic machine learning modeling and scoring can be easily carried out. We illustrate several features of <code>civis_ml</code> with data from a fictitious company called Brandable, who is looking to predict which customers are likely to upgrade from the free to the premium service.</p>
 <div id="data-sources" class="section level2">
 <h2 class="hasAnchor">
 <a href="#data-sources" class="anchor"></a>Data sources</h2>
 <p>The first step of modeling with <code>civis_ml</code> is to specify the data source, which is the first argument. <code>civis_ml</code> works with local data frames, a CSV on local disk, <a href="https://github.com/wesm/feather">feather-format</a> files, tables in Redshift, and files on S3 (the files endpoint):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(civis)
-
-<span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(df, ...)
-<span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(<span class="st">"path/to/data.csv"</span>, ...)
-<span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(<span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="dt">table_name =</span> <span class="st">"schema.table"</span>, <span class="dt">database_name =</span> <span class="st">"database"</span>), ...)
-<span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(<span class="kw"><a href="../reference/civis_file.html">civis_file</a></span>(<span class="dv">1234</span>), ...)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(civis)</a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(df, ...)</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(<span class="st">"path/to/data.csv"</span>, ...)</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(<span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="dt">table_name =</span> <span class="st">"schema.table"</span>, <span class="dt">database_name =</span> <span class="st">"database"</span>), ...)</a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(<span class="kw"><a href="../reference/civis_file.html">civis_file</a></span>(<span class="dv">1234</span>), ...)</a></code></pre></div>
 <p>The Brandable data is located in a Redshift table called <code>sample_project.premium_training_set</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">civis.default_db =</span> <span class="st">"my_database"</span>)
-tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="dt">table_name =</span> <span class="st">"sample_project.premium_training_set"</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">options</span>(<span class="dt">civis.default_db =</span> <span class="st">"my_database"</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2">tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="dt">table_name =</span> <span class="st">"sample_project.premium_training_set"</span>)</a></code></pre></div>
 <p>Note that <code>civis_table</code> only returns information on where to find the data for <code>civis_ml</code>, not the data itself. <code>civis_table</code> also takes two SQL statements that can be useful for limiting the rows used for training: <code>sql_where</code>, and <code>sql_limit</code>.</p>
 </div>
 <div id="modeling" class="section level2">
 <h2 class="hasAnchor">
 <a href="#modeling" class="anchor"></a>Modeling</h2>
 <p>After the data source is specified, we next choose the model type. There are 13 named CivisML models that can be called from <code>civis_ml</code>, 6 for classification and 7 for regression. The name of the model corresponds to the name of the estimator in scikit-learn. It can be given in the <code>model_type</code> argument of <code>civis_ml</code>, or called directly using a <code>civis_ml_*</code> function such as <code>civis_ml_sparse_logistic</code>.</p>
-<table style="width:89%;" class="table">
+<table class="table">
 <colgroup>
-<col width="9%">
+<col width="10%">
+<col width="20%">
+<col width="20%">
 <col width="18%">
-<col width="18%">
-<col width="16%">
-<col width="26%">
+<col width="30%">
 </colgroup>
 <thead><tr class="header">
 <th>Name</th>
@@ -176,6 +176,7 @@ tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_t
 <td align="left"></td>
 <td>classification</td>
 <td><a href="https://github.com/civisanalytics/civisml-extensions">StackedClassifier</a></td>
+<td></td>
 </tr>
 <tr class="odd">
 <td><code>sparse_linear_regressor</code></td>
@@ -224,21 +225,22 @@ tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_t
 <td align="left"></td>
 <td>regression</td>
 <td><a href="https://github.com/civisanalytics/civisml-extensions">StackedRegressor</a></td>
+<td></td>
 </tr>
 </tbody>
 </table>
 <p>Documentation on the meta parameters specific to each estimator are provided in <code>?civis_ml_*</code>. For example, the regularization strength parameter <code>C</code> of <code>sparse_logistic</code> is documented in <code><a href="../reference/civis_ml_sparse_logistic.html">?civis_ml_sparse_logistic</a></code>.</p>
 <p>For the Brandable data, we use a <code>random_forest</code> classifier to predict the probability that a customer upgrades from free to premium services. For efficiency, we can also denote a <code>primary_key</code>, and a set of <code>excluded_columns</code> that are not included in the model:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(civis)
-tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="st">"sample_project.premium_training_set"</span>)
-m   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
-                <span class="dt">model_type =</span> <span class="st">"random_forest_classifier"</span>, 
-                <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
-                <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)
-
-m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml_random_forest_classifier.html">civis_ml_random_forest_classifier</a></span>(tab,
-      <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
-      <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">library</span>(civis)</a>
+<a class="sourceLine" id="cb3-2" title="2">tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="st">"sample_project.premium_training_set"</span>)</a>
+<a class="sourceLine" id="cb3-3" title="3">m   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, </a>
+<a class="sourceLine" id="cb3-4" title="4">                <span class="dt">model_type =</span> <span class="st">"random_forest_classifier"</span>, </a>
+<a class="sourceLine" id="cb3-5" title="5">                <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, </a>
+<a class="sourceLine" id="cb3-6" title="6">                <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)</a>
+<a class="sourceLine" id="cb3-7" title="7"></a>
+<a class="sourceLine" id="cb3-8" title="8">m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml_random_forest_classifier.html">civis_ml_random_forest_classifier</a></span>(tab,</a>
+<a class="sourceLine" id="cb3-9" title="9">      <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, </a>
+<a class="sourceLine" id="cb3-10" title="10">      <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)</a></code></pre></div>
 <p>Note that if the dependent variables have null values, those rows will be removed before modeling.</p>
 <div id="hyperparameter-tuning" class="section level3">
 <h3 class="hasAnchor">
@@ -246,30 +248,30 @@ m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml_
 <p>You can tune hyperparameters using one of two methods: grid search or hyperband. CivisML will perform grid search if you pass a named list of hyperparameters and candidate values to <code>cross_validation_parameters</code>. By default, hyperparameter tuning will run in parallel, using as many jobs as possible without overloading your computing cluster. If you wish to have more control over the number of jobs running at once, you can set it using the <code>n_jobs</code> parameter.</p>
 <p><a href="https://arxiv.org/abs/1603.06560">Hyperband</a> is an efficient approach to hyperparameter optimization, and recommended over grid search where possible. CivisML will perform hyperband optimization if you pass the string <code>"hyperband"</code> to <code>cross_validation_parameters</code>. Hyperband cannot be used to tune GLMs. For this reason, preset GLMs do not have a hyperband option. Hyperband is supported for random forests, gradient boosted trees, extra trees, multilayer perceptrons, and the random forest and gradient boosted tree steps of stacking. It is highly recommended that multilayer perceptron models only be used with hyperband.</p>
 <p>For the <code>random_forest_classifier</code> in the Brandable data, we try both <code>"hyperband"</code> and grid search for hyperparameter optimization.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="st">"sample_project.premium_training_set"</span>)
-
-<span class="co"># hyperband</span>
-m_hyper &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
-              <span class="dt">model_type =</span> <span class="st">"random_forest_classifier"</span>, 
-              <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
-              <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>, 
-              <span class="dt">cross_validation_parameters =</span> <span class="st">'hyperband'</span>)
-
-<span class="co"># grid search</span>
-cv_params &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="st">"max_depth"</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>), 
-                  <span class="st">"n_estimators"</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>))
-  
-m_grid &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
-              <span class="dt">model_type =</span> <span class="st">"random_forest_classifier"</span>, 
-              <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
-              <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>, 
-              <span class="dt">cross_validation_parameters =</span> cv_params)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="st">"sample_project.premium_training_set"</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co"># hyperband</span></a>
+<a class="sourceLine" id="cb4-4" title="4">m_hyper &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, </a>
+<a class="sourceLine" id="cb4-5" title="5">              <span class="dt">model_type =</span> <span class="st">"random_forest_classifier"</span>, </a>
+<a class="sourceLine" id="cb4-6" title="6">              <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, </a>
+<a class="sourceLine" id="cb4-7" title="7">              <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>, </a>
+<a class="sourceLine" id="cb4-8" title="8">              <span class="dt">cross_validation_parameters =</span> <span class="st">'hyperband'</span>)</a>
+<a class="sourceLine" id="cb4-9" title="9"></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="co"># grid search</span></a>
+<a class="sourceLine" id="cb4-11" title="11">cv_params &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="st">"max_depth"</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>), </a>
+<a class="sourceLine" id="cb4-12" title="12">                  <span class="st">"n_estimators"</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>))</a>
+<a class="sourceLine" id="cb4-13" title="13">  </a>
+<a class="sourceLine" id="cb4-14" title="14">m_grid &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, </a>
+<a class="sourceLine" id="cb4-15" title="15">              <span class="dt">model_type =</span> <span class="st">"random_forest_classifier"</span>, </a>
+<a class="sourceLine" id="cb4-16" title="16">              <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, </a>
+<a class="sourceLine" id="cb4-17" title="17">              <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>, </a>
+<a class="sourceLine" id="cb4-18" title="18">              <span class="dt">cross_validation_parameters =</span> cv_params)</a></code></pre></div>
 <p>CivisML runs pre-defined models with hyperband using the following distributions:</p>
 <table class="table">
 <colgroup>
 <col width="26%">
 <col width="14%">
-<col width="58%">
+<col width="59%">
 </colgroup>
 <thead><tr class="header">
 <th>Models</th>
@@ -322,17 +324,17 @@ m_grid &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civi
 <h3 class="hasAnchor">
 <a href="#stacking" class="anchor"></a>Stacking</h3>
 <p>The <code>"stacking_classifier"</code> model stacks together the <code>"gradient_boosting_classifier"</code> and <code>"random_forest_classifier"</code> predefined models together with a <code>glmnet.LogitNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5, scoring='log_loss')</code>. Defaults for the predefined models are documented in <code><a href="../reference/civis_ml.html">?civis_ml</a></code>. Each column is first <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">standardized</a>, and then the model predictions are combined using <a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html">LogisticRegressionCV</a> with <code>penalty='l2'</code> and <code>tol=1e-08</code>. The <code>"stacking_regressor"</code> works similarly, stacking together the <code>"gradient_boosting_regressor"</code> and <code>"random_forest_regressor"</code> models and a <code>glmnet.ElasticNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5, scoring='r2')</code>, combining them using <a href="https://github.com/civisanalytics/civisml-extensions">NonNegativeLinearRegression</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m_stack &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
-              <span class="dt">model_type =</span> <span class="st">"stacking_classifier"</span>, 
-              <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
-              <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">m_stack &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, </a>
+<a class="sourceLine" id="cb5-2" title="2">              <span class="dt">model_type =</span> <span class="st">"stacking_classifier"</span>, </a>
+<a class="sourceLine" id="cb5-3" title="3">              <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, </a>
+<a class="sourceLine" id="cb5-4" title="4">              <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="results" class="section level2">
 <h2 class="hasAnchor">
 <a href="#results" class="anchor"></a>Results</h2>
 <p>A simple summary of the results from the best fitting model is provided with <code>print</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">m</a></code></pre></div>
 <pre><code>## &lt;CivisML random_forest_classifier&gt;
 ## https://platform.civisanalytics.com/#/models/7072485
 ## Job id:  7072485  Run id:  58251183 
@@ -342,17 +344,17 @@ m_grid &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civi
 ##                  0      1
 ## Prop Correct 0.923 0.3297</code></pre>
 <p>Following the link takes you to a summary of the model results in Civis Platform. Additional metrics can be computed with <code>get_metric</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/get_metric.html">get_metric</a></span>(m, <span class="st">"accuracy"</span>)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="../reference/get_metric.html">get_metric</a></span>(m, <span class="st">"accuracy"</span>)</a></code></pre></div>
 <pre><code>## [1] 0.761</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/get_metric.html">get_metric</a></span>(m, <span class="st">"confusion_matrix"</span>)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="../reference/get_metric.html">get_metric</a></span>(m, <span class="st">"confusion_matrix"</span>)</a></code></pre></div>
 <pre><code>##      [,1] [,2]
 ## [1,]  671   56
 ## [2,]  183   90</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/get_metric.html">get_metric</a></span>(m, <span class="st">"roc_auc"</span>)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="../reference/get_metric.html">get_metric</a></span>(m, <span class="st">"roc_auc"</span>)</a></code></pre></div>
 <pre><code>## [1] 0.8009004</code></pre>
 <p>Out of sample (or out of fold) scores used in training can be retrieved using <code>fetch_oos_scores</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">oos &lt;-<span class="st"> </span><span class="kw"><a href="../reference/fetch_oos_scores.html">fetch_oos_scores</a></span>(m)
-<span class="kw">head</span>(oos)</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">oos &lt;-<span class="st"> </span><span class="kw"><a href="../reference/fetch_oos_scores.html">fetch_oos_scores</a></span>(m)</a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="kw">head</span>(oos)</a></code></pre></div>
 <pre><code>##   brandable_user_id upgrade_1
 ## 1   00214b9181f2347    0.3280
 ## 2   0b6cbd77cb8d98b    0.7140
@@ -365,50 +367,50 @@ m_grid &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civi
 <h2 class="hasAnchor">
 <a href="#diagnostics" class="anchor"></a>Diagnostics</h2>
 <p>For classification problems, <code>plot</code> produces a a decile plot using <code>ggplot2</code>. For the premium upgrade model, the decile plot shows that the top-scoring 10% of individuals contain 2.20 times as many targets (people who upgraded) as a randomly selected list of the same size.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(m)</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">plot</span>(m)</a></code></pre></div>
 <p><img src="civis_ml_files/figure-html/unnamed-chunk-11-1.png" width="480"></p>
 <p>For regression problems, <code>plot</code> produces a binned scatter-plot of <span class="math inline">\(y\)</span> against <span class="math inline">\(\hat{y}\)</span>.</p>
 <p><code>hist</code> shows the histogram of out of sample (out of fold scores), also using <code>ggplot2</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(m)</code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">hist</span>(m)</a></code></pre></div>
 <p><img src="civis_ml_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 </div>
 <div id="prediction-and-scoring" class="section level2">
 <h2 class="hasAnchor">
 <a href="#prediction-and-scoring" class="anchor"></a>Prediction and Scoring</h2>
 <p>CivisML can also be used to score models on hundreds of millions of rows, and distributed over many compute instances. Like many estimators in R, this is done through a <code>predict</code> method. The <code>newdata</code> argument of <code>predict</code> can take any data source supported in <code>civis_ml</code>. Here we use a table in Redshift containing all Brandable users, and output the result to another table in Redshift:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred_tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="dt">table_name =</span> <span class="st">"sample_project.brandable_all_users"</span>)
-pred_job &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> pred_tab, 
-                    <span class="dt">output_table =</span> <span class="st">"sample_project.brandable_user_scores"</span>)</code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">pred_tab &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_table.html">civis_table</a></span>(<span class="dt">table_name =</span> <span class="st">"sample_project.brandable_all_users"</span>)</a>
+<a class="sourceLine" id="cb18-2" title="2">pred_job &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> pred_tab, </a>
+<a class="sourceLine" id="cb18-3" title="3">                    <span class="dt">output_table =</span> <span class="st">"sample_project.brandable_user_scores"</span>)</a></code></pre></div>
 <p>Like training and validation, scoring is distributed by default, using up to 90 percent of your computing cluster resources. If you would like to have more control over the number of jobs that are run at once, you can set a maximum using <code>n_jobs</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred_job &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> pred_tab, 
-                    <span class="dt">output_table =</span> <span class="st">"sample_project.brandable_user_scores"</span>, 
-                    <span class="dt">n_jobs =</span> <span class="dv">25</span>)</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">pred_job &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> pred_tab, </a>
+<a class="sourceLine" id="cb19-2" title="2">                    <span class="dt">output_table =</span> <span class="st">"sample_project.brandable_user_scores"</span>, </a>
+<a class="sourceLine" id="cb19-3" title="3">                    <span class="dt">n_jobs =</span> <span class="dv">25</span>)</a></code></pre></div>
 <p>The predictions can be loaded into memory using <code>fetch_predictions</code>, which downloads directly from S3:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">yhat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/fetch_predictions.html">fetch_predictions</a></span>(pred_job)</code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">yhat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/fetch_predictions.html">fetch_predictions</a></span>(pred_job)</a></code></pre></div>
 <p>Note that if the table of predictions exceeds available memory, it may be helpful to use <code>download_civis</code> instead.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download from S3</span>
-<span class="kw"><a href="../reference/download_civis.html">download_civis</a></span>(pred_job<span class="op">$</span>model_info<span class="op">$</span>output_file_ids, <span class="dt">path =</span> <span class="st">"my_predictions.csv"</span>)
-
-<span class="co"># download from Redshift </span>
-<span class="kw"><a href="../reference/download_civis.html">download_civis</a></span>(<span class="st">"sample_project.brandable_user_scores"</span>)</code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="co"># download from S3</span></a>
+<a class="sourceLine" id="cb21-2" title="2"><span class="kw"><a href="../reference/download_civis.html">download_civis</a></span>(pred_job<span class="op">$</span>model_info<span class="op">$</span>output_file_ids, <span class="dt">path =</span> <span class="st">"my_predictions.csv"</span>)</a>
+<a class="sourceLine" id="cb21-3" title="3"></a>
+<a class="sourceLine" id="cb21-4" title="4"><span class="co"># download from Redshift </span></a>
+<a class="sourceLine" id="cb21-5" title="5"><span class="kw"><a href="../reference/download_civis.html">download_civis</a></span>(<span class="st">"sample_project.brandable_user_scores"</span>)</a></code></pre></div>
 </div>
 <div id="retrieving-existing-models" class="section level2">
 <h2 class="hasAnchor">
 <a href="#retrieving-existing-models" class="anchor"></a>Retrieving Existing models</h2>
 <p>An existing model (or particular run of an existing model) can be retrieved using <code>civis_ml_fetch_existing</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model_id &lt;-<span class="st"> </span>m<span class="op">$</span>job<span class="op">$</span>id
-m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml_fetch_existing</a></span>(model_id)</code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">model_id &lt;-<span class="st"> </span>m<span class="op">$</span>job<span class="op">$</span>id</a>
+<a class="sourceLine" id="cb22-2" title="2">m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml_fetch_existing</a></span>(model_id)</a></code></pre></div>
 </div>
 <div id="error-handling" class="section level2">
 <h2 class="hasAnchor">
 <a href="#error-handling" class="anchor"></a>Error Handling</h2>
 <p>Unfortunately, many kinds of errors can occur. When an error occurs within CivisML, a <code>civis_ml_error</code> is thrown. By default, the log from the CivisML job is printed, which is useful for debugging.</p>
 <p>Here is an example error from misspelling the model type:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
-         <span class="dt">model_type =</span> <span class="st">"random_fest_classifier"</span>, 
-         <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
-         <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>, 
-         <span class="dt">cross_validation_parameters =</span> cv_params)</code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, </a>
+<a class="sourceLine" id="cb23-2" title="2">         <span class="dt">model_type =</span> <span class="st">"random_fest_classifier"</span>, </a>
+<a class="sourceLine" id="cb23-3" title="3">         <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, </a>
+<a class="sourceLine" id="cb23-4" title="4">         <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>, </a>
+<a class="sourceLine" id="cb23-5" title="5">         <span class="dt">cross_validation_parameters =</span> cv_params)</a></code></pre></div>
 <pre><code>## &lt;civis_ml_error&gt;
 ## scripts_get_custom_runs(id = 7077157, run_id = 58263925): 
 ## 2017-08-29 13:01:54 PM CDT Queued
@@ -427,30 +429,30 @@ m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.
 <a href="#programming-with-civis_ml" class="anchor"></a>Programming with <code>civis_ml</code>
 </h2>
 <p>When programming with <code>civis_ml</code>, errors can be caught using the base R <code>try</code> or <code>tryCatch</code>. In <code>civis</code>, we provide functions for getting debugging information using <code>get_error</code> or just the logs using <code>fetch_logs</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">e &lt;-<span class="st"> </span><span class="kw">tryCatch</span>({
-  <span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
-        <span class="dt">model_type =</span> <span class="st">"random_fest_classifier"</span>, 
-        <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
-        <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)
-  }, <span class="dt">civis_ml_error =</span> <span class="cf">function</span>(e) e)
-<span class="kw"><a href="../reference/get_error.html">get_error</a></span>(e)
-<span class="kw"><a href="../reference/fetch_logs.html">fetch_logs</a></span>(e)</code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">e &lt;-<span class="st"> </span><span class="kw">tryCatch</span>({</a>
+<a class="sourceLine" id="cb25-2" title="2">  <span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, </a>
+<a class="sourceLine" id="cb25-3" title="3">        <span class="dt">model_type =</span> <span class="st">"random_fest_classifier"</span>, </a>
+<a class="sourceLine" id="cb25-4" title="4">        <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, </a>
+<a class="sourceLine" id="cb25-5" title="5">        <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)</a>
+<a class="sourceLine" id="cb25-6" title="6">  }, <span class="dt">civis_ml_error =</span> <span class="cf">function</span>(e) e)</a>
+<a class="sourceLine" id="cb25-7" title="7"><span class="kw"><a href="../reference/get_error.html">get_error</a></span>(e)</a>
+<a class="sourceLine" id="cb25-8" title="8"><span class="kw"><a href="../reference/fetch_logs.html">fetch_logs</a></span>(e)</a></code></pre></div>
 <p>Error handling can be used to implement more robust workflow programming with <code>civis_ml</code>. In the following function, we implement <code>retry_model</code>, which retries on e.g. connection failures but not on a <code>civis_ml_error</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">retry_model &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">max_retries =</span> <span class="dv">5</span>) {
-  i &lt;-<span class="st"> </span><span class="dv">1</span>
-  <span class="cf">while</span> (i <span class="op">&lt;</span><span class="st"> </span>max_retries) {
-    <span class="kw">tryCatch</span>({
-      m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, 
-               <span class="dt">model_type =</span> <span class="st">"random_forest_classifier"</span>, 
-               <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, 
-               <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)
-      <span class="kw">return</span>(m)
-    }, <span class="dt">civis_ml_error =</span> <span class="cf">function</span>(e) <span class="kw">stop</span>(e))
-    <span class="kw">cat</span>(<span class="st">"Retry: "</span>, i, <span class="dt">fill =</span> <span class="ot">TRUE</span>)
-    i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
-  }
-  <span class="kw">stop</span>(<span class="st">"Exceeded maximum retries."</span>)
-}</code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">retry_model &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">max_retries =</span> <span class="dv">5</span>) {</a>
+<a class="sourceLine" id="cb26-2" title="2">  i &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb26-3" title="3">  <span class="cf">while</span> (i <span class="op">&lt;</span><span class="st"> </span>max_retries) {</a>
+<a class="sourceLine" id="cb26-4" title="4">    <span class="kw">tryCatch</span>({</a>
+<a class="sourceLine" id="cb26-5" title="5">      m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/civis_ml.html">civis_ml</a></span>(tab, <span class="dt">dependent_variable =</span> <span class="st">"upgrade"</span>, </a>
+<a class="sourceLine" id="cb26-6" title="6">               <span class="dt">model_type =</span> <span class="st">"random_forest_classifier"</span>, </a>
+<a class="sourceLine" id="cb26-7" title="7">               <span class="dt">primary_key =</span> <span class="st">"brandable_user_id"</span>, </a>
+<a class="sourceLine" id="cb26-8" title="8">               <span class="dt">excluded_columns =</span> <span class="st">"residential_zip"</span>)</a>
+<a class="sourceLine" id="cb26-9" title="9">      <span class="kw">return</span>(m)</a>
+<a class="sourceLine" id="cb26-10" title="10">    }, <span class="dt">civis_ml_error =</span> <span class="cf">function</span>(e) <span class="kw">stop</span>(e))</a>
+<a class="sourceLine" id="cb26-11" title="11">    <span class="kw">cat</span>(<span class="st">"Retry: "</span>, i, <span class="dt">fill =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb26-12" title="12">    i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb26-13" title="13">  }</a>
+<a class="sourceLine" id="cb26-14" title="14">  <span class="kw">stop</span>(<span class="st">"Exceeded maximum retries."</span>)</a>
+<a class="sourceLine" id="cb26-15" title="15">}</a></code></pre></div>
 <p>Workflow programming could be further enhanced by printing the logs, storing the error object, or writing error logs to a file or database.</p>
 </div>
 <div id="appendix" class="section level2">

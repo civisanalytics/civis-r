@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.6.1</span>
       </span>
     </div>
 
@@ -117,66 +117,66 @@
 <div id="reading-data-into-r-from-platform" class="section level2">
 <h2 class="hasAnchor">
 <a href="#reading-data-into-r-from-platform" class="anchor"></a>Reading Data Into R From Platform</h2>
-<p>The main workhose for getting data from Platform is <code>read_civis</code>. This function is designed to work similarly to the built in function <code>read.csv</code>, returning a dataframe from a table in Platform. For more flexibility, <code>read_civis</code> can download files from Redshift using an SQL query, or download a file from S3 (‘the files endpoint’) using a file id.</p>
+<p>The main workhose for getting data from Platform is <code>read_civis</code>. This function is designed to work similarly to the built in function <code>read.csv</code>, returning a dataframe from a table in Platform. For more flexibility, <code>read_civis</code> can download files from Redshift using an SQL query, or download a file from S3 (’the files endpoint’) using a file id.</p>
 <p>To read from a table in Platform, simply provide the name of the schema, table within the schema, and the database:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="st">"schema.tablename"</span>, <span class="dt">database =</span> <span class="st">"my-database"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="st">"schema.tablename"</span>, <span class="dt">database =</span> <span class="st">"my-database"</span>)</a></code></pre></div>
 <p>For convenience, a default database can be set in the package options, and not specified in further calls to any IO function. If there is only one database available, this database will automatically be used as the default. In the examples that follow, we assume that a default database has been set.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">civis.default_db =</span> <span class="st">"my-database"</span>)
-df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="st">"schema.tablename"</span>)</code></pre></div>
-<p><code>read_civis</code> accepts SQL queries when more flexibility is needed. This is accomplished by wrapping <code><a href="http://dplyr.tidyverse.org/reference/sql.html">sql(...)</a></code> around a string containing the query. With <code>read_civis</code>, queries are always read only, and always return a <code>data.frame</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">query &lt;-<span class="st"> "SELECT * FROM table JOIN other_table USING id WHERE var1 &lt; 23"</span>
-df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="kw"><a href="http://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(query))</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">options</span>(<span class="dt">civis.default_db =</span> <span class="st">"my-database"</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2">df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="st">"schema.tablename"</span>)</a></code></pre></div>
+<p><code>read_civis</code> accepts SQL queries when more flexibility is needed. This is accomplished by wrapping <code><a href="https://dplyr.tidyverse.org/reference/sql.html">sql(...)</a></code> around a string containing the query. With <code>read_civis</code>, queries are always read only, and always return a <code>data.frame</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">query &lt;-<span class="st"> "SELECT * FROM table JOIN other_table USING id WHERE var1 &lt; 23"</span></a>
+<a class="sourceLine" id="cb3-2" title="2">df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(query))</a></code></pre></div>
 <p>Finally, <code>read_civis</code> accepts a file id as the first argument to read in files from S3 as data frames. IDs are obtained from <code>write_civis_file</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(iris)
-id &lt;-<span class="st"> </span><span class="kw"><a href="../reference/write_civis_file.html">write_civis_file</a></span>(iris)
-df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(id)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">data</span>(iris)</a>
+<a class="sourceLine" id="cb4-2" title="2">id &lt;-<span class="st"> </span><span class="kw"><a href="../reference/write_civis_file.html">write_civis_file</a></span>(iris)</a>
+<a class="sourceLine" id="cb4-3" title="3">df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(id)</a></code></pre></div>
 <p>For maximum flexibility, <code>read_civis</code> accepts parameters from <code>read.csv</code> which can be used to define data types when the defaults are not appropriate. For instance, when numbers should be read in as characters or when strings shouldn’t be read in as factors.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">query &lt;-<span class="st"> "SELECT * FROM table JOIN other_table USING id WHERE var1 &lt; 23"</span>
-df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="kw"><a href="http://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(query), <span class="dt">colClasses =</span> <span class="st">"character"</span>)
-df2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="kw"><a href="http://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(query), <span class="dt">as.is =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">query &lt;-<span class="st"> "SELECT * FROM table JOIN other_table USING id WHERE var1 &lt; 23"</span></a>
+<a class="sourceLine" id="cb5-2" title="2">df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(query), <span class="dt">colClasses =</span> <span class="st">"character"</span>)</a>
+<a class="sourceLine" id="cb5-3" title="3">df2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(query), <span class="dt">as.is =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
 <div id="uploading-data-to-platform" class="section level2">
 <h2 class="hasAnchor">
 <a href="#uploading-data-to-platform" class="anchor"></a>Uploading Data to Platform</h2>
 <p>The complement to reading data into the R workspace is writing data to the Platform. The function <code>write_civis</code> uploads data frames or csv files to an Amazon Redshift database. The function <code>write_civis_file</code> uploads R objects and arbitrary files to Amazon S3 (the files endpoint).</p>
 <p>When creating a new table, <code>write_civis</code> relies on Platform to determine data types. Distkeys and sortkeys can optionally be set to improve query performance. Again, we set a default database in these examples for convenience.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">civis.default_db =</span> <span class="st">"my_database"</span>)
-df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">100</span>), <span class="dt">y =</span> <span class="kw">rnorm</span>(<span class="dv">100</span>), <span class="dt">z =</span> <span class="kw">rnorm</span>(<span class="dv">100</span>))
-<span class="kw"><a href="../reference/write_civis.html">write_civis</a></span>(df, <span class="dt">tablename =</span> <span class="st">"schema.tablename"</span>,
-            <span class="dt">distkey =</span> <span class="st">"id"</span>, <span class="dt">sortkey1 =</span> <span class="st">"date"</span>, <span class="dt">sortkey2 =</span> <span class="st">"type"</span>)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">options</span>(<span class="dt">civis.default_db =</span> <span class="st">"my_database"</span>)</a>
+<a class="sourceLine" id="cb6-2" title="2">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">100</span>), <span class="dt">y =</span> <span class="kw">rnorm</span>(<span class="dv">100</span>), <span class="dt">z =</span> <span class="kw">rnorm</span>(<span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="kw"><a href="../reference/write_civis.html">write_civis</a></span>(df, <span class="dt">tablename =</span> <span class="st">"schema.tablename"</span>,</a>
+<a class="sourceLine" id="cb6-4" title="4">            <span class="dt">distkey =</span> <span class="st">"id"</span>, <span class="dt">sortkey1 =</span> <span class="st">"date"</span>, <span class="dt">sortkey2 =</span> <span class="st">"type"</span>)</a></code></pre></div>
 <p>By default, <code>write_civis</code> will fail if the table passed in <code>tablename</code> already exists. Optionally, <code>write_civis</code> can append to an existing table. It may also delete all rows and then append (truncate). If specific datatypes are required, a table may first be created with a SQL <code>CREATE TABLE</code> command and then data can be inserted with <code>write_civis</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/write_civis.html">write_civis</a></span>(df, <span class="dt">tablename =</span> <span class="st">"schema.tablename"</span>, <span class="dt">if_exists =</span> <span class="st">"append"</span>)
-<span class="kw"><a href="../reference/write_civis.html">write_civis</a></span>(df, <span class="dt">tablename =</span> <span class="st">"schema.tablename"</span>, <span class="dt">if_exists =</span> <span class="st">"truncate"</span>)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="../reference/write_civis.html">write_civis</a></span>(df, <span class="dt">tablename =</span> <span class="st">"schema.tablename"</span>, <span class="dt">if_exists =</span> <span class="st">"append"</span>)</a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw"><a href="../reference/write_civis.html">write_civis</a></span>(df, <span class="dt">tablename =</span> <span class="st">"schema.tablename"</span>, <span class="dt">if_exists =</span> <span class="st">"truncate"</span>)</a></code></pre></div>
 <p>If a csv file is saved to disk but not loaded in the R workspace, <code>write_civis</code> will upload the csv to Platform without needing first load the csv into RAM. This can save time when a file is large. Uploading a csv directly to Platform is done by simply passing the file name and path to <code>write_civis</code> as the first argument:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/write_civis.html">write_civis</a></span>(<span class="st">"~/path/to/my_data.csv"</span>, <span class="dt">tablename=</span><span class="st">"schema.tablename"</span>)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="../reference/write_civis.html">write_civis</a></span>(<span class="st">"~/path/to/my_data.csv"</span>, <span class="dt">tablename=</span><span class="st">"schema.tablename"</span>)</a></code></pre></div>
 <p>Finally, <code>write_civis_file</code> uploads R objects and files to Amazon S3, which is also referred to as the ‘files endpoint.’ R objects saved to the files endpoint expire after 30 days and are serialized using <code>saveRDS</code>. R objects can be loaded back into memory by passing the file id to <code>read_civis</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(iris)
-id &lt;-<span class="st"> </span><span class="kw"><a href="../reference/write_civis_file.html">write_civis_file</a></span>(iris)
-iris2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(id)</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">data</span>(iris)</a>
+<a class="sourceLine" id="cb9-2" title="2">id &lt;-<span class="st"> </span><span class="kw"><a href="../reference/write_civis_file.html">write_civis_file</a></span>(iris)</a>
+<a class="sourceLine" id="cb9-3" title="3">iris2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(id)</a></code></pre></div>
 <p>When passed a file name and path, <code>write_civis_file</code> will upload the file to S3 as-is. To read the file back into memory as a data frame, an appropriate function to convert the file to a data frame must be provided to the <code>using</code> argument of <code>read_civis</code>. For example, a csv on the files endpoint can be read back into R as a data frame by setting <code>using = read.csv</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id &lt;-<span class="st"> </span><span class="kw"><a href="../reference/write_civis_file.html">write_civis_file</a></span>(<span class="st">"path/to/my_data.csv"</span>)
-<span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(id, <span class="dt">using =</span> read.csv)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">id &lt;-<span class="st"> </span><span class="kw"><a href="../reference/write_civis_file.html">write_civis_file</a></span>(<span class="st">"path/to/my_data.csv"</span>)</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(id, <span class="dt">using =</span> read.csv)</a></code></pre></div>
 </div>
 <div id="downloading-large-data-sets-from-platform-" class="section level2">
 <h2 class="hasAnchor">
 <a href="#downloading-large-data-sets-from-platform-" class="anchor"></a>Downloading Large Data Sets from Platform.</h2>
 <p>Occasionally, a table may be too large to store in memory. <code>download_civis</code> can be used in place of <code>read_civis</code> to download data straight to disk from Platform.</p>
-<p>Like <code>read_civis</code>, <code>download_civis</code> can download files from Amazon Redshift by passing <code>schema.tablename</code>, or <code><a href="http://dplyr.tidyverse.org/reference/sql.html">sql(...)</a></code> as the first argument. Files can be downloaded from Amazon S3 by passing the file id to <code>download_civis</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">query &lt;-<span class="st"> "SELECT * FROM table JOIN other_table USING id WHERE var1 &lt; 23"</span>
-<span class="kw"><a href="../reference/download_civis.html">download_civis</a></span>(<span class="kw"><a href="http://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(query), <span class="dt">file =</span> <span class="st">"path/to/my_file.csv"</span>)
-<span class="kw"><a href="../reference/download_civis.html">download_civis</a></span>(<span class="st">"schema.tablename"</span>, <span class="dt">file =</span> <span class="st">"path/to/my_file.csv"</span>)
-
-id &lt;-<span class="st"> </span><span class="kw"><a href="../reference/write_civis_file.html">write_civis_file</a></span>(iris)
-<span class="kw"><a href="../reference/download_civis.html">download_civis</a></span>(id, <span class="dt">file =</span> <span class="st">"path/to/my_iris.rds"</span>)</code></pre></div>
+<p>Like <code>read_civis</code>, <code>download_civis</code> can download files from Amazon Redshift by passing <code>schema.tablename</code>, or <code><a href="https://dplyr.tidyverse.org/reference/sql.html">sql(...)</a></code> as the first argument. Files can be downloaded from Amazon S3 by passing the file id to <code>download_civis</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">query &lt;-<span class="st"> "SELECT * FROM table JOIN other_table USING id WHERE var1 &lt; 23"</span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="kw"><a href="../reference/download_civis.html">download_civis</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(query), <span class="dt">file =</span> <span class="st">"path/to/my_file.csv"</span>)</a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="kw"><a href="../reference/download_civis.html">download_civis</a></span>(<span class="st">"schema.tablename"</span>, <span class="dt">file =</span> <span class="st">"path/to/my_file.csv"</span>)</a>
+<a class="sourceLine" id="cb11-4" title="4"></a>
+<a class="sourceLine" id="cb11-5" title="5">id &lt;-<span class="st"> </span><span class="kw"><a href="../reference/write_civis_file.html">write_civis_file</a></span>(iris)</a>
+<a class="sourceLine" id="cb11-6" title="6"><span class="kw"><a href="../reference/download_civis.html">download_civis</a></span>(id, <span class="dt">file =</span> <span class="st">"path/to/my_iris.rds"</span>)</a></code></pre></div>
 </div>
 <div id="running-queries-on-platform" class="section level2">
 <h2 class="hasAnchor">
 <a href="#running-queries-on-platform" class="anchor"></a>Running Queries on Platform</h2>
 <p>Arbitrary queries can be run on Redshift using <code>query_civis</code>, which returns the meta-data of the query.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q_res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/query_civis.html">query_civis</a></span>(<span class="st">"GRANT ALL ON schema.my_table TO GROUP admin"</span>)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">q_res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/query_civis.html">query_civis</a></span>(<span class="st">"GRANT ALL ON schema.my_table TO GROUP admin"</span>)</a></code></pre></div>
 <p>Existing queries can be re-run by passing the query id to <code>query_civis</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id &lt;-<span class="st"> </span>q_res<span class="op">$</span>id
-<span class="kw"><a href="../reference/query_civis.html">query_civis</a></span>(id)</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">id &lt;-<span class="st"> </span>q_res<span class="op">$</span>id</a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="kw"><a href="../reference/query_civis.html">query_civis</a></span>(id)</a></code></pre></div>
 </div>
 <div id="common-errors" class="section level2">
 <h2 class="hasAnchor">
@@ -185,26 +185,26 @@ id &lt;-<span class="st"> </span><span class="kw"><a href="../reference/write_ci
 <h4 class="hasAnchor">
 <a href="#civis-api-key-not-properly-set-or-has-expired-" class="anchor"></a>Civis API key not properly set or has expired.</h4>
 <p>Often an improper API key will return an error like below:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> Error <span class="cf">in</span> <span class="kw">api_key</span>() <span class="op">:</span><span class="st"> </span>
-<span class="st">  </span>The environmental variable CIVIS_API_KEY is not set. Add this to your .Renviron or call <span class="kw">Sys.setenv</span>(<span class="dt">CIVIS_API_KEY =</span> <span class="st">'&lt;api_key&gt;'</span>) </code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"> Error <span class="cf">in</span> <span class="kw">api_key</span>() <span class="op">:</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="st">  </span>The environmental variable CIVIS_API_KEY is not set. Add this to your .Renviron or call <span class="kw">Sys.setenv</span>(<span class="dt">CIVIS_API_KEY =</span> <span class="st">'&lt;api_key&gt;'</span>) </a></code></pre></div>
 <p>However, there may be cases where the errors are less straightforward. It is a good idea to test that API credentials are properly set with a simple call such as <code><a href="../reference/users_list_me.html">civis::users_list_me()</a></code>. See the README to set up API keys correctly.</p>
 </div>
 <div id="query-does-not-return-any-results-" class="section level4">
 <h4 class="hasAnchor">
 <a href="#query-does-not-return-any-results-" class="anchor"></a>Query does not return any results.</h4>
 <p>This may happen if a table is empty or when no rows match a <code>WHERE</code> statement. To fix, double check that the query is correct or the table is not empty.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="kw"><a href="http://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(<span class="st">"SELECT * FROM schema.tablename WHERE 1 = 0"</span>))
-Error <span class="cf">in</span> <span class="kw">download_script_results</span>(run<span class="op">$</span>script_id, run<span class="op">$</span>run_id) <span class="op">:</span><span class="st"> </span>
-<span class="st">  </span>Query produced no output. </code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(<span class="st">"SELECT * FROM schema.tablename WHERE 1 = 0"</span>))</a>
+<a class="sourceLine" id="cb15-2" title="2">Error <span class="cf">in</span> <span class="kw">download_script_results</span>(run<span class="op">$</span>script_id, run<span class="op">$</span>run_id) <span class="op">:</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="st">  </span>Query produced no output. </a></code></pre></div>
 </div>
 <div id="database-not-set-correctly-" class="section level4">
 <h4 class="hasAnchor">
 <a href="#database-not-set-correctly-" class="anchor"></a>Database not set correctly.</h4>
 <p>For both <code>read_civis</code> and <code>write_civis</code>, the database must be set to the correct, case sensitive name (not hostname) of the database.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> Error <span class="cf">in</span> <span class="kw">get_db</span>(database) <span class="op">:</span><span class="st"> </span>
-<span class="st">  </span>Argument database is <span class="ot">NULL</span> and <span class="kw">options</span>(<span class="st">"civis.default_db"</span>) not set. Set this option using <span class="kw">options</span>(<span class="dt">civis.default_db =</span> <span class="st">"my_database"</span>) </code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"> Error <span class="cf">in</span> <span class="kw">get_db</span>(database) <span class="op">:</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="st">  </span>Argument database is <span class="ot">NULL</span> and <span class="kw">options</span>(<span class="st">"civis.default_db"</span>) not set. Set this option using <span class="kw">options</span>(<span class="dt">civis.default_db =</span> <span class="st">"my_database"</span>) </a></code></pre></div>
 <p>To see a complete list of database names, run:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(<span class="kw"><a href="../reference/databases_list.html">databases_list</a></span>(), <span class="cf">function</span>(x) x<span class="op">$</span>name)</code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">sapply</span>(<span class="kw"><a href="../reference/databases_list.html">databases_list</a></span>(), <span class="cf">function</span>(x) x<span class="op">$</span>name)</a></code></pre></div>
 </div>
 </div>
   </div>
