@@ -10,7 +10,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><meta property="og:title" content="R Client for the 'Civis data science API'">
-<meta property="og:description" content="A set of tools around common workflows and a convenient interface to make
+<meta property="og:description" content="A convenient interface for making
   requests directly to the 'Civis data science API' &lt;https://www.civisanalytics.com/platform/&gt;.">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.6.1</span>
       </span>
     </div>
 
@@ -107,8 +107,8 @@
 <div id="linuxmacos" class="section level4">
 <h4 class="hasAnchor">
 <a href="#linuxmacos" class="anchor"></a>Linux/MacOS</h4>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">touch</span> ~/.Renviron
-<span class="ex">open</span> -t ~/.Renviron</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="fu">touch</span> ~/.Renviron</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="ex">open</span> -t ~/.Renviron</a></code></pre></div>
 <p>Then add the following line replacing the fake key <code>sadf8sadf9jasdf</code> with the API key from your Civis Platform Profile:</p>
 <pre><code>CIVIS_API_KEY=sadf8sadf9jasdf</code></pre>
 <p>After saving the <code>.Renviron</code> file, you’ll need to restart R/Rstudio.</p>
@@ -117,20 +117,20 @@
 <h4 class="hasAnchor">
 <a href="#windows" class="anchor"></a>Windows</h4>
 <p>A <code>.Renviron</code> file can be created in the R user home directory, <code>Sys.getenv("R_USER")</code>. Typically this is <code>"C:/username/Documents"</code>. Open or create <code>.Renviron</code> with <code>notepad</code> and add the key as above. Save with type <code>all files</code>, not <code>.txt</code>. Restart R/Rstudio.</p>
-<p>❗ You must keep your API key secret. If you use version control tools, ensure you do not commit <code>.Renviron</code> or any scripts in which you have hard-coded an API key.</p>
+<p><span class="emoji" data-emoji="heavy_exclamation_mark">❗</span> You must keep your API key secret. If you use version control tools, ensure you do not commit <code>.Renviron</code> or any scripts in which you have hard-coded an API key.</p>
 </div>
 </div>
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"civis"</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">install.packages</span>(<span class="st">"civis"</span>)</a></code></pre></div>
 <div id="updating" class="section level3">
 <h3 class="hasAnchor">
 <a href="#updating" class="anchor"></a>Updating</h3>
 <p>The <code>civis</code> package automatically generates R functions and documentation to interact with the Civis Platform when the package installs. From time to time, new API functions are added. These can be obtained immediately by re-installing the package from github:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"civisanalytics/civis-r"</span>)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"civisanalytics/civis-r"</span>)</a></code></pre></div>
 <p>If the dependencies are already installed (such as in docker containers), skipping dependency upgrades will be considerably faster:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"civisanalytics/civis-r"</span>, <span class="dt">upgrade_dependencies =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"civisanalytics/civis-r"</span>, <span class="dt">upgrade_dependencies =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="usage" class="section level2">
@@ -142,44 +142,44 @@
 <li>Making direct calls to the API</li>
 </ol>
 <p>Many useful tasks will require making multiple direct calls to the API. <code>civis</code> includes a number of wrapper functions to make common tasks like IO and modeling easier. For example, reading data from a table in Platform is as easy as</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(civis)
-
-<span class="co"># Read an entire table in to memory</span>
-my_table &lt;-<span class="st"> "schema.tablename"</span>
-df &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_civis.html">read_civis</a></span>(my_table, <span class="dt">database=</span><span class="st">"my_database"</span>)
-
-<span class="co"># Run a query and read the results into memory</span>
-query &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(<span class="st">"SELECT a, b, c FROM schema.tablename WHERE b &gt; 42"</span>)
-df2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_civis.html">read_civis</a></span>(query, <span class="dt">database=</span><span class="st">"my_database"</span>)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">library</span>(civis)</a>
+<a class="sourceLine" id="cb6-2" title="2"></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="co"># Read an entire table in to memory</span></a>
+<a class="sourceLine" id="cb6-4" title="4">my_table &lt;-<span class="st"> "schema.tablename"</span></a>
+<a class="sourceLine" id="cb6-5" title="5">df &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_civis.html">read_civis</a></span>(my_table, <span class="dt">database=</span><span class="st">"my_database"</span>)</a>
+<a class="sourceLine" id="cb6-6" title="6"></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co"># Run a query and read the results into memory</span></a>
+<a class="sourceLine" id="cb6-8" title="8">query &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/sql.html">sql</a></span>(<span class="st">"SELECT a, b, c FROM schema.tablename WHERE b &gt; 42"</span>)</a>
+<a class="sourceLine" id="cb6-9" title="9">df2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_civis.html">read_civis</a></span>(query, <span class="dt">database=</span><span class="st">"my_database"</span>)</a></code></pre></div>
 <p><code>civis</code> includes many more functions for tasks like writing data to tables and files as well as for creating reports. For more detailed documentation, see the included vignettes:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">browseVignettes</span>(<span class="st">'civis'</span>)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">browseVignettes</span>(<span class="st">'civis'</span>)</a></code></pre></div>
 <div id="direct-calls-to-api" class="section level3">
 <h3 class="hasAnchor">
 <a href="#direct-calls-to-api" class="anchor"></a>Direct calls to API</h3>
 <p>Functions which make direct calls to the API are prefixed with the name of the resource that the function accesses. For example, the <code>users</code> resource encapsulates all the functionality of Platform regarding users. We can make various calls to the <code>users</code> resource to get information about ourselves and our team.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Data about me</span>
-civis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/civis/topics/users_list_me">users_list_me</a></span>()
-
-<span class="op">&lt;</span>civis_api<span class="op">&gt;</span>
-List of <span class="dv">14</span>
- <span class="op">$</span><span class="st"> </span>id                      <span class="op">:</span><span class="st"> </span>int <span class="dv">971</span>
- <span class="op">$</span><span class="st"> </span>name                    <span class="op">:</span><span class="st"> </span>chr <span class="st">"A User"</span>
- <span class="op">$</span><span class="st"> </span>email                   <span class="op">:</span><span class="st"> </span>chr <span class="st">"a_user@example.com"</span>
- <span class="op">$</span><span class="st"> </span>username                <span class="op">:</span><span class="st"> </span>chr <span class="st">"a_user"</span>
- <span class="op">$</span><span class="st"> </span>initials                <span class="op">:</span><span class="st"> </span>chr <span class="st">"AU"</span>
-<span class="co"># ...</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Data about my team</span>
-my_team &lt;-<span class="st"> </span>civis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/civis/topics/users_list">users_list</a></span>()
-team_members &lt;-<span class="st"> </span><span class="kw">sapply</span>(my_team, <span class="cf">function</span>(x) x<span class="op">$</span>name)
-<span class="kw">print</span>(team_members)
-
-[<span class="dv">1</span>] <span class="st">"Jean-Luc Picard"</span>      <span class="st">"Beverly Crusher"</span>     <span class="st">"Q"</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># Data about me</span></a>
+<a class="sourceLine" id="cb8-2" title="2">civis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/civis/topics/users_list_me">users_list_me</a></span>()</a>
+<a class="sourceLine" id="cb8-3" title="3"></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="op">&lt;</span>civis_api<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb8-5" title="5">List of <span class="dv">14</span></a>
+<a class="sourceLine" id="cb8-6" title="6"> <span class="op">$</span><span class="st"> </span>id                      <span class="op">:</span><span class="st"> </span>int <span class="dv">971</span></a>
+<a class="sourceLine" id="cb8-7" title="7"> <span class="op">$</span><span class="st"> </span>name                    <span class="op">:</span><span class="st"> </span>chr <span class="st">"A User"</span></a>
+<a class="sourceLine" id="cb8-8" title="8"> <span class="op">$</span><span class="st"> </span>email                   <span class="op">:</span><span class="st"> </span>chr <span class="st">"a_user@example.com"</span></a>
+<a class="sourceLine" id="cb8-9" title="9"> <span class="op">$</span><span class="st"> </span>username                <span class="op">:</span><span class="st"> </span>chr <span class="st">"a_user"</span></a>
+<a class="sourceLine" id="cb8-10" title="10"> <span class="op">$</span><span class="st"> </span>initials                <span class="op">:</span><span class="st"> </span>chr <span class="st">"AU"</span></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="co"># ...</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># Data about my team</span></a>
+<a class="sourceLine" id="cb9-2" title="2">my_team &lt;-<span class="st"> </span>civis<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/civis/topics/users_list">users_list</a></span>()</a>
+<a class="sourceLine" id="cb9-3" title="3">team_members &lt;-<span class="st"> </span><span class="kw">sapply</span>(my_team, <span class="cf">function</span>(x) x<span class="op">$</span>name)</a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="kw">print</span>(team_members)</a>
+<a class="sourceLine" id="cb9-5" title="5"></a>
+<a class="sourceLine" id="cb9-6" title="6">[<span class="dv">1</span>] <span class="st">"Jean-Luc Picard"</span>      <span class="st">"Beverly Crusher"</span>     <span class="st">"Q"</span></a></code></pre></div>
 </div>
 </div>
 <div id="api-documentation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#api-documentation" class="anchor"></a>API Documentation</h2>
-<p><a href="https://platform.civisanalytics.com/api" class="uri">https://platform.civisanalytics.com/api</a></p>
+<p><a href="https://platform.civisanalytics.com/api">https://platform.civisanalytics.com/api</a></p>
 </div>
 <div id="contributing" class="section level2">
 <h2 class="hasAnchor">
@@ -203,15 +203,15 @@ team_members &lt;-<span class="st"> </span><span class="kw">sapply</span>(my_tea
 <h3 class="hasAnchor">
 <a href="#integration-tests" class="anchor"></a>Integration tests</h3>
 <p>For major, potentially breaking changes, integration tests should be run with</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="bu">cd</span> tools/integration_tests
-<span class="ex">Rscript</span> smoke_test.R</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1"><span class="bu">cd</span> tools/integration_tests</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="ex">Rscript</span> smoke_test.R</a></code></pre></div>
 <p>Note, integration tests require a valid API key to run, and my be slow.</p>
 </div>
 <div id="authorship" class="section level3">
 <h3 class="hasAnchor">
 <a href="#authorship" class="anchor"></a>Authorship</h3>
 <p>All contributors of code should include themselves in <code>DESCRIPTION</code> by adding the following object in the <code>Authors@R</code> section:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">person</span>(<span class="st">"FirstName"</span>, <span class="st">"LastName"</span>, <span class="dt">email =</span> <span class="st">"email@email.com"</span>, <span class="dt">role =</span> <span class="st">"ctb"</span>)</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">person</span>(<span class="st">"FirstName"</span>, <span class="st">"LastName"</span>, <span class="dt">email =</span> <span class="st">"email@email.com"</span>, <span class="dt">role =</span> <span class="st">"ctb"</span>)</a></code></pre></div>
 <p>This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the <a href="http://contributor-covenant.org">Contributor Covenant</a> code of conduct.</p>
 </div>
 </div>

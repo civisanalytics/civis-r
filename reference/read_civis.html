@@ -63,7 +63,7 @@ this database will automatically be used as the default." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.6.1</span>
       </span>
     </div>
 
@@ -128,7 +128,7 @@ this database will automatically be used as the default." />
     <div class="ref-description">
     
     <p><code>read_civis</code> loads a table from Redshift as a data frame if
-given a <code>"schema.table"</code> or <code><a href='http://dplyr.tidyverse.org/reference/sql.html'>sql("query")</a></code> as the first argument, or
+given a <code>"schema.table"</code> or <code><a href='https://dplyr.tidyverse.org/reference/sql.html'>sql("query")</a></code> as the first argument, or
 loads a file from Amazon S3 (the files endpoint) if a file id is given.</p>
 <p>A default database can be set using <code>options(civis.default_db = "my_database")</code>.
 If there is only one database available,
@@ -153,7 +153,7 @@ this database will automatically be used as the default.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p><code>"schema.table"</code>, <code><a href='http://dplyr.tidyverse.org/reference/sql.html'>sql("query")</a></code>, or a file id.</p></td>
+      <td><p><code>"schema.table"</code>, <code><a href='https://dplyr.tidyverse.org/reference/sql.html'>sql("query")</a></code>, or a file id.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -213,7 +213,7 @@ an uncompressed text or csv from the files endpoint, set <code>using = read.csv<
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>read_civis</span>(<span class='st'>"schema.my_table"</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='st'>"my_database"</span>)
 
 <span class='co'># Read data from a SQL select statement (READ ONLY)</span>
-<span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/sql.html'>sql</a></span>(<span class='st'>"SELECT * FROM table JOIN other_table USING id WHERE var1 &lt; 23"</span>)
+<span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/sql.html'>sql</a></span>(<span class='st'>"SELECT * FROM table JOIN other_table USING id WHERE var1 &lt; 23"</span>)
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>read_civis</span>(<span class='no'>query</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='st'>"my_database"</span>)
 
 <span class='co'># Read an R object from the files endpoint.</span>
@@ -225,7 +225,7 @@ an uncompressed text or csv from the files endpoint, set <code>using = read.csv<
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>read_civis</span>(<span class='no'>id</span>, <span class='kw'>using</span> <span class='kw'>=</span> <span class='no'>read.csv</span>)
 
 <span class='co'># Gracefully handle when read_civis.sql returns no rows</span>
-<span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/sql.html'>sql</a></span>(<span class='st'>"SELECT * FROM table WHERE 1 = 2"</span>)
+<span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/sql.html'>sql</a></span>(<span class='st'>"SELECT * FROM table WHERE 1 = 2"</span>)
 <span class='no'>mean_x</span> <span class='kw'>&lt;-</span> <span class='fu'>tryCatch</span>({
   <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>read_civis</span>(<span class='no'>query</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='st'>"my_database"</span>)
   <span class='fu'>mean</span>(<span class='no'>df</span>$<span class='no'>x</span>)

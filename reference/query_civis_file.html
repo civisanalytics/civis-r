@@ -59,7 +59,7 @@ with read_civis or download_civis." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.6.1</span>
       </span>
     </div>
 
@@ -148,7 +148,7 @@ with <code><a href='read_civis.html'>read_civis</a></code> or <code><a href='dow
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>"schema.table", <code><a href='http://dplyr.tidyverse.org/reference/sql.html'>sql("query")</a></code>, or a sql script job id.</p></td>
+      <td><p>"schema.table", <code><a href='https://dplyr.tidyverse.org/reference/sql.html'>sql("query")</a></code>, or a sql script job id.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -202,7 +202,7 @@ which is a gzipped csv.</p>
 <span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'>query_civis_file</span>(<span class='st'>"schema.tablename"</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='st'>"my_database"</span>)
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_civis.html'>read_civis</a></span>(<span class='no'>id</span>, <span class='kw'>using</span> <span class='kw'>=</span> <span class='no'>read.csv</span>)
 
-<span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/sql.html'>sql</a></span>(<span class='st'>"SELECT * FROM table JOIN other_table USING id WHERE var1 &lt; 23"</span>)
+<span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/sql.html'>sql</a></span>(<span class='st'>"SELECT * FROM table JOIN other_table USING id WHERE var1 &lt; 23"</span>)
 <span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'>query_civis_file</span>(<span class='no'>query</span>)
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_civis.html'>read_civis</a></span>(<span class='no'>id</span>, <span class='kw'>using</span> <span class='kw'>=</span> <span class='no'>read.csv</span>)
 

@@ -65,7 +65,7 @@ this database will automatically be used as the default." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.6.1</span>
       </span>
     </div>
 
@@ -131,7 +131,7 @@ this database will automatically be used as the default." />
     
     <p><code>download_civis</code> downloads a file based on the type of its first
 argument, which can be a string <code>"schema.table"</code>,
-a SQL query <code><a href='http://dplyr.tidyverse.org/reference/sql.html'>sql(...)</a></code>, or a numeric file ID.</p>
+a SQL query <code><a href='https://dplyr.tidyverse.org/reference/sql.html'>sql(...)</a></code>, or a numeric file ID.</p>
 <p>A table or a query from Redshift will be downloaded onto disk as a CSV.
 A file from Platform files endpoint will be downloaded as is.</p>
 <p>A default database can be set using <code>options(civis.default_db = "my_database")</code>.
@@ -161,7 +161,7 @@ this database will automatically be used as the default.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p><code>"schema.table"</code>, <code><a href='http://dplyr.tidyverse.org/reference/sql.html'>sql("query")</a></code>, or a file id.</p></td>
+      <td><p><code>"schema.table"</code>, <code><a href='https://dplyr.tidyverse.org/reference/sql.html'>sql("query")</a></code>, or a file id.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -229,7 +229,7 @@ It is returned invisibly.</p>
                <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"~/Downloads/my_table.csv"</span>)
 
 <span class='co'># Download data from a SQL select statement (READ ONLY) into a CSV</span>
-<span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/sql.html'>sql</a></span>(<span class='st'>"SELECT * FROM table JOIN other_table USING id WHERE var1 &lt; 23"</span>)
+<span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/sql.html'>sql</a></span>(<span class='st'>"SELECT * FROM table JOIN other_table USING id WHERE var1 &lt; 23"</span>)
 <span class='fu'>download_civis</span>(<span class='no'>query</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='st'>"my_database"</span>,
                <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"~/Downloads/my_table.csv"</span>)
 
