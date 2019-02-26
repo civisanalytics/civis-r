@@ -109,14 +109,16 @@ await <- function(f, ...,
 }
 
 #' @param .x a vector of values to be passed to \code{f}
+#' @param .y a vector of values to be passed to \code{f} (default \code{NULL})
 #' @export
 #' @describeIn await Call a function repeatedly for all values of a vector until all have reached a completed status
-await_all <- function(f, .x, ...,
+await_all <- function(f, .x, .y = NULL, ...,
                       .status_key = "state",
                       .success_states = c("succeeded", "success"),
                       .error_states = c("failed", "cancelled"),
                       .timeout = NULL, .interval = NULL,
                       .verbose = FALSE) {
+
 
   responses <- vector(mode = "list", length = length(.x))
   called <- rep(FALSE, length(.x))
@@ -124,13 +126,19 @@ await_all <- function(f, .x, ...,
   start <- Sys.time()
   fname <- as.character(substitute(f))
 
+  if (!is.null(.y) & (length(.x) != length(.y))) {
+    error <- c("Lengths of input parameters (.x and .y) are not equal!")
+    stop(error)
+  }
+
+  zipped_parameters <- if (is.null(.y)) .x else mapply(c, .x, .y, SIMPLIFY=FALSE)
+
   repeat {
-    responses[!called] <- lapply(.x[!called], safe_call_once,
+    responses[!called] <- lapply(zipped_parameters[!called], safe_call_once,
                                  f = f, ..., .status_key = .status_key,
                                  .success_states = .success_states,
                                  .error_states = .error_states,
                                  fname = fname)
-
 
     called <- unlist(lapply(responses, function(x) x$called))
 
@@ -141,7 +149,7 @@ await_all <- function(f, .x, ...,
     if (!is.null(.timeout)) {
       running_time <- as.numeric(difftime(Sys.time(), start, units = "secs"))
       if (running_time > .timeout) {
-        args <- c(list(.x), list(...))
+        args <- c(list(zipped_parameters), list(...))
         names(args)[1] <- names(formals(f))[1]
         status <- unlist(lapply(responses, function(x) get_status(x$response)))
         stop(civis_timeout_error(fname, args, status))
@@ -158,7 +166,7 @@ await_all <- function(f, .x, ...,
                       ". Retry ", i, " in ", pretty_time, " seconds")
         message(msg)
       }
-      lapply(seq_along(.x), make_msg)
+      lapply(seq_along(zipped_parameters), make_msg)
     }
     Sys.sleep(interval)
     i <- i + 1
@@ -280,8 +288,3 @@ await_err_msg <- function(fname, args = NULL, error = NULL) {
   arg_str  <- if (!is.null(args)) paste0(names(args), " = ", args, collapse = ", ")
   paste0(fname, "(", arg_str, "): ", error)
 }
-
-
-
-
-

@@ -9,7 +9,7 @@ await(f, ..., .status_key = "state", .success_states = c("succeeded",
   "success"), .error_states = c("failed", "cancelled"),
   .timeout = NULL, .interval = NULL, .verbose = FALSE)
 
-await_all(f, .x, ..., .status_key = "state",
+await_all(f, .x, .y = NULL, ..., .status_key = "state",
   .success_states = c("succeeded", "success"),
   .error_states = c("failed", "cancelled"), .timeout = NULL,
   .interval = NULL, .verbose = FALSE)
@@ -36,6 +36,8 @@ intervals with jitter (see 'Details')}
 \item{.verbose}{Print the status of \code{f} at a given retry with the retry time (default \code{FALSE})}
 
 \item{.x}{a vector of values to be passed to \code{f}}
+
+\item{.y}{a vector of values to be passed to \code{f} (default \code{NULL})}
 }
 \description{
 \code{await} repeatedly calls a Civis API endpoint such as \code{scripts_get_sql_runs}

@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.7.0] - Unreleased
+
+### Added
+
+Utitilies for platform  scripts
+
+- `civis_script` annotates an integer as a valid custom, container, or other platform script.
+- A new method `read_civis.civis_script` is added to easily read script outputs into memory.
+- `fetch_output_file_ids` returns file ids of run outputs for a `civis_script`.
+- `fetch_output` returns the output of `scripts_list_*_runs_outputs` for a `civis_script`.
+- `write_job_output` for adding File run outputs to scripts.
+
 ## [1.6.1] - 2019-02-12
 
 ### Fixed

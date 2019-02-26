@@ -1,8 +1,10 @@
-#' Read a table or file from the Civis Platform as a data frame
+#' Read tables and files from Civis Platform
 #'
 #' @description \code{read_civis} loads a table from Redshift as a data frame if
 #' given a \code{"schema.table"} or \code{sql("query")} as the first argument, or
 #' loads a file from Amazon S3 (the files endpoint) if a file id is given.
+#' Run outputs from any Civis platform script
+#' are returned if a \code{\link{civis_script}} is given.
 #'
 #' A default database can be set using \code{options(civis.default_db = "my_database")}.
 #' If there is only one database available,
@@ -17,14 +19,12 @@
 #' @param hidden bool, Whether the job is hidden.
 #' @param verbose bool, Set to TRUE to print intermediate progress indicators.
 #' @param ... arguments passed to \code{using}.
-#' @details For \code{read_civis.sql}, queries must be \code{READ ONLY}.
-#' To execute arbitrary queries, use \code{\link{query_civis}}.
 #' @examples
 #' \dontrun{
 #' # Read all columns in a single table
 #' df <- read_civis("schema.my_table", database = "my_database")
 #'
-#' # Read data from a SQL select statement (READ ONLY)
+#' # Read data from a SQL select statement
 #' query <- sql("SELECT * FROM table JOIN other_table USING id WHERE var1 < 23")
 #' df <- read_civis(query, database = "my_database")
 #'
@@ -35,6 +35,13 @@
 #' # Read a text file or csv from the files endpoint.
 #' id <- write_civis_file("my_csv.csv")
 #' df <- read_civis(id, using = read.csv)
+#'
+#' # Read JSONValues from a civis script
+#' vals <- read_civis(civis_script(1234))
+#'
+#' # Read File run outputs from a civis script
+#' df <- read_civis(civis_script(1234), regex = '.csv', using = read.csv)
+#' obj <- read_civis(civis_script(1234), regex = '.rds', using = readRDS)
 #'
 #' # Gracefully handle when read_civis.sql returns no rows
 #' query <- sql("SELECT * FROM table WHERE 1 = 2")
@@ -102,6 +109,33 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
     unlink(tmp)
   })
 }
+
+#' @describeIn read_civis Return run outputs of a \code{civis_script} as a named list.
+#' @param regex Regex of matching run output names.
+#' @details
+#' If \code{using = NULL}, \code{read_civis.civis_script}
+#' will return all JSONValues with name matching \code{regex}.
+#' Otherwise all File run outputs matching \code{regex} will be read into memory
+#' with \code{using}.
+#' Results are always a named list.
+#' If the script has no outputs, an empty list will be returned.
+#' @export
+read_civis.civis_script <- function(x, using, regex = NULL, ...) {
+  output <- fetch_output(x, regex = regex)
+  if (is.null(using)) {
+    out <- Filter(function(o) o$objectType == 'JSONValue', output)
+    names <- lapply(out, function(o) o$name)
+    res <- stats::setNames(lapply(out, function(o) o$value), names)
+  } else {
+    out <- Filter(function(o) o$objectType == 'File', output)
+    names <- lapply(out, function(o) o$name)
+    res <- stats::setNames(lapply(out, function(o) {
+      read_civis(o$objectId, using = using, ...)
+    }), names)
+  }
+  return(res)
+}
+
 
 #' Upload a local data frame or csv file to the Civis Platform (Redshift)
 #'
@@ -401,7 +435,7 @@ write_civis_file.character <- function(x, name = x, expires_at = NULL, ...) {
 #' download_civis("schema.table", database = "my_database",
 #'                file = "~/Downloads/my_table.csv")
 #'
-#' # Download data from a SQL select statement (READ ONLY) into a CSV
+#' # Download data from a SQL select statement into a CSV
 #' query <- sql("SELECT * FROM table JOIN other_table USING id WHERE var1 < 23")
 #' download_civis(query, database = "my_database",
 #'                file = "~/Downloads/my_table.csv")
