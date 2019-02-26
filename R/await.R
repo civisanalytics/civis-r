@@ -131,7 +131,8 @@ await_all <- function(f, .x, .y = NULL, ...,
     stop(error)
   }
 
-  zipped_parameters <- if (is.null(.y)) .x else lapply(strsplit(paste(.x, .y), ' '), as.integer)
+  # zipped_parameters <- if (is.null(.y)) .x else lapply(strsplit(paste(.x, .y), ' '), as.integer)
+  zipped_parameters <- if (is.null(.y)) .x else mapply(c, .x, .y, SIMPLIFY=FALSE)
 
   repeat {
     responses[!called] <- lapply(zipped_parameters[!called], safe_call_once,
@@ -288,8 +289,3 @@ await_err_msg <- function(fname, args = NULL, error = NULL) {
   arg_str  <- if (!is.null(args)) paste0(names(args), " = ", args, collapse = ", ")
   paste0(fname, "(", arg_str, "): ", error)
 }
-
-
-
-
-
