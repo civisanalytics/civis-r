@@ -103,6 +103,21 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
   })
 }
 
+#' @describeIn read_civis Return run outputs of a \code{civis_script} as a list.
+read_civis.civis_script <- function(x, regex = NULL, ...) {
+  job <- jobs_get(x$id)
+  run_id <- if (is.null(x$run_id)) job$lastRun$id else x$run_id
+  get_output <- get_script_fun(job$type, 'outputs')
+  output <- get_output(x$id, run_id)
+  names <- sapply(output, function(o) o$name)
+  if(!is.null(regex)) {
+    output <- output[[grep(regex, names)]]
+  }
+  out <- setNames(lapply(output, function(o) o$objectId), names)
+  out
+}
+
+
 #' Upload a local data frame or csv file to the Civis Platform (Redshift)
 #'
 #' @description Uploads a data frame, a csv file, or file on S3 to Redshift based
