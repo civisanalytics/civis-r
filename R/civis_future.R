@@ -131,7 +131,7 @@ value.CivisFuture <- function(future, ...) {
       future$run <- await(scripts_get_containers_runs, id = future$job$containerId,
                           run_id = future$job$id)
       future$state <- future$run$state
-      future$value <- fetch_output(future$run)
+      future$value <- read_civis(civis_script(future$run$id), using = readRDS)
       future$logs  <- fetch_logs(future$run)
     }, civis_error = function(e) {
       future$state <- "failed"
@@ -172,13 +172,6 @@ resolved.CivisFuture <- function(future, ...){
 #' @describeIn CivisFuture Fetch logs from a CivisFuture
 fetch_logs.CivisFuture <- function(object, ...){
   object$logs
-}
-
-fetch_output <- function(run) {
-  outputs <- scripts_list_containers_runs_outputs(run$containerId, run$id)
-  # We only save one object in the run script.
-  output_file_id <- outputs[[1]][["objectId"]]
-  read_civis(output_file_id)
 }
 
 make_docker_cmd <- function(task_file_id, run_script_file_id) {

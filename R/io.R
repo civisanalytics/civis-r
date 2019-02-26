@@ -104,17 +104,20 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
 }
 
 #' @describeIn read_civis Return run outputs of a \code{civis_script} as a list.
-read_civis.civis_script <- function(x, regex = NULL, ...) {
-  job <- jobs_get(x$id)
-  run_id <- if (is.null(x$run_id)) job$lastRun$id else x$run_id
-  get_output <- get_script_fun(job$type, 'outputs')
-  output <- get_output(x$id, run_id)
-  names <- sapply(output, function(o) o$name)
-  if(!is.null(regex)) {
-    output <- output[[grep(regex, names)]]
+#' @export
+read_civis.civis_script <- function(x, regex = NULL, using = NULL, ...) {
+  if (is.null(using)) {
+    ids <- fetch_output_file_ids(x$id, x$run_id, regex = regex)
+    return(ids)
+  } else {
+    output <- fetch_output_(x$id, x$run_id, regex = regex)
+    names  <- lapply(output, function(o) o$name)
+    maybe_read <- function(o, using, ...) {
+      if (is.null(o$value)) read_civis(o$objectId, using = using, ...) else o$value
+    }
+    res <- setNames(lapply(output, maybe_read, using = using, ...), names)
+    return(res)
   }
-  out <- setNames(lapply(output, function(o) o$objectId), names)
-  out
 }
 
 

@@ -5,6 +5,7 @@
 \alias{read_civis.numeric}
 \alias{read_civis.character}
 \alias{read_civis.sql}
+\alias{read_civis.civis_script}
 \title{Read a table or file from the Civis Platform as a data frame}
 \usage{
 read_civis(x, ...)
@@ -15,6 +16,8 @@ read_civis(x, ...)
 
 \method{read_civis}{sql}(x, database = NULL, using = utils::read.csv,
   job_name = NULL, hidden = TRUE, verbose = FALSE, ...)
+
+\method{read_civis}{civis_script}(x, regex = NULL, using = NULL, ...)
 }
 \arguments{
 \item{x}{\code{"schema.table"}, \code{sql("query")}, or a file id.}
@@ -57,6 +60,8 @@ an uncompressed text or csv from the files endpoint, set \code{using = read.csv}
 \item \code{character}: Return all columns from a table as a data frame.
 
 \item \code{sql}: Return a SQL query as a data frame.
+
+\item \code{civis_script}: Return run outputs of a \code{civis_script} as a list.
 }}
 
 \examples{
