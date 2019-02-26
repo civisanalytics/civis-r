@@ -131,7 +131,6 @@ await_all <- function(f, .x, .y = NULL, ...,
     stop(error)
   }
 
-  # zipped_parameters <- if (is.null(.y)) .x else lapply(strsplit(paste(.x, .y), ' '), as.integer)
   zipped_parameters <- if (is.null(.y)) .x else mapply(c, .x, .y, SIMPLIFY=FALSE)
 
   repeat {
