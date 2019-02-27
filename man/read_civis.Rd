@@ -40,9 +40,9 @@ If no database is specified, uses \code{options(civis.default_db)}.}
 }
 \description{
 \code{read_civis} loads a table from Redshift as a data frame if
-given a \code{"schema.table"} or \code{sql("query")} as the first argument. A
-file from Amazon S3 (the files endpoint) if a file id is given. Run output ids
-or values from any Civis platform script
+given a \code{"schema.table"} or \code{sql("query")} as the first argument, or
+loads a file from Amazon S3 (the files endpoint) if a file id is given.
+Run output ids or values from any Civis platform script
 are returned if a \code{\link{civis_script}} is given.
 
 A default database can be set using \code{options(civis.default_db = "my_database")}.
@@ -58,7 +58,7 @@ If \code{using = NULL}, \code{read_civis.civis_script} will return run output
 file ids, including ids of JsonValues.
 Otherwise all run outputs matching \code{regex} will be read into memory
 with \code{using}. JsonValues are always returned as values if \code{using} is not \code{NULL}.
-Results are always a list. If the script has no outputs, the results are a list of length is 0.
+Results are always a list. If the script has no outputs, the results are an empty list of length 0.
 }
 \section{Methods (by class)}{
 \itemize{

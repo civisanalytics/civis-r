@@ -29,11 +29,13 @@ If the script has no outputs, the results are a list of length is 0.
 }}
 
 \examples{
+\dontrun{
 out <- fetch_output(civis_script(1234))
 
 # Filter output with regex, then read into memory:
 ids <- fetch_output_file_ids(civis_script(1234), regex = '.csv')
 vals <- lapply(ids, read_civis, using = read.csv)
+}
 }
 \seealso{
 Other script_utils: \code{\link{civis_script}}

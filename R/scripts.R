@@ -24,15 +24,17 @@ civis_script <- function(id, run_id = NULL) {
 #' @family script_utils
 #' @details If the script has no outputs, the results are a list of length is 0.
 #' @examples
+#' \dontrun{
 #' out <- fetch_output(civis_script(1234))
 #'
 #' # Filter output with regex, then read into memory:
 #' ids <- fetch_output_file_ids(civis_script(1234), regex = '.csv')
 #' vals <- lapply(ids, read_civis, using = read.csv)
+#' }
 fetch_output_file_ids <- function(x, regex = NULL) {
   output <- fetch_output(x, regex)
   names <- lapply(output, function(o) o$name)
-  out <- setNames(lapply(output, function(o) o$objectId), names)
+  out <- stats::setNames(lapply(output, function(o) o$objectId), names)
   return(out)
 }
 
