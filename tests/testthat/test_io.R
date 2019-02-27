@@ -60,15 +60,14 @@ test_that("read_civis.numeric fails for NA", {
 })
 
 test_that("read_civis.civis_script using = NULL", {
-  mock_output <- list(list('name' = 'asdf', objectId = 1),
-                      list('name' = 'fake', objectId = 2))
-  with_mock(
+  mock_output <- list(list('name' = 'asdf', objectId = 1, objectType = 'JSONValue', value = 'a'),
+                      list('name' = 'fake', objectId = 2, objectType = 'JSONValue', value = 'b'),
+                      list('name' = 'file_fake', objectId = 3, objectType = 'File'))
+  vals <- with_mock(
     `civis::jobs_get` = function(...) list(type = 'JobTypes::ContainerDocker'),
     `civis::scripts_list_containers_runs_outputs` = function(...) mock_output,
-    expect_equal(read_civis(civis_script(1,1)),
-                 list(asdf = 1, fake = 2)),
-    expect_equal(read_civis(civis_script(1,1), regex = 'fake'),
-                 list(fake = 2))
+    expect_equal(read_civis(civis_script(1,1)), list(asdf = 'a', fake = 'b')),
+    expect_equal(read_civis(civis_script(1,1), regex = 'fake'), list(fake = 'b'))
   )
 })
 

@@ -114,25 +114,24 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
 #' @describeIn read_civis Return run output values or file ids of a \code{civis_script} as a list.
 #' @param regex Regex of matching run output names.
 #' @details
-#' If \code{using = NULL}, \code{read_civis.civis_script} will return run output
-#' file ids, including ids of JsonValues.
-#' Otherwise all run outputs matching \code{regex} will be read into memory
-#' with \code{using}. JsonValues are always returned as values if \code{using} is not \code{NULL}.
-#' Results are always a list. If the script has no outputs, the results are an empty list of length 0.
+#' If \code{using = NULL}, \code{read_civis.civis_script}
+#' will return all JSONValues with name matching \code{regex}.
+#' Otherwise all File run outputs matching \code{regex} will be read into memory
+#' with \code{using}.
+#' Results are always a list. If the script has no outputs, an error will be signalled.
 #' @export
 read_civis.civis_script <- function(x, regex = NULL, using = NULL, ...) {
+  output <- fetch_output(x, regex = regex)
   if (is.null(using)) {
-    ids <- fetch_output_file_ids(x, regex = regex)
-    return(ids)
+    out <- Filter(function(o) o$objectType == 'JSONValue', output)
+    names <- lapply(out, function(o) o$name)
+    res <- setNames(lapply(out, function(o) o$value), names)
   } else {
-    output <- fetch_output(x, regex = regex)
-    names <- lapply(output, function(o) o$name)
-    maybe_read <- function(o, using, ...) {
-      if (is.null(o$value)) read_civis(o$objectId, using = using, ...) else o$value
-    }
-    res <- lapply(output, maybe_read, using = using, ...)
-    return(res)
+    out <- Filter(function(o) o$objectType == 'File', output)
+    names <- lapply(out, function(o) o$name)
+    res <- setNames(lapply(out, function(o) read_civis(o, using = using, ...)), names)
   }
+  return(res)
 }
 
 

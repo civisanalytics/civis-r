@@ -64,7 +64,7 @@ fetch_output <- function(x, regex = NULL) {
 #' @details container and custom scripts both have the same job type, but can be distinguished
 #' by a non-null \code{fromTemplateId}.
 get_script_fun <- function(job, fun_type = c("outputs", "logs")) {
-  fun_type = match.arg(fun_type)
+  fun_type <- match.arg(fun_type)
   job_type <- job$type
   if (!is.null(job$fromTemplateId)) {
     name <- "custom"
@@ -78,7 +78,7 @@ get_script_fun <- function(job, fun_type = c("outputs", "logs")) {
 # containers and custom scripts both have type 'ContainerDocker'
 # sql is of type SqlRunner
 # javascript is of type ScriptedSql
-SCRIPT_MAPPING = data.frame(
+SCRIPT_MAPPING <- data.frame(
   job_type = paste0("JobTypes::", c('ContainerDocker', 'PythonDocker', 'RDocker', 'SqlRunner', 'ScriptedSql')),
   name = c('containers', 'python3', 'r', 'sql', 'javascript')
 )
