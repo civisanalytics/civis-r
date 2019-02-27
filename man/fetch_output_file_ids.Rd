@@ -20,6 +20,9 @@ A named list of run output file ids with names matching \code{regex}.
 \description{
 Return output from a civis_script.
 }
+\details{
+If the script has no outputs, the results are a list of length is 0.
+}
 \section{Functions}{
 \itemize{
 \item \code{fetch_output}: Return output of \code{scripts_list_*_runs_outputs} matching \code{regex}.

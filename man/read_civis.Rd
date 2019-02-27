@@ -58,7 +58,7 @@ If \code{using = NULL}, \code{read_civis.civis_script} will return run output
 file ids, including ids of JsonValues.
 Otherwise all run outputs matching \code{regex} will be read into memory
 with \code{using}. JsonValues are always returned as values if \code{using} is not \code{NULL}.
-Results are always a list.
+Results are always a list. If the script has no outputs, the results are a list of length is 0.
 }
 \section{Methods (by class)}{
 \itemize{
