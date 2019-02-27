@@ -129,7 +129,7 @@ read_civis.civis_script <- function(x, regex = NULL, using = NULL, ...) {
   } else {
     out <- Filter(function(o) o$objectType == 'File', output)
     names <- lapply(out, function(o) o$name)
-    res <- setNames(lapply(out, function(o) read_civis(o, using = using, ...)), names)
+    res <- setNames(lapply(out, function(o) read_civis(o$objectId, using = using, ...)), names)
   }
   return(res)
 }
