@@ -54,11 +54,11 @@ By default, \code{read_civis.numeric} assumes the file has been serialized using
 \code{saveRDS}, as in \code{write_civis_file} and uses \code{using = readRDS} by default. For reading
 an uncompressed text or csv from the files endpoint, set \code{using = read.csv} for example.
 
-If \code{using = NULL}, \code{read_civis.civis_script} will return run output
-file ids, including ids of JsonValues.
-Otherwise all run outputs matching \code{regex} will be read into memory
-with \code{using}. JsonValues are always returned as values if \code{using} is not \code{NULL}.
-Results are always a list. If the script has no outputs, the results are an empty list of length 0.
+If \code{using = NULL}, \code{read_civis.civis_script}
+will return all JSONValues with name matching \code{regex}.
+Otherwise all File run outputs matching \code{regex} will be read into memory
+with \code{using}.
+Results are always a list. If the script has no outputs, an error will be signalled.
 }
 \section{Methods (by class)}{
 \itemize{
