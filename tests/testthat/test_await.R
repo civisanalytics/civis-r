@@ -178,7 +178,7 @@ test_that("await_all returns list of completed responses - univariate", {
   x <- await_all(f_rand, .x = 1:2, job_id = 1)
   expect_is(x, "list")
   expect_equal(sapply(x, get_status), rep("succeeded", 2))
-  expect_equal(sapply(x, function(x) x$id), 1:2)
+  expect_equal(sapply(x, function(x) unlist(x$args)), 1:2)
   expect_equal(sapply(x, function(x) x$job_id), rep(1, 2))
 })
 
