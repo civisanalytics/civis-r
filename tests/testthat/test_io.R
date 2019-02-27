@@ -59,9 +59,34 @@ test_that("read_civis.numeric fails for NA", {
   expect_error(read_civis(as.numeric(NA)), msg)
 })
 
-test_that("read_civis.civis_script returns", {
-  expect_true(TRUE)
+test_that("read_civis.civis_script using = NULL", {
+  mock_output <- list(list('name' = 'asdf', objectId = 1),
+                      list('name' = 'fake', objectId = 2))
+  with_mock(
+    `civis::jobs_get` = function(...) list(type = 'JobTypes::ContainerDocker'),
+    `civis::scripts_list_containers_runs_outputs` = function(...) mock_output,
+    expect_equal(read_civis(civis_script(1,1)),
+                 list(asdf = 1, fake = 2)),
+    expect_equal(read_civis(civis_script(1,1), regex = 'fake'),
+                 list(fake = 2)),
+  )
 })
+
+test_that("read_civis.civis_script with using", {
+  mock_output <- list(list('name' = 'asdf', objectId = 1),
+                      list('name' = 'fake', objectId = 2))
+  with_mock(
+    `civis::jobs_get` = function(...) list(type = 'JobTypes::ContainerDocker'),
+    `civis::scripts_list_containers_runs_outputs` = function(...) mock_output,
+    # returns first arg of read_civis.numeric, which is the objectId
+    `civis::read_civis.numeric` = function(...) list(...)[[1]],
+    expect_equal(read_civis(civis_script(1,1), using = I),
+                 list(1, 2)),
+    expect_equal(read_civis(civis_script(1,1), regex = 'fake', using = I),
+                 list(2))
+  )
+})
+
 
 # write_civis -----------------------------------------------------------------
 
