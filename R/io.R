@@ -36,7 +36,7 @@
 #' id <- write_civis_file("my_csv.csv")
 #' df <- read_civis(id, using = read.csv)
 #'
-#' # Read JSON run outputs from a civis script
+#' # Read JSONValues from a civis script
 #' vals <- read_civis(civis_script(1234))
 #'
 #' # Read File run outputs from a civis script
@@ -124,11 +124,13 @@ read_civis.civis_script <- function(x, regex = NULL, using = NULL, ...) {
   if (is.null(using)) {
     out <- Filter(function(o) o$objectType == 'JSONValue', output)
     names <- lapply(out, function(o) o$name)
-    res <- setNames(lapply(out, function(o) o$value), names)
+    res <- stats::setNames(lapply(out, function(o) o$value), names)
   } else {
     out <- Filter(function(o) o$objectType == 'File', output)
     names <- lapply(out, function(o) o$name)
-    res <- setNames(lapply(out, function(o) read_civis(o$objectId, using = using, ...)), names)
+    res <- stats::setNames(lapply(out, function(o) {
+      read_civis(o$objectId, using = using, ...)
+    }), names)
   }
   return(res)
 }
