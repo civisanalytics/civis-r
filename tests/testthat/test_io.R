@@ -68,7 +68,7 @@ test_that("read_civis.civis_script using = NULL", {
     expect_equal(read_civis(civis_script(1,1)),
                  list(asdf = 1, fake = 2)),
     expect_equal(read_civis(civis_script(1,1), regex = 'fake'),
-                 list(fake = 2)),
+                 list(fake = 2))
   )
 })
 
