@@ -88,7 +88,7 @@ df <- read_civis(id)
 id <- write_civis_file("my_csv.csv")
 df <- read_civis(id, using = read.csv)
 
-# Read JSON run outputs from a civis script
+# Read JSONValues from a civis script
 vals <- read_civis(civis_script(1234))
 
 # Read File run outputs from a civis script
