@@ -1,0 +1,84 @@
+#' Civis Script
+#'
+#' Create a civis_script object from a job and run id.
+#' @param id integer, job id of the script.
+#' @param run_id integer, id of the run. If \code{NULL} (default), the most recent run will be used.
+#' @details
+#' A \code{civis_script} can be any custom, container, R, Python, SQL, or Javacript platform script.
+#' @return a \code{civis_script} object.
+#' @export
+#' @seealso \code{\link{read_civis}}
+#' @family script_utils
+civis_script <- function(id, run_id = NULL) {
+  if (length(id) != 1) stop("id must be length 1")
+  if (!is.null(run_id) && length(run_id) != 1) stop("run_id must be length 1 or NULL")
+  obj <- list(id = id, run_id = run_id)
+  class(obj) <- "civis_script"
+  return(obj)
+}
+
+#' @return A named list of run output file ids with names matching \code{regex}.
+#' @param x civis_script
+#' @param regex string, regex used to match the run output name.
+#' @export
+#' @family script_utils
+#' @details If the script has no outputs, the results are a list of length is 0.
+#' @examples
+#' out <- fetch_output(civis_script(1234))
+#'
+#' # Filter output with regex, then read into memory:
+#' ids <- fetch_output_file_ids(civis_script(1234), regex = '.csv')
+#' vals <- lapply(ids, read_civis, using = read.csv)
+fetch_output_file_ids <- function(x, regex = NULL) {
+  output <- fetch_output(x, regex)
+  names <- lapply(output, function(o) o$name)
+  out <- setNames(lapply(output, function(o) o$objectId), names)
+  return(out)
+}
+
+#' Return output from a civis_script.
+#' @describeIn fetch_output_file_ids Return output of \code{scripts_list_*_runs_outputs} matching \code{regex}.
+#' @inheritParams fetch_output_file_ids
+#' @family script_utils
+#' @export
+fetch_output <- function(x, regex = NULL) {
+  job <- jobs_get(x$id)
+  run_id <- if (is.null(x$run_id)) job$lastRun$id else x$run_id
+  get_output <- get_script_fun(job, 'outputs')
+  output <- get_output(x$id, run_id)
+  names <- sapply(output, function(o) o$name)
+  if (!is.null(regex)) {
+    match <- grep(regex, names)
+    output <- output[match]
+  }
+  return(output)
+}
+
+#' Get a script function matching a job type.
+#' @param job output of \code{jobs_get}
+#' @param fun_type one of \code{"logs"} or \code{"outputs"}
+#' @return The correct output or log fetching function
+#' (e.g. \code{\link{scripts_list_containers_runs_logs}}) based on the job type.
+#' @details container and custom scripts both have the same job type, but can be distinguished
+#' by a non-null \code{fromTemplateId}.
+get_script_fun <- function(job, fun_type = c("outputs", "logs")) {
+  fun_type = match.arg(fun_type)
+  job_type <- job$type
+  if (!is.null(job$fromTemplateId)) {
+    name <- "custom"
+  } else {
+    name <- SCRIPT_MAPPING$name[which(SCRIPT_MAPPING$job_type == job_type)]
+  }
+  fname <- paste0("scripts_list_", name, "_runs_", fun_type)
+  get(fname)
+}
+
+# containers and custom scripts both have type 'ContainerDocker'
+# sql is of type SqlRunner
+# javascript is of type ScriptedSql
+SCRIPT_MAPPING = data.frame(
+  job_type = paste0("JobTypes::", c('ContainerDocker', 'PythonDocker', 'RDocker', 'SqlRunner', 'ScriptedSql')),
+  name = c('containers', 'python3', 'r', 'sql', 'javascript')
+)
+
+
