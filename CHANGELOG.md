@@ -1,9 +1,15 @@
 # Changelog
 
-## Unreleased
+## [1.6.1] - 2019-02-12
+
+### Fixed
+- Update link in CivisML vignette.
+
+## [1.6.0] - 2019-02-11
 
 ### Fixed
 - `write_civis.numeric` now correctly syncs with headers [#150].
+- Use upper case for REST verb names. [#153].
 
 ### Added
 - `write_civis` gains `header`, `credential_id` and `import_args` arguments to more 
