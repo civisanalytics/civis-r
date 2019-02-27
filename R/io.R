@@ -3,7 +3,7 @@
 #' @description \code{read_civis} loads a table from Redshift as a data frame if
 #' given a \code{"schema.table"} or \code{sql("query")} as the first argument, or
 #' loads a file from Amazon S3 (the files endpoint) if a file id is given.
-#' Run output ids or values from any Civis platform script
+#' Run outputs from any Civis platform script
 #' are returned if a \code{\link{civis_script}} is given.
 #'
 #' A default database can be set using \code{options(civis.default_db = "my_database")}.
@@ -36,11 +36,10 @@
 #' id <- write_civis_file("my_csv.csv")
 #' df <- read_civis(id, using = read.csv)
 #'
-#' # Read and download all run outputs from a civis script.
-#' ids <- read_civis(civis_script(1234))
-#' mapply(download_civis, ids, names(ids))
+#' # Read JSON run outputs from a civis script
+#' vals <- read_civis(civis_script(1234))
 #'
-#' # Read run output objects into memory
+#' # Read File run outputs from a civis script
 #' df <- read_civis(civis_script(1234), regex = '.csv', using = read.csv)
 #' obj <- read_civis(civis_script(1234), regex = '.rds', using = readRDS)
 #'
@@ -111,14 +110,14 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
   })
 }
 
-#' @describeIn read_civis Return run output values or file ids of a \code{civis_script} as a list.
+#' @describeIn read_civis Return run outputs of a \code{civis_script} as a named list.
 #' @param regex Regex of matching run output names.
 #' @details
 #' If \code{using = NULL}, \code{read_civis.civis_script}
 #' will return all JSONValues with name matching \code{regex}.
 #' Otherwise all File run outputs matching \code{regex} will be read into memory
 #' with \code{using}.
-#' Results are always a list. If the script has no outputs, an error will be signalled.
+#' Results are always a named list. If the script has no outputs, an error will be signalled.
 #' @export
 read_civis.civis_script <- function(x, regex = NULL, using = NULL, ...) {
   output <- fetch_output(x, regex = regex)
