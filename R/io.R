@@ -1,8 +1,10 @@
-#' Read a table or file from the Civis Platform as a data frame
+#' Read tables and files from Civis Platform
 #'
 #' @description \code{read_civis} loads a table from Redshift as a data frame if
-#' given a \code{"schema.table"} or \code{sql("query")} as the first argument, or
-#' loads a file from Amazon S3 (the files endpoint) if a file id is given.
+#' given a \code{"schema.table"} or \code{sql("query")} as the first argument. A
+#' file from Amazon S3 (the files endpoint) if a file id is given. Run output ids
+#' or values from any Civis platform script
+#' are returned if a \code{\link{civis_script}} is given.
 #'
 #' A default database can be set using \code{options(civis.default_db = "my_database")}.
 #' If there is only one database available,
@@ -17,7 +19,6 @@
 #' @param hidden bool, Whether the job is hidden.
 #' @param verbose bool, Set to TRUE to print intermediate progress indicators.
 #' @param ... arguments passed to \code{using}.
-#' @details
 #' @examples
 #' \dontrun{
 #' # Read all columns in a single table
@@ -104,6 +105,12 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
 
 #' @describeIn read_civis Return run output values or file ids of a \code{civis_script} as a list.
 #' @param regex Regex of matching run output names.
+#' @details
+#' If \code{using = NULL}, \code{read_civis.civis_script} will return run output
+#' file ids, including ids of JsonValues.
+#' Otherwise all run outputs matching \code{regex} will be read into memory
+#' with \code{using}. JsonValues are always returned as values if \code{using} is not \code{NULL}.
+#' Results are always a list.
 #' @export
 read_civis.civis_script <- function(x, regex = NULL, using = NULL, ...) {
   if (is.null(using)) {

@@ -6,7 +6,7 @@
 \alias{read_civis.character}
 \alias{read_civis.sql}
 \alias{read_civis.civis_script}
-\title{Read a table or file from the Civis Platform as a data frame}
+\title{Read tables and files from Civis Platform}
 \usage{
 read_civis(x, ...)
 
@@ -35,23 +35,30 @@ If no database is specified, uses \code{options(civis.default_db)}.}
 \item{job_name}{string, Name of the job (default: \code{"Civis Export Via R Client"}).}
 
 \item{hidden}{bool, Whether the job is hidden.}
+
+\item{regex}{Regex of matching run output names.}
 }
 \description{
 \code{read_civis} loads a table from Redshift as a data frame if
-given a \code{"schema.table"} or \code{sql("query")} as the first argument, or
-loads a file from Amazon S3 (the files endpoint) if a file id is given.
+given a \code{"schema.table"} or \code{sql("query")} as the first argument. A
+file from Amazon S3 (the files endpoint) if a file id is given. Run output ids
+or values from any Civis platform script
+are returned if a \code{\link{civis_script}} is given.
 
 A default database can be set using \code{options(civis.default_db = "my_database")}.
 If there is only one database available,
 this database will automatically be used as the default.
 }
 \details{
-For \code{read_civis.sql}, queries must be \code{READ ONLY}.
-To execute arbitrary queries, use \code{\link{query_civis}}.
-
 By default, \code{read_civis.numeric} assumes the file has been serialized using
 \code{saveRDS}, as in \code{write_civis_file} and uses \code{using = readRDS} by default. For reading
 an uncompressed text or csv from the files endpoint, set \code{using = read.csv} for example.
+
+If \code{using = NULL}, \code{read_civis.civis_script} will return run output
+file ids, including ids of JsonValues.
+Otherwise all run outputs matching \code{regex} will be read into memory
+with \code{using}. JsonValues are always returned as values if \code{using} is not \code{NULL}.
+Results are always a list.
 }
 \section{Methods (by class)}{
 \itemize{
@@ -61,7 +68,7 @@ an uncompressed text or csv from the files endpoint, set \code{using = read.csv}
 
 \item \code{sql}: Return a SQL query as a data frame.
 
-\item \code{civis_script}: Return run outputs of a \code{civis_script} as a list.
+\item \code{civis_script}: Return run output values or file ids of a \code{civis_script} as a list.
 }}
 
 \examples{
@@ -69,7 +76,7 @@ an uncompressed text or csv from the files endpoint, set \code{using = read.csv}
 # Read all columns in a single table
 df <- read_civis("schema.my_table", database = "my_database")
 
-# Read data from a SQL select statement (READ ONLY)
+# Read data from a SQL select statement
 query <- sql("SELECT * FROM table JOIN other_table USING id WHERE var1 < 23")
 df <- read_civis(query, database = "my_database")
 
