@@ -17,14 +17,13 @@
 #' @param hidden bool, Whether the job is hidden.
 #' @param verbose bool, Set to TRUE to print intermediate progress indicators.
 #' @param ... arguments passed to \code{using}.
-#' @details For \code{read_civis.sql}, queries must be \code{READ ONLY}.
-#' To execute arbitrary queries, use \code{\link{query_civis}}.
+#' @details
 #' @examples
 #' \dontrun{
 #' # Read all columns in a single table
 #' df <- read_civis("schema.my_table", database = "my_database")
 #'
-#' # Read data from a SQL select statement (READ ONLY)
+#' # Read data from a SQL select statement
 #' query <- sql("SELECT * FROM table JOIN other_table USING id WHERE var1 < 23")
 #' df <- read_civis(query, database = "my_database")
 #'
@@ -103,14 +102,15 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
   })
 }
 
-#' @describeIn read_civis Return run outputs of a \code{civis_script} as a list.
+#' @describeIn read_civis Return run output values or file ids of a \code{civis_script} as a list.
+#' @param regex Regex of matching run output names.
 #' @export
 read_civis.civis_script <- function(x, regex = NULL, using = NULL, ...) {
   if (is.null(using)) {
-    ids <- fetch_output_file_ids(x$id, x$run_id, regex = regex)
+    ids <- fetch_output_file_ids(x, regex = regex)
     return(ids)
   } else {
-    output <- fetch_output_(x$id, x$run_id, regex = regex)
+    output <- fetch_output(x, regex = regex)
     names  <- lapply(output, function(o) o$name)
     maybe_read <- function(o, using, ...) {
       if (is.null(o$value)) read_civis(o$objectId, using = using, ...) else o$value
@@ -419,7 +419,7 @@ write_civis_file.character <- function(x, name = x, expires_at = NULL, ...) {
 #' download_civis("schema.table", database = "my_database",
 #'                file = "~/Downloads/my_table.csv")
 #'
-#' # Download data from a SQL select statement (READ ONLY) into a CSV
+#' # Download data from a SQL select statement into a CSV
 #' query <- sql("SELECT * FROM table JOIN other_table USING id WHERE var1 < 23")
 #' download_civis(query, database = "my_database",
 #'                file = "~/Downloads/my_table.csv")
