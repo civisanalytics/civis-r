@@ -88,6 +88,14 @@ df <- read_civis(id)
 id <- write_civis_file("my_csv.csv")
 df <- read_civis(id, using = read.csv)
 
+# Read and download all run outputs from a civis script.
+ids <- read_civis(civis_script(1234))
+mapply(download_civis, ids, names(ids))
+
+# Read run output objects into memory
+df <- read_civis(civis_script(1234), regex = '.csv', using = read.csv)
+obj <- read_civis(civis_script(1234), regex = '.rds', using = readRDS)
+
 # Gracefully handle when read_civis.sql returns no rows
 query <- sql("SELECT * FROM table WHERE 1 = 2")
 mean_x <- tryCatch({

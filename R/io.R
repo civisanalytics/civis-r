@@ -36,6 +36,14 @@
 #' id <- write_civis_file("my_csv.csv")
 #' df <- read_civis(id, using = read.csv)
 #'
+#' # Read and download all run outputs from a civis script.
+#' ids <- read_civis(civis_script(1234))
+#' mapply(download_civis, ids, names(ids))
+#'
+#' # Read run output objects into memory
+#' df <- read_civis(civis_script(1234), regex = '.csv', using = read.csv)
+#' obj <- read_civis(civis_script(1234), regex = '.rds', using = readRDS)
+#'
 #' # Gracefully handle when read_civis.sql returns no rows
 #' query <- sql("SELECT * FROM table WHERE 1 = 2")
 #' mean_x <- tryCatch({
@@ -110,7 +118,7 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
 #' file ids, including ids of JsonValues.
 #' Otherwise all run outputs matching \code{regex} will be read into memory
 #' with \code{using}. JsonValues are always returned as values if \code{using} is not \code{NULL}.
-#' Results are always a list. If the script has no outputs, the results are a list of length is 0.
+#' Results are always a list. If the script has no outputs, the results are a list of length 0.
 #' @export
 read_civis.civis_script <- function(x, regex = NULL, using = NULL, ...) {
   if (is.null(using)) {
