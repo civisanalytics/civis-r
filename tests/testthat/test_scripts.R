@@ -1,11 +1,5 @@
 context("scripts")
 
-mock_fetch_output <- function(regex, mock_output) {
-
-}
-
-
-
 test_that('fetch_output_file_ids returns named list of file_ids', {
   mock_output <- list(list(name = 'fake_name', objectId = 1),
                       list(name = 'asdf', objectId = 2))

@@ -59,7 +59,9 @@ test_that("read_civis.numeric fails for NA", {
   expect_error(read_civis(as.numeric(NA)), msg)
 })
 
-test_that("read_civis.civis_script returns")
+test_that("read_civis.civis_script returns", {
+  expect_true(TRUE)
+})
 
 # write_civis -----------------------------------------------------------------
 

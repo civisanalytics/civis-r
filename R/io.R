@@ -118,11 +118,11 @@ read_civis.civis_script <- function(x, regex = NULL, using = NULL, ...) {
     return(ids)
   } else {
     output <- fetch_output(x, regex = regex)
-    names  <- lapply(output, function(o) o$name)
+    names <- lapply(output, function(o) o$name)
     maybe_read <- function(o, using, ...) {
       if (is.null(o$value)) read_civis(o$objectId, using = using, ...) else o$value
     }
-    res <- setNames(lapply(output, maybe_read, using = using, ...), names)
+    res <- lapply(output, maybe_read, using = using, ...)
     return(res)
   }
 }
