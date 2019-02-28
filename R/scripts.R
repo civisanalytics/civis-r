@@ -56,6 +56,14 @@ fetch_output <- function(x, regex = NULL) {
   return(output)
 }
 
+#' Add a file as a run output if called from a container job
+#'
+#' @param filename string, name of the file to add as a run output
+#'   \code{civis::scripts_post_*_runs_outputs}.
+#' @return Returns the filename if not running on platform.
+#' @details Only posts if running on Civis Platform.
+#'
+#' @export
 write_job_output <- function(filename) {
   job_id <- Sys.getenv("CIVIS_JOB_ID")
   run_id <- Sys.getenv("CIVIS_RUN_ID")
