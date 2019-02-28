@@ -41,3 +41,25 @@ test_that("fetch_until halts", {
   expect_equal(n_calls, 2)
   expect_equal(resp, list(1, 2))
 })
+
+test_that("find", {
+  n_calls <- 0
+  # 2 pages, 4 items
+  responses <- list(list(list(a = 1), list(b = 1)),
+                    list(list(a = 1), list(b = 2)))
+  fn <- function(...) {
+    n_calls <<- n_calls + 1
+    structure(responses[[n_calls]],
+              headers = list("x-pagination-total-pages" = "2",
+                             "x-pagination-current-page" = n_calls))
+  }
+  matches <- find(fn, keys = list(a = 1))
+  expect_equal(matches, list(list(a = 1), list(a = 1)))
+  expect_equal(n_calls, 2)
+  n_calls <- 0
+  responses <- list(list(list(a = 1, x = 1), list(b = 1)),
+                    list(list(a = 1, x = 2), list(b = 2)))
+
+  matches <- find(fn, keys = list(a = 1, x = 1))
+  expect_equal(matches, list(list(a = 1, x = 1)))
+})

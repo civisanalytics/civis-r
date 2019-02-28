@@ -88,3 +88,40 @@ fetch_until <- function(fn, .until, ...) {
 
   full_results
 }
+
+#' Retrieve items from a paginated endpoint matching keys
+#' @param fn function, the API function to be called (usually a list endpoint)
+#' @param keys list of key value pairs.
+#' @return Items from \code{fn} that match all key value pairs in \code{keys}.
+#' @param ... Arguments passed to \code{fn}.
+#' @examples
+#' \dontrun{
+#' find(credentials_list, list(username = 'username', name = 'cred_name')))
+#' find(templates_list_scripts, list(name = 'template name'))
+#'
+#' }
+#' @export
+find <- function(fn, keys, ...) {
+  args <- list(...)
+
+  # all keys must match values for one response x
+  is_match <- function(x, keys) {
+    all(purrr::map2_lgl(names(keys), keys, .f = function(key, value) {
+      if (key %in% names(x)) x[[key]] == value else FALSE
+    }))
+  }
+
+  args$page_num <- 1
+  args$limit <- NULL
+  results <- list()
+  repeat {
+    res <- do.call(fn, args)
+    match <- res[purrr::map_lgl(res, is_match, keys = keys)]
+    results <- append(results, match)
+    args$page_num <- next_page(res)
+    if (is.null(args$page_num)) {
+      break
+    }
+  }
+  return(results)
+}
