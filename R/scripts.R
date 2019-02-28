@@ -56,6 +56,23 @@ fetch_output <- function(x, regex = NULL) {
   return(output)
 }
 
+write_job_output <- function(filename) {
+  job_id <- Sys.getenv("CIVIS_JOB_ID")
+  run_id <- Sys.getenv("CIVIS_RUN_ID")
+  if (job_id != "" & run_id != "") {
+    name <- basename(filename)
+    file_id <- civis::write_civis_file(filename, name = name, expires_at = NULL)
+    job <- jobs_get(job_id)
+    post_output <- get_script_fun(job, verb = "post", fun_type = 'outputs')
+    post_output(id = job_id,
+                run_id = run_id,
+                object_type = 'File',
+                object_id = file_id)
+  } else {
+    return(filename)
+  }
+}
+
 #' Get a script function matching a job type.
 #' @param job output of \code{jobs_get}
 #' @param fun_type one of \code{"logs"} or \code{"outputs"}
