@@ -63,5 +63,4 @@ test_that("script_get_fun works", {
 
   expect_error(get_script_fun(423, 'list', 'asdf'), 'outputs')
   expect_error(get_script_fun(423, 'asdf', 'outputs'), 'list')
-
 })

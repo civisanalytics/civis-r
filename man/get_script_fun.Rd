@@ -4,8 +4,12 @@
 \alias{get_script_fun}
 \title{Get a script function matching a job type.}
 \usage{
+<<<<<<< HEAD
 get_script_fun(job, verb = c("list", "post"), fun_type = c("outputs",
   "logs"))
+=======
+get_script_fun(job, fun_type = c("outputs", "logs"))
+>>>>>>> origin/civis-script
 }
 \arguments{
 \item{job}{output of \code{jobs_get}}
