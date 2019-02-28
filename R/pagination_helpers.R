@@ -104,7 +104,7 @@ fetch_until <- function(fn, .until, ...) {
 find <- function(fn, keys, ...) {
   args <- list(...)
 
-  # all keys must match values for one response x
+  # all keys must be present and match values for one response x
   is_match <- function(x, keys) {
     all(purrr::map2_lgl(names(keys), keys, .f = function(key, value) {
       if (key %in% names(x)) x[[key]] == value else FALSE
