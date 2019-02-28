@@ -59,6 +59,37 @@ test_that("read_civis.numeric fails for NA", {
   expect_error(read_civis(as.numeric(NA)), msg)
 })
 
+test_that("read_civis.civis_script using = NULL", {
+  mock_output <- list(list(name = 'asdf', objectId = 1, objectType = 'JSONValue', value = 'a'),
+                      list(name = 'fake', objectId = 2, objectType = 'JSONValue', value = 'b'),
+                      list(name = 'file_fake', objectId = 3, objectType = 'File'))
+  vals <- with_mock(
+    `civis::jobs_get` = function(...) list(type = 'JobTypes::ContainerDocker'),
+    `civis::scripts_list_containers_runs_outputs` = function(...) mock_output,
+    expect_equal(read_civis(civis_script(1,1), using = NULL),
+                 list(asdf = 'a', fake = 'b')),
+    expect_equal(read_civis(civis_script(1,1), using = NULL, regex = 'fake'),
+                 list(fake = 'b'))
+  )
+})
+
+test_that("read_civis.civis_script with using", {
+  mock_output <- list(list(name = 'asdf', objectId = 1, objectType = 'JSONValue', value = 'a'),
+                      list(name = 'lol', objectId = 2, objectType = 'File'),
+                      list(name = 'fake', objectId = 3, objectType = 'File'))
+  with_mock(
+    `civis::jobs_get` = function(...) list(type = 'JobTypes::ContainerDocker'),
+    `civis::scripts_list_containers_runs_outputs` = function(...) mock_output,
+    # returns first arg of read_civis.numeric, which is the objectId
+    `civis::read_civis.numeric` = function(...) list(...)[[1]],
+    expect_equal(read_civis(civis_script(1,1), using = I),
+                 list(lol = 2, fake = 3)),
+    expect_equal(read_civis(civis_script(1,1), regex = 'fake', using = I),
+                 list(fake = 3))
+  )
+})
+
+
 # write_civis -----------------------------------------------------------------
 
 test_that("write_civis.character returns meta data if successful", {

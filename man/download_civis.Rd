@@ -73,7 +73,7 @@ this database will automatically be used as the default.
 download_civis("schema.table", database = "my_database",
                file = "~/Downloads/my_table.csv")
 
-# Download data from a SQL select statement (READ ONLY) into a CSV
+# Download data from a SQL select statement into a CSV
 query <- sql("SELECT * FROM table JOIN other_table USING id WHERE var1 < 23")
 download_civis(query, database = "my_database",
                file = "~/Downloads/my_table.csv")

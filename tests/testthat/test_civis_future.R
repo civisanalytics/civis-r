@@ -41,10 +41,10 @@ mock_run <- function(expr) {
     `civis::write_civis_file` = function(...) 123,
     `civis::upload_runner_script` = function(...) "",
     `civis::scripts_post_containers` = function(...) NULL,
-    `civis::scripts_post_containers_runs` = function(fut) mock_r_eval(fut),
+    `civis::scripts_post_containers_runs` = function(fut) NULL,
     `civis::scripts_post_containers_runs_outputs` = function(...) NULL,
     `civis::scripts_get_containers_runs` = function(...) list(state = "succeeded"),
-    `civis::fetch_output` = function(...) mock_r_eval(fut),
+    `civis::read_civis` = function(...) mock_r_eval(fut),
     `civis::fetch_logs` = function(...) list("a log"),
     list(fut = run(fut), value = value(fut))
   )
