@@ -27,19 +27,21 @@ CivisFuture(expr = NULL, envir = parent.frame(), substitute = FALSE,
 \method{fetch_logs}{CivisFuture}(object, ...)
 }
 \arguments{
-\item{expr}{An R \link[base]{expression}.}
+\item{expr}{An \R \link[base]{expression}.}
 
-\item{envir}{The \link{environment} in which the evaluation
-is done (or inherits from if \code{local} is TRUE).}
+\item{envir}{The \link{environment} from where global objects should be
+identified.}
 
 \item{substitute}{If TRUE, argument \code{expr} is
 \code{\link[base]{substitute}()}:ed, otherwise not.}
 
-\item{globals}{(optional) a named list of global objects needed in order
-for the future to be resolved correctly.}
+\item{globals}{(optional) a logical, a character vector, or a named list
+to control how globals are handled.
+For details, see section 'Globals used by future expressions'
+in the help for \code{\link{future}()}.}
 
 \item{packages}{(optional) a character vector specifying packages
-to be attached in the R environment evaluating the future.}
+to be attached in the \R environment evaluating the future.}
 
 \item{lazy}{If \code{FALSE} (default), the future is resolved
 eagerly (starting immediately), otherwise not.}
@@ -50,14 +52,16 @@ the assignments are done to the global environment of the \R process
 evaluating the future.}
 
 \item{gc}{If TRUE, the garbage collector run (in the process that
-evaluated the future) after the value of the future is collected.
+evaluated the future) only after the value of the future is collected.
+Exactly when the values are collected may depend on various factors such
+as number of free workers and whether \code{earlySignal} is TRUE (more
+frequently) or FALSE (less frequently).
 \emph{Some types of futures ignore this argument.}}
 
-\item{earlySignal}{Specified whether conditions should be signaled
-as soon as possible or not.}
+\item{earlySignal}{Specified whether conditions should be signaled as soon
+as possible or not.}
 
-\item{label}{An optional character string label attached to the
-future.}
+\item{label}{An optional character string label attached to the future.}
 
 \item{required_resources}{resources, see \code{\link{scripts_post_containers}}}
 
