@@ -83,6 +83,7 @@ write_job_output <- function(filename) {
 
 #' Get a script function matching a job type.
 #' @param job output of \code{jobs_get}
+#' @param verb one of \code{"list"} or \code{"post"}
 #' @param fun_type one of \code{"logs"} or \code{"outputs"}
 #' @return The correct output or log fetching function
 #' (e.g. \code{\link{scripts_list_containers_runs_logs}}) based on the job type.
