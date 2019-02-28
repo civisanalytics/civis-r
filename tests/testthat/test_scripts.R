@@ -23,12 +23,6 @@ test_that("fetch_output dispatches correct function", {
     expect_equal(fetch_output(civis_script(1,1), regex = 'fake'),
                  mock_output[1])
   )
-  mock_output <- list()
-  with_mock(
-    `civis::jobs_get` = function(...)  list(type = 'JobTypes::ContainerDocker'),
-    `civis::scripts_list_containers_runs_outputs` = function(...) mock_output,
-    expect_error(fetch_output(civis_script(1,1)))
-  )
 })
 
 test_that("test civis_script", {

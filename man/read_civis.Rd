@@ -17,7 +17,7 @@ read_civis(x, ...)
 \method{read_civis}{sql}(x, database = NULL, using = utils::read.csv,
   job_name = NULL, hidden = TRUE, verbose = FALSE, ...)
 
-\method{read_civis}{civis_script}(x, regex = NULL, using = NULL, ...)
+\method{read_civis}{civis_script}(x, using, regex = NULL, ...)
 }
 \arguments{
 \item{x}{\code{"schema.table"}, \code{sql("query")}, or a file id.}
@@ -58,7 +58,8 @@ If \code{using = NULL}, \code{read_civis.civis_script}
 will return all JSONValues with name matching \code{regex}.
 Otherwise all File run outputs matching \code{regex} will be read into memory
 with \code{using}.
-Results are always a named list. If the script has no outputs, an error will be signalled.
+Results are always a named list.
+If the script has no outputs, an empty list will be returned.
 }
 \section{Methods (by class)}{
 \itemize{

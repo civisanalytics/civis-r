@@ -117,9 +117,10 @@ read_civis.sql <- function(x, database = NULL, using = utils::read.csv,
 #' will return all JSONValues with name matching \code{regex}.
 #' Otherwise all File run outputs matching \code{regex} will be read into memory
 #' with \code{using}.
-#' Results are always a named list. If the script has no outputs, an error will be signalled.
+#' Results are always a named list.
+#' If the script has no outputs, an empty list will be returned.
 #' @export
-read_civis.civis_script <- function(x, regex = NULL, using = NULL, ...) {
+read_civis.civis_script <- function(x, using, regex = NULL, ...) {
   output <- fetch_output(x, regex = regex)
   if (is.null(using)) {
     out <- Filter(function(o) o$objectType == 'JSONValue', output)

@@ -66,8 +66,10 @@ test_that("read_civis.civis_script using = NULL", {
   vals <- with_mock(
     `civis::jobs_get` = function(...) list(type = 'JobTypes::ContainerDocker'),
     `civis::scripts_list_containers_runs_outputs` = function(...) mock_output,
-    expect_equal(read_civis(civis_script(1,1)), list(asdf = 'a', fake = 'b')),
-    expect_equal(read_civis(civis_script(1,1), regex = 'fake'), list(fake = 'b'))
+    expect_equal(read_civis(civis_script(1,1), using = NULL),
+                 list(asdf = 'a', fake = 'b')),
+    expect_equal(read_civis(civis_script(1,1), using = NULL, regex = 'fake'),
+                 list(fake = 'b'))
   )
 })
 

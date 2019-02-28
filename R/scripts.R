@@ -53,7 +53,6 @@ fetch_output <- function(x, regex = NULL) {
     match <- grep(regex, names)
     output <- output[match]
   }
-  if (length(output) == 0) stop(paste0("Job ", x$id, " has no run outputs."))
   return(output)
 }
 
