@@ -46,7 +46,7 @@ fetch_output_file_ids <- function(x, regex = NULL) {
 fetch_output <- function(x, regex = NULL) {
   job <- jobs_get(x$id)
   run_id <- if (is.null(x$run_id)) job$lastRun$id else x$run_id
-  get_output <- get_script_fun(job, 'outputs')
+  get_output <- get_script_fun(job, 'list', 'outputs')
   output <- get_output(x$id, run_id)
   names <- sapply(output, function(o) o$name)
   if (!is.null(regex)) {
@@ -88,15 +88,16 @@ write_job_output <- function(filename) {
 #' (e.g. \code{\link{scripts_list_containers_runs_logs}}) based on the job type.
 #' @details container and custom scripts both have the same job type, but can be distinguished
 #' by a non-null \code{fromTemplateId}.
-get_script_fun <- function(job, fun_type = c("outputs", "logs")) {
+get_script_fun <- function(job, verb = c("list", "post"), fun_type = c("outputs", "logs")) {
   fun_type <- match.arg(fun_type)
+  verb <- match.arg(verb)
   job_type <- job$type
   if (!is.null(job$fromTemplateId)) {
     name <- "custom"
   } else {
     name <- SCRIPT_MAPPING$name[which(SCRIPT_MAPPING$job_type == job_type)]
   }
-  fname <- paste0("scripts_list_", name, "_runs_", fun_type)
+  fname <- paste0("scripts_", verb, "_", name, "_runs_", fun_type)
   get(fname)
 }
 

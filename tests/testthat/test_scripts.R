@@ -51,15 +51,21 @@ test_that("write_job_output posts", {
 
 test_that("script_get_fun works", {
   mock_job <- list(type = 'JobTypes::ContainerDocker')
-  expect_equal(get_script_fun(mock_job, 'outputs'),
+  expect_equal(get_script_fun(mock_job, 'list', 'outputs'),
                scripts_list_containers_runs_outputs)
   mock_job <- list(type = 'JobTypes::PythonDocker')
-  expect_equal(get_script_fun(mock_job, 'logs'),
+  expect_equal(get_script_fun(mock_job, 'list', 'logs'),
                scripts_list_python3_runs_logs)
   mock_job <- list(type = 'JobTypes::ContainerDocker',
                    fromTemplateId = 1)
-  expect_equal(get_script_fun(mock_job, 'outputs'),
+  expect_equal(get_script_fun(mock_job, 'list', 'outputs'),
                scripts_list_custom_runs_outputs)
 
-  expect_error(get_script_fun(423, 'asdf'), 'outputs')
+  mock_job <- list(type = 'JobTypes::ContainerDocker',
+                   fromTemplateId = 1)
+  expect_equal(get_script_fun(mock_job, 'post', 'outputs'),
+               scripts_post_custom_runs_outputs)
+
+  expect_error(get_script_fun(423, 'list', 'asdf'), 'outputs')
+  expect_error(get_script_fun(423, 'asdf', 'outputs'), 'list')
 })
