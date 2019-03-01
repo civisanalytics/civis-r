@@ -131,8 +131,8 @@ value.CivisFuture <- function(future, ...) {
       future$run <- await(scripts_get_containers_runs, id = future$job$containerId,
                           run_id = future$job$id)
       future$state <- future$run$state
-      future$value <- unname(read_civis(civis_script(future$job$containerId),
-                                 using = readRDS)[[1]])
+      future$value <- read_civis(civis_script(future$job$containerId),
+                                 using = readRDS)[[1]]
       future$logs  <- fetch_logs(future$run)
     }, civis_error = function(e) {
       future$state <- "failed"
