@@ -49,6 +49,31 @@ test_that("write_job_output posts", {
   expect_null(write_job_output('asdf'))
 })
 
+test_that("run_template", {
+  mock_output <- list(list(name = 'a', objectId = 1))
+  mock_post <- mockery::mock(list(id = 1))
+  vals <- with_mock(
+    `civis::scripts_post_custom` =  mock_post,
+    `civis::scripts_post_custom_runs` = function(...) list(id = 1),
+    `civis::scripts_get_custom_runs` = function(...) list(state = 'succeeded'),
+    `civis::jobs_get` = function(...) list(type = 'JobTypes::ContainerDocker', fromTemplateId = 1),
+    `civis::scripts_list_custom_runs_outputs` = function(...) mock_output,
+    run_template(1, arguments = list(arg = 1), credential_id = 1)
+  )
+  expect_equal(vals, list(a = 1))
+  mockery::expect_called(mock_post, 1)
+  expect_equal(mockery::mock_args(mock_post)[[1]],
+               list(1, arguments = list(arg = 1), credential_id = 1))
+})
+
+test_that("run_civis", {
+  # CivisFuture is tested extensively elsewhere.
+  with_mock(
+    `civis::civis_platform` = future::sequential,
+    expect_equal(run_civis(2 + 2), 4)
+  )
+})
+
 test_that("script_get_fun works", {
   mock_job <- list(type = 'JobTypes::ContainerDocker')
   expect_equal(get_script_fun(mock_job, 'list', 'outputs'),
