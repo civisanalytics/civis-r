@@ -46,7 +46,7 @@ test_that("write_job_output posts", {
   )
   Sys.unsetenv("CIVIS_JOB_ID" )
   Sys.unsetenv("CIVIS_RUN_ID")
-  expect_equal(write_job_output('asdf'), 'asdf')
+  expect_null(write_job_output('asdf'))
 })
 
 test_that("script_get_fun works", {

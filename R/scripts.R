@@ -76,8 +76,6 @@ write_job_output <- function(filename) {
                 run_id = run_id,
                 object_type = 'File',
                 object_id = file_id)
-  } else {
-    return(filename)
   }
 }
 
