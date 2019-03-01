@@ -163,10 +163,10 @@ library(future)
 
 test_that("futures work", {
   plan(civis_platform)
-  d2 <- future({read_civis("datascience.iris", "redshift-general")})
+  fut <- future({read_civis("datascience.iris", "redshift-general")})
   d <- read_civis("datascience.iris", verbose = TRUE)
-  expect_is(d2, "CivisFuture")
-  d2 <- value(d2)
+  expect_is(fut, "CivisFuture")
+  d2 <- value(fut)
   expect_equal(d[order(d$index), ], d2[order(d2$index), ], check.attributes = FALSE)
 })
 
