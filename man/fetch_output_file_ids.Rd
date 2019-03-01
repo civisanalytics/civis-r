@@ -38,8 +38,10 @@ vals <- lapply(ids, read_civis, using = read.csv)
 }
 }
 \seealso{
-Other script_utils: \code{\link{civis_script}}
+Other script_utils: \code{\link{civis_script}},
+  \code{\link{run_civis}}, \code{\link{run_template}}
 
-Other script_utils: \code{\link{civis_script}}
+Other script_utils: \code{\link{civis_script}},
+  \code{\link{run_civis}}, \code{\link{run_template}}
 }
 \concept{script_utils}
