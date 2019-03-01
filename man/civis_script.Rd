@@ -23,6 +23,7 @@ A \code{civis_script} can be any custom, container, R, Python, SQL, or Javacript
 \seealso{
 \code{\link{read_civis}}
 
-Other script_utils: \code{\link{fetch_output_file_ids}}
+Other script_utils: \code{\link{fetch_output_file_ids}},
+  \code{\link{run_civis}}, \code{\link{run_template}}
 }
 \concept{script_utils}

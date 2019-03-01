@@ -11,6 +11,8 @@ Utitilies for platform  scripts
 - `fetch_output_file_ids` returns file ids of run outputs for a `civis_script`.
 - `fetch_output` returns the output of `scripts_list_*_runs_outputs` for a `civis_script`.
 - `write_job_output` for adding File run outputs to scripts.
+- `run_civis` can be used to run an arbitrary R exporession in a Civis Platform container
+- `run_template` can be used to run a template job, and return file IDs of results.
 
 ## [1.6.1] - 2019-02-12
 
