@@ -17,13 +17,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-Civis Scripts are the way to  _productionize_ your code with Civis Platform. 
+Civis Scripts are the way to  productionize your code with Civis Platform. 
 A loose definition of productionizing is to 
 run your code on a remote server rather than on a local machine.
 
 It is not always a good idea to productionize, for instance, while you are 
 iterating and prototyping. But once a solution has been finalized and you want to 
-re-run the same tasks multiple times, it might be time to productionize!
+re-run the same task multiple times, it might be time to productionize!
 Here are some of the benefits:
 
 1. Easily schedule and automate tasks, and include tasks in workflows.
@@ -39,6 +39,44 @@ common tasks where they have been implemented already.
 
 Ready? Buckle in!
 
+## Quick Start
+
+```{r}
+# create a container script with a parameter
+script <- scripts_post_containers(
+  required_resources = list(cpu = 1024, memory = 50, diskSpace = 15),
+  docker_command = 'cd /package_dir && Rscript inst/run_script.R',
+  docker_image_name = 'civisanalytics/datascience-r',
+  name = 'SCRIPT NAME',
+  params = list(
+    list(name = 'NAME_OF_ENV_VAR',
+         label = 'Name User Sees', 
+         type = 'string',
+         required = TRUE)
+  )
+)
+
+# publish the container script as a template 
+template <- templates_post_scripts(script$id, name = 'TEMPLATE NAME', note = 'Markdown Docs')
+
+# run a template script, returning file ids of run outputs
+out <- run_template(template$id)
+
+# post a file or JSONValue run output within a script
+write_job_output('filename.csv')
+json_values_post(jsonlite::toJSON(my_list), 'my_list.json')
+
+# get run output file ids of a script
+out <- fetch_output_file_ids(civis_script(id))
+
+# get csv run outputs of a script
+df <- read_civis(civis_script(id), regex = '.csv', using = read.csv)
+
+# get JSONValue run outputs
+my_list <- read_civis(civis_script(id))
+
+```
+
 ## Script Concepts and Overview
 
 A script is a job that executes code in Civis Platform. A script accepts user input through _parameters_, gives values back to the user as _run outputs_, and records any _logs_ along the way. 
@@ -51,7 +89,8 @@ get access to those changes.
 
 A better way to share code with others is with _template_ scripts. A template script is a 'published' language or container script. The script that the template runs is the _backing script_ of the template. 
 
-Once a container or language script is published as a template, users can create their own instances of the template.
+Once a container or language script is published as a template, users can create 
+their own instances of the template.
 These instances are called _custom_ scripts and they inherit all changes made to the template. 
 This feature makes it easy to share code with others and to rapidly deploy changes and fixes.
 
@@ -101,12 +140,16 @@ run_script <- function(source, name = 'Cool') {
 ```
 
 ### Run Outputs
-
 This script isn't very useful because it doesn't produce any output that we can access. 
-To add an output to a job, we can use `scripts_post_r_runs_outputs`. Notice
-that the environment variables `CIVIS_JOB_ID` and `CIVIS_RUN_ID` are 
-automatically inserted into the environment for us to have access to.
+To add an output to a job, we can use `scripts_post_r_runs_outputs`. The two most 
+common types of run outputs are `Files` and `JSONValues`.
 
+#### Files
+
+We can specify adding a `File` as a run output by uploading the object to S3
+with `write_civis_file` and  setting `object_type` in `scripts_post_r_runs_outputs` to `File`.
+Notice that the environment variables `CIVIS_JOB_ID` and `CIVIS_RUN_ID` are 
+automatically inserted into the environment for us to have access to.
 ```{r, eval=FALSE}
 source <- c("
  library(civis)
@@ -133,6 +176,27 @@ source <- c("
 run <- run_script(source)
 ```
 
+#### JSONValues
+
+When adding run outputs to a script, assume that the script can be
+used by any language. As a result, it is best practice to make run outputs
+as portable as possible. For data, CSVs are a good choice. 
+For arbitrary lists, JSONValues are often the best choice. It is user friendly to
+add the file extension to the name of the run output.
+
+Adding JSONValue run outputs is common enough
+for it to be implemented directly as a Civis API endpoint, `json_values_post`:
+
+```{r, eval=FALSE}
+source <- c("
+ library(civis)
+ library(jsonlite)
+ my_farm <- list(cows = 1, ducks = list(mallard = 2, goldeneye = 1))
+ json_values_post(jsonlite::toJson(my_farm), name = 'my_farm.json')
+")
+run_farm <- run_script(source)
+```
+
 To retrieve script outputs we can use `scripts_list_r_runs_outputs`:
 
 ```{r}
@@ -141,13 +205,19 @@ iris <- read_civis(out$objectId, using = read.csv)
 ```
 
 Since this pattern is also common, you can simply use `read_civis` directly.
-This will work for any script type:
+This will work for any script type. Use `regex` and `using` to filter
+run outputs by file extension, and provide the appropriate reading function.
+JSONValues can be read automatically!
 
 ```{r, eval = FALSE}
-iris <- read_civis(civis_script(run$rId), using = read.csv)
+# get csv run outputs
+iris <- read_civis(civis_script(run$rId), regex = '.csv', using = read.csv)
+
+# get JSONValues
+my_farm <- read_civis(civis_script(run_farm$rId))
 ```
 
-A long round trip just to get `iris`!
+A long round trip, but I'm grateful not to lose track of my farm animals.
 
 ### Script Parameters
 
@@ -232,6 +302,10 @@ Returns:
 template <- templates_post_scripts(script_id = job$id, note = note, name = 'Pet Greeter')
 ```
 
+If you need a link to your template script, use 
+`https://platform.civisanalytics.com/spa/#/scripts/new/{your template id}`.
+This link will automatically direct the user to a new instance of the template.
+
 ### Making Changes 
 
 To make changes to the template note or name, use `templates_patch_scripts`.
@@ -241,7 +315,7 @@ templates_patch_scripts(template_id$id, note = new_note)
 ```
 
 To change the behavior, name, or parameters of the script, 
-simply update the backing script, using `scripts_patch_r`.
+update the backing script using `scripts_patch_r`.
 
 * Note: 
 It is _not recommended_ to make  breaking changes to the API of a script by 
@@ -278,19 +352,27 @@ It returns the output file ids of the job for you to use later on in your progra
 out <- run_template(template$id, arguments = list(PET_NAME = 'CHARLES'))
 ```
 
+To stay organized, let's automatically add the script to an existing project:
+
+```{r, eval = FALSE}
+# We might need to find the project id first
+search_list(type = 'project', 'My project Name')
+out <- run_template(template$id, arguments = list(PET_NAME = 'CHARLES'),
+                    target_project_id = project_id)
+```
+
 Finally, let's clean up our experiment by archiving our Pet Greeter Template.
 
 ```{r}
 templates_patch_scripts(template$id, archived = TRUE)
 ```
 
+## Conclusion 
+
 That's it! Now go forth and productionize!
 
 ## Appendix: Misc Notes
 
-If need a link to your template script, use 
-`https://platform.civisanalytics.com/spa/#/scripts/new/{your template id}`.
-This link will automatically direct the user to a new instance of the template.
 
 
 
