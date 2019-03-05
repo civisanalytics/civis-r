@@ -56,6 +56,57 @@ fetch_output <- function(x, regex = NULL) {
   return(output)
 }
 
+#' Evaluate an R expression in a Civis Platform container
+#' @param expr code to evaluate
+#' @param ... arguments to \code{\link{CivisFuture}}
+#' @details
+#' \code{run_civis} blocks until completion. For non-blocking calls,
+#' use futures directly with \code{\link{civis_platform}}.
+#' Attempts are made at detecting and installing necessary packages
+#' within the container, and detecting global variables required in \code{expr}.
+#'
+#' @family script_utils
+#' @examples
+#' \dontrun{
+#' run_civis(2+2)
+#'
+#' # specify required resources, and a specific image
+#' run_civis(2+2,
+#'   required_resources = list(cpu = 1024, memory = 2048),
+#'   docker_image_name='image',
+#'   docker_image_tag = 'latest')
+#'
+#' }
+#' @export
+run_civis <- function(expr, ...) {
+  future::plan(civis_platform)
+  on.exit(future::plan("default"))
+  fut <- future::future({expr}, ...)
+  return(value(fut))
+}
+
+#' Run a template script
+#' @param id id of the template script.
+#' @param arguments list of arguments to the script.
+#' @param ... additional arguments to \code{scripts_post_custom}
+#' @return File ids of any run outputs are returned.
+#' @export
+#' @family script_utils
+#' @examples
+#' \dontrun{
+#' # Try a search for the template id
+#' search_list('template name', type = 'template_script')
+#'
+#' # Run the template
+#' run_template(id, arguments = list(arg1 = 1, arg2 = 2), ...)
+#' }
+run_template <- function(id, arguments, ...) {
+  job <- scripts_post_custom(id, arguments = arguments, ...)
+  run <- scripts_post_custom_runs(job$id)
+  await(scripts_get_custom_runs, id = job$id, run_id = run$id)
+  fetch_output_file_ids(civis_script(job$id, run$id))
+}
+
 #' Add a file as a run output if called from a container job
 #'
 #' @param filename string, name of the file to add as a run output
