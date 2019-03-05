@@ -371,8 +371,6 @@ templates_patch_scripts(template$id, archived = TRUE)
 
 That's it! Now go forth and productionize!
 
-## Appendix: Misc Notes
-
 
 
 
