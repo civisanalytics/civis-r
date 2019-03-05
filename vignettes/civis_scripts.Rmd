@@ -21,7 +21,7 @@ Civis Scripts are the way to  productionize your code with Civis Platform.
 A loose definition of productionizing is to 
 run your code on a remote server rather than on a local machine.
 
-It is not always a good idea to productionize, for instance, while you are 
+It is not always a good idea to productionize while you are 
 iterating and prototyping. But once a solution has been finalized and you want to 
 re-run the same task multiple times, it might be time to productionize!
 Here are some of the benefits:
@@ -178,11 +178,10 @@ run <- run_script(source)
 
 #### JSONValues
 
-When adding run outputs to a script, assume that the script can be
-used by any language. As a result, it is best practice to make run outputs
-as portable as possible. For data, CSVs are a good choice. 
-For arbitrary lists, JSONValues are often the best choice. It is user friendly to
-add the file extension to the name of the run output.
+It is best practice to make run outputs
+as portable as possible because the script can be called by any language.
+For arbitrary data, JSONValues are often the best choice. 
+Regardless, it is user friendly to add the file extension to the name of the run output.
 
 Adding JSONValue run outputs is common enough
 for it to be implemented directly as a Civis API endpoint, `json_values_post`:
