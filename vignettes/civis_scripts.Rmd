@@ -18,26 +18,45 @@ knitr::opts_chunk$set(
 ```
 
 Civis Scripts are the way to  productionize your code with Civis Platform. 
-A loose definition of productionizing is to 
-run your code on a remote server rather than on a local machine.
+You've probably used three of the four types of scripts already in the Civis Platform UI ("Code" --> "Scripts"):
+_language_ ([R](https://platform.civisanalytics.com/spa/#/scripts/new?type=r), [Python3](https://platform.civisanalytics.com/spa/#/scripts/new?type=python), [javascript](https://platform.civisanalytics.com/spa/#/scripts/new?type=javascript), and [sql](https://platform.civisanalytics.com/spa/#/scripts/new?type=sql)), [_container_](https://platform.civisanalytics.com/spa/#/scripts/new?type=container),
+and [_custom_](https://platform.civisanalytics.com/spa/#/scripts/new?type=custom&fromTemplateId=11219). 
+If you've run any of these scripts in Civis Platform, you've already started _productionizing_ your
+code. Most loosely, productionizing means that your code now runs on a 
+remote server than your local or development machine.
 
-It is not always a good idea to productionize while you are 
-iterating and prototyping. But once a solution has been finalized and you want to 
-re-run the same task multiple times, it might be time to productionize!
-Here are some of the benefits:
+You probably already know some of the benefits too:
 
 1. Easily schedule and automate tasks, and include tasks in workflows.
 2. Ensure your code doesn't break in the future when dependencies change.
 3. Share code with others without them worrying about dependencies or language compatibility.
 4. Rapidly deploy fixes and changes.
 
-This is a guide to productionizing your code with Civis Scripts using the `civis-r` API Client. 
-It will cover the  different types of scripts, and how to programmatically read outputs, 
-kick off new script runs, and  publish your own script templates to share your code with others. 
-It will make heavy use of API functions directly, but highlight convenient wrappers for
+This guide will cover how to programmatically do the same tasks using the API
+that you are used to doing in GUI. Instead of typing in values for the parameters or clicking to
+download outputs, you can do the same thing in your programs. Hooray for automation! 
+
+Specifically, this guide will cover how to programmatically read outputs, 
+kick off new script runs, and  publish your own script templates
+to share your code with others. It will make heavy use of API functions
+directly, but highlight convenient wrappers for
 common tasks where they have been implemented already. 
 
 Ready? Buckle in!
+
+## Script Concepts and Overview
+
+A script is a job that executes code in Civis Platform. A script accepts user input through _parameters_, gives values back to the user as _run outputs_, and records any _logs_ along the way. 
+
+A script author can share language and container scripts with others by letting users _clone_ the script. But if an author makes a change to the script such as fixing a bug or adding a feature, users will have to re-clone the script to 
+get access to those changes.
+
+A better way to share code with others is with _template_ scripts. A template script is a 'published' language or container script. The script that the template runs is the _backing script_ of the template. 
+
+Once a container or language script is published as a template, users can create 
+their own instances of the template.
+These instances are called _custom_ scripts and they inherit all changes made to the template. 
+This feature makes it easy to share code with others and to rapidly deploy changes and fixes.
 
 ## Quick Start
 
@@ -77,22 +96,7 @@ my_list <- read_civis(civis_script(id))
 
 ```
 
-## Script Concepts and Overview
 
-A script is a job that executes code in Civis Platform. A script accepts user input through _parameters_, gives values back to the user as _run outputs_, and records any _logs_ along the way. 
-
-There are four types of scripts: _language_ (R, Python3, javascript, and sql), _container_, _custom_, and _template_. 
-A _language_ script allows an author to quickly add and edit source code of a language directly in a job. _Container_ scripts are like language scripts, but allow the author to specify the Docker image and to run a specific Docker command. This allows the author to have the most control over the environment in which the code runs. 
-
-A script author can share language and container scripts with others by letting users _clone_ the script. But if an author makes a change to the script such as fixing a bug or adding a feature, users will have to re-clone the script to 
-get access to those changes.
-
-A better way to share code with others is with _template_ scripts. A template script is a 'published' language or container script. The script that the template runs is the _backing script_ of the template. 
-
-Once a container or language script is published as a template, users can create 
-their own instances of the template.
-These instances are called _custom_ scripts and they inherit all changes made to the template. 
-This feature makes it easy to share code with others and to rapidly deploy changes and fixes.
 
 ## Creating and Running Scripts
 
@@ -102,7 +106,7 @@ we'll cover `custom` and `template` scripts.
 
 ### An Example Script
 
-The `post` method creates the job and returns a list of metadata about it, including it's type.
+The `post` method creates the job and returns a list of metadata about it, including its type.
 
 ```{r, eval = FALSE}
 source <- c('
@@ -286,7 +290,7 @@ often helpful for users.
 note <- c("
 # Pet Greeter
 
-Greets your pet, given it's name! 
+Greets your pet, given its name! 
  
 For your pet to receive the greeting, it must be a Civis Platform
 user with the ability to read.
@@ -301,9 +305,31 @@ Returns:
 template <- templates_post_scripts(script_id = job$id, note = note, name = 'Pet Greeter')
 ```
 
-If you need a link to your template script, use 
-`https://platform.civisanalytics.com/spa/#/scripts/new/{your template id}`.
-This link will automatically direct the user to a new instance of the template.
+### Custom Scripts
+`scripts_post_custom` creates an instance of a template that inherits all changes made to the template.
+We can now make a simple program to call and run a instance of the template.
+
+```{r, eval=FALSE}
+job <- scripts_post_custom(id, arguments = arguments, ...)
+run <- scripts_post_custom_runs(job$id)
+await(scripts_get_custom_runs, id = job$id, run_id = run$id)
+```
+
+Conveniently, `run_template` does exactly this and is already provided in `civis`.
+It returns the output file ids of the job for you to use later on in your program.
+
+```{r, eval = FALSE}
+out <- run_template(template$id, arguments = list(PET_NAME = 'CHARLES'))
+```
+
+To stay organized, let's automatically add the script to an existing project:
+
+```{r, eval = FALSE}
+# We might need to find the project id first
+search_list(type = 'project', 'My project Name')
+out <- run_template(template$id, arguments = list(PET_NAME = 'CHARLES'),
+                    target_project_id = project_id)
+```
 
 ### Making Changes 
 
@@ -333,34 +359,17 @@ scripts_patch_r(id = job$id, name = 'Pet Greeter',
                 params = params)
 ```
 
+### Discoverability
 
-### Custom Scripts
-`scripts_post_custom` creates an instance of a template that inherits all changes made to the template.
-We can now make a simple program to call and run a instance of the template.
+To help share your template with others, use this link:
+`https://platform.civisanalytics.com/spa/#/scripts/new/{your template id}`.
 
-```{r, eval=FALSE}
-job <- scripts_post_custom(id, arguments = arguments, ...)
-run <- scripts_post_custom_runs(job$id)
-await(scripts_get_custom_runs, id = job$id, run_id = run$id)
-```
+This link will automatically direct the user to a new instance of the template.
 
-Conveniently, `run_template` does exactly this and is already provided in `civis`.
-It returns the output file ids of the job for you to use later on in your program.
+It's a good idea to archive unused templates so that it's easy for users to find
+the right template quickly. This is important if you automatically deploy your templates.
 
-```{r, eval = FALSE}
-out <- run_template(template$id, arguments = list(PET_NAME = 'CHARLES'))
-```
-
-To stay organized, let's automatically add the script to an existing project:
-
-```{r, eval = FALSE}
-# We might need to find the project id first
-search_list(type = 'project', 'My project Name')
-out <- run_template(template$id, arguments = list(PET_NAME = 'CHARLES'),
-                    target_project_id = project_id)
-```
-
-Finally, let's clean up our experiment by archiving our Pet Greeter Template.
+Let's clean up our experiment by archiving our Pet Greeter Template:
 
 ```{r}
 templates_patch_scripts(template$id, archived = TRUE)
