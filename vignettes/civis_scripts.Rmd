@@ -195,7 +195,7 @@ source <- c("
  library(civis)
  library(jsonlite)
  my_farm <- list(cows = 1, ducks = list(mallard = 2, goldeneye = 1))
- json_values_post(jsonlite::toJson(my_farm), name = 'my_farm.json')
+ json_values_post(jsonlite::toJSON(my_farm), name = 'my_farm.json')
 ")
 run_farm <- run_script(source)
 ```
@@ -307,7 +307,7 @@ template <- templates_post_scripts(script_id = job$id, note = note, name = 'Pet 
 
 ### Custom Scripts
 `scripts_post_custom` creates an instance of a template that inherits all changes made to the template.
-We can now make a simple program to call and run a instance of the template.
+We can now make a simple program to call and run an instance of the template.
 
 ```{r, eval=FALSE}
 job <- scripts_post_custom(id, arguments = arguments, ...)
