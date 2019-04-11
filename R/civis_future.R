@@ -1,4 +1,4 @@
-#' @importFrom future run value resolved
+#' @importFrom future run resolved result
 NULL
 
 #' Evaluate an expression in Civis Platform
