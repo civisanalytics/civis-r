@@ -1,4 +1,4 @@
-#' @importFrom future run value resolved
+#' @importFrom future run resolved result
 NULL
 
 #' Evaluate an expression in Civis Platform
@@ -91,11 +91,13 @@ CivisFuture <- function(expr = NULL,
                            gc = gc,
                            earlySignal = earlySignal,
                            label = label,
+                           version = "1.8",  # see: https://github.com/civisanalytics/civis-r/issues/168
 
                            # extra args to scripts_post_containers
                            required_resources = required_resources,
                            docker_image_name = docker_image_name,
                            docker_image_tag = docker_image_tag, ...)
+  future$.callResult <- TRUE
   structure(future, class = c("CivisFuture", class(future)))
 }
 
@@ -121,18 +123,20 @@ run.CivisFuture <- function(future, ...) {
 
 #' @export
 #' @describeIn CivisFuture Return the value of a CivisFuture
-value.CivisFuture <- function(future, ...) {
+result.CivisFuture <- function(future, ...) {
   if (future$state == "created") {
     future <- run(future)
   }
-  # if the value isn't collected, try to collect it.
-  if (is.null(future$value)) {
+
+  # if the result isn't collected, try to collect it.
+  if (is.null(future$result)) {
     tryCatch({
       future$run <- await(scripts_get_containers_runs, id = future$job$containerId,
                           run_id = future$job$id)
       future$state <- future$run$state
-      future$value <- read_civis(civis_script(future$job$containerId),
-                                 using = readRDS)[[1]]
+      value <- read_civis(civis_script(future$job$containerId),
+                          using = readRDS)[[1]]
+      future$result <- future::FutureResult(value=value)
       future$logs  <- fetch_logs(future$run)
     }, civis_error = function(e) {
       future$state <- "failed"
@@ -140,7 +144,7 @@ value.CivisFuture <- function(future, ...) {
       stop(e)
     }, error = function(e) stop(e))
   }
-  future$value
+  future$result
 }
 
 #' Cancel the evaluation of a CivisFuture.

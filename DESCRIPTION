@@ -27,7 +27,7 @@ Imports:
     dbplyr (>= 1.0.0),
     devtools,
     feather,
-    future (>= 1.6.1),
+    future (>= 1.8.0),
     ggplot2,
     httr,
     jsonlite,
