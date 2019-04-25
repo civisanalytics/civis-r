@@ -134,8 +134,9 @@ await_all <- function(f, .x, .y = NULL, ...,
   zipped_parameters <- if (is.null(.y)) .x else mapply(c, .x, .y, SIMPLIFY=FALSE)
 
   repeat {
-    responses[!called] <- lapply(zipped_parameters[!called], safe_call_once,
-                                 f = f, ..., .status_key = .status_key,
+    responses[!called] <- lapply(X = zipped_parameters[!called], FUN = safe_call_once,
+                                 f = f, ...,
+                                 .status_key = .status_key,
                                  .success_states = .success_states,
                                  .error_states = .error_states,
                                  fname = fname)
@@ -178,18 +179,21 @@ safe_call_once <- function(...) {
   tryCatch(call_once(...), error = function(e) e)
 }
 
-# .id is the first argument to f.
-call_once <- function(f, ..., .id = NULL, .status_key = "state",
+# .id is the first argument to f
+call_once <- function(X, f, ...,
+                      .status_key = "state",
                       .success_states = c("succeeded"),
                       .error_states = c("failed", "cancelled"), fname) {
-  response <- do.call(f, c(.id, list(...)))
+  response <- do.call(what = f,
+                      args = sapply(X, list)
+                      )
   status <- response[[.status_key]]
   if (is.null(status)) stop("Cannot find status")
 
   called <- any(status %in% .success_states)
 
   if (any(status %in% .error_states)) {
-    args <- c(.id, list(...))
+    args <- c(X, ...)
     names(args)[1] <- names(formals(f))[1]
     # queries_post uses response$exception for errors
     error <- response$error %||% response$exception
@@ -198,7 +202,7 @@ call_once <- function(f, ..., .id = NULL, .status_key = "state",
   response <- structure(response,
                         status = status,
                         fname = fname,
-                        args = list(...))
+                        args = c(X, ...))
   return(list(response = response, called = called))
 }
 
