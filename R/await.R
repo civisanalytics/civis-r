@@ -73,7 +73,7 @@
 #' \item{20-29: 10s - 1m}
 #' }
 #' @seealso \code{\link{get_status}, \link{get_error}, \link{fetch_logs}}
-await <- function(f, ...,
+await <- function(f, .x,
                   .status_key = "state",
                   .success_states = c("succeeded", "success"),
                   .error_states = c("failed", "cancelled"),
@@ -83,7 +83,7 @@ await <- function(f, ...,
   i <- 1
   fname = as.character(substitute(f))
   repeat {
-    r <- call_once(f, ..., .status_key = .status_key,
+    r <- call_once(f, .x, .status_key = .status_key,
                    .success_states = .success_states,
                    .error_states = .error_states,
                    fname = fname)
@@ -93,7 +93,7 @@ await <- function(f, ...,
 
     if (!is.null(.timeout)) {
       running_time <- as.numeric(difftime(Sys.time(), start, units = "secs"))
-      if (running_time > .timeout) stop(civis_timeout_error(fname, list(...), status))
+      if (running_time > .timeout) stop(civis_timeout_error(fname, list(.x), status))
     }
 
     interval <- if (is.null(.interval)) interval_jitter(i) else .interval
@@ -112,7 +112,7 @@ await <- function(f, ...,
 #' @param .y a vector of values to be passed to \code{f} (default \code{NULL})
 #' @export
 #' @describeIn await Call a function repeatedly for all values of a vector until all have reached a completed status
-await_all <- function(f, .x, .y = NULL, ...,
+await_all <- function(f, .x, .y = NULL,
                       .status_key = "state",
                       .success_states = c("succeeded", "success"),
                       .error_states = c("failed", "cancelled"),
@@ -135,7 +135,7 @@ await_all <- function(f, .x, .y = NULL, ...,
 
   repeat {
     responses[!called] <- lapply(X = zipped_parameters[!called], FUN = safe_call_once,
-                                 f = f, ...,
+                                 f = f,
                                  .status_key = .status_key,
                                  .success_states = .success_states,
                                  .error_states = .error_states,
@@ -150,7 +150,7 @@ await_all <- function(f, .x, .y = NULL, ...,
     if (!is.null(.timeout)) {
       running_time <- as.numeric(difftime(Sys.time(), start, units = "secs"))
       if (running_time > .timeout) {
-        args <- c(list(zipped_parameters), list(...))
+        args <- c(list(zipped_parameters))
         names(args)[1] <- names(formals(f))[1]
         status <- unlist(lapply(responses, function(x) get_status(x$response)))
         stop(civis_timeout_error(fname, args, status))
@@ -180,20 +180,18 @@ safe_call_once <- function(...) {
 }
 
 # .id is the first argument to f
-call_once <- function(X, f, ...,
+call_once <- function(f, ...,
                       .status_key = "state",
                       .success_states = c("succeeded"),
                       .error_states = c("failed", "cancelled"), fname) {
-  response <- do.call(what = f,
-                      args = sapply(X, list)
-                      )
+  response <- do.call(what = f, args = sapply(X = ..., FUN = list))
   status <- response[[.status_key]]
   if (is.null(status)) stop("Cannot find status")
 
   called <- any(status %in% .success_states)
 
   if (any(status %in% .error_states)) {
-    args <- c(X, ...)
+    args <- sapply(X = ..., FUN = list)
     names(args)[1] <- names(formals(f))[1]
     # queries_post uses response$exception for errors
     error <- response$error %||% response$exception
@@ -202,7 +200,7 @@ call_once <- function(X, f, ...,
   response <- structure(response,
                         status = status,
                         fname = fname,
-                        args = c(X, ...))
+                        args = sapply(X = ..., FUN = list))
   return(list(response = response, called = called))
 }
 
