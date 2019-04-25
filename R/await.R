@@ -290,3 +290,4 @@ await_err_msg <- function(fname, args = NULL, error = NULL) {
   arg_str  <- if (!is.null(args)) paste0(names(args), " = ", args, collapse = ", ")
   paste0(fname, "(", arg_str, "): ", error)
 }
+
