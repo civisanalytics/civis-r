@@ -2,6 +2,11 @@
 
 ## [1.7.0] - Unreleased
 
+### Fixed
+
+- Docker images for `civis_platform` are now tagged to `civisanalytics/datascience-r:2` for
+compatibility with R 3.6.0.
+
 ### Added
 
 Utitilies for platform  scripts
