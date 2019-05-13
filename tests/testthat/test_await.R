@@ -127,20 +127,20 @@ test_that("verbose produces correct messages", {
 
 test_that("call_once returns list with element called", {
   f <- function(id) return(list(state = "succeeded"))
-  expect_true(call_once(f, .id = 1, fname = "f")$called)
+  expect_true(call_once(f, 1, fname = "f")$called)
 
   f <- function(id) return(list(state = "partying instead"))
-  expect_false(call_once(f, .id = 1, fname = "f")$called)
+  expect_false(call_once(f, 1, fname = "f")$called)
 })
 
 test_that("if called, get_status(r$response) returns status", {
   f <- function(id) return(list(state = "succeeded"))
-  expect_equal(get_status(call_once(f, .id = 1, fname = "f")$response), "succeeded")
+  expect_equal(get_status(call_once(f, 1, fname = "f")$response), "succeeded")
 })
 
 test_that("call_once captures completed_states and status_keys", {
   f <- function(id) return(list(party_status = "at the party"))
-  expect_true(call_once(f, .id = 1, .success_states = "at the party",
+  expect_true(call_once(f, 1, .success_states = "at the party",
                         .status_key = "party_status",  fname = "f")$called)
 })
 
@@ -156,7 +156,7 @@ test_that("safe_call_once catches civis_await_error", {
   expect_is(e, c("civis_await_error", "civis_error", "error"))
 })
 
-f_rand <- function(job_id, ...) {
+f_rand <- function(job_id, run_id = 1, ...) {
   x <- runif(1)
   if (x < .9) {
     return(list(state = "succeeded", job_id = job_id, args = list(...)))
@@ -165,66 +165,39 @@ f_rand <- function(job_id, ...) {
   }
 }
 
-test_that("await_all calls f until completion - univariate", {
-  fake_f <- mockery::mock(list(status = "running"),
-                 list(status = "running"),
-                 list(status = "succeeded"), cycle = TRUE)
-  await_all(fake_f, 1:2, .status_key = "status", .interval = .001)
-  mockery::expect_called(fake_f, 6)
-})
-
-test_that("await_all returns list of completed responses - univariate", {
-  set.seed(2)
-  x <- await_all(f_rand, .x = 1:2, job_id = 1)
-  expect_is(x, "list")
-  expect_equal(sapply(x, get_status), rep("succeeded", 2))
-  expect_equal(sapply(x, function(x) unlist(x$args)), 1:2)
-  expect_equal(sapply(x, function(x) x$job_id), rep(1, 2))
-})
-
-test_that("await_all vectorizes over any argument - univariate", {
-  x <- await_all(f_rand, .x = 1:2, id = 1)
-  expect_equal(sapply(x, function(x) x$job_id), 1:2)
-})
-
-test_that("await_all catches arbitrary status and keys - univariate", {
-  f <- function(x) list(party_status = "going home", value = x)
-  x <- await_all(f, .x = 1:2,  .status_key = "party_status",
-                 .success_states = "going home", .verbose = TRUE)
-  expect_equal(sapply(x, get_status), rep("going home", 2))
-  expect_equal(sapply(x, function(x) x$value), 1:2)
-})
-
 test_that("await_all throws civis_timeout_error", {
-  f <- function(x) list(state = "at the party")
+  f <- function(x, y) list(state = "at the party")
   msg <- c("Timeout exceeded. Current status: at the party, at the party")
-  expect_error(await_all(f, .x = 1:2, .timeout = .002, .interval = .001), msg)
+  expect_error(await_all(f, .x = 1:2, .y = 1:2, .timeout = .002,
+                         .interval = .001), msg)
 
-  e <- tryCatch(await_all(f, .x = 1:2, .timeout = .002, .interval = .001),
+  e <- tryCatch(await_all(f, .x = 1:2, .y = 1:2, .timeout = .002, .interval = .001),
            "civis_timeout_error" = function(e) e)
 
   get_error(e)
 
-  e2 <- tryCatch(await_all(f, .x = 1:2, .timeout = .002, .interval = .001),
+  e2 <- tryCatch(await_all(f, .x = 1:2, .y = 1:2, .timeout = .002,
+                           .interval = .001),
                 "civis_error" = function(e) e)
   expect_equal(e, e2)
 })
 
 test_that("await_all catches mixed failure states", {
-  f <- function(x) {
+  f <- function(x, y) {
     switch(x, list(state = "succeeded"),
            list(state = "failed", error = "platform error"),
            list(state = "succeeded"))
   }
-  r <- await_all(f, .x = 1:2)
+  r <- await_all(f, .x = 1:2, .y = 1:2)
   expect_true(is.civis_error(r[[2]]))
   expect_equal(get_error(r[[2]])$error, "platform error")
-  expect_equal(get_error(r[[2]])$args, list(x = 2))
+  expect_equal(get_error(r[[2]])$args, list(x = 2, y = 2))
 })
 
 test_that("await_all verbose prints all tasks and status", {
   set.seed(2)
-  msgs <- capture_messages(await_all(f_rand, .x = 1:5, job_id = 1, .verbose = TRUE))
+  msgs <- capture_messages(
+    await_all(f_rand, .x = 1:5, .y = 1:5, .verbose = TRUE))
   expect_true(any(grepl("partying instead", x = msgs)))
   expect_equal(length(msgs), 5)
 })
@@ -243,11 +216,12 @@ test_that("await_all calls f until completion - multivariate", {
 
 test_that("await_all returns list of completed responses - multivariate", {
   set.seed(2)
-  x <- await_all(f_rand, .x = 1:2, .y = 3:4, job_id = 1)
+  x <- await_all(f_rand, .x = 1:2, .y = 3:4)
   expect_is(x, "list")
   expect_equal(sapply(x, get_status), rep("succeeded", 2))
-  expect_equal(sapply(x, function(x) x$args), list(c(1, 3), c(2, 4)))
-  expect_equal(sapply(x, function(x) x$job_id), rep(1, 2))
+  expect_equal(lapply(x, function(x) attr(x, 'args')),
+               list(list(job_id = 1, run_id = 3),
+                    list(job_id = 2, run_id = 4)))
 })
 
 test_that("await_all catches arbitrary status and keys - multivariate", {
@@ -255,5 +229,5 @@ test_that("await_all catches arbitrary status and keys - multivariate", {
   x <- await_all(f, .x = 1:2, .y = 3:4, .status_key = "party_status",
                  .success_states = "going home", .verbose = TRUE)
   expect_equal(sapply(x, get_status), rep("going home", 2))
-  expect_equal(sapply(x, function(x) x$value), cbind(c(1, 3), c(2, 4)))
+  expect_equal(sapply(x, function(x) x$value), 1:2)
 })
