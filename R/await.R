@@ -38,6 +38,9 @@
 #'    r <- try(await(queries_get, id = q_id))
 #'    get_error(r)
 #'
+#'    jobs <- c(1234, 5678)
+#'    runs <- c(1234, 5678)
+#'    rs <- await_all(scripts_get_r_runs, .x = jobs, .y = runs)
 #' }
 #' @export
 #' @details
@@ -109,7 +112,7 @@ await <- function(f, ...,
 }
 
 #' @param .x a vector of values to be passed to \code{f}
-#' @param .y a vector of values to be passed to \code{f} (default \code{NULL})
+#' @param .y a vector of values to be passed to \code{f}
 #' @export
 #' @describeIn await Call a function repeatedly for all values of a vector until all have reached a completed status
 await_all <- function(f, .x, .y, ...,

@@ -9,7 +9,7 @@ await(f, ..., .status_key = "state", .success_states = c("succeeded",
   "success"), .error_states = c("failed", "cancelled"),
   .timeout = NULL, .interval = NULL, .verbose = FALSE)
 
-await_all(f, .x, .y = NULL, ..., .status_key = "state",
+await_all(f, .x, .y, ..., .status_key = "state",
   .success_states = c("succeeded", "success"),
   .error_states = c("failed", "cancelled"), .timeout = NULL,
   .interval = NULL, .verbose = FALSE)
@@ -37,7 +37,7 @@ intervals with jitter (see 'Details')}
 
 \item{.x}{a vector of values to be passed to \code{f}}
 
-\item{.y}{a vector of values to be passed to \code{f} (default \code{NULL})}
+\item{.y}{a vector of values to be passed to \code{f}}
 }
 \description{
 \code{await} repeatedly calls a Civis API endpoint such as \code{scripts_get_sql_runs}
@@ -102,6 +102,9 @@ Approximate intervals for a given number of retries are as follows:
    r <- try(await(queries_get, id = q_id))
    get_error(r)
 
+   jobs <- c(1234, 5678)
+   runs <- c(1234, 5678)
+   rs <- await_all(scripts_get_r_runs, .x = jobs, .y = runs)
 }
 }
 \seealso{
