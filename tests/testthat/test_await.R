@@ -165,6 +165,36 @@ f_rand <- function(job_id, run_id = 1, ...) {
   }
 }
 
+test_that("await_all calls f until completion - univariate", {
+  fake_f <- mockery::mock(list(status = "running"),
+                          list(status = "running"),
+                          list(status = "succeeded"), cycle = TRUE)
+  await_all(fake_f, 1:2, .status_key = "status", .interval = .001)
+  mockery::expect_called(fake_f, 6)
+})
+
+test_that("await_all returns list of completed responses - univariate", {
+  set.seed(2)
+  x <- await_all(f_rand, .x = 1:2)
+  expect_is(x, "list")
+  expect_equal(sapply(x, get_status), rep("succeeded", 2))
+  expect_equal(lapply(x, function(x) attr(x, 'args')),
+               list(list(job_id = 1), list(job_id = 2)))
+})
+
+test_that("await_all vectorizes over any argument - univariate", {
+  x <- await_all(f_rand, .x = 1:2)
+  expect_equal(sapply(x, function(x) x$job_id), 1:2)
+})
+
+test_that("await_all catches arbitrary status and keys - univariate", {
+  f <- function(x) list(party_status = "going home", value = x)
+  x <- await_all(f, .x = 1:2,  .status_key = "party_status",
+                 .success_states = "going home", .verbose = TRUE)
+  expect_equal(sapply(x, get_status), rep("going home", 2))
+  expect_equal(sapply(x, function(x) x$value), 1:2)
+})
+
 test_that("await_all throws civis_timeout_error", {
   f <- function(x, y) list(state = "at the party")
   msg <- c("Timeout exceeded. Current status: at the party, at the party")

@@ -115,7 +115,7 @@ await <- function(f, ...,
 #' @param .y a vector of values to be passed to \code{f}
 #' @export
 #' @describeIn await Call a function repeatedly for all values of a vector until all have reached a completed status
-await_all <- function(f, .x, .y, ...,
+await_all <- function(f, .x, .y = NULL, ...,
                       .status_key = "state",
                       .success_states = c("succeeded", "success"),
                       .error_states = c("failed", "cancelled"),
@@ -133,28 +133,45 @@ await_all <- function(f, .x, .y, ...,
     error <- c("Lengths of input parameters (.x and .y) are not equal")
     stop(error)
   }
-  params <-
-    mapply(function(...) {
-      args <- append(
-        list(...),
-        list(
-          .status_key = .status_key,
-          .success_states = .success_states,
-          .error_states = .error_states,
-          fname = fname
-        )
+
+  if (is.null(.y)) {
+    params <- lapply(.x, function(x) {
+      args <- list(
+        x,
+        .status_key = .status_key,
+        .success_states = .success_states,
+        .error_states = .error_states,
+        fname = fname
       )
-      # do.call needs named args
+      names(args)[1] <- names(formals(f))[1]
+      args
+    })
+  } else {
+    params <-
+      mapply(function(...) {
+        args <- append(
+          list(...),
+          list(
+            .status_key = .status_key,
+            .success_states = .success_states,
+            .error_states = .error_states,
+            fname = fname
+          )
+        )
+        # do.call needs named args
       names(args)[1:2] <- names(formals(f))[1:2]
       args
     }, .x, .y, SIMPLIFY = FALSE)
+  }
 
   repeat {
     responses[!called] <- lapply(params[!called], function(args, ...) {
       do.call(safe_call_once, c(f, args, ...))
     }, ...)
 
-    called <- unlist(lapply(responses, function(x) x$called))
+    called <- unlist(lapply(responses, function(x) {
+      x$called | is(x, 'error')
+    }))
 
     if (all(called)) {
       return(lapply(responses, maybe_response))
@@ -195,7 +212,6 @@ safe_call_once <- function(...) {
   tryCatch(call_once(...), error = function(e) e)
 }
 
-# .id is the first argument to f.
 call_once <- function(f, ..., .status_key = "state",
                       .success_states = c("succeeded"),
                       .error_states = c("failed", "cancelled"), fname) {
