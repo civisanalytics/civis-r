@@ -112,7 +112,7 @@ await <- function(f, ...,
 }
 
 #' @param .x a vector of values to be passed to \code{f}
-#' @param .y a vector of values to be passed to \code{f}
+#' @param .y a vector of values to be passed to \code{f} (default \code{NULL})
 #' @export
 #' @describeIn await Call a function repeatedly for all values of a vector until all have reached a completed status
 await_all <- function(f, .x, .y = NULL, ...,
@@ -130,7 +130,7 @@ await_all <- function(f, .x, .y = NULL, ...,
   fname <- as.character(substitute(f))
 
   if (!is.null(.y) & (length(.x) != length(.y))) {
-    error <- c("Lengths of input parameters (.x and .y) are not equal")
+    error <- c("Lengths of input parameters (.x and .y) are not equal!")
     stop(error)
   }
 
@@ -178,13 +178,9 @@ await_all <- function(f, .x, .y = NULL, ...,
     }
 
     if (!is.null(.timeout)) {
-      running_time <-
-        as.numeric(difftime(Sys.time(), start, units = "secs"))
+      running_time <- as.numeric(difftime(Sys.time(), start, units = "secs"))
       if (running_time > .timeout) {
-        status <-
-          unlist(lapply(responses, function(x)
-            get_status(x$response)))
-        args <- params[!called]
+        status <- unlist(lapply(responses, function(x) get_status(x$response)))
         stop(civis_timeout_error(fname, args, status))
       }
     }
@@ -194,8 +190,7 @@ await_all <- function(f, .x, .y = NULL, ...,
     if (.verbose) {
       pretty_time <- formatC(interval, digits = 3, format = "fg")
       make_msg <- function(x) {
-        msg <- paste0("Task: ", x,
-                      " Status: ", responses[[x]]$response[[.status_key]],
+        msg <- paste0("Task: ", x, " Status: ", responses[[x]]$response[[.status_key]],
                       " @ ", Sys.time(),
                       ". Retry ", i, " in ", pretty_time, " seconds")
         message(msg)

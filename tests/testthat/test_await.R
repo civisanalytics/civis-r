@@ -196,38 +196,35 @@ test_that("await_all catches arbitrary status and keys - univariate", {
 })
 
 test_that("await_all throws civis_timeout_error", {
-  f <- function(x, y) list(state = "at the party")
+  f <- function(x) list(state = "at the party")
   msg <- c("Timeout exceeded. Current status: at the party, at the party")
-  expect_error(await_all(f, .x = 1:2, .y = 1:2, .timeout = .002,
-                         .interval = .001), msg)
+  expect_error(await_all(f, .x = 1:2, .timeout = .002, .interval = .001), msg)
 
-  e <- tryCatch(await_all(f, .x = 1:2, .y = 1:2, .timeout = .002, .interval = .001),
+  e <- tryCatch(await_all(f, .x = 1:2, .timeout = .002, .interval = .001),
            "civis_timeout_error" = function(e) e)
 
   get_error(e)
 
-  e2 <- tryCatch(await_all(f, .x = 1:2, .y = 1:2, .timeout = .002,
-                           .interval = .001),
+  e2 <- tryCatch(await_all(f, .x = 1:2, .timeout = .002, .interval = .001),
                 "civis_error" = function(e) e)
   expect_equal(e, e2)
 })
 
 test_that("await_all catches mixed failure states", {
-  f <- function(x, y) {
+  f <- function(x) {
     switch(x, list(state = "succeeded"),
            list(state = "failed", error = "platform error"),
            list(state = "succeeded"))
   }
-  r <- await_all(f, .x = 1:2, .y = 1:2)
+  r <- await_all(f, .x = 1:2)
   expect_true(is.civis_error(r[[2]]))
   expect_equal(get_error(r[[2]])$error, "platform error")
-  expect_equal(get_error(r[[2]])$args, list(x = 2, y = 2))
+  expect_equal(get_error(r[[2]])$args, list(x = 2))
 })
 
 test_that("await_all verbose prints all tasks and status", {
   set.seed(2)
-  msgs <- capture_messages(
-    await_all(f_rand, .x = 1:5, .y = 1:5, .verbose = TRUE))
+  msgs <- capture_messages(await_all(f_rand, .x = 1:5, .y = 1:5, .verbose = TRUE))
   expect_true(any(grepl("partying instead", x = msgs)))
   expect_equal(length(msgs), 5)
 })
