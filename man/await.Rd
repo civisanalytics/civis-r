@@ -102,6 +102,9 @@ Approximate intervals for a given number of retries are as follows:
    r <- try(await(queries_get, id = q_id))
    get_error(r)
 
+   jobs <- c(1234, 5678)
+   runs <- c(1234, 5678)
+   rs <- await_all(scripts_get_r_runs, .x = jobs, .y = runs)
 }
 }
 \seealso{

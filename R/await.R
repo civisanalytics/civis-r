@@ -38,6 +38,9 @@
 #'    r <- try(await(queries_get, id = q_id))
 #'    get_error(r)
 #'
+#'    jobs <- c(1234, 5678)
+#'    runs <- c(1234, 5678)
+#'    rs <- await_all(scripts_get_r_runs, .x = jobs, .y = runs)
 #' }
 #' @export
 #' @details
@@ -131,16 +134,44 @@ await_all <- function(f, .x, .y = NULL, ...,
     stop(error)
   }
 
-  zipped_parameters <- if (is.null(.y)) .x else mapply(c, .x, .y, SIMPLIFY=FALSE)
+  if (is.null(.y)) {
+    params <- lapply(.x, function(x) {
+      args <- list(
+        x,
+        .status_key = .status_key,
+        .success_states = .success_states,
+        .error_states = .error_states,
+        fname = fname
+      )
+      names(args)[1] <- names(formals(f))[1]
+      args
+    })
+  } else {
+    params <-
+      mapply(function(...) {
+        args <- append(
+          list(...),
+          list(
+            .status_key = .status_key,
+            .success_states = .success_states,
+            .error_states = .error_states,
+            fname = fname
+          )
+        )
+        # do.call needs named args
+      names(args)[1:2] <- names(formals(f))[1:2]
+      args
+    }, .x, .y, SIMPLIFY = FALSE)
+  }
 
   repeat {
-    responses[!called] <- lapply(zipped_parameters[!called], safe_call_once,
-                                 f = f, ..., .status_key = .status_key,
-                                 .success_states = .success_states,
-                                 .error_states = .error_states,
-                                 fname = fname)
+    responses[!called] <- lapply(params[!called], function(args, ...) {
+      do.call(safe_call_once, c(f, args, ...))
+    }, ...)
 
-    called <- unlist(lapply(responses, function(x) x$called))
+    called <- unlist(lapply(responses, function(x) {
+      x$called | is(x, 'error')
+    }))
 
     if (all(called)) {
       return(lapply(responses, maybe_response))
@@ -149,8 +180,6 @@ await_all <- function(f, .x, .y = NULL, ...,
     if (!is.null(.timeout)) {
       running_time <- as.numeric(difftime(Sys.time(), start, units = "secs"))
       if (running_time > .timeout) {
-        args <- c(list(zipped_parameters), list(...))
-        names(args)[1] <- names(formals(f))[1]
         status <- unlist(lapply(responses, function(x) get_status(x$response)))
         stop(civis_timeout_error(fname, args, status))
       }
@@ -166,7 +195,7 @@ await_all <- function(f, .x, .y = NULL, ...,
                       ". Retry ", i, " in ", pretty_time, " seconds")
         message(msg)
       }
-      lapply(seq_along(zipped_parameters), make_msg)
+      lapply(seq_along(params), make_msg)
     }
     Sys.sleep(interval)
     i <- i + 1
@@ -178,18 +207,17 @@ safe_call_once <- function(...) {
   tryCatch(call_once(...), error = function(e) e)
 }
 
-# .id is the first argument to f.
-call_once <- function(f, ..., .id = NULL, .status_key = "state",
+call_once <- function(f, ..., .status_key = "state",
                       .success_states = c("succeeded"),
                       .error_states = c("failed", "cancelled"), fname) {
-  response <- do.call(f, c(.id, list(...)))
+  response <- do.call(f, list(...))
   status <- response[[.status_key]]
   if (is.null(status)) stop("Cannot find status")
 
   called <- any(status %in% .success_states)
 
   if (any(status %in% .error_states)) {
-    args <- c(.id, list(...))
+    args <- list(...)
     names(args)[1] <- names(formals(f))[1]
     # queries_post uses response$exception for errors
     error <- response$error %||% response$exception

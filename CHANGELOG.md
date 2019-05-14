@@ -4,6 +4,8 @@
 
 ### Fixed
 
+- `await_all` is now vectorized over two arguments (typically run and job
+  ids) as intended (#171).
 - Docker images for `civis_platform` are now tagged to `civisanalytics/datascience-r:2` for
 compatibility with R 3.6.0.
 
