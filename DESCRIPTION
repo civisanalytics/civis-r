@@ -37,7 +37,6 @@ Imports:
     roxygen2,
     stats,
     stringr,
-    testthat,
     utils
 Suggests:
     ggplot2,
@@ -46,6 +45,7 @@ Suggests:
     mockery,
     R.utils,
     rstudioapi,
+    testthat,
     yaml
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr

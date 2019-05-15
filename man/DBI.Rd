@@ -7,8 +7,7 @@
 \alias{CivisDriver-class}
 \alias{show,CivisDriver-method}
 \alias{dbConnect,CivisDriver-method}
-\alias{dbDataType,CivisDriver,ANY-method}
-\alias{dbDataType,CivisDriver,list-method}
+\alias{dbDataType,CivisDriver-method}
 \alias{dbIsValid,CivisDriver-method}
 \alias{dbGetInfo,CivisDriver-method}
 \alias{CivisConnection-class}
@@ -18,7 +17,7 @@
 \alias{dbDisconnect,CivisConnection-method}
 \alias{dbSendQuery,CivisConnection,character-method}
 \alias{dbSendStatement,CivisConnection,character-method}
-\alias{dbDataType,CivisConnection,ANY-method}
+\alias{dbDataType,CivisConnection-method}
 \alias{dbQuoteString,CivisConnection,character-method}
 \alias{dbQuoteIdentifier,CivisConnection,character-method}
 \alias{dbWriteTable,CivisConnection,character,data.frame-method}
@@ -28,9 +27,6 @@
 \alias{dbListFields,CivisConnection,character-method}
 \alias{dbRemoveTable,CivisConnection,character-method}
 \alias{dbGetInfo,CivisConnection-method}
-\alias{dbBegin,CivisConnection-method}
-\alias{dbCommit,CivisConnection-method}
-\alias{dbRollback,CivisConnection-method}
 \alias{CivisResult-class}
 \alias{show,CivisResult-method}
 \alias{dbClearResult,CivisResult-method}
@@ -39,19 +35,13 @@
 \alias{dbGetInfo,CivisResult-method}
 \alias{dbIsValid,CivisResult-method}
 \alias{dbGetStatement,CivisResult-method}
-\alias{dbColumnInfo,CivisResult-method}
-\alias{dbGetRowCount,CivisResult-method}
-\alias{dbGetRowsAffected,CivisResult-method}
-\alias{dbBind,CivisResult-method}
 \title{DBI methods}
 \usage{
 \S4method{show}{CivisDriver}(object)
 
 \S4method{dbConnect}{CivisDriver}(drv, database, ...)
 
-\S4method{dbDataType}{CivisDriver,ANY}(dbObj, obj, ...)
-
-\S4method{dbDataType}{CivisDriver,list}(dbObj, obj, ...)
+\S4method{dbDataType}{CivisDriver}(dbObj, obj, ...)
 
 \S4method{dbIsValid}{CivisDriver}(dbObj, ...)
 
@@ -69,7 +59,7 @@
 
 \S4method{dbSendStatement}{CivisConnection,character}(conn, statement, ...)
 
-\S4method{dbDataType}{CivisConnection,ANY}(dbObj, obj, ...)
+\S4method{dbDataType}{CivisConnection}(dbObj, obj, ...)
 
 \S4method{dbQuoteString}{CivisConnection,character}(conn, x, ...)
 
@@ -90,12 +80,6 @@
 
 \S4method{dbGetInfo}{CivisConnection}(dbObj, ...)
 
-\S4method{dbBegin}{CivisConnection}(conn, ...)
-
-\S4method{dbCommit}{CivisConnection}(conn, ...)
-
-\S4method{dbRollback}{CivisConnection}(conn, ...)
-
 \S4method{show}{CivisResult}(object)
 
 \S4method{dbClearResult}{CivisResult}(res, ...)
@@ -109,14 +93,6 @@
 \S4method{dbIsValid}{CivisResult}(dbObj, ...)
 
 \S4method{dbGetStatement}{CivisResult}(res, ...)
-
-\S4method{dbColumnInfo}{CivisResult}(res, ...)
-
-\S4method{dbGetRowCount}{CivisResult}(res, ...)
-
-\S4method{dbGetRowsAffected}{CivisResult}(res, ...)
-
-\S4method{dbBind}{CivisResult}(res, params, ...)
 }
 \arguments{
 \item{object}{Any R object}
@@ -160,8 +136,6 @@ or the result of a call to \code{\link[=dbQuoteIdentifier]{dbQuoteIdentifier()}}
 or \code{n = Inf}
 to retrieve all pending records.  Some implementations may recognize other
 special values.}
-
-\item{params}{A list of bindings, named or unnamed.}
 }
 \description{
 Implementations of pure virtual functions defined in the `DBI` package.
