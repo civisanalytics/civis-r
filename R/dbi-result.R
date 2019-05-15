@@ -112,46 +112,6 @@ setMethod(
   }
 )
 
-#' @rdname DBI
-#' @inheritParams DBI::dbColumnInfo
-#' @export
-setMethod(
-  "dbColumnInfo", "CivisResult",
-  function(res, ...) {
-    testthat::skip("Not yet implemented: dbColumnInfo(Result)")
-  }
-)
-
-#' @rdname DBI
-#' @inheritParams DBI::dbGetRowCount
-#' @export
-setMethod(
-  "dbGetRowCount", "CivisResult",
-  function(res, ...) {
-    testthat::skip("Not yet implemented: dbGetRowCount(Result)")
-  }
-)
-
-#' @rdname DBI
-#' @inheritParams DBI::dbGetRowsAffected
-#' @export
-setMethod(
-  "dbGetRowsAffected", "CivisResult",
-  function(res, ...) {
-    testthat::skip("Not yet implemented: dbGetRowsAffected(Result)")
-  }
-)
-
-#' @rdname DBI
-#' @inheritParams DBI::dbBind
-#' @export
-setMethod(
-  "dbBind", "CivisResult",
-  function(res, params, ...) {
-    testthat::skip("Not yet implemented: dbBind(Result)")
-  }
-)
-
 assert_result_valid <- function(res) {
   if (!dbIsValid(res)) {
     stop("Result has been already cleared.", call. = FALSE)
