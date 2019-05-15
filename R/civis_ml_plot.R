@@ -6,6 +6,7 @@
 #' @return A \code{ggplot2} plot object is returned invisibly.
 #' @export
 hist.civis_ml <- function(x, name = NULL, ...) {
+  requireNamespace("ggplot2", quietly = TRUE)
   score_array <- get_metric(x, "score_histogram")
   if (is.null(score_array)) stop("Histogram data not available.")
   if (is_multiclass(x)) {
@@ -40,6 +41,7 @@ hist.civis_ml <- function(x, name = NULL, ...) {
 #' @return A \code{ggplot2} plot object is returned invisibly.
 #' @export
 plot.civis_ml_regressor <- function(x, ...) {
+  requireNamespace("ggplot2", quietly = TRUE)
   pl <- get_metric(x, "y_yhat_plot")
   if (is.null(pl)) stop("Plotting data not available.")
 
@@ -71,6 +73,7 @@ plot.civis_ml_regressor <- function(x, ...) {
 #' @return A \code{ggplot2} plot object is returned invisibly.
 #' @export
 plot.civis_ml_classifier <- function(x, name =  NULL, ...) {
+  requireNamespace("ggplot2", quietly = TRUE)
 
   if (is_multitarget(x) | is.null(x$metrics)) stop("Plotting data not available.")
   if (is_multiclass(x)) {

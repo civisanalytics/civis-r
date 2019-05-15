@@ -28,7 +28,6 @@ Imports:
     devtools,
     feather,
     future (>= 1.8.0),
-    ggplot2,
     httr,
     jsonlite,
     lubridate,
@@ -41,6 +40,7 @@ Imports:
     testthat,
     utils
 Suggests:
+    ggplot2,
     knitr,
     rmarkdown,
     mockery,
