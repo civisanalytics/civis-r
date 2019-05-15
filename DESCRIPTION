@@ -28,7 +28,6 @@ Imports:
     future (>= 1.8.0),
     httr,
     jsonlite,
-    lubridate,
     methods,
     memoise,
     purrr,
