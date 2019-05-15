@@ -24,9 +24,7 @@ BugReports: https://github.com/civisanalytics/civis-r/issues
 Imports:
     DBI,
     dplyr (>= 0.7.0),
-    dbplyr (>= 1.0.0),
     devtools,
-    feather,
     future (>= 1.8.0),
     httr,
     jsonlite,
@@ -39,6 +37,8 @@ Imports:
     stringr,
     utils
 Suggests:
+    dbplyr (>= 1.0.0),
+    feather,
     ggplot2,
     knitr,
     rmarkdown,
