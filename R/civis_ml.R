@@ -524,6 +524,7 @@ stash_local_dataframe <- function(x) {
 
   if (tmpl_id > 9969) {
     # newer versions use feather
+    requireNamespace('feather', quietly = TRUE)
     feather::write_feather(x, tmp_path)
     civis_path <- "modelpipeline_data.feather"
   } else {
