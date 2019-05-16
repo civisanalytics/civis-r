@@ -8,6 +8,7 @@
 db_query_fields.CivisConnection <- function(con, sql, ...) {
   # dplyr does a where 0 = 1 here, but result sets with 0 rows are not
   # returned by platform
+  requireNamespace('dbplyr', quietly = TRUE)
   fields <- dbplyr::build_sql("SELECT * FROM ",
                               dplyr::sql_subquery(con, sql),
                               " LIMIT 1", con = con)
@@ -24,6 +25,7 @@ db_query_fields.CivisConnection <- function(con, sql, ...) {
 #' @export
 sql_escape_ident.CivisConnection <- function(con, x) {
   # TODO: will this always be a tablename?
+  requireNamespace('dbplyr', quietly = TRUE)
   tryCatch({
     # the default impl doesn't seem to properly quote "schema"."table"
     parts <- split_schema_name(x)
@@ -40,6 +42,7 @@ sql_escape_ident.CivisConnection <- function(con, x) {
 #' @importFrom dplyr sql_translate_env
 #' @export
 sql_translate_env.CivisConnection <- function(x) {
+  requireNamespace('dbplyr', quietly = TRUE)
   # https://github.com/tidyverse/dbplyr/blob/c8d60a634d07fa6972345407de459f76db64cf91/R/db-postgres.r
   dbplyr::sql_variant(
     dbplyr::sql_translator(.parent = dbplyr::base_scalar,

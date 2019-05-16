@@ -24,11 +24,8 @@ BugReports: https://github.com/civisanalytics/civis-r/issues
 Imports:
     DBI,
     dplyr (>= 0.7.0),
-    dbplyr (>= 1.0.0),
     devtools,
-    feather,
     future (>= 1.8.0),
-    ggplot2,
     httr,
     jsonlite,
     lubridate,
@@ -38,14 +35,17 @@ Imports:
     roxygen2,
     stats,
     stringr,
-    testthat,
     utils
 Suggests:
+    dbplyr (>= 1.0.0),
+    feather,
+    ggplot2,
     knitr,
     rmarkdown,
     mockery,
     R.utils,
     rstudioapi,
+    testthat,
     yaml
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr

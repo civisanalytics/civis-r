@@ -82,7 +82,7 @@ run_civis <- function(expr, ...) {
   future::plan(civis_platform)
   on.exit(future::plan("default"))
   fut <- future::future({expr}, ...)
-  return(value(fut))
+  return(future::value(fut))
 }
 
 #' Run a template script

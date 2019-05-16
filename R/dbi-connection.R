@@ -132,7 +132,7 @@ setMethod(
   function(dbObj, obj, ...) {
     tryCatch(
       getMethod("dbDataType", "DBIObject", asNamespace("DBI"))(dbObj, obj, ...),
-      error = function(e) testthat::skip("Not yet implemented: dbDataType(Connection)"))
+      error = function(e) e)
   }
 )
 
@@ -241,7 +241,6 @@ setMethod(
     if (conn@read_only) {
       stop("This database connection is read-only. You cannot remove tables.")
     }
-    testthat::skip("Not yet implemented: dbRemoveTable(Connection, character)")
   }
 )
 
@@ -259,36 +258,6 @@ setMethod(
       port = NULL,
       civis_client_version = version()
     )
-  }
-)
-
-#' @rdname DBI
-#' @inheritParams DBI::dbBegin
-#' @export
-setMethod(
-  "dbBegin", "CivisConnection",
-  function(conn, ...) {
-    testthat::skip("Not implemented: dbBegin(Connection)")
-  }
-)
-
-#' @rdname DBI
-#' @inheritParams DBI::dbCommit
-#' @export
-setMethod(
-  "dbCommit", "CivisConnection",
-  function(conn, ...) {
-    testthat::skip("Not implemented: dbCommit(Connection)")
-  }
-)
-
-#' @rdname DBI
-#' @inheritParams DBI::dbRollback
-#' @export
-setMethod(
-  "dbRollback", "CivisConnection",
-  function(conn, ...) {
-    testthat::skip("Not implemented: dbRollback(Connection)")
   }
 )
 
