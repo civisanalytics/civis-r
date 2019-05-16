@@ -22,14 +22,12 @@ LazyData: true
 URL: https://github.com/civisanalytics/civis-r
 BugReports: https://github.com/civisanalytics/civis-r/issues
 Imports:
-    devtools,
     future (>= 1.8.0),
     httr,
     jsonlite,
     methods,
     memoise,
     purrr,
-    roxygen2,
     stats,
     stringr,
     utils
@@ -38,6 +36,7 @@ Suggests:
     ggplot2,
     knitr,
     rmarkdown,
+    roxygen2,
     mockery,
     R.utils,
     rstudioapi,
