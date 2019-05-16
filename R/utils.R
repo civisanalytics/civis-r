@@ -72,9 +72,20 @@ default_credential <- function() {
   cred[['id']]
 }
 
-#' @importFrom dplyr sql
+#' SQL escaping
+#' @param ... Character vectors that will be combined into a single SQL expression.
 #' @export
-dplyr::sql
+sql <- function(...) {
+  # dbplyr::sql, but not imported
+  x <- c(...)
+  if (length(x) == 0) {
+    return(character())
+  }
+  if (!is.character(x)) {
+    stop("Character input expected", call. = FALSE)
+  }
+  structure(x, class = c("sql", "character"))
+}
 
 get_username <- function() {
   users_list_me()[['username']]
