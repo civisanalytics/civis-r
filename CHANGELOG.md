@@ -1,6 +1,16 @@
 # Changelog
 
-## [1.7.0] - Unreleased
+## [2.0.0] - Unreleased
+
+### Changed
+
+- Partial DBI interface to Redshift (through the Civis API) removed, 
+removing `DBI, dplyr` and `dbplyr` from dependencies.
+- `feather`, and `ggplot2` (used for CivisML features)
+are now suggested rather than imported.
+- Only autogenerate endpoints when a valid API key is present and
+the installation type is `source`. Package
+now suggests rather than imports `roxygen2` for this purpose.
 
 ### Fixed
 
