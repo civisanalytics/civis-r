@@ -4,20 +4,21 @@ FILENAME <- c("R/generated_client.R")
 #'
 #' @details
 #' Skips autogeneration on windows with R < 3.4.0 and if R_CLIENT_DEV == "TRUE".
-#' Skips downloading a fresh spec if CIVIS_API_KEY is not set.
-#' @importFrom devtools document
-#' @importFrom roxygen2 roxygenize
+#' A valid CIVIS_API_KEY must be set.
 fetch_and_generate_client <- function() {
+
   if (Sys.getenv("R_CLIENT_DEV") != "TRUE" && windows_r_version_is_valid()) {
+    message("Generating API")
     tryCatch({
-      message("Generating API")
+      requireNamespace('roxygen2', quietly = TRUE)
+      api_key()
       spec <- get_spec()
       client_str <- generate_client(spec)
-      message(paste0("Writing API to ", FILENAME))
       write_client(client_str, FILENAME = FILENAME)
-      devtools::document()
+      roxygen2::roxygenise('.')
     }, error = function(e) {
-      message("Generating API failed, reverting to default specification.")
+      message(e)
+      message("\nGenerating API failed, reverting to default.")
     })
   } else {
     message("Skipping client generation")
@@ -31,6 +32,15 @@ windows_r_version_is_valid <- function(major = 3, minor = 3.4) {
   }
   if (!valid) message("Autogenerating API on Windows requires R > 3.4.0")
   valid
+}
+
+get_spec <- function() {
+  call_api("get", path = "/endpoints/", list(), list(), list())
+}
+
+write_client <- function(client_str, FILENAME) {
+  cat("", file = FILENAME)
+  cat(client_str, file = FILENAME, append = TRUE)
 }
 
 #' Generate a client
@@ -353,29 +363,3 @@ returns_array <- function(verb, verb_name, path_name) {
   return(FALSE)
 }
 
-
-# ---- Main ----
-get_spec <- function() {
-
-  # Skip retries whenever api_key not set (e.g. Travis, Appveyor, CRAN)
-  if (!inherits(try(api_key(), silent = TRUE), "try-error")) {
-    api_spec <- try(call_api("get", path = "/endpoints/", list(), list(), list()))
-    if (inherits(api_spec, "try-error")) {
-      message("Downloading API specification from Civis failed, using cached API specification.")
-
-      # loads cached spec generated from 'tools/generate_default_client.R'
-      load("R/sysdata.rda")
-    } else {
-      message("Downloading API specification from Civis successful.")
-    }
-  } else {
-    message("The environment variable CIVIS_API_KEY is not set, using cached API specification.")
-    load("R/sysdata.rda")
-  }
-  api_spec
-}
-
-write_client <- function(client_str, FILENAME) {
-  cat("", file = FILENAME)
-  cat(client_str, file = FILENAME, append = TRUE)
-}

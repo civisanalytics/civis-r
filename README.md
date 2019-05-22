@@ -51,20 +51,21 @@ you have hard-coded an API key.
 ## Install
 
 ```r
+# Default install
 install.packages("civis")
+
+# All features (including CivisML)
+install.packages("civis", depends = TRUE)
 ```
 
 ### Updating
 
-The `civis` package automatically generates R functions and documentation to interact with the Civis Platform when the package installs. From time to time, new API functions are added. These can be obtained immediately by re-installing the package from github:
+The `civis` package can automatically generate R functions and documentation to interact with the Civis Platform when the package installs.
+
+From time to time, new API functions are added. These can be obtained immediately by installing the package from source:
 
 ```r
-devtools::install_github("civisanalytics/civis-r")
-```
-If the dependencies are already installed (such as in docker containers), skipping 
-dependency upgrades will be considerably faster:
-```r
-devtools::install_github("civisanalytics/civis-r", upgrade_dependencies = FALSE)
+install.packages('civis', depends = TRUE, type = 'source')
 ```
 
 ## Usage
@@ -138,7 +139,7 @@ print(team_members)
 
 ## Contributing
 
-Contributions to the code are very welcome! Issues and bug reports can filed through the standard Github issue interface.  
+Contributions to the code are very welcome! Issues and bug reports can filed through the standard Github issue interface.
 
 ### git-flow
 
