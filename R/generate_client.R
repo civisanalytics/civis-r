@@ -5,7 +5,6 @@ FILENAME <- c("R/generated_client.R")
 #' @details
 #' Skips autogeneration on windows with R < 3.4.0 and if R_CLIENT_DEV == "TRUE".
 #' A valid CIVIS_API_KEY must be set.
-#' @importFrom roxygen2 roxygenize
 fetch_and_generate_client <- function() {
 
   if (Sys.getenv("R_CLIENT_DEV") != "TRUE" && windows_r_version_is_valid()) {
