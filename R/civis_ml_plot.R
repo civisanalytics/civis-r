@@ -15,8 +15,8 @@ hist.civis_ml <- function(x, name = NULL, ...) {
     names <- get_model_data(x, "target_columns")
   }
   if (is.array(score_array)) {
-    # 3d array to list of 2d arrays
-    score_array <- purrr::array_tree(score_array, margin = 1)
+    score_array <- lapply(apply(score_array, 1, list),
+                          function(x) x[[1]])
   }
   df <- data.frame(do.call(rbind, score_array))
   colnames(df) <- c("low", "count", "up")

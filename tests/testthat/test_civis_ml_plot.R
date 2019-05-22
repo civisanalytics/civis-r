@@ -13,7 +13,7 @@ test_that("decile plot for classification is produced", {
   plot_has_facets <- function(p) !is.null(p$facet)
   expect_true(all(sapply(ps, plot_has_facets)))
 
-  plot_has_bars <- function(p) is(purrr::pluck(p, "layers", 1, "geom"), "GeomBar")
+  plot_has_bars <- function(p) is((p[["layers"]][[1]][["geom"]]), "GeomBar")
   expect_true(all(sapply(ps, plot_has_bars)))
 
   plot_has_x_decile <- function(p) {
@@ -41,7 +41,7 @@ test_that("models with no metrics throw errors for hist and plot", {
 test_that("y_yhat plot for reg is produced", {
   expect_true(all(sapply(ps, is, "ggplot")))
 
-  plot_has_bins <- function(p) is(purrr::pluck(p, "layers", 1, "geom"), "GeomTile")
+  plot_has_bins <- function(p) is(p[["layers"]][[1]][["geom"]], "GeomTile")
   expect_true(all(sapply(ps, plot_has_bins)))
 
   plot_vals_correct <- function(p, m) {
@@ -57,7 +57,7 @@ test_that("hist is produced", {
 
   expect_true(all(sapply(hs, is, "ggplot")))
 
-  plot_has_bars <- function(p) is(purrr::pluck(p, "layers", 1, "geom"), "GeomBar")
+  plot_has_bars <- function(p) is(p[["layers"]][[1]][["geom"]], "GeomBar")
   expect_true(all(sapply(hs, plot_has_bars)))
 })
 

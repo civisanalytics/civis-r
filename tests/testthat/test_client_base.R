@@ -50,13 +50,13 @@ test_that("print and str methods for civis_api", {
     call_api("GET", path, path_params, query_params, body_params))
 
   # print hides attributes
-  expect_false(stringr::str_detect(capture_output(print(response)), "attribute"))
+  expect_false(grepl("attribute", capture_output(print(response))))
 
   # str shows attributes and structure
   resp_str <- capture_output(str(response, 1))
-  expect_true(stringr::str_detect(resp_str, "attr"))
-  expect_true(stringr::str_detect(resp_str, "List of 8"))
-  expect_true(stringr::str_detect(resp_str, "List of 10"))
+  expect_match(resp_str, "attr")
+  expect_match(resp_str, "List of 8")
+  expect_match(resp_str, "List of 10")
 })
 
 test_that("call api catches http error", {

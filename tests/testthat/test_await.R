@@ -115,14 +115,14 @@ test_that("verbose produces correct messages", {
                                 .success_states = c("success", "fail"),
              .verbose = TRUE))
   patterns <- c("Status: running", "Retry 1 in 0.302 seconds")
-  expect_true(all(stringr::str_detect(msg, patterns)))
+  expect_true(all(sapply(patterns, grepl, x = msg)))
 
   set.seed(4)
   msg <- capture_messages(await(f, x = 1, .status_key = "state",
                                 .success_states = c("success", "fail"),
                                 .verbose = TRUE, .interval = .01))
   patterns <- c("Status: running", "Retry 1 in 0.01 seconds")
-  expect_true(all(stringr::str_detect(msg, patterns)))
+  expect_true(all(sapply(patterns, grepl, msg)))
 })
 
 test_that("call_once returns list with element called", {

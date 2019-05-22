@@ -36,7 +36,7 @@ test_that("fetch_until halts", {
                              "x-pagination-current-page" = n_calls))
   }
 
-  resp <- fetch_until(fn, ~ .x == 2)
+  resp <- fetch_until(fn, function(.x) .x == 2)
 
   expect_equal(n_calls, 2)
   expect_equal(resp, list(1, 2))

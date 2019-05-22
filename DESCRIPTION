@@ -27,9 +27,7 @@ Imports:
     jsonlite,
     methods,
     memoise,
-    purrr,
     stats,
-    stringr,
     utils
 Suggests:
     feather,

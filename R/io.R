@@ -80,7 +80,7 @@ read_civis.numeric <- function(x, using = readRDS, verbose = FALSE, ...) {
 #' @export
 #' @describeIn read_civis Return all columns from a table as a data frame.
 read_civis.character <- function(x, database = NULL, ...) {
-  if (stringr::str_detect(tolower(x), "\\bselect\\b")) {
+  if (grepl("\\bselect\\b", tolower(x))) {
     msg <- c("Argument x should be \"schema.tablename\". Did you mean x = sql(\"...\")?")
     stop(msg)
   }
@@ -461,7 +461,7 @@ download_civis.character <- function(x, database = NULL, file,
                                      overwrite = FALSE, progress = FALSE, split = FALSE,
                                      job_name = NULL, hidden = TRUE, verbose = FALSE,
                                      ...) {
-  if (stringr::str_detect(tolower(x), "\\bselect\\b")) {
+  if (grepl("\\bselect\\b", tolower(x))) {
     msg <- c("Argument x should be \"schema.table\". Did you mean x = sql(\"...\")?")
     stop(msg)
   }
@@ -515,7 +515,7 @@ download_civis.sql <- function(x, database = NULL, file,
     if (file.exists(file)) file.remove(file)
     concat_command <- ifelse(.Platform$OS.type == "unix", "cat", "type")
     system2(command = concat_command,
-            args = c(paste(purrr::map_chr(unzipped_file_paths, 1), collapse = " "),
+            args = c(paste(unlist(unzipped_file_paths), collapse = " "),
                      ">", file))
   }
 
@@ -602,8 +602,8 @@ civis_to_multifile_csv <- function(sql, database, job_name = NULL, hidden = TRUE
   # If the user-submitted SQL query ends with ";"
   # the resulting query would be "; LIMIT 1", which is a SQL syntax error
   # Thus we make sure that the user-submitted query does not end with ";"
-  if (stringr::str_sub(sql, start = -1L) == ";") {
-    stringr::str_sub(sql, start = -1L) <- ""
+  if (substring(sql, nchar(sql) - 1, nchar(sql)) == ";") {
+    substring(sql, nchar(sql) - 1, nchar(sql)) <- ""
   }
 
   column_delimiter <- delimiter_name_from_string(delimiter)
@@ -717,7 +717,7 @@ query_civis_file <- function(x, ...){
 #' @describeIn query_civis_file Export a \code{"schema.table"} to a file id.
 query_civis_file.character <- function(x, database = NULL, job_name = NULL, hidden = TRUE,
                                        verbose = verbose, csv_settings = NULL, ...) {
-  if (stringr::str_detect(tolower(x), "\\bselect\\b")) {
+  if (grepl( "\\bselect\\b", tolower(x))) {
     msg <- c("Argument x should be \"schema.tablename\". Did you mean x = sql(\"...\")?")
     stop(msg)
   }

@@ -181,9 +181,9 @@ fetch_logs.CivisFuture <- function(object, ...){
 
 make_docker_cmd <- function(task_file_id, run_script_file_id) {
   # this loads the same initial packages in the same order as default R.
-  cmd <- "Rscript -e \"civis::download_civis(${run_script_file_id}, 'run.R')\" && \
-    Rscript --default-packages=methods,datasets,utils,grDevices,graphics,stats run.R ${task_file_id}"
-  stringr::str_interp(cmd)
+  sprintf("Rscript -e \"civis::download_civis(%i, 'run.R')\" && \
+    Rscript --default-packages=methods,datasets,utils,grDevices,graphics,stats run.R %i",
+          run_script_file_id, task_file_id)
 }
 
 upload_runner_script <- function() {

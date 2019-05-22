@@ -191,7 +191,7 @@ data source when calling \code{civis_ml}:
 \examples{
 \dontrun{
  df <- iris
- names(df) <- stringr::str_replace(names(df), "\\\\.", "_")
+ names(df) <- gsub("\\\\.", "_", names(df))
 
  m <- civis_ml_extra_trees_classifier(df,
    dependent_variable = "Species",

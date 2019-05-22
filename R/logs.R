@@ -61,7 +61,7 @@ print.civis_logs <- function(x, ...) {
 }
 
 format_scripts_logs <- function(logs) {
-  messages <- purrr::map_chr(logs, format_scripts_message)
+  messages <- sapply(logs, format_scripts_message)
   # The messages come in reverse order, flip them so the user can read from
   # top down.
   messages <- rev(messages)

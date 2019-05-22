@@ -183,7 +183,7 @@ data source when calling \code{civis_ml}:
 \dontrun{
 
 df <- iris
-names(df) <- stringr::str_replace(names(df), "\\\\.", "_")
+names(df) <- gsub("\\\\.", "_", names(df))
 
 m <- civis_ml_sparse_logistic(df, "Species")
 yhat <- fetch_oos_scores(m)
