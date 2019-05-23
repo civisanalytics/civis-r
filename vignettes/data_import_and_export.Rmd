@@ -76,7 +76,7 @@ from S3 as data frames. IDs are obtained from `write_civis_file`.
 ```{r, eval=FALSE}
 data(iris)
 id <- write_civis_file(iris)
-df <- read_civis(id)
+df <- read_civis(id, using = read.csv)
 ```
 
 For maximum flexibility, `read_civis` accepts parameters from `read.csv` which
@@ -131,26 +131,32 @@ and path to `write_civis` as the first argument:
 write_civis("~/path/to/my_data.csv", tablename="schema.tablename")
 ```
 
-Finally, `write_civis_file` uploads R objects and files to Amazon S3, which is also
-referred to as the 'files endpoint.' R objects saved to the files endpoint expire after
-30 days and are serialized using `saveRDS`. R objects can be loaded back into memory by
-passing the file id to `read_civis`.
+Finally, `write_civis_file` uploads data frames, R objects and files to Amazon S3, which is also
+referred to as the 'files endpoint.' Data frames are uploaded as CSVs. 
+R objects saved to the files endpoint and are serialized using `saveRDS`. 
+R objects can be loaded back into memory by passing the file id to `read_civis`.
 
 ```{r, eval = FALSE}
+# Upload a data frame
 data(iris)
 id <- write_civis_file(iris)
-iris2 <- read_civis(id)
+iris2 <- read_civis(id, using = read.csv)
+
+# Upload an arbitrary R object
+farm <- list(chickens = 1, ducks = 4)
+id <- write_civis_file(farm)
+farm2 <- read_civis(id)
+
 ```
 
 When passed a file name and path, `write_civis_file` will upload the file to S3 as-is. 
-To read the file back into memory as a data frame, an appropriate function to convert the
+To read the file back into memory, an appropriate function to convert the
 file to a data frame must be provided to the `using` argument of `read_civis`. 
-For example, a csv on the files endpoint can be read back into R as a data frame 
-by setting `using = read.csv`.
+For example, a JSON file can be read back into R using `jsonlite::fromJSON`.
 
 ```{r, eval = FALSE}
-id <- write_civis_file("path/to/my_data.csv")
-read_civis(id, using = read.csv)
+id <- write_civis_file("path/to/my_data.json")
+read_civis(id, using = jsonlite::fromJSON)
 ```
 
 
