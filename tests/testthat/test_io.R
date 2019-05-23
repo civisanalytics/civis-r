@@ -260,7 +260,7 @@ test_that("write_civis_file.character returns a file id", {
   unlink("mockfile.txt")
 })
 
-test_that("write_civis_file.default returns a file id", {
+test_that("write_civis_file returns a file id", {
   mock_df <- data.frame(a = c(1,2), b = c("cape-cod", "clams"))
   with_mock(
     `civis::files_post` = function(...) list(uploadFields = list("fakeurl.com"), id = 5),
@@ -269,6 +269,17 @@ test_that("write_civis_file.default returns a file id", {
     expect_equal(write_civis_file(mock_df), 5),
     expect_equal(write_civis_file(as.list(mock_df)), 5),
     expect_equal(write_civis_file(1:3), 5)
+  )
+})
+
+test_that("write_civis_file.data.frame has row.names = FALSE", {
+  mock_df <- data.frame(a = c(1,2), b = c("cape-cod", "clams"))
+  mock_write <- mock()
+  with_mock(
+    `write.csv` = mock_write,
+    `civis::write_civis_file.character` = function(...) 1,
+    id <- write_civis_file(mock_df),
+    expect_equal(mock_args(mock_write)[[1]][3], list(row.names = FALSE))
   )
 })
 

@@ -3,6 +3,7 @@
 \name{write_civis_file}
 \alias{write_civis_file}
 \alias{write_civis_file.default}
+\alias{write_civis_file.data.frame}
 \alias{write_civis_file.character}
 \title{Upload a R object or file to Civis Platform (Files endpoint)}
 \usage{
@@ -11,13 +12,17 @@ write_civis_file(x, ...)
 \method{write_civis_file}{default}(x, name = "r-object.rds",
   expires_at = NULL, ...)
 
+\method{write_civis_file}{data.frame}(x, name = "data.csv",
+  expires_at = NULL, row.names = FALSE, ...)
+
 \method{write_civis_file}{character}(x, name = x, expires_at = NULL,
   ...)
 }
 \arguments{
 \item{x}{R object or path of file to upload.}
 
-\item{...}{arguments passed to \code{\link{saveRDS}}.}
+\item{...}{arguments passed to \code{\link{saveRDS}} or \code{\link{write.csv}} for
+data frames.}
 
 \item{name}{string, Name of the file or object.}
 
@@ -29,30 +34,36 @@ The file id which can be used to later retrieve the file using
 \code{\link{read_civis}}.
 }
 \description{
-Uploads a R object or file to the files endpoint on Civis
+Uploads a data frame, R object or file to the files endpoint on Civis
 Platform (Amazon S3). It returns the id of the file for use with \code{\link{read_civis}}
 or \code{\link{download_civis}}.
 
-R objects are serialized with \code{\link{saveRDS}}, files are unserialized.
+Data frames are uploaded as CSVs with \code{\link{write.csv}}.
+R objects are serialized with \code{\link{saveRDS}}. Files are uploaded as-is.
 Objects or files larger than 50mb are chunked and can be uploaded in parallel
 if a \code{\link{plan}} has been set. Files larger than 5TB cannot be uploaded.
 }
 \details{
+Data frames are uploaded as CSVs using \code{\link{write.csv}}, with row.names = FALSE
+by default. Additional arguments to \code{write.csv} can be passed through \code{...}.
+
 By default, R objects are serialized using \code{\link{saveRDS}} before uploading the object
 to the files endpoint. If given a filepath, the file is uploaded as-is.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: Serialize R object to Civis Platform (Files endpoint).
+\item \code{default}: Serialize R object
 
-\item \code{character}: Upload a text file to Civis Platform (Files endpoint).
+\item \code{data.frame}: Upload a data frame as a csv
+
+\item \code{character}: Upload any file
 }}
 
 \examples{
 \dontrun{
 data(iris)
 file_id <- write_civis_file(iris)
-read_civis(file_id)
+read_civis(file_id, using = read.csv)
 
 file_id <- write_civis_file("path/to/my.csv")
 read_civis(file_id, using = read.csv)
