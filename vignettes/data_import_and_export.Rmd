@@ -134,19 +134,21 @@ write_civis("~/path/to/my_data.csv", tablename="schema.tablename")
 
 Finally, `write_civis_file` uploads data frames, R objects and files to Amazon S3, which is also
 referred to as the 'files endpoint.' Data frames are uploaded as CSVs. 
-R objects saved to the files endpoint and are serialized using `saveRDS`. 
-R objects can be loaded back into memory by passing the file id to `read_civis`.
+R objects saved to the files endpoint and are serialized using `saveRDS`.
+
+Data frames and R objects can be loaded back into memory by passing the 
+file id to `read_civis`, and an appropriate `using` argument. 
 
 ```{r, eval = FALSE}
 # Upload a data frame
 data(iris)
 id <- write_civis_file(iris)
-iris2 <- read_civis(id, using = read.csv)
+iris2 <- read_civis(id)
 
 # Upload an arbitrary R object
 farm <- list(chickens = 1, ducks = 4, pigs = 2, cows = 1)
 id <- write_civis_file(farm)
-farm2 <- read_civis(id)
+farm2 <- read_civis(id, using = readRDS)
 
 ```
 

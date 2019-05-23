@@ -34,7 +34,7 @@
 #'
 #' # Read a text file or csv from the files endpoint.
 #' id <- write_civis_file("my_csv.csv")
-#' df <- read_civis(id, using = read.csv)
+#' df <- read_civis(id)
 #'
 #' # Read JSONValues from a civis script
 #' vals <- read_civis(civis_script(1234))
@@ -60,11 +60,10 @@ read_civis <- function(x, ...) {
 
 #' @describeIn read_civis Return a file as a data frame
 #' @details
-#' By default, \code{read_civis.numeric} assumes the file has been serialized using
-#' \code{saveRDS}, as in \code{write_civis_file} and uses \code{using = readRDS} by default. For reading
-#' an uncompressed text or csv from the files endpoint, set \code{using = read.csv} for example.
+#' By default, \code{read_civis.numeric} assumes the file is a CSV. For reading
+#' a serialized R object, set \code{using = readRDS} for example.
 #' @export
-read_civis.numeric <- function(x, using = readRDS, verbose = FALSE, ...) {
+read_civis.numeric <- function(x, using = read.csv, verbose = FALSE, ...) {
   stopifnot(is.function(using))
   if (is.na(x)) stop("File ID cannot be NA.")
   fn <- tempfile()
@@ -340,11 +339,14 @@ write_civis.numeric <- function(x, tablename, database = NULL, if_exists = "fail
 #' @examples \dontrun{
 #' data(iris)
 #' file_id <- write_civis_file(iris)
-#' read_civis(file_id, using = read.csv)
+#' read_civis(file_id)
 #'
 #' file_id <- write_civis_file("path/to/my.csv")
-#' read_civis(file_id, using = read.csv)
+#' read_civis(file_id)
 #' read_civis(file_id, using = readr::read_csv)
+#'
+#' file_id <- write_civis_file(list(a = 1))
+#' read_civis(file_id, using = readRDS)
 #'
 #' # Does not expire
 #' file_id <- write_civis_file(iris, expires_at = NULL)
