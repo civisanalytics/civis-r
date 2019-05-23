@@ -272,17 +272,6 @@ test_that("write_civis_file returns a file id", {
   )
 })
 
-test_that("write_civis_file.data.frame has row.names = FALSE", {
-  mock_df <- data.frame(a = c(1,2), b = c("cape-cod", "clams"))
-  mock_write <- mock()
-  with_mock(
-    `write.csv` = mock_write,
-    `civis::write_civis_file.character` = function(...) 1,
-    id <- write_civis_file(mock_df),
-    expect_equal(mock_args(mock_write)[[1]][3], list(row.names = FALSE))
-  )
-})
-
 test_that("write_civis_file calls multipart_unload for big files", {
   fake_file_size <- mock(file.size)
   mockery::stub(write_civis_file.character, "file.size", MIN_MULTIPART_SIZE + 1)
@@ -293,6 +282,19 @@ test_that("write_civis_file calls multipart_unload for big files", {
     expect_equal(write_civis_file(fn, name = "asdf"), 1)
   )
   unlink(fn)
+})
+
+test_that("write_civis_file.data.frame uploads a cisv", {
+  m <- mock()
+  with_mock(
+    `civis::with_tempfile` = m,
+    `civis:::write_civis_file.character` = function(...) 1,
+    write_civis_file(iris),
+    # call the temporary function given to with_tempfile
+    mock_args(m)[[1]][[1]]('tmp.csv'),
+    expect_equal(read.csv('tmp.csv'), iris),
+    unlink('tmp.csv')
+  )
 })
 
 # download_civis --------------------------------------------------------------

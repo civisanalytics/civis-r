@@ -28,6 +28,9 @@ data frames.}
 
 \item{expires_at}{string, The date and time the object will expire on in the
 format \code{"YYYY-MM-DD HH:MM:SS"}. \code{expires_at = NULL} allows files to be kept indefinitely.}
+
+\item{row.names}{default FALSE. Either a logical value indicating whether the row names
+of x are to be written along with x, or a character vector of row names to be written.}
 }
 \value{
 The file id which can be used to later retrieve the file using

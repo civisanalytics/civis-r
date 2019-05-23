@@ -32,9 +32,8 @@ can be easily shared and used in multiple workflows by multiple people.
 However, importing and exporting even small files on Redshift can be slow.
 
 R objects and arbitrary files can be stored on Amazon S3, and are accessed 
-using a numeric file id. In `civis`, R objects are serialized using `saveRDS`
-for speed and efficiency. Text or csv files created by other programs can also
-be read back into R as a data frames.
+using a numeric file id. Data frames are uploaded as CSVs for portability,
+and arbitrary R objects are serialized using `saveRDS` for speed and efficiency. 
 
 ## Reading Data Into R From Platform
 
@@ -91,7 +90,7 @@ df2 <- read_civis(sql(query), as.is = TRUE)
 ```
 
 
-## Uploading Data to Platform
+## Uploading Data to a Database
 
 The complement to reading data into the R workspace is writing data
 to the Platform.  The function `write_civis` uploads data frames or csv files to
@@ -131,6 +130,8 @@ and path to `write_civis` as the first argument:
 write_civis("~/path/to/my_data.csv", tablename="schema.tablename")
 ```
 
+## Uploading Data to S3
+
 Finally, `write_civis_file` uploads data frames, R objects and files to Amazon S3, which is also
 referred to as the 'files endpoint.' Data frames are uploaded as CSVs. 
 R objects saved to the files endpoint and are serialized using `saveRDS`. 
@@ -143,7 +144,7 @@ id <- write_civis_file(iris)
 iris2 <- read_civis(id, using = read.csv)
 
 # Upload an arbitrary R object
-farm <- list(chickens = 1, ducks = 4)
+farm <- list(chickens = 1, ducks = 4, pigs = 2, cows = 1)
 id <- write_civis_file(farm)
 farm2 <- read_civis(id)
 

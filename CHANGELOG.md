@@ -4,6 +4,10 @@
 
 ### Changed
 
+
+- `write_civis_file` now uploads data frames as CSVs by default. This change
+requires specifying `read_civis(id, using = read.csv)` to read the data frame
+back into memory from a file id.
 - Partial DBI interface to Redshift (through the Civis API) removed,
 removing `DBI, dplyr` and `dbplyr` from dependencies.
 - `feather`, and `ggplot2` (used for CivisML features)
@@ -23,6 +27,10 @@ than a function or a formula.
 compatibility with R 3.6.0.
 
 ### Added
+
+IO
+
+- `write_civis_file.data.frame` uploads a data frame to S3 as a CSV.
 
 Utitilies for platform  scripts
 

@@ -383,14 +383,20 @@ write_civis_file.default <- function(x, name = 'r-object.rds', expires_at = NULL
 }
 
 #' @describeIn write_civis_file Upload a data frame as a csv
+#' @param row.names default FALSE. Either a logical value indicating whether the row names
+#' of x are to be written along with x, or a character vector of row names to be written.
 #' @export
+#' @importFrom utils write.csv
 write_civis_file.data.frame <- function(x,
                                         name = 'data.csv',
                                         expires_at = NULL,
-                                        row.names = FALSE, ...) {
+                                        row.names = FALSE,
+                                        ...) {
   with_tempfile(function(tmp_file, ...) {
     write.csv(x, file = tmp_file, row.names = row.names, ...)
-    write_civis_file.character(x = tmp_file, name = name, expires_at = expires_at)
+    write_civis_file.character(x = tmp_file,
+                               name = name,
+                               expires_at = expires_at)
   })
 }
 
