@@ -66,11 +66,14 @@ to the files endpoint. If given a filepath, the file is uploaded as-is.
 \dontrun{
 data(iris)
 file_id <- write_civis_file(iris)
-read_civis(file_id, using = read.csv)
+read_civis(file_id)
 
 file_id <- write_civis_file("path/to/my.csv")
-read_civis(file_id, using = read.csv)
+read_civis(file_id)
 read_civis(file_id, using = readr::read_csv)
+
+file_id <- write_civis_file(list(a = 1))
+read_civis(file_id, using = readRDS)
 
 # Does not expire
 file_id <- write_civis_file(iris, expires_at = NULL)

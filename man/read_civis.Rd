@@ -10,7 +10,7 @@
 \usage{
 read_civis(x, ...)
 
-\method{read_civis}{numeric}(x, using = readRDS, verbose = FALSE, ...)
+\method{read_civis}{numeric}(x, using = read.csv, verbose = FALSE, ...)
 
 \method{read_civis}{character}(x, database = NULL, ...)
 
@@ -50,9 +50,8 @@ If there is only one database available,
 this database will automatically be used as the default.
 }
 \details{
-By default, \code{read_civis.numeric} assumes the file has been serialized using
-\code{saveRDS}, as in \code{write_civis_file} and uses \code{using = readRDS} by default. For reading
-an uncompressed text or csv from the files endpoint, set \code{using = read.csv} for example.
+By default, \code{read_civis.numeric} assumes the file is a CSV. For reading
+a serialized R object, set \code{using = readRDS} for example.
 
 If \code{using = NULL}, \code{read_civis.civis_script}
 will return all JSONValues with name matching \code{regex}.
@@ -87,7 +86,7 @@ df <- read_civis(id)
 
 # Read a text file or csv from the files endpoint.
 id <- write_civis_file("my_csv.csv")
-df <- read_civis(id, using = read.csv)
+df <- read_civis(id)
 
 # Read JSONValues from a civis script
 vals <- read_civis(civis_script(1234))
