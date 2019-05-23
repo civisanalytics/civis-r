@@ -284,7 +284,7 @@ test_that("write_civis_file calls multipart_unload for big files", {
   unlink(fn)
 })
 
-test_that("write_civis_file.data.frame uploads a cisv", {
+test_that("write_civis_file.data.frame uploads a csv", {
   m <- mock()
   with_mock(
     `civis::with_tempfile` = m,
