@@ -9,7 +9,7 @@ fetch_until(fn, .until, ...)
 \arguments{
 \item{fn}{The API function to be called.}
 
-\item{.until}{A function or formula which returns a boolean value.
+\item{.until}{A function which returns a boolean value.
 \code{.until} will be called with each item from the API response. When
 \code{.until} returns \code{TRUE} iteration will stop and \code{fetch_until}
 will return all responses accumulated so far.}

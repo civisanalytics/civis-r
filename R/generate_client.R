@@ -99,9 +99,9 @@ build_function_args <- function(params) {
 }
 
 build_function_name <- function(verb_name, path_name) {
-  parts <- stringr::str_split(path_name, "/", simplify = TRUE)
-  parts <- purrr::discard(parts, ~ .x == "")
-  parts <- purrr::discard(parts, ~ startsWith(.x, "{"))
+  parts <- strsplit(path_name, "/")[[1]]
+  parts <- parts[parts != ""]
+  parts <- parts[!startsWith(parts, "{")]
   parts <- gsub("-", "_", parts)
 
   if (!endsWith(path_name, "}") & verb_name == "get") verb_name <- "list"
@@ -304,7 +304,7 @@ same_ref <- function(parent, child) {
 # ref is a list with key="$ref" and value="#/definitions/Objectx"
 get_ref <- function(ref, spec) {
   ref <- ref[which(names(ref) == "$ref")]  # see ex5
-  ref_path <- stringr::str_split(ref, "/", simplify = TRUE)
+  ref_path <- strsplit(unlist(ref), "/")[[1]]
   ref_path <- ref_path[-1]  # the first portion of the path is `#`
   spec[[ref_path]]
 }

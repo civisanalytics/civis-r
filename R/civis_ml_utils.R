@@ -197,7 +197,7 @@ model_url <- function(x) {
 }
 
 model_type <- function(job) {
-  is_regr <- stringr::str_detect(job$arguments$MODEL, "regressor")
+  is_regr <- grepl('regressor', job$arguments$MODEL)
   type <- if (is_regr) "regressor" else "classifier"
   type
 }

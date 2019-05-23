@@ -48,7 +48,7 @@
 #' @examples \dontrun{
 #'
 #' df <- iris
-#' names(df) <- stringr::str_replace(names(df), "\\.", "_")
+#' names(df) <- gsub("\\.", "_", names(df))
 #'
 #' m <- civis_ml_sparse_logistic(df, "Species")
 #' yhat <- fetch_oos_scores(m)
@@ -372,7 +372,7 @@ civis_ml_sparse_ridge_regressor <- function(x,
 #' @examples
 #' \dontrun{
 #'  df <- iris
-#'  names(df) <- stringr::str_replace(names(df), "\\.", "_")
+#'  names(df) <- gsub("\\.", "_", names(df))
 #'
 #'  m <- civis_ml_gradient_boosting_classifier(df,
 #'    dependent_variable = "Species",
@@ -595,7 +595,7 @@ civis_ml_gradient_boosting_regressor <- function(x,
 #' @examples
 #' \dontrun{
 #'  df <- iris
-#'  names(df) <- stringr::str_replace(names(df), "\\.", "_")
+#'  names(df) <- gsub("\\.", "_", names(df))
 #'
 #'  m <- civis_ml_random_forest_classifier(df,
 #'    dependent_variable = "Species",
@@ -793,7 +793,7 @@ civis_ml_random_forest_regressor <- function(x,
 #' @examples
 #' \dontrun{
 #'  df <- iris
-#'  names(df) <- stringr::str_replace(names(df), "\\.", "_")
+#'  names(df) <- gsub("\\.", "_", names(df))
 #'
 #'  m <- civis_ml_extra_trees_classifier(df,
 #'    dependent_variable = "Species",
