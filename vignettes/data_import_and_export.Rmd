@@ -75,7 +75,7 @@ from S3 as data frames. IDs are obtained from `write_civis_file`.
 ```{r, eval=FALSE}
 data(iris)
 id <- write_civis_file(iris)
-df <- read_civis(id, using = read.csv)
+df <- read_civis(id)
 ```
 
 For maximum flexibility, `read_civis` accepts parameters from `read.csv` which
