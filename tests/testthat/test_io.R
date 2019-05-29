@@ -260,7 +260,7 @@ test_that("write_civis_file.character returns a file id", {
   unlink("mockfile.txt")
 })
 
-test_that("write_civis_file.default returns a file id", {
+test_that("write_civis_file returns a file id", {
   mock_df <- data.frame(a = c(1,2), b = c("cape-cod", "clams"))
   with_mock(
     `civis::files_post` = function(...) list(uploadFields = list("fakeurl.com"), id = 5),
@@ -282,6 +282,19 @@ test_that("write_civis_file calls multipart_unload for big files", {
     expect_equal(write_civis_file(fn, name = "asdf"), 1)
   )
   unlink(fn)
+})
+
+test_that("write_civis_file.data.frame uploads a csv", {
+  m <- mock()
+  with_mock(
+    `civis::with_tempfile` = m,
+    `civis:::write_civis_file.character` = function(...) 1,
+    write_civis_file(iris),
+    # call the temporary function given to with_tempfile
+    mock_args(m)[[1]][[1]]('tmp.csv'),
+    expect_equal(read.csv('tmp.csv'), iris),
+    unlink('tmp.csv')
+  )
 })
 
 # download_civis --------------------------------------------------------------

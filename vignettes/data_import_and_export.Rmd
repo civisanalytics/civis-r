@@ -32,9 +32,8 @@ can be easily shared and used in multiple workflows by multiple people.
 However, importing and exporting even small files on Redshift can be slow.
 
 R objects and arbitrary files can be stored on Amazon S3, and are accessed 
-using a numeric file id. In `civis`, R objects are serialized using `saveRDS`
-for speed and efficiency. Text or csv files created by other programs can also
-be read back into R as a data frames.
+using a numeric file id. Data frames are uploaded as CSVs for portability,
+and arbitrary R objects are serialized using `saveRDS` for speed and efficiency. 
 
 ## Reading Data Into R From Platform
 
@@ -91,7 +90,7 @@ df2 <- read_civis(sql(query), as.is = TRUE)
 ```
 
 
-## Uploading Data to Platform
+## Uploading Data to a Database
 
 The complement to reading data into the R workspace is writing data
 to the Platform.  The function `write_civis` uploads data frames or csv files to
@@ -131,26 +130,36 @@ and path to `write_civis` as the first argument:
 write_civis("~/path/to/my_data.csv", tablename="schema.tablename")
 ```
 
-Finally, `write_civis_file` uploads R objects and files to Amazon S3, which is also
-referred to as the 'files endpoint.' R objects saved to the files endpoint expire after
-30 days and are serialized using `saveRDS`. R objects can be loaded back into memory by
-passing the file id to `read_civis`.
+## Uploading Data to S3
+
+Finally, `write_civis_file` uploads data frames, R objects and files to Amazon S3, which is also
+referred to as the 'files endpoint.' Data frames are uploaded as CSVs. 
+R objects saved to the files endpoint and are serialized using `saveRDS`.
+
+Data frames and R objects can be loaded back into memory by passing the 
+file id to `read_civis`, and an appropriate `using` argument. 
 
 ```{r, eval = FALSE}
+# Upload a data frame
 data(iris)
 id <- write_civis_file(iris)
 iris2 <- read_civis(id)
+
+# Upload an arbitrary R object
+farm <- list(chickens = 1, ducks = 4, pigs = 2, cows = 1)
+id <- write_civis_file(farm)
+farm2 <- read_civis(id, using = readRDS)
+
 ```
 
 When passed a file name and path, `write_civis_file` will upload the file to S3 as-is. 
-To read the file back into memory as a data frame, an appropriate function to convert the
+To read the file back into memory, an appropriate function to convert the
 file to a data frame must be provided to the `using` argument of `read_civis`. 
-For example, a csv on the files endpoint can be read back into R as a data frame 
-by setting `using = read.csv`.
+For example, a JSON file can be read back into R using `jsonlite::fromJSON`.
 
 ```{r, eval = FALSE}
-id <- write_civis_file("path/to/my_data.csv")
-read_civis(id, using = read.csv)
+id <- write_civis_file("path/to/my_data.json")
+read_civis(id, using = jsonlite::fromJSON)
 ```
 
 
