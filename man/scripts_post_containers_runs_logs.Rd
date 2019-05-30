@@ -20,7 +20,7 @@ scripts_post_containers_runs_logs(id, run_id, message = NULL,
 \itemize{
 \item message string, The log message to store.
 \item level string, The log level of this message [default: info]
-\item createdAt string, 
+\item createdAt string, The timestamp of this message in ISO 8601 format. This is what logs are ordered by, so it is recommended to use timestamps with nanosecond precision. If absent, defaults to the time that the log was received by the API.
 }}
 
 \item{child_job_id}{integer optional. The ID of the child job the message came from.}

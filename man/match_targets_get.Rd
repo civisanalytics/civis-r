@@ -15,6 +15,7 @@ A list containing the following elements:
 \item{name}{string, The name of the match target}
 \item{table}{string, The name of the DynamoDB table}
 \item{region}{string, The AWS region of the DynamoDB table. By default, us-east-1.}
+\item{targetFileName}{string, The name of the target file}
 \item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
 }
 \description{

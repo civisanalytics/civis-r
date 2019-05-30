@@ -7,7 +7,7 @@
 templates_list_scripts_shares(id)
 }
 \arguments{
-\item{id}{integer required. The ID of the object.}
+\item{id}{integer required. The ID of the resource that is shared.}
 }
 \value{
 An array containing the following fields:

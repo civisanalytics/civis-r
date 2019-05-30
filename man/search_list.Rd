@@ -19,7 +19,7 @@ search_list(query = NULL, type = NULL, offset = NULL, order = NULL,
 
 \item{owner}{string optional. The owner for the search.}
 
-\item{limit}{integer optional. Defaults to 10. Maximum allowed is 50.}
+\item{limit}{integer optional. Defaults to 10. Maximum allowed is 1000.}
 
 \item{archived}{string optional. If specified, return only results with the chosen archived status; either 'true', 'false', or 'all'. Defaults to 'false'.}
 
@@ -43,6 +43,7 @@ An array containing the following fields:
 \item lastRunState string, The last run state of the item, if the item is a job.
 \item lastRunStart string, The last run start time of the item, if the item is a job.
 \item lastRunFinish string, The last run finish time of the item, if the item is a job.
+\item public boolean, The flag that indicates a template is available to all users.
 \item lastRunException string, The exception of the item after the last run, if the item is a job.
 }}
 }

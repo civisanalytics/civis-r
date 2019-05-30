@@ -4,17 +4,17 @@
 \alias{match_targets_post}
 \title{Create a new match target}
 \usage{
-match_targets_post(name, table, id = NULL, region = NULL,
-  encryption_key_credential_id = NULL)
+match_targets_post(name, table = NULL, region = NULL,
+  target_file_name = NULL, encryption_key_credential_id = NULL)
 }
 \arguments{
 \item{name}{string required. The name of the match target}
 
-\item{table}{string required. The name of the DynamoDB table}
-
-\item{id}{integer optional. The ID of the match target}
+\item{table}{string optional. The name of the DynamoDB table}
 
 \item{region}{string optional. The AWS region of the DynamoDB table. By default, us-east-1.}
+
+\item{target_file_name}{string optional. The name of the target file}
 
 \item{encryption_key_credential_id}{integer optional. The ID of the encryption key credential.}
 }
@@ -24,6 +24,7 @@ A list containing the following elements:
 \item{name}{string, The name of the match target}
 \item{table}{string, The name of the DynamoDB table}
 \item{region}{string, The AWS region of the DynamoDB table. By default, us-east-1.}
+\item{targetFileName}{string, The name of the target file}
 \item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
 }
 \description{

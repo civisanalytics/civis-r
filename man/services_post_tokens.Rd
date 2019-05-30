@@ -4,19 +4,30 @@
 \alias{services_post_tokens}
 \title{Create a new long-lived service token}
 \usage{
-services_post_tokens(id, name)
+services_post_tokens(id, name, machine_token = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of token.}
+\item{id}{integer required. The ID of the service.}
 
-\item{name}{string required. The name of token.}
+\item{name}{string required. The name of the token.}
+
+\item{machine_token}{boolean optional. If true, create a compact token with no user information.}
 }
 \value{
 A list containing the following elements:
-\item{id}{integer, The ID of token.}
-\item{name}{string, The name of token.}
+\item{id}{integer, The ID of the token.}
+\item{name}{string, The name of the token.}
+\item{user}{list, A list containing the following elements: 
+\itemize{
+\item id integer, The ID of this user.
+\item name string, This user's name.
+\item username string, This user's username.
+\item initials string, This user's initials.
+\item online boolean, Whether this user is online.
+}}
+\item{machineToken}{boolean, If true, this token is not tied to a particular user.}
 \item{createdAt}{string, The date and time when the token was created.}
-\item{token}{string, The value for a long-lived arproxy service token.}
+\item{token}{string, The value of the token. Only returned when the token is first created.}
 }
 \description{
 Create a new long-lived service token

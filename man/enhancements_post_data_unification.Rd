@@ -6,16 +6,15 @@
 \usage{
 enhancements_post_data_unification(name, field_mapping1, field_mapping2,
   schedule = NULL, parent_id = NULL, notifications = NULL,
-  table1 = NULL, file1_id = NULL, table2 = NULL, file2_id = NULL,
-  output_table = NULL, output_filename = NULL, max_matches = NULL,
-  threshold = NULL)
+  table1 = NULL, table2 = NULL, output_table = NULL,
+  max_matches = NULL, threshold = NULL)
 }
 \arguments{
 \item{name}{string required. The name of the enhancement job.}
 
-\item{field_mapping1}{list required. The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.}
+\item{field_mapping1}{list required. The column mapping for Table 1. See /enhancements/field_mapping for list of valid fields.}
 
-\item{field_mapping2}{list required. The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.}
+\item{field_mapping2}{list required. The column mapping for Table 2. See /enhancements/field_mapping for list of valid fields.}
 
 \item{schedule}{list optional. A list containing the following elements: 
 \itemize{
@@ -49,16 +48,12 @@ enhancements_post_data_unification(name, field_mapping1, field_mapping2,
 \item table string, The table name.
 }}
 
-\item{file1_id}{integer optional. The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.}
-
 \item{table2}{list optional. A list containing the following elements: 
 \itemize{
 \item databaseName string, The Redshift database name for the table.
 \item schema string, The schema name for the table.
 \item table string, The table name.
 }}
-
-\item{file2_id}{integer optional. The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.}
 
 \item{output_table}{list optional. A list containing the following elements: 
 \itemize{
@@ -67,9 +62,7 @@ enhancements_post_data_unification(name, field_mapping1, field_mapping2,
 \item table string, The table name.
 }}
 
-\item{output_filename}{string optional. The name of the output file. This should be set if and only if file1Id and file2Id are set.}
-
-\item{max_matches}{integer optional. The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.}
+\item{max_matches}{integer optional. The maximum number of matches per record in Table 1 to return. Must be between 0 and 10. 0 returns all matches.}
 
 \item{threshold}{number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 }
@@ -119,30 +112,27 @@ A list containing the following elements:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
-\item{fieldMapping1}{list, The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.}
+\item{fieldMapping1}{list, The column mapping for Table 1. See /enhancements/field_mapping for list of valid fields.}
 \item{table1}{list, A list containing the following elements: 
 \itemize{
 \item databaseName string, The Redshift database name for the table.
 \item schema string, The schema name for the table.
 \item table string, The table name.
 }}
-\item{file1Id}{integer, The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.}
-\item{fieldMapping2}{list, The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.}
+\item{fieldMapping2}{list, The column mapping for Table 2. See /enhancements/field_mapping for list of valid fields.}
 \item{table2}{list, A list containing the following elements: 
 \itemize{
 \item databaseName string, The Redshift database name for the table.
 \item schema string, The schema name for the table.
 \item table string, The table name.
 }}
-\item{file2Id}{integer, The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.}
 \item{outputTable}{list, A list containing the following elements: 
 \itemize{
 \item databaseName string, The Redshift database name for the table.
 \item schema string, The schema name for the table.
 \item table string, The table name.
 }}
-\item{outputFilename}{string, The name of the output file. This should be set if and only if file1Id and file2Id are set.}
-\item{maxMatches}{integer, The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.}
+\item{maxMatches}{integer, The maximum number of matches per record in Table 1 to return. Must be between 0 and 10. 0 returns all matches.}
 \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 }
 \description{

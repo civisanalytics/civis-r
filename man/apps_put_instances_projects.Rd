@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{apps_put_instances_projects}
 \alias{apps_put_instances_projects}
-\title{Add a AppInstance to a project}
+\title{Add an item to a project}
 \usage{
 apps_put_instances_projects(id, project_id, slug)
 }
@@ -17,5 +17,5 @@ apps_put_instances_projects(id, project_id, slug)
 An empty HTTP response
 }
 \description{
-Add a AppInstance to a project
+Add an item to a project
 }

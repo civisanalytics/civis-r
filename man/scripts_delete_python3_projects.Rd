@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{scripts_delete_python3_projects}
 \alias{scripts_delete_python3_projects}
-\title{Remove a python docker from a project}
+\title{Remove an item from a project}
 \usage{
 scripts_delete_python3_projects(id, project_id)
 }
@@ -15,5 +15,5 @@ scripts_delete_python3_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Remove a python docker from a project
+Remove an item from a project
 }

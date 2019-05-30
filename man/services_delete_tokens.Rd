@@ -7,7 +7,7 @@
 services_delete_tokens(id, token_id)
 }
 \arguments{
-\item{id}{integer required. The ID of service.}
+\item{id}{integer required. The ID of the service.}
 
 \item{token_id}{integer required. The ID of the token.}
 }

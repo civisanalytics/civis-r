@@ -1,3 +1,380 @@
+#' List users and groups permissioned on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' 
+#' @return  An array containing the following fields:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+aliases_list_shares <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/aliases/{id}/shares"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions users have on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+aliases_put_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/aliases/{id}/shares/users"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a user has on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
+#' 
+#' @return  An empty HTTP response
+#' @export
+aliases_delete_shares_users <- function(id, user_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/aliases/{id}/shares/users/{user_id}"
+  path_params  <- list(id = id, user_id = user_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions groups has on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+aliases_put_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/aliases/{id}/shares/groups"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a group has on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
+#' 
+#' @return  An empty HTTP response
+#' @export
+aliases_delete_shares_groups <- function(id, group_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/aliases/{id}/shares/groups/{group_id}"
+  path_params  <- list(id = id, group_id = group_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List Aliases
+#' @param object_type string optional. Filter results by object type. Pass multiple object types with a comma-separatedlist. Valid types include: bsd_cons_export, model, cass_ncoa, catalist, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, silverpop_contact_import, silverpop_contact_export, silverpop_data_import, silverpop_remove_recipient, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
+#' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id, object_type.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to asc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The id of the Alias object.}
+#' \item{objectId}{integer, The id of the object}
+#' \item{objectType}{string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, catalist, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, silverpop_contact_import, silverpop_contact_export, silverpop_data_import, silverpop_remove_recipient, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{alias}{string, The alias of the object}
+#' \item{userId}{integer, The id of the user who created the alias}
+#' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
+#' @export
+aliases_list <- function(object_type = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/aliases/"
+  path_params  <- list()
+  query_params <- list(object_type = object_type, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create an Alias
+#' @param object_id integer required. The id of the object
+#' @param object_type string required. The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, catalist, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, silverpop_contact_import, silverpop_contact_export, silverpop_data_import, silverpop_remove_recipient, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
+#' @param alias string required. The alias of the object
+#' @param display_name string optional. The display name of the Alias object. Defaults to object name if not provided.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The id of the Alias object.}
+#' \item{objectId}{integer, The id of the object}
+#' \item{objectType}{string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, catalist, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, silverpop_contact_import, silverpop_contact_export, silverpop_data_import, silverpop_remove_recipient, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{alias}{string, The alias of the object}
+#' \item{userId}{integer, The id of the user who created the alias}
+#' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
+#' @export
+aliases_post <- function(object_id, object_type, alias, display_name = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/aliases/"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(objectId = object_id, objectType = object_type, alias = alias, displayName = display_name)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get an Alias
+#' @param id integer required. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The id of the Alias object.}
+#' \item{objectId}{integer, The id of the object}
+#' \item{objectType}{string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, catalist, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, silverpop_contact_import, silverpop_contact_export, silverpop_data_import, silverpop_remove_recipient, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{alias}{string, The alias of the object}
+#' \item{userId}{integer, The id of the user who created the alias}
+#' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
+#' @export
+aliases_get <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/aliases/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Replace all attributes of this Alias
+#' @param id integer required. The id of the Alias object.
+#' @param object_id integer required. The id of the object
+#' @param object_type string required. The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, catalist, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, silverpop_contact_import, silverpop_contact_export, silverpop_data_import, silverpop_remove_recipient, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
+#' @param alias string required. The alias of the object
+#' @param display_name string optional. The display name of the Alias object. Defaults to object name if not provided.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The id of the Alias object.}
+#' \item{objectId}{integer, The id of the object}
+#' \item{objectType}{string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, catalist, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, silverpop_contact_import, silverpop_contact_export, silverpop_data_import, silverpop_remove_recipient, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{alias}{string, The alias of the object}
+#' \item{userId}{integer, The id of the user who created the alias}
+#' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
+#' @export
+aliases_put <- function(id, object_id, object_type, alias, display_name = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/aliases/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(objectId = object_id, objectType = object_type, alias = alias, displayName = display_name)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update some attributes of this Alias
+#' @param id integer required. The id of the Alias object.
+#' @param object_id integer optional. The id of the object
+#' @param object_type string optional. The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, catalist, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, silverpop_contact_import, silverpop_contact_export, silverpop_data_import, silverpop_remove_recipient, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
+#' @param alias string optional. The alias of the object
+#' @param display_name string optional. The display name of the Alias object. Defaults to object name if not provided.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The id of the Alias object.}
+#' \item{objectId}{integer, The id of the object}
+#' \item{objectType}{string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, catalist, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, silverpop_contact_import, silverpop_contact_export, silverpop_data_import, silverpop_remove_recipient, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{alias}{string, The alias of the object}
+#' \item{userId}{integer, The id of the user who created the alias}
+#' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
+#' @export
+aliases_patch <- function(id, object_id = NULL, object_type = NULL, alias = NULL, display_name = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/aliases/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(objectId = object_id, objectType = object_type, alias = alias, displayName = display_name)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Delete an alias
+#' @param id integer required. The id of the Alias object.
+#' 
+#' @return  An empty HTTP response
+#' @export
+aliases_delete <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/aliases/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get details about an alias within an FCO type
+#' @param object_type string required. The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, catalist, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, silverpop_contact_import, silverpop_contact_export, silverpop_data_import, silverpop_remove_recipient, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
+#' @param alias string required. The alias of the object
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The id of the Alias object.}
+#' \item{objectId}{integer, The id of the object}
+#' \item{objectType}{string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, catalist, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, silverpop_contact_import, silverpop_contact_export, silverpop_data_import, silverpop_remove_recipient, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{alias}{string, The alias of the object}
+#' \item{userId}{integer, The id of the user who created the alias}
+#' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
+#' @export
+aliases_get_object_type <- function(object_type, alias) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/aliases/{object_type}/{alias}"
+  path_params  <- list(object_type = object_type, alias = alias)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List announcements
 #' @param limit integer optional. Number of results to return. Defaults to 10. Maximum allowed is 50.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
@@ -22,7 +399,7 @@ announcements_list <- function(limit = NULL, page_num = NULL, order = NULL, orde
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -47,7 +424,7 @@ apps_list <- function() {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -82,7 +459,7 @@ apps_get <- function(slug) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -125,7 +502,7 @@ apps_list_instances <- function(slug, archived = NULL, app_release_id = NULL, li
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -165,7 +542,7 @@ apps_post_instances <- function(slug, name = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -197,7 +574,7 @@ apps_list_releases <- function(slug, archived = NULL, limit = NULL, page_num = N
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -225,7 +602,7 @@ apps_get_releases <- function(id, slug) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -265,7 +642,7 @@ apps_get_instances <- function(id, slug) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -306,7 +683,7 @@ apps_patch_instances <- function(id, slug, name = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -314,8 +691,8 @@ apps_patch_instances <- function(id, slug, name = NULL) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
 #' @param slug string required. The slug for the application.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -336,17 +713,17 @@ apps_patch_instances <- function(id, slug, name = NULL) {
 #' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
 #' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
 #' @export
-apps_list_instances_shares <- function(id, slug) {
+apps_list_instances_shares <- function(slug, id) {
 
   args <- as.list(match.call())[-1]
   path <- "/apps/{slug}/instances/{id}/shares"
-  path_params  <- list(id = id, slug = slug)
+  path_params  <- list(slug = slug, id = id)
   query_params <- list()
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -354,10 +731,10 @@ apps_list_instances_shares <- function(id, slug) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
 #' @param slug string required. The slug for the application.
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -380,17 +757,17 @@ apps_list_instances_shares <- function(id, slug) {
 #' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
 #' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
 #' @export
-apps_put_instances_shares_users <- function(id, slug, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+apps_put_instances_shares_users <- function(slug, id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/apps/{slug}/instances/{id}/shares/users"
-  path_params  <- list(id = id, slug = slug)
+  path_params  <- list(slug = slug, id = id)
   query_params <- list()
   body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -398,23 +775,23 @@ apps_put_instances_shares_users <- function(id, slug, user_ids, permission_level
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
 #' @param slug string required. The slug for the application.
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
-apps_delete_instances_shares_users <- function(id, user_id, slug) {
+apps_delete_instances_shares_users <- function(slug, id, user_id) {
 
   args <- as.list(match.call())[-1]
   path <- "/apps/{slug}/instances/{id}/shares/users/{user_id}"
-  path_params  <- list(id = id, user_id = user_id, slug = slug)
+  path_params  <- list(slug = slug, id = id, user_id = user_id)
   query_params <- list()
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -422,10 +799,10 @@ apps_delete_instances_shares_users <- function(id, user_id, slug) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
 #' @param slug string required. The slug for the application.
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -448,17 +825,17 @@ apps_delete_instances_shares_users <- function(id, user_id, slug) {
 #' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
 #' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
 #' @export
-apps_put_instances_shares_groups <- function(id, slug, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+apps_put_instances_shares_groups <- function(slug, id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/apps/{slug}/instances/{id}/shares/groups"
-  path_params  <- list(id = id, slug = slug)
+  path_params  <- list(slug = slug, id = id)
   query_params <- list()
   body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -466,23 +843,23 @@ apps_put_instances_shares_groups <- function(id, slug, group_ids, permission_lev
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
 #' @param slug string required. The slug for the application.
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
-apps_delete_instances_shares_groups <- function(id, group_id, slug) {
+apps_delete_instances_shares_groups <- function(slug, id, group_id) {
 
   args <- as.list(match.call())[-1]
   path <- "/apps/{slug}/instances/{id}/shares/groups/{group_id}"
-  path_params  <- list(id = id, group_id = group_id, slug = slug)
+  path_params  <- list(slug = slug, id = id, group_id = group_id)
   query_params <- list()
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -523,14 +900,14 @@ apps_put_instances_archive <- function(id, slug, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a AppInstance belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param slug string required. The slug for the application.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -570,14 +947,14 @@ apps_list_instances_projects <- function(id, slug, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a AppInstance to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' @param slug string required. The slug for the application.
@@ -594,14 +971,14 @@ apps_put_instances_projects <- function(id, project_id, slug) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a AppInstance from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' @param slug string required. The slug for the application.
@@ -618,7 +995,7 @@ apps_delete_instances_projects <- function(id, project_id, slug) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -650,7 +1027,7 @@ clusters_list_workers <- function(limit = NULL, page_num = NULL, order = NULL, o
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -683,7 +1060,7 @@ clusters_get_workers <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -750,7 +1127,7 @@ clusters_list_workers_active_jobs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -817,7 +1194,7 @@ clusters_list_workers_queued_jobs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -834,6 +1211,7 @@ clusters_list_workers_queued_jobs <- function(id) {
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID of this cluster.}
 #' \item{organizationId}{string, The id of this cluster's organization.}
+#' \item{organizationName}{string, The name of this cluster's organization.}
 #' \item{organizationSlug}{string, The slug of this cluster's organization.}
 #' \item{clusterPartitions}{array, An array containing the following fields: 
 #' \itemize{
@@ -855,7 +1233,7 @@ clusters_list_kubernetes <- function(organization_slug = NULL, limit = NULL, pag
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -868,6 +1246,7 @@ clusters_list_kubernetes <- function(organization_slug = NULL, limit = NULL, pag
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this cluster.}
 #' \item{organizationId}{string, The id of this cluster's organization.}
+#' \item{organizationName}{string, The name of this cluster's organization.}
 #' \item{organizationSlug}{string, The slug of this cluster's organization.}
 #' \item{clusterPartitions}{array, An array containing the following fields: 
 #' \itemize{
@@ -889,7 +1268,81 @@ clusters_get_kubernetes <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the deployments associated with a Kubernetes Cluster
+#' @param id integer required. The id of the cluster.
+#' @param base_type string optional. If specified, return deployments of these base types. It accepts a comma-separated list, possible values are 'Notebook', 'Service', 'Run'.
+#' @param state string optional. If specified, return deployments in these states. It accepts a comma-separated list, possible values are pending, running, terminated, sleeping
+#' @param limit integer optional. Number of results to return. Defaults to its maximum of 50.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to asc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The id of this deployment.}
+#' \item{name}{string, The name of the deployment.}
+#' \item{baseId}{integer, The id of the base object associated with the deployment.}
+#' \item{baseType}{string, The base type of this deployment.}
+#' \item{state}{string, The state of the deployment.}
+#' \item{cpu}{integer, The CPU in millicores required by the deployment.}
+#' \item{memory}{integer, The memory in MB required by the deployment.}
+#' \item{diskSpace}{integer, The disk space in GB required by the deployment.}
+#' \item{instanceType}{string, The EC2 instance type requested for the deployment.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' @export
+clusters_list_kubernetes_deployments <- function(id, base_type = NULL, state = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/clusters/kubernetes/{id}/deployments"
+  path_params  <- list(id = id)
+  query_params <- list(base_type = base_type, state = state, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get stats about deployments associated with a Kubernetes Cluster
+#' @param id integer required. The ID of this cluster.
+#' 
+#' @return  An array containing the following fields:
+#' \item{baseType}{string, The base type of this deployment}
+#' \item{state}{string, State of the deployment}
+#' \item{count}{integer, Number of deployments of base type and state}
+#' \item{totalCpu}{integer, Total amount of CPU in millicores for deployments of base type and state}
+#' \item{totalMemory}{integer, Total amount of Memory in megabytes for deployments of base type and state}
+#' @export
+clusters_list_kubernetes_deployment_stats <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/clusters/kubernetes/{id}/deployment_stats"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -906,11 +1359,12 @@ clusters_get_kubernetes <- function(id) {
 #' \item{instanceConfigs}{array, An array containing the following fields: 
 #' \itemize{
 #' \item instanceConfigId integer, The ID of this InstanceConfig.
-#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, and p2.xlarge.
+#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.
 #' \item minInstances integer, The minimum number of instances of that type in this cluster.
 #' \item maxInstances integer, The maximum number of instances of that type in this cluster.
-#' \item instanceMaxMemory number, The amount of memory (RAM) available to a single instance of that type in megabytes.
-#' \item instanceMaxCpu number, The number of processor shares available to a single instance of that type in millicores.
+#' \item instanceMaxMemory integer, The amount of memory (RAM) available to a single instance of that type in megabytes.
+#' \item instanceMaxCpu integer, The number of processor shares available to a single instance of that type in millicores.
+#' \item instanceMaxDisk integer, The amount of disk available to a single instance of that type in gigabytes.
 #' }}
 #' \item{defaultInstanceConfigId}{integer, The id of the InstanceConfig that is the default for this partition.}
 #' @export
@@ -924,7 +1378,7 @@ clusters_list_kubernetes_partitions <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -935,7 +1389,7 @@ clusters_list_kubernetes_partitions <- function(id) {
 #' @param id integer required. The ID of the cluster which this partition belongs to.
 #' @param instance_configs array required. An array containing the following fields: 
 #' \itemize{
-#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, and p2.xlarge.
+#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.
 #' \item minInstances integer, The minimum number of instances of that type in this cluster.
 #' \item maxInstances integer, The maximum number of instances of that type in this cluster.
 #' }
@@ -949,11 +1403,12 @@ clusters_list_kubernetes_partitions <- function(id) {
 #' \item{instanceConfigs}{array, An array containing the following fields: 
 #' \itemize{
 #' \item instanceConfigId integer, The ID of this InstanceConfig.
-#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, and p2.xlarge.
+#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.
 #' \item minInstances integer, The minimum number of instances of that type in this cluster.
 #' \item maxInstances integer, The maximum number of instances of that type in this cluster.
-#' \item instanceMaxMemory number, The amount of memory (RAM) available to a single instance of that type in megabytes.
-#' \item instanceMaxCpu number, The number of processor shares available to a single instance of that type in millicores.
+#' \item instanceMaxMemory integer, The amount of memory (RAM) available to a single instance of that type in megabytes.
+#' \item instanceMaxCpu integer, The number of processor shares available to a single instance of that type in millicores.
+#' \item instanceMaxDisk integer, The amount of disk available to a single instance of that type in gigabytes.
 #' }}
 #' \item{defaultInstanceConfigId}{integer, The id of the InstanceConfig that is the default for this partition.}
 #' @export
@@ -967,7 +1422,7 @@ clusters_post_kubernetes_partitions <- function(id, instance_configs, name, labe
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -979,7 +1434,7 @@ clusters_post_kubernetes_partitions <- function(id, instance_configs, name, labe
 #' @param cluster_partition_id integer required. The ID of this cluster partition.
 #' @param instance_configs array optional. An array containing the following fields: 
 #' \itemize{
-#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, and p2.xlarge.
+#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.
 #' \item minInstances integer, The minimum number of instances of that type in this cluster.
 #' \item maxInstances integer, The maximum number of instances of that type in this cluster.
 #' }
@@ -993,11 +1448,12 @@ clusters_post_kubernetes_partitions <- function(id, instance_configs, name, labe
 #' \item{instanceConfigs}{array, An array containing the following fields: 
 #' \itemize{
 #' \item instanceConfigId integer, The ID of this InstanceConfig.
-#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, and p2.xlarge.
+#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.
 #' \item minInstances integer, The minimum number of instances of that type in this cluster.
 #' \item maxInstances integer, The maximum number of instances of that type in this cluster.
-#' \item instanceMaxMemory number, The amount of memory (RAM) available to a single instance of that type in megabytes.
-#' \item instanceMaxCpu number, The number of processor shares available to a single instance of that type in millicores.
+#' \item instanceMaxMemory integer, The amount of memory (RAM) available to a single instance of that type in megabytes.
+#' \item instanceMaxCpu integer, The number of processor shares available to a single instance of that type in millicores.
+#' \item instanceMaxDisk integer, The amount of disk available to a single instance of that type in gigabytes.
 #' }}
 #' \item{defaultInstanceConfigId}{integer, The id of the InstanceConfig that is the default for this partition.}
 #' @export
@@ -1011,7 +1467,7 @@ clusters_patch_kubernetes_partitions <- function(id, cluster_partition_id, insta
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1034,7 +1490,7 @@ clusters_delete_kubernetes_partitions <- function(id, cluster_partition_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1052,11 +1508,12 @@ clusters_delete_kubernetes_partitions <- function(id, cluster_partition_id) {
 #' \item{instanceConfigs}{array, An array containing the following fields: 
 #' \itemize{
 #' \item instanceConfigId integer, The ID of this InstanceConfig.
-#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, and p2.xlarge.
+#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.
 #' \item minInstances integer, The minimum number of instances of that type in this cluster.
 #' \item maxInstances integer, The maximum number of instances of that type in this cluster.
-#' \item instanceMaxMemory number, The amount of memory (RAM) available to a single instance of that type in megabytes.
-#' \item instanceMaxCpu number, The number of processor shares available to a single instance of that type in millicores.
+#' \item instanceMaxMemory integer, The amount of memory (RAM) available to a single instance of that type in megabytes.
+#' \item instanceMaxCpu integer, The number of processor shares available to a single instance of that type in millicores.
+#' \item instanceMaxDisk integer, The amount of disk available to a single instance of that type in gigabytes.
 #' }}
 #' \item{defaultInstanceConfigId}{integer, The id of the InstanceConfig that is the default for this partition.}
 #' @export
@@ -1070,7 +1527,7 @@ clusters_get_kubernetes_partitions <- function(id, cluster_partition_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1099,7 +1556,7 @@ codes_list <- function(limit = NULL, type = NULL, featured = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1126,7 +1583,7 @@ codes_post <- function(name, type, body, readme, score = NULL, auth_s3_url = NUL
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1157,7 +1614,7 @@ codes_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1194,7 +1651,7 @@ codes_put <- function(id, name, type, body, readme, score = NULL, auth_s3_url = 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1222,7 +1679,7 @@ codes_patch <- function(id, name = NULL, type = NULL, body = NULL, readme = NULL
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1244,7 +1701,7 @@ codes_delete <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1253,6 +1710,7 @@ codes_delete <- function(id) {
 
 #' List credentials
 #' @param type string optional. The type (or types) of credentials to return. One or more of: Amazon Web Services S3, Bitbucket, BSD::API, CASS/NCOA PAF, Catalist::API, Catalist::SFTP, Certificate, Civis Platform, Custom, Database, Google, Github, JobTraits::Ftp, Salesforce User, Salesforce Client, Silverpop Application, Silverpop Refresh Token, Silverpop User, TableauUser, VAN::MyVoterFile, VAN::MyCampaign, and VAN::BothModes. Specify multiple values as a comma-separated list (e.g., "A,B").
+#' @param remote_host_id integer optional. The ID of the remote host associated with the credentials to return.
 #' @param default boolean optional. If true, will return a list with a single credential which is the current user's default credential.
 #' @param limit integer optional. Number of results to return. Defaults to its maximum of 1000.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
@@ -1272,17 +1730,17 @@ codes_delete <- function(id) {
 #' \item{createdAt}{string, The creation time for this credential.}
 #' \item{updatedAt}{string, The last modification time for this credential.}
 #' @export
-credentials_list <- function(type = NULL, default = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+credentials_list <- function(type = NULL, remote_host_id = NULL, default = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/credentials/"
   path_params  <- list()
-  query_params <- list(type = type, default = default, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(type = type, remote_host_id = remote_host_id, default = default, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1322,7 +1780,7 @@ credentials_post <- function(type, username, password, name = NULL, description 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1363,7 +1821,7 @@ credentials_put <- function(id, type, username, password, name = NULL, descripti
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1396,7 +1854,7 @@ credentials_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1405,7 +1863,7 @@ credentials_get <- function(id) {
 
 #' Authenticate against a remote host
 #' @param url string required. The URL to your host.
-#' @param remote_host_type string required. The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::Salesforce, and RemoteHostTypes::Van
+#' @param remote_host_type string required. The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, RemoteHostTypes::Salesforce, RemoteHostTypes::Snowflake, and RemoteHostTypes::Van
 #' @param username string required. The username for the credential.
 #' @param password string required. The password for the credential.
 #' 
@@ -1432,7 +1890,7 @@ credentials_post_authenticate <- function(url, remote_host_type, username, passw
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1458,7 +1916,7 @@ credentials_post_temporary <- function(id, duration = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1466,7 +1924,7 @@ credentials_post_temporary <- function(id, duration = NULL) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -1497,7 +1955,7 @@ credentials_list_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1505,9 +1963,9 @@ credentials_list_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -1540,7 +1998,7 @@ credentials_put_shares_users <- function(id, user_ids, permission_level, share_e
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1548,8 +2006,8 @@ credentials_put_shares_users <- function(id, user_ids, permission_level, share_e
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -1563,7 +2021,7 @@ credentials_delete_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1571,9 +2029,9 @@ credentials_delete_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -1606,7 +2064,7 @@ credentials_put_shares_groups <- function(id, group_ids, permission_level, share
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1614,8 +2072,8 @@ credentials_put_shares_groups <- function(id, group_ids, permission_level, share
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -1629,7 +2087,7 @@ credentials_delete_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1641,6 +2099,7 @@ credentials_delete_shares_groups <- function(id, group_id) {
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID for the database.}
 #' \item{name}{string, The name of the database.}
+#' \item{adapter}{string, The type of the database.}
 #' @export
 databases_list <- function() {
 
@@ -1652,7 +2111,32 @@ databases_list <- function() {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Show database information
+#' @param id integer required. The ID for the database.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the database.}
+#' \item{name}{string, The name of the database.}
+#' \item{adapter}{string, The type of the database.}
+#' @export
+databases_get <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/databases/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1675,7 +2159,32 @@ databases_list_schemas <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Creates and enqueues a schema scanner job
+#' @param id integer required. The ID of the database.
+#' @param schema string required. The name of the schema.
+#' 
+#' @return  A list containing the following elements:
+#' \item{jobId}{integer, The ID of the job created.}
+#' \item{runId}{integer, The ID of the run created.}
+#' @export
+databases_post_schemas_scan <- function(id, schema) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/databases/{id}/schemas/scan"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(schema = schema)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1726,7 +2235,7 @@ databases_list_tables <- function(id, name = NULL, limit = NULL, page_num = NULL
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1775,7 +2284,7 @@ databases_list_tables_search <- function(id, name = NULL, column_name = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1803,7 +2312,7 @@ databases_list_whitelist_ips <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1834,7 +2343,7 @@ databases_post_whitelist_ips <- function(id, subnet_mask) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1865,7 +2374,7 @@ databases_get_whitelist_ips <- function(id, whitelisted_ip_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1888,7 +2397,7 @@ databases_delete_whitelist_ips <- function(id, whitelisted_ip_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1909,7 +2418,7 @@ endpoints_list <- function() {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1931,7 +2440,7 @@ enhancements_list_types <- function() {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1954,7 +2463,7 @@ enhancements_list_field_mapping <- function() {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1998,7 +2507,7 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -2051,7 +2560,7 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' @param perform_ncoa boolean optional. Whether to update addresses for records matching the National Change of Address (NCOA) database.
 #' @param ncoa_credential_id integer optional. Credential to use when performing NCOA updates. Required if 'performNcoa' is true.
 #' @param output_level string optional. The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.
-#' @param limiting_sql string optional. The limiting sql.
+#' @param limiting_sql string optional. The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the enhancement.}
@@ -2120,7 +2629,7 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' \item{performNcoa}{boolean, Whether to update addresses for records matching the National Change of Address (NCOA) database.}
 #' \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 #' \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
-#' \item{limitingSQL}{string, The limiting sql.}
+#' \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 enhancements_post_cass_ncoa <- function(name, source, schedule = NULL, parent_id = NULL, notifications = NULL, destination = NULL, column_mapping = NULL, use_default_column_mapping = NULL, perform_ncoa = NULL, ncoa_credential_id = NULL, output_level = NULL, limiting_sql = NULL) {
@@ -2133,7 +2642,7 @@ enhancements_post_cass_ncoa <- function(name, source, schedule = NULL, parent_id
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -2210,7 +2719,7 @@ enhancements_post_cass_ncoa <- function(name, source, schedule = NULL, parent_id
 #' \item{performNcoa}{boolean, Whether to update addresses for records matching the National Change of Address (NCOA) database.}
 #' \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 #' \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
-#' \item{limitingSQL}{string, The limiting sql.}
+#' \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 enhancements_get_cass_ncoa <- function(id) {
@@ -2223,7 +2732,7 @@ enhancements_get_cass_ncoa <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -2277,7 +2786,7 @@ enhancements_get_cass_ncoa <- function(id) {
 #' @param perform_ncoa boolean optional. Whether to update addresses for records matching the National Change of Address (NCOA) database.
 #' @param ncoa_credential_id integer optional. Credential to use when performing NCOA updates. Required if 'performNcoa' is true.
 #' @param output_level string optional. The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.
-#' @param limiting_sql string optional. The limiting sql.
+#' @param limiting_sql string optional. The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the enhancement.}
@@ -2346,7 +2855,7 @@ enhancements_get_cass_ncoa <- function(id) {
 #' \item{performNcoa}{boolean, Whether to update addresses for records matching the National Change of Address (NCOA) database.}
 #' \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 #' \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
-#' \item{limitingSQL}{string, The limiting sql.}
+#' \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent_id = NULL, notifications = NULL, destination = NULL, column_mapping = NULL, use_default_column_mapping = NULL, perform_ncoa = NULL, ncoa_credential_id = NULL, output_level = NULL, limiting_sql = NULL) {
@@ -2359,7 +2868,7 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -2413,7 +2922,7 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' @param perform_ncoa boolean optional. Whether to update addresses for records matching the National Change of Address (NCOA) database.
 #' @param ncoa_credential_id integer optional. Credential to use when performing NCOA updates. Required if 'performNcoa' is true.
 #' @param output_level string optional. The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.
-#' @param limiting_sql string optional. The limiting sql.
+#' @param limiting_sql string optional. The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the enhancement.}
@@ -2482,7 +2991,7 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' \item{performNcoa}{boolean, Whether to update addresses for records matching the National Change of Address (NCOA) database.}
 #' \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 #' \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
-#' \item{limitingSQL}{string, The limiting sql.}
+#' \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 enhancements_patch_cass_ncoa <- function(id, name = NULL, schedule = NULL, parent_id = NULL, notifications = NULL, source = NULL, destination = NULL, column_mapping = NULL, use_default_column_mapping = NULL, perform_ncoa = NULL, ncoa_credential_id = NULL, output_level = NULL, limiting_sql = NULL) {
@@ -2495,7 +3004,7 @@ enhancements_patch_cass_ncoa <- function(id, name = NULL, schedule = NULL, paren
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -2524,7 +3033,7 @@ enhancements_post_cass_ncoa_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -2557,7 +3066,7 @@ enhancements_list_cass_ncoa_runs <- function(id, limit = NULL, page_num = NULL, 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -2587,7 +3096,7 @@ enhancements_get_cass_ncoa_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -2610,7 +3119,7 @@ enhancements_delete_cass_ncoa_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -2639,7 +3148,7 @@ enhancements_list_cass_ncoa_runs_logs <- function(id, run_id, last_id = NULL, li
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -2664,7 +3173,7 @@ enhancements_post_cass_ncoa_cancel <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -2696,7 +3205,614 @@ enhancements_list_cass_ncoa_runs_outputs <- function(id, run_id, limit = NULL, p
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a Geocode Enhancement
+#' @param name string required. The name of the enhancement job.
+#' @param remote_host_id integer required. The ID of the remote host.
+#' @param credential_id integer required. The ID of the remote host credential.
+#' @param source_schema_and_table string required. The source database schema and table.
+#' @param schedule list optional. A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }
+#' @param parent_id integer optional. Parent ID that triggers this enhancement.
+#' @param notifications list optional. A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }
+#' @param multipart_key array optional. The source table primary key.
+#' @param limiting_sql string optional. The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').
+#' @param target_schema string optional. The output table schema.
+#' @param target_table string optional. The output table name.
+#' @param country string optional. The country of the addresses to be geocoded; either 'us' or 'ca'.
+#' @param provider string optional. The geocoding provider; one of postgis, nominatim, and geocoder_ca.
+#' @param output_address boolean optional. Whether to output the parsed address. Only guaranteed for the 'postgis' provider.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{remoteHostId}{integer, The ID of the remote host.}
+#' \item{credentialId}{integer, The ID of the remote host credential.}
+#' \item{sourceSchemaAndTable}{string, The source database schema and table.}
+#' \item{multipartKey}{array, The source table primary key.}
+#' \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
+#' \item{targetSchema}{string, The output table schema.}
+#' \item{targetTable}{string, The output table name.}
+#' \item{country}{string, The country of the addresses to be geocoded; either 'us' or 'ca'.}
+#' \item{provider}{string, The geocoding provider; one of postgis, nominatim, and geocoder_ca.}
+#' \item{outputAddress}{boolean, Whether to output the parsed address. Only guaranteed for the 'postgis' provider.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+enhancements_post_geocode <- function(name, remote_host_id, credential_id, source_schema_and_table, schedule = NULL, parent_id = NULL, notifications = NULL, multipart_key = NULL, limiting_sql = NULL, target_schema = NULL, target_table = NULL, country = NULL, provider = NULL, output_address = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/geocode"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(name = name, remoteHostId = remote_host_id, credentialId = credential_id, sourceSchemaAndTable = source_schema_and_table, schedule = schedule, parentId = parent_id, notifications = notifications, multipartKey = multipart_key, limitingSQL = limiting_sql, targetSchema = target_schema, targetTable = target_table, country = country, provider = provider, outputAddress = output_address)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get a Geocode Enhancement
+#' @param id integer required. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{remoteHostId}{integer, The ID of the remote host.}
+#' \item{credentialId}{integer, The ID of the remote host credential.}
+#' \item{sourceSchemaAndTable}{string, The source database schema and table.}
+#' \item{multipartKey}{array, The source table primary key.}
+#' \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
+#' \item{targetSchema}{string, The output table schema.}
+#' \item{targetTable}{string, The output table name.}
+#' \item{country}{string, The country of the addresses to be geocoded; either 'us' or 'ca'.}
+#' \item{provider}{string, The geocoding provider; one of postgis, nominatim, and geocoder_ca.}
+#' \item{outputAddress}{boolean, Whether to output the parsed address. Only guaranteed for the 'postgis' provider.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+enhancements_get_geocode <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/geocode/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Replace all attributes of this Geocode Enhancement
+#' @param id integer required. The ID for the enhancement.
+#' @param name string required. The name of the enhancement job.
+#' @param remote_host_id integer required. The ID of the remote host.
+#' @param credential_id integer required. The ID of the remote host credential.
+#' @param source_schema_and_table string required. The source database schema and table.
+#' @param schedule list optional. A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }
+#' @param parent_id integer optional. Parent ID that triggers this enhancement.
+#' @param notifications list optional. A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }
+#' @param multipart_key array optional. The source table primary key.
+#' @param limiting_sql string optional. The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').
+#' @param target_schema string optional. The output table schema.
+#' @param target_table string optional. The output table name.
+#' @param country string optional. The country of the addresses to be geocoded; either 'us' or 'ca'.
+#' @param provider string optional. The geocoding provider; one of postgis, nominatim, and geocoder_ca.
+#' @param output_address boolean optional. Whether to output the parsed address. Only guaranteed for the 'postgis' provider.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{remoteHostId}{integer, The ID of the remote host.}
+#' \item{credentialId}{integer, The ID of the remote host credential.}
+#' \item{sourceSchemaAndTable}{string, The source database schema and table.}
+#' \item{multipartKey}{array, The source table primary key.}
+#' \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
+#' \item{targetSchema}{string, The output table schema.}
+#' \item{targetTable}{string, The output table name.}
+#' \item{country}{string, The country of the addresses to be geocoded; either 'us' or 'ca'.}
+#' \item{provider}{string, The geocoding provider; one of postgis, nominatim, and geocoder_ca.}
+#' \item{outputAddress}{boolean, Whether to output the parsed address. Only guaranteed for the 'postgis' provider.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+enhancements_put_geocode <- function(id, name, remote_host_id, credential_id, source_schema_and_table, schedule = NULL, parent_id = NULL, notifications = NULL, multipart_key = NULL, limiting_sql = NULL, target_schema = NULL, target_table = NULL, country = NULL, provider = NULL, output_address = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/geocode/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, remoteHostId = remote_host_id, credentialId = credential_id, sourceSchemaAndTable = source_schema_and_table, schedule = schedule, parentId = parent_id, notifications = notifications, multipartKey = multipart_key, limitingSQL = limiting_sql, targetSchema = target_schema, targetTable = target_table, country = country, provider = provider, outputAddress = output_address)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update some attributes of this Geocode Enhancement
+#' @param id integer required. The ID for the enhancement.
+#' @param name string optional. The name of the enhancement job.
+#' @param schedule list optional. A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }
+#' @param parent_id integer optional. Parent ID that triggers this enhancement.
+#' @param notifications list optional. A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }
+#' @param remote_host_id integer optional. The ID of the remote host.
+#' @param credential_id integer optional. The ID of the remote host credential.
+#' @param source_schema_and_table string optional. The source database schema and table.
+#' @param multipart_key array optional. The source table primary key.
+#' @param limiting_sql string optional. The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').
+#' @param target_schema string optional. The output table schema.
+#' @param target_table string optional. The output table name.
+#' @param country string optional. The country of the addresses to be geocoded; either 'us' or 'ca'.
+#' @param provider string optional. The geocoding provider; one of postgis, nominatim, and geocoder_ca.
+#' @param output_address boolean optional. Whether to output the parsed address. Only guaranteed for the 'postgis' provider.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the enhancement.}
+#' \item{name}{string, The name of the enhancement job.}
+#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
+#' \item{createdAt}{string, The time this enhancement was created.}
+#' \item{updatedAt}{string, The time the enhancement was last updated.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{state}{string, The status of the enhancement's last run}
+#' \item{schedule}{list, A list containing the following elements: 
+#' \itemize{
+#' \item scheduled boolean, If the item is scheduled.
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+#' \item scheduledHours array, Hours of the day it is scheduled on.
+#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+#' }}
+#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
+#' \item{notifications}{list, A list containing the following elements: 
+#' \itemize{
+#' \item urls array, URLs to receive a POST request at job completion
+#' \item successEmailSubject string, Custom subject line for success e-mail.
+#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
+#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
+#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
+#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
+#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
+#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
+#' \item successOn boolean, If success email notifications are on.
+#' \item failureOn boolean, If failure email notifications are on.
+#' }}
+#' \item{runningAs}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{remoteHostId}{integer, The ID of the remote host.}
+#' \item{credentialId}{integer, The ID of the remote host credential.}
+#' \item{sourceSchemaAndTable}{string, The source database schema and table.}
+#' \item{multipartKey}{array, The source table primary key.}
+#' \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
+#' \item{targetSchema}{string, The output table schema.}
+#' \item{targetTable}{string, The output table name.}
+#' \item{country}{string, The country of the addresses to be geocoded; either 'us' or 'ca'.}
+#' \item{provider}{string, The geocoding provider; one of postgis, nominatim, and geocoder_ca.}
+#' \item{outputAddress}{boolean, Whether to output the parsed address. Only guaranteed for the 'postgis' provider.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+enhancements_patch_geocode <- function(id, name = NULL, schedule = NULL, parent_id = NULL, notifications = NULL, remote_host_id = NULL, credential_id = NULL, source_schema_and_table = NULL, multipart_key = NULL, limiting_sql = NULL, target_schema = NULL, target_table = NULL, country = NULL, provider = NULL, output_address = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/geocode/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, schedule = schedule, parentId = parent_id, notifications = notifications, remoteHostId = remote_host_id, credentialId = credential_id, sourceSchemaAndTable = source_schema_and_table, multipartKey = multipart_key, limitingSQL = limiting_sql, targetSchema = target_schema, targetTable = target_table, country = country, provider = provider, outputAddress = output_address)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Start a run
+#' @param id integer required. The ID of the geocode.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the run.}
+#' \item{geocodeId}{integer, The ID of the geocode.}
+#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
+#' \item{error}{string, The error, if any, returned by the run.}
+#' @export
+enhancements_post_geocode_runs <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/geocode/{id}/runs"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List runs for the given geocode
+#' @param id integer required. The ID of the geocode.
+#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID of the run.}
+#' \item{geocodeId}{integer, The ID of the geocode.}
+#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
+#' \item{error}{string, The error, if any, returned by the run.}
+#' @export
+enhancements_list_geocode_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/geocode/{id}/runs"
+  path_params  <- list(id = id)
+  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Check status of a run
+#' @param id integer required. The ID of the geocode.
+#' @param run_id integer required. The ID of the run.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the run.}
+#' \item{geocodeId}{integer, The ID of the geocode.}
+#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
+#' \item{error}{string, The error, if any, returned by the run.}
+#' @export
+enhancements_get_geocode_runs <- function(id, run_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/geocode/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Cancel a run
+#' @param id integer required. The ID of the geocode.
+#' @param run_id integer required. The ID of the run.
+#' 
+#' @return  An empty HTTP response
+#' @export
+enhancements_delete_geocode_runs <- function(id, run_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/geocode/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get the logs for a run
+#' @param id integer required. The ID of the geocode.
+#' @param run_id integer required. The ID of the run.
+#' @param last_id integer optional. The ID of the last log message received. Log entries with this ID value or lower will be omitted.Logs are sorted by ID if this value is provided, and are otherwise sorted by createdAt.
+#' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID of the log.}
+#' \item{createdAt}{string, The time the log was created.}
+#' \item{message}{string, The log message.}
+#' \item{level}{string, The level of the log. One of unknown,fatal,error,warn,info,debug.}
+#' @export
+enhancements_list_geocode_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/geocode/{id}/runs/{run_id}/logs"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list(last_id = last_id, limit = limit)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Cancel a run
+#' @param id integer required. The ID of the job.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the run.}
+#' \item{state}{string, The state of the run, one of 'queued', 'running' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' @export
+enhancements_post_geocode_cancel <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/geocode/{id}/cancel"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the outputs for a run
+#' @param id integer required. The ID of the job.
+#' @param run_id integer required. The ID of the run.
+#' @param limit integer optional. Number of results to return. Defaults to its maximum of 50.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at, id.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, The type of the output. Valid values are File, Table, Report, Project, Credential, or JSONValue}
+#' \item{objectId}{integer, The ID of the output.}
+#' \item{name}{string, The name of the output.}
+#' \item{link}{string, The hypermedia link to the output.}
+#' \item{value}{string, }
+#' @export
+enhancements_list_geocode_runs_outputs <- function(id, run_id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/geocode/{id}/runs/{run_id}/outputs"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -2705,8 +3821,8 @@ enhancements_list_cass_ncoa_runs_outputs <- function(id, run_id, limit = NULL, p
 
 #' Create a Data Unification Enhancement
 #' @param name string required. The name of the enhancement job.
-#' @param field_mapping1 list required. The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.
-#' @param field_mapping2 list required. The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.
+#' @param field_mapping1 list required. The column mapping for Table 1. See /enhancements/field_mapping for list of valid fields.
+#' @param field_mapping2 list required. The column mapping for Table 2. See /enhancements/field_mapping for list of valid fields.
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
@@ -2735,22 +3851,19 @@ enhancements_list_cass_ncoa_runs_outputs <- function(id, run_id, limit = NULL, p
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param file1_id integer optional. The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.
 #' @param table2 list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param file2_id integer optional. The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.
 #' @param output_table list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param output_filename string optional. The name of the output file. This should be set if and only if file1Id and file2Id are set.
-#' @param max_matches integer optional. The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.
+#' @param max_matches integer optional. The maximum number of matches per record in Table 1 to return. Must be between 0 and 10. 0 returns all matches.
 #' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
 #' 
 #' @return  A list containing the following elements:
@@ -2798,43 +3911,40 @@ enhancements_list_cass_ncoa_runs_outputs <- function(id, run_id, limit = NULL, p
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{fieldMapping1}{list, The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.}
+#' \item{fieldMapping1}{list, The column mapping for Table 1. See /enhancements/field_mapping for list of valid fields.}
 #' \item{table1}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{file1Id}{integer, The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.}
-#' \item{fieldMapping2}{list, The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.}
+#' \item{fieldMapping2}{list, The column mapping for Table 2. See /enhancements/field_mapping for list of valid fields.}
 #' \item{table2}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{file2Id}{integer, The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.}
 #' \item{outputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{outputFilename}{string, The name of the output file. This should be set if and only if file1Id and file2Id are set.}
-#' \item{maxMatches}{integer, The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in Table 1 to return. Must be between 0 and 10. 0 returns all matches.}
 #' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' @export
-enhancements_post_data_unification <- function(name, field_mapping1, field_mapping2, schedule = NULL, parent_id = NULL, notifications = NULL, table1 = NULL, file1_id = NULL, table2 = NULL, file2_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+enhancements_post_data_unification <- function(name, field_mapping1, field_mapping2, schedule = NULL, parent_id = NULL, notifications = NULL, table1 = NULL, table2 = NULL, output_table = NULL, max_matches = NULL, threshold = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/enhancements/data-unification"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, fieldMapping1 = field_mapping1, fieldMapping2 = field_mapping2, schedule = schedule, parentId = parent_id, notifications = notifications, table1 = table1, file1Id = file1_id, table2 = table2, file2Id = file2_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  body_params  <- list(name = name, fieldMapping1 = field_mapping1, fieldMapping2 = field_mapping2, schedule = schedule, parentId = parent_id, notifications = notifications, table1 = table1, table2 = table2, outputTable = output_table, maxMatches = max_matches, threshold = threshold)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -2889,30 +3999,27 @@ enhancements_post_data_unification <- function(name, field_mapping1, field_mappi
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{fieldMapping1}{list, The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.}
+#' \item{fieldMapping1}{list, The column mapping for Table 1. See /enhancements/field_mapping for list of valid fields.}
 #' \item{table1}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{file1Id}{integer, The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.}
-#' \item{fieldMapping2}{list, The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.}
+#' \item{fieldMapping2}{list, The column mapping for Table 2. See /enhancements/field_mapping for list of valid fields.}
 #' \item{table2}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{file2Id}{integer, The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.}
 #' \item{outputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{outputFilename}{string, The name of the output file. This should be set if and only if file1Id and file2Id are set.}
-#' \item{maxMatches}{integer, The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in Table 1 to return. Must be between 0 and 10. 0 returns all matches.}
 #' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' @export
 enhancements_get_data_unification <- function(id) {
@@ -2925,7 +4032,7 @@ enhancements_get_data_unification <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -2935,8 +4042,8 @@ enhancements_get_data_unification <- function(id) {
 #' Replace all attributes of this Data Unification Enhancement
 #' @param id integer required. The ID for the enhancement.
 #' @param name string required. The name of the enhancement job.
-#' @param field_mapping1 list required. The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.
-#' @param field_mapping2 list required. The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.
+#' @param field_mapping1 list required. The column mapping for Table 1. See /enhancements/field_mapping for list of valid fields.
+#' @param field_mapping2 list required. The column mapping for Table 2. See /enhancements/field_mapping for list of valid fields.
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
@@ -2965,22 +4072,19 @@ enhancements_get_data_unification <- function(id) {
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param file1_id integer optional. The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.
 #' @param table2 list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param file2_id integer optional. The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.
 #' @param output_table list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param output_filename string optional. The name of the output file. This should be set if and only if file1Id and file2Id are set.
-#' @param max_matches integer optional. The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.
+#' @param max_matches integer optional. The maximum number of matches per record in Table 1 to return. Must be between 0 and 10. 0 returns all matches.
 #' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
 #' 
 #' @return  A list containing the following elements:
@@ -3028,43 +4132,40 @@ enhancements_get_data_unification <- function(id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{fieldMapping1}{list, The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.}
+#' \item{fieldMapping1}{list, The column mapping for Table 1. See /enhancements/field_mapping for list of valid fields.}
 #' \item{table1}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{file1Id}{integer, The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.}
-#' \item{fieldMapping2}{list, The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.}
+#' \item{fieldMapping2}{list, The column mapping for Table 2. See /enhancements/field_mapping for list of valid fields.}
 #' \item{table2}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{file2Id}{integer, The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.}
 #' \item{outputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{outputFilename}{string, The name of the output file. This should be set if and only if file1Id and file2Id are set.}
-#' \item{maxMatches}{integer, The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in Table 1 to return. Must be between 0 and 10. 0 returns all matches.}
 #' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' @export
-enhancements_put_data_unification <- function(id, name, field_mapping1, field_mapping2, schedule = NULL, parent_id = NULL, notifications = NULL, table1 = NULL, file1_id = NULL, table2 = NULL, file2_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+enhancements_put_data_unification <- function(id, name, field_mapping1, field_mapping2, schedule = NULL, parent_id = NULL, notifications = NULL, table1 = NULL, table2 = NULL, output_table = NULL, max_matches = NULL, threshold = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/enhancements/data-unification/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, fieldMapping1 = field_mapping1, fieldMapping2 = field_mapping2, schedule = schedule, parentId = parent_id, notifications = notifications, table1 = table1, file1Id = file1_id, table2 = table2, file2Id = file2_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  body_params  <- list(name = name, fieldMapping1 = field_mapping1, fieldMapping2 = field_mapping2, schedule = schedule, parentId = parent_id, notifications = notifications, table1 = table1, table2 = table2, outputTable = output_table, maxMatches = max_matches, threshold = threshold)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3096,30 +4197,27 @@ enhancements_put_data_unification <- function(id, name, field_mapping1, field_ma
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }
-#' @param field_mapping1 list optional. The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.
+#' @param field_mapping1 list optional. The column mapping for Table 1. See /enhancements/field_mapping for list of valid fields.
 #' @param table1 list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param file1_id integer optional. The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.
-#' @param field_mapping2 list optional. The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.
+#' @param field_mapping2 list optional. The column mapping for Table 2. See /enhancements/field_mapping for list of valid fields.
 #' @param table2 list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param file2_id integer optional. The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.
 #' @param output_table list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param output_filename string optional. The name of the output file. This should be set if and only if file1Id and file2Id are set.
-#' @param max_matches integer optional. The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.
+#' @param max_matches integer optional. The maximum number of matches per record in Table 1 to return. Must be between 0 and 10. 0 returns all matches.
 #' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
 #' 
 #' @return  A list containing the following elements:
@@ -3167,43 +4265,40 @@ enhancements_put_data_unification <- function(id, name, field_mapping1, field_ma
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{fieldMapping1}{list, The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.}
+#' \item{fieldMapping1}{list, The column mapping for Table 1. See /enhancements/field_mapping for list of valid fields.}
 #' \item{table1}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{file1Id}{integer, The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.}
-#' \item{fieldMapping2}{list, The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.}
+#' \item{fieldMapping2}{list, The column mapping for Table 2. See /enhancements/field_mapping for list of valid fields.}
 #' \item{table2}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{file2Id}{integer, The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.}
 #' \item{outputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{outputFilename}{string, The name of the output file. This should be set if and only if file1Id and file2Id are set.}
-#' \item{maxMatches}{integer, The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in Table 1 to return. Must be between 0 and 10. 0 returns all matches.}
 #' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' @export
-enhancements_patch_data_unification <- function(id, name = NULL, schedule = NULL, parent_id = NULL, notifications = NULL, field_mapping1 = NULL, table1 = NULL, file1_id = NULL, field_mapping2 = NULL, table2 = NULL, file2_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+enhancements_patch_data_unification <- function(id, name = NULL, schedule = NULL, parent_id = NULL, notifications = NULL, field_mapping1 = NULL, table1 = NULL, field_mapping2 = NULL, table2 = NULL, output_table = NULL, max_matches = NULL, threshold = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/enhancements/data-unification/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, schedule = schedule, parentId = parent_id, notifications = notifications, fieldMapping1 = field_mapping1, table1 = table1, file1Id = file1_id, fieldMapping2 = field_mapping2, table2 = table2, file2Id = file2_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  body_params  <- list(name = name, schedule = schedule, parentId = parent_id, notifications = notifications, fieldMapping1 = field_mapping1, table1 = table1, fieldMapping2 = field_mapping2, table2 = table2, outputTable = output_table, maxMatches = max_matches, threshold = threshold)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3232,7 +4327,7 @@ enhancements_post_data_unification_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3265,7 +4360,7 @@ enhancements_list_data_unification_runs <- function(id, limit = NULL, page_num =
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3295,7 +4390,7 @@ enhancements_get_data_unification_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3318,7 +4413,7 @@ enhancements_delete_data_unification_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3347,7 +4442,7 @@ enhancements_list_data_unification_runs_logs <- function(id, run_id, last_id = N
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3372,7 +4467,7 @@ enhancements_post_data_unification_cancel <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3404,7 +4499,7 @@ enhancements_list_data_unification_runs_outputs <- function(id, run_id, limit = 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3442,15 +4537,13 @@ enhancements_list_data_unification_runs_outputs <- function(id, run_id, limit = 
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param input_file_id integer optional. The ID for the input file. This should be set if and only if inputTable and outputTable are not set.
 #' @param output_table list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param output_filename string optional. The name of the output file. This should be set if and only if inputFileId is set.
-#' @param max_matches integer optional. The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.
+#' @param max_matches integer optional. The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.
 #' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
 #' 
 #' @return  A list containing the following elements:
@@ -3505,28 +4598,26 @@ enhancements_list_data_unification_runs_outputs <- function(id, run_id, limit = 
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
 #' \item{outputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
-#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
 #' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' @export
-enhancements_post_table_deduplication <- function(name, input_field_mapping, schedule = NULL, parent_id = NULL, notifications = NULL, input_table = NULL, input_file_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+enhancements_post_table_deduplication <- function(name, input_field_mapping, schedule = NULL, parent_id = NULL, notifications = NULL, input_table = NULL, output_table = NULL, max_matches = NULL, threshold = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/enhancements/table-deduplication"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, inputFieldMapping = input_field_mapping, schedule = schedule, parentId = parent_id, notifications = notifications, inputTable = input_table, inputFileId = input_file_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  body_params  <- list(name = name, inputFieldMapping = input_field_mapping, schedule = schedule, parentId = parent_id, notifications = notifications, inputTable = input_table, outputTable = output_table, maxMatches = max_matches, threshold = threshold)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3588,15 +4679,13 @@ enhancements_post_table_deduplication <- function(name, input_field_mapping, sch
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
 #' \item{outputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
-#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
 #' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' @export
 enhancements_get_table_deduplication <- function(id) {
@@ -3609,7 +4698,7 @@ enhancements_get_table_deduplication <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3648,15 +4737,13 @@ enhancements_get_table_deduplication <- function(id) {
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param input_file_id integer optional. The ID for the input file. This should be set if and only if inputTable and outputTable are not set.
 #' @param output_table list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param output_filename string optional. The name of the output file. This should be set if and only if inputFileId is set.
-#' @param max_matches integer optional. The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.
+#' @param max_matches integer optional. The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.
 #' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
 #' 
 #' @return  A list containing the following elements:
@@ -3711,28 +4798,26 @@ enhancements_get_table_deduplication <- function(id) {
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
 #' \item{outputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
-#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
 #' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' @export
-enhancements_put_table_deduplication <- function(id, name, input_field_mapping, schedule = NULL, parent_id = NULL, notifications = NULL, input_table = NULL, input_file_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+enhancements_put_table_deduplication <- function(id, name, input_field_mapping, schedule = NULL, parent_id = NULL, notifications = NULL, input_table = NULL, output_table = NULL, max_matches = NULL, threshold = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/enhancements/table-deduplication/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, inputFieldMapping = input_field_mapping, schedule = schedule, parentId = parent_id, notifications = notifications, inputTable = input_table, inputFileId = input_file_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  body_params  <- list(name = name, inputFieldMapping = input_field_mapping, schedule = schedule, parentId = parent_id, notifications = notifications, inputTable = input_table, outputTable = output_table, maxMatches = max_matches, threshold = threshold)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3771,15 +4856,13 @@ enhancements_put_table_deduplication <- function(id, name, input_field_mapping, 
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param input_file_id integer optional. The ID for the input file. This should be set if and only if inputTable and outputTable are not set.
 #' @param output_table list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param output_filename string optional. The name of the output file. This should be set if and only if inputFileId is set.
-#' @param max_matches integer optional. The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.
+#' @param max_matches integer optional. The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.
 #' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
 #' 
 #' @return  A list containing the following elements:
@@ -3834,28 +4917,26 @@ enhancements_put_table_deduplication <- function(id, name, input_field_mapping, 
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
 #' \item{outputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
-#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
 #' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' @export
-enhancements_patch_table_deduplication <- function(id, name = NULL, schedule = NULL, parent_id = NULL, notifications = NULL, input_field_mapping = NULL, input_table = NULL, input_file_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+enhancements_patch_table_deduplication <- function(id, name = NULL, schedule = NULL, parent_id = NULL, notifications = NULL, input_field_mapping = NULL, input_table = NULL, output_table = NULL, max_matches = NULL, threshold = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/enhancements/table-deduplication/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, schedule = schedule, parentId = parent_id, notifications = notifications, inputFieldMapping = input_field_mapping, inputTable = input_table, inputFileId = input_file_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  body_params  <- list(name = name, schedule = schedule, parentId = parent_id, notifications = notifications, inputFieldMapping = input_field_mapping, inputTable = input_table, outputTable = output_table, maxMatches = max_matches, threshold = threshold)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3884,7 +4965,7 @@ enhancements_post_table_deduplication_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3917,7 +4998,7 @@ enhancements_list_table_deduplication_runs <- function(id, limit = NULL, page_nu
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3947,7 +5028,7 @@ enhancements_get_table_deduplication_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3970,7 +5051,7 @@ enhancements_delete_table_deduplication_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3999,7 +5080,7 @@ enhancements_list_table_deduplication_runs_logs <- function(id, run_id, last_id 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4024,7 +5105,7 @@ enhancements_post_table_deduplication_cancel <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4056,7 +5137,7 @@ enhancements_list_table_deduplication_runs_outputs <- function(id, run_id, limit
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4065,7 +5146,7 @@ enhancements_list_table_deduplication_runs_outputs <- function(id, run_id, limit
 
 #' Create a Civis Data Match Enhancement
 #' @param name string required. The name of the enhancement job.
-#' @param input_field_mapping list required. The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.
+#' @param input_field_mapping list required. The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.
 #' @param match_target_id integer required. The ID of the Civis Data match target. See /match_targets for IDs.
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
@@ -4095,15 +5176,13 @@ enhancements_list_table_deduplication_runs_outputs <- function(id, run_id, limit
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param input_file_id integer optional. The ID for the input file. This should be set if and only if inputTable and outputTable are not set.
 #' @param output_table list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param output_filename string optional. The name of the output file. This should be set if and only if inputFileId is set.
-#' @param max_matches integer optional. The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.
+#' @param max_matches integer optional. The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.
 #' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
 #' 
 #' @return  A list containing the following elements:
@@ -4151,14 +5230,13 @@ enhancements_list_table_deduplication_runs_outputs <- function(id, run_id, limit
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{inputFieldMapping}{list, The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.}
+#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
 #' \item{inputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
 #' \item{matchTargetId}{integer, The ID of the Civis Data match target. See /match_targets for IDs.}
 #' \item{outputTable}{list, A list containing the following elements: 
 #' \itemize{
@@ -4166,21 +5244,20 @@ enhancements_list_table_deduplication_runs_outputs <- function(id, run_id, limit
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
-#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
 #' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' @export
-enhancements_post_civis_data_match <- function(name, input_field_mapping, match_target_id, schedule = NULL, parent_id = NULL, notifications = NULL, input_table = NULL, input_file_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+enhancements_post_civis_data_match <- function(name, input_field_mapping, match_target_id, schedule = NULL, parent_id = NULL, notifications = NULL, input_table = NULL, output_table = NULL, max_matches = NULL, threshold = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/enhancements/civis-data-match"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, inputFieldMapping = input_field_mapping, matchTargetId = match_target_id, schedule = schedule, parentId = parent_id, notifications = notifications, inputTable = input_table, inputFileId = input_file_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  body_params  <- list(name = name, inputFieldMapping = input_field_mapping, matchTargetId = match_target_id, schedule = schedule, parentId = parent_id, notifications = notifications, inputTable = input_table, outputTable = output_table, maxMatches = max_matches, threshold = threshold)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4235,14 +5312,13 @@ enhancements_post_civis_data_match <- function(name, input_field_mapping, match_
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{inputFieldMapping}{list, The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.}
+#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
 #' \item{inputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
 #' \item{matchTargetId}{integer, The ID of the Civis Data match target. See /match_targets for IDs.}
 #' \item{outputTable}{list, A list containing the following elements: 
 #' \itemize{
@@ -4250,8 +5326,7 @@ enhancements_post_civis_data_match <- function(name, input_field_mapping, match_
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
-#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
 #' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' @export
 enhancements_get_civis_data_match <- function(id) {
@@ -4264,7 +5339,7 @@ enhancements_get_civis_data_match <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4274,7 +5349,7 @@ enhancements_get_civis_data_match <- function(id) {
 #' Replace all attributes of this Civis Data Match Enhancement
 #' @param id integer required. The ID for the enhancement.
 #' @param name string required. The name of the enhancement job.
-#' @param input_field_mapping list required. The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.
+#' @param input_field_mapping list required. The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.
 #' @param match_target_id integer required. The ID of the Civis Data match target. See /match_targets for IDs.
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
@@ -4304,15 +5379,13 @@ enhancements_get_civis_data_match <- function(id) {
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param input_file_id integer optional. The ID for the input file. This should be set if and only if inputTable and outputTable are not set.
 #' @param output_table list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param output_filename string optional. The name of the output file. This should be set if and only if inputFileId is set.
-#' @param max_matches integer optional. The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.
+#' @param max_matches integer optional. The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.
 #' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
 #' 
 #' @return  A list containing the following elements:
@@ -4360,14 +5433,13 @@ enhancements_get_civis_data_match <- function(id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{inputFieldMapping}{list, The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.}
+#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
 #' \item{inputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
 #' \item{matchTargetId}{integer, The ID of the Civis Data match target. See /match_targets for IDs.}
 #' \item{outputTable}{list, A list containing the following elements: 
 #' \itemize{
@@ -4375,21 +5447,20 @@ enhancements_get_civis_data_match <- function(id) {
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
-#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
 #' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' @export
-enhancements_put_civis_data_match <- function(id, name, input_field_mapping, match_target_id, schedule = NULL, parent_id = NULL, notifications = NULL, input_table = NULL, input_file_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+enhancements_put_civis_data_match <- function(id, name, input_field_mapping, match_target_id, schedule = NULL, parent_id = NULL, notifications = NULL, input_table = NULL, output_table = NULL, max_matches = NULL, threshold = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/enhancements/civis-data-match/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, inputFieldMapping = input_field_mapping, matchTargetId = match_target_id, schedule = schedule, parentId = parent_id, notifications = notifications, inputTable = input_table, inputFileId = input_file_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  body_params  <- list(name = name, inputFieldMapping = input_field_mapping, matchTargetId = match_target_id, schedule = schedule, parentId = parent_id, notifications = notifications, inputTable = input_table, outputTable = output_table, maxMatches = max_matches, threshold = threshold)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4421,14 +5492,13 @@ enhancements_put_civis_data_match <- function(id, name, input_field_mapping, mat
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }
-#' @param input_field_mapping list optional. The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.
+#' @param input_field_mapping list optional. The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.
 #' @param input_table list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param input_file_id integer optional. The ID for the input file. This should be set if and only if inputTable and outputTable are not set.
 #' @param match_target_id integer optional. The ID of the Civis Data match target. See /match_targets for IDs.
 #' @param output_table list optional. A list containing the following elements: 
 #' \itemize{
@@ -4436,8 +5506,7 @@ enhancements_put_civis_data_match <- function(id, name, input_field_mapping, mat
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }
-#' @param output_filename string optional. The name of the output file. This should be set if and only if inputFileId is set.
-#' @param max_matches integer optional. The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.
+#' @param max_matches integer optional. The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.
 #' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
 #' 
 #' @return  A list containing the following elements:
@@ -4485,14 +5554,13 @@ enhancements_put_civis_data_match <- function(id, name, input_field_mapping, mat
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{inputFieldMapping}{list, The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.}
+#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
 #' \item{inputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
 #' \item{matchTargetId}{integer, The ID of the Civis Data match target. See /match_targets for IDs.}
 #' \item{outputTable}{list, A list containing the following elements: 
 #' \itemize{
@@ -4500,21 +5568,20 @@ enhancements_put_civis_data_match <- function(id, name, input_field_mapping, mat
 #' \item schema string, The schema name for the table.
 #' \item table string, The table name.
 #' }}
-#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
-#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+#' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
 #' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' @export
-enhancements_patch_civis_data_match <- function(id, name = NULL, schedule = NULL, parent_id = NULL, notifications = NULL, input_field_mapping = NULL, input_table = NULL, input_file_id = NULL, match_target_id = NULL, output_table = NULL, output_filename = NULL, max_matches = NULL, threshold = NULL) {
+enhancements_patch_civis_data_match <- function(id, name = NULL, schedule = NULL, parent_id = NULL, notifications = NULL, input_field_mapping = NULL, input_table = NULL, match_target_id = NULL, output_table = NULL, max_matches = NULL, threshold = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/enhancements/civis-data-match/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, schedule = schedule, parentId = parent_id, notifications = notifications, inputFieldMapping = input_field_mapping, inputTable = input_table, inputFileId = input_file_id, matchTargetId = match_target_id, outputTable = output_table, outputFilename = output_filename, maxMatches = max_matches, threshold = threshold)
+  body_params  <- list(name = name, schedule = schedule, parentId = parent_id, notifications = notifications, inputFieldMapping = input_field_mapping, inputTable = input_table, matchTargetId = match_target_id, outputTable = output_table, maxMatches = max_matches, threshold = threshold)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4543,7 +5610,7 @@ enhancements_post_civis_data_match_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4576,7 +5643,7 @@ enhancements_list_civis_data_match_runs <- function(id, limit = NULL, page_num =
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4606,7 +5673,7 @@ enhancements_get_civis_data_match_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4629,7 +5696,7 @@ enhancements_delete_civis_data_match_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4658,7 +5725,7 @@ enhancements_list_civis_data_match_runs_logs <- function(id, run_id, last_id = N
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4683,7 +5750,7 @@ enhancements_post_civis_data_match_cancel <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4715,7 +5782,7 @@ enhancements_list_civis_data_match_runs_outputs <- function(id, run_id, limit = 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4723,7 +5790,7 @@ enhancements_list_civis_data_match_runs_outputs <- function(id, run_id, limit = 
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -4754,7 +5821,7 @@ enhancements_list_cass_ncoa_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4762,9 +5829,9 @@ enhancements_list_cass_ncoa_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -4797,7 +5864,7 @@ enhancements_put_cass_ncoa_shares_users <- function(id, user_ids, permission_lev
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4805,8 +5872,8 @@ enhancements_put_cass_ncoa_shares_users <- function(id, user_ids, permission_lev
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -4820,7 +5887,7 @@ enhancements_delete_cass_ncoa_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4828,9 +5895,9 @@ enhancements_delete_cass_ncoa_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -4863,7 +5930,7 @@ enhancements_put_cass_ncoa_shares_groups <- function(id, group_ids, permission_l
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4871,8 +5938,8 @@ enhancements_put_cass_ncoa_shares_groups <- function(id, group_ids, permission_l
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -4886,14 +5953,14 @@ enhancements_delete_cass_ncoa_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a JobTypes::CassNcoa belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -4932,14 +5999,14 @@ enhancements_list_cass_ncoa_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a JobTypes::CassNcoa to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -4955,14 +6022,14 @@ enhancements_put_cass_ncoa_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a JobTypes::CassNcoa from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -4978,7 +6045,7 @@ enhancements_delete_cass_ncoa_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -5056,7 +6123,7 @@ enhancements_delete_cass_ncoa_projects <- function(id, project_id) {
 #' \item{performNcoa}{boolean, Whether to update addresses for records matching the National Change of Address (NCOA) database.}
 #' \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 #' \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
-#' \item{limitingSQL}{string, The limiting sql.}
+#' \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 enhancements_put_cass_ncoa_archive <- function(id, status) {
@@ -5069,7 +6136,7 @@ enhancements_put_cass_ncoa_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -5077,7 +6144,7 @@ enhancements_put_cass_ncoa_archive <- function(id, status) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -5098,17 +6165,17 @@ enhancements_put_cass_ncoa_archive <- function(id, status) {
 #' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
 #' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
 #' @export
-enhancements_list_person_matching_shares <- function(id) {
+enhancements_list_geocode_shares <- function(id) {
 
   args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}/shares"
+  path <- "/enhancements/geocode/{id}/shares"
   path_params  <- list(id = id)
   query_params <- list()
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -5116,9 +6183,9 @@ enhancements_list_person_matching_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -5141,17 +6208,17 @@ enhancements_list_person_matching_shares <- function(id) {
 #' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
 #' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
 #' @export
-enhancements_put_person_matching_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+enhancements_put_geocode_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
 
   args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}/shares/users"
+  path <- "/enhancements/geocode/{id}/shares/users"
   path_params  <- list(id = id)
   query_params <- list()
   body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -5159,22 +6226,22 @@ enhancements_put_person_matching_shares_users <- function(id, user_ids, permissi
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
-enhancements_delete_person_matching_shares_users <- function(id, user_id) {
+enhancements_delete_geocode_shares_users <- function(id, user_id) {
 
   args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}/shares/users/{user_id}"
+  path <- "/enhancements/geocode/{id}/shares/users/{user_id}"
   path_params  <- list(id = id, user_id = user_id)
   query_params <- list()
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -5182,9 +6249,9 @@ enhancements_delete_person_matching_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -5207,17 +6274,17 @@ enhancements_delete_person_matching_shares_users <- function(id, user_id) {
 #' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
 #' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
 #' @export
-enhancements_put_person_matching_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+enhancements_put_geocode_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
 
   args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}/shares/groups"
+  path <- "/enhancements/geocode/{id}/shares/groups"
   path_params  <- list(id = id)
   query_params <- list()
   body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -5225,29 +6292,29 @@ enhancements_put_person_matching_shares_groups <- function(id, group_ids, permis
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
-enhancements_delete_person_matching_shares_groups <- function(id, group_id) {
+enhancements_delete_geocode_shares_groups <- function(id, group_id) {
 
   args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}/shares/groups/{group_id}"
+  path <- "/enhancements/geocode/{id}/shares/groups/{group_id}"
   path_params  <- list(id = id, group_id = group_id)
   query_params <- list()
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a container docker belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -5276,63 +6343,63 @@ enhancements_delete_person_matching_shares_groups <- function(id, group_id) {
 #' \item{updatedAt}{string, }
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
-enhancements_list_person_matching_projects <- function(id, hidden = NULL) {
+enhancements_list_geocode_projects <- function(id, hidden = NULL) {
 
   args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}/projects"
+  path <- "/enhancements/geocode/{id}/projects"
   path_params  <- list(id = id)
   query_params <- list(hidden = hidden)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a container docker to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
 #' @return  An empty HTTP response
 #' @export
-enhancements_put_person_matching_projects <- function(id, project_id) {
+enhancements_put_geocode_projects <- function(id, project_id) {
 
   args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}/projects/{project_id}"
+  path <- "/enhancements/geocode/{id}/projects/{project_id}"
   path_params  <- list(id = id, project_id = project_id)
   query_params <- list()
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a container docker from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
 #' @return  An empty HTTP response
 #' @export
-enhancements_delete_person_matching_projects <- function(id, project_id) {
+enhancements_delete_geocode_projects <- function(id, project_id) {
 
   args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}/projects/{project_id}"
+  path <- "/enhancements/geocode/{id}/projects/{project_id}"
   path_params  <- list(id = id, project_id = project_id)
   query_params <- list()
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -5388,1093 +6455,29 @@ enhancements_delete_person_matching_projects <- function(id, project_id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{configuration}{list, A list containing the following elements: 
-#' \itemize{
-#' \item task string, The type of person matching task. Options are: "table_to_table", "dedupe_table", or "table_to_civis_data".
-#' \item source string, The input source of your data. Options are: "redshift" or "s3".
-#' \item inputDatabaseName string, The Redshift database name for input data.
-#' \item inputSchema string, The schema name for the input data.
-#' \item inputTable string, The table name for the input data.
-#' \item inputFileId string, The ID of the input S3 file.
-#' \item inputFieldMapping string, The column mapping for the input in JSON or YAML.
-#' \item inputFileHeaders string, Provide your headers in a list if the first row of your input does not have the headers, and make them JSON-decodable. For example: ["col1","col2","col3"].
-#' \item targetDatabaseName string, The Redshift database for target data.
-#' \item targetSchema string, The schema for target data.
-#' \item targetTable string, The table for target data.
-#' \item targetFieldMapping string, The column mapping for the target in JSON or YAML.
-#' \item targetFileId string, The ID of the target S3 file.
-#' \item matchTargetId integer, The ID of the match target.
-#' \item matchDatabaseName string, The Redshift database for the match output table.
-#' \item matchSchema string, The schema for the match output table.
-#' \item matchTable string, The name of the match output table.
-#' \item matchCsvFilename string, The name of the match output file.
-#' \item matchSourceIdCol string, The name of the column in the output table that will hold the id from the source for each match.
-#' \item matchTargetIdCol string, The name the column in the output table that will hold the id from the target for each match.
-#' \item maxMatches integer, The maximum number of matches to return.
-#' \item threshold number, The score threshold (between 0 and 1).
-#' }}
-#' @export
-enhancements_put_person_matching_archive <- function(id, status) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/person-matching/{id}/archive"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(status = status)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
-#' 
-#' @return  An array containing the following fields:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-enhancements_list_data_unification_shares <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}/shares"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
-#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
-#' @param send_shared_email boolean optional. Send email to the recipients of a share.
-#' 
-#' @return  A list containing the following elements:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-enhancements_put_data_unification_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}/shares/users"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
-#' 
-#' @return  An empty HTTP response
-#' @export
-enhancements_delete_data_unification_shares_users <- function(id, user_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}/shares/users/{user_id}"
-  path_params  <- list(id = id, user_id = user_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
-#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
-#' @param send_shared_email boolean optional. Send email to the recipients of a share.
-#' 
-#' @return  A list containing the following elements:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-enhancements_put_data_unification_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}/shares/groups"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
-#' 
-#' @return  An empty HTTP response
-#' @export
-enhancements_delete_data_unification_shares_groups <- function(id, group_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}/shares/groups/{group_id}"
-  path_params  <- list(id = id, group_id = group_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List the projects a container docker belongs to
-#' @param id integer required. The ID of the resource.
-#' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID for this project.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{name}{string, The name of this project.}
-#' \item{description}{string, A description of the project.}
-#' \item{users}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{autoShare}{boolean, }
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
+#' \item{remoteHostId}{integer, The ID of the remote host.}
+#' \item{credentialId}{integer, The ID of the remote host credential.}
+#' \item{sourceSchemaAndTable}{string, The source database schema and table.}
+#' \item{multipartKey}{array, The source table primary key.}
+#' \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
+#' \item{targetSchema}{string, The output table schema.}
+#' \item{targetTable}{string, The output table name.}
+#' \item{country}{string, The country of the addresses to be geocoded; either 'us' or 'ca'.}
+#' \item{provider}{string, The geocoding provider; one of postgis, nominatim, and geocoder_ca.}
+#' \item{outputAddress}{boolean, Whether to output the parsed address. Only guaranteed for the 'postgis' provider.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
-enhancements_list_data_unification_projects <- function(id, hidden = NULL) {
+enhancements_put_geocode_archive <- function(id, status) {
 
   args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}/projects"
-  path_params  <- list(id = id)
-  query_params <- list(hidden = hidden)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Add a container docker to a project
-#' @param id integer required. The ID of the resource.
-#' @param project_id integer required. The ID of the project.
-#' 
-#' @return  An empty HTTP response
-#' @export
-enhancements_put_data_unification_projects <- function(id, project_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}/projects/{project_id}"
-  path_params  <- list(id = id, project_id = project_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Remove a container docker from a project
-#' @param id integer required. The ID of the resource.
-#' @param project_id integer required. The ID of the project.
-#' 
-#' @return  An empty HTTP response
-#' @export
-enhancements_delete_data_unification_projects <- function(id, project_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}/projects/{project_id}"
-  path_params  <- list(id = id, project_id = project_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Update the archive status of this object
-#' @param id integer required. The ID of the object.
-#' @param status boolean required. The desired archived status of the object.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for the enhancement.}
-#' \item{name}{string, The name of the enhancement job.}
-#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
-#' \item{createdAt}{string, The time this enhancement was created.}
-#' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{list, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }}
-#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{list, A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }}
-#' \item{runningAs}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{fieldMapping1}{list, The column mapping for Table/File 1. See /enhancements/field_mapping for list of valid fields.}
-#' \item{table1}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{file1Id}{integer, The ID for File 1. This should be set if and only if table1, table2, and outputTable are not set.}
-#' \item{fieldMapping2}{list, The column mapping for Table/File 2. See /enhancements/field_mapping for list of valid fields.}
-#' \item{table2}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{file2Id}{integer, The ID for File 2. This should be set if and only if table1, table2, and outputTable is not set.}
-#' \item{outputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{outputFilename}{string, The name of the output file. This should be set if and only if file1Id and file2Id are set.}
-#' \item{maxMatches}{integer, The maximum number of matches per record in Table/File 1 to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
-#' @export
-enhancements_put_data_unification_archive <- function(id, status) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}/archive"
+  path <- "/enhancements/geocode/{id}/archive"
   path_params  <- list(id = id)
   query_params <- list()
   body_params  <- list(status = status)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
-#' 
-#' @return  An array containing the following fields:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-enhancements_list_table_deduplication_shares <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}/shares"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
-#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
-#' @param send_shared_email boolean optional. Send email to the recipients of a share.
-#' 
-#' @return  A list containing the following elements:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-enhancements_put_table_deduplication_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}/shares/users"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
-#' 
-#' @return  An empty HTTP response
-#' @export
-enhancements_delete_table_deduplication_shares_users <- function(id, user_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}/shares/users/{user_id}"
-  path_params  <- list(id = id, user_id = user_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
-#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
-#' @param send_shared_email boolean optional. Send email to the recipients of a share.
-#' 
-#' @return  A list containing the following elements:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-enhancements_put_table_deduplication_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}/shares/groups"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
-#' 
-#' @return  An empty HTTP response
-#' @export
-enhancements_delete_table_deduplication_shares_groups <- function(id, group_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}/shares/groups/{group_id}"
-  path_params  <- list(id = id, group_id = group_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List the projects a container docker belongs to
-#' @param id integer required. The ID of the resource.
-#' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID for this project.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{name}{string, The name of this project.}
-#' \item{description}{string, A description of the project.}
-#' \item{users}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{autoShare}{boolean, }
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' \item{archived}{string, The archival status of the requested item(s).}
-#' @export
-enhancements_list_table_deduplication_projects <- function(id, hidden = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}/projects"
-  path_params  <- list(id = id)
-  query_params <- list(hidden = hidden)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Add a container docker to a project
-#' @param id integer required. The ID of the resource.
-#' @param project_id integer required. The ID of the project.
-#' 
-#' @return  An empty HTTP response
-#' @export
-enhancements_put_table_deduplication_projects <- function(id, project_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}/projects/{project_id}"
-  path_params  <- list(id = id, project_id = project_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Remove a container docker from a project
-#' @param id integer required. The ID of the resource.
-#' @param project_id integer required. The ID of the project.
-#' 
-#' @return  An empty HTTP response
-#' @export
-enhancements_delete_table_deduplication_projects <- function(id, project_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}/projects/{project_id}"
-  path_params  <- list(id = id, project_id = project_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Update the archive status of this object
-#' @param id integer required. The ID of the object.
-#' @param status boolean required. The desired archived status of the object.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for the enhancement.}
-#' \item{name}{string, The name of the enhancement job.}
-#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
-#' \item{createdAt}{string, The time this enhancement was created.}
-#' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{list, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }}
-#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{list, A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }}
-#' \item{runningAs}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
-#' \item{inputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
-#' \item{outputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
-#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
-#' @export
-enhancements_put_table_deduplication_archive <- function(id, status) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}/archive"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(status = status)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
-#' 
-#' @return  An array containing the following fields:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-enhancements_list_civis_data_match_shares <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/civis-data-match/{id}/shares"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
-#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
-#' @param send_shared_email boolean optional. Send email to the recipients of a share.
-#' 
-#' @return  A list containing the following elements:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-enhancements_put_civis_data_match_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/civis-data-match/{id}/shares/users"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
-#' 
-#' @return  An empty HTTP response
-#' @export
-enhancements_delete_civis_data_match_shares_users <- function(id, user_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/civis-data-match/{id}/shares/users/{user_id}"
-  path_params  <- list(id = id, user_id = user_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
-#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
-#' @param send_shared_email boolean optional. Send email to the recipients of a share.
-#' 
-#' @return  A list containing the following elements:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-enhancements_put_civis_data_match_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/civis-data-match/{id}/shares/groups"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
-#' 
-#' @return  An empty HTTP response
-#' @export
-enhancements_delete_civis_data_match_shares_groups <- function(id, group_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/civis-data-match/{id}/shares/groups/{group_id}"
-  path_params  <- list(id = id, group_id = group_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List the projects a container docker belongs to
-#' @param id integer required. The ID of the resource.
-#' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID for this project.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{name}{string, The name of this project.}
-#' \item{description}{string, A description of the project.}
-#' \item{users}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{autoShare}{boolean, }
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' \item{archived}{string, The archival status of the requested item(s).}
-#' @export
-enhancements_list_civis_data_match_projects <- function(id, hidden = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/civis-data-match/{id}/projects"
-  path_params  <- list(id = id)
-  query_params <- list(hidden = hidden)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Add a container docker to a project
-#' @param id integer required. The ID of the resource.
-#' @param project_id integer required. The ID of the project.
-#' 
-#' @return  An empty HTTP response
-#' @export
-enhancements_put_civis_data_match_projects <- function(id, project_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/civis-data-match/{id}/projects/{project_id}"
-  path_params  <- list(id = id, project_id = project_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Remove a container docker from a project
-#' @param id integer required. The ID of the resource.
-#' @param project_id integer required. The ID of the project.
-#' 
-#' @return  An empty HTTP response
-#' @export
-enhancements_delete_civis_data_match_projects <- function(id, project_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/civis-data-match/{id}/projects/{project_id}"
-  path_params  <- list(id = id, project_id = project_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Update the archive status of this object
-#' @param id integer required. The ID of the object.
-#' @param status boolean required. The desired archived status of the object.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for the enhancement.}
-#' \item{name}{string, The name of the enhancement job.}
-#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
-#' \item{createdAt}{string, The time this enhancement was created.}
-#' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{list, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }}
-#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{list, A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }}
-#' \item{runningAs}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{inputFieldMapping}{list, The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.}
-#' \item{inputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
-#' \item{matchTargetId}{integer, The ID of the Civis Data match target. See /match_targets for IDs.}
-#' \item{outputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
-#' \item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
-#' @export
-enhancements_put_civis_data_match_archive <- function(id, status) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/civis-data-match/{id}/archive"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(status = status)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -6527,14 +6530,14 @@ exports_list <- function(type = NULL, author = NULL, status = NULL, hidden = NUL
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a Data::S3File belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -6573,14 +6576,14 @@ files_list_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a Data::S3File to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -6596,14 +6599,14 @@ files_put_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a Data::S3File from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -6619,7 +6622,7 @@ files_delete_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -6649,7 +6652,7 @@ files_post <- function(name, expires_at = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -6679,7 +6682,7 @@ files_post_multipart <- function(name, num_parts, expires_at = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -6701,7 +6704,7 @@ files_post_multipart_complete <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -6740,7 +6743,7 @@ files_get <- function(id, link_expires_at = NULL, inline = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -6748,7 +6751,7 @@ files_get <- function(id, link_expires_at = NULL, inline = NULL) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -6779,7 +6782,7 @@ files_list_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -6787,9 +6790,9 @@ files_list_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -6822,7 +6825,7 @@ files_put_shares_users <- function(id, user_ids, permission_level, share_email_b
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -6830,8 +6833,8 @@ files_put_shares_users <- function(id, user_ids, permission_level, share_email_b
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -6845,7 +6848,7 @@ files_delete_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -6853,9 +6856,9 @@ files_delete_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -6888,7 +6891,7 @@ files_put_shares_groups <- function(id, group_ids, permission_level, share_email
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -6896,8 +6899,8 @@ files_put_shares_groups <- function(id, group_ids, permission_level, share_email
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -6911,7 +6914,7 @@ files_delete_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -6940,7 +6943,7 @@ git_repos_list <- function(limit = NULL, page_num = NULL, order = NULL, order_di
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -6966,7 +6969,7 @@ git_repos_post <- function(repo_url) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -6992,7 +6995,7 @@ git_repos_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7014,7 +7017,7 @@ git_repos_delete <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7022,7 +7025,7 @@ git_repos_delete <- function(id) {
 
 
 #' List Groups
-#' @param query string optional. If specified, it will filter the groups returned. Prefix matching is supported (e.g., "query=group" will return "group" and "group of people", but not "my group".
+#' @param query string optional. If specified, it will filter the groups returned. Infix matching is supported (e.g., "query=group" will return "group" and "group of people" and "my group" and "my group of people").
 #' @param permission string optional. A permissions string, one of "read", "write", or "manage". Lists only groups for which the current user has that permission.
 #' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
@@ -7046,7 +7049,7 @@ groups_list <- function(query = NULL, permission = NULL, limit = NULL, page_num 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7054,7 +7057,7 @@ groups_list <- function(query = NULL, permission = NULL, limit = NULL, page_num 
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -7085,7 +7088,7 @@ imports_list_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7093,9 +7096,9 @@ imports_list_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -7128,7 +7131,7 @@ imports_put_shares_users <- function(id, user_ids, permission_level, share_email
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7136,8 +7139,8 @@ imports_put_shares_users <- function(id, user_ids, permission_level, share_email
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -7151,7 +7154,7 @@ imports_delete_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7159,9 +7162,9 @@ imports_delete_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -7194,7 +7197,7 @@ imports_put_shares_groups <- function(id, group_ids, permission_level, share_ema
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7202,8 +7205,8 @@ imports_put_shares_groups <- function(id, group_ids, permission_level, share_ema
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -7217,14 +7220,14 @@ imports_delete_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a JobTypes::Import belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -7263,14 +7266,14 @@ imports_list_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a JobTypes::Import to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -7286,14 +7289,14 @@ imports_put_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a JobTypes::Import from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -7309,7 +7312,7 @@ imports_delete_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7412,7 +7415,7 @@ imports_put_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7423,6 +7426,7 @@ imports_put_archive <- function(id, status) {
 #' @param type string optional. If specified, return imports of these types. It accepts a comma-separated list, possible values are 'AutoImport', 'DbSync', 'Salesforce', 'GdocImport'.
 #' @param author string optional. If specified, return imports from this author. It accepts a comma-separated list of author ids.
 #' @param destination string optional. If specified, returns imports with one of these destinations. It accepts a comma-separated list of remote host ids.
+#' @param source string optional. If specified, returns imports with one of these sources. It accepts a comma-separated list of remote host ids. 'DbSync' must be specified for 'type'.
 #' @param status string optional. If specified, returns imports with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' @param archived string optional. The archival status of the requested item(s).
@@ -7482,17 +7486,17 @@ imports_put_archive <- function(id, status) {
 #' \item{timeZone}{string, The time zone of this import.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
-imports_list <- function(type = NULL, author = NULL, destination = NULL, status = NULL, hidden = NULL, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+imports_list <- function(type = NULL, author = NULL, destination = NULL, source = NULL, status = NULL, hidden = NULL, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/imports/"
   path_params  <- list()
-  query_params <- list(type = type, author = author, destination = destination, status = status, hidden = hidden, archived = archived, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(type = type, author = author, destination = destination, source = source, status = status, hidden = hidden, archived = archived, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7633,7 +7637,7 @@ imports_post <- function(name, sync_type, is_outbound, source = NULL, destinatio
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7654,6 +7658,7 @@ imports_post <- function(name, sync_type, is_outbound, source = NULL, destinatio
 #' @param column_delimiter string optional. The column delimiter of the file. If column_delimiter is null or omitted, it will be auto-detected. Valid arguments are "comma", "tab", and "pipe".
 #' @param first_row_is_header boolean optional. A boolean value indicating whether or not the first row is a header row. If first_row_is_header is null or omitted, it will be auto-detected.
 #' @param multipart boolean optional. If true, the upload URI will require a `multipart/form-data` POST request. Defaults to false.
+#' @param escaped boolean optional. If true, escape quotes with a backslash; otherwise, escape quotes by double-quoting. Defaults to false.
 #' @param hidden boolean optional. The hidden status of the item.
 #' 
 #' @return  A list containing the following elements:
@@ -7662,17 +7667,17 @@ imports_post <- function(name, sync_type, is_outbound, source = NULL, destinatio
 #' \item{runUri}{string, The URI to POST to once the file upload is complete. After uploading the file using the URI given in the uploadUri attribute of the response, POST to this URI to initiate the import of your uploaded file into the platform.}
 #' \item{uploadFields}{list, If multipart was set to true, these fields should be included in the multipart upload.}
 #' @export
-imports_post_files <- function(schema, name, remote_host_id, credential_id, max_errors = NULL, existing_table_rows = NULL, diststyle = NULL, distkey = NULL, sortkey1 = NULL, sortkey2 = NULL, column_delimiter = NULL, first_row_is_header = NULL, multipart = NULL, hidden = NULL) {
+imports_post_files <- function(schema, name, remote_host_id, credential_id, max_errors = NULL, existing_table_rows = NULL, diststyle = NULL, distkey = NULL, sortkey1 = NULL, sortkey2 = NULL, column_delimiter = NULL, first_row_is_header = NULL, multipart = NULL, escaped = NULL, hidden = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/imports/files"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(schema = schema, name = name, remoteHostId = remote_host_id, credentialId = credential_id, maxErrors = max_errors, existingTableRows = existing_table_rows, diststyle = diststyle, distkey = distkey, sortkey1 = sortkey1, sortkey2 = sortkey2, columnDelimiter = column_delimiter, firstRowIsHeader = first_row_is_header, multipart = multipart, hidden = hidden)
+  body_params  <- list(schema = schema, name = name, remoteHostId = remote_host_id, credentialId = credential_id, maxErrors = max_errors, existingTableRows = existing_table_rows, diststyle = diststyle, distkey = distkey, sortkey1 = sortkey1, sortkey2 = sortkey2, columnDelimiter = column_delimiter, firstRowIsHeader = first_row_is_header, multipart = multipart, escaped = escaped, hidden = hidden)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7701,7 +7706,7 @@ imports_post_files_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7734,7 +7739,7 @@ imports_list_files_runs <- function(id, limit = NULL, page_num = NULL, order = N
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7764,7 +7769,7 @@ imports_get_files_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7787,7 +7792,7 @@ imports_delete_files_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7816,7 +7821,7 @@ imports_list_files_runs_logs <- function(id, run_id, last_id = NULL, limit = NUL
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7845,7 +7850,390 @@ imports_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a CSV Import
+#' @param source list required. A list containing the following elements: 
+#' \itemize{
+#' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
+#' \item storagePaths object, 
+#' }
+#' @param destination list required. A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The destination schema name.
+#' \item table string, The destination table name.
+#' \item remoteHostId integer, The ID of the destination database host.
+#' \item credentialId integer, The ID of the credentials for the destination database.
+#' \item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' }
+#' @param first_row_is_header boolean required. A boolean value indicating whether or not the first row of the source file is a header row.
+#' @param column_delimiter string optional. The column delimiter for the file. Valid arguments are "comma", "tab", and "pipe". Defaults to "comma".
+#' @param escaped boolean optional. A boolean value indicating whether or not the source file has quotes escaped with a backslash.Defaults to false.
+#' @param compression string optional. The type of compression of the source file. Valid arguments are "gzip" and "none". Defaults to "none".
+#' @param existing_table_rows string optional. The behavior if a destination table with the requested name already exists.  One of "fail", "truncate", "append", "drop", or "upsert".Defaults to "fail".
+#' @param max_errors integer optional. The maximum number of rows with errors to ignore before failing. This option is not supported for Postgres databases.
+#' @param table_columns array optional. An array containing the following fields: 
+#' \itemize{
+#' \item name string, The column name.
+#' \item sqlType string, The SQL type of the column.
+#' }
+#' @param redshift_destination_options list optional. A list containing the following elements: 
+#' \itemize{
+#' \item distkey string, Distkey for this table in Redshift
+#' \item sortkeys array, Sortkeys for this table in Redshift. Please provide a maximum of two.
+#' }
+#' @param hidden boolean optional. The hidden status of the item.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the import.}
+#' \item{source}{list, A list containing the following elements: 
+#' \itemize{
+#' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
+#' \item storagePaths object, 
+#' }}
+#' \item{destination}{list, A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The destination schema name.
+#' \item table string, The destination table name.
+#' \item remoteHostId integer, The ID of the destination database host.
+#' \item credentialId integer, The ID of the credentials for the destination database.
+#' \item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' }}
+#' \item{firstRowIsHeader}{boolean, A boolean value indicating whether or not the first row of the source file is a header row.}
+#' \item{columnDelimiter}{string, The column delimiter for the file. Valid arguments are "comma", "tab", and "pipe". Defaults to "comma".}
+#' \item{escaped}{boolean, A boolean value indicating whether or not the source file has quotes escaped with a backslash.Defaults to false.}
+#' \item{compression}{string, The type of compression of the source file. Valid arguments are "gzip" and "none". Defaults to "none".}
+#' \item{existingTableRows}{string, The behavior if a destination table with the requested name already exists.  One of "fail", "truncate", "append", "drop", or "upsert".Defaults to "fail".}
+#' \item{maxErrors}{integer, The maximum number of rows with errors to ignore before failing. This option is not supported for Postgres databases.}
+#' \item{tableColumns}{array, An array containing the following fields: 
+#' \itemize{
+#' \item name string, The column name.
+#' \item sqlType string, The SQL type of the column.
+#' }}
+#' \item{redshiftDestinationOptions}{list, A list containing the following elements: 
+#' \itemize{
+#' \item distkey string, Distkey for this table in Redshift
+#' \item sortkeys array, Sortkeys for this table in Redshift. Please provide a maximum of two.
+#' }}
+#' \item{hidden}{boolean, The hidden status of the item.}
+#' @export
+imports_post_files_csv <- function(source, destination, first_row_is_header, column_delimiter = NULL, escaped = NULL, compression = NULL, existing_table_rows = NULL, max_errors = NULL, table_columns = NULL, redshift_destination_options = NULL, hidden = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/imports/files/csv"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(source = source, destination = destination, firstRowIsHeader = first_row_is_header, columnDelimiter = column_delimiter, escaped = escaped, compression = compression, existingTableRows = existing_table_rows, maxErrors = max_errors, tableColumns = table_columns, redshiftDestinationOptions = redshift_destination_options, hidden = hidden)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get a CSV Import
+#' @param id integer required. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the import.}
+#' \item{source}{list, A list containing the following elements: 
+#' \itemize{
+#' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
+#' \item storagePaths object, 
+#' }}
+#' \item{destination}{list, A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The destination schema name.
+#' \item table string, The destination table name.
+#' \item remoteHostId integer, The ID of the destination database host.
+#' \item credentialId integer, The ID of the credentials for the destination database.
+#' \item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' }}
+#' \item{firstRowIsHeader}{boolean, A boolean value indicating whether or not the first row of the source file is a header row.}
+#' \item{columnDelimiter}{string, The column delimiter for the file. Valid arguments are "comma", "tab", and "pipe". Defaults to "comma".}
+#' \item{escaped}{boolean, A boolean value indicating whether or not the source file has quotes escaped with a backslash.Defaults to false.}
+#' \item{compression}{string, The type of compression of the source file. Valid arguments are "gzip" and "none". Defaults to "none".}
+#' \item{existingTableRows}{string, The behavior if a destination table with the requested name already exists.  One of "fail", "truncate", "append", "drop", or "upsert".Defaults to "fail".}
+#' \item{maxErrors}{integer, The maximum number of rows with errors to ignore before failing. This option is not supported for Postgres databases.}
+#' \item{tableColumns}{array, An array containing the following fields: 
+#' \itemize{
+#' \item name string, The column name.
+#' \item sqlType string, The SQL type of the column.
+#' }}
+#' \item{redshiftDestinationOptions}{list, A list containing the following elements: 
+#' \itemize{
+#' \item distkey string, Distkey for this table in Redshift
+#' \item sortkeys array, Sortkeys for this table in Redshift. Please provide a maximum of two.
+#' }}
+#' \item{hidden}{boolean, The hidden status of the item.}
+#' @export
+imports_get_files_csv <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/imports/files/csv/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Replace all attributes of this CSV Import
+#' @param id integer required. The ID for the import.
+#' @param source list required. A list containing the following elements: 
+#' \itemize{
+#' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
+#' \item storagePaths object, 
+#' }
+#' @param destination list required. A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The destination schema name.
+#' \item table string, The destination table name.
+#' \item remoteHostId integer, The ID of the destination database host.
+#' \item credentialId integer, The ID of the credentials for the destination database.
+#' \item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' }
+#' @param first_row_is_header boolean required. A boolean value indicating whether or not the first row of the source file is a header row.
+#' @param column_delimiter string optional. The column delimiter for the file. Valid arguments are "comma", "tab", and "pipe". Defaults to "comma".
+#' @param escaped boolean optional. A boolean value indicating whether or not the source file has quotes escaped with a backslash.Defaults to false.
+#' @param compression string optional. The type of compression of the source file. Valid arguments are "gzip" and "none". Defaults to "none".
+#' @param existing_table_rows string optional. The behavior if a destination table with the requested name already exists.  One of "fail", "truncate", "append", "drop", or "upsert".Defaults to "fail".
+#' @param max_errors integer optional. The maximum number of rows with errors to ignore before failing. This option is not supported for Postgres databases.
+#' @param table_columns array optional. An array containing the following fields: 
+#' \itemize{
+#' \item name string, The column name.
+#' \item sqlType string, The SQL type of the column.
+#' }
+#' @param redshift_destination_options list optional. A list containing the following elements: 
+#' \itemize{
+#' \item distkey string, Distkey for this table in Redshift
+#' \item sortkeys array, Sortkeys for this table in Redshift. Please provide a maximum of two.
+#' }
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the import.}
+#' \item{source}{list, A list containing the following elements: 
+#' \itemize{
+#' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
+#' \item storagePaths object, 
+#' }}
+#' \item{destination}{list, A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The destination schema name.
+#' \item table string, The destination table name.
+#' \item remoteHostId integer, The ID of the destination database host.
+#' \item credentialId integer, The ID of the credentials for the destination database.
+#' \item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' }}
+#' \item{firstRowIsHeader}{boolean, A boolean value indicating whether or not the first row of the source file is a header row.}
+#' \item{columnDelimiter}{string, The column delimiter for the file. Valid arguments are "comma", "tab", and "pipe". Defaults to "comma".}
+#' \item{escaped}{boolean, A boolean value indicating whether or not the source file has quotes escaped with a backslash.Defaults to false.}
+#' \item{compression}{string, The type of compression of the source file. Valid arguments are "gzip" and "none". Defaults to "none".}
+#' \item{existingTableRows}{string, The behavior if a destination table with the requested name already exists.  One of "fail", "truncate", "append", "drop", or "upsert".Defaults to "fail".}
+#' \item{maxErrors}{integer, The maximum number of rows with errors to ignore before failing. This option is not supported for Postgres databases.}
+#' \item{tableColumns}{array, An array containing the following fields: 
+#' \itemize{
+#' \item name string, The column name.
+#' \item sqlType string, The SQL type of the column.
+#' }}
+#' \item{redshiftDestinationOptions}{list, A list containing the following elements: 
+#' \itemize{
+#' \item distkey string, Distkey for this table in Redshift
+#' \item sortkeys array, Sortkeys for this table in Redshift. Please provide a maximum of two.
+#' }}
+#' \item{hidden}{boolean, The hidden status of the item.}
+#' @export
+imports_put_files_csv <- function(id, source, destination, first_row_is_header, column_delimiter = NULL, escaped = NULL, compression = NULL, existing_table_rows = NULL, max_errors = NULL, table_columns = NULL, redshift_destination_options = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/imports/files/csv/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(source = source, destination = destination, firstRowIsHeader = first_row_is_header, columnDelimiter = column_delimiter, escaped = escaped, compression = compression, existingTableRows = existing_table_rows, maxErrors = max_errors, tableColumns = table_columns, redshiftDestinationOptions = redshift_destination_options)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update some attributes of this CSV Import
+#' @param id integer required. The ID for the import.
+#' @param source list optional. A list containing the following elements: 
+#' \itemize{
+#' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
+#' \item storagePaths object, 
+#' }
+#' @param destination list optional. A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The destination schema name.
+#' \item table string, The destination table name.
+#' \item remoteHostId integer, The ID of the destination database host.
+#' \item credentialId integer, The ID of the credentials for the destination database.
+#' \item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' }
+#' @param first_row_is_header boolean optional. A boolean value indicating whether or not the first row of the source file is a header row.
+#' @param column_delimiter string optional. The column delimiter for the file. Valid arguments are "comma", "tab", and "pipe". Defaults to "comma".
+#' @param escaped boolean optional. A boolean value indicating whether or not the source file has quotes escaped with a backslash.Defaults to false.
+#' @param compression string optional. The type of compression of the source file. Valid arguments are "gzip" and "none". Defaults to "none".
+#' @param existing_table_rows string optional. The behavior if a destination table with the requested name already exists.  One of "fail", "truncate", "append", "drop", or "upsert".Defaults to "fail".
+#' @param max_errors integer optional. The maximum number of rows with errors to ignore before failing. This option is not supported for Postgres databases.
+#' @param table_columns array optional. An array containing the following fields: 
+#' \itemize{
+#' \item name string, The column name.
+#' \item sqlType string, The SQL type of the column.
+#' }
+#' @param redshift_destination_options list optional. A list containing the following elements: 
+#' \itemize{
+#' \item distkey string, Distkey for this table in Redshift
+#' \item sortkeys array, Sortkeys for this table in Redshift. Please provide a maximum of two.
+#' }
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the import.}
+#' \item{source}{list, A list containing the following elements: 
+#' \itemize{
+#' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
+#' \item storagePaths object, 
+#' }}
+#' \item{destination}{list, A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The destination schema name.
+#' \item table string, The destination table name.
+#' \item remoteHostId integer, The ID of the destination database host.
+#' \item credentialId integer, The ID of the credentials for the destination database.
+#' \item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' }}
+#' \item{firstRowIsHeader}{boolean, A boolean value indicating whether or not the first row of the source file is a header row.}
+#' \item{columnDelimiter}{string, The column delimiter for the file. Valid arguments are "comma", "tab", and "pipe". Defaults to "comma".}
+#' \item{escaped}{boolean, A boolean value indicating whether or not the source file has quotes escaped with a backslash.Defaults to false.}
+#' \item{compression}{string, The type of compression of the source file. Valid arguments are "gzip" and "none". Defaults to "none".}
+#' \item{existingTableRows}{string, The behavior if a destination table with the requested name already exists.  One of "fail", "truncate", "append", "drop", or "upsert".Defaults to "fail".}
+#' \item{maxErrors}{integer, The maximum number of rows with errors to ignore before failing. This option is not supported for Postgres databases.}
+#' \item{tableColumns}{array, An array containing the following fields: 
+#' \itemize{
+#' \item name string, The column name.
+#' \item sqlType string, The SQL type of the column.
+#' }}
+#' \item{redshiftDestinationOptions}{list, A list containing the following elements: 
+#' \itemize{
+#' \item distkey string, Distkey for this table in Redshift
+#' \item sortkeys array, Sortkeys for this table in Redshift. Please provide a maximum of two.
+#' }}
+#' \item{hidden}{boolean, The hidden status of the item.}
+#' @export
+imports_patch_files_csv <- function(id, source = NULL, destination = NULL, first_row_is_header = NULL, column_delimiter = NULL, escaped = NULL, compression = NULL, existing_table_rows = NULL, max_errors = NULL, table_columns = NULL, redshift_destination_options = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/imports/files/csv/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(source = source, destination = destination, firstRowIsHeader = first_row_is_header, columnDelimiter = column_delimiter, escaped = escaped, compression = compression, existingTableRows = existing_table_rows, maxErrors = max_errors, tableColumns = table_columns, redshiftDestinationOptions = redshift_destination_options)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Archive a CSV Import (deprecated, use archiving endpoints instead)
+#' @param id integer required. 
+#' 
+#' @return  An empty HTTP response
+#' @export
+imports_delete_files_csv <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/imports/files/csv/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update the archive status of this object
+#' @param id integer required. The ID of the object.
+#' @param status boolean required. The desired archived status of the object.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for the import.}
+#' \item{source}{list, A list containing the following elements: 
+#' \itemize{
+#' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
+#' \item storagePaths object, 
+#' }}
+#' \item{destination}{list, A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The destination schema name.
+#' \item table string, The destination table name.
+#' \item remoteHostId integer, The ID of the destination database host.
+#' \item credentialId integer, The ID of the credentials for the destination database.
+#' \item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' }}
+#' \item{firstRowIsHeader}{boolean, A boolean value indicating whether or not the first row of the source file is a header row.}
+#' \item{columnDelimiter}{string, The column delimiter for the file. Valid arguments are "comma", "tab", and "pipe". Defaults to "comma".}
+#' \item{escaped}{boolean, A boolean value indicating whether or not the source file has quotes escaped with a backslash.Defaults to false.}
+#' \item{compression}{string, The type of compression of the source file. Valid arguments are "gzip" and "none". Defaults to "none".}
+#' \item{existingTableRows}{string, The behavior if a destination table with the requested name already exists.  One of "fail", "truncate", "append", "drop", or "upsert".Defaults to "fail".}
+#' \item{maxErrors}{integer, The maximum number of rows with errors to ignore before failing. This option is not supported for Postgres databases.}
+#' \item{tableColumns}{array, An array containing the following fields: 
+#' \itemize{
+#' \item name string, The column name.
+#' \item sqlType string, The SQL type of the column.
+#' }}
+#' \item{redshiftDestinationOptions}{list, A list containing the following elements: 
+#' \itemize{
+#' \item distkey string, Distkey for this table in Redshift
+#' \item sortkeys array, Sortkeys for this table in Redshift. Please provide a maximum of two.
+#' }}
+#' \item{hidden}{boolean, The hidden status of the item.}
+#' @export
+imports_put_files_csv_archive <- function(id, status) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/imports/files/csv/{id}/archive"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(status = status)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7879,14 +8267,14 @@ imports_list_batches <- function(hidden = NULL, limit = NULL, page_num = NULL, o
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Upload multiple files to Redshift
+#' Upload multiple files to Civis
 #' @param file_ids array required. The file IDs for the import.
 #' @param schema string required. The destination schema name. This schema must already exist in Redshift.
 #' @param table string required. The destination table name, without the schema prefix. This table must already exist in Redshift.
@@ -7918,7 +8306,7 @@ imports_post_batches <- function(file_ids, schema, table, remote_host_id, creden
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7949,7 +8337,7 @@ imports_get_batches <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8051,7 +8439,7 @@ imports_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8192,7 +8580,7 @@ imports_put <- function(id, name, sync_type, is_outbound, source = NULL, destina
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8220,7 +8608,7 @@ imports_list_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8243,7 +8631,7 @@ imports_post_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8268,7 +8656,7 @@ imports_post_cancel <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8302,6 +8690,7 @@ imports_post_cancel <- function(id) {
 #' \item sortkey2 string, 
 #' \item columnDelimiter string, 
 #' \item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the index of the column being overridden.
+#' \item escaped boolean, If true, escape quotes with a backslash; otherwise, escape quotes by double-quoting. Defaults to false.
 #' \item identityColumn string, 
 #' \item rowChunkSize integer, 
 #' \item wipeDestinationTable boolean, 
@@ -8351,6 +8740,7 @@ imports_post_cancel <- function(id) {
 #' \item sortkey2 string, 
 #' \item columnDelimiter string, 
 #' \item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the index of the column being overridden.
+#' \item escaped boolean, If true, escape quotes with a backslash; otherwise, escape quotes by double-quoting. Defaults to false.
 #' \item identityColumn string, 
 #' \item rowChunkSize integer, 
 #' \item wipeDestinationTable boolean, 
@@ -8382,7 +8772,7 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8417,6 +8807,7 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' \item sortkey2 string, 
 #' \item columnDelimiter string, 
 #' \item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the index of the column being overridden.
+#' \item escaped boolean, If true, escape quotes with a backslash; otherwise, escape quotes by double-quoting. Defaults to false.
 #' \item identityColumn string, 
 #' \item rowChunkSize integer, 
 #' \item wipeDestinationTable boolean, 
@@ -8466,6 +8857,7 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' \item sortkey2 string, 
 #' \item columnDelimiter string, 
 #' \item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the index of the column being overridden.
+#' \item escaped boolean, If true, escape quotes with a backslash; otherwise, escape quotes by double-quoting. Defaults to false.
 #' \item identityColumn string, 
 #' \item rowChunkSize integer, 
 #' \item wipeDestinationTable boolean, 
@@ -8497,7 +8889,7 @@ imports_put_syncs <- function(id, sync_id, source, destination, advanced_options
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8520,7 +8912,7 @@ imports_delete_syncs <- function(id, sync_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8560,6 +8952,7 @@ imports_delete_syncs <- function(id, sync_id) {
 #' \item sortkey2 string, 
 #' \item columnDelimiter string, 
 #' \item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the index of the column being overridden.
+#' \item escaped boolean, If true, escape quotes with a backslash; otherwise, escape quotes by double-quoting. Defaults to false.
 #' \item identityColumn string, 
 #' \item rowChunkSize integer, 
 #' \item wipeDestinationTable boolean, 
@@ -8591,7 +8984,7 @@ imports_put_syncs_archive <- function(id, sync_id, status = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8648,7 +9041,7 @@ jobs_list <- function(state = NULL, type = NULL, q = NULL, permission = NULL, sc
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8705,7 +9098,7 @@ jobs_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8728,7 +9121,7 @@ jobs_post_trigger_email <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8785,7 +9178,7 @@ jobs_list_parents <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8833,7 +9226,39 @@ jobs_list_children <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List runs for the given job
+#' @param id integer required. The ID for this job.
+#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, }
+#' \item{state}{string, }
+#' \item{createdAt}{string, The time that the run was queued.}
+#' \item{startedAt}{string, The time that the run started.}
+#' \item{finishedAt}{string, The time that the run completed.}
+#' \item{error}{string, The error message for this run, if present.}
+#' @export
+jobs_list_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/jobs/{id}/runs"
+  path_params  <- list(id = id)
+  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8861,7 +9286,7 @@ jobs_post_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8890,7 +9315,7 @@ jobs_get_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8913,7 +9338,36 @@ jobs_delete_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get the logs for a run
+#' @param id integer required. The ID of the job.
+#' @param run_id integer required. The ID of the run.
+#' @param last_id integer optional. The ID of the last log message received. Log entries with this ID value or lower will be omitted.Logs are sorted by ID if this value is provided, and are otherwise sorted by createdAt.
+#' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID of the log.}
+#' \item{createdAt}{string, The time the log was created.}
+#' \item{message}{string, The log message.}
+#' \item{level}{string, The level of the log. One of unknown,fatal,error,warn,info,debug.}
+#' @export
+jobs_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/jobs/{id}/runs/{run_id}/logs"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list(last_id = last_id, limit = limit)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8963,7 +9417,7 @@ jobs_list_workflows <- function(id, archived = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8971,7 +9425,7 @@ jobs_list_workflows <- function(id, archived = NULL) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -9002,7 +9456,7 @@ jobs_list_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9010,9 +9464,9 @@ jobs_list_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -9045,7 +9499,7 @@ jobs_put_shares_users <- function(id, user_ids, permission_level, share_email_bo
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9053,8 +9507,8 @@ jobs_put_shares_users <- function(id, user_ids, permission_level, share_email_bo
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -9068,7 +9522,7 @@ jobs_delete_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9076,9 +9530,9 @@ jobs_delete_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -9111,7 +9565,7 @@ jobs_put_shares_groups <- function(id, group_ids, permission_level, share_email_
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9119,8 +9573,8 @@ jobs_put_shares_groups <- function(id, group_ids, permission_level, share_email_
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -9134,14 +9588,14 @@ jobs_delete_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a Job belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -9180,14 +9634,14 @@ jobs_list_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a Job to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -9203,14 +9657,14 @@ jobs_put_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a Job from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -9226,7 +9680,256 @@ jobs_delete_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a JSON Value
+#' @param value_str string required. The JSON value to store. Should be a serialized JSON string. Limited to 10000 bytes.
+#' @param name string optional. The name of the JSON Value.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the JSON Value.}
+#' \item{name}{string, The name of the JSON Value.}
+#' \item{value}{string, The deserialized JSON value.}
+#' @export
+json_values_post <- function(value_str, name = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/json_values/"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(valueStr = value_str, name = name)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get details about a JSON Value
+#' @param id integer required. The ID of the JSON Value.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the JSON Value.}
+#' \item{name}{string, The name of the JSON Value.}
+#' \item{value}{string, The deserialized JSON value.}
+#' @export
+json_values_get <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/json_values/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update some attributes of this JSON Value
+#' @param id integer required. The ID of the JSON Value.
+#' @param name string optional. The name of the JSON Value.
+#' @param value_str string optional. The JSON value to store. Should be a serialized JSON string. Limited to 10000 bytes.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the JSON Value.}
+#' \item{name}{string, The name of the JSON Value.}
+#' \item{value}{string, The deserialized JSON value.}
+#' @export
+json_values_patch <- function(id, name = NULL, value_str = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/json_values/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, valueStr = value_str)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List users and groups permissioned on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' 
+#' @return  An array containing the following fields:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+json_values_list_shares <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/json_values/{id}/shares"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions users have on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+json_values_put_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/json_values/{id}/shares/users"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a user has on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
+#' 
+#' @return  An empty HTTP response
+#' @export
+json_values_delete_shares_users <- function(id, user_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/json_values/{id}/shares/users/{user_id}"
+  path_params  <- list(id = id, user_id = user_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions groups has on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+json_values_put_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/json_values/{id}/shares/groups"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a group has on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
+#' 
+#' @return  An empty HTTP response
+#' @export
+json_values_delete_shares_groups <- function(id, group_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/json_values/{id}/shares/groups/{group_id}"
+  path_params  <- list(id = id, group_id = group_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9239,6 +9942,7 @@ jobs_delete_projects <- function(id, project_id) {
 #' \item{id}{integer, The ID of the match target}
 #' \item{name}{string, The name of the match target}
 #' \item{table}{string, The name of the DynamoDB table}
+#' \item{targetFileName}{string, The name of the target file}
 #' \item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
 #' @export
 match_targets_list <- function() {
@@ -9251,7 +9955,7 @@ match_targets_list <- function() {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9260,9 +9964,9 @@ match_targets_list <- function() {
 
 #' Create a new match target
 #' @param name string required. The name of the match target
-#' @param table string required. The name of the DynamoDB table
-#' @param id integer optional. The ID of the match target
+#' @param table string optional. The name of the DynamoDB table
 #' @param region string optional. The AWS region of the DynamoDB table. By default, us-east-1.
+#' @param target_file_name string optional. The name of the target file
 #' @param encryption_key_credential_id integer optional. The ID of the encryption key credential.
 #' 
 #' @return  A list containing the following elements:
@@ -9270,19 +9974,20 @@ match_targets_list <- function() {
 #' \item{name}{string, The name of the match target}
 #' \item{table}{string, The name of the DynamoDB table}
 #' \item{region}{string, The AWS region of the DynamoDB table. By default, us-east-1.}
+#' \item{targetFileName}{string, The name of the target file}
 #' \item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
 #' @export
-match_targets_post <- function(name, table, id = NULL, region = NULL, encryption_key_credential_id = NULL) {
+match_targets_post <- function(name, table = NULL, region = NULL, target_file_name = NULL, encryption_key_credential_id = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/match_targets/"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, table = table, id = id, region = region, encryptionKeyCredentialId = encryption_key_credential_id)
+  body_params  <- list(name = name, table = table, region = region, targetFileName = target_file_name, encryptionKeyCredentialId = encryption_key_credential_id)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9297,6 +10002,7 @@ match_targets_post <- function(name, table, id = NULL, region = NULL, encryption
 #' \item{name}{string, The name of the match target}
 #' \item{table}{string, The name of the DynamoDB table}
 #' \item{region}{string, The AWS region of the DynamoDB table. By default, us-east-1.}
+#' \item{targetFileName}{string, The name of the target file}
 #' \item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
 #' @export
 match_targets_get <- function(id) {
@@ -9309,7 +10015,7 @@ match_targets_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9321,6 +10027,7 @@ match_targets_get <- function(id) {
 #' @param name string optional. The name of the match target
 #' @param table string optional. The name of the DynamoDB table
 #' @param region string optional. The AWS region of the DynamoDB table. By default, us-east-1.
+#' @param target_file_name string optional. The name of the target file
 #' @param encryption_key_credential_id integer optional. The ID of the encryption key credential.
 #' 
 #' @return  A list containing the following elements:
@@ -9328,19 +10035,20 @@ match_targets_get <- function(id) {
 #' \item{name}{string, The name of the match target}
 #' \item{table}{string, The name of the DynamoDB table}
 #' \item{region}{string, The AWS region of the DynamoDB table. By default, us-east-1.}
+#' \item{targetFileName}{string, The name of the target file}
 #' \item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
 #' @export
-match_targets_patch <- function(id, name = NULL, table = NULL, region = NULL, encryption_key_credential_id = NULL) {
+match_targets_patch <- function(id, name = NULL, table = NULL, region = NULL, target_file_name = NULL, encryption_key_credential_id = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/match_targets/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, table = table, region = region, encryptionKeyCredentialId = encryption_key_credential_id)
+  body_params  <- list(name = name, table = table, region = region, targetFileName = target_file_name, encryptionKeyCredentialId = encryption_key_credential_id)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9348,7 +10056,7 @@ match_targets_patch <- function(id, name = NULL, table = NULL, region = NULL, en
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -9379,7 +10087,7 @@ media_list_spot_orders_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9387,9 +10095,9 @@ media_list_spot_orders_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -9422,7 +10130,7 @@ media_put_spot_orders_shares_users <- function(id, user_ids, permission_level, s
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9430,8 +10138,8 @@ media_put_spot_orders_shares_users <- function(id, user_ids, permission_level, s
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -9445,7 +10153,7 @@ media_delete_spot_orders_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9453,9 +10161,9 @@ media_delete_spot_orders_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -9488,7 +10196,7 @@ media_put_spot_orders_shares_groups <- function(id, group_ids, permission_level,
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9496,8 +10204,8 @@ media_put_spot_orders_shares_groups <- function(id, group_ids, permission_level,
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -9511,7 +10219,7 @@ media_delete_spot_orders_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9540,7 +10248,7 @@ media_put_spot_orders_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9548,7 +10256,7 @@ media_put_spot_orders_archive <- function(id, status) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -9579,7 +10287,7 @@ media_list_optimizations_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9587,9 +10295,9 @@ media_list_optimizations_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -9622,7 +10330,7 @@ media_put_optimizations_shares_users <- function(id, user_ids, permission_level,
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9630,8 +10338,8 @@ media_put_optimizations_shares_users <- function(id, user_ids, permission_level,
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -9645,7 +10353,7 @@ media_delete_optimizations_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9653,9 +10361,9 @@ media_delete_optimizations_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -9688,7 +10396,7 @@ media_put_optimizations_shares_groups <- function(id, group_ids, permission_leve
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9696,8 +10404,8 @@ media_put_optimizations_shares_groups <- function(id, group_ids, permission_leve
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -9711,7 +10419,7 @@ media_delete_optimizations_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9770,7 +10478,7 @@ media_put_optimizations_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9778,7 +10486,7 @@ media_put_optimizations_archive <- function(id, status) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -9809,7 +10517,7 @@ media_list_ratecards_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9817,9 +10525,9 @@ media_list_ratecards_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -9852,7 +10560,7 @@ media_put_ratecards_shares_users <- function(id, user_ids, permission_level, sha
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9860,8 +10568,8 @@ media_put_ratecards_shares_users <- function(id, user_ids, permission_level, sha
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -9875,7 +10583,7 @@ media_delete_ratecards_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9883,9 +10591,9 @@ media_delete_ratecards_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -9918,7 +10626,7 @@ media_put_ratecards_shares_groups <- function(id, group_ids, permission_level, s
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9926,8 +10634,8 @@ media_put_ratecards_shares_groups <- function(id, group_ids, permission_level, s
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -9941,7 +10649,7 @@ media_delete_ratecards_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9970,7 +10678,7 @@ media_put_ratecards_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10013,7 +10721,7 @@ media_list_optimizations <- function(archived = NULL, limit = NULL, page_num = N
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10087,7 +10795,7 @@ media_post_optimizations <- function(runs, name = NULL, programs = NULL, network
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10145,7 +10853,7 @@ media_get_optimizations <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10220,7 +10928,7 @@ media_patch_optimizations <- function(id, name = NULL, runs = NULL, programs = N
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10278,7 +10986,7 @@ media_post_optimizations_clone <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10307,7 +11015,7 @@ media_post_optimizations_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10340,7 +11048,7 @@ media_list_optimizations_runs <- function(id, limit = NULL, page_num = NULL, ord
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10370,7 +11078,7 @@ media_get_optimizations_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10393,7 +11101,7 @@ media_delete_optimizations_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10422,7 +11130,7 @@ media_list_optimizations_runs_logs <- function(id, run_id, last_id = NULL, limit
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10447,7 +11155,7 @@ media_list_spot_orders <- function(id = NULL, archived = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10475,7 +11183,7 @@ media_post_spot_orders <- function(body = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10503,7 +11211,7 @@ media_get_spot_orders <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10532,7 +11240,7 @@ media_put_spot_orders <- function(id, body = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10562,7 +11270,7 @@ media_list_ratecards <- function(archived = NULL, filename = NULL, dma_number = 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10593,7 +11301,7 @@ media_post_ratecards <- function(filename, start_on, end_on, dma_number) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10621,7 +11329,7 @@ media_get_ratecards <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10653,7 +11361,7 @@ media_put_ratecards <- function(id, filename, start_on, end_on, dma_number) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10685,7 +11393,7 @@ media_patch_ratecards <- function(id, filename = NULL, start_on = NULL, end_on =
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10710,7 +11418,7 @@ media_list_dmas <- function(name = NULL, number = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10737,7 +11445,7 @@ media_list_targets <- function(name = NULL, identifier = NULL, data_source = NUL
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10762,7 +11470,7 @@ models_list_types <- function() {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10915,7 +11623,7 @@ models_post <- function(table_name = NULL, database_id = NULL, credential_id = N
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11015,7 +11723,7 @@ models_list <- function(model_name = NULL, training_table_name = NULL, dependent
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11076,7 +11784,7 @@ models_patch <- function(id, table_name = NULL, database_id = NULL, credential_i
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11190,7 +11898,7 @@ models_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11224,7 +11932,7 @@ models_post_builds <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11262,7 +11970,7 @@ models_list_builds <- function(id, limit = NULL, page_num = NULL, order = NULL, 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11297,7 +12005,7 @@ models_get_builds <- function(id, build_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11320,7 +12028,7 @@ models_delete_builds <- function(id, build_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11349,7 +12057,7 @@ models_list_builds_logs <- function(id, build_id, last_id = NULL, limit = NULL) 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11357,7 +12065,7 @@ models_list_builds_logs <- function(id, build_id, last_id = NULL, limit = NULL) 
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -11388,7 +12096,7 @@ models_list_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11396,9 +12104,9 @@ models_list_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -11431,7 +12139,7 @@ models_put_shares_users <- function(id, user_ids, permission_level, share_email_
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11439,8 +12147,8 @@ models_put_shares_users <- function(id, user_ids, permission_level, share_email_
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -11454,7 +12162,7 @@ models_delete_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11462,9 +12170,9 @@ models_delete_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -11497,7 +12205,7 @@ models_put_shares_groups <- function(id, group_ids, permission_level, share_emai
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11505,8 +12213,8 @@ models_put_shares_groups <- function(id, group_ids, permission_level, share_emai
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -11520,14 +12228,14 @@ models_delete_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a models belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -11566,14 +12274,14 @@ models_list_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a models to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -11589,14 +12297,14 @@ models_put_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a models from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -11612,7 +12320,7 @@ models_delete_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11727,7 +12435,7 @@ models_put_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11775,7 +12483,7 @@ models_put_predictions <- function(id, table_name, primary_key, limiting_sql = N
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11806,7 +12514,7 @@ models_list_schedules <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11845,7 +12553,7 @@ models_put_schedules <- function(id, schedule) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11907,7 +12615,7 @@ notebooks_list <- function(hidden = NULL, archived = NULL, author = NULL, status
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -11998,7 +12706,7 @@ notebooks_post <- function(name = NULL, language = NULL, description = NULL, fil
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12072,7 +12780,7 @@ notebooks_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12163,7 +12871,7 @@ notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12254,7 +12962,7 @@ notebooks_patch <- function(id, name = NULL, language = NULL, description = NULL
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12276,7 +12984,7 @@ notebooks_delete <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12300,7 +13008,7 @@ notebooks_list_update_links <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12374,7 +13082,7 @@ notebooks_post_clone <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12382,7 +13090,7 @@ notebooks_post_clone <- function(id) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -12413,7 +13121,7 @@ notebooks_list_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12421,9 +13129,9 @@ notebooks_list_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -12456,7 +13164,7 @@ notebooks_put_shares_users <- function(id, user_ids, permission_level, share_ema
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12464,8 +13172,8 @@ notebooks_put_shares_users <- function(id, user_ids, permission_level, share_ema
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -12479,7 +13187,7 @@ notebooks_delete_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12487,9 +13195,9 @@ notebooks_delete_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -12522,7 +13230,7 @@ notebooks_put_shares_groups <- function(id, group_ids, permission_level, share_e
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12530,8 +13238,8 @@ notebooks_put_shares_groups <- function(id, group_ids, permission_level, share_e
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -12545,7 +13253,7 @@ notebooks_delete_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12620,14 +13328,14 @@ notebooks_put_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a Notebook belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -12666,14 +13374,14 @@ notebooks_list_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a Notebook to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -12689,14 +13397,14 @@ notebooks_put_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a Notebook from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -12712,7 +13420,7 @@ notebooks_delete_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12754,7 +13462,7 @@ notebooks_list_deployments <- function(notebook_id, deployment_id = NULL, limit 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12794,7 +13502,7 @@ notebooks_post_deployments <- function(notebook_id, deployment_id = NULL, publis
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12833,7 +13541,7 @@ notebooks_get_deployments <- function(notebook_id, deployment_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12856,7 +13564,7 @@ notebooks_delete_deployments <- function(notebook_id, deployment_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12867,6 +13575,7 @@ notebooks_delete_deployments <- function(notebook_id, deployment_id) {
 #' @param id integer required. The ID of the owning Notebook.
 #' @param deployment_id integer required. The ID for this deployment.
 #' @param start_at string optional. Log entries with a lower timestamp will be omitted.
+#' @param end_at string optional. Log entries with a higher timestamp will be omitted.
 #' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
 #' 
 #' @return  An array containing the following fields:
@@ -12875,24 +13584,24 @@ notebooks_delete_deployments <- function(notebook_id, deployment_id) {
 #' \item{createdAt}{string, The time the log was created.}
 #' \item{source}{string, The source of the log. One of "system", "user".}
 #' @export
-notebooks_list_deployments_logs <- function(id, deployment_id, start_at = NULL, limit = NULL) {
+notebooks_list_deployments_logs <- function(id, deployment_id, start_at = NULL, end_at = NULL, limit = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/notebooks/{id}/deployments/{deployment_id}/logs"
   path_params  <- list(id = id, deployment_id = deployment_id)
-  query_params <- list(start_at = start_at, limit = limit)
+  query_params <- list(start_at = start_at, end_at = end_at, limit = limit)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Get the git metadata attached to this Notebook
+#' Get the git metadata attached to an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -12917,14 +13626,14 @@ notebooks_list_git <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Attach this Notebook to a git repo/file
+#' Attach an item to a file in a git repo
 #' @param id integer required. The ID of the file.
 #' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
 #' @param git_branch string optional. The git branch that the file is on.
@@ -12953,14 +13662,14 @@ notebooks_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Get the git commits for this Notebook
+#' Get the git commits for an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -12979,7 +13688,7 @@ notebooks_list_git_commits <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13008,7 +13717,7 @@ notebooks_post_git_commits <- function(id, content, message, file_hash) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13035,7 +13744,7 @@ notebooks_get_git_commits <- function(id, commit_hash) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13059,7 +13768,7 @@ notifications_list <- function(last_event_id = NULL, r = NULL, mock = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13085,7 +13794,7 @@ ontology_list <- function(subset = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13125,7 +13834,7 @@ predictions_list <- function(model_id = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13183,7 +13892,7 @@ predictions_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13244,7 +13953,7 @@ predictions_patch <- function(id, output_table_name = NULL, limiting_sql = NULL,
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13276,7 +13985,7 @@ predictions_list_schedules <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13317,7 +14026,7 @@ predictions_put_schedules <- function(id, schedule = NULL, score_on_model_build 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13353,7 +14062,7 @@ predictions_post_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13393,7 +14102,7 @@ predictions_list_runs <- function(id, limit = NULL, page_num = NULL, order = NUL
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13430,7 +14139,7 @@ predictions_get_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13453,7 +14162,7 @@ predictions_delete_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13482,7 +14191,7 @@ predictions_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13534,7 +14243,7 @@ projects_list <- function(author = NULL, permission = NULL, hidden = NULL, archi
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13695,7 +14404,7 @@ projects_post <- function(name, description, note = NULL, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13853,7 +14562,7 @@ projects_get <- function(project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14014,7 +14723,7 @@ projects_put <- function(project_id, name = NULL, description = NULL, note = NUL
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14036,7 +14745,7 @@ projects_delete <- function(project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14044,7 +14753,7 @@ projects_delete <- function(project_id) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -14075,7 +14784,7 @@ projects_list_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14083,9 +14792,9 @@ projects_list_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -14118,7 +14827,7 @@ projects_put_shares_users <- function(id, user_ids, permission_level, share_emai
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14126,8 +14835,8 @@ projects_put_shares_users <- function(id, user_ids, permission_level, share_emai
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -14141,7 +14850,7 @@ projects_delete_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14149,9 +14858,9 @@ projects_delete_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -14184,7 +14893,7 @@ projects_put_shares_groups <- function(id, group_ids, permission_level, share_em
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14192,8 +14901,8 @@ projects_put_shares_groups <- function(id, group_ids, permission_level, share_em
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -14207,7 +14916,7 @@ projects_delete_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14366,7 +15075,7 @@ projects_put_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14413,7 +15122,7 @@ queries_list <- function(database_id = NULL, author_id = NULL, created_before = 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14469,7 +15178,7 @@ queries_post <- function(database, sql, preview_rows, credential = NULL, hidden 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14498,7 +15207,7 @@ queries_post_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14531,7 +15240,7 @@ queries_list_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, o
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14561,7 +15270,7 @@ queries_get_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14584,7 +15293,7 @@ queries_delete_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14613,7 +15322,7 @@ queries_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14662,7 +15371,7 @@ queries_put_scripts <- function(id, script_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14710,7 +15419,7 @@ queries_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14718,12 +15427,12 @@ queries_get <- function(id) {
 
 
 #' List the remote hosts
-#' @param type string optional. The type of remote host. One of: 
+#' @param type string optional. The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, RemoteHostTypes::Salesforce, RemoteHostTypes::Snowflake, and RemoteHostTypes::Van
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID of the remote host.}
 #' \item{name}{string, The name of the remote host.}
-#' \item{type}{string, The type of remote host. One of: }
+#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, RemoteHostTypes::Salesforce, RemoteHostTypes::Snowflake, and RemoteHostTypes::Van}
 #' \item{url}{string, The URL for remote host.}
 #' @export
 remote_hosts_list <- function(type = NULL) {
@@ -14736,7 +15445,7 @@ remote_hosts_list <- function(type = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14746,12 +15455,12 @@ remote_hosts_list <- function(type = NULL) {
 #' Create a new remote host
 #' @param name string required. The human readable name for the remote host.
 #' @param url string required. The URL to your host.
-#' @param type string required. The type of remote host. One of: 
+#' @param type string required. The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, RemoteHostTypes::Salesforce, RemoteHostTypes::Snowflake, and RemoteHostTypes::Van
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of the remote host.}
 #' \item{name}{string, The name of the remote host.}
-#' \item{type}{string, The type of remote host. One of: }
+#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, RemoteHostTypes::Salesforce, RemoteHostTypes::Snowflake, and RemoteHostTypes::Van}
 #' \item{url}{string, The URL for remote host.}
 #' @export
 remote_hosts_post <- function(name, url, type) {
@@ -14764,7 +15473,7 @@ remote_hosts_post <- function(name, url, type) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14789,7 +15498,7 @@ remote_hosts_post_authenticate <- function(id, credential_id = NULL, username = 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14818,7 +15527,7 @@ remote_hosts_list_data_sets <- function(id, credential_id = NULL, username = NUL
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14889,7 +15598,7 @@ results_list <- function(type = NULL, author = NULL, template_id = NULL, hidden 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14968,7 +15677,7 @@ results_post <- function(script_id = NULL, name = NULL, code_body = NULL, app_st
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15039,7 +15748,7 @@ reports_list <- function(type = NULL, author = NULL, template_id = NULL, hidden 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15118,14 +15827,14 @@ reports_post <- function(script_id = NULL, name = NULL, code_body = NULL, app_st
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Get the git metadata attached to this Report
+#' Get the git metadata attached to an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -15150,14 +15859,14 @@ results_list_git <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Attach this Report to a git repo/file
+#' Attach an item to a file in a git repo
 #' @param id integer required. The ID of the file.
 #' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
 #' @param git_branch string optional. The git branch that the file is on.
@@ -15186,14 +15895,14 @@ results_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NU
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Get the git metadata attached to this Report
+#' Get the git metadata attached to an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -15218,14 +15927,14 @@ reports_list_git <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Attach this Report to a git repo/file
+#' Attach an item to a file in a git repo
 #' @param id integer required. The ID of the file.
 #' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
 #' @param git_branch string optional. The git branch that the file is on.
@@ -15254,14 +15963,14 @@ reports_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NU
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Get the git commits for this Report
+#' Get the git commits for an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -15280,7 +15989,7 @@ results_list_git_commits <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15309,14 +16018,14 @@ results_post_git_commits <- function(id, content, message, file_hash) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Get the git commits for this Report
+#' Get the git commits for an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -15335,7 +16044,7 @@ reports_list_git_commits <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15364,7 +16073,7 @@ reports_post_git_commits <- function(id, content, message, file_hash) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15391,7 +16100,7 @@ results_get_git_commits <- function(id, commit_hash) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15418,7 +16127,7 @@ reports_get_git_commits <- function(id, commit_hash) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15491,7 +16200,7 @@ results_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15572,7 +16281,7 @@ results_patch <- function(id, name = NULL, script_id = NULL, code_body = NULL, c
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15645,7 +16354,7 @@ reports_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15726,7 +16435,7 @@ reports_patch <- function(id, name = NULL, script_id = NULL, code_body = NULL, c
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15799,7 +16508,7 @@ results_post_grants <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15821,7 +16530,7 @@ results_delete_grants <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15894,7 +16603,7 @@ reports_post_grants <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15916,7 +16625,7 @@ reports_delete_grants <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15956,7 +16665,7 @@ results_list_snapshots <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16013,7 +16722,7 @@ results_post_snapshots <- function(id, state = NULL, finished_at = NULL, send_em
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16070,7 +16779,7 @@ results_patch_snapshots <- function(id, state = NULL, finished_at = NULL, send_e
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16110,7 +16819,7 @@ reports_list_snapshots <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16167,7 +16876,7 @@ reports_post_snapshots <- function(id, state = NULL, finished_at = NULL, send_em
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16224,7 +16933,7 @@ reports_patch_snapshots <- function(id, state = NULL, finished_at = NULL, send_e
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16232,7 +16941,7 @@ reports_patch_snapshots <- function(id, state = NULL, finished_at = NULL, send_e
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -16263,7 +16972,7 @@ results_list_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16271,7 +16980,7 @@ results_list_shares <- function(id) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -16302,7 +17011,7 @@ reports_list_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16310,9 +17019,9 @@ reports_list_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -16345,7 +17054,7 @@ results_put_shares_users <- function(id, user_ids, permission_level, share_email
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16353,9 +17062,9 @@ results_put_shares_users <- function(id, user_ids, permission_level, share_email
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -16388,7 +17097,7 @@ reports_put_shares_users <- function(id, user_ids, permission_level, share_email
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16396,8 +17105,8 @@ reports_put_shares_users <- function(id, user_ids, permission_level, share_email
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -16411,7 +17120,7 @@ results_delete_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16419,8 +17128,8 @@ results_delete_shares_users <- function(id, user_id) {
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -16434,7 +17143,7 @@ reports_delete_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16442,9 +17151,9 @@ reports_delete_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -16477,7 +17186,7 @@ results_put_shares_groups <- function(id, group_ids, permission_level, share_ema
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16485,9 +17194,9 @@ results_put_shares_groups <- function(id, group_ids, permission_level, share_ema
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -16520,7 +17229,7 @@ reports_put_shares_groups <- function(id, group_ids, permission_level, share_ema
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16528,8 +17237,8 @@ reports_put_shares_groups <- function(id, group_ids, permission_level, share_ema
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -16543,7 +17252,7 @@ results_delete_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16551,8 +17260,8 @@ results_delete_shares_groups <- function(id, group_id) {
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -16566,14 +17275,14 @@ reports_delete_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a Report belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -16612,14 +17321,14 @@ results_list_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a Report belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -16658,14 +17367,14 @@ reports_list_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a Report to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -16681,14 +17390,14 @@ results_put_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a Report from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -16704,14 +17413,14 @@ results_delete_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a Report to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -16727,14 +17436,14 @@ reports_put_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a Report from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -16750,7 +17459,7 @@ reports_delete_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16824,7 +17533,7 @@ results_put_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16898,7 +17607,7 @@ reports_put_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16938,7 +17647,7 @@ results_get_services <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16980,7 +17689,7 @@ results_patch_services <- function(id, name = NULL, provide_api_key = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17020,7 +17729,7 @@ reports_get_services <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17062,7 +17771,7 @@ reports_patch_services <- function(id, name = NULL, provide_api_key = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17103,7 +17812,7 @@ results_post_services <- function(service_id, provide_api_key = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17144,7 +17853,7 @@ reports_post_services <- function(service_id, provide_api_key = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17152,7 +17861,7 @@ reports_post_services <- function(service_id, provide_api_key = NULL) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -17183,7 +17892,7 @@ results_list_services_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17191,7 +17900,7 @@ results_list_services_shares <- function(id) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -17222,7 +17931,7 @@ reports_list_services_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17230,9 +17939,9 @@ reports_list_services_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -17265,7 +17974,7 @@ results_put_services_shares_users <- function(id, user_ids, permission_level, sh
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17273,9 +17982,9 @@ results_put_services_shares_users <- function(id, user_ids, permission_level, sh
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -17308,7 +18017,7 @@ reports_put_services_shares_users <- function(id, user_ids, permission_level, sh
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17316,8 +18025,8 @@ reports_put_services_shares_users <- function(id, user_ids, permission_level, sh
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -17331,7 +18040,7 @@ results_delete_services_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17339,8 +18048,8 @@ results_delete_services_shares_users <- function(id, user_id) {
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -17354,7 +18063,7 @@ reports_delete_services_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17362,9 +18071,9 @@ reports_delete_services_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -17397,7 +18106,7 @@ results_put_services_shares_groups <- function(id, group_ids, permission_level, 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17405,9 +18114,9 @@ results_put_services_shares_groups <- function(id, group_ids, permission_level, 
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -17440,7 +18149,7 @@ reports_put_services_shares_groups <- function(id, group_ids, permission_level, 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17448,8 +18157,8 @@ reports_put_services_shares_groups <- function(id, group_ids, permission_level, 
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -17463,7 +18172,7 @@ results_delete_services_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17471,8 +18180,8 @@ results_delete_services_shares_groups <- function(id, group_id) {
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -17486,7 +18195,191 @@ reports_delete_services_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the projects an item belongs to
+#' @param id integer required. The ID of the resource.
+#' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID for this project.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{name}{string, The name of this project.}
+#' \item{description}{string, A description of the project.}
+#' \item{users}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{autoShare}{boolean, }
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+results_list_services_projects <- function(id, hidden = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/results/services/{id}/projects"
+  path_params  <- list(id = id)
+  query_params <- list(hidden = hidden)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the projects an item belongs to
+#' @param id integer required. The ID of the resource.
+#' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID for this project.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{name}{string, The name of this project.}
+#' \item{description}{string, A description of the project.}
+#' \item{users}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{autoShare}{boolean, }
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+reports_list_services_projects <- function(id, hidden = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/services/{id}/projects"
+  path_params  <- list(id = id)
+  query_params <- list(hidden = hidden)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Add an item to a project
+#' @param id integer required. The ID of the resource.
+#' @param project_id integer required. The ID of the project.
+#' 
+#' @return  An empty HTTP response
+#' @export
+results_put_services_projects <- function(id, project_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/results/services/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Remove an item from a project
+#' @param id integer required. The ID of the resource.
+#' @param project_id integer required. The ID of the project.
+#' 
+#' @return  An empty HTTP response
+#' @export
+results_delete_services_projects <- function(id, project_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/results/services/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Add an item to a project
+#' @param id integer required. The ID of the resource.
+#' @param project_id integer required. The ID of the project.
+#' 
+#' @return  An empty HTTP response
+#' @export
+reports_put_services_projects <- function(id, project_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/services/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Remove an item from a project
+#' @param id integer required. The ID of the resource.
+#' @param project_id integer required. The ID of the project.
+#' 
+#' @return  An empty HTTP response
+#' @export
+reports_delete_services_projects <- function(id, project_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/services/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17508,7 +18401,7 @@ scripts_list_types <- function() {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17542,7 +18435,7 @@ scripts_list_history <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17559,7 +18452,7 @@ scripts_list_history <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -17611,7 +18504,7 @@ scripts_list_history <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -17683,7 +18576,7 @@ scripts_post <- function(name, remote_host_id, credential_id, sql, params = NULL
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17754,7 +18647,7 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17770,7 +18663,7 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -17830,7 +18723,7 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -17904,7 +18797,7 @@ scripts_patch <- function(id, name = NULL, sql = NULL, params = NULL, arguments 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17926,7 +18819,7 @@ scripts_delete <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17965,7 +18858,7 @@ scripts_delete <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -18039,7 +18932,7 @@ scripts_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -18061,7 +18954,7 @@ scripts_post_run <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -18086,7 +18979,7 @@ scripts_post_cancel <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -18101,7 +18994,6 @@ scripts_post_cancel <- function(id) {
 #' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
 #' \item wholeInstance boolean, Whether or not to use the entire instance. If true, cpu, memory, and disk space are not required and will be set to an instance's max.
 #' }
-#' @param docker_command string required. The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]
 #' @param docker_image_name string required. The name of the docker image to pull from DockerHub.
 #' @param name string optional. The name of the container.
 #' @param parent_id integer optional. The ID of the parent job that will trigger this script
@@ -18111,7 +19003,7 @@ scripts_post_cancel <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -18143,7 +19035,8 @@ scripts_post_cancel <- function(id) {
 #' @param repo_ref string optional. The tag or branch of the github repo to clone into the container.
 #' @param remote_host_credential_id integer optional. The id of the database credentials to pass into the environment of the container.
 #' @param git_credential_id integer optional. The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. Unnecessary if no git repo is specified or the git repo is public.
-#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub (default: latest).
+#' @param docker_command string optional. The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]. 
+#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub.
 #' @param instance_type string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
 #' @param time_zone string optional. The time zone of this script.
@@ -18179,7 +19072,7 @@ scripts_post_cancel <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -18235,9 +19128,9 @@ scripts_post_cancel <- function(id) {
 #' \item{repoRef}{string, The tag or branch of the github repo to clone into the container.}
 #' \item{remoteHostCredentialId}{integer, The id of the database credentials to pass into the environment of the container.}
 #' \item{gitCredentialId}{integer, The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. Unnecessary if no git repo is specified or the git repo is public.}
-#' \item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]}
+#' \item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]. }
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
-#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{lastRun}{list, A list containing the following elements: 
@@ -18254,17 +19147,17 @@ scripts_post_cancel <- function(id) {
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' @export
-scripts_post_containers <- function(required_resources, docker_command, docker_image_name, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, repo_http_uri = NULL, repo_ref = NULL, remote_host_credential_id = NULL, git_credential_id = NULL, docker_image_tag = NULL, instance_type = NULL, cancel_timeout = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL) {
+scripts_post_containers <- function(required_resources, docker_image_name, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, repo_http_uri = NULL, repo_ref = NULL, remote_host_credential_id = NULL, git_credential_id = NULL, docker_command = NULL, docker_image_tag = NULL, instance_type = NULL, cancel_timeout = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/containers"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(requiredResources = required_resources, dockerCommand = docker_command, dockerImageName = docker_image_name, name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, repoHttpUri = repo_http_uri, repoRef = repo_ref, remoteHostCredentialId = remote_host_credential_id, gitCredentialId = git_credential_id, dockerImageTag = docker_image_tag, instanceType = instance_type, cancelTimeout = cancel_timeout, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id)
+  body_params  <- list(requiredResources = required_resources, dockerImageName = docker_image_name, name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, repoHttpUri = repo_http_uri, repoRef = repo_ref, remoteHostCredentialId = remote_host_credential_id, gitCredentialId = git_credential_id, dockerCommand = docker_command, dockerImageTag = docker_image_tag, instanceType = instance_type, cancelTimeout = cancel_timeout, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -18303,7 +19196,7 @@ scripts_post_containers <- function(required_resources, docker_command, docker_i
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -18359,9 +19252,9 @@ scripts_post_containers <- function(required_resources, docker_command, docker_i
 #' \item{repoRef}{string, The tag or branch of the github repo to clone into the container.}
 #' \item{remoteHostCredentialId}{integer, The id of the database credentials to pass into the environment of the container.}
 #' \item{gitCredentialId}{integer, The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. Unnecessary if no git repo is specified or the git repo is public.}
-#' \item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]}
+#' \item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]. }
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
-#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{lastRun}{list, A list containing the following elements: 
@@ -18388,7 +19281,7 @@ scripts_get_containers <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -18404,7 +19297,6 @@ scripts_get_containers <- function(id) {
 #' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
 #' \item wholeInstance boolean, Whether or not to use the entire instance. If true, cpu, memory, and disk space are not required and will be set to an instance's max.
 #' }
-#' @param docker_command string required. The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]
 #' @param docker_image_name string required. The name of the docker image to pull from DockerHub.
 #' @param name string optional. The name of the container.
 #' @param parent_id integer optional. The ID of the parent job that will trigger this script
@@ -18414,7 +19306,7 @@ scripts_get_containers <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -18446,7 +19338,8 @@ scripts_get_containers <- function(id) {
 #' @param repo_ref string optional. The tag or branch of the github repo to clone into the container.
 #' @param remote_host_credential_id integer optional. The id of the database credentials to pass into the environment of the container.
 #' @param git_credential_id integer optional. The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. Unnecessary if no git repo is specified or the git repo is public.
-#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub (default: latest).
+#' @param docker_command string optional. The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]. 
+#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub.
 #' @param instance_type string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
 #' @param time_zone string optional. The time zone of this script.
@@ -18481,7 +19374,7 @@ scripts_get_containers <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -18537,9 +19430,9 @@ scripts_get_containers <- function(id) {
 #' \item{repoRef}{string, The tag or branch of the github repo to clone into the container.}
 #' \item{remoteHostCredentialId}{integer, The id of the database credentials to pass into the environment of the container.}
 #' \item{gitCredentialId}{integer, The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. Unnecessary if no git repo is specified or the git repo is public.}
-#' \item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]}
+#' \item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]. }
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
-#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{lastRun}{list, A list containing the following elements: 
@@ -18556,17 +19449,17 @@ scripts_get_containers <- function(id) {
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' @export
-scripts_put_containers <- function(id, required_resources, docker_command, docker_image_name, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, repo_http_uri = NULL, repo_ref = NULL, remote_host_credential_id = NULL, git_credential_id = NULL, docker_image_tag = NULL, instance_type = NULL, cancel_timeout = NULL, time_zone = NULL, target_project_id = NULL) {
+scripts_put_containers <- function(id, required_resources, docker_image_name, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, repo_http_uri = NULL, repo_ref = NULL, remote_host_credential_id = NULL, git_credential_id = NULL, docker_command = NULL, docker_image_tag = NULL, instance_type = NULL, cancel_timeout = NULL, time_zone = NULL, target_project_id = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/containers/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(requiredResources = required_resources, dockerCommand = docker_command, dockerImageName = docker_image_name, name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, repoHttpUri = repo_http_uri, repoRef = repo_ref, remoteHostCredentialId = remote_host_credential_id, gitCredentialId = git_credential_id, dockerImageTag = docker_image_tag, instanceType = instance_type, cancelTimeout = cancel_timeout, timeZone = time_zone, targetProjectId = target_project_id)
+  body_params  <- list(requiredResources = required_resources, dockerImageName = docker_image_name, name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, repoHttpUri = repo_http_uri, repoRef = repo_ref, remoteHostCredentialId = remote_host_credential_id, gitCredentialId = git_credential_id, dockerCommand = docker_command, dockerImageTag = docker_image_tag, instanceType = instance_type, cancelTimeout = cancel_timeout, timeZone = time_zone, targetProjectId = target_project_id)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -18583,7 +19476,7 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -18622,9 +19515,9 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' @param repo_ref string optional. The tag or branch of the github repo to clone into the container.
 #' @param remote_host_credential_id integer optional. The id of the database credentials to pass into the environment of the container.
 #' @param git_credential_id integer optional. The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. Unnecessary if no git repo is specified or the git repo is public.
-#' @param docker_command string optional. The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]
+#' @param docker_command string optional. The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]. 
 #' @param docker_image_name string optional. The name of the docker image to pull from DockerHub.
-#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub (default: latest).
+#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub.
 #' @param instance_type string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
 #' @param time_zone string optional. The time zone of this script.
@@ -18659,7 +19552,7 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -18715,9 +19608,9 @@ scripts_put_containers <- function(id, required_resources, docker_command, docke
 #' \item{repoRef}{string, The tag or branch of the github repo to clone into the container.}
 #' \item{remoteHostCredentialId}{integer, The id of the database credentials to pass into the environment of the container.}
 #' \item{gitCredentialId}{integer, The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. Unnecessary if no git repo is specified or the git repo is public.}
-#' \item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]}
+#' \item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]. }
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
-#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{lastRun}{list, A list containing the following elements: 
@@ -18744,7 +19637,7 @@ scripts_patch_containers <- function(id, name = NULL, parent_id = NULL, user_con
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -18766,7 +19659,7 @@ scripts_delete_containers <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -18782,7 +19675,7 @@ scripts_delete_containers <- function(id) {
 #' \itemize{
 #' \item message string, The log message to store.
 #' \item level string, The log level of this message [default: info]
-#' \item createdAt string, 
+#' \item createdAt string, The timestamp of this message in ISO 8601 format. This is what logs are ordered by, so it is recommended to use timestamps with nanosecond precision. If absent, defaults to the time that the log was received by the API.
 #' }
 #' @param child_job_id integer optional. The ID of the child job the message came from.
 #' 
@@ -18798,7 +19691,7 @@ scripts_post_containers_runs_logs <- function(id, run_id, message = NULL, level 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -18827,7 +19720,7 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -18846,7 +19739,7 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -18917,7 +19810,7 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -19002,7 +19895,7 @@ scripts_post_sql <- function(name, sql, remote_host_id, credential_id, parent_id
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -19041,7 +19934,7 @@ scripts_post_sql <- function(name, sql, remote_host_id, credential_id, parent_id
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -19126,7 +20019,7 @@ scripts_get_sql <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -19146,7 +20039,7 @@ scripts_get_sql <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -19216,7 +20109,7 @@ scripts_get_sql <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -19301,7 +20194,7 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -19318,7 +20211,7 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -19391,7 +20284,7 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -19476,7 +20369,7 @@ scripts_patch_sql <- function(id, name = NULL, parent_id = NULL, user_context = 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -19498,7 +20391,7 @@ scripts_delete_sql <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -19515,7 +20408,7 @@ scripts_delete_sql <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -19555,6 +20448,7 @@ scripts_delete_sql <- function(id) {
 #' }
 #' @param instance_type string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
+#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -19585,7 +20479,7 @@ scripts_delete_sql <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -19654,18 +20548,19 @@ scripts_delete_sql <- function(id) {
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' @export
-scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, cancel_timeout = NULL) {
+scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, cancel_timeout = NULL, docker_image_tag = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/python3"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, source = source, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, cancelTimeout = cancel_timeout)
+  body_params  <- list(name = name, source = source, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -19704,7 +20599,7 @@ scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = 
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -19773,6 +20668,7 @@ scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = 
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' @export
 scripts_get_python3 <- function(id) {
 
@@ -19784,7 +20680,7 @@ scripts_get_python3 <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -19802,7 +20698,7 @@ scripts_get_python3 <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -19841,6 +20737,7 @@ scripts_get_python3 <- function(id) {
 #' }
 #' @param instance_type string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
+#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -19871,7 +20768,7 @@ scripts_get_python3 <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -19940,18 +20837,19 @@ scripts_get_python3 <- function(id) {
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' @export
-scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, cancel_timeout = NULL) {
+scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, cancel_timeout = NULL, docker_image_tag = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/python3/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, source = source, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, cancelTimeout = cancel_timeout)
+  body_params  <- list(name = name, source = source, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -19968,7 +20866,7 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -20008,6 +20906,7 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' @param instance_type string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.
 #' @param source string optional. The body/text of the script.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
+#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -20038,7 +20937,7 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -20107,18 +21006,19 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' @export
-scripts_patch_python3 <- function(id, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, source = NULL, cancel_timeout = NULL) {
+scripts_patch_python3 <- function(id, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, source = NULL, cancel_timeout = NULL, docker_image_tag = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/python3/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, source = source, cancelTimeout = cancel_timeout)
+  body_params  <- list(name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, source = source, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -20140,7 +21040,7 @@ scripts_delete_python3 <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -20157,7 +21057,7 @@ scripts_delete_python3 <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -20197,6 +21097,7 @@ scripts_delete_python3 <- function(id) {
 #' }
 #' @param instance_type string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
+#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -20227,7 +21128,7 @@ scripts_delete_python3 <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -20296,18 +21197,19 @@ scripts_delete_python3 <- function(id) {
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' @export
-scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, cancel_timeout = NULL) {
+scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, cancel_timeout = NULL, docker_image_tag = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/r"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, source = source, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, cancelTimeout = cancel_timeout)
+  body_params  <- list(name = name, source = source, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -20346,7 +21248,7 @@ scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, 
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -20415,6 +21317,7 @@ scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, 
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' @export
 scripts_get_r <- function(id) {
 
@@ -20426,7 +21329,7 @@ scripts_get_r <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -20444,7 +21347,7 @@ scripts_get_r <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -20483,6 +21386,7 @@ scripts_get_r <- function(id) {
 #' }
 #' @param instance_type string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
+#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -20513,7 +21417,7 @@ scripts_get_r <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -20582,18 +21486,19 @@ scripts_get_r <- function(id) {
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' @export
-scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, cancel_timeout = NULL) {
+scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, cancel_timeout = NULL, docker_image_tag = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/r/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, source = source, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, cancelTimeout = cancel_timeout)
+  body_params  <- list(name = name, source = source, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -20610,7 +21515,7 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -20650,6 +21555,7 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' @param instance_type string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.
 #' @param source string optional. The body/text of the script.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
+#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -20680,7 +21586,7 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -20749,18 +21655,19 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' @export
-scripts_patch_r <- function(id, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, source = NULL, cancel_timeout = NULL) {
+scripts_patch_r <- function(id, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, source = NULL, cancel_timeout = NULL, docker_image_tag = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/r/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, source = source, cancelTimeout = cancel_timeout)
+  body_params  <- list(name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, source = source, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -20782,7 +21689,7 @@ scripts_delete_r <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -20801,7 +21708,7 @@ scripts_delete_r <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -20863,7 +21770,7 @@ scripts_delete_r <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -20937,7 +21844,7 @@ scripts_post_javascript <- function(name, source, remote_host_id, credential_id,
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -20976,7 +21883,7 @@ scripts_post_javascript <- function(name, source, remote_host_id, credential_id,
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -21050,7 +21957,7 @@ scripts_get_javascript <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -21070,7 +21977,7 @@ scripts_get_javascript <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -21131,7 +22038,7 @@ scripts_get_javascript <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -21205,7 +22112,7 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -21222,7 +22129,7 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -21286,7 +22193,7 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -21360,7 +22267,7 @@ scripts_patch_javascript <- function(id, name = NULL, parent_id = NULL, user_con
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -21382,7 +22289,7 @@ scripts_delete_javascript <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -21445,7 +22352,7 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -21512,7 +22419,7 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -21583,7 +22490,7 @@ scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL,
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -21621,7 +22528,7 @@ scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL,
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -21692,7 +22599,7 @@ scripts_get_custom <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -21758,7 +22665,7 @@ scripts_get_custom <- function(id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -21829,7 +22736,7 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -21895,7 +22802,7 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -21966,7 +22873,7 @@ scripts_patch_custom <- function(id, name = NULL, parent_id = NULL, arguments = 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -21988,7 +22895,7 @@ scripts_delete_custom <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22023,7 +22930,7 @@ scripts_post_sql_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22062,7 +22969,7 @@ scripts_list_sql_runs <- function(id, limit = NULL, page_num = NULL, order = NUL
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22098,7 +23005,7 @@ scripts_get_sql_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22121,7 +23028,7 @@ scripts_delete_sql_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22150,7 +23057,7 @@ scripts_list_sql_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22179,7 +23086,7 @@ scripts_post_containers_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22212,7 +23119,7 @@ scripts_list_containers_runs <- function(id, limit = NULL, page_num = NULL, orde
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22242,7 +23149,7 @@ scripts_get_containers_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22265,7 +23172,7 @@ scripts_delete_containers_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22294,7 +23201,7 @@ scripts_post_python3_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22327,7 +23234,7 @@ scripts_list_python3_runs <- function(id, limit = NULL, page_num = NULL, order =
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22357,7 +23264,7 @@ scripts_get_python3_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22380,7 +23287,7 @@ scripts_delete_python3_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22409,7 +23316,7 @@ scripts_list_python3_runs_logs <- function(id, run_id, last_id = NULL, limit = N
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22438,7 +23345,7 @@ scripts_post_r_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22471,7 +23378,7 @@ scripts_list_r_runs <- function(id, limit = NULL, page_num = NULL, order = NULL,
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22501,7 +23408,7 @@ scripts_get_r_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22524,7 +23431,7 @@ scripts_delete_r_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22553,7 +23460,7 @@ scripts_list_r_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22582,7 +23489,7 @@ scripts_post_javascript_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22615,7 +23522,7 @@ scripts_list_javascript_runs <- function(id, limit = NULL, page_num = NULL, orde
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22645,7 +23552,7 @@ scripts_get_javascript_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22668,7 +23575,7 @@ scripts_delete_javascript_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22697,7 +23604,7 @@ scripts_list_javascript_runs_logs <- function(id, run_id, last_id = NULL, limit 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22726,7 +23633,7 @@ scripts_post_custom_runs <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22759,7 +23666,7 @@ scripts_list_custom_runs <- function(id, limit = NULL, page_num = NULL, order = 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22789,7 +23696,7 @@ scripts_get_custom_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22812,7 +23719,7 @@ scripts_delete_custom_runs <- function(id, run_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22841,7 +23748,7 @@ scripts_list_custom_runs_logs <- function(id, run_id, last_id = NULL, limit = NU
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22873,7 +23780,7 @@ scripts_list_sql_runs_outputs <- function(id, run_id, limit = NULL, page_num = N
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22905,7 +23812,7 @@ scripts_list_containers_runs_outputs <- function(id, run_id, limit = NULL, page_
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22935,7 +23842,7 @@ scripts_post_containers_runs_outputs <- function(id, run_id, object_type, object
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22967,7 +23874,7 @@ scripts_list_python3_runs_outputs <- function(id, run_id, limit = NULL, page_num
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -22997,7 +23904,7 @@ scripts_post_python3_runs_outputs <- function(id, run_id, object_type, object_id
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23029,7 +23936,7 @@ scripts_list_r_runs_outputs <- function(id, run_id, limit = NULL, page_num = NUL
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23059,7 +23966,7 @@ scripts_post_r_runs_outputs <- function(id, run_id, object_type, object_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23091,7 +23998,7 @@ scripts_list_javascript_runs_outputs <- function(id, run_id, limit = NULL, page_
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23121,7 +24028,7 @@ scripts_post_javascript_runs_outputs <- function(id, run_id, object_type, object
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23153,7 +24060,7 @@ scripts_list_custom_runs_outputs <- function(id, run_id, limit = NULL, page_num 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23183,14 +24090,14 @@ scripts_post_custom_runs_outputs <- function(id, run_id, object_type, object_id)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Get the git metadata attached to this scripts
+#' Get the git metadata attached to an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -23215,14 +24122,14 @@ scripts_list_sql_git <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Attach this scripts to a git repo/file
+#' Attach an item to a file in a git repo
 #' @param id integer required. The ID of the file.
 #' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
 #' @param git_branch string optional. The git branch that the file is on.
@@ -23251,14 +24158,14 @@ scripts_put_sql_git <- function(id, git_ref = NULL, git_branch = NULL, git_path 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Get the git commits for this scripts
+#' Get the git commits for an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -23277,7 +24184,7 @@ scripts_list_sql_git_commits <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23306,7 +24213,7 @@ scripts_post_sql_git_commits <- function(id, content, message, file_hash) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23333,14 +24240,14 @@ scripts_get_sql_git_commits <- function(id, commit_hash) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Get the git metadata attached to this scripted sql
+#' Get the git metadata attached to an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -23365,14 +24272,14 @@ scripts_list_javascript_git <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Attach this scripted sql to a git repo/file
+#' Attach an item to a file in a git repo
 #' @param id integer required. The ID of the file.
 #' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
 #' @param git_branch string optional. The git branch that the file is on.
@@ -23401,14 +24308,14 @@ scripts_put_javascript_git <- function(id, git_ref = NULL, git_branch = NULL, gi
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Get the git commits for this scripted sql
+#' Get the git commits for an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -23427,7 +24334,7 @@ scripts_list_javascript_git_commits <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23456,7 +24363,7 @@ scripts_post_javascript_git_commits <- function(id, content, message, file_hash)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23483,14 +24390,14 @@ scripts_get_javascript_git_commits <- function(id, commit_hash) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Get the git metadata attached to this python docker
+#' Get the git metadata attached to an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -23515,14 +24422,14 @@ scripts_list_python3_git <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Attach this python docker to a git repo/file
+#' Attach an item to a file in a git repo
 #' @param id integer required. The ID of the file.
 #' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
 #' @param git_branch string optional. The git branch that the file is on.
@@ -23551,14 +24458,14 @@ scripts_put_python3_git <- function(id, git_ref = NULL, git_branch = NULL, git_p
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Get the git commits for this python docker
+#' Get the git commits for an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -23577,7 +24484,7 @@ scripts_list_python3_git_commits <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23606,7 +24513,7 @@ scripts_post_python3_git_commits <- function(id, content, message, file_hash) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23633,14 +24540,14 @@ scripts_get_python3_git_commits <- function(id, commit_hash) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Get the git metadata attached to this r docker
+#' Get the git metadata attached to an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -23665,14 +24572,14 @@ scripts_list_r_git <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Attach this r docker to a git repo/file
+#' Attach an item to a file in a git repo
 #' @param id integer required. The ID of the file.
 #' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
 #' @param git_branch string optional. The git branch that the file is on.
@@ -23701,14 +24608,14 @@ scripts_put_r_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Get the git commits for this r docker
+#' Get the git commits for an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -23727,7 +24634,7 @@ scripts_list_r_git_commits <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23756,7 +24663,7 @@ scripts_post_r_git_commits <- function(id, content, message, file_hash) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23783,7 +24690,7 @@ scripts_get_r_git_commits <- function(id, commit_hash) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23791,7 +24698,7 @@ scripts_get_r_git_commits <- function(id, commit_hash) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -23822,7 +24729,7 @@ scripts_list_sql_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23830,9 +24737,9 @@ scripts_list_sql_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -23865,7 +24772,7 @@ scripts_put_sql_shares_users <- function(id, user_ids, permission_level, share_e
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23873,8 +24780,8 @@ scripts_put_sql_shares_users <- function(id, user_ids, permission_level, share_e
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -23888,7 +24795,7 @@ scripts_delete_sql_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23896,9 +24803,9 @@ scripts_delete_sql_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -23931,7 +24838,7 @@ scripts_put_sql_shares_groups <- function(id, group_ids, permission_level, share
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23939,8 +24846,8 @@ scripts_put_sql_shares_groups <- function(id, group_ids, permission_level, share
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -23954,14 +24861,14 @@ scripts_delete_sql_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a scripts belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -24000,14 +24907,14 @@ scripts_list_sql_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a scripts to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -24023,14 +24930,14 @@ scripts_put_sql_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a scripts from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -24046,7 +24953,7 @@ scripts_delete_sql_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24086,7 +24993,7 @@ scripts_delete_sql_projects <- function(id, project_id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -24171,7 +25078,7 @@ scripts_put_sql_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24179,7 +25086,7 @@ scripts_put_sql_archive <- function(id, status) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -24210,7 +25117,7 @@ scripts_list_containers_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24218,9 +25125,9 @@ scripts_list_containers_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -24253,7 +25160,7 @@ scripts_put_containers_shares_users <- function(id, user_ids, permission_level, 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24261,8 +25168,8 @@ scripts_put_containers_shares_users <- function(id, user_ids, permission_level, 
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -24276,7 +25183,7 @@ scripts_delete_containers_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24284,9 +25191,9 @@ scripts_delete_containers_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -24319,7 +25226,7 @@ scripts_put_containers_shares_groups <- function(id, group_ids, permission_level
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24327,8 +25234,8 @@ scripts_put_containers_shares_groups <- function(id, group_ids, permission_level
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -24342,14 +25249,14 @@ scripts_delete_containers_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a container docker belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -24388,14 +25295,14 @@ scripts_list_containers_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a container docker to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -24411,14 +25318,14 @@ scripts_put_containers_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a container docker from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -24434,7 +25341,7 @@ scripts_delete_containers_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24474,7 +25381,7 @@ scripts_delete_containers_projects <- function(id, project_id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -24530,9 +25437,9 @@ scripts_delete_containers_projects <- function(id, project_id) {
 #' \item{repoRef}{string, The tag or branch of the github repo to clone into the container.}
 #' \item{remoteHostCredentialId}{integer, The id of the database credentials to pass into the environment of the container.}
 #' \item{gitCredentialId}{integer, The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. Unnecessary if no git repo is specified or the git repo is public.}
-#' \item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]}
+#' \item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]. }
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
-#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{lastRun}{list, A list containing the following elements: 
@@ -24559,7 +25466,7 @@ scripts_put_containers_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24567,7 +25474,7 @@ scripts_put_containers_archive <- function(id, status) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -24598,7 +25505,7 @@ scripts_list_python3_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24606,9 +25513,9 @@ scripts_list_python3_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -24641,7 +25548,7 @@ scripts_put_python3_shares_users <- function(id, user_ids, permission_level, sha
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24649,8 +25556,8 @@ scripts_put_python3_shares_users <- function(id, user_ids, permission_level, sha
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -24664,7 +25571,7 @@ scripts_delete_python3_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24672,9 +25579,9 @@ scripts_delete_python3_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -24707,7 +25614,7 @@ scripts_put_python3_shares_groups <- function(id, group_ids, permission_level, s
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24715,8 +25622,8 @@ scripts_put_python3_shares_groups <- function(id, group_ids, permission_level, s
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -24730,14 +25637,14 @@ scripts_delete_python3_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a python docker belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -24776,14 +25683,14 @@ scripts_list_python3_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a python docker to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -24799,14 +25706,14 @@ scripts_put_python3_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a python docker from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -24822,7 +25729,7 @@ scripts_delete_python3_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24862,7 +25769,7 @@ scripts_delete_python3_projects <- function(id, project_id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -24931,6 +25838,7 @@ scripts_delete_python3_projects <- function(id, project_id) {
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' @export
 scripts_put_python3_archive <- function(id, status) {
 
@@ -24942,7 +25850,7 @@ scripts_put_python3_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24950,7 +25858,7 @@ scripts_put_python3_archive <- function(id, status) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -24981,7 +25889,7 @@ scripts_list_r_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24989,9 +25897,9 @@ scripts_list_r_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -25024,7 +25932,7 @@ scripts_put_r_shares_users <- function(id, user_ids, permission_level, share_ema
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25032,8 +25940,8 @@ scripts_put_r_shares_users <- function(id, user_ids, permission_level, share_ema
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -25047,7 +25955,7 @@ scripts_delete_r_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25055,9 +25963,9 @@ scripts_delete_r_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -25090,7 +25998,7 @@ scripts_put_r_shares_groups <- function(id, group_ids, permission_level, share_e
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25098,8 +26006,8 @@ scripts_put_r_shares_groups <- function(id, group_ids, permission_level, share_e
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -25113,14 +26021,14 @@ scripts_delete_r_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a r docker belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -25159,14 +26067,14 @@ scripts_list_r_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a r docker to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -25182,14 +26090,14 @@ scripts_put_r_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a r docker from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -25205,7 +26113,7 @@ scripts_delete_r_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25245,7 +26153,7 @@ scripts_delete_r_projects <- function(id, project_id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -25314,6 +26222,7 @@ scripts_delete_r_projects <- function(id, project_id) {
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' @export
 scripts_put_r_archive <- function(id, status) {
 
@@ -25325,7 +26234,7 @@ scripts_put_r_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25333,7 +26242,7 @@ scripts_put_r_archive <- function(id, status) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -25364,7 +26273,7 @@ scripts_list_javascript_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25372,9 +26281,9 @@ scripts_list_javascript_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -25407,7 +26316,7 @@ scripts_put_javascript_shares_users <- function(id, user_ids, permission_level, 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25415,8 +26324,8 @@ scripts_put_javascript_shares_users <- function(id, user_ids, permission_level, 
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -25430,7 +26339,7 @@ scripts_delete_javascript_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25438,9 +26347,9 @@ scripts_delete_javascript_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -25473,7 +26382,7 @@ scripts_put_javascript_shares_groups <- function(id, group_ids, permission_level
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25481,8 +26390,8 @@ scripts_put_javascript_shares_groups <- function(id, group_ids, permission_level
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -25496,14 +26405,14 @@ scripts_delete_javascript_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a scripted sql belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -25542,14 +26451,14 @@ scripts_list_javascript_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a scripted sql to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -25565,14 +26474,14 @@ scripts_put_javascript_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a scripted sql from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -25588,7 +26497,7 @@ scripts_delete_javascript_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25628,7 +26537,7 @@ scripts_delete_javascript_projects <- function(id, project_id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -25702,7 +26611,7 @@ scripts_put_javascript_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25710,7 +26619,7 @@ scripts_put_javascript_archive <- function(id, status) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -25741,7 +26650,7 @@ scripts_list_custom_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25749,9 +26658,9 @@ scripts_list_custom_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -25784,7 +26693,7 @@ scripts_put_custom_shares_users <- function(id, user_ids, permission_level, shar
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25792,8 +26701,8 @@ scripts_put_custom_shares_users <- function(id, user_ids, permission_level, shar
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -25807,7 +26716,7 @@ scripts_delete_custom_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25815,9 +26724,9 @@ scripts_delete_custom_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -25850,7 +26759,7 @@ scripts_put_custom_shares_groups <- function(id, group_ids, permission_level, sh
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25858,8 +26767,8 @@ scripts_put_custom_shares_groups <- function(id, group_ids, permission_level, sh
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -25873,14 +26782,14 @@ scripts_delete_custom_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a Job belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -25919,14 +26828,14 @@ scripts_list_custom_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a Job to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -25942,14 +26851,14 @@ scripts_put_custom_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a Job from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -25965,7 +26874,7 @@ scripts_delete_custom_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -26004,7 +26913,7 @@ scripts_delete_custom_projects <- function(id, project_id) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -26075,7 +26984,7 @@ scripts_put_custom_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -26117,7 +27026,7 @@ scripts_put_custom_archive <- function(id, status) {
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -26202,7 +27111,7 @@ scripts_post_sql_clone <- function(id, clone_schedule = NULL, clone_triggers = N
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -26244,7 +27153,7 @@ scripts_post_sql_clone <- function(id, clone_schedule = NULL, clone_triggers = N
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -26318,7 +27227,7 @@ scripts_post_javascript_clone <- function(id, clone_schedule = NULL, clone_trigg
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -26360,7 +27269,7 @@ scripts_post_javascript_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -26429,6 +27338,7 @@ scripts_post_javascript_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' @export
 scripts_post_python3_clone <- function(id, clone_schedule = NULL, clone_triggers = NULL, clone_notifications = NULL) {
 
@@ -26440,7 +27350,7 @@ scripts_post_python3_clone <- function(id, clone_schedule = NULL, clone_triggers
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -26482,7 +27392,7 @@ scripts_post_python3_clone <- function(id, clone_schedule = NULL, clone_triggers
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -26551,6 +27461,7 @@ scripts_post_python3_clone <- function(id, clone_schedule = NULL, clone_triggers
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' @export
 scripts_post_r_clone <- function(id, clone_schedule = NULL, clone_triggers = NULL, clone_notifications = NULL) {
 
@@ -26562,7 +27473,7 @@ scripts_post_r_clone <- function(id, clone_schedule = NULL, clone_triggers = NUL
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -26603,7 +27514,7 @@ scripts_post_r_clone <- function(id, clone_schedule = NULL, clone_triggers = NUL
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -26674,7 +27585,7 @@ scripts_post_custom_clone <- function(id, clone_schedule = NULL, clone_triggers 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -26716,7 +27627,7 @@ scripts_post_custom_clone <- function(id, clone_schedule = NULL, clone_triggers 
 #' \item name string, The variable's name as used within your code.
 #' \item label string, The label to present to users when asking them for the value.
 #' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -26772,9 +27683,9 @@ scripts_post_custom_clone <- function(id, clone_schedule = NULL, clone_triggers 
 #' \item{repoRef}{string, The tag or branch of the github repo to clone into the container.}
 #' \item{remoteHostCredentialId}{integer, The id of the database credentials to pass into the environment of the container.}
 #' \item{gitCredentialId}{integer, The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. Unnecessary if no git repo is specified or the git repo is public.}
-#' \item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]}
+#' \item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]. }
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
-#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 #' \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{lastRun}{list, A list containing the following elements: 
@@ -26801,7 +27712,7 @@ scripts_post_containers_clone <- function(id, clone_schedule = NULL, clone_trigg
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -26814,7 +27725,7 @@ scripts_post_containers_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' @param offset integer optional. The offset for the search results.
 #' @param order string optional. The field on which to order the result set.
 #' @param owner string optional. The owner for the search.
-#' @param limit integer optional. Defaults to 10. Maximum allowed is 50.
+#' @param limit integer optional. Defaults to 10. Maximum allowed is 1000.
 #' @param archived string optional. If specified, return only results with the chosen archived status; either 'true', 'false', or 'all'. Defaults to 'false'.
 #' @param last_run_state string optional. The last run state of the job being searched for; either: 'queued', 'running', 'succeeded', 'failed', or 'cancelled'.
 #' 
@@ -26835,6 +27746,7 @@ scripts_post_containers_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' \item lastRunState string, The last run state of the item, if the item is a job.
 #' \item lastRunStart string, The last run start time of the item, if the item is a job.
 #' \item lastRunFinish string, The last run finish time of the item, if the item is a job.
+#' \item public boolean, The flag that indicates a template is available to all users.
 #' \item lastRunException string, The exception of the item after the last run, if the item is a job.
 #' }}
 #' @export
@@ -26848,7 +27760,7 @@ search_list <- function(query = NULL, type = NULL, offset = NULL, order = NULL, 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -26870,7 +27782,7 @@ search_list_types <- function() {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -26953,7 +27865,7 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -26978,6 +27890,7 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' @param cpu integer optional. The amount of cpu allocated to each replica of the the Service.
 #' @param credentials array optional. A list of credential IDs to pass to the Service.
 #' @param api_key_id integer optional. API key id of user
+#' @param permission_set_id integer optional. The ID of the associated permission set, if any.
 #' @param git_repo_url string optional. The url for the git repo where the Service code lives.
 #' @param git_repo_ref string optional. The git reference to use when pulling code from the repo.
 #' @param git_path_dir string optional. The path to the Service code within the git repo. If unspecified, the root directory will be used.
@@ -27019,6 +27932,7 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' \item{updatedAt}{string, }
 #' \item{credentials}{array, A list of credential IDs to pass to the Service.}
 #' \item{apiKeyId}{integer, API key id of user}
+#' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
 #' \item{gitPathDir}{string, The path to the Service code within the git repo. If unspecified, the root directory will be used.}
@@ -27072,17 +27986,17 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' @export
-services_post <- function(name = NULL, description = NULL, type = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL, hidden = NULL) {
+services_post <- function(name = NULL, description = NULL, type = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL, permission_set_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL, hidden = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/services/"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, description = description, type = type, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, apiKeyId = api_key_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications, hidden = hidden)
+  body_params  <- list(name = name, description = description, type = type, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, apiKeyId = api_key_id, permissionSetId = permission_set_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications, hidden = hidden)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -27122,6 +28036,7 @@ services_post <- function(name = NULL, description = NULL, type = NULL, docker_i
 #' \item{updatedAt}{string, }
 #' \item{credentials}{array, A list of credential IDs to pass to the Service.}
 #' \item{apiKeyId}{integer, API key id of user}
+#' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
 #' \item{gitPathDir}{string, The path to the Service code within the git repo. If unspecified, the root directory will be used.}
@@ -27185,7 +28100,7 @@ services_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -27210,6 +28125,7 @@ services_get <- function(id) {
 #' @param cpu integer optional. The amount of cpu allocated to each replica of the the Service.
 #' @param credentials array optional. A list of credential IDs to pass to the Service.
 #' @param api_key_id integer optional. API key id of user
+#' @param permission_set_id integer optional. The ID of the associated permission set, if any.
 #' @param git_repo_url string optional. The url for the git repo where the Service code lives.
 #' @param git_repo_ref string optional. The git reference to use when pulling code from the repo.
 #' @param git_path_dir string optional. The path to the Service code within the git repo. If unspecified, the root directory will be used.
@@ -27250,6 +28166,7 @@ services_get <- function(id) {
 #' \item{updatedAt}{string, }
 #' \item{credentials}{array, A list of credential IDs to pass to the Service.}
 #' \item{apiKeyId}{integer, API key id of user}
+#' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
 #' \item{gitPathDir}{string, The path to the Service code within the git repo. If unspecified, the root directory will be used.}
@@ -27303,17 +28220,17 @@ services_get <- function(id) {
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' @export
-services_put <- function(id, name = NULL, description = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL) {
+services_put <- function(id, name = NULL, description = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL, permission_set_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/services/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, description = description, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, apiKeyId = api_key_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications)
+  body_params  <- list(name = name, description = description, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, apiKeyId = api_key_id, permissionSetId = permission_set_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -27338,6 +28255,7 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' @param cpu integer optional. The amount of cpu allocated to each replica of the the Service.
 #' @param credentials array optional. A list of credential IDs to pass to the Service.
 #' @param api_key_id integer optional. API key id of user
+#' @param permission_set_id integer optional. The ID of the associated permission set, if any.
 #' @param git_repo_url string optional. The url for the git repo where the Service code lives.
 #' @param git_repo_ref string optional. The git reference to use when pulling code from the repo.
 #' @param git_path_dir string optional. The path to the Service code within the git repo. If unspecified, the root directory will be used.
@@ -27378,6 +28296,7 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' \item{updatedAt}{string, }
 #' \item{credentials}{array, A list of credential IDs to pass to the Service.}
 #' \item{apiKeyId}{integer, API key id of user}
+#' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
 #' \item{gitPathDir}{string, The path to the Service code within the git repo. If unspecified, the root directory will be used.}
@@ -27431,17 +28350,17 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' @export
-services_patch <- function(id, name = NULL, description = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL) {
+services_patch <- function(id, name = NULL, description = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL, permission_set_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/services/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, description = description, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, apiKeyId = api_key_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications)
+  body_params  <- list(name = name, description = description, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, apiKeyId = api_key_id, permissionSetId = permission_set_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -27463,7 +28382,7 @@ services_delete <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -27471,7 +28390,7 @@ services_delete <- function(id) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -27502,7 +28421,7 @@ services_list_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -27510,9 +28429,9 @@ services_list_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -27545,7 +28464,7 @@ services_put_shares_users <- function(id, user_ids, permission_level, share_emai
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -27553,8 +28472,8 @@ services_put_shares_users <- function(id, user_ids, permission_level, share_emai
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -27568,7 +28487,7 @@ services_delete_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -27576,9 +28495,9 @@ services_delete_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -27611,7 +28530,7 @@ services_put_shares_groups <- function(id, group_ids, permission_level, share_em
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -27619,8 +28538,8 @@ services_put_shares_groups <- function(id, group_ids, permission_level, share_em
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -27634,7 +28553,7 @@ services_delete_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -27675,6 +28594,7 @@ services_delete_shares_groups <- function(id, group_id) {
 #' \item{updatedAt}{string, }
 #' \item{credentials}{array, A list of credential IDs to pass to the Service.}
 #' \item{apiKeyId}{integer, API key id of user}
+#' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
 #' \item{gitPathDir}{string, The path to the Service code within the git repo. If unspecified, the root directory will be used.}
@@ -27738,14 +28658,14 @@ services_put_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a Service belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -27784,14 +28704,14 @@ services_list_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a Service to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -27807,14 +28727,14 @@ services_put_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a Service from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -27830,7 +28750,7 @@ services_delete_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -27872,7 +28792,7 @@ services_list_deployments <- function(service_id, deployment_id = NULL, limit = 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -27912,7 +28832,7 @@ services_post_deployments <- function(service_id, deployment_id = NULL, publishe
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -27951,7 +28871,7 @@ services_get_deployments <- function(service_id, deployment_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -27974,7 +28894,7 @@ services_delete_deployments <- function(service_id, deployment_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28014,7 +28934,7 @@ services_post_redeploy <- function(service_id, deployment_id = NULL, published =
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28025,6 +28945,7 @@ services_post_redeploy <- function(service_id, deployment_id = NULL, published =
 #' @param id integer required. The ID of the owning Service.
 #' @param deployment_id integer required. The ID for this deployment.
 #' @param start_at string optional. Log entries with a lower timestamp will be omitted.
+#' @param end_at string optional. Log entries with a higher timestamp will be omitted.
 #' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
 #' 
 #' @return  An array containing the following fields:
@@ -28033,17 +28954,17 @@ services_post_redeploy <- function(service_id, deployment_id = NULL, published =
 #' \item{createdAt}{string, The time the log was created.}
 #' \item{source}{string, The source of the log. One of "system", "user".}
 #' @export
-services_list_deployments_logs <- function(id, deployment_id, start_at = NULL, limit = NULL) {
+services_list_deployments_logs <- function(id, deployment_id, start_at = NULL, end_at = NULL, limit = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/services/{id}/deployments/{deployment_id}/logs"
   path_params  <- list(id = id, deployment_id = deployment_id)
-  query_params <- list(start_at = start_at, limit = limit)
+  query_params <- list(start_at = start_at, end_at = end_at, limit = limit)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28083,6 +29004,7 @@ services_list_deployments_logs <- function(id, deployment_id, start_at = NULL, l
 #' \item{updatedAt}{string, }
 #' \item{credentials}{array, A list of credential IDs to pass to the Service.}
 #' \item{apiKeyId}{integer, API key id of user}
+#' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
 #' \item{gitPathDir}{string, The path to the Service code within the git repo. If unspecified, the root directory will be used.}
@@ -28146,7 +29068,7 @@ services_post_clone <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28154,26 +29076,36 @@ services_post_clone <- function(id) {
 
 
 #' Create a new long-lived service token
-#' @param id integer required. The ID of token.
-#' @param name string required. The name of token.
+#' @param id integer required. The ID of the service.
+#' @param name string required. The name of the token.
+#' @param machine_token boolean optional. If true, create a compact token with no user information.
 #' 
 #' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of token.}
-#' \item{name}{string, The name of token.}
+#' \item{id}{integer, The ID of the token.}
+#' \item{name}{string, The name of the token.}
+#' \item{user}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{machineToken}{boolean, If true, this token is not tied to a particular user.}
 #' \item{createdAt}{string, The date and time when the token was created.}
-#' \item{token}{string, The value for a long-lived arproxy service token.}
+#' \item{token}{string, The value of the token. Only returned when the token is first created.}
 #' @export
-services_post_tokens <- function(id, name) {
+services_post_tokens <- function(id, name, machine_token = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/services/{id}/tokens"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name)
+  body_params  <- list(name = name, machineToken = machine_token)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28181,11 +29113,20 @@ services_post_tokens <- function(id, name) {
 
 
 #' List tokens
-#' @param id integer required. 
+#' @param id integer required. The ID of the service.
 #' 
 #' @return  An array containing the following fields:
-#' \item{id}{integer, The ID of token.}
-#' \item{name}{string, The name of token.}
+#' \item{id}{integer, The ID of the token.}
+#' \item{name}{string, The name of the token.}
+#' \item{user}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{machineToken}{boolean, If true, this token is not tied to a particular user.}
 #' \item{createdAt}{string, The date and time when the token was created.}
 #' @export
 services_list_tokens <- function(id) {
@@ -28198,7 +29139,7 @@ services_list_tokens <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28206,7 +29147,7 @@ services_list_tokens <- function(id) {
 
 
 #' Revoke a token by id
-#' @param id integer required. The ID of service.
+#' @param id integer required. The ID of the service.
 #' @param token_id integer required. The ID of the token.
 #' 
 #' @return  An empty HTTP response
@@ -28221,91 +29162,7 @@ services_delete_tokens <- function(id, token_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Import a file into a table
-#' @param database_id integer required. The ID of the destination database.
-#' @param schema string required. The destination schema name.
-#' @param name string required. The destination table name, without the schema prefix.
-#' @param data string required. The file to import, uploaded using HTTP multipart.
-#' 
-#' @return  A list containing the following elements:
-#' \item{databaseId}{integer, The ID of the destination database.}
-#' \item{schema}{string, The destination schema name.}
-#' \item{name}{string, The destination table name, without the schema prefix.}
-#' \item{state}{string, The state of the last run.}
-#' \item{startedAt}{string, The start time of the last run.}
-#' \item{finishedAt}{string, The end time of the last run.}
-#' @export
-tables_post <- function(database_id, schema, name, data) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/tables/"
-  path_params  <- list()
-  query_params <- list()
-  body_params  <- list(databaseId = database_id, schema = schema, name = name, data = data)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List tables
-#' @param database_id integer optional. The ID of the database.
-#' @param schema string optional. If specified, will be used to filter the tables returned. Substring matching is supported with "\%" and "*" wildcards (e.g., "schema=\%census\%" will return both "client_census.table" and "census_2010.table").
-#' @param name string optional. If specified, will be used to filter the tables returned. Substring matching is supported with "\%" and "*" wildcards (e.g., "name=\%table\%" will return both "table1" and "my table").
-#' @param search string optional. If specified, will be used to filter the tables returned. Will search across schema and name (in the full form schema.name) and will return any full name containing the search string.
-#' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to schema. Must be one of: schema, name, search.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to asc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID of the table.}
-#' \item{databaseId}{integer, The ID of the database.}
-#' \item{schema}{string, The name of the schema containing the table.}
-#' \item{name}{string, Name of the table.}
-#' \item{description}{string, The description of the table, as specified by the table owner}
-#' \item{isView}{boolean, True if this table represents a view. False if it represents a regular table.}
-#' \item{rowCount}{integer, The number of rows in the table.}
-#' \item{columnCount}{integer, The number of columns in the table.}
-#' \item{sizeMb}{number, The size of the table in megabytes.}
-#' \item{owner}{string, The database username of the table's owner.}
-#' \item{distkey}{string, The column used as the Amazon Redshift distkey.}
-#' \item{sortkeys}{string, The column used as the Amazon Redshift sortkey.}
-#' \item{refreshStatus}{string, How up-to-date the table's statistics on row counts, null counts, distinct counts, and values distributions are. One of: refreshing, stale, or current.}
-#' \item{lastRefresh}{string, The time of the last statistics refresh.}
-#' \item{refreshId}{string, The ID of the most recent statistics refresh.}
-#' \item{lastRun}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, 
-#' \item state string, 
-#' \item createdAt string, The time that the run was queued.
-#' \item startedAt string, The time that the run started.
-#' \item finishedAt string, The time that the run completed.
-#' \item error string, The error message for this run, if present.
-#' }}
-#' @export
-tables_list <- function(database_id = NULL, schema = NULL, name = NULL, search = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/tables/"
-  path_params  <- list()
-  query_params <- list(database_id = database_id, schema = schema, name = name, search = search, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28329,7 +29186,7 @@ tables_post_enhance <- function(id, job_type, metadata = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28356,7 +29213,7 @@ tables_post_enhancements_geocodings <- function(source_table_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28389,7 +29246,7 @@ tables_post_enhancements_cass_ncoa <- function(source_table_id, perform_ncoa = N
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28422,7 +29279,7 @@ tables_post_enhancements_prepared_matchings <- function(source_table_id, thresho
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28455,7 +29312,7 @@ tables_post_enhancements_table_matchings <- function(source_table_id, threshold,
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28483,7 +29340,7 @@ tables_get_enhancements_geocodings <- function(id, source_table_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28514,7 +29371,7 @@ tables_get_enhancements_cass_ncoa <- function(id, source_table_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28545,7 +29402,7 @@ tables_get_enhancements_prepared_matchings <- function(id, source_table_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28576,7 +29433,34 @@ tables_get_enhancements_table_matchings <- function(id, source_table_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Creates and enqueues a single table scanner job on a new table
+#' @param database_id integer required. The ID of the database.
+#' @param schema string required. The name of the schema containing the table.
+#' @param table_name string required. The name of the table.
+#' @param queue_stats boolean optional. Whether or not the job should queue on syncing table stats
+#' 
+#' @return  A list containing the following elements:
+#' \item{jobId}{integer, The ID of the job created.}
+#' \item{runId}{integer, The ID of the run created.}
+#' @export
+tables_post_scan <- function(database_id, schema, table_name, queue_stats = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/tables/scan"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(databaseId = database_id, schema = schema, tableName = table_name, queueStats = queue_stats)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28611,11 +29495,14 @@ tables_get_enhancements_table_matchings <- function(id, source_table_id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
+#' \item{primaryKeys}{array, The primary keys for this table.}
+#' \item{lastModifiedKeys}{array, The columns indicating an entry's modification status for this table.}
 #' \item{ontologyMapping}{list, The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
 #' \item{columns}{array, An array containing the following fields: 
 #' \itemize{
 #' \item name string, Name of the column.
-#' \item sqlType string, SQL type of the column.
+#' \item civisDataType string, The generic data type of the column (ex. "string"). Since this is database-agnostic, it may be helpful when loading data to R/Python.
+#' \item sqlType string, The database-specific SQL type of the column (ex. "varchar(30)").
 #' \item sampleValues array, A sample of values from the column.
 #' \item encoding string, The compression encoding for this columnSee: http://docs.aws.amazon.com/redshift/latest/dg/c_Compression_encodings.html
 #' \item description string, The description of the column, as specified by the table owner
@@ -28674,7 +29561,60 @@ tables_post_refresh <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List tables
+#' @param database_id integer optional. The ID of the database.
+#' @param schema string optional. If specified, will be used to filter the tables returned. Substring matching is supported with "\%" and "*" wildcards (e.g., "schema=\%census\%" will return both "client_census.table" and "census_2010.table").
+#' @param name string optional. If specified, will be used to filter the tables returned. Substring matching is supported with "\%" and "*" wildcards (e.g., "name=\%table\%" will return both "table1" and "my table").
+#' @param search string optional. If specified, will be used to filter the tables returned. Will search across schema and name (in the full form schema.name) and will return any full name containing the search string.
+#' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to schema. Must be one of: schema, name, search.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to asc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID of the table.}
+#' \item{databaseId}{integer, The ID of the database.}
+#' \item{schema}{string, The name of the schema containing the table.}
+#' \item{name}{string, Name of the table.}
+#' \item{description}{string, The description of the table, as specified by the table owner}
+#' \item{isView}{boolean, True if this table represents a view. False if it represents a regular table.}
+#' \item{rowCount}{integer, The number of rows in the table.}
+#' \item{columnCount}{integer, The number of columns in the table.}
+#' \item{sizeMb}{number, The size of the table in megabytes.}
+#' \item{owner}{string, The database username of the table's owner.}
+#' \item{distkey}{string, The column used as the Amazon Redshift distkey.}
+#' \item{sortkeys}{string, The column used as the Amazon Redshift sortkey.}
+#' \item{refreshStatus}{string, How up-to-date the table's statistics on row counts, null counts, distinct counts, and values distributions are. One of: refreshing, stale, or current.}
+#' \item{lastRefresh}{string, The time of the last statistics refresh.}
+#' \item{refreshId}{string, The ID of the most recent statistics refresh.}
+#' \item{lastRun}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, 
+#' \item state string, 
+#' \item createdAt string, The time that the run was queued.
+#' \item startedAt string, The time that the run started.
+#' \item finishedAt string, The time that the run completed.
+#' \item error string, The error message for this run, if present.
+#' }}
+#' @export
+tables_list <- function(database_id = NULL, schema = NULL, name = NULL, search = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/tables/"
+  path_params  <- list()
+  query_params <- list(database_id = database_id, schema = schema, name = name, search = search, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28709,11 +29649,14 @@ tables_post_refresh <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
+#' \item{primaryKeys}{array, The primary keys for this table.}
+#' \item{lastModifiedKeys}{array, The columns indicating an entry's modification status for this table.}
 #' \item{ontologyMapping}{list, The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
 #' \item{columns}{array, An array containing the following fields: 
 #' \itemize{
 #' \item name string, Name of the column.
-#' \item sqlType string, SQL type of the column.
+#' \item civisDataType string, The generic data type of the column (ex. "string"). Since this is database-agnostic, it may be helpful when loading data to R/Python.
+#' \item sqlType string, The database-specific SQL type of the column (ex. "varchar(30)").
 #' \item sampleValues array, A sample of values from the column.
 #' \item encoding string, The compression encoding for this columnSee: http://docs.aws.amazon.com/redshift/latest/dg/c_Compression_encodings.html
 #' \item description string, The description of the column, as specified by the table owner
@@ -28772,7 +29715,7 @@ tables_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28783,6 +29726,8 @@ tables_get <- function(id) {
 #' @param id integer required. The ID of the table.
 #' @param ontology_mapping list optional. The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.
 #' @param description string optional. The user-defined description of the table.
+#' @param primary_keys array optional. The columns comprising the primary key of this table.
+#' @param last_modified_keys array optional. The columns indicating when a row was last modified.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of the table.}
@@ -28809,19 +29754,21 @@ tables_get <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
+#' \item{primaryKeys}{array, The primary keys for this table.}
+#' \item{lastModifiedKeys}{array, The columns indicating an entry's modification status for this table.}
 #' \item{ontologyMapping}{list, The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
 #' @export
-tables_patch <- function(id, ontology_mapping = NULL, description = NULL) {
+tables_patch <- function(id, ontology_mapping = NULL, description = NULL, primary_keys = NULL, last_modified_keys = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/tables/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(ontologyMapping = ontology_mapping, description = description)
+  body_params  <- list(ontologyMapping = ontology_mapping, description = description, primaryKeys = primary_keys, lastModifiedKeys = last_modified_keys)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28838,7 +29785,8 @@ tables_patch <- function(id, ontology_mapping = NULL, description = NULL) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{name}{string, Name of the column.}
-#' \item{sqlType}{string, SQL type of the column.}
+#' \item{civisDataType}{string, The generic data type of the column (ex. "string"). Since this is database-agnostic, it may be helpful when loading data to R/Python.}
+#' \item{sqlType}{string, The database-specific SQL type of the column (ex. "varchar(30)").}
 #' \item{sampleValues}{array, A sample of values from the column.}
 #' \item{encoding}{string, The compression encoding for this columnSee: http://docs.aws.amazon.com/redshift/latest/dg/c_Compression_encodings.html}
 #' \item{description}{string, The description of the column, as specified by the table owner}
@@ -28866,7 +29814,99 @@ tables_list_columns <- function(id, name = NULL, limit = NULL, page_num = NULL, 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the projects an item belongs to
+#' @param id integer required. The ID of the resource.
+#' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID for this project.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{name}{string, The name of this project.}
+#' \item{description}{string, A description of the project.}
+#' \item{users}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{autoShare}{boolean, }
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+tables_list_projects <- function(id, hidden = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/tables/{id}/projects"
+  path_params  <- list(id = id)
+  query_params <- list(hidden = hidden)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Add an item to a project
+#' @param id integer required. The ID of the resource.
+#' @param project_id integer required. The ID of the project.
+#' 
+#' @return  An empty HTTP response
+#' @export
+tables_put_projects <- function(id, project_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/tables/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Remove an item from a project
+#' @param id integer required. The ID of the resource.
+#' @param project_id integer required. The ID of the project.
+#' 
+#' @return  An empty HTTP response
+#' @export
+tables_delete_projects <- function(id, project_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/tables/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28874,7 +29914,7 @@ tables_list_columns <- function(id, name = NULL, limit = NULL, page_num = NULL, 
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -28905,7 +29945,7 @@ templates_list_reports_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28913,9 +29953,9 @@ templates_list_reports_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -28948,7 +29988,7 @@ templates_put_reports_shares_users <- function(id, user_ids, permission_level, s
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28956,8 +29996,8 @@ templates_put_reports_shares_users <- function(id, user_ids, permission_level, s
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -28971,7 +30011,7 @@ templates_delete_reports_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28979,9 +30019,9 @@ templates_delete_reports_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -29014,7 +30054,7 @@ templates_put_reports_shares_groups <- function(id, group_ids, permission_level,
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29022,8 +30062,8 @@ templates_put_reports_shares_groups <- function(id, group_ids, permission_level,
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -29037,7 +30077,7 @@ templates_delete_reports_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29080,7 +30120,7 @@ templates_list_reports <- function(hidden = NULL, category = NULL, limit = NULL,
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29126,7 +30166,7 @@ templates_post_reports <- function(name, code_body, category = NULL, archived = 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29167,7 +30207,7 @@ templates_get_reports <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29213,7 +30253,7 @@ templates_put_reports <- function(id, name, code_body, category = NULL, archived
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29259,7 +30299,7 @@ templates_patch_reports <- function(id, name = NULL, category = NULL, archived =
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29281,7 +30321,7 @@ templates_delete_reports <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29289,7 +30329,7 @@ templates_delete_reports <- function(id) {
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -29320,7 +30360,7 @@ templates_list_scripts_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29328,9 +30368,9 @@ templates_list_scripts_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -29363,7 +30403,7 @@ templates_put_scripts_shares_users <- function(id, user_ids, permission_level, s
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29371,8 +30411,8 @@ templates_put_scripts_shares_users <- function(id, user_ids, permission_level, s
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -29386,7 +30426,7 @@ templates_delete_scripts_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29394,9 +30434,9 @@ templates_delete_scripts_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -29429,7 +30469,7 @@ templates_put_scripts_shares_groups <- function(id, group_ids, permission_level,
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29437,8 +30477,8 @@ templates_put_scripts_shares_groups <- function(id, group_ids, permission_level,
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -29452,14 +30492,14 @@ templates_delete_scripts_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a Template::Script belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -29498,14 +30538,14 @@ templates_list_scripts_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a Template::Script to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -29521,14 +30561,14 @@ templates_put_scripts_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a Template::Script from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -29544,7 +30584,7 @@ templates_delete_scripts_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29582,7 +30622,7 @@ templates_list_scripts <- function(hidden = NULL, category = NULL, limit = NULL,
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29600,6 +30640,7 @@ templates_list_scripts <- function(hidden = NULL, category = NULL, limit = NULL,
 #' @return  A list containing the following elements:
 #' \item{id}{integer, }
 #' \item{scriptId}{integer, The id of the script that this template uses.}
+#' \item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{userContext}{string, The user context of the script that this template uses.}
 #' \item{name}{string, The name of the template.}
 #' \item{category}{string, The category of this template.}
@@ -29622,7 +30663,7 @@ templates_post_scripts <- function(script_id, name, note = NULL, ui_report_id = 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29635,6 +30676,7 @@ templates_post_scripts <- function(script_id, name, note = NULL, ui_report_id = 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, }
 #' \item{scriptId}{integer, The id of the script that this template uses.}
+#' \item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{userContext}{string, The user context of the script that this template uses.}
 #' \item{name}{string, The name of the template.}
 #' \item{category}{string, The category of this template.}
@@ -29657,7 +30699,7 @@ templates_get_scripts <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29674,6 +30716,7 @@ templates_get_scripts <- function(id) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, }
 #' \item{scriptId}{integer, The id of the script that this template uses.}
+#' \item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{userContext}{string, The user context of the script that this template uses.}
 #' \item{name}{string, The name of the template.}
 #' \item{category}{string, The category of this template.}
@@ -29696,7 +30739,7 @@ templates_put_scripts <- function(id, name, note = NULL, ui_report_id = NULL, ar
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29713,6 +30756,7 @@ templates_put_scripts <- function(id, name, note = NULL, ui_report_id = NULL, ar
 #' @return  A list containing the following elements:
 #' \item{id}{integer, }
 #' \item{scriptId}{integer, The id of the script that this template uses.}
+#' \item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{userContext}{string, The user context of the script that this template uses.}
 #' \item{name}{string, The name of the template.}
 #' \item{category}{string, The category of this template.}
@@ -29735,7 +30779,7 @@ templates_patch_scripts <- function(id, name = NULL, note = NULL, ui_report_id =
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29757,7 +30801,7 @@ templates_delete_scripts <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29802,7 +30846,7 @@ users_list <- function(feature_flag = NULL, account_status = NULL, query = NULL,
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29830,8 +30874,12 @@ users_list <- function(feature_flag = NULL, account_status = NULL, query = NULL,
 #' }}
 #' \item{organizationName}{string, The name of the organization the user belongs to.}
 #' \item{organizationSlug}{string, The slug of the organization the user belongs to.}
+#' \item{organizationDefaultThemeId}{integer, The ID of the organizations's default theme.}
 #' \item{createdAt}{string, The date and time when the user was created.}
 #' \item{signInCount}{integer, The number of times the user has signed in.}
+#' \item{assumingRole}{boolean, Whether the user is assuming a role or not.}
+#' \item{assumingAdmin}{boolean, Whether the user is assuming admin.}
+#' \item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
 #' @export
 users_list_me <- function() {
 
@@ -29843,7 +30891,7 @@ users_list_me <- function() {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29945,8 +30993,12 @@ users_list_me <- function() {
 #' }}
 #' \item{organizationName}{string, The name of the organization the user belongs to.}
 #' \item{organizationSlug}{string, The slug of the organization the user belongs to.}
+#' \item{organizationDefaultThemeId}{integer, The ID of the organizations's default theme.}
 #' \item{createdAt}{string, The date and time when the user was created.}
 #' \item{signInCount}{integer, The number of times the user has signed in.}
+#' \item{assumingRole}{boolean, Whether the user is assuming a role or not.}
+#' \item{assumingAdmin}{boolean, Whether the user is assuming admin.}
+#' \item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
 #' @export
 users_patch_me <- function(preferences = NULL, last_checked_announcements = NULL) {
 
@@ -29958,7 +31010,7 @@ users_patch_me <- function(preferences = NULL, last_checked_announcements = NULL
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29985,7 +31037,7 @@ users_patch_me <- function(preferences = NULL, last_checked_announcements = NULL
 #' \item{state}{string, The state of this user.}
 #' \item{timeZone}{string, The time zone of this user.}
 #' \item{initials}{string, The initials of this user.}
-#' \item{department}{string, The deartment of this user.}
+#' \item{department}{string, The department of this user.}
 #' \item{title}{string, The title of this user.}
 #' \item{githubUsername}{string, The GitHub username of this user.}
 #' \item{prefersSmsOtp}{string, The preference for phone authorization of this user}
@@ -29993,6 +31045,9 @@ users_patch_me <- function(preferences = NULL, last_checked_announcements = NULL
 #' \item{ssoDisabled}{string, The availability of SSO for this user.}
 #' \item{otpRequiredForLogin}{string, The two factor authorization requirement for this user.}
 #' \item{phone}{string, The phone number of this user.}
+#' \item{organizationSlug}{string, The slug of the organization the user belongs to.}
+#' \item{organizationSSODisableCapable}{string, The user's organization's ability to disable sso for their users.}
+#' \item{organizationLoginType}{string, The user's organization's login type.}
 #' @export
 users_get <- function(id) {
 
@@ -30004,7 +31059,7 @@ users_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -30041,7 +31096,7 @@ users_list_api_keys <- function(id, limit = NULL, page_num = NULL, order = NULL,
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -30050,8 +31105,8 @@ users_list_api_keys <- function(id, limit = NULL, page_num = NULL, order = NULL,
 
 #' Create a new API key belonging to the logged-in user
 #' @param id string required. The ID of the user or 'me'.
-#' @param name string required. The name of the API key.
 #' @param expires_in integer required. The number of seconds the key should last for.
+#' @param name string required. The name of the API key.
 #' @param constraints array optional. An array containing the following fields: 
 #' \itemize{
 #' \item constraint string, The path matcher of the constraint.
@@ -30088,17 +31143,17 @@ users_list_api_keys <- function(id, limit = NULL, page_num = NULL, order = NULL,
 #' }}
 #' \item{token}{string, The API key.}
 #' @export
-users_post_api_keys <- function(id, name, expires_in, constraints = NULL) {
+users_post_api_keys <- function(id, expires_in, name, constraints = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/users/{id}/api_keys"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, expiresIn = expires_in, constraints = constraints)
+  body_params  <- list(expiresIn = expires_in, name = name, constraints = constraints)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -30142,7 +31197,7 @@ users_get_api_keys <- function(id, key_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -30186,7 +31241,7 @@ users_delete_api_keys <- function(id, key_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -30241,7 +31296,7 @@ workflows_list <- function(hidden = NULL, archived = NULL, author = NULL, limit 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -30326,7 +31381,7 @@ workflows_post <- function(name, description = NULL, from_job_chain = NULL, defi
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -30388,7 +31443,7 @@ workflows_get <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -30472,7 +31527,7 @@ workflows_put <- function(id, name, description = NULL, definition = NULL, sched
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -30556,7 +31611,7 @@ workflows_patch <- function(id, name = NULL, description = NULL, definition = NU
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("patch", path, path_params, query_params, body_params)
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -30564,7 +31619,7 @@ workflows_patch <- function(id, name = NULL, description = NULL, definition = NU
 
 
 #' List users and groups permissioned on this object
-#' @param id integer required. The ID of the object.
+#' @param id integer required. The ID of the resource that is shared.
 #' 
 #' @return  An array containing the following fields:
 #' \item{readers}{list, A list containing the following elements: 
@@ -30595,7 +31650,7 @@ workflows_list_shares <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -30603,9 +31658,9 @@ workflows_list_shares <- function(id) {
 
 
 #' Set the permissions users have on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param user_ids array required. An array of one or more user IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -30638,7 +31693,7 @@ workflows_put_shares_users <- function(id, user_ids, permission_level, share_ema
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -30646,8 +31701,8 @@ workflows_put_shares_users <- function(id, user_ids, permission_level, share_ema
 
 
 #' Revoke the permissions a user has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param user_id integer required. ID of the user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -30661,7 +31716,7 @@ workflows_delete_shares_users <- function(id, user_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -30669,9 +31724,9 @@ workflows_delete_shares_users <- function(id, user_id) {
 
 
 #' Set the permissions groups has on this object
-#' @param id integer required. ID of the resource to be shared
-#' @param group_ids array required. An array of one or more group IDs
-#' @param permission_level string required. Options are: "read", "write", or "manage"
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
 #' @param share_email_body string optional. Custom body text for e-mail sent on a share.
 #' @param send_shared_email boolean optional. Send email to the recipients of a share.
 #' 
@@ -30704,7 +31759,7 @@ workflows_put_shares_groups <- function(id, group_ids, permission_level, share_e
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -30712,8 +31767,8 @@ workflows_put_shares_groups <- function(id, group_ids, permission_level, share_e
 
 
 #' Revoke the permissions a group has on this object
-#' @param id integer required. ID of the resource to be revoked
-#' @param group_id integer required. ID of the group
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
 #' 
 #' @return  An empty HTTP response
 #' @export
@@ -30727,7 +31782,7 @@ workflows_delete_shares_groups <- function(id, group_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -30790,14 +31845,14 @@ workflows_put_archive <- function(id, status) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' List the projects a Workflow::Workflow belongs to
+#' List the projects an item belongs to
 #' @param id integer required. The ID of the resource.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' 
@@ -30836,14 +31891,14 @@ workflows_list_projects <- function(id, hidden = NULL) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Add a Workflow::Workflow to a project
+#' Add an item to a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -30859,14 +31914,14 @@ workflows_put_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Remove a Workflow::Workflow from a project
+#' Remove an item from a project
 #' @param id integer required. The ID of the resource.
 #' @param project_id integer required. The ID of the project.
 #' 
@@ -30882,14 +31937,14 @@ workflows_delete_projects <- function(id, project_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("delete", path, path_params, query_params, body_params)
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Get the git metadata attached to this Workflow::Workflow
+#' Get the git metadata attached to an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -30914,14 +31969,14 @@ workflows_list_git <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Attach this Workflow::Workflow to a git repo/file
+#' Attach an item to a file in a git repo
 #' @param id integer required. The ID of the file.
 #' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
 #' @param git_branch string optional. The git branch that the file is on.
@@ -30950,14 +32005,14 @@ workflows_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("put", path, path_params, query_params, body_params)
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
  }
 
 
-#' Get the git commits for this Workflow::Workflow
+#' Get the git commits for an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -30976,7 +32031,7 @@ workflows_list_git_commits <- function(id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -31005,7 +32060,7 @@ workflows_post_git_commits <- function(id, content, message, file_hash) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -31032,7 +32087,7 @@ workflows_get_git_commits <- function(id, commit_hash) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -31096,7 +32151,7 @@ workflows_post_clone <- function(id, clone_schedule = NULL, clone_notifications 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -31138,7 +32193,7 @@ workflows_list_executions <- function(id, limit = NULL, page_num = NULL, order =
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -31190,7 +32245,7 @@ workflows_post_executions <- function(id, target_task = NULL, input = NULL, incl
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -31240,7 +32295,7 @@ workflows_get_executions <- function(id, execution_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("get", path, path_params, query_params, body_params)
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -31290,7 +32345,7 @@ workflows_post_executions_cancel <- function(id, execution_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -31340,7 +32395,7 @@ workflows_post_executions_resume <- function(id, execution_id) {
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -31391,7 +32446,7 @@ workflows_post_executions_retry <- function(id, execution_id, task_name = NULL) 
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("post", path, path_params, query_params, body_params)
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 

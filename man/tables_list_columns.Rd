@@ -23,7 +23,8 @@ tables_list_columns(id, name = NULL, limit = NULL, page_num = NULL,
 \value{
 An array containing the following fields:
 \item{name}{string, Name of the column.}
-\item{sqlType}{string, SQL type of the column.}
+\item{civisDataType}{string, The generic data type of the column (ex. "string"). Since this is database-agnostic, it may be helpful when loading data to R/Python.}
+\item{sqlType}{string, The database-specific SQL type of the column (ex. "varchar(30)").}
 \item{sampleValues}{array, A sample of values from the column.}
 \item{encoding}{string, The compression encoding for this columnSee: http://docs.aws.amazon.com/redshift/latest/dg/c_Compression_encodings.html}
 \item{description}{string, The description of the column, as specified by the table owner}

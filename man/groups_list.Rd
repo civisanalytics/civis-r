@@ -8,7 +8,7 @@ groups_list(query = NULL, permission = NULL, limit = NULL,
   page_num = NULL, order = NULL, order_dir = NULL)
 }
 \arguments{
-\item{query}{string optional. If specified, it will filter the groups returned. Prefix matching is supported (e.g., "query=group" will return "group" and "group of people", but not "my group".}
+\item{query}{string optional. If specified, it will filter the groups returned. Infix matching is supported (e.g., "query=group" will return "group" and "group of people" and "my group" and "my group of people").}
 
 \item{permission}{string optional. A permissions string, one of "read", "write", or "manage". Lists only groups for which the current user has that permission.}
 

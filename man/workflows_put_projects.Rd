@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{workflows_put_projects}
 \alias{workflows_put_projects}
-\title{Add a Workflow::Workflow to a project}
+\title{Add an item to a project}
 \usage{
 workflows_put_projects(id, project_id)
 }
@@ -15,5 +15,5 @@ workflows_put_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Add a Workflow::Workflow to a project
+Add an item to a project
 }

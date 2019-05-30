@@ -62,15 +62,13 @@ A list containing the following elements:
 \item schema string, The schema name for the table.
 \item table string, The table name.
 }}
-\item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
 \item{outputTable}{list, A list containing the following elements: 
 \itemize{
 \item databaseName string, The Redshift database name for the table.
 \item schema string, The schema name for the table.
 \item table string, The table name.
 }}
-\item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
-\item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+\item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
 \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 }
 \description{

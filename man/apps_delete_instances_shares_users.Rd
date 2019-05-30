@@ -4,14 +4,14 @@
 \alias{apps_delete_instances_shares_users}
 \title{Revoke the permissions a user has on this object}
 \usage{
-apps_delete_instances_shares_users(id, user_id, slug)
+apps_delete_instances_shares_users(slug, id, user_id)
 }
 \arguments{
-\item{id}{integer required. ID of the resource to be revoked}
-
-\item{user_id}{integer required. ID of the user}
-
 \item{slug}{string required. The slug for the application.}
+
+\item{id}{integer required. The ID of the resource that is shared.}
+
+\item{user_id}{integer required. The ID of the user.}
 }
 \value{
 An empty HTTP response

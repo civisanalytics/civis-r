@@ -4,17 +4,17 @@
 \alias{apps_put_instances_shares_users}
 \title{Set the permissions users have on this object}
 \usage{
-apps_put_instances_shares_users(id, slug, user_ids, permission_level,
+apps_put_instances_shares_users(slug, id, user_ids, permission_level,
   share_email_body = NULL, send_shared_email = NULL)
 }
 \arguments{
-\item{id}{integer required. ID of the resource to be shared}
-
 \item{slug}{string required. The slug for the application.}
 
-\item{user_ids}{array required. An array of one or more user IDs}
+\item{id}{integer required. The ID of the resource that is shared.}
 
-\item{permission_level}{string required. Options are: "read", "write", or "manage"}
+\item{user_ids}{array required. An array of one or more user IDs.}
+
+\item{permission_level}{string required. Options are: "read", "write", or "manage".}
 
 \item{share_email_body}{string optional. Custom body text for e-mail sent on a share.}
 

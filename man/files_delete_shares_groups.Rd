@@ -7,9 +7,9 @@
 files_delete_shares_groups(id, group_id)
 }
 \arguments{
-\item{id}{integer required. ID of the resource to be revoked}
+\item{id}{integer required. The ID of the resource that is shared.}
 
-\item{group_id}{integer required. ID of the group}
+\item{group_id}{integer required. The ID of the group.}
 }
 \value{
 An empty HTTP response

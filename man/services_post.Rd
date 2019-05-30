@@ -8,8 +8,9 @@ services_post(name = NULL, description = NULL, type = NULL,
   docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL,
   replicas = NULL, max_replicas = NULL, instance_type = NULL,
   memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL,
-  git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL,
-  environment_variables = NULL, notifications = NULL, hidden = NULL)
+  permission_set_id = NULL, git_repo_url = NULL, git_repo_ref = NULL,
+  git_path_dir = NULL, environment_variables = NULL,
+  notifications = NULL, hidden = NULL)
 }
 \arguments{
 \item{name}{string optional. The name of this Service.}
@@ -41,6 +42,8 @@ services_post(name = NULL, description = NULL, type = NULL,
 \item{credentials}{array optional. A list of credential IDs to pass to the Service.}
 
 \item{api_key_id}{integer optional. API key id of user}
+
+\item{permission_set_id}{integer optional. The ID of the associated permission set, if any.}
 
 \item{git_repo_url}{string optional. The url for the git repo where the Service code lives.}
 
@@ -89,6 +92,7 @@ A list containing the following elements:
 \item{updatedAt}{string, }
 \item{credentials}{array, A list of credential IDs to pass to the Service.}
 \item{apiKeyId}{integer, API key id of user}
+\item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
 \item{gitPathDir}{string, The path to the Service code within the git repo. If unspecified, the root directory will be used.}

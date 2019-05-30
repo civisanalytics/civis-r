@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{templates_list_scripts_projects}
 \alias{templates_list_scripts_projects}
-\title{List the projects a Template::Script belongs to}
+\title{List the projects an item belongs to}
 \usage{
 templates_list_scripts_projects(id, hidden = NULL)
 }
@@ -38,5 +38,5 @@ An array containing the following fields:
 \item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
-List the projects a Template::Script belongs to
+List the projects an item belongs to
 }

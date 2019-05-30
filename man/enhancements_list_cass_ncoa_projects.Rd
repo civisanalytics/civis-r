@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{enhancements_list_cass_ncoa_projects}
 \alias{enhancements_list_cass_ncoa_projects}
-\title{List the projects a JobTypes::CassNcoa belongs to}
+\title{List the projects an item belongs to}
 \usage{
 enhancements_list_cass_ncoa_projects(id, hidden = NULL)
 }
@@ -38,5 +38,5 @@ An array containing the following fields:
 \item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
-List the projects a JobTypes::CassNcoa belongs to
+List the projects an item belongs to
 }

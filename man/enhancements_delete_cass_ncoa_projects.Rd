@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{enhancements_delete_cass_ncoa_projects}
 \alias{enhancements_delete_cass_ncoa_projects}
-\title{Remove a JobTypes::CassNcoa from a project}
+\title{Remove an item from a project}
 \usage{
 enhancements_delete_cass_ncoa_projects(id, project_id)
 }
@@ -15,5 +15,5 @@ enhancements_delete_cass_ncoa_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Remove a JobTypes::CassNcoa from a project
+Remove an item from a project
 }

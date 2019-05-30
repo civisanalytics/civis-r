@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{results_list_projects}
 \alias{results_list_projects}
-\title{List the projects a Report belongs to}
+\title{List the projects an item belongs to}
 \usage{
 results_list_projects(id, hidden = NULL)
 }
@@ -38,5 +38,5 @@ An array containing the following fields:
 \item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
-List the projects a Report belongs to
+List the projects an item belongs to
 }

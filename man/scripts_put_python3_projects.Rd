@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{scripts_put_python3_projects}
 \alias{scripts_put_python3_projects}
-\title{Add a python docker to a project}
+\title{Add an item to a project}
 \usage{
 scripts_put_python3_projects(id, project_id)
 }
@@ -15,5 +15,5 @@ scripts_put_python3_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Add a python docker to a project
+Add an item to a project
 }

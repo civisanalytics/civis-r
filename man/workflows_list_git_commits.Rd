@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{workflows_list_git_commits}
 \alias{workflows_list_git_commits}
-\title{Get the git commits for this Workflow::Workflow}
+\title{Get the git commits for an item}
 \usage{
 workflows_list_git_commits(id)
 }
@@ -17,5 +17,5 @@ A list containing the following elements:
 \item{message}{string, The commit message.}
 }
 \description{
-Get the git commits for this Workflow::Workflow
+Get the git commits for an item
 }

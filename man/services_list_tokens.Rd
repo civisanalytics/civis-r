@@ -7,12 +7,21 @@
 services_list_tokens(id)
 }
 \arguments{
-\item{id}{integer required.}
+\item{id}{integer required. The ID of the service.}
 }
 \value{
 An array containing the following fields:
-\item{id}{integer, The ID of token.}
-\item{name}{string, The name of token.}
+\item{id}{integer, The ID of the token.}
+\item{name}{string, The name of the token.}
+\item{user}{list, A list containing the following elements: 
+\itemize{
+\item id integer, The ID of this user.
+\item name string, This user's name.
+\item username string, This user's username.
+\item initials string, This user's initials.
+\item online boolean, Whether this user is online.
+}}
+\item{machineToken}{boolean, If true, this token is not tied to a particular user.}
 \item{createdAt}{string, The date and time when the token was created.}
 }
 \description{

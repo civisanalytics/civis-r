@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{reports_put_projects}
 \alias{reports_put_projects}
-\title{Add a Report to a project}
+\title{Add an item to a project}
 \usage{
 reports_put_projects(id, project_id)
 }
@@ -15,5 +15,5 @@ reports_put_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Add a Report to a project
+Add an item to a project
 }

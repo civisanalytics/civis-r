@@ -11,13 +11,13 @@ remote_hosts_post(name, url, type)
 
 \item{url}{string required. The URL to your host.}
 
-\item{type}{string required. The type of remote host. One of:}
+\item{type}{string required. The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, RemoteHostTypes::Salesforce, RemoteHostTypes::Snowflake, and RemoteHostTypes::Van}
 }
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID of the remote host.}
 \item{name}{string, The name of the remote host.}
-\item{type}{string, The type of remote host. One of: }
+\item{type}{string, The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, RemoteHostTypes::Salesforce, RemoteHostTypes::Snowflake, and RemoteHostTypes::Van}
 \item{url}{string, The URL for remote host.}
 }
 \description{

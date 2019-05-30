@@ -10,6 +10,7 @@ databases_list()
 An array containing the following fields:
 \item{id}{integer, The ID for the database.}
 \item{name}{string, The name of the database.}
+\item{adapter}{string, The type of the database.}
 }
 \description{
 List databases

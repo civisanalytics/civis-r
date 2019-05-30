@@ -5,7 +5,7 @@
 \title{Get the logs for a Notebook deployment}
 \usage{
 notebooks_list_deployments_logs(id, deployment_id, start_at = NULL,
-  limit = NULL)
+  end_at = NULL, limit = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the owning Notebook.}
@@ -13,6 +13,8 @@ notebooks_list_deployments_logs(id, deployment_id, start_at = NULL,
 \item{deployment_id}{integer required. The ID for this deployment.}
 
 \item{start_at}{string optional. Log entries with a lower timestamp will be omitted.}
+
+\item{end_at}{string optional. Log entries with a higher timestamp will be omitted.}
 
 \item{limit}{integer optional. The maximum number of log messages to return. Default of 10000.}
 }

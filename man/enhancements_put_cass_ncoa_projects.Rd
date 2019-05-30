@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{enhancements_put_cass_ncoa_projects}
 \alias{enhancements_put_cass_ncoa_projects}
-\title{Add a JobTypes::CassNcoa to a project}
+\title{Add an item to a project}
 \usage{
 enhancements_put_cass_ncoa_projects(id, project_id)
 }
@@ -15,5 +15,5 @@ enhancements_put_cass_ncoa_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Add a JobTypes::CassNcoa to a project
+Add an item to a project
 }

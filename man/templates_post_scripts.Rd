@@ -24,6 +24,7 @@ templates_post_scripts(script_id, name, note = NULL,
 A list containing the following elements:
 \item{id}{integer, }
 \item{scriptId}{integer, The id of the script that this template uses.}
+\item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 \item{userContext}{string, The user context of the script that this template uses.}
 \item{name}{string, The name of the template.}
 \item{category}{string, The category of this template.}
