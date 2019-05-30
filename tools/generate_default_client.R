@@ -4,7 +4,7 @@
 
 library(civis)
 
-job <- scripts_post_custom(from_template_id = 9925)
+job <- scripts_post_custom(from_template_id = 13448)
 run <- scripts_post_custom_runs(job$id)
 await(scripts_get_custom_runs, id = job$id, run_id = run$id)
 spec_id <- scripts_list_custom_runs_outputs(job$id, run$id)[[1]]$objectId
