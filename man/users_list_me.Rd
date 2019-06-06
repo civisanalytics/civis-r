@@ -26,8 +26,12 @@ A list containing the following elements:
 }}
 \item{organizationName}{string, The name of the organization the user belongs to.}
 \item{organizationSlug}{string, The slug of the organization the user belongs to.}
+\item{organizationDefaultThemeId}{integer, The ID of the organizations's default theme.}
 \item{createdAt}{string, The date and time when the user was created.}
 \item{signInCount}{integer, The number of times the user has signed in.}
+\item{assumingRole}{boolean, Whether the user is assuming a role or not.}
+\item{assumingAdmin}{boolean, Whether the user is assuming admin.}
+\item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
 }
 \description{
 Show info about the logged-in user

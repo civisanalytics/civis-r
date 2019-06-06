@@ -4,12 +4,12 @@
 \alias{apps_list_instances_shares}
 \title{List users and groups permissioned on this object}
 \usage{
-apps_list_instances_shares(id, slug)
+apps_list_instances_shares(slug, id)
 }
 \arguments{
-\item{id}{integer required. The ID of the object.}
-
 \item{slug}{string required. The slug for the application.}
+
+\item{id}{integer required. The ID of the resource that is shared.}
 }
 \value{
 An array containing the following fields:

@@ -8,7 +8,7 @@ imports_post_files(schema, name, remote_host_id, credential_id,
   max_errors = NULL, existing_table_rows = NULL, diststyle = NULL,
   distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
   column_delimiter = NULL, first_row_is_header = NULL,
-  multipart = NULL, hidden = NULL)
+  multipart = NULL, escaped = NULL, hidden = NULL)
 }
 \arguments{
 \item{schema}{string required. The schema of the destination table.}
@@ -36,6 +36,8 @@ imports_post_files(schema, name, remote_host_id, credential_id,
 \item{first_row_is_header}{boolean optional. A boolean value indicating whether or not the first row is a header row. If first_row_is_header is null or omitted, it will be auto-detected.}
 
 \item{multipart}{boolean optional. If true, the upload URI will require a `multipart/form-data` POST request. Defaults to false.}
+
+\item{escaped}{boolean optional. If true, escape quotes with a backslash; otherwise, escape quotes by double-quoting. Defaults to false.}
 
 \item{hidden}{boolean optional. The hidden status of the item.}
 }

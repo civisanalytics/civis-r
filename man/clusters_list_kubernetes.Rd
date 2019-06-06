@@ -22,6 +22,7 @@ clusters_list_kubernetes(organization_slug = NULL, limit = NULL,
 An array containing the following fields:
 \item{id}{integer, The ID of this cluster.}
 \item{organizationId}{string, The id of this cluster's organization.}
+\item{organizationName}{string, The name of this cluster's organization.}
 \item{organizationSlug}{string, The slug of this cluster's organization.}
 \item{clusterPartitions}{array, An array containing the following fields: 
 \itemize{

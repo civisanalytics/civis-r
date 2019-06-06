@@ -38,12 +38,12 @@ ex <- list(paths[["/admin/dump-memory"]]$post,
 
 
 ex_ref <- lapply(ex, replace_ref, spec = spec)
-ex_verb_names <- c("post", "get", "get", "delete", "get", "get", "get", "patch", "post", "put")
+ex_verb_names <- c("post", "get", "get", "delete", "get", "get", "get", "patch", "post", "put", "get", 'get')
 ex_path_names <- c("/admin/dump-memory", "/admin/announcements", "/admin/organizations",
                    "/admin/announcements/{id}", "/bocce_clusters/{id}/active_jobs",
                    "/channels/",
                    "/jobs/{id}/children", "/admin/announcements/{id}", "/scripts/sql",
-                   "/notebooks/{id}")
+                   "/notebooks/{id}", "/aliases/{object_type}/{alias}", '/databases/{id}/tables-search')
 ex_params <- lapply(ex_ref, parse_params)
 
 # ----- test utils
@@ -68,7 +68,8 @@ test_that("function names are correct", {
                 "admin_list_organizations", "admin_delete_announcements",
                 "bocce_clusters_list_active_jobs", "channels_list",
                 "jobs_list_children", "admin_patch_announcements",
-                "scripts_post_sql", "notebooks_put")
+                "scripts_post_sql", "notebooks_put",
+                'aliases_get_object_type', 'databases_list_tables_search')
   test_names <- mapply(build_function_name, verb_name = ex_verb_names,
                        path_name = ex_path_names)
   expect_equivalent(ex_names, test_names)

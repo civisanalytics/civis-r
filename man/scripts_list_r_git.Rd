@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{scripts_list_r_git}
 \alias{scripts_list_r_git}
-\title{Get the git metadata attached to this r docker}
+\title{Get the git metadata attached to an item}
 \usage{
 scripts_list_r_git(id)
 }
@@ -23,5 +23,5 @@ A list containing the following elements:
 }}
 }
 \description{
-Get the git metadata attached to this r docker
+Get the git metadata attached to an item
 }

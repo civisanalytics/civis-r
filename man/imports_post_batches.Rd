@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{imports_post_batches}
 \alias{imports_post_batches}
-\title{Upload multiple files to Redshift}
+\title{Upload multiple files to Civis}
 \usage{
 imports_post_batches(file_ids, schema, table, remote_host_id,
   credential_id, column_delimiter = NULL, first_row_is_header = NULL,
@@ -40,5 +40,5 @@ A list containing the following elements:
 \item{hidden}{boolean, The hidden status of the item.}
 }
 \description{
-Upload multiple files to Redshift
+Upload multiple files to Civis
 }

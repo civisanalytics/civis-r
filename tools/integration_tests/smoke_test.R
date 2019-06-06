@@ -1,6 +1,5 @@
 library(testthat)
 library(civis)
-library(dplyr)
 library(future)
 
 # Smoke test for testing general end to end functions.  These tests hit

@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{reports_put_git}
 \alias{reports_put_git}
-\title{Attach this Report to a git repo/file}
+\title{Attach an item to a file in a git repo}
 \usage{
 reports_put_git(id, git_ref = NULL, git_branch = NULL,
   git_path = NULL, git_repo_url = NULL)
@@ -32,5 +32,5 @@ A list containing the following elements:
 }}
 }
 \description{
-Attach this Report to a git repo/file
+Attach an item to a file in a git repo
 }

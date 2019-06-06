@@ -98,16 +98,26 @@ build_function_args <- function(params) {
   paste0(" <- function(", arg_str, ") {\n\n")
 }
 
+#' @importFrom utils tail
 build_function_name <- function(verb_name, path_name) {
   parts <- strsplit(path_name, "/")[[1]]
-  parts <- parts[parts != ""]
-  parts <- parts[!startsWith(parts, "{")]
+  parts <- parts[parts != '']
   parts <- gsub("-", "_", parts)
-
+  args <- tail(parts, -1)
+  sig <- NULL
+  for (i in seq_along(args)) {
+    prev <- if (i > 1) args[i - 1] else NULL
+    if (!bracketed(args[i])) {
+      sig <- paste0(c(sig, args[i]), collapse = "_")
+    } else if (!is.null(prev) && bracketed(prev)) {
+      sig <- paste0(sig, gsub("\\{|\\}", "", prev), collapse = "_")
+    }
+  }
   if (!endsWith(path_name, "}") & verb_name == "get") verb_name <- "list"
-
-  paste(c(parts[1], verb_name, parts[-1]), collapse = "_")
+  paste(c(parts[1], verb_name, sig), collapse = "_")
 }
+
+bracketed <- function(x) grepl("\\{|\\}", x)
 
 build_docs <- function(verb) {
   title <- sprintf("#' %s\n", verb$summary)

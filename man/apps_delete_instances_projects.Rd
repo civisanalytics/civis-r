@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{apps_delete_instances_projects}
 \alias{apps_delete_instances_projects}
-\title{Remove a AppInstance from a project}
+\title{Remove an item from a project}
 \usage{
 apps_delete_instances_projects(id, project_id, slug)
 }
@@ -17,5 +17,5 @@ apps_delete_instances_projects(id, project_id, slug)
 An empty HTTP response
 }
 \description{
-Remove a AppInstance from a project
+Remove an item from a project
 }

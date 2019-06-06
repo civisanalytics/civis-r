@@ -8,11 +8,11 @@ templates_put_scripts_shares_groups(id, group_ids, permission_level,
   share_email_body = NULL, send_shared_email = NULL)
 }
 \arguments{
-\item{id}{integer required. ID of the resource to be shared}
+\item{id}{integer required. The ID of the resource that is shared.}
 
-\item{group_ids}{array required. An array of one or more group IDs}
+\item{group_ids}{array required. An array of one or more group IDs.}
 
-\item{permission_level}{string required. Options are: "read", "write", or "manage"}
+\item{permission_level}{string required. Options are: "read", "write", or "manage".}
 
 \item{share_email_body}{string optional. Custom body text for e-mail sent on a share.}
 

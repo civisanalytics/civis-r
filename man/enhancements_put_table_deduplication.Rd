@@ -6,8 +6,8 @@
 \usage{
 enhancements_put_table_deduplication(id, name, input_field_mapping,
   schedule = NULL, parent_id = NULL, notifications = NULL,
-  input_table = NULL, input_file_id = NULL, output_table = NULL,
-  output_filename = NULL, max_matches = NULL, threshold = NULL)
+  input_table = NULL, output_table = NULL, max_matches = NULL,
+  threshold = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID for the enhancement.}
@@ -48,8 +48,6 @@ enhancements_put_table_deduplication(id, name, input_field_mapping,
 \item table string, The table name.
 }}
 
-\item{input_file_id}{integer optional. The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
-
 \item{output_table}{list optional. A list containing the following elements: 
 \itemize{
 \item databaseName string, The Redshift database name for the table.
@@ -57,9 +55,7 @@ enhancements_put_table_deduplication(id, name, input_field_mapping,
 \item table string, The table name.
 }}
 
-\item{output_filename}{string optional. The name of the output file. This should be set if and only if inputFileId is set.}
-
-\item{max_matches}{integer optional. The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+\item{max_matches}{integer optional. The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
 
 \item{threshold}{number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 }
@@ -116,15 +112,13 @@ A list containing the following elements:
 \item schema string, The schema name for the table.
 \item table string, The table name.
 }}
-\item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
 \item{outputTable}{list, A list containing the following elements: 
 \itemize{
 \item databaseName string, The Redshift database name for the table.
 \item schema string, The schema name for the table.
 \item table string, The table name.
 }}
-\item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
-\item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+\item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
 \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 }
 \description{

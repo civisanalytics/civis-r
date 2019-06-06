@@ -27,7 +27,7 @@ A list containing the following elements:
 \item{state}{string, The state of this user.}
 \item{timeZone}{string, The time zone of this user.}
 \item{initials}{string, The initials of this user.}
-\item{department}{string, The deartment of this user.}
+\item{department}{string, The department of this user.}
 \item{title}{string, The title of this user.}
 \item{githubUsername}{string, The GitHub username of this user.}
 \item{prefersSmsOtp}{string, The preference for phone authorization of this user}
@@ -35,6 +35,9 @@ A list containing the following elements:
 \item{ssoDisabled}{string, The availability of SSO for this user.}
 \item{otpRequiredForLogin}{string, The two factor authorization requirement for this user.}
 \item{phone}{string, The phone number of this user.}
+\item{organizationSlug}{string, The slug of the organization the user belongs to.}
+\item{organizationSSODisableCapable}{string, The user's organization's ability to disable sso for their users.}
+\item{organizationLoginType}{string, The user's organization's login type.}
 }
 \description{
 Show info about a user

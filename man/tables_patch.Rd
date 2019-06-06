@@ -4,7 +4,8 @@
 \alias{tables_patch}
 \title{Update a table}
 \usage{
-tables_patch(id, ontology_mapping = NULL, description = NULL)
+tables_patch(id, ontology_mapping = NULL, description = NULL,
+  primary_keys = NULL, last_modified_keys = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the table.}
@@ -12,6 +13,10 @@ tables_patch(id, ontology_mapping = NULL, description = NULL)
 \item{ontology_mapping}{list optional. The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
 
 \item{description}{string optional. The user-defined description of the table.}
+
+\item{primary_keys}{array optional. The columns comprising the primary key of this table.}
+
+\item{last_modified_keys}{array optional. The columns indicating when a row was last modified.}
 }
 \value{
 A list containing the following elements:
@@ -39,6 +44,8 @@ A list containing the following elements:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
+\item{primaryKeys}{array, The primary keys for this table.}
+\item{lastModifiedKeys}{array, The columns indicating an entry's modification status for this table.}
 \item{ontologyMapping}{list, The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
 }
 \description{
