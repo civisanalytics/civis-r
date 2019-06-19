@@ -18,7 +18,7 @@ uses \code{options(civis.default_db)}}
 Returns table meta-data from \code{\link{tables_get}}.
 }
 \description{
-Refreshes a table on Redshift using \code{\link{tables_post_refresh}}, which runs the 
+Refreshes a table on Redshift using \code{\link{tables_post_refresh}}, which runs the
 table scanner and updates table meta-data.
 }
 \seealso{

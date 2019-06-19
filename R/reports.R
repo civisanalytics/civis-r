@@ -9,7 +9,7 @@
 #' @param project_id integer, Project_id that the report should be added to.
 #' @param ... additional parameters to send to \code{rmarkdown::render}. Note:
 #' A temporary file will be used for \code{output_file} if \code{output_file}
-#' is not explicity set and \code{input} will be overwritten with
+#' is not explicitly set and \code{input} will be overwritten with
 #' \code{rmd_file}.
 #'
 #' @details
@@ -24,7 +24,7 @@
 #' }
 #' Since \code{report_id} is set, this code will overwrite the existing
 #' report with that number, which may be useful when updating a report on
-#' a schedule.  Any argument passed in explicity to \code{publish_rmd}
+#' a schedule.  Any argument passed in explicitly to \code{publish_rmd}
 #' will be used in place of the corresponding argument set in YAML metadata.
 #'
 #' @note
@@ -54,7 +54,7 @@ publish_rmd <- function(rmd_file, report_id=NULL, report_name=NULL,
   render_args <- list(...)
 
   # Look for publish_html args in the yaml of the RMarkdown file, overwriting
-  # the arg if it is explicity passed into publish_rmd
+  # the arg if it is explicitly passed into publish_rmd
   html_args <- parse_front_matter(rmd_file)[["civis"]]
   html_args <- if (is.null(html_args)) list() else html_args
   if (!missing(report_id)) html_args[["report_id"]] <- report_id

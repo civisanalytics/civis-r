@@ -37,7 +37,7 @@ and arbitrary R objects are serialized using `saveRDS` for speed and efficiency.
 
 ## Reading Data Into R From Platform
 
-The main workhose for getting data from Platform is `read_civis`.
+The main workhorse for getting data from Platform is `read_civis`.
 This function is designed to work similarly to the built in function
 `read.csv`, returning a dataframe from a table in Platform. For more flexibility,
 `read_civis` can download files from Redshift using an SQL query, or download a 
