@@ -53,7 +53,7 @@ a call to `civis_ml`, Platform builds the model while your laptop waits
 for the task to complete.  This means that you don't have to worry about
 running out of memory or cpu cores on your laptop when training dozens of
 models, or when scoring a model on a very large population. The task being
-parallized in the code below is simply the task of waiting for Platform to
+parallelized in the code below is simply the task of waiting for Platform to
 send results back to your laptop.
 
 
@@ -153,5 +153,5 @@ certain operating systems.  If you encounter an error parallelizing
 functions in `civis`, we recommend first trying more than one method
 listed above.  While we will address errors specific to `civis` with
 regards to parallel code, the technicalities of parallel libraries in
-R across operating systems and enviroments prevent us from providing
+R across operating systems and environments prevent us from providing
 more general support for issues regarding parallelized code in R.

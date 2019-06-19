@@ -10,10 +10,10 @@ transfer_table(source_db, dest_db, source_table, dest_table,
   advanced_options = NULL)
 }
 \arguments{
-\item{source_db}{string or int, The name of the database where the source table is located. 
+\item{source_db}{string or int, The name of the database where the source table is located.
 Optionally, could be the database ID.}
 
-\item{dest_db}{string or int, The name of the database where the table will be transfered.
+\item{dest_db}{string or int, The name of the database where the table will be transferred.
 Optionally, could be the database ID.}
 
 \item{source_table}{string, Full name of the table to transfer,
@@ -22,16 +22,16 @@ e.g., \code{"schema.table"}.}
 \item{dest_table}{string, Full name of the table in the destination database,
 e.g., \code{"schema.table"}.}
 
-\item{job_name}{string, optional, A name to give the job. 
+\item{job_name}{string, optional, A name to give the job.
 If omitted, a random job name will be used.}
 
-\item{source_credential_id}{string or int, Optional credential ID 
+\item{source_credential_id}{string or int, Optional credential ID
 for the source database. If \code{NULL}, the default credential will be used.}
 
-\item{dest_credential_id}{string or int, Optional credential ID 
+\item{dest_credential_id}{string or int, Optional credential ID
 for the source database. If \code{NULL}, the default credential will be used.}
 
-\item{interval}{Number of seconds to wait between checks for job completion. 
+\item{interval}{Number of seconds to wait between checks for job completion.
 If \code{NULL}, the default exponential backoff from \code{await} will be used.}
 
 \item{verbose}{bool, Set to TRUE to print intermediate progress indicators.}
