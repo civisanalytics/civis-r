@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{templates_delete_scripts_projects}
 \alias{templates_delete_scripts_projects}
-\title{Remove a Template::Script from a project}
+\title{Remove an item from a project}
 \usage{
 templates_delete_scripts_projects(id, project_id)
 }
@@ -15,5 +15,5 @@ templates_delete_scripts_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Remove a Template::Script from a project
+Remove an item from a project
 }

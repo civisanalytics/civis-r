@@ -61,7 +61,7 @@ print.civis_logs <- function(x, ...) {
 }
 
 format_scripts_logs <- function(logs) {
-  messages <- purrr::map_chr(logs, format_scripts_message)
+  messages <- sapply(logs, format_scripts_message)
   # The messages come in reverse order, flip them so the user can read from
   # top down.
   messages <- rev(messages)
@@ -69,9 +69,8 @@ format_scripts_logs <- function(logs) {
 }
 
 format_scripts_message <- function(m) {
-  # Messages from scripts_list_*_runs_logs are a list containing a `message`
-  # and a `createdAt` timestamp.
-  ts <- strftime(lubridate::ymd_hms(m$createdAt),
-                 format = "%Y-%m-%d %H:%M:%S %p %Z")
+  # timestamp: 2019-05-15T12:00:14.522Z
+  # strptime, as.POSIXct don't recoginize 'T' as a valid separator
+  ts <- strftime(gsub("T", " ", m$createdAt))
   paste(ts, m$message)
 }

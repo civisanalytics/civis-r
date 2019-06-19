@@ -115,6 +115,7 @@ await <- function(f, ...,
 #' @param .y a vector of values to be passed to \code{f} (default \code{NULL})
 #' @export
 #' @describeIn await Call a function repeatedly for all values of a vector until all have reached a completed status
+#' @importFrom methods is
 await_all <- function(f, .x, .y = NULL, ...,
                       .status_key = "state",
                       .success_states = c("succeeded", "success"),

@@ -5,7 +5,7 @@
 \title{Update a match target}
 \usage{
 match_targets_patch(id, name = NULL, table = NULL, region = NULL,
-  encryption_key_credential_id = NULL)
+  target_file_name = NULL, encryption_key_credential_id = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the match target}
@@ -16,6 +16,8 @@ match_targets_patch(id, name = NULL, table = NULL, region = NULL,
 
 \item{region}{string optional. The AWS region of the DynamoDB table. By default, us-east-1.}
 
+\item{target_file_name}{string optional. The name of the target file}
+
 \item{encryption_key_credential_id}{integer optional. The ID of the encryption key credential.}
 }
 \value{
@@ -24,6 +26,7 @@ A list containing the following elements:
 \item{name}{string, The name of the match target}
 \item{table}{string, The name of the DynamoDB table}
 \item{region}{string, The AWS region of the DynamoDB table. By default, us-east-1.}
+\item{targetFileName}{string, The name of the target file}
 \item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
 }
 \description{

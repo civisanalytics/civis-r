@@ -19,11 +19,12 @@ A list containing the following elements:
 \item{instanceConfigs}{array, An array containing the following fields: 
 \itemize{
 \item instanceConfigId integer, The ID of this InstanceConfig.
-\item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, and p2.xlarge.
+\item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.
 \item minInstances integer, The minimum number of instances of that type in this cluster.
 \item maxInstances integer, The maximum number of instances of that type in this cluster.
-\item instanceMaxMemory number, The amount of memory (RAM) available to a single instance of that type in megabytes.
-\item instanceMaxCpu number, The number of processor shares available to a single instance of that type in millicores.
+\item instanceMaxMemory integer, The amount of memory (RAM) available to a single instance of that type in megabytes.
+\item instanceMaxCpu integer, The number of processor shares available to a single instance of that type in millicores.
+\item instanceMaxDisk integer, The amount of disk available to a single instance of that type in gigabytes.
 }}
 \item{defaultInstanceConfigId}{integer, The id of the InstanceConfig that is the default for this partition.}
 }

@@ -4,14 +4,14 @@
 \alias{users_post_api_keys}
 \title{Create a new API key belonging to the logged-in user}
 \usage{
-users_post_api_keys(id, name, expires_in, constraints = NULL)
+users_post_api_keys(id, expires_in, name, constraints = NULL)
 }
 \arguments{
 \item{id}{string required. The ID of the user or 'me'.}
 
-\item{name}{string required. The name of the API key.}
-
 \item{expires_in}{integer required. The number of seconds the key should last for.}
+
+\item{name}{string required. The name of the API key.}
 
 \item{constraints}{array optional. An array containing the following fields: 
 \itemize{

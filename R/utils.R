@@ -72,9 +72,20 @@ default_credential <- function() {
   cred[['id']]
 }
 
-#' @importFrom dplyr sql
+#' SQL escaping
+#' @param ... Character vectors that will be combined into a single SQL expression.
 #' @export
-dplyr::sql
+sql <- function(...) {
+  # dbplyr::sql, but not imported
+  x <- c(...)
+  if (length(x) == 0) {
+    return(character())
+  }
+  if (!is.character(x)) {
+    stop("Character input expected", call. = FALSE)
+  }
+  structure(x, class = c("sql", "character"))
+}
 
 get_username <- function() {
   users_list_me()[['username']]
@@ -105,14 +116,9 @@ camel_to_snake <- function(s) {
   first_cap <- '(.)([A-Z][a-z]+)'
   all_cap <- '([a-z0-9])([A-Z])'
 
-  s <- stringr::str_replace_all(s, first_cap, "\\1_\\2")
-  s <- stringr::str_replace_all(s, all_cap, "\\1_\\2")
-  stringr::str_to_lower(s)
-}
-
-snake_to_camel <- function(s) {
-  parts <- stringr::str_split(s, "_", simplify = TRUE)
-  paste(c(parts[1], stringr::str_to_title(parts[-1])), collapse = "", sep = "")
+  s <- gsub(first_cap, "\\1_\\2", s)
+  s <- gsub(all_cap, "\\1_\\2", s)
+  tolower(s)
 }
 
 escape_percent <- function(x) {

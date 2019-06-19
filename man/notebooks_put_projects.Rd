@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{notebooks_put_projects}
 \alias{notebooks_put_projects}
-\title{Add a Notebook to a project}
+\title{Add an item to a project}
 \usage{
 notebooks_put_projects(id, project_id)
 }
@@ -15,5 +15,5 @@ notebooks_put_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Add a Notebook to a project
+Add an item to a project
 }

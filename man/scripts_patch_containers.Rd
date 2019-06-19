@@ -27,7 +27,7 @@ scripts_patch_containers(id, name = NULL, parent_id = NULL,
 \item name string, The variable's name as used within your code.
 \item label string, The label to present to users when asking them for the value.
 \item description string, A short sentence or fragment describing this parameter to the end user.
-\item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+\item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 \item required boolean, Whether this param is required.
 \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -75,11 +75,11 @@ scripts_patch_containers(id, name = NULL, parent_id = NULL,
 
 \item{git_credential_id}{integer optional. The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. Unnecessary if no git repo is specified or the git repo is public.}
 
-\item{docker_command}{string optional. The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]}
+\item{docker_command}{string optional. The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand].}
 
 \item{docker_image_name}{string optional. The name of the docker image to pull from DockerHub.}
 
-\item{docker_image_tag}{string optional. The tag of the docker image to pull from DockerHub (default: latest).}
+\item{docker_image_tag}{string optional. The tag of the docker image to pull from DockerHub.}
 
 \item{instance_type}{string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 
@@ -119,7 +119,7 @@ A list containing the following elements:
 \item name string, The variable's name as used within your code.
 \item label string, The label to present to users when asking them for the value.
 \item description string, A short sentence or fragment describing this parameter to the end user.
-\item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+\item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 \item required boolean, Whether this param is required.
 \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -175,9 +175,9 @@ A list containing the following elements:
 \item{repoRef}{string, The tag or branch of the github repo to clone into the container.}
 \item{remoteHostCredentialId}{integer, The id of the database credentials to pass into the environment of the container.}
 \item{gitCredentialId}{integer, The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. Unnecessary if no git repo is specified or the git repo is public.}
-\item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]}
+\item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]. }
 \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
-\item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+\item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 \item{lastRun}{list, A list containing the following elements: 

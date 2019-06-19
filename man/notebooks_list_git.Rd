@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{notebooks_list_git}
 \alias{notebooks_list_git}
-\title{Get the git metadata attached to this Notebook}
+\title{Get the git metadata attached to an item}
 \usage{
 notebooks_list_git(id)
 }
@@ -23,5 +23,5 @@ A list containing the following elements:
 }}
 }
 \description{
-Get the git metadata attached to this Notebook
+Get the git metadata attached to an item
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{reports_list_git}
 \alias{reports_list_git}
-\title{Get the git metadata attached to this Report}
+\title{Get the git metadata attached to an item}
 \usage{
 reports_list_git(id)
 }
@@ -23,5 +23,5 @@ A list containing the following elements:
 }}
 }
 \description{
-Get the git metadata attached to this Report
+Get the git metadata attached to an item
 }

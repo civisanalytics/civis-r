@@ -6,16 +6,15 @@
 \usage{
 enhancements_put_civis_data_match(id, name, input_field_mapping,
   match_target_id, schedule = NULL, parent_id = NULL,
-  notifications = NULL, input_table = NULL, input_file_id = NULL,
-  output_table = NULL, output_filename = NULL, max_matches = NULL,
-  threshold = NULL)
+  notifications = NULL, input_table = NULL, output_table = NULL,
+  max_matches = NULL, threshold = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID for the enhancement.}
 
 \item{name}{string required. The name of the enhancement job.}
 
-\item{input_field_mapping}{list required. The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.}
+\item{input_field_mapping}{list required. The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
 
 \item{match_target_id}{integer required. The ID of the Civis Data match target. See /match_targets for IDs.}
 
@@ -51,8 +50,6 @@ enhancements_put_civis_data_match(id, name, input_field_mapping,
 \item table string, The table name.
 }}
 
-\item{input_file_id}{integer optional. The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
-
 \item{output_table}{list optional. A list containing the following elements: 
 \itemize{
 \item databaseName string, The Redshift database name for the table.
@@ -60,9 +57,7 @@ enhancements_put_civis_data_match(id, name, input_field_mapping,
 \item table string, The table name.
 }}
 
-\item{output_filename}{string optional. The name of the output file. This should be set if and only if inputFileId is set.}
-
-\item{max_matches}{integer optional. The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+\item{max_matches}{integer optional. The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
 
 \item{threshold}{number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 }
@@ -112,14 +107,13 @@ A list containing the following elements:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
-\item{inputFieldMapping}{list, The column mapping for the input table/file. See /enhancements/field_mapping for list of valid fields.}
+\item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
 \item{inputTable}{list, A list containing the following elements: 
 \itemize{
 \item databaseName string, The Redshift database name for the table.
 \item schema string, The schema name for the table.
 \item table string, The table name.
 }}
-\item{inputFileId}{integer, The ID for the input file. This should be set if and only if inputTable and outputTable are not set.}
 \item{matchTargetId}{integer, The ID of the Civis Data match target. See /match_targets for IDs.}
 \item{outputTable}{list, A list containing the following elements: 
 \itemize{
@@ -127,8 +121,7 @@ A list containing the following elements:
 \item schema string, The schema name for the table.
 \item table string, The table name.
 }}
-\item{outputFilename}{string, The name of the output file. This should be set if and only if inputFileId is set.}
-\item{maxMatches}{integer, The maximum number of matches per record in the input table/file to return. Must be between 0 and 10. 0 returns all matches.}
+\item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
 \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 }
 \description{

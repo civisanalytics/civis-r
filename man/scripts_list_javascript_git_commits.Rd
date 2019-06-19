@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{scripts_list_javascript_git_commits}
 \alias{scripts_list_javascript_git_commits}
-\title{Get the git commits for this scripted sql}
+\title{Get the git commits for an item}
 \usage{
 scripts_list_javascript_git_commits(id)
 }
@@ -17,5 +17,5 @@ A list containing the following elements:
 \item{message}{string, The commit message.}
 }
 \description{
-Get the git commits for this scripted sql
+Get the git commits for an item
 }

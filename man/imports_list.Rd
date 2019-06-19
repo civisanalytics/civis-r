@@ -5,8 +5,8 @@
 \title{List}
 \usage{
 imports_list(type = NULL, author = NULL, destination = NULL,
-  status = NULL, hidden = NULL, archived = NULL, limit = NULL,
-  page_num = NULL, order = NULL, order_dir = NULL)
+  source = NULL, status = NULL, hidden = NULL, archived = NULL,
+  limit = NULL, page_num = NULL, order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{type}{string optional. If specified, return imports of these types. It accepts a comma-separated list, possible values are 'AutoImport', 'DbSync', 'Salesforce', 'GdocImport'.}
@@ -14,6 +14,8 @@ imports_list(type = NULL, author = NULL, destination = NULL,
 \item{author}{string optional. If specified, return imports from this author. It accepts a comma-separated list of author ids.}
 
 \item{destination}{string optional. If specified, returns imports with one of these destinations. It accepts a comma-separated list of remote host ids.}
+
+\item{source}{string optional. If specified, returns imports with one of these sources. It accepts a comma-separated list of remote host ids. 'DbSync' must be specified for 'type'.}
 
 \item{status}{string optional. If specified, returns imports with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.}
 

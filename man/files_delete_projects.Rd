@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{files_delete_projects}
 \alias{files_delete_projects}
-\title{Remove a Data::S3File from a project}
+\title{Remove an item from a project}
 \usage{
 files_delete_projects(id, project_id)
 }
@@ -15,5 +15,5 @@ files_delete_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Remove a Data::S3File from a project
+Remove an item from a project
 }

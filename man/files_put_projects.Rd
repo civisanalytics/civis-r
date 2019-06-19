@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{files_put_projects}
 \alias{files_put_projects}
-\title{Add a Data::S3File to a project}
+\title{Add an item to a project}
 \usage{
 files_put_projects(id, project_id)
 }
@@ -15,5 +15,5 @@ files_put_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Add a Data::S3File to a project
+Add an item to a project
 }

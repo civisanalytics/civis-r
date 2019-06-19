@@ -9,7 +9,7 @@ credentials_post_authenticate(url, remote_host_type, username, password)
 \arguments{
 \item{url}{string required. The URL to your host.}
 
-\item{remote_host_type}{string required. The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::Salesforce, and RemoteHostTypes::Van}
+\item{remote_host_type}{string required. The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, RemoteHostTypes::Salesforce, RemoteHostTypes::Snowflake, and RemoteHostTypes::Van}
 
 \item{username}{string required. The username for the credential.}
 

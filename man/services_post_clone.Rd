@@ -40,6 +40,7 @@ A list containing the following elements:
 \item{updatedAt}{string, }
 \item{credentials}{array, A list of credential IDs to pass to the Service.}
 \item{apiKeyId}{integer, API key id of user}
+\item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
 \item{gitPathDir}{string, The path to the Service code within the git repo. If unspecified, the root directory will be used.}

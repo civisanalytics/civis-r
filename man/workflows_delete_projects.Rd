@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{workflows_delete_projects}
 \alias{workflows_delete_projects}
-\title{Remove a Workflow::Workflow from a project}
+\title{Remove an item from a project}
 \usage{
 workflows_delete_projects(id, project_id)
 }
@@ -15,5 +15,5 @@ workflows_delete_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Remove a Workflow::Workflow from a project
+Remove an item from a project
 }

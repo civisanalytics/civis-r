@@ -9,7 +9,7 @@ scripts_put_python3(id, name, source, parent_id = NULL,
   schedule = NULL, notifications = NULL, next_run_at = NULL,
   time_zone = NULL, target_project_id = NULL,
   required_resources = NULL, instance_type = NULL,
-  cancel_timeout = NULL)
+  cancel_timeout = NULL, docker_image_tag = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID for the script.}
@@ -27,7 +27,7 @@ scripts_put_python3(id, name, source, parent_id = NULL,
 \item name string, The variable's name as used within your code.
 \item label string, The label to present to users when asking them for the value.
 \item description string, A short sentence or fragment describing this parameter to the end user.
-\item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+\item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 \item required boolean, Whether this param is required.
 \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -75,6 +75,8 @@ scripts_put_python3(id, name, source, parent_id = NULL,
 \item{instance_type}{string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 
 \item{cancel_timeout}{integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
+
+\item{docker_image_tag}{string optional. The tag of the docker image to pull from DockerHub.}
 }
 \value{
 A list containing the following elements:
@@ -106,7 +108,7 @@ A list containing the following elements:
 \item name string, The variable's name as used within your code.
 \item label string, The label to present to users when asking them for the value.
 \item description string, A short sentence or fragment describing this parameter to the end user.
-\item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, database, credential_aws, credential_redshift, or credential_custom
+\item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
 \item required boolean, Whether this param is required.
 \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
@@ -175,6 +177,7 @@ A list containing the following elements:
 \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 \item{source}{string, The body/text of the script.}
 \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
+\item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 }
 \description{
 Replace all attributes of this Python Script

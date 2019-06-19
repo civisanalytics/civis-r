@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{services_delete_projects}
 \alias{services_delete_projects}
-\title{Remove a Service from a project}
+\title{Remove an item from a project}
 \usage{
 services_delete_projects(id, project_id)
 }
@@ -15,5 +15,5 @@ services_delete_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Remove a Service from a project
+Remove an item from a project
 }

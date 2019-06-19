@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{imports_put_projects}
 \alias{imports_put_projects}
-\title{Add a JobTypes::Import to a project}
+\title{Add an item to a project}
 \usage{
 imports_put_projects(id, project_id)
 }
@@ -15,5 +15,5 @@ imports_put_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Add a JobTypes::Import to a project
+Add an item to a project
 }

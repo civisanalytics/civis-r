@@ -4,14 +4,14 @@
 \alias{apps_delete_instances_shares_groups}
 \title{Revoke the permissions a group has on this object}
 \usage{
-apps_delete_instances_shares_groups(id, group_id, slug)
+apps_delete_instances_shares_groups(slug, id, group_id)
 }
 \arguments{
-\item{id}{integer required. ID of the resource to be revoked}
-
-\item{group_id}{integer required. ID of the group}
-
 \item{slug}{string required. The slug for the application.}
+
+\item{id}{integer required. The ID of the resource that is shared.}
+
+\item{group_id}{integer required. The ID of the group.}
 }
 \value{
 An empty HTTP response

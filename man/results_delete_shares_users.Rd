@@ -7,9 +7,9 @@
 results_delete_shares_users(id, user_id)
 }
 \arguments{
-\item{id}{integer required. ID of the resource to be revoked}
+\item{id}{integer required. The ID of the resource that is shared.}
 
-\item{user_id}{integer required. ID of the user}
+\item{user_id}{integer required. The ID of the user.}
 }
 \value{
 An empty HTTP response

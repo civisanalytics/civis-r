@@ -70,7 +70,7 @@ enhancements_patch_cass_ncoa(id, name = NULL, schedule = NULL,
 
 \item{output_level}{string optional. The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
 
-\item{limiting_sql}{string optional. The limiting sql.}
+\item{limiting_sql}{string optional. The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
 }
 \value{
 A list containing the following elements:
@@ -140,7 +140,7 @@ A list containing the following elements:
 \item{performNcoa}{boolean, Whether to update addresses for records matching the National Change of Address (NCOA) database.}
 \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
-\item{limitingSQL}{string, The limiting sql.}
+\item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
 \item{archived}{string, The archival status of the requested item(s).}
 }
 \description{

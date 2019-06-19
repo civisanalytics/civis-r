@@ -34,7 +34,7 @@
 #'
 #' # Read a text file or csv from the files endpoint.
 #' id <- write_civis_file("my_csv.csv")
-#' df <- read_civis(id, using = read.csv)
+#' df <- read_civis(id)
 #'
 #' # Read JSONValues from a civis script
 #' vals <- read_civis(civis_script(1234))
@@ -60,11 +60,10 @@ read_civis <- function(x, ...) {
 
 #' @describeIn read_civis Return a file as a data frame
 #' @details
-#' By default, \code{read_civis.numeric} assumes the file has been serialized using
-#' \code{saveRDS}, as in \code{write_civis_file} and uses \code{using = readRDS} by default. For reading
-#' an uncompressed text or csv from the files endpoint, set \code{using = read.csv} for example.
+#' By default, \code{read_civis.numeric} assumes the file is a CSV. For reading
+#' a serialized R object, set \code{using = readRDS} for example.
 #' @export
-read_civis.numeric <- function(x, using = readRDS, verbose = FALSE, ...) {
+read_civis.numeric <- function(x, using = read.csv, verbose = FALSE, ...) {
   stopifnot(is.function(using))
   if (is.na(x)) stop("File ID cannot be NA.")
   fn <- tempfile()
@@ -80,7 +79,7 @@ read_civis.numeric <- function(x, using = readRDS, verbose = FALSE, ...) {
 #' @export
 #' @describeIn read_civis Return all columns from a table as a data frame.
 read_civis.character <- function(x, database = NULL, ...) {
-  if (stringr::str_detect(tolower(x), "\\bselect\\b")) {
+  if (grepl("\\bselect\\b", tolower(x))) {
     msg <- c("Argument x should be \"schema.tablename\". Did you mean x = sql(\"...\")?")
     stop(msg)
   }
@@ -317,11 +316,12 @@ write_civis.numeric <- function(x, tablename, database = NULL, if_exists = "fail
 
 #' Upload a R object or file to Civis Platform (Files endpoint)
 #'
-#' @description Uploads a R object or file to the files endpoint on Civis
+#' @description Uploads a data frame, R object or file to the files endpoint on Civis
 #' Platform (Amazon S3). It returns the id of the file for use with \code{\link{read_civis}}
 #' or \code{\link{download_civis}}.
 #'
-#' R objects are serialized with \code{\link{saveRDS}}, files are unserialized.
+#' Data frames are uploaded as CSVs with \code{\link{write.csv}}.
+#' R objects are serialized with \code{\link{saveRDS}}. Files are uploaded as-is.
 #' Objects or files larger than 50mb are chunked and can be uploaded in parallel
 #' if a \code{\link{plan}} has been set. Files larger than 5TB cannot be uploaded.
 #'
@@ -329,7 +329,9 @@ write_civis.numeric <- function(x, tablename, database = NULL, if_exists = "fail
 #' @param name string, Name of the file or object.
 #' @param expires_at string, The date and time the object will expire on in the
 #' format \code{"YYYY-MM-DD HH:MM:SS"}. \code{expires_at = NULL} allows files to be kept indefinitely.
-#' @param ... arguments passed to \code{\link{saveRDS}}.
+#' @param ... arguments passed to \code{\link{saveRDS}} or \code{\link{write.csv}} for
+#' data frames.
+#'
 #'
 #' @return The file id which can be used to later retrieve the file using
 #' \code{\link{read_civis}}.
@@ -340,8 +342,11 @@ write_civis.numeric <- function(x, tablename, database = NULL, if_exists = "fail
 #' read_civis(file_id)
 #'
 #' file_id <- write_civis_file("path/to/my.csv")
-#' read_civis(file_id, using = read.csv)
+#' read_civis(file_id)
 #' read_civis(file_id, using = readr::read_csv)
+#'
+#' file_id <- write_civis_file(list(a = 1))
+#' read_civis(file_id, using = readRDS)
 #'
 #' # Does not expire
 #' file_id <- write_civis_file(iris, expires_at = NULL)
@@ -356,8 +361,14 @@ write_civis.numeric <- function(x, tablename, database = NULL, if_exists = "fail
 #' plan(multisession)
 #' file_id <- write_civis_file("my_large_file")
 #' }
-#' @details By default, R objects are serialized using \code{\link{saveRDS}} before uploading the object
+#' @details
+#' Data frames are uploaded as CSVs using \code{\link{write.csv}}, with row.names = FALSE
+#' by default. Additional arguments to \code{write.csv} can be passed through \code{...}.
+#'
+#' By default, R objects are serialized using \code{\link{saveRDS}} before uploading the object
 #' to the files endpoint. If given a filepath, the file is uploaded as-is.
+#'
+#'
 #' @family io
 #' @export
 write_civis_file <- function(x, ...) {
@@ -365,7 +376,7 @@ write_civis_file <- function(x, ...) {
 }
 
 #' @export
-#' @describeIn write_civis_file Serialize R object to Civis Platform (Files endpoint).
+#' @describeIn write_civis_file Serialize R object
 write_civis_file.default <- function(x, name = 'r-object.rds', expires_at = NULL, ...) {
   with_tempfile(function(tmp_file, ...) {
     saveRDS(x, file = tmp_file, ...)
@@ -373,7 +384,25 @@ write_civis_file.default <- function(x, name = 'r-object.rds', expires_at = NULL
   })
 }
 
-#' @describeIn write_civis_file Upload a text file to Civis Platform (Files endpoint).
+#' @describeIn write_civis_file Upload a data frame as a csv
+#' @param row.names default FALSE. Either a logical value indicating whether the row names
+#' of x are to be written along with x, or a character vector of row names to be written.
+#' @export
+#' @importFrom utils write.csv
+write_civis_file.data.frame <- function(x,
+                                        name = 'data.csv',
+                                        expires_at = NULL,
+                                        row.names = FALSE,
+                                        ...) {
+  with_tempfile(function(tmp_file, ...) {
+    write.csv(x, file = tmp_file, row.names = row.names, ...)
+    write_civis_file.character(x = tmp_file,
+                               name = name,
+                               expires_at = expires_at)
+  })
+}
+
+#' @describeIn write_civis_file Upload any file
 #' @export
 write_civis_file.character <- function(x, name = x, expires_at = NULL, ...) {
   if (length(x) > 1 || !file.exists(x)) {
@@ -461,7 +490,7 @@ download_civis.character <- function(x, database = NULL, file,
                                      overwrite = FALSE, progress = FALSE, split = FALSE,
                                      job_name = NULL, hidden = TRUE, verbose = FALSE,
                                      ...) {
-  if (stringr::str_detect(tolower(x), "\\bselect\\b")) {
+  if (grepl("\\bselect\\b", tolower(x))) {
     msg <- c("Argument x should be \"schema.table\". Did you mean x = sql(\"...\")?")
     stop(msg)
   }
@@ -515,7 +544,7 @@ download_civis.sql <- function(x, database = NULL, file,
     if (file.exists(file)) file.remove(file)
     concat_command <- ifelse(.Platform$OS.type == "unix", "cat", "type")
     system2(command = concat_command,
-            args = c(paste(purrr::map_chr(unzipped_file_paths, 1), collapse = " "),
+            args = c(paste(unlist(unzipped_file_paths), collapse = " "),
                      ">", file))
   }
 
@@ -602,8 +631,8 @@ civis_to_multifile_csv <- function(sql, database, job_name = NULL, hidden = TRUE
   # If the user-submitted SQL query ends with ";"
   # the resulting query would be "; LIMIT 1", which is a SQL syntax error
   # Thus we make sure that the user-submitted query does not end with ";"
-  if (stringr::str_sub(sql, start = -1L) == ";") {
-    stringr::str_sub(sql, start = -1L) <- ""
+  if (substring(sql, nchar(sql) - 1, nchar(sql)) == ";") {
+    substring(sql, nchar(sql) - 1, nchar(sql)) <- ""
   }
 
   column_delimiter <- delimiter_name_from_string(delimiter)
@@ -717,7 +746,7 @@ query_civis_file <- function(x, ...){
 #' @describeIn query_civis_file Export a \code{"schema.table"} to a file id.
 query_civis_file.character <- function(x, database = NULL, job_name = NULL, hidden = TRUE,
                                        verbose = verbose, csv_settings = NULL, ...) {
-  if (stringr::str_detect(tolower(x), "\\bselect\\b")) {
+  if (grepl( "\\bselect\\b", tolower(x))) {
     msg <- c("Argument x should be \"schema.tablename\". Did you mean x = sql(\"...\")?")
     stop(msg)
   }

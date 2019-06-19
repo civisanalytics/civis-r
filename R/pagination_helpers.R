@@ -41,7 +41,7 @@ next_page <- function(response) {
 #' column_names <- columns %>% purrr::map_chr("name")
 #' }
 fetch_all <- function(fn, ...) {
-  fetch_until(fn, ~FALSE, ...)
+  fetch_until(fn, function(x) x == FALSE, ...)
 }
 
 #' Retrieve some results from a paginated endpoint
@@ -50,7 +50,7 @@ fetch_all <- function(fn, ...) {
 #' This is useful when searching for a particular value or record.
 #'
 #' @param fn The API function to be called.
-#' @param .until A function or formula which returns a boolean value.
+#' @param .until A function which returns a boolean value.
 #' \code{.until} will be called with each item from the API response. When
 #' \code{.until} returns \code{TRUE} iteration will stop and \code{fetch_until}
 #' will return all responses accumulated so far.
@@ -66,7 +66,6 @@ fetch_all <- function(fn, ...) {
 #'                        .until = function(x) x == "voterbase_id")
 #' }
 fetch_until <- function(fn, .until, ...) {
-  until <- purrr::as_mapper(.until)
   args <- list(...)
 
   args$page_num <- 1
@@ -76,7 +75,7 @@ fetch_until <- function(fn, .until, ...) {
   repeat {
     res <- do.call(fn, args)
     full_results <- append(full_results, res)
-    if (any(purrr::map_lgl(res, until))) {
+    if (any(sapply(res, .until))) {
       break
     }
 
@@ -88,3 +87,4 @@ fetch_until <- function(fn, .until, ...) {
 
   full_results
 }
+

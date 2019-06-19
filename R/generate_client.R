@@ -4,20 +4,21 @@ FILENAME <- c("R/generated_client.R")
 #'
 #' @details
 #' Skips autogeneration on windows with R < 3.4.0 and if R_CLIENT_DEV == "TRUE".
-#' Skips downloading a fresh spec if CIVIS_API_KEY is not set.
-#' @importFrom devtools document
-#' @importFrom roxygen2 roxygenize
+#' A valid CIVIS_API_KEY must be set.
 fetch_and_generate_client <- function() {
+
   if (Sys.getenv("R_CLIENT_DEV") != "TRUE" && windows_r_version_is_valid()) {
+    message("Generating API")
     tryCatch({
-      message("Generating API")
+      requireNamespace('roxygen2', quietly = TRUE)
+      api_key()
       spec <- get_spec()
       client_str <- generate_client(spec)
-      message(paste0("Writing API to ", FILENAME))
       write_client(client_str, FILENAME = FILENAME)
-      devtools::document()
+      roxygen2::roxygenise('.')
     }, error = function(e) {
-      message("Generating API failed, reverting to default specification.")
+      message(e)
+      message("\nGenerating API failed, reverting to default.")
     })
   } else {
     message("Skipping client generation")
@@ -31,6 +32,15 @@ windows_r_version_is_valid <- function(major = 3, minor = 3.4) {
   }
   if (!valid) message("Autogenerating API on Windows requires R > 3.4.0")
   valid
+}
+
+get_spec <- function() {
+  call_api("get", path = "/endpoints/", list(), list(), list())
+}
+
+write_client <- function(client_str, FILENAME) {
+  cat("", file = FILENAME)
+  cat(client_str, file = FILENAME, append = TRUE)
 }
 
 #' Generate a client
@@ -88,16 +98,26 @@ build_function_args <- function(params) {
   paste0(" <- function(", arg_str, ") {\n\n")
 }
 
+#' @importFrom utils tail
 build_function_name <- function(verb_name, path_name) {
-  parts <- stringr::str_split(path_name, "/", simplify = TRUE)
-  parts <- purrr::discard(parts, ~ .x == "")
-  parts <- purrr::discard(parts, ~ startsWith(.x, "{"))
+  parts <- strsplit(path_name, "/")[[1]]
+  parts <- parts[parts != '']
   parts <- gsub("-", "_", parts)
-
+  args <- tail(parts, -1)
+  sig <- NULL
+  for (i in seq_along(args)) {
+    prev <- if (i > 1) args[i - 1] else NULL
+    if (!bracketed(args[i])) {
+      sig <- paste0(c(sig, args[i]), collapse = "_")
+    } else if (!is.null(prev) && bracketed(prev)) {
+      sig <- paste0(sig, gsub("\\{|\\}", "", prev), collapse = "_")
+    }
+  }
   if (!endsWith(path_name, "}") & verb_name == "get") verb_name <- "list"
-
-  paste(c(parts[1], verb_name, parts[-1]), collapse = "_")
+  paste(c(parts[1], verb_name, sig), collapse = "_")
 }
+
+bracketed <- function(x) grepl("\\{|\\}", x)
 
 build_docs <- function(verb) {
   title <- sprintf("#' %s\n", verb$summary)
@@ -294,7 +314,7 @@ same_ref <- function(parent, child) {
 # ref is a list with key="$ref" and value="#/definitions/Objectx"
 get_ref <- function(ref, spec) {
   ref <- ref[which(names(ref) == "$ref")]  # see ex5
-  ref_path <- stringr::str_split(ref, "/", simplify = TRUE)
+  ref_path <- strsplit(unlist(ref), "/")[[1]]
   ref_path <- ref_path[-1]  # the first portion of the path is `#`
   spec[[ref_path]]
 }
@@ -353,29 +373,3 @@ returns_array <- function(verb, verb_name, path_name) {
   return(FALSE)
 }
 
-
-# ---- Main ----
-get_spec <- function() {
-
-  # Skip retries whenever api_key not set (e.g. Travis, Appveyor, CRAN)
-  if (!inherits(try(api_key(), silent = TRUE), "try-error")) {
-    api_spec <- try(call_api("get", path = "/endpoints/", list(), list(), list()))
-    if (inherits(api_spec, "try-error")) {
-      message("Downloading API specification from Civis failed, using cached API specification.")
-
-      # loads cached spec generated from 'tools/generate_default_client.R'
-      load("R/sysdata.rda")
-    } else {
-      message("Downloading API specification from Civis successful.")
-    }
-  } else {
-    message("The environment variable CIVIS_API_KEY is not set, using cached API specification.")
-    load("R/sysdata.rda")
-  }
-  api_spec
-}
-
-write_client <- function(client_str, FILENAME) {
-  cat("", file = FILENAME)
-  cat(client_str, file = FILENAME, append = TRUE)
-}

@@ -11,5 +11,5 @@ Fetches and generates the client in generated_client.R
 }
 \details{
 Skips autogeneration on windows with R < 3.4.0 and if R_CLIENT_DEV == "TRUE".
-Skips downloading a fresh spec if CIVIS_API_KEY is not set.
+A valid CIVIS_API_KEY must be set.
 }

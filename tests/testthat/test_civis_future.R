@@ -29,24 +29,24 @@ test_that("r eval works", {
   output <- capture.output(res <- mock_r_eval(fut))
   expect_equal(res, 6)
 
-  library(purrr)
-  fut <- CivisFuture(map(1:2, c))
+  library(jsonlite)
+  fut <- CivisFuture(toJSON(1:2))
   output <- capture.output(res <- mock_r_eval(fut))
-  expect_equal(res, list(1, 2))
+  expect_equal(res, toJSON(1:2))
 })
 
 mock_run <- function(expr) {
   fut <- CivisFuture(expr)
   with_mock(
     `civis::write_civis_file` = function(...) 123,
-    `civis::upload_runner_script` = function(...) "",
+    `civis::upload_runner_script` = function(...) 1,
     `civis::scripts_post_containers` = function(...) NULL,
     `civis::scripts_post_containers_runs` = function(fut) NULL,
     `civis::scripts_post_containers_runs_outputs` = function(...) NULL,
     `civis::scripts_get_containers_runs` = function(...) list(state = "succeeded"),
     `civis::read_civis` = function(...) mock_r_eval(fut),
     `civis::fetch_logs` = function(...) list("a log"),
-    list(fut = run(fut), value = value(fut))
+    list(fut = run(fut), value = future::value(fut))
   )
 }
 
@@ -63,14 +63,14 @@ mock_err <- function(expr) {
   fut <- CivisFuture(expr)
   with_mock(
     `civis::write_civis_file` = function(...) 123,
-    `civis::upload_runner_script` = function(...) "",
+    `civis::upload_runner_script` = function(...) 1,
     `civis::scripts_post_containers` = function(...) NULL,
     `civis::scripts_post_containers_runs` = function(...) list(containerId = 1, id = 2),
     `civis::scripts_post_containers_runs_outputs` = function(...) NULL,
     `civis::scripts_get_containers_runs` = function(id, run_id) list(state = "failed"),
     `civis::fetch_output` = function(...) NULL,
     `civis::fetch_logs` = function(...) list("error_log"),
-    list(fut = run(fut), value = value(fut))
+    list(fut = run(fut), value = future::value(fut))
   )
 }
 
@@ -90,9 +90,9 @@ test_that("CivisFuture has the right stuff", {
  fut <- CivisFuture(quote(a + 3))
  expect_equal(fut$envir$a, 5)
 
- library(purrr)
- fut <- CivisFuture(quote(map(1:2, c)))
- expect_equal(fut$packages, "purrr")
+ library(jsonlite)
+ fut <- CivisFuture(quote(toJSON(1:2)))
+ expect_equal(fut$packages, "jsonlite")
 
  # two other quick checks
  expect_equal(fut$docker_image_name, "civisanalytics/datascience-r")

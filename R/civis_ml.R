@@ -760,8 +760,9 @@ must_fetch_output_json <- function(outputs, file_name) {
 }
 
 must_fetch_output_file <- function(outputs, file_name) {
-  out <- purrr::keep(outputs, ~ .$objectType == "File" && .$name == file_name)
-  if (purrr::is_empty(out)) {
+  id <- which(sapply(outputs, function(x) x$name == file_name && x$objectType == "File"))
+  out <- outputs[id]
+  if (length(out) == 0) {
     stop(paste0(file_name, " not found in model output."), call. = FALSE)
   }
 

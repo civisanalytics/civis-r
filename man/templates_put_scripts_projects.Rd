@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{templates_put_scripts_projects}
 \alias{templates_put_scripts_projects}
-\title{Add a Template::Script to a project}
+\title{Add an item to a project}
 \usage{
 templates_put_scripts_projects(id, project_id)
 }
@@ -15,5 +15,5 @@ templates_put_scripts_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Add a Template::Script to a project
+Add an item to a project
 }

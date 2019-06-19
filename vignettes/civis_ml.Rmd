@@ -182,7 +182,7 @@ saveRDS(err_m, file = "../inst/civis_ml_err.rds")
 
 ```{r, eval=TRUE, echo=FALSE}
 library(civis)
-path <- devtools::package_file("inst", "civis_ml_brandable.rds")
+path <- system.file("civis_ml_brandable.rds", package = 'civis')
 m <- readRDS(path)
 m
 ```
@@ -202,7 +202,7 @@ head(oos)
 ```
 
 ```{r, echo=FALSE, eval=TRUE}
-path <- devtools::package_file("inst", "civis_ml_oos.rds")
+path <- system.file("civis_ml_oos.rds", package = 'civis')
 oos <- readRDS(path)
 head(oos)
 ```
@@ -282,7 +282,7 @@ civis_ml(tab, dependent_variable = "upgrade",
 ```
 
 ```{r, echo=FALSE, eval=TRUE}
-path <- devtools::package_file("inst", "civis_ml_err.rds")
+path <- system.file("civis_ml_err.rds", package = 'civis')
 err <- readRDS(path)
 err
 ```
