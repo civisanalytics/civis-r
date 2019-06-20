@@ -23,7 +23,7 @@ _language_ ([R](https://platform.civisanalytics.com/spa/#/scripts/new?type=r), [
 and [_custom_](https://platform.civisanalytics.com/spa/#/scripts/new?type=custom&fromTemplateId=11219). 
 If you've run any of these scripts in Civis Platform, you've already started _productionizing_ your
 code. Most loosely, productionizing means that your code now runs on a 
-remote server than your local or development machine.
+remote server instead of your local or development machine.
 
 You probably already know some of the benefits too:
 
@@ -210,7 +210,7 @@ iris <- read_civis(out$objectId, using = read.csv)
 Since this pattern is also common, you can simply use `read_civis` directly.
 This will work for any script type. Use `regex` and `using` to filter
 run outputs by file extension, and provide the appropriate reading function.
-JSONValues can be read automatically!
+JSONValues can be read automatically.
 
 ```{r, eval = FALSE}
 # get csv run outputs
@@ -220,11 +220,9 @@ iris <- read_civis(civis_script(run$rId), regex = '.csv', using = read.csv)
 my_farm <- read_civis(civis_script(run_farm$rId))
 ```
 
-A long round trip, but I'm grateful not to lose track of my farm animals.
-
 ### Script Parameters
 
-Scripts are more useful if their behavior can be configured by the user. We can do this with script parameters!
+Scripts are more useful if their behavior can be configured by the user, which can be done with script parameters.
 Script _parameters_ are placeholders for input by the user. Specific values of the parameters input by
 the user are called _arguments_. Here, we modify `run_script` to automatically add a parameter, 
 and simultaneously take a value of that parameter provided by the user. In the script itself,
