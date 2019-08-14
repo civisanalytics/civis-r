@@ -100,11 +100,21 @@ run_civis <- function(expr, ...) {
 #' # Run the template
 #' run_template(id, arguments = list(arg1 = 1, arg2 = 2), ...)
 #' }
-run_template <- function(id, arguments, ...) {
+run_template <- function(id, arguments, JSONvalue=FALSE, ...) {
   job <- scripts_post_custom(id, arguments = arguments, ...)
   run <- scripts_post_custom_runs(job$id)
   await(scripts_get_custom_runs, id = job$id, run_id = run$id)
-  fetch_output_file_ids(civis_script(job$id, run$id))
+  file_ids = fetch_output_file_ids(civis_script(job$id, run$id))
+  if (JSONvalue) {
+     file_contents = c()
+     for (f in file_ids) {
+         file_content = json_values_get(f)
+       	 file_contents = c(file_contents, file_content)
+     }
+  }
+  else {
+     return(file_ids)
+  }
 }
 
 #' Add a file as a run output if called from a container job
