@@ -4,17 +4,21 @@
 \alias{run_template}
 \title{Run a template script}
 \usage{
-run_template(id, arguments, ...)
+run_template(id, arguments, JSONValue = FALSE, ...)
 }
 \arguments{
 \item{id}{id of the template script.}
 
 \item{arguments}{list of arguments to the script.}
 
+\item{JSONValue}{bool (default FALSE) If true, returns the 
+JSON values instead of the file_ids}
+
 \item{...}{additional arguments to \code{scripts_post_custom}}
 }
 \value{
-File ids of any run outputs are returned.
+If JSONValue is TRUE, File ids of any run outputs are returned.
+        If JSONValue is FALSE, JSON values of any run outputs are returned.
 }
 \description{
 Run a template script
@@ -26,6 +30,9 @@ search_list('template name', type = 'template_script')
 
 # Run the template
 run_template(id, arguments = list(arg1 = 1, arg2 = 2), ...)
+
+# Run the template and return JSON value outputs
+run_template(id, arguments = list(arg1 = 1, arg2 = 2), JSONValue=TRUE...)
 }
 }
 \seealso{
