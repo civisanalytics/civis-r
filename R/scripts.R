@@ -88,7 +88,7 @@ run_civis <- function(expr, ...) {
 #' Run a template script
 #' @param id id of the template script.
 #' @param arguments list of arguments to the script.
-#' @param JSONValue (default FALSE) If true, returns the 
+#' @param JSONValue bool (default FALSE) If true, returns the 
 #'                  JSON values instead of the file_ids
 #' @param ... additional arguments to \code{scripts_post_custom}
 #' @return If JSONValue is TRUE, File ids of any run outputs are returned.
@@ -102,6 +102,9 @@ run_civis <- function(expr, ...) {
 #'
 #' # Run the template
 #' run_template(id, arguments = list(arg1 = 1, arg2 = 2), ...)
+#'
+#' # Run the template and return JSON value outputs
+#' run_template(id, arguments = list(arg1 = 1, arg2 = 2), JSONValue=TRUE...)
 #' }
 run_template <- function(id, arguments, JSONValue=FALSE, ...) {
   job <- scripts_post_custom(id, arguments = arguments, ...)
