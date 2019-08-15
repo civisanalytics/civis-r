@@ -17,8 +17,11 @@ JSON values instead of the file_ids}
 \item{...}{additional arguments to \code{scripts_post_custom}}
 }
 \value{
-If JSONValue is TRUE, File ids of any run outputs are returned.
-        If JSONValue is FALSE, JSON values of any run outputs are returned.
+If JSONValue is FALSE, File ids of any run outputs are returned.
+        If JSONValue is TRUE, JSON values of first JSON run output is returned.
+          If there are no JSON outputs, nothing is returned
+          If there are more than 1 JSON outputs, error message is printed 
+            and nothing is returned.
 }
 \description{
 Run a template script

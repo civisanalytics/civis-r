@@ -91,8 +91,12 @@ run_civis <- function(expr, ...) {
 #' @param JSONValue bool (default FALSE) If true, returns the 
 #'                  JSON values instead of the file_ids
 #' @param ... additional arguments to \code{scripts_post_custom}
-#' @return If JSONValue is TRUE, File ids of any run outputs are returned.
-#'         If JSONValue is FALSE, JSON values of any run outputs are returned.
+#' @return If JSONValue is FALSE, File ids of any run outputs are returned.
+#'         If JSONValue is TRUE, JSON values of first JSON run output is returned.
+#'           If there are no JSON outputs, nothing is returned
+#'           If there are more than 1 JSON outputs, error message is printed 
+#'             and nothing is returned.
+#'                              
 #' @export
 #' @family script_utils
 #' @examples
@@ -112,9 +116,16 @@ run_template <- function(id, arguments, JSONValue=FALSE, ...) {
   await(scripts_get_custom_runs, id = job$id, run_id = run$id)
   if (JSONValue) {
      output <- fetch_output(civis_script(job$id, run$id))
-     names <- lapply(output, function(o) o$name)
-     file_values <- stats::setNames(lapply(output, function(o) o$value), names)
-     return(file_values)
+     json_output <- output[sapply(output, function(o) o$objectType=="JSONValue")]
+     if (length(json_output) > 1) {
+        cat("Error in returning JSON outputs of template run -- too many JSON outputs")
+	return()
+     }
+     if (length(json_output) == 0) {
+        cat("Error in returning JSON outputs of template run -- no JSON output")
+	return()
+     }
+     return(json_output[[1]]$value)
   }
   else {
      file_ids = fetch_output_file_ids(civis_script(job$id, run$id))
