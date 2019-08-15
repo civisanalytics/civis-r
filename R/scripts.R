@@ -88,8 +88,11 @@ run_civis <- function(expr, ...) {
 #' Run a template script
 #' @param id id of the template script.
 #' @param arguments list of arguments to the script.
+#' @param JSONValue (default FALSE) If true, returns the 
+#'                  JSON values instead of the file_ids
 #' @param ... additional arguments to \code{scripts_post_custom}
-#' @return File ids of any run outputs are returned.
+#' @return If JSONValue is TRUE, File ids of any run outputs are returned.
+#'         If JSONValue is FALSE, JSON values of any run outputs are returned.
 #' @export
 #' @family script_utils
 #' @examples
@@ -100,19 +103,18 @@ run_civis <- function(expr, ...) {
 #' # Run the template
 #' run_template(id, arguments = list(arg1 = 1, arg2 = 2), ...)
 #' }
-run_template <- function(id, arguments, JSONvalue=FALSE, ...) {
+run_template <- function(id, arguments, JSONValue=FALSE, ...) {
   job <- scripts_post_custom(id, arguments = arguments, ...)
   run <- scripts_post_custom_runs(job$id)
   await(scripts_get_custom_runs, id = job$id, run_id = run$id)
-  file_ids = fetch_output_file_ids(civis_script(job$id, run$id))
-  if (JSONvalue) {
-     file_contents = c()
-     for (f in file_ids) {
-         file_content = json_values_get(f)
-       	 file_contents = c(file_contents, file_content)
-     }
+  if (JSONValue) {
+     output <- fetch_output(civis_script(job$id, run$id))
+     names <- lapply(output, function(o) o$name)
+     file_values <- stats::setNames(lapply(output, function(o) o$value), names)
+     return(file_values)
   }
   else {
+     file_ids = fetch_output_file_ids(civis_script(job$id, run$id))
      return(file_ids)
   }
 }
