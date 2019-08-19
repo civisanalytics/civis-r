@@ -124,7 +124,7 @@ run_template <- function(id, arguments, JSONValue=FALSE, ...) {
 	return()
      }
      if (length(json_output) > 1) {
-        warning("Error in returning JSON outputs of template run -- too many JSON outputs")
+        warning("More than 1 JSON output for template. Returning only the first one")
      }
      return(json_output[[1]]$value)
 
