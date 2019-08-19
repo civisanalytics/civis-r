@@ -115,17 +115,19 @@ run_template <- function(id, arguments, JSONValue=FALSE, ...) {
   run <- scripts_post_custom_runs(job$id)
   await(scripts_get_custom_runs, id = job$id, run_id = run$id)
   if (JSONValue) {
+
      output <- fetch_output(civis_script(job$id, run$id))
      json_output <- output[sapply(output, function(o) o$objectType=="JSONValue")]
-     if (length(json_output) > 1) {
-        cat("Error in returning JSON outputs of template run -- too many JSON outputs")
+
+     if (length(json_output) == 0) {
+        warning("Error in returning JSON outputs of template run -- no JSON output")
 	return()
      }
-     if (length(json_output) == 0) {
-        cat("Error in returning JSON outputs of template run -- no JSON output")
-	return()
+     if (length(json_output) > 1) {
+        warning("Error in returning JSON outputs of template run -- too many JSON outputs")
      }
      return(json_output[[1]]$value)
+
   }
   else {
      file_ids = fetch_output_file_ids(civis_script(job$id, run$id))
