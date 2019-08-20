@@ -93,9 +93,10 @@ run_civis <- function(expr, ...) {
 #' @param ... additional arguments to \code{scripts_post_custom}
 #' @return If JSONValue is FALSE, File ids of any run outputs are returned.
 #'         If JSONValue is TRUE, JSON values of first JSON run output is returned.
-#'           If there are no JSON outputs, nothing is returned
-#'           If there are more than 1 JSON outputs, error message is printed 
-#'             and nothing is returned.
+#'           If there are no JSON outputs, warning message is printed
+#'             and nothing is returned
+#'           If there are more than 1 JSON outputs, warning message is printed 
+#'             and the first JSON output is returned.
 #'                              
 #' @export
 #' @family script_utils
