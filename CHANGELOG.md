@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+- `run_template` takes an additional value of JSONValue. If TRUE,
+  frunction returns the JSON output instead of the fileid.
+
 ## [2.0.0] - 2019-06-19
 
 ### Changed
