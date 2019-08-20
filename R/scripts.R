@@ -88,8 +88,16 @@ run_civis <- function(expr, ...) {
 #' Run a template script
 #' @param id id of the template script.
 #' @param arguments list of arguments to the script.
+#' @param JSONValue bool (default FALSE) If true, returns the 
+#'                  JSON values instead of the file_ids
 #' @param ... additional arguments to \code{scripts_post_custom}
-#' @return File ids of any run outputs are returned.
+#' @return If JSONValue is FALSE, File ids of any run outputs are returned.
+#'         If JSONValue is TRUE, JSON values of first JSON run output is returned.
+#'           If there are no JSON outputs, warning message is printed
+#'             and nothing is returned
+#'           If there are more than 1 JSON outputs, warning message is printed 
+#'             and the first JSON output is returned.
+#'                              
 #' @export
 #' @family script_utils
 #' @examples
@@ -99,12 +107,33 @@ run_civis <- function(expr, ...) {
 #'
 #' # Run the template
 #' run_template(id, arguments = list(arg1 = 1, arg2 = 2), ...)
+#'
+#' # Run the template and return JSON value outputs
+#' run_template(id, arguments = list(arg1 = 1, arg2 = 2), JSONValue=TRUE, ...)
 #' }
-run_template <- function(id, arguments, ...) {
+run_template <- function(id, arguments, JSONValue=FALSE, ...) {
   job <- scripts_post_custom(id, arguments = arguments, ...)
   run <- scripts_post_custom_runs(job$id)
   await(scripts_get_custom_runs, id = job$id, run_id = run$id)
-  fetch_output_file_ids(civis_script(job$id, run$id))
+  if (JSONValue) {
+
+     output <- fetch_output(civis_script(job$id, run$id))
+     json_output <- output[sapply(output, function(o) o$objectType=="JSONValue")]
+
+     if (length(json_output) == 0) {
+        warning("Error in returning JSON outputs of template run -- no JSON output")
+	return()
+     }
+     if (length(json_output) > 1) {
+        warning("More than 1 JSON output for template. Returning only the first one")
+     }
+     return(json_output[[1]]$value)
+
+  }
+  else {
+     file_ids = fetch_output_file_ids(civis_script(job$id, run$id))
+     return(file_ids)
+  }
 }
 
 #' Add a file as a run output if called from a container job
