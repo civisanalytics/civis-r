@@ -36,7 +36,7 @@ search_list('template name', type = 'template_script')
 run_template(id, arguments = list(arg1 = 1, arg2 = 2), ...)
 
 # Run the template and return JSON value outputs
-run_template(id, arguments = list(arg1 = 1, arg2 = 2), JSONValue=TRUE...)
+run_template(id, arguments = list(arg1 = 1, arg2 = 2), JSONValue=TRUE, ...)
 }
 }
 \seealso{
