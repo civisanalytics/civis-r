@@ -66,6 +66,58 @@ test_that("run_template", {
                list(1, arguments = list(arg = 1), credential_id = 1))
 })
 
+test_that("run_template_with_json", {
+  mock_output <- list(list(name = 'a', objectId = 1, objectType = 'JSONValue', value = "{'a':1}"))
+  mock_post <- mockery::mock(list(id = 1))
+  vals <- with_mock(
+    `civis::scripts_post_custom` =  mock_post,
+    `civis::scripts_post_custom_runs` = function(...) list(id = 1),
+    `civis::scripts_get_custom_runs` = function(...) list(state = 'succeeded'),
+    `civis::jobs_get` = function(...) list(type = 'JobTypes::ContainerDocker', fromTemplateId = 1),
+    `civis::scripts_list_custom_runs_outputs` = function(...) mock_output,
+    run_template(1, arguments = list(arg = 1), credential_id = 1, JSONValue=TRUE)
+  )
+  expect_equal(vals, "{'a':1}")
+  mockery::expect_called(mock_post, 1)
+  expect_equal(mockery::mock_args(mock_post)[[1]],
+               list(1, arguments = list(arg = 1), credential_id = 1))
+})
+
+test_that("run_template_with_no_json_output", {
+  mock_output <- list(list(name = 'a', objectId = 1, objectType = 'JSONValue', value = "{'a':1}"),
+  	      	      list(name = 'b', objectId = 2, objectType = 'JSONValue', value = "{'b':2}"))
+  mock_post <- mockery::mock(list(id = 1))
+  vals <- with_mock(
+    `civis::scripts_post_custom` =  mock_post,
+    `civis::scripts_post_custom_runs` = function(...) list(id = 1),
+    `civis::scripts_get_custom_runs` = function(...) list(state = 'succeeded'),
+    `civis::jobs_get` = function(...) list(type = 'JobTypes::ContainerDocker', fromTemplateId = 1),
+    `civis::scripts_list_custom_runs_outputs` = function(...) mock_output,
+    run_template(1, arguments = list(arg = 1), credential_id = 1, JSONValue=TRUE)
+  )
+  expect_equal(vals, "{'a':1}")
+  mockery::expect_called(mock_post, 1)
+  expect_equal(mockery::mock_args(mock_post)[[1]],
+               list(1, arguments = list(arg = 1), credential_id = 1))
+})
+
+test_that("run_template_with_multiple_json_output", {
+  mock_output <- list(list(name = 'a', objectId = 1, objectType = 'int'))
+  mock_post <- mockery::mock(list(id = 1))
+  vals <- with_mock(
+    `civis::scripts_post_custom` =  mock_post,
+    `civis::scripts_post_custom_runs` = function(...) list(id = 1),
+    `civis::scripts_get_custom_runs` = function(...) list(state = 'succeeded'),
+    `civis::jobs_get` = function(...) list(type = 'JobTypes::ContainerDocker', fromTemplateId = 1),
+    `civis::scripts_list_custom_runs_outputs` = function(...) mock_output,
+    run_template(1, arguments = list(arg = 1), credential_id = 1, JSONValue=TRUE)
+  )
+  expect_equal(vals, NULL)
+  mockery::expect_called(mock_post, 1)
+  expect_equal(mockery::mock_args(mock_post)[[1]],
+               list(1, arguments = list(arg = 1), credential_id = 1))
+})
+
 test_that("run_civis", {
   # CivisFuture is tested extensively elsewhere.
   with_mock(
