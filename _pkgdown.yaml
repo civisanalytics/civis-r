@@ -41,6 +41,14 @@ reference:
       contents:
       - publish_rmd
       - publish_html
+    - title: Scripts
+      desc: Using Civis Scripts
+      contents:
+      - run_template
+      - civis_script
+      - write_job_output
+      - run_civis
+      - fetch_output_file_ids
     - title: Tables
       desc: Utilities for working with Redshift Tables
       contents:
@@ -71,3 +79,4 @@ reference:
       desc: Direct API calls to the Civis Platform
       contents:
       - matches("^\\w*_(delete|get|list|patch|post|put)")
+      - -matches("^models_")
