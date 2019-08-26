@@ -177,6 +177,14 @@ test_that("additional packages get installed", {
   expect_equal(res, list(1, 2))
 })
 
+test_that("environment is attached", {
+  f <- function(x) g(x)
+  g <- function(x) x
+  fut <- future({f(1)})
+  res <- value(fut)
+  expect_equal(res, 1)
+})
+
 end <- proc.time()
 tot <- end - start
 

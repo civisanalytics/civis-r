@@ -33,6 +33,12 @@ test_that("r eval works", {
   fut <- CivisFuture(toJSON(1:2))
   output <- capture.output(res <- mock_r_eval(fut))
   expect_equal(res, toJSON(1:2))
+
+  f <- function(x) g(x)
+  g <- function(x) x
+  fut <- CivisFuture({f(1)})
+  o <- capture.output(res <- mock_r_eval(fut))
+  expect_equal(res, 1)
 })
 
 mock_run <- function(expr) {
@@ -115,4 +121,3 @@ test_that("cancel", {
   )
   expect_equal(fut$state, "cancelled")
 })
-

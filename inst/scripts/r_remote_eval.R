@@ -5,7 +5,7 @@ library(civis)
 args <- commandArgs(trailingOnly = TRUE)
 task_file_id <- as.numeric(args[[1]])
 
-fut <- read_civis(task_file_id)
+fut <- read_civis(task_file_id, using = readRDS)
 
 # install and load missing packages
 cat("Installing and loading required packages", fill = TRUE)
@@ -21,7 +21,11 @@ if (length(pkgs) > 0) {
 
 cat("Evaluating R expression", fill = TRUE)
 
-res <- eval(fut$expr, fut$envir)
+attach(fut$envir)
+
+res <- eval(fut$expr)
+
+detach(fut$envir)
 
 cat("Complete.", fill = TRUE)
 

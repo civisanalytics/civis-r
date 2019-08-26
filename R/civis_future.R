@@ -69,7 +69,7 @@ CivisFuture <- function(expr = NULL,
                         label = NULL,
                         required_resources = list(cpu = 1024, memory = 2048, diskSpace = 4),
                         docker_image_name = "civisanalytics/datascience-r",
-                        docker_image_tag = "2",
+                        docker_image_tag = "3",
                          ...) {
 
   gp <- future::getGlobalsAndPackages(expr, envir = envir, globals = globals)
