@@ -77,6 +77,10 @@ test_that("await throws a civis_timeout_error on timeout", {
   expect_equal(e, e2)
 })
 
+test_that("default interval is null", {
+  expect_null(getOption("civis.default_polling_interval"))
+})
+
 test_that("get_error returns error data for civis_error", {
   f <- function(x) {
     if (x == 0) {
@@ -258,3 +262,4 @@ test_that("await_all catches arbitrary status and keys - multivariate", {
   expect_equal(sapply(x, get_status), rep("going home", 2))
   expect_equal(sapply(x, function(x) x$value), 1:2)
 })
+

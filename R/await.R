@@ -75,12 +75,15 @@
 #' \item{11-19: 5-10s}
 #' \item{20-29: 10s - 1m}
 #' }
+#' The polling interval can be set to a fixed value globally with
+#' \code{options("civis.default_polling_interval" = INTERVAL_IN_SECONDS)}.
 #' @seealso \code{\link{get_status}, \link{get_error}, \link{fetch_logs}}
 await <- function(f, ...,
                   .status_key = "state",
                   .success_states = c("succeeded", "success"),
                   .error_states = c("failed", "cancelled"),
-                  .timeout = NULL, .interval = NULL,
+                  .timeout = NULL,
+                  .interval = getOption("civis.default_polling_interval"),
                   .verbose = FALSE) {
   start <- Sys.time()
   i <- 1
