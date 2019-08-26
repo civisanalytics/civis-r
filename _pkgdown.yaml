@@ -78,5 +78,5 @@ reference:
     - title: API
       desc: Direct API calls to the Civis Platform
       contents:
-      - matches("\\w*(get|post|patch|put|delete)")
+      - matches("^\\w*_(delete|get|list|patch|post|put)")
       - -matches("^models_")
