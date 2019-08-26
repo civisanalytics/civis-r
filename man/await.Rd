@@ -85,7 +85,7 @@ Approximate intervals for a given number of retries are as follows:
 \item{20-29: 10s - 1m}
 }
 The polling interval can be set to a fixed value globally with
-\code{options("civis.default_polling_interval" = 1)}
+\code{options("civis.default_polling_interval" = INTERVAL_IN_SECONDS)}.
 }
 \section{Functions}{
 \itemize{

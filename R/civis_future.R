@@ -15,7 +15,7 @@ NULL
 #'  fut <- future({2 + 2},
 #'    required_resources = list(cpu = 1024, memory = 2048),
 #'    docker_image_name = "civisanalytics/datascience-r",
-#'    docker_image_tag = "2.2.0")
+#'    docker_image_tag = "3")
 #'
 #'  # Evaluate the future later
 #'  fut <- future({2 + 2}, lazy = TRUE)
