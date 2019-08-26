@@ -22,7 +22,7 @@ report will be created.}
 
 \item{...}{additional parameters to send to \code{rmarkdown::render}. Note:
 A temporary file will be used for \code{output_file} if \code{output_file}
-is not explicity set and \code{input} will be overwritten with
+is not explicitly set and \code{input} will be overwritten with
 \code{rmd_file}.}
 }
 \description{
@@ -40,7 +40,7 @@ with \code{title: "my title!"}, these parameters can be set like
 }
 Since \code{report_id} is set, this code will overwrite the existing
 report with that number, which may be useful when updating a report on
-a schedule.  Any argument passed in explicity to \code{publish_rmd}
+a schedule.  Any argument passed in explicitly to \code{publish_rmd}
 will be used in place of the corresponding argument set in YAML metadata.
 }
 \note{

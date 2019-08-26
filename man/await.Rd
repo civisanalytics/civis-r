@@ -7,7 +7,9 @@
 \usage{
 await(f, ..., .status_key = "state", .success_states = c("succeeded",
   "success"), .error_states = c("failed", "cancelled"),
-  .timeout = NULL, .interval = NULL, .verbose = FALSE)
+  .timeout = NULL,
+  .interval = getOption("civis.default_polling_interval"),
+  .verbose = FALSE)
 
 await_all(f, .x, .y = NULL, ..., .status_key = "state",
   .success_states = c("succeeded", "success"),
@@ -82,6 +84,8 @@ Approximate intervals for a given number of retries are as follows:
 \item{11-19: 5-10s}
 \item{20-29: 10s - 1m}
 }
+The polling interval can be set to a fixed value globally with
+\code{options("civis.default_polling_interval" = 1)}
 }
 \section{Functions}{
 \itemize{

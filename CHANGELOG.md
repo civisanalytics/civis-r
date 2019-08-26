@@ -4,7 +4,11 @@
 
 ### Changed
 - `run_template` takes an additional value of JSONValue. If TRUE,
-  frunction returns the JSON output instead of the fileid.
+  function returns the JSON output instead of the fileid.
+
+### Added
+- Provided package option `civis.default_polling_interval` to globally 
+set the interval for polling via `await` (#204).
 
 ## [2.0.0] - 2019-06-19
 
