@@ -5,6 +5,9 @@
 ### Changed
 - `run_template` takes an additional value of JSONValue. If TRUE,
   function returns the JSON output instead of the fileid.
+  
+### Fixed
+- Bug in handling of environments in CivisFuture (#205).
 
 ### Added
 - Provided package option `civis.default_polling_interval` to globally 

@@ -14,7 +14,7 @@ CivisFuture(expr = NULL, envir = parent.frame(), substitute = FALSE,
   gc = FALSE, earlySignal = FALSE, label = NULL,
   required_resources = list(cpu = 1024, memory = 2048, diskSpace = 4),
   docker_image_name = "civisanalytics/datascience-r",
-  docker_image_tag = "2", ...)
+  docker_image_tag = "3", ...)
 
 \method{run}{CivisFuture}(future, ...)
 
