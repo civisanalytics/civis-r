@@ -178,6 +178,7 @@ test_that("additional packages get installed", {
 })
 
 test_that("environment is attached", {
+  plan(civis_platform)
   f <- function(x) g(x)
   g <- function(x) x
   fut <- future({f(1)})

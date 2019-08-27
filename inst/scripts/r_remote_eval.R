@@ -29,14 +29,5 @@ detach(fut$envir)
 
 cat("Complete.", fill = TRUE)
 
-
-# store results on s3
-output_file_id <- write_civis_file(res)
-cat("Output file id: ", output_file_id, fill = TRUE)
-
-# attach to the job output
-script_id <- Sys.getenv("CIVIS_JOB_ID")
-run_id <- Sys.getenv("CIVIS_RUN_ID")
-resp <- scripts_post_containers_runs_outputs(script_id, run_id,
-                                              object_type = "File",
-                                              object_id = output_file_id)
+saveRDS(res, file = 'r-object.rds')
+write_job_output("r-object.rds")

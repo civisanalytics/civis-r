@@ -15,6 +15,7 @@ mock_r_eval <- function(fut) {
     `civis::scripts_post_containers_runs_outputs` = function(...) NULL,
     `civis::write_civis_file` = function(...) NULL,
     eval(r_remote_eval),
+    unlink('r-object.rds'),
     return(res)
   )
 }
