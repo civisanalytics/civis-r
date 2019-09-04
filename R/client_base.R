@@ -129,7 +129,9 @@ stop_for_status <- function(x, task = NULL) {
     return(invisible(x))
 
   call <- sys.call(-1)
-  error_msg <- httr::content(x)$errorDescription
+  # e.g. 429, 503 do not have errorDescription fields
+  error_msg <- tryCatch(httr::content(x)$errorDescription,
+                        error = function(e) "")
   condition <- httr::http_condition(x, "error", task = task, call = call)
   condition$message <- paste0(c(condition$message, error_msg), collapse = " ")
   stop(condition)
