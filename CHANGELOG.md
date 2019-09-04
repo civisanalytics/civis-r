@@ -5,9 +5,11 @@
 ### Changed
 - `run_template` takes an additional value of JSONValue. If TRUE,
   function returns the JSON output instead of the fileid.
+- All API calls now retry a max of 10 times for maximum of 1 hr when rate limited. (#214).
   
 ### Fixed
 - Bug in handling of environments in CivisFuture (#205).
+- Bug in error handling on API responses with no `errorDescription` (#214)
 
 ### Added
 - Provided package option `civis.default_polling_interval` to globally 
