@@ -117,10 +117,10 @@ test_that("retry on GET/POST on 429", {
     `httr:::backoff_full_jitter` = function(...) Sys.sleep(0),
     expect_error(call_api("GET", path, path_params, query_params, body_params),
                  paste0(httr_429$status_code)),
-    expect_called(mock_rp, 3),
+    expect_called(mock_rp, 10),
     expect_error(call_api("POST", path, path_params, query_params, body_params),
                paste0(httr_429$status_code)),
-    expect_called(mock_rp, 6))
+    expect_called(mock_rp, 20))
 })
 
 test_that("failing to parse JSON content returns CivisClientError", {

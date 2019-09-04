@@ -20,8 +20,6 @@ print.civis_api <- function(x, ...) {
   invisible(resp)
 }
 
-
-
 call_api <- function(verb, path, path_params, query_params, body_params) {
     url <- build_url(path, path_params)
     auth <- httr::authenticate(api_key(), "")
@@ -43,11 +41,15 @@ call_api <- function(verb, path, path_params, query_params, body_params) {
       retry_on <- c(413, 429, 502, 503, 504)
       terminate_on <- setdiff(200:527, retry_on)
       request <- httr::RETRY
-      request_args <- c(request_args, list(terminate_on = terminate_on))
+      request_args <- c(request_args, list(terminate_on = terminate_on,
+                                           pause_cap = 600,
+                                           times = 10))
     } else {
       # Retry on all other verbs only if 429.
       terminate_on <- setdiff(200:527, 429)
-      request_args <- c(request_args, list(terminate_on = terminate_on))
+      request_args <- c(request_args, list(terminate_on = terminate_on,
+                                           pause_cap = 600,
+                                           times = 10))
       request <- httr::RETRY
     }
     response <- do.call(request, request_args)
