@@ -20,12 +20,6 @@ print.civis_api <- function(x, ...) {
   invisible(resp)
 }
 
-
-# Like the python client, only RETRY on get/put and connection-error.
-RETRY_ON <- c(413, 429, 502, 503, 504)
-# But httr: only takes terminate_on, so terminate on success and non-connection errors.
-TERMINATE_ON <- setdiff(200:527, RETRY_ON)
-
 call_api <- function(verb, path, path_params, query_params, body_params) {
     url <- build_url(path, path_params)
     auth <- httr::authenticate(api_key(), "")
@@ -43,10 +37,20 @@ call_api <- function(verb, path, path_params, query_params, body_params) {
       request_args <- c(request_args, list(body = body_json, httr::content_type_json()))
     }
     if (tolower(verb) %in% c("get", "put")) {
+      # Retry get and put for these error codes, in addition to 429.
+      retry_on <- c(413, 429, 502, 503, 504)
+      terminate_on <- setdiff(200:527, retry_on)
       request <- httr::RETRY
-      request_args <- c(request_args, list(terminate_on = TERMINATE_ON))
+      request_args <- c(request_args, list(terminate_on = terminate_on,
+                                           pause_cap = 600,
+                                           times = 10))
     } else {
-      request <- httr::VERB
+      # Retry on all other verbs only if 429.
+      terminate_on <- setdiff(200:527, 429)
+      request_args <- c(request_args, list(terminate_on = terminate_on,
+                                           pause_cap = 600,
+                                           times = 10))
+      request <- httr::RETRY
     }
     response <- do.call(request, request_args)
 
@@ -125,7 +129,9 @@ stop_for_status <- function(x, task = NULL) {
     return(invisible(x))
 
   call <- sys.call(-1)
-  error_msg <- httr::content(x)$errorDescription
+  # e.g. 429, 503 do not have errorDescription fields
+  error_msg <- tryCatch(httr::content(x)$errorDescription,
+                        error = function(e) "")
   condition <- httr::http_condition(x, "error", task = task, call = call)
   condition$message <- paste0(c(condition$message, error_msg), collapse = " ")
   stop(condition)
