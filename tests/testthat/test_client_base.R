@@ -71,20 +71,6 @@ test_that("call api catches http error", {
   )
 })
 
-test_that("call api retries get/put requests, but not post requests", {
-  with_mock(
-    `civis::api_key` = function(...) "fake_key",
-    `httr::VERB` = function(...) httr_504,
-    `httr::RETRY` = function(...) httr_200,
-    expect_silent(call_api("GET", path, path_params, query_params, body_params)),
-    expect_silent(call_api("PUT", path, path_params, query_params, body_params)),
-    expect_error(
-      call_api("POST", path, path_params, query_params, body_params),
-      "Gateway Timeout \\(HTTP 504\\). Failed to GET httpbin.org/status/504."
-    )
-  )
-})
-
 test_that("stop_for_status concatenates Platform specific errors", {
   error <- "Gateway Timeout \\(HTTP 504\\). hi from platform!"
   with_mock(
@@ -97,7 +83,7 @@ test_that("stop_for_status concatenates Platform specific errors", {
 test_that("204, 205 responses return NULL", {
   response <- with_mock(
       `civis::api_key` = function(...) "fake_key",
-      `httr::VERB` = function(...) httr_204,
+      `httr::RETRY` = function(...) httr_204,
       call_api("POST", path, path_params, query_params, body_params))
   expect_null(response$content)
   expect_is(response, "civis_api")
@@ -111,8 +97,8 @@ test_that("204, 205 responses return NULL", {
 
 })
 
-test_that("no retry on GET/PUT and code 403", {
-  for (verb in c("GET", "PUT")) {
+test_that("no retry on GET/PUT/POST and code 403", {
+  for (verb in c("GET", "PUT", "POST")) {
       mock_rp <- mock(httr_403, cycle = TRUE)
       with_mock(
         `civis::api_key` = function(...) "fake_key",
@@ -123,7 +109,7 @@ test_that("no retry on GET/PUT and code 403", {
     }
 })
 
-test_that("retry on GET/PUT and 429", {
+test_that("retry on GET/POST on 429", {
   mock_rp <- mock(httr_429, cycle = TRUE)
   with_mock(
     `civis::api_key` = function(...) "fake_key",
@@ -131,14 +117,16 @@ test_that("retry on GET/PUT and 429", {
     `httr:::backoff_full_jitter` = function(...) Sys.sleep(0),
     expect_error(call_api("GET", path, path_params, query_params, body_params),
                  paste0(httr_429$status_code)),
-    expect_called(mock_rp, 3))
+    expect_called(mock_rp, 3),
+    expect_error(call_api("POST", path, path_params, query_params, body_params),
+               paste0(httr_429$status_code)),
+    expect_called(mock_rp, 6))
 })
 
 test_that("failing to parse JSON content returns CivisClientError", {
   error <- 'Unable to parse JSON from response'
   with_mock(
     `civis::api_key` = function(...) "fake_key",
-    `httr::VERB` = function(...) httr_200,
     `httr::RETRY` = function(...) httr_200,
 
     # This simulates httr::content failing with an arbitrary error/message
