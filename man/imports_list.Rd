@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{imports_list}
 \alias{imports_list}
-\title{List}
+\title{List Imports}
 \usage{
 imports_list(type = NULL, author = NULL, destination = NULL,
   source = NULL, status = NULL, hidden = NULL, archived = NULL,
@@ -34,7 +34,7 @@ imports_list(type = NULL, author = NULL, destination = NULL,
 \value{
 An array containing the following fields:
 \item{name}{string, The name of the import.}
-\item{syncType}{string, The type of sync to perform; one of Dbsync, AutoImport, SilverpopDataImport, SilverpopContactImport, GdocImport, GdocExport, and Salesforce.}
+\item{syncType}{string, The type of sync to perform; one of Dbsync, AutoImport, GdocImport, GdocExport, and Salesforce.}
 \item{source}{list, A list containing the following elements: 
 \itemize{
 \item remoteHostId integer, 
@@ -84,5 +84,5 @@ An array containing the following fields:
 \item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
-List
+List Imports
 }

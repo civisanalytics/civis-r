@@ -2,12 +2,12 @@
 % Please edit documentation in R/generated_client.R
 \name{scripts_delete_sql_projects}
 \alias{scripts_delete_sql_projects}
-\title{Remove an item from a project}
+\title{Remove a SQL script from a project}
 \usage{
 scripts_delete_sql_projects(id, project_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the resource.}
+\item{id}{integer required. The ID of the SQL script.}
 
 \item{project_id}{integer required. The ID of the project.}
 }
@@ -15,5 +15,5 @@ scripts_delete_sql_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Remove an item from a project
+Remove a SQL script from a project
 }

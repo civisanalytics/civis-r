@@ -2,12 +2,12 @@
 % Please edit documentation in R/generated_client.R
 \name{scripts_delete_python3_projects}
 \alias{scripts_delete_python3_projects}
-\title{Remove an item from a project}
+\title{Remove a Python Script from a project}
 \usage{
 scripts_delete_python3_projects(id, project_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the resource.}
+\item{id}{integer required. The ID of the Python Script.}
 
 \item{project_id}{integer required. The ID of the project.}
 }
@@ -15,5 +15,5 @@ scripts_delete_python3_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Remove an item from a project
+Remove a Python Script from a project
 }

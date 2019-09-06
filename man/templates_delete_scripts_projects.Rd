@@ -2,12 +2,12 @@
 % Please edit documentation in R/generated_client.R
 \name{templates_delete_scripts_projects}
 \alias{templates_delete_scripts_projects}
-\title{Remove an item from a project}
+\title{Remove a Script Template from a project}
 \usage{
 templates_delete_scripts_projects(id, project_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the resource.}
+\item{id}{integer required. The ID of the Script Template.}
 
 \item{project_id}{integer required. The ID of the project.}
 }
@@ -15,5 +15,5 @@ templates_delete_scripts_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Remove an item from a project
+Remove a Script Template from a project
 }

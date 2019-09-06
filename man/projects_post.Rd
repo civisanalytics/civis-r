@@ -138,6 +138,14 @@ A list containing the following elements:
 \item name string, 
 \item slug string, 
 }}
+\item{projects}{array, An array containing the following fields: 
+\itemize{
+\item id integer, The item's ID.
+\item createdAt string, 
+\item updatedAt string, 
+\item name string, 
+\item description string, 
+}}
 \item{allObjects}{array, An array containing the following fields: 
 \itemize{
 \item projectId integer, 
@@ -149,6 +157,7 @@ A list containing the following elements:
 \item icon string, 
 \item author string, 
 \item archived string, The archival status of the requested item(s).
+\item updatedAt string, 
 }}
 \item{note}{string, }
 \item{hidden}{boolean, The hidden status of the item.}

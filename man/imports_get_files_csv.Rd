@@ -37,6 +37,7 @@ A list containing the following elements:
 \item name string, The column name.
 \item sqlType string, The SQL type of the column.
 }}
+\item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
 \item{redshiftDestinationOptions}{list, A list containing the following elements: 
 \itemize{
 \item distkey string, Distkey for this table in Redshift

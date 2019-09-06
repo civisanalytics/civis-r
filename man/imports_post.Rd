@@ -12,7 +12,7 @@ imports_post(name, sync_type, is_outbound, source = NULL,
 \arguments{
 \item{name}{string required. The name of the import.}
 
-\item{sync_type}{string required. The type of sync to perform; one of Dbsync, AutoImport, SilverpopDataImport, SilverpopContactImport, GdocImport, GdocExport, and Salesforce.}
+\item{sync_type}{string required. The type of sync to perform; one of Dbsync, AutoImport, GdocImport, GdocExport, and Salesforce.}
 
 \item{is_outbound}{boolean required.}
 
@@ -64,7 +64,7 @@ imports_post(name, sync_type, is_outbound, source = NULL,
 \value{
 A list containing the following elements:
 \item{name}{string, The name of the import.}
-\item{syncType}{string, The type of sync to perform; one of Dbsync, AutoImport, SilverpopDataImport, SilverpopContactImport, GdocImport, GdocExport, and Salesforce.}
+\item{syncType}{string, The type of sync to perform; one of Dbsync, AutoImport, GdocImport, GdocExport, and Salesforce.}
 \item{source}{list, A list containing the following elements: 
 \itemize{
 \item remoteHostId integer, 

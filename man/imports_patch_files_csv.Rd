@@ -7,7 +7,7 @@
 imports_patch_files_csv(id, source = NULL, destination = NULL,
   first_row_is_header = NULL, column_delimiter = NULL,
   escaped = NULL, compression = NULL, existing_table_rows = NULL,
-  max_errors = NULL, table_columns = NULL,
+  max_errors = NULL, table_columns = NULL, execution = NULL,
   redshift_destination_options = NULL)
 }
 \arguments{
@@ -47,6 +47,8 @@ imports_patch_files_csv(id, source = NULL, destination = NULL,
 \item sqlType string, The SQL type of the column.
 }}
 
+\item{execution}{string optional. In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
+
 \item{redshift_destination_options}{list optional. A list containing the following elements: 
 \itemize{
 \item distkey string, Distkey for this table in Redshift
@@ -81,6 +83,7 @@ A list containing the following elements:
 \item name string, The column name.
 \item sqlType string, The SQL type of the column.
 }}
+\item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
 \item{redshiftDestinationOptions}{list, A list containing the following elements: 
 \itemize{
 \item distkey string, Distkey for this table in Redshift

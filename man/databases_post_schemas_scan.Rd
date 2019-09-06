@@ -4,12 +4,14 @@
 \alias{databases_post_schemas_scan}
 \title{Creates and enqueues a schema scanner job}
 \usage{
-databases_post_schemas_scan(id, schema)
+databases_post_schemas_scan(id, schema, stats_priority = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the database.}
 
 \item{schema}{string required. The name of the schema.}
+
+\item{stats_priority}{string optional. When to sync table statistics for every table in the schema. Valid options are the following. Option: 'flag' means to flag stats for the next scheduled run of a full table scan on the database. Option: 'block' means to block this job on stats syncing. Option: 'queue' means to queue a separate job for syncing stats and do not block this job on the queued job. Defaults to 'flag'}
 }
 \value{
 A list containing the following elements:

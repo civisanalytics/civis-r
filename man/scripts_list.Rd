@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{scripts_list}
 \alias{scripts_list}
-\title{List scripts}
+\title{List Scripts}
 \usage{
 scripts_list(type = NULL, category = NULL, author = NULL,
   status = NULL, hidden = NULL, archived = NULL, limit = NULL,
@@ -73,5 +73,5 @@ An array containing the following fields:
 \item{templateScriptId}{integer, The ID of the template script, if any.}
 }
 \description{
-List scripts
+List Scripts
 }

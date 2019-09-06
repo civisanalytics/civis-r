@@ -2,12 +2,12 @@
 % Please edit documentation in R/generated_client.R
 \name{reports_delete_services_projects}
 \alias{reports_delete_services_projects}
-\title{Remove an item from a project}
+\title{Remove a Service Report from a project}
 \usage{
 reports_delete_services_projects(id, project_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the resource.}
+\item{id}{integer required. The ID of the Service Report.}
 
 \item{project_id}{integer required. The ID of the project.}
 }
@@ -15,5 +15,5 @@ reports_delete_services_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Remove an item from a project
+Remove a Service Report from a project
 }

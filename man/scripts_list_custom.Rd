@@ -62,6 +62,15 @@ An array containing the following fields:
 \item error string, The error message for this run, if present.
 }}
 \item{archived}{string, The archival status of the requested item(s).}
+\item{lastSuccessfulRun}{list, A list containing the following elements: 
+\itemize{
+\item id integer, 
+\item state string, 
+\item createdAt string, The time that the run was queued.
+\item startedAt string, The time that the run started.
+\item finishedAt string, The time that the run completed.
+\item error string, The error message for this run, if present.
+}}
 }
 \description{
 List Custom Scripts

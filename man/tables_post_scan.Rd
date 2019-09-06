@@ -4,7 +4,7 @@
 \alias{tables_post_scan}
 \title{Creates and enqueues a single table scanner job on a new table}
 \usage{
-tables_post_scan(database_id, schema, table_name, queue_stats = NULL)
+tables_post_scan(database_id, schema, table_name, stats_priority = NULL)
 }
 \arguments{
 \item{database_id}{integer required. The ID of the database.}
@@ -13,7 +13,7 @@ tables_post_scan(database_id, schema, table_name, queue_stats = NULL)
 
 \item{table_name}{string required. The name of the table.}
 
-\item{queue_stats}{boolean optional. Whether or not the job should queue on syncing table stats}
+\item{stats_priority}{string optional. When to sync table statistics. Valid Options are the following. Option: 'flag' means to flag stats for the next scheduled run of a full table scan on the database. Option: 'block' means to block this job on stats syncing. Option: 'queue' means to queue a separate job for syncing stats and do not block this job on the queued job. Defaults to 'flag'}
 }
 \value{
 A list containing the following elements:

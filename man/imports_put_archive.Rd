@@ -14,7 +14,7 @@ imports_put_archive(id, status)
 \value{
 A list containing the following elements:
 \item{name}{string, The name of the import.}
-\item{syncType}{string, The type of sync to perform; one of Dbsync, AutoImport, SilverpopDataImport, SilverpopContactImport, GdocImport, GdocExport, and Salesforce.}
+\item{syncType}{string, The type of sync to perform; one of Dbsync, AutoImport, GdocImport, GdocExport, and Salesforce.}
 \item{source}{list, A list containing the following elements: 
 \itemize{
 \item remoteHostId integer, 

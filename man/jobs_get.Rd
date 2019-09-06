@@ -38,6 +38,10 @@ A list containing the following elements:
 }}
 \item{hidden}{boolean, The hidden status of the item.}
 \item{archived}{string, The archival status of the requested item(s).}
+\item{successEmailSubject}{string, }
+\item{successEmailBody}{string, }
+\item{runningAsUser}{string, }
+\item{runByUser}{string, }
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the item is scheduled.

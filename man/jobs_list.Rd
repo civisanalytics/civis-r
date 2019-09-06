@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{jobs_list}
 \alias{jobs_list}
-\title{List}
+\title{List Jobs}
 \usage{
 jobs_list(state = NULL, type = NULL, q = NULL, permission = NULL,
   scheduled = NULL, hidden = NULL, archived = NULL, limit = NULL,
@@ -60,5 +60,5 @@ An array containing the following fields:
 }}
 }
 \description{
-List
+List Jobs
 }

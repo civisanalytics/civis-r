@@ -100,6 +100,15 @@ A list containing the following elements:
 \item{hidden}{boolean, The hidden status of the item.}
 \item{archived}{string, The archival status of the requested item(s).}
 \item{targetProjectId}{integer, Target project to which script outputs will be added.}
+\item{lastSuccessfulRun}{list, A list containing the following elements: 
+\itemize{
+\item id integer, 
+\item state string, 
+\item createdAt string, The time that the run was queued.
+\item startedAt string, The time that the run started.
+\item finishedAt string, The time that the run completed.
+\item error string, The error message for this run, if present.
+}}
 }
 \description{
 Update the archive status of this object

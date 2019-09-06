@@ -2,12 +2,12 @@
 % Please edit documentation in R/generated_client.R
 \name{files_delete_projects}
 \alias{files_delete_projects}
-\title{Remove an item from a project}
+\title{Remove a File from a project}
 \usage{
 files_delete_projects(id, project_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the resource.}
+\item{id}{integer required. The ID of the File.}
 
 \item{project_id}{integer required. The ID of the project.}
 }
@@ -15,5 +15,5 @@ files_delete_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Remove an item from a project
+Remove a File from a project
 }

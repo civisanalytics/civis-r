@@ -2,12 +2,12 @@
 % Please edit documentation in R/generated_client.R
 \name{enhancements_put_geocode_projects}
 \alias{enhancements_put_geocode_projects}
-\title{Add an item to a project}
+\title{Add a Geocode Enhancement to a project}
 \usage{
 enhancements_put_geocode_projects(id, project_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the resource.}
+\item{id}{integer required. The ID of the Geocode Enhancement.}
 
 \item{project_id}{integer required. The ID of the project.}
 }
@@ -15,5 +15,5 @@ enhancements_put_geocode_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Add an item to a project
+Add a Geocode Enhancement to a project
 }
