@@ -2,12 +2,12 @@
 % Please edit documentation in R/generated_client.R
 \name{imports_put_projects}
 \alias{imports_put_projects}
-\title{Add an item to a project}
+\title{Add an Import to a project}
 \usage{
 imports_put_projects(id, project_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the resource.}
+\item{id}{integer required. The ID of the Import.}
 
 \item{project_id}{integer required. The ID of the project.}
 }
@@ -15,5 +15,5 @@ imports_put_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Add an item to a project
+Add an Import to a project
 }

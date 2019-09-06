@@ -14,12 +14,11 @@ imports_put_syncs(id, sync_id, source, destination,
 
 \item{source}{list required. A list containing the following elements: 
 \itemize{
-\item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce, silverpop
+\item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce
 \item databaseTable object, 
 \item file object, 
 \item googleWorksheet object, 
 \item salesforce object, 
-\item silverpop object, 
 }}
 
 \item{destination}{list required. A list containing the following elements: 
@@ -67,12 +66,11 @@ A list containing the following elements:
 \item{source}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of the table or file, if available.
-\item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce, silverpop
+\item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce
 \item databaseTable object, 
 \item file object, 
 \item googleWorksheet object, 
 \item salesforce object, 
-\item silverpop object, 
 }}
 \item{destination}{list, A list containing the following elements: 
 \itemize{

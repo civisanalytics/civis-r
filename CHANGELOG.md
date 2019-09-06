@@ -1,10 +1,10 @@
 # Changelog
 
-## Unreleased
+## [2.1.0] - 2019-09-06
 
 ### Changed
 - `run_template` takes an additional value of JSONValue. If TRUE,
-  function returns the JSON output instead of the fileid.
+  function returns the JSON output instead of the file id.
 - All API calls now retry a max of 10 times for maximum of 1 hr when rate limited. (#214).
   
 ### Fixed

@@ -2,12 +2,12 @@
 % Please edit documentation in R/generated_client.R
 \name{scripts_put_r_projects}
 \alias{scripts_put_r_projects}
-\title{Add an item to a project}
+\title{Add an R Script to a project}
 \usage{
 scripts_put_r_projects(id, project_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the resource.}
+\item{id}{integer required. The ID of the R Script.}
 
 \item{project_id}{integer required. The ID of the project.}
 }
@@ -15,5 +15,5 @@ scripts_put_r_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Add an item to a project
+Add an R Script to a project
 }

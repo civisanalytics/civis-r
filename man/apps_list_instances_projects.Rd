@@ -2,12 +2,12 @@
 % Please edit documentation in R/generated_client.R
 \name{apps_list_instances_projects}
 \alias{apps_list_instances_projects}
-\title{List the projects an item belongs to}
+\title{List the projects an App Instance belongs to}
 \usage{
 apps_list_instances_projects(id, slug, hidden = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of the resource.}
+\item{id}{integer required. The ID of the App Instance.}
 
 \item{slug}{string required. The slug for the application.}
 
@@ -40,5 +40,5 @@ An array containing the following fields:
 \item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
-List the projects an item belongs to
+List the projects an App Instance belongs to
 }

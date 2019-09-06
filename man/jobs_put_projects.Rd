@@ -2,12 +2,12 @@
 % Please edit documentation in R/generated_client.R
 \name{jobs_put_projects}
 \alias{jobs_put_projects}
-\title{Add an item to a project}
+\title{Add a Job to a project}
 \usage{
 jobs_put_projects(id, project_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the resource.}
+\item{id}{integer required. The ID of the Job.}
 
 \item{project_id}{integer required. The ID of the project.}
 }
@@ -15,5 +15,5 @@ jobs_put_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Add an item to a project
+Add a Job to a project
 }

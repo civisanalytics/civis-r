@@ -8,7 +8,7 @@ aliases_list(object_type = NULL, limit = NULL, page_num = NULL,
   order = NULL, order_dir = NULL)
 }
 \arguments{
-\item{object_type}{string optional. Filter results by object type. Pass multiple object types with a comma-separatedlist. Valid types include: bsd_cons_export, model, cass_ncoa, catalist, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, silverpop_contact_import, silverpop_contact_export, silverpop_data_import, silverpop_remove_recipient, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+\item{object_type}{string optional. Filter results by object type. Pass multiple object types with a comma-separatedlist. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.}
 
@@ -22,7 +22,7 @@ aliases_list(object_type = NULL, limit = NULL, page_num = NULL,
 An array containing the following fields:
 \item{id}{integer, The id of the Alias object.}
 \item{objectId}{integer, The id of the object}
-\item{objectType}{string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, catalist, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, silverpop_contact_import, silverpop_contact_export, silverpop_data_import, silverpop_remove_recipient, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+\item{objectType}{string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
 \item{alias}{string, The alias of the object}
 \item{userId}{integer, The id of the user who created the alias}
 \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}

@@ -30,6 +30,13 @@ A list containing the following elements:
 }}
 \item{downloadUrl}{string, A JSON string containing information about the URL of the file.}
 \item{fileUrl}{string, The URL that may be used to download the file.}
+\item{detectedInfo}{list, A list containing the following elements: 
+\itemize{
+\item includeHeader boolean, A boolean value indicating whether or not the first row of the file is a header row.
+\item columnDelimiter string, The column delimiter for the file. One of "comma", "tab", or "pipe".
+\item compression string, The type of compression of the file. One of "gzip", or "none".
+\item tableColumns array, An array of hashes corresponding to the columns in the file. Each hash should have keys for column "name" and "sql_type"
+}}
 }
 \description{
 Get details about a file

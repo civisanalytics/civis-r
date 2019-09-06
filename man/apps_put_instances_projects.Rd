@@ -2,12 +2,12 @@
 % Please edit documentation in R/generated_client.R
 \name{apps_put_instances_projects}
 \alias{apps_put_instances_projects}
-\title{Add an item to a project}
+\title{Add an App Instance to a project}
 \usage{
 apps_put_instances_projects(id, project_id, slug)
 }
 \arguments{
-\item{id}{integer required. The ID of the resource.}
+\item{id}{integer required. The ID of the App Instance.}
 
 \item{project_id}{integer required. The ID of the project.}
 
@@ -17,5 +17,5 @@ apps_put_instances_projects(id, project_id, slug)
 An empty HTTP response
 }
 \description{
-Add an item to a project
+Add an App Instance to a project
 }

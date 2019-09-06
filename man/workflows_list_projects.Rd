@@ -2,12 +2,12 @@
 % Please edit documentation in R/generated_client.R
 \name{workflows_list_projects}
 \alias{workflows_list_projects}
-\title{List the projects an item belongs to}
+\title{List the projects a Workflow belongs to}
 \usage{
 workflows_list_projects(id, hidden = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of the resource.}
+\item{id}{integer required. The ID of the Workflow.}
 
 \item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
 }
@@ -38,5 +38,5 @@ An array containing the following fields:
 \item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
-List the projects an item belongs to
+List the projects a Workflow belongs to
 }

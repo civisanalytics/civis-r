@@ -2,12 +2,12 @@
 % Please edit documentation in R/generated_client.R
 \name{scripts_put_sql_projects}
 \alias{scripts_put_sql_projects}
-\title{Add an item to a project}
+\title{Add a SQL script to a project}
 \usage{
 scripts_put_sql_projects(id, project_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the resource.}
+\item{id}{integer required. The ID of the SQL script.}
 
 \item{project_id}{integer required. The ID of the project.}
 }
@@ -15,5 +15,5 @@ scripts_put_sql_projects(id, project_id)
 An empty HTTP response
 }
 \description{
-Add an item to a project
+Add a SQL script to a project
 }
