@@ -12,10 +12,13 @@ db_list_response <- list(
 )
 
 test_that("get_database_id returns a matching id", {
+  # simulates a character of class glue often used for
+  # string interpolation
+  glue_str <- structure("db1", class = c("glue", "character"))
   with_mock(
     `civis::databases_list` = function(...) db_list_response,
-    expect_equal(get_database_id("db2"), 2),
-    expect_equal(get_database_id("db1"), 1)
+    expect_equal(get_database_id(glue_str), 1),
+    expect_equal(get_database_id("db2"), 2)
   )
 })
 
