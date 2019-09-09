@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
       </span>
     </div>
 
@@ -170,11 +170,15 @@
 <dt>prefersSmsOtp</dt><dd><p>string, The preference for phone authorization of this user</p></dd>
 <dt>vpnEnabled</dt><dd><p>string, The availability of vpn for this user.</p></dd>
 <dt>ssoDisabled</dt><dd><p>string, The availability of SSO for this user.</p></dd>
-<dt>otpRequiredForLogin</dt><dd><p>string, The two factor authorization requirement for this user.</p></dd>
+<dt>otpRequiredForLogin</dt><dd><p>string, The two factor authentication requirement for this user.</p></dd>
+<dt>exemptFromOrgSmsOtpDisabled</dt><dd><p>string, Whether the user has SMS OTP enabled on an individual level. This field does not matter if the org does not have SMS OTP disabled.</p></dd>
+<dt>smsOtpAllowed</dt><dd><p>string, Whether the user is allowed to receive two factor authentication codes via SMS.</p></dd>
+<dt>robot</dt><dd><p>boolean, Whether the user is a robot.</p></dd>
 <dt>phone</dt><dd><p>string, The phone number of this user.</p></dd>
 <dt>organizationSlug</dt><dd><p>string, The slug of the organization the user belongs to.</p></dd>
 <dt>organizationSSODisableCapable</dt><dd><p>string, The user's organization's ability to disable sso for their users.</p></dd>
 <dt>organizationLoginType</dt><dd><p>string, The user's organization's login type.</p></dd>
+<dt>organizationSmsOtpDisabled</dt><dd><p>boolean, Whether the user's organization has SMS OTP disabled.</p></dd>
 
     
 

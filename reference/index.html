@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
       </span>
     </div>
 
@@ -348,6 +348,44 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
+          <h2 id="section-scripts" class="hasAnchor"><a href="#section-scripts" class="anchor"></a>Scripts</h2>
+          <p class="section-desc"><p>Using Civis Scripts</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="run_template.html">run_template()</a></code> </p>
+        </td>
+        <td><p>Run a template script</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="civis_script.html">civis_script()</a></code> </p>
+        </td>
+        <td><p>Civis Script</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="write_job_output.html">write_job_output()</a></code> </p>
+        </td>
+        <td><p>Add a file as a run output if called from a container job</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="run_civis.html">run_civis()</a></code> </p>
+        </td>
+        <td><p>Evaluate an R expression in a Civis Platform container</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="fetch_output_file_ids.html">fetch_output_file_ids()</a></code> <code><a href="fetch_output_file_ids.html">fetch_output()</a></code> </p>
+        </td>
+        <td><p>Return output from a civis_script.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
           <h2 id="section-tables" class="hasAnchor"><a href="#section-tables" class="anchor"></a>Tables</h2>
           <p class="section-desc"><p>Utilities for working with Redshift Tables</p></p>
         </th>
@@ -541,7 +579,7 @@
         <td>
           <p><code><a href="apps_delete_instances_projects.html">apps_delete_instances_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove an App Instance from a project</p></td>
       </tr><tr>
         
         <td>
@@ -589,7 +627,7 @@
         <td>
           <p><code><a href="apps_list_instances_projects.html">apps_list_instances_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects an App Instance belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -625,7 +663,7 @@
         <td>
           <p><code><a href="apps_put_instances_projects.html">apps_put_instances_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add an App Instance to a project</p></td>
       </tr><tr>
         
         <td>
@@ -889,7 +927,7 @@
         <td>
           <p><code><a href="enhancements_delete_cass_ncoa_projects.html">enhancements_delete_cass_ncoa_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a CASS/NCOA Enhancement from a project</p></td>
       </tr><tr>
         
         <td>
@@ -925,7 +963,7 @@
         <td>
           <p><code><a href="enhancements_delete_geocode_projects.html">enhancements_delete_geocode_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a Geocode Enhancement from a project</p></td>
       </tr><tr>
         
         <td>
@@ -1021,7 +1059,7 @@
         <td>
           <p><code><a href="enhancements_list_cass_ncoa_projects.html">enhancements_list_cass_ncoa_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a CASS/NCOA Enhancement belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -1093,7 +1131,7 @@
         <td>
           <p><code><a href="enhancements_list_geocode_projects.html">enhancements_list_geocode_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a Geocode Enhancement belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -1279,7 +1317,7 @@
         <td>
           <p><code><a href="enhancements_put_cass_ncoa_projects.html">enhancements_put_cass_ncoa_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a CASS/NCOA Enhancement to a project</p></td>
       </tr><tr>
         
         <td>
@@ -1321,7 +1359,7 @@
         <td>
           <p><code><a href="enhancements_put_geocode_projects.html">enhancements_put_geocode_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a Geocode Enhancement to a project</p></td>
       </tr><tr>
         
         <td>
@@ -1351,7 +1389,7 @@
         <td>
           <p><code><a href="files_delete_projects.html">files_delete_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a File from a project</p></td>
       </tr><tr>
         
         <td>
@@ -1375,7 +1413,7 @@
         <td>
           <p><code><a href="files_list_projects.html">files_list_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a File belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -1405,7 +1443,7 @@
         <td>
           <p><code><a href="files_put_projects.html">files_put_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a File to a project</p></td>
       </tr><tr>
         
         <td>
@@ -1465,7 +1503,7 @@
         <td>
           <p><code><a href="imports_delete_projects.html">imports_delete_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove an Import from a project</p></td>
       </tr><tr>
         
         <td>
@@ -1513,7 +1551,7 @@
         <td>
           <p><code><a href="imports_list.html">imports_list()</a></code> </p>
         </td>
-        <td><p>List</p></td>
+        <td><p>List Imports</p></td>
       </tr><tr>
         
         <td>
@@ -1537,7 +1575,7 @@
         <td>
           <p><code><a href="imports_list_projects.html">imports_list_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects an Import belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -1639,7 +1677,7 @@
         <td>
           <p><code><a href="imports_put_projects.html">imports_put_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add an Import to a project</p></td>
       </tr><tr>
         
         <td>
@@ -1669,7 +1707,7 @@
         <td>
           <p><code><a href="jobs_delete_projects.html">jobs_delete_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a Job from a project</p></td>
       </tr><tr>
         
         <td>
@@ -1705,7 +1743,7 @@
         <td>
           <p><code><a href="jobs_list.html">jobs_list()</a></code> </p>
         </td>
-        <td><p>List</p></td>
+        <td><p>List Jobs</p></td>
       </tr><tr>
         
         <td>
@@ -1723,7 +1761,7 @@
         <td>
           <p><code><a href="jobs_list_projects.html">jobs_list_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a Job belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -1736,6 +1774,12 @@
           <p><code><a href="jobs_list_runs_logs.html">jobs_list_runs_logs()</a></code> </p>
         </td>
         <td><p>Get the logs for a run</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="jobs_list_runs_outputs.html">jobs_list_runs_outputs()</a></code> </p>
+        </td>
+        <td><p>List the outputs for a run</p></td>
       </tr><tr>
         
         <td>
@@ -1765,7 +1809,7 @@
         <td>
           <p><code><a href="jobs_put_projects.html">jobs_put_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a Job to a project</p></td>
       </tr><tr>
         
         <td>
@@ -2087,138 +2131,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="models_delete_builds.html">models_delete_builds()</a></code> </p>
-        </td>
-        <td><p>Cancel a build</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_delete_projects.html">models_delete_projects()</a></code> </p>
-        </td>
-        <td><p>Remove an item from a project</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_delete_shares_groups.html">models_delete_shares_groups()</a></code> </p>
-        </td>
-        <td><p>Revoke the permissions a group has on this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_delete_shares_users.html">models_delete_shares_users()</a></code> </p>
-        </td>
-        <td><p>Revoke the permissions a user has on this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_get.html">models_get()</a></code> </p>
-        </td>
-        <td><p>Retrieve model configuration</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_get_builds.html">models_get_builds()</a></code> </p>
-        </td>
-        <td><p>Check status of a build</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_list.html">models_list()</a></code> </p>
-        </td>
-        <td><p>List</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_list_builds.html">models_list_builds()</a></code> </p>
-        </td>
-        <td><p>List builds for the given model</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_list_builds_logs.html">models_list_builds_logs()</a></code> </p>
-        </td>
-        <td><p>Get the logs for a build</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_list_projects.html">models_list_projects()</a></code> </p>
-        </td>
-        <td><p>List the projects an item belongs to</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_list_schedules.html">models_list_schedules()</a></code> </p>
-        </td>
-        <td><p>Show the model build schedule</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_list_shares.html">models_list_shares()</a></code> </p>
-        </td>
-        <td><p>List users and groups permissioned on this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_list_types.html">models_list_types()</a></code> </p>
-        </td>
-        <td><p>List all available model types</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_patch.html">models_patch()</a></code> </p>
-        </td>
-        <td><p>Update model configuration</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_post.html">models_post()</a></code> </p>
-        </td>
-        <td><p>Create new configuration for a model</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_post_builds.html">models_post_builds()</a></code> </p>
-        </td>
-        <td><p>Start a build</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_put_archive.html">models_put_archive()</a></code> </p>
-        </td>
-        <td><p>Update the archive status of this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_put_predictions.html">models_put_predictions()</a></code> </p>
-        </td>
-        <td><p>Add a table on which to apply the predictive model</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_put_projects.html">models_put_projects()</a></code> </p>
-        </td>
-        <td><p>Add an item to a project</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_put_schedules.html">models_put_schedules()</a></code> </p>
-        </td>
-        <td><p>Schedule the model build</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_put_shares_groups.html">models_put_shares_groups()</a></code> </p>
-        </td>
-        <td><p>Set the permissions groups has on this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="models_put_shares_users.html">models_put_shares_users()</a></code> </p>
-        </td>
-        <td><p>Set the permissions users have on this object</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="notebooks_delete.html">notebooks_delete()</a></code> </p>
         </td>
         <td><p>Archive a Notebook (deprecated, use archiving endpoints instead)</p></td>
@@ -2233,7 +2145,7 @@
         <td>
           <p><code><a href="notebooks_delete_projects.html">notebooks_delete_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a Notebook from a project</p></td>
       </tr><tr>
         
         <td>
@@ -2299,7 +2211,7 @@
         <td>
           <p><code><a href="notebooks_list_projects.html">notebooks_list_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a Notebook belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -2365,7 +2277,7 @@
         <td>
           <p><code><a href="notebooks_put_projects.html">notebooks_put_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a Notebook to a project</p></td>
       </tr><tr>
         
         <td>
@@ -2605,13 +2517,13 @@
         <td>
           <p><code><a href="reports_delete_projects.html">reports_delete_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a Report from a project</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="reports_delete_services_projects.html">reports_delete_services_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a Service Report from a project</p></td>
       </tr><tr>
         
         <td>
@@ -2659,7 +2571,7 @@
         <td>
           <p><code><a href="reports_list.html">reports_list()</a></code> </p>
         </td>
-        <td><p>List</p></td>
+        <td><p>List Reports</p></td>
       </tr><tr>
         
         <td>
@@ -2677,13 +2589,13 @@
         <td>
           <p><code><a href="reports_list_projects.html">reports_list_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a Report belongs to</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="reports_list_services_projects.html">reports_list_services_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a Service Report belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -2699,12 +2611,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="reports_list_snapshots.html">reports_list_snapshots()</a></code> </p>
-        </td>
-        <td><p>Get details about the report's snapshot automation settings</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="reports_patch.html">reports_patch()</a></code> </p>
         </td>
         <td><p>Update a report</p></td>
@@ -2714,12 +2620,6 @@
           <p><code><a href="reports_patch_services.html">reports_patch_services()</a></code> </p>
         </td>
         <td><p>Update some attributes of this service report</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="reports_patch_snapshots.html">reports_patch_snapshots()</a></code> </p>
-        </td>
-        <td><p>Update the report's snapshot automation settings</p></td>
       </tr><tr>
         
         <td>
@@ -2747,12 +2647,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="reports_post_snapshots.html">reports_post_snapshots()</a></code> </p>
-        </td>
-        <td><p>Generate and optionally email a snapshot of the specified report</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="reports_put_archive.html">reports_put_archive()</a></code> </p>
         </td>
         <td><p>Update the archive status of this object</p></td>
@@ -2767,13 +2661,13 @@
         <td>
           <p><code><a href="reports_put_projects.html">reports_put_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a Report to a project</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="reports_put_services_projects.html">reports_put_services_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a Service Report to a project</p></td>
       </tr><tr>
         
         <td>
@@ -2809,13 +2703,13 @@
         <td>
           <p><code><a href="results_delete_projects.html">results_delete_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a Report from a project</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="results_delete_services_projects.html">results_delete_services_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a Service Report from a project</p></td>
       </tr><tr>
         
         <td>
@@ -2863,7 +2757,7 @@
         <td>
           <p><code><a href="results_list.html">results_list()</a></code> </p>
         </td>
-        <td><p>List</p></td>
+        <td><p>List Reports</p></td>
       </tr><tr>
         
         <td>
@@ -2881,13 +2775,13 @@
         <td>
           <p><code><a href="results_list_projects.html">results_list_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a Report belongs to</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="results_list_services_projects.html">results_list_services_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a Service Report belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -2903,12 +2797,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="results_list_snapshots.html">results_list_snapshots()</a></code> </p>
-        </td>
-        <td><p>Get details about the report's snapshot automation settings</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="results_patch.html">results_patch()</a></code> </p>
         </td>
         <td><p>Update a report</p></td>
@@ -2918,12 +2806,6 @@
           <p><code><a href="results_patch_services.html">results_patch_services()</a></code> </p>
         </td>
         <td><p>Update some attributes of this service report</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_patch_snapshots.html">results_patch_snapshots()</a></code> </p>
-        </td>
-        <td><p>Update the report's snapshot automation settings</p></td>
       </tr><tr>
         
         <td>
@@ -2951,12 +2833,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="results_post_snapshots.html">results_post_snapshots()</a></code> </p>
-        </td>
-        <td><p>Generate and optionally email a snapshot of the specified report</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="results_put_archive.html">results_put_archive()</a></code> </p>
         </td>
         <td><p>Update the archive status of this object</p></td>
@@ -2971,13 +2847,13 @@
         <td>
           <p><code><a href="results_put_projects.html">results_put_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a Report to a project</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="results_put_services_projects.html">results_put_services_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a Service Report to a project</p></td>
       </tr><tr>
         
         <td>
@@ -3005,6 +2881,36 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="saml_service_providers_delete_shares_groups.html">saml_service_providers_delete_shares_groups()</a></code> </p>
+        </td>
+        <td><p>Revoke the permissions a group has on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="saml_service_providers_delete_shares_users.html">saml_service_providers_delete_shares_users()</a></code> </p>
+        </td>
+        <td><p>Revoke the permissions a user has on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="saml_service_providers_list_shares.html">saml_service_providers_list_shares()</a></code> </p>
+        </td>
+        <td><p>List users and groups permissioned on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="saml_service_providers_put_shares_groups.html">saml_service_providers_put_shares_groups()</a></code> </p>
+        </td>
+        <td><p>Set the permissions groups has on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="saml_service_providers_put_shares_users.html">saml_service_providers_put_shares_users()</a></code> </p>
+        </td>
+        <td><p>Set the permissions users have on this object</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="scripts_delete.html">scripts_delete()</a></code> </p>
         </td>
         <td><p>Archive a script (deprecated, use archive endpoints instead)</p></td>
@@ -3019,7 +2925,7 @@
         <td>
           <p><code><a href="scripts_delete_containers_projects.html">scripts_delete_containers_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a Container Script from a project</p></td>
       </tr><tr>
         
         <td>
@@ -3049,7 +2955,7 @@
         <td>
           <p><code><a href="scripts_delete_custom_projects.html">scripts_delete_custom_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a Custom Script from a project</p></td>
       </tr><tr>
         
         <td>
@@ -3079,7 +2985,7 @@
         <td>
           <p><code><a href="scripts_delete_javascript_projects.html">scripts_delete_javascript_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a JavaScript Script from a project</p></td>
       </tr><tr>
         
         <td>
@@ -3109,7 +3015,7 @@
         <td>
           <p><code><a href="scripts_delete_python3_projects.html">scripts_delete_python3_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a Python Script from a project</p></td>
       </tr><tr>
         
         <td>
@@ -3139,7 +3045,7 @@
         <td>
           <p><code><a href="scripts_delete_r_projects.html">scripts_delete_r_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove an R Script from a project</p></td>
       </tr><tr>
         
         <td>
@@ -3169,7 +3075,7 @@
         <td>
           <p><code><a href="scripts_delete_sql_projects.html">scripts_delete_sql_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a SQL script from a project</p></td>
       </tr><tr>
         
         <td>
@@ -3295,13 +3201,13 @@
         <td>
           <p><code><a href="scripts_list.html">scripts_list()</a></code> </p>
         </td>
-        <td><p>List scripts</p></td>
+        <td><p>List Scripts</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="scripts_list_containers_projects.html">scripts_list_containers_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a Container Script belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -3337,7 +3243,7 @@
         <td>
           <p><code><a href="scripts_list_custom_projects.html">scripts_list_custom_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a Custom Script belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -3385,7 +3291,7 @@
         <td>
           <p><code><a href="scripts_list_javascript_projects.html">scripts_list_javascript_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a JavaScript Script belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -3427,7 +3333,7 @@
         <td>
           <p><code><a href="scripts_list_python3_projects.html">scripts_list_python3_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a Python Script belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -3469,7 +3375,7 @@
         <td>
           <p><code><a href="scripts_list_r_projects.html">scripts_list_r_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects an R Script belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -3511,7 +3417,7 @@
         <td>
           <p><code><a href="scripts_list_sql_projects.html">scripts_list_sql_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a SQL script belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -3787,7 +3693,7 @@
         <td>
           <p><code><a href="scripts_put_containers_projects.html">scripts_put_containers_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a Container Script to a project</p></td>
       </tr><tr>
         
         <td>
@@ -3817,7 +3723,7 @@
         <td>
           <p><code><a href="scripts_put_custom_projects.html">scripts_put_custom_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a Custom Script to a project</p></td>
       </tr><tr>
         
         <td>
@@ -3853,7 +3759,7 @@
         <td>
           <p><code><a href="scripts_put_javascript_projects.html">scripts_put_javascript_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a JavaScript Script to a project</p></td>
       </tr><tr>
         
         <td>
@@ -3889,7 +3795,7 @@
         <td>
           <p><code><a href="scripts_put_python3_projects.html">scripts_put_python3_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a Python Script to a project</p></td>
       </tr><tr>
         
         <td>
@@ -3925,7 +3831,7 @@
         <td>
           <p><code><a href="scripts_put_r_projects.html">scripts_put_r_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add an R Script to a project</p></td>
       </tr><tr>
         
         <td>
@@ -3961,7 +3867,7 @@
         <td>
           <p><code><a href="scripts_put_sql_projects.html">scripts_put_sql_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a SQL script to a project</p></td>
       </tr><tr>
         
         <td>
@@ -4003,7 +3909,7 @@
         <td>
           <p><code><a href="services_delete_projects.html">services_delete_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a Service from a project</p></td>
       </tr><tr>
         
         <td>
@@ -4057,7 +3963,7 @@
         <td>
           <p><code><a href="services_list_projects.html">services_list_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a Service belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -4123,7 +4029,7 @@
         <td>
           <p><code><a href="services_put_projects.html">services_put_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a Service to a project</p></td>
       </tr><tr>
         
         <td>
@@ -4139,9 +4045,75 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="storage_hosts_delete.html">storage_hosts_delete()</a></code> </p>
+        </td>
+        <td><p>Delete a storage host (deprecated)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="storage_hosts_delete_shares_groups.html">storage_hosts_delete_shares_groups()</a></code> </p>
+        </td>
+        <td><p>Revoke the permissions a group has on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="storage_hosts_delete_shares_users.html">storage_hosts_delete_shares_users()</a></code> </p>
+        </td>
+        <td><p>Revoke the permissions a user has on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="storage_hosts_get.html">storage_hosts_get()</a></code> </p>
+        </td>
+        <td><p>Get a storage host</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="storage_hosts_list.html">storage_hosts_list()</a></code> </p>
+        </td>
+        <td><p>List the storage hosts</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="storage_hosts_list_shares.html">storage_hosts_list_shares()</a></code> </p>
+        </td>
+        <td><p>List users and groups permissioned on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="storage_hosts_patch.html">storage_hosts_patch()</a></code> </p>
+        </td>
+        <td><p>Update some attributes of this storage host</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="storage_hosts_post.html">storage_hosts_post()</a></code> </p>
+        </td>
+        <td><p>Create a new storage host</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="storage_hosts_put.html">storage_hosts_put()</a></code> </p>
+        </td>
+        <td><p>Replace all attributes of this storage host</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="storage_hosts_put_shares_groups.html">storage_hosts_put_shares_groups()</a></code> </p>
+        </td>
+        <td><p>Set the permissions groups has on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="storage_hosts_put_shares_users.html">storage_hosts_put_shares_users()</a></code> </p>
+        </td>
+        <td><p>Set the permissions users have on this object</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="tables_delete_projects.html">tables_delete_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a Table from a project</p></td>
       </tr><tr>
         
         <td>
@@ -4189,7 +4161,7 @@
         <td>
           <p><code><a href="tables_list_projects.html">tables_list_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a Table belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -4243,7 +4215,7 @@
         <td>
           <p><code><a href="tables_put_projects.html">tables_put_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a Table to a project</p></td>
       </tr><tr>
         
         <td>
@@ -4273,7 +4245,7 @@
         <td>
           <p><code><a href="templates_delete_scripts_projects.html">templates_delete_scripts_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a Script Template from a project</p></td>
       </tr><tr>
         
         <td>
@@ -4321,7 +4293,7 @@
         <td>
           <p><code><a href="templates_list_scripts_projects.html">templates_list_scripts_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a Script Template belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -4381,7 +4353,7 @@
         <td>
           <p><code><a href="templates_put_scripts_projects.html">templates_put_scripts_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a Script Template to a project</p></td>
       </tr><tr>
         
         <td>
@@ -4447,7 +4419,7 @@
         <td>
           <p><code><a href="workflows_delete_projects.html">workflows_delete_projects()</a></code> </p>
         </td>
-        <td><p>Remove an item from a project</p></td>
+        <td><p>Remove a Workflow from a project</p></td>
       </tr><tr>
         
         <td>
@@ -4472,6 +4444,12 @@
           <p><code><a href="workflows_get_executions.html">workflows_get_executions()</a></code> </p>
         </td>
         <td><p>Get a workflow execution</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="workflows_get_executions_tasks.html">workflows_get_executions_tasks()</a></code> </p>
+        </td>
+        <td><p>Get a task of a workflow execution</p></td>
       </tr><tr>
         
         <td>
@@ -4507,7 +4485,7 @@
         <td>
           <p><code><a href="workflows_list_projects.html">workflows_list_projects()</a></code> </p>
         </td>
-        <td><p>List the projects an item belongs to</p></td>
+        <td><p>List the projects a Workflow belongs to</p></td>
       </tr><tr>
         
         <td>
@@ -4585,7 +4563,7 @@
         <td>
           <p><code><a href="workflows_put_projects.html">workflows_put_projects()</a></code> </p>
         </td>
-        <td><p>Add an item to a project</p></td>
+        <td><p>Add a Workflow to a project</p></td>
       </tr><tr>
         
         <td>
@@ -4611,6 +4589,7 @@
       <li><a href="#section-civisml-workflows">CivisML Workflows</a></li>
       <li><a href="#section-parallel-computing">Parallel Computing</a></li>
       <li><a href="#section-reports">Reports</a></li>
+      <li><a href="#section-scripts">Scripts</a></li>
       <li><a href="#section-tables">Tables</a></li>
       <li><a href="#section-pagination">Pagination</a></li>
       <li><a href="#section-polling">Polling</a></li>

@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
       </span>
     </div>
 
@@ -171,6 +171,13 @@
 </ul></p></dd>
 <dt>downloadUrl</dt><dd><p>string, A JSON string containing information about the URL of the file.</p></dd>
 <dt>fileUrl</dt><dd><p>string, The URL that may be used to download the file.</p></dd>
+<dt>detectedInfo</dt><dd><p>list, A list containing the following elements: 
+<ul>
+<li><p>includeHeader boolean, A boolean value indicating whether or not the first row of the file is a header row.</p></li>
+<li><p>columnDelimiter string, The column delimiter for the file. One of "comma", "tab", or "pipe".</p></li>
+<li><p>compression string, The type of compression of the file. One of "gzip", or "none".</p></li>
+<li><p>tableColumns array, An array of hashes corresponding to the columns in the file. Each hash should have keys for column "name" and "sql_type"</p></li>
+</ul></p></dd>
 
     
 

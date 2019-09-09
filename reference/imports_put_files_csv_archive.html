@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
       </span>
     </div>
 
@@ -178,6 +178,7 @@
 <li><p>name string, The column name.</p></li>
 <li><p>sqlType string, The SQL type of the column.</p></li>
 </ul></p></dd>
+<dt>execution</dt><dd><p>string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.</p></dd>
 <dt>redshiftDestinationOptions</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>distkey string, Distkey for this table in Redshift</p></li>
