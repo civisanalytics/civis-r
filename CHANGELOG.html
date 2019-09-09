@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
       </span>
     </div>
 
@@ -127,10 +127,38 @@
 
 <div id="section" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section" class="anchor"></a>[2.0.0] - 2019-06-19</h2>
+<a href="#section" class="anchor"></a>[2.1.0] - 2019-09-06</h2>
 <div id="changed" class="section level3">
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
+<ul>
+<li>
+<code>run_template</code> takes an additional value of JSONValue. If TRUE, function returns the JSON output instead of the file id.</li>
+<li>All API calls now retry a max of 10 times for maximum of 1 hr when rate limited. (#214).</li>
+</ul>
+</div>
+<div id="fixed" class="section level3">
+<h3 class="hasAnchor">
+<a href="#fixed" class="anchor"></a>Fixed</h3>
+<ul>
+<li>Bug in handling of environments in CivisFuture (#205).</li>
+<li>Bug in error handling on API responses with no <code>errorDescription</code> (#214)</li>
+</ul>
+</div>
+<div id="added" class="section level3">
+<h3 class="hasAnchor">
+<a href="#added" class="anchor"></a>Added</h3>
+<ul>
+<li>Provided package option <code>civis.default_polling_interval</code> to globally set the interval for polling via <code>await</code> (#204).</li>
+</ul>
+</div>
+</div>
+<div id="section-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#section-1" class="anchor"></a>[2.0.0] - 2019-06-19</h2>
+<div id="changed-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#changed-1" class="anchor"></a>Changed</h3>
 <ul>
 <li>
 <code>write_civis_file</code> now uploads data frames as CSVs by default.</li>
@@ -144,18 +172,18 @@
 <code>stringr</code>, <code>purrr</code>, and <code>devtools</code> are removed from dependencies.</li>
 </ul>
 </div>
-<div id="fixed" class="section level3">
+<div id="fixed-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed" class="anchor"></a>Fixed</h3>
+<a href="#fixed-1" class="anchor"></a>Fixed</h3>
 <ul>
 <li>
 <code>await_all</code> is now vectorized over two arguments (typically run and job ids) as intended (#171).</li>
 <li>Docker images for <code>civis_platform</code> are now tagged to <code>civisanalytics/datascience-r:2</code> for compatibility with R 3.6.0.</li>
 </ul>
 </div>
-<div id="added" class="section level3">
+<div id="added-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#added" class="anchor"></a>Added</h3>
+<a href="#added-1" class="anchor"></a>Added</h3>
 <p>IO</p>
 <ul>
 <li>
@@ -179,32 +207,32 @@
 </ul>
 </div>
 </div>
-<div id="section-1" class="section level2">
+<div id="section-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-1" class="anchor"></a>[1.6.1] - 2019-02-12</h2>
-<div id="fixed-1" class="section level3">
+<a href="#section-2" class="anchor"></a>[1.6.1] - 2019-02-12</h2>
+<div id="fixed-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-1" class="anchor"></a>Fixed</h3>
+<a href="#fixed-2" class="anchor"></a>Fixed</h3>
 <ul>
 <li>Update link in CivisML vignette.</li>
 </ul>
 </div>
 </div>
-<div id="section-2" class="section level2">
+<div id="section-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-2" class="anchor"></a>[1.6.0] - 2019-02-11</h2>
-<div id="fixed-2" class="section level3">
+<a href="#section-3" class="anchor"></a>[1.6.0] - 2019-02-11</h2>
+<div id="fixed-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-2" class="anchor"></a>Fixed</h3>
+<a href="#fixed-3" class="anchor"></a>Fixed</h3>
 <ul>
 <li>
 <code>write_civis.numeric</code> now correctly syncs with headers [#150].</li>
 <li>Use upper case for REST verb names. [#153].</li>
 </ul>
 </div>
-<div id="added-1" class="section level3">
+<div id="added-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#added-1" class="anchor"></a>Added</h3>
+<a href="#added-2" class="anchor"></a>Added</h3>
 <ul>
 <li>
 <code>write_civis</code> gains <code>header</code>, <code>credential_id</code> and <code>import_args</code> arguments to more flexibly import data ([#150, #149, #130]).</li>
@@ -219,31 +247,31 @@
 </ul>
 </div>
 </div>
-<div id="section-3" class="section level2">
+<div id="section-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-3" class="anchor"></a>[1.5.1] - 2018-08-15</h2>
-<div id="changed-1" class="section level3">
+<a href="#section-4" class="anchor"></a>[1.5.1] - 2018-08-15</h2>
+<div id="changed-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#changed-1" class="anchor"></a>Changed</h3>
+<a href="#changed-2" class="anchor"></a>Changed</h3>
 <ul>
 <li>Hyperband is now supported for stacking estimators in <code>civis_ml</code>. Fixes #131.</li>
 <li>Now <code>tryCatch</code> when generating the client. Fixes #138.</li>
 </ul>
 </div>
-<div id="fixed-3" class="section level3">
+<div id="fixed-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-3" class="anchor"></a>Fixed</h3>
+<a href="#fixed-4" class="anchor"></a>Fixed</h3>
 <ul>
 <li>Added Encoding: UTF-8 to ‘DESCRIPTION’ to fix R CMD CHECK warning from changes to roxygen2 6.1.0. Fixes #133.</li>
 </ul>
 </div>
 </div>
-<div id="section-4" class="section level2">
+<div id="section-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-4" class="anchor"></a>[1.5.0] - 2018-05-20</h2>
-<div id="changed-2" class="section level3">
+<a href="#section-5" class="anchor"></a>[1.5.0] - 2018-05-20</h2>
+<div id="changed-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#changed-2" class="anchor"></a>Changed</h3>
+<a href="#changed-3" class="anchor"></a>Changed</h3>
 <ul>
 <li>
 <code>write_civis_file</code> automatically retries on upload failures.</li>
@@ -251,41 +279,41 @@
 <code><a href="https://www.rdocumentation.org/packages/base/topics/library">library(civis)</a></code> now works even if the API key has expired or no API key is present.</li>
 </ul>
 </div>
-<div id="fixed-4" class="section level3">
+<div id="fixed-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-4" class="anchor"></a>Fixed</h3>
+<a href="#fixed-5" class="anchor"></a>Fixed</h3>
 <ul>
 <li>
 <code>read_civis</code> now correctly reads exports from Redshift containing null values.</li>
 </ul>
 </div>
 </div>
-<div id="section-5" class="section level2">
+<div id="section-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-5" class="anchor"></a>[1.4.0] - 2018-05-04</h2>
-<div id="changed-3" class="section level3">
+<a href="#section-6" class="anchor"></a>[1.4.0] - 2018-05-04</h2>
+<div id="changed-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#changed-3" class="anchor"></a>Changed</h3>
+<a href="#changed-4" class="anchor"></a>Changed</h3>
 <ul>
 <li>Add v2.2 CivisML templates.</li>
 <li>Removed read-only restriction for queries from <code>read_civis</code> and <code>download_civis</code>.</li>
 <li>The DBI connectors are provided on an as-is basis and are no longer maintained.</li>
 </ul>
 </div>
-<div id="fixed-5" class="section level3">
+<div id="fixed-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-5" class="anchor"></a>Fixed</h3>
+<a href="#fixed-6" class="anchor"></a>Fixed</h3>
 <ul>
 <li>Fix CRAN check failures for dev DBI-test.</li>
 </ul>
 </div>
 </div>
-<div id="section-6" class="section level2">
+<div id="section-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-6" class="anchor"></a>[1.3.0] - 2018-03-30</h2>
-<div id="added-2" class="section level3">
+<a href="#section-7" class="anchor"></a>[1.3.0] - 2018-03-30</h2>
+<div id="added-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#added-2" class="anchor"></a>Added</h3>
+<a href="#added-3" class="anchor"></a>Added</h3>
 <ul>
 <li>Local dataframes can now be sent to CivisML as feather files.</li>
 <li>Print CivisML training warnings when model results are fetched from Platform.</li>
@@ -295,18 +323,18 @@
 <li><p><code>write_civis</code> gains a <code>diststyle</code> argument for controlling the distribution of tables on Redshift.</p></li>
 </ul>
 </div>
-<div id="changed-4" class="section level3">
+<div id="changed-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#changed-4" class="anchor"></a>Changed</h3>
+<a href="#changed-5" class="anchor"></a>Changed</h3>
 <ul>
 <li>CivisML stacking documentation has been updated.</li>
 <li>
 <code>write_civis_file</code> now defaults to the file path for the <code>name</code> argument instead of requiring it.</li>
 </ul>
 </div>
-<div id="fixed-6" class="section level3">
+<div id="fixed-7" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-6" class="anchor"></a>Fixed</h3>
+<a href="#fixed-7" class="anchor"></a>Fixed</h3>
 <ul>
 <li>
 <code>read_civis.numeric</code>, <code>write_civis.numeric</code>, <code>download_civis.numeric</code>, and <code>query_civis.numeric</code> now fail with a better error message when called with <code>x = NA</code> of type numeric.</li>
@@ -315,20 +343,20 @@
 </ul>
 </div>
 </div>
-<div id="section-7" class="section level2">
+<div id="section-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-7" class="anchor"></a>[1.2.0] - 2018-01-23</h2>
-<div id="fixed-7" class="section level3">
+<a href="#section-8" class="anchor"></a>[1.2.0] - 2018-01-23</h2>
+<div id="fixed-8" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-7" class="anchor"></a>Fixed</h3>
+<a href="#fixed-8" class="anchor"></a>Fixed</h3>
 <ul>
 <li>
 <code>resolved.CivisFuture</code> now gets the status of the platform job directly and updates the state of the future.</li>
 </ul>
 </div>
-<div id="added-3" class="section level3">
+<div id="added-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#added-3" class="anchor"></a>Added</h3>
+<a href="#added-4" class="anchor"></a>Added</h3>
 <ul>
 <li>Update <code>civis_ml</code> documentation with the following CivisML 2.1 features and defaults:
 <ul>
@@ -346,9 +374,9 @@
 <code>value.CivisFuture</code> now prints error logs from failed jobs, throws a catcheable error, and fetches the job logs automatically.</li>
 </ul>
 </div>
-<div id="changed-5" class="section level3">
+<div id="changed-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#changed-5" class="anchor"></a>Changed</h3>
+<a href="#changed-6" class="anchor"></a>Changed</h3>
 <ul>
 <li>
 <code>civis_ml_fetch_existing</code> can handle runs with missing <code>metrics.json</code> files.</li>
@@ -357,24 +385,24 @@
 </ul>
 </div>
 </div>
-<div id="section-8" class="section level2">
+<div id="section-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-8" class="anchor"></a>[1.1.1] - 2017-11-20</h2>
-<div id="fixed-8" class="section level3">
+<a href="#section-9" class="anchor"></a>[1.1.1] - 2017-11-20</h2>
+<div id="fixed-9" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-8" class="anchor"></a>Fixed</h3>
+<a href="#fixed-9" class="anchor"></a>Fixed</h3>
 <ul>
 <li>
 <code>write_civis</code> calls <code>imports_post_files</code> correctly after a change in the argument order.</li>
 </ul>
 </div>
 </div>
-<div id="section-9" class="section level2">
+<div id="section-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-9" class="anchor"></a>[1.1.0] - 2017-11-10</h2>
-<div id="fixed-9" class="section level3">
+<a href="#section-10" class="anchor"></a>[1.1.0] - 2017-11-10</h2>
+<div id="fixed-10" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-9" class="anchor"></a>Fixed</h3>
+<a href="#fixed-10" class="anchor"></a>Fixed</h3>
 <ul>
 <li>Corrected project_id type in <code>publish_rmd</code> and <code>publish_html</code>
 </li>
@@ -383,9 +411,9 @@
 </li>
 </ul>
 </div>
-<div id="changed-6" class="section level3">
+<div id="changed-7" class="section level3">
 <h3 class="hasAnchor">
-<a href="#changed-6" class="anchor"></a>Changed</h3>
+<a href="#changed-7" class="anchor"></a>Changed</h3>
 <ul>
 <li>
 <code>call_api</code> only retries on 413, 429, 502, 503, 504 as in civis-python.</li>
@@ -395,9 +423,9 @@
 <li>Files uploaded using <code>write_civis_file</code> now don’t expire by default.</li>
 </ul>
 </div>
-<div id="added-4" class="section level3">
+<div id="added-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#added-4" class="anchor"></a>Added</h3>
+<a href="#added-5" class="anchor"></a>Added</h3>
 <ul>
 <li>“Publish to Civis” Rstudio addin installed by default that publishes <code>.Rmd</code> and <code>.html</code> files as Civis Platform reports.</li>
 <li>
@@ -418,12 +446,12 @@
 </div>
 </div>
 </div>
-<div id="section-10" class="section level2">
+<div id="section-11" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-10" class="anchor"></a>[1.0.2] - 2017-09-21</h2>
-<div id="fixed-10" class="section level3">
+<a href="#section-11" class="anchor"></a>[1.0.2] - 2017-09-21</h2>
+<div id="fixed-11" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-10" class="anchor"></a>Fixed</h3>
+<a href="#fixed-11" class="anchor"></a>Fixed</h3>
 <ul>
 <li>roxygen2::roxygenize, devtools::build, and memoise::memoise included in NAMESPACE</li>
 <li>uuid dependency removed</li>
@@ -433,12 +461,12 @@
 </ul>
 </div>
 </div>
-<div id="section-11" class="section level2">
+<div id="section-12" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-11" class="anchor"></a>[1.0.1] - 2017-09-18</h2>
-<div id="fixed-11" class="section level3">
+<a href="#section-12" class="anchor"></a>[1.0.1] - 2017-09-18</h2>
+<div id="fixed-12" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-11" class="anchor"></a>Fixed</h3>
+<a href="#fixed-12" class="anchor"></a>Fixed</h3>
 <ul>
 <li>
 <code>configure</code> and <code>configure.win</code> now use <code>R_HOME</code> to find <code>Rscript</code> instead of assuming that <code>Rscript</code> is on the path.</li>
@@ -452,12 +480,12 @@
 </ul>
 </div>
 </div>
-<div id="section-12" class="section level2">
+<div id="section-13" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-12" class="anchor"></a>[1.0.0] - 2017-09-08</h2>
-<div id="added-5" class="section level3">
+<a href="#section-13" class="anchor"></a>[1.0.0] - 2017-09-08</h2>
+<div id="added-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#added-5" class="anchor"></a>Added</h3>
+<a href="#added-6" class="anchor"></a>Added</h3>
 <div id="civisml-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#civisml-1" class="anchor"></a>CivisML</h4>
@@ -490,9 +518,9 @@
 </ul>
 </div>
 </div>
-<div id="changed-7" class="section level3">
+<div id="changed-8" class="section level3">
 <h3 class="hasAnchor">
-<a href="#changed-7" class="anchor"></a>Changed</h3>
+<a href="#changed-8" class="anchor"></a>Changed</h3>
 <ul>
 <li>
 <code>civis_ml</code> now throws an appropriate error message if a model type is called with multiple dependent variables but doesn’t support them.</li>
@@ -503,21 +531,21 @@
 <li>If there is only one available database and a default database has not been set as a package option or provided, <code>get_default_database</code> uses that database.</li>
 </ul>
 </div>
-<div id="fixed-12" class="section level3">
+<div id="fixed-13" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fixed-12" class="anchor"></a>Fixed</h3>
+<a href="#fixed-13" class="anchor"></a>Fixed</h3>
 <ul>
 <li>
 <code>read_civis</code> now reads from a temporary file when the file size is &gt; than 2^31-1 bytes.</li>
 </ul>
 </div>
 </div>
-<div id="section-13" class="section level2">
+<div id="section-14" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section-13" class="anchor"></a>[0.9.1] - 2017-08-15</h2>
-<div id="added-6" class="section level3">
+<a href="#section-14" class="anchor"></a>[0.9.1] - 2017-08-15</h2>
+<div id="added-7" class="section level3">
 <h3 class="hasAnchor">
-<a href="#added-6" class="anchor"></a>Added</h3>
+<a href="#added-7" class="anchor"></a>Added</h3>
 <div id="civisml-2" class="section level4">
 <h4 class="hasAnchor">
 <a href="#civisml-2" class="anchor"></a>CivisML</h4>

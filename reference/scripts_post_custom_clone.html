@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
       </span>
     </div>
 
@@ -248,6 +248,15 @@
 <dt>hidden</dt><dd><p>boolean, The hidden status of the item.</p></dd>
 <dt>archived</dt><dd><p>string, The archival status of the requested item(s).</p></dd>
 <dt>targetProjectId</dt><dd><p>integer, Target project to which script outputs will be added.</p></dd>
+<dt>lastSuccessfulRun</dt><dd><p>list, A list containing the following elements: 
+<ul>
+<li><p>id integer,</p></li>
+<li><p>state string,</p></li>
+<li><p>createdAt string, The time that the run was queued.</p></li>
+<li><p>startedAt string, The time that the run started.</p></li>
+<li><p>finishedAt string, The time that the run completed.</p></li>
+<li><p>error string, The error message for this run, if present.</p></li>
+</ul></p></dd>
 
     
 

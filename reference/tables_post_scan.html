@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
       </span>
     </div>
 
@@ -134,7 +134,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>tables_post_scan</span>(<span class='no'>database_id</span>, <span class='no'>schema</span>, <span class='no'>table_name</span>, <span class='kw'>queue_stats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>tables_post_scan</span>(<span class='no'>database_id</span>, <span class='no'>schema</span>, <span class='no'>table_name</span>, <span class='kw'>stats_priority</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,8 +152,8 @@
       <td><p>string required. The name of the table.</p></td>
     </tr>
     <tr>
-      <th>queue_stats</th>
-      <td><p>boolean optional. Whether or not the job should queue on syncing table stats</p></td>
+      <th>stats_priority</th>
+      <td><p>string optional. When to sync table statistics. Valid Options are the following. Option: 'flag' means to flag stats for the next scheduled run of a full table scan on the database. Option: 'block' means to block this job on stats syncing. Option: 'queue' means to queue a separate job for syncing stats and do not block this job on the queued job. Defaults to 'flag'</p></td>
     </tr>
     </table>
     

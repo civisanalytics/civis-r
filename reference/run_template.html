@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
       </span>
     </div>
 
@@ -134,7 +134,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>run_template</span>(<span class='no'>id</span>, <span class='no'>arguments</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>run_template</span>(<span class='no'>id</span>, <span class='no'>arguments</span>, <span class='kw'>JSONValue</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,6 +148,11 @@
       <td><p>list of arguments to the script.</p></td>
     </tr>
     <tr>
+      <th>JSONValue</th>
+      <td><p>bool (default FALSE) If true, returns the 
+JSON values instead of the file_ids</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>additional arguments to <code>scripts_post_custom</code></p></td>
     </tr>
@@ -155,7 +160,12 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>File ids of any run outputs are returned.</p>
+    <p>If JSONValue is FALSE, File ids of any run outputs are returned.
+        If JSONValue is TRUE, JSON values of first JSON run output is returned.
+          If there are no JSON outputs, warning message is printed
+            and nothing is returned
+          If there are more than 1 JSON outputs, warning message is printed 
+            and the first JSON output is returned.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -171,6 +181,9 @@
 
 <span class='co'># Run the template</span>
 <span class='fu'>run_template</span>(<span class='no'>id</span>, <span class='kw'>arguments</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>arg1</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>arg2</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='no'>...</span>)
+
+<span class='co'># Run the template and return JSON value outputs</span>
+<span class='fu'>run_template</span>(<span class='no'>id</span>, <span class='kw'>arguments</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>arg1</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>arg2</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='kw'>JSONValue</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='no'>...</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
