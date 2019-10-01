@@ -8,7 +8,7 @@
 get_database_id <- function(database_name) {
   dbs <- databases_list()
   for (db in dbs) {
-    if (identical(db$name, database_name)) {
+    if (db$name == database_name) {
       return(db$id)
     }
   }
