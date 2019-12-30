@@ -703,8 +703,9 @@ query_civis.numeric <- function(x, verbose = FALSE, ...) {
 query_civis.character <- function(x, database = NULL, verbose = FALSE, ...) {
   db <- get_db(database)
   db_id <- get_database_id(db)
-  cred_id <- default_credential()
-  q_id <- queries_post(db_id, x, preview_rows = 0, credential = cred_id, ...)[["id"]]
+  credential <- list(...)$credential
+  credential <- if (is.null(credential)) default_credential() else credential
+  q_id <- queries_post(db_id, x, preview_rows = 0, ...)[["id"]]
   await(queries_get, id = q_id, .verbose = verbose)
 }
 
