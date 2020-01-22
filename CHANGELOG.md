@@ -7,19 +7,23 @@
 - The `database` parameter in `read_civis` now accepts character
 objects of class `glue`.
 
+### Changed
+
+- CivisML uses platform aliases instead of hard-coded template IDs.
+
 ## [2.1.0] - 2019-09-06
 
 ### Changed
 - `run_template` takes an additional value of JSONValue. If TRUE,
   function returns the JSON output instead of the file id.
 - All API calls now retry a max of 10 times for maximum of 1 hr when rate limited. (#214).
-  
+
 ### Fixed
 - Bug in handling of environments in CivisFuture (#205).
 - Bug in error handling on API responses with no `errorDescription` (#214)
 
 ### Added
-- Provided package option `civis.default_polling_interval` to globally 
+- Provided package option `civis.default_polling_interval` to globally
 set the interval for polling via `await` (#204).
 
 ## [2.0.0] - 2019-06-19
@@ -27,8 +31,8 @@ set the interval for polling via `await` (#204).
 ### Changed
 
 
-- `write_civis_file` now uploads data frames as CSVs by default. 
-- Correspondingly, `read_civis.numeric` now has `read.csv` as the 
+- `write_civis_file` now uploads data frames as CSVs by default.
+- Correspondingly, `read_civis.numeric` now has `read.csv` as the
 default argument for `using`.
 - Partial DBI interface to Redshift (through the Civis API) removed,
 removing `DBI, dplyr` and `dbplyr` from dependencies.
@@ -76,7 +80,7 @@ Utitilies for platform  scripts
 - Use upper case for REST verb names. [#153].
 
 ### Added
-- `write_civis` gains `header`, `credential_id` and `import_args` arguments to more 
+- `write_civis` gains `header`, `credential_id` and `import_args` arguments to more
 flexibly import data ([#150, #149, #130]).
 - `coef.civis_ml` which returns `civis_ml` model coefficients in the format of `stats::coef`
 - added tests for `coef.civis_ml`
@@ -93,7 +97,7 @@ flexibly import data ([#150, #149, #130]).
 
 ### Fixed
 
-- Added Encoding: UTF-8 to 'DESCRIPTION' to fix R CMD CHECK warning from changes to 
+- Added Encoding: UTF-8 to 'DESCRIPTION' to fix R CMD CHECK warning from changes to
 roxygen2 6.1.0. Fixes #133.
 
 ## [1.5.0] - 2018-05-20
@@ -109,7 +113,7 @@ roxygen2 6.1.0. Fixes #133.
 
 ### Changed
 - Add v2.2 CivisML templates.
-- Removed read-only restriction for queries from `read_civis` and `download_civis`. 
+- Removed read-only restriction for queries from `read_civis` and `download_civis`.
 - The DBI connectors are provided on an as-is basis and are no longer maintained.
 
 ### Fixed
@@ -185,16 +189,16 @@ include /announcements, /apps, /clusters, /codes, /enhancements,
 /media, /notebooks.  Most endpoints were already available to all users,
 but with this change these endpoints will now be documented.
 - `write_civis_file` uploads objects larger than 50MB
-in multiple parts, and supports objects up to 5TB. 
+in multiple parts, and supports objects up to 5TB.
 Uploads occur in parallel if a `future::plan` has been specified.
-- Files uploaded using `write_civis_file` now don't expire by default. 
+- Files uploaded using `write_civis_file` now don't expire by default.
 
 ### Added
 
 - "Publish to Civis" Rstudio addin installed by default that publishes `.Rmd` and `.html` files as Civis Platform reports.
 - `write_civis.numeric` is provided to sync a CSV file on S3 to Redshift given a file id.
-- A new `plan(civis_platform)` has been added to evaluate R expressions on Civis Platform 
-using the `future` API. 
+- A new `plan(civis_platform)` has been added to evaluate R expressions on Civis Platform
+using the `future` API.
 
 #### CivisML
 - New named workflows: `multilayer_perceptron_regressor`, `multilayer_perceptron_classifier`,
@@ -226,7 +230,7 @@ arguments in `predict.civis_ml`.
 
 ## [1.0.0] - 2017-09-08
 
-### Added 
+### Added
 
 #### CivisML
 
