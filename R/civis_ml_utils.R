@@ -27,27 +27,27 @@ CIVIS_ML_TEMPLATE_IDS <- data.frame(
 )
 
 
-get_template_ids_all_versions <- function(){
-  # Get template IDs for all accessible CivisML versions.
-  #
-  # Args:
-  #
-  # Returns:
-  #   CIVIS_ML_TEMPLATE_IDS: A data frame of collections of version, name, IDs
+# get_template_ids_all_versions <- function(){
+#   # Get template IDs for all accessible CivisML versions.
+#   #
+#   # Args:
+#   #
+#   # Returns:
+#   #   CIVIS_ML_TEMPLATE_IDS: A data frame of collections of version, name, IDs
 
 
-  template_alias_objects <- aliases_list(object_type='template_script')
+#   template_alias_objects <- aliases_list(object_type='template_script')
 
-  df_aliases <- data.frame(matrix(unlist(template_alias_objects),
-                                  nrow=length(template_alias_objects),
-                                  byrow=T),
-                           stringsAsFactors=FALSE)
+#   df_aliases <- data.frame(matrix(unlist(template_alias_objects),
+#                                   nrow=length(template_alias_objects),
+#                                   byrow=T),
+#                            stringsAsFactors=FALSE)
 
-  names(df_aliases) <- c("id", "objectId", "objectType", "alias", "userId", "displayName")
-  df_aliases[,c("id","objectId","userId")] <- sapply(df_aliases[,c("id","objectId","userId")],as.integer)
+#   names(df_aliases) <- c("id", "objectId", "objectType", "alias", "userId", "displayName")
+#   df_aliases[,c("id","objectId","userId")] <- sapply(df_aliases[,c("id","objectId","userId")],as.integer)
 
 
-}
+# }
 
 
 # returns a version compatible template id for a given training model without API calls.
