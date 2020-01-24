@@ -26,6 +26,28 @@ CIVIS_ML_TEMPLATE_IDS <- data.frame(
   stringsAsFactors = FALSE
 )
 
+
+# get_template_ids_all_versions <- function(){
+#   # Get template IDs for all accessible CivisML versions.
+#   #
+#   # Args:
+#   #
+#   # Returns:
+#   #   CIVIS_ML_TEMPLATE_IDS: A data frame of collections of version, name, IDs
+
+
+#   # https://civisanalytics.github.io/civis-r/reference/fetch_all.html
+#   l <- fetch_all(aliases_list, object_type='template_script')
+
+#   df <- data.frame(matrix(unlist(l), nrow=length(l), byrow=T),stringsAsFactors=FALSE)
+
+#   names(df) <- c("id", "objectId", "objectType", "alias", "userId", "displayName")
+#   df[,c("id","objectId","userId")] <- sapply(df[,c("id","objectId","userId")],as.integer)
+
+
+# }
+
+
 # returns a version compatible template id for a given training model without API calls.
 get_predict_template_id <- function(m) {
   train_id <- m$job$fromTemplateId
