@@ -35,16 +35,42 @@ CIVIS_ML_TEMPLATE_IDS <- data.frame(
 #   # Returns:
 #   #   CIVIS_ML_TEMPLATE_IDS: A data frame of collections of version, name, IDs
 
-
+#   # TODO Wrap around fetch_all but blocked by https://github.com/civisanalytics/civis-r/issues/223
 #   template_alias_objects <- aliases_list(object_type='template_script')
 
-#   df_aliases <- data.frame(matrix(unlist(template_alias_objects),
-#                                   nrow=length(template_alias_objects),
+#   # Template script aliases are not used exclusively for civis-ml
+#   template_aliases <- sapply(template_alias_objects, `[[`, 'alias')
+#   civisml_template_alias_objects <- template_alias_objects[startsWith(template_aliases,
+#                                                                       'civis-civisml-')]
+#   #
+
+#    <- lapply(civisml_template_alias_objects,function(alias_obj){
+
+
+#       id = alias_obj$objectId
+
+#       version =
+
+#       name =
+
+
+#       list(id = id, version = version, name = name)
+
+#     })
+
+
+
+
+#   df_aliases <- data.frame(matrix(unlist(),
+#                                   nrow=length(),
 #                                   byrow=T),
 #                            stringsAsFactors=FALSE)
 
-#   names(df_aliases) <- c("id", "objectId", "objectType", "alias", "userId", "displayName")
-#   df_aliases[,c("id","objectId","userId")] <- sapply(df_aliases[,c("id","objectId","userId")],as.integer)
+
+#   # names(df_aliases) <- c("id", "objectId", "objectType", "alias", "userId", "displayName")
+#   # df_aliases[,c("id","objectId","userId")] <- sapply(df_aliases[,c("id","objectId","userId")],as.integer)
+
+
 
 
 # }
