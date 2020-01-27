@@ -761,13 +761,13 @@ query_civis_file.sql <- function(x, database = NULL, job_name = NULL, hidden = T
                                  verbose = FALSE, csv_settings = NULL, ...) {
   x <- as.character(x)
   db <- get_db(database)
-  cred_id <- default_credential()
   if (is.null(job_name)) job_name <- "Civis S3 Export Via R Client"
   run <- start_scripted_sql_job(database = db,
                                 sql = x,
                                 job_name = job_name,
                                 hidden = hidden,
-                                csv_settings = csv_settings)
+                                csv_settings = csv_settings,
+                                ...)
   res <- await(scripts_get_sql_runs,
                id = run$script_id, run_id = run$run_id, .verbose = verbose)
   res$output[[1]]$fileId
@@ -784,12 +784,13 @@ query_civis_file.numeric <- function(x, database = NULL, verbose = FALSE, ...) {
 
 # Kick off a scripted sql job
 start_scripted_sql_job <- function(database, sql, job_name, hidden = TRUE,
-                                   csv_settings = NULL) {
+                                   csv_settings = NULL, ...) {
 
   db_id <- get_database_id(database)
-  creds <- default_credential()
+  credential <- list(...)$credential
+  credential <- if (is.null(credential)) default_credential() else credential
   args <- list(name = job_name, sql = sql, hidden = hidden, remote_host_id = db_id,
-               credential_id = creds)
+               credential_id = credential)
   if (!missing(csv_settings)) args <- c(args, list(csv_settings = csv_settings))
 
   script_id <- do.call(scripts_post_sql, args)[["id"]]
