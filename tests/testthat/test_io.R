@@ -321,12 +321,14 @@ test_that("download_civis.numeric fails for NA", {
 # query_civis -----------------------------------------------------------------
 
 test_that("query_civis returns object from await", {
+  qp <- mockery::mock()
   with_mock(
     `civis::get_database_id` = function(...) TRUE,
-    `civis::default_credential` = function(...) TRUE,
-    `civis::queries_post` = function(...) list(id = "query_id"),
+    `civis::default_credential` = function(...) 1,
+    `civis::queries_post` = qp,
     `civis::queries_get` = function(...) list(state = 'succeeded'),
-    expect_equal(get_status(query_civis("query", "database")), 'succeeded')
+    expect_equal(get_status(query_civis("query", "database", credential = 10)), 'succeeded'),
+    expect_equal(mockery::mock_args(qp)[[1]]$credential, 10)
   )
 })
 
