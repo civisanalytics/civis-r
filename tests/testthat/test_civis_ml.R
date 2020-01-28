@@ -311,7 +311,7 @@ fake_model <- structure(
     job = list(
       id = 123,
       name = "model_task",
-      fromTemplateId = current[current$name == "train", "id"],
+      fromTemplateId = current[current$name == "training", "id"],
       arguments = list(
         PRIMARY_KEY = "training_primary_key"
       )
