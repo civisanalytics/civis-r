@@ -22,6 +22,25 @@ str_detect_multiple <- function(string, pattern) {
          string = string, pattern = pattern)
 }
 
+test_that("get_job_type_version works", {
+
+  expect_equal(get_job_type_version("civis-civisml-training"),
+               list(job_type = "training", version = "prod"))
+  expect_equal(get_job_type_version("civis-civisml-training-v2-3"),
+               list(job_type = "training", version = "v2.3"))
+  expect_equal(get_job_type_version("civis-civisml-training-dev"),
+               list(job_type = "training", version = "dev"))
+  expect_equal(get_job_type_version("civis-civisml-training-foo-bar"),
+               list(job_type = "training", version = "foo-bar"))
+
+  expect_error(get_job_type_version("foo-bar"))
+  expect_error(get_job_type_version('civis-civisml'))
+  expect_error(get_job_type_version('civis-civisml-'))
+  expect_error(get_job_type_version('civis-civisml-training-'))
+  expect_error(get_job_type_version('civis-civisml-training-foobar-'))
+
+})
+
 
 test_that("print.civis_ml_classifier works", {
   class_msg <- lapply(model_list[is_classif], function(x) utils::capture.output(x))
@@ -95,9 +114,10 @@ test_that("is_multitarget works", {
 test_that("get_predict_template_id returns correct template for train/predict version ", {
   m <- model_list[[1]]
   id <- m$job$fromTemplateId
-  ver <- CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$id == id, "version"]
-  pred_id <- CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$version == ver &
-                                   CIVIS_ML_TEMPLATE_IDS$name == "prediction", "id"]
+  civis_ml_template_ids <- get_template_ids_all_versions()
+  ver <- civis_ml_template_ids[civis_ml_template_ids$id == id, "version"]
+  pred_id <- civis_ml_template_ids[civis_ml_template_ids$version == ver[1] &
+                                   civis_ml_template_ids$name == "prediction", "id"]
   expect_equal(get_predict_template_id(m), pred_id)
 
   fake_model <- list(job = list(fromTemplateId = 9112))
