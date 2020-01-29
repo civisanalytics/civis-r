@@ -8,10 +8,10 @@
 
 get_train_template_id <- function() {
 
-  CIVIS_ML_TEMPLATE_IDS <- get_template_ids_all_versions()
+  civis_ml_template_ids <- get_template_ids_all_versions()
 
-  id <- CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$version == "prod" &
-                              CIVIS_ML_TEMPLATE_IDS$name == "training", "id"]
+  id <- civis_ml_template_ids[civis_ml_template_ids$version == "prod" &
+                              civis_ml_template_ids$name == "training", "id"]
 
   return(id)
 
