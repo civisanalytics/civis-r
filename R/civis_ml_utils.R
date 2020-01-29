@@ -47,16 +47,16 @@ get_template_ids_all_versions <- function(){
 
     })
 
-  CIVIS_ML_TEMPLATE_IDS <- data.frame(matrix(unlist(ids),
-                                  nrow=length(ids),
-                                  byrow=T),
-                           stringsAsFactors=FALSE)
+  civis_ml_template_ids <- data.frame(matrix(unlist(ids),
+                                             nrow=length(ids),
+                                             byrow=T),
+                                      stringsAsFactors=FALSE)
 
-  names(CIVIS_ML_TEMPLATE_IDS) <- c("id", "version", "name")
-  CIVIS_ML_TEMPLATE_IDS[,"id"] <- as.integer(CIVIS_ML_TEMPLATE_IDS[,"id"])
+  names(civis_ml_template_ids) <- c("id", "version", "name")
+  civis_ml_template_ids[,"id"] <- as.integer(civis_ml_template_ids[,"id"])
 
 
-  return(CIVIS_ML_TEMPLATE_IDS)
+  return(civis_ml_template_ids)
 
 }
 
