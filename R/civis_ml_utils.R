@@ -101,11 +101,14 @@ get_job_type_version <- function(alias){
 # returns a version compatible template id for a given training model without API calls.
 get_predict_template_id <- function(m) {
   train_id <- m$job$fromTemplateId
-  this_version <- CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$id == train_id, "version"]
+
+  civis_ml_template_ids <- get_template_ids_all_versions()
+
+  this_version <- civis_ml_template_ids[civis_ml_template_ids$id == train_id, "version"]
 
   #  `prod` points to the same template id as the latest version (e.g. v2.2)
-  CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$version == this_version[1] &
-                        CIVIS_ML_TEMPLATE_IDS$name == "prediction", "id"]
+  civis_ml_template_ids[civis_ml_template_ids$version == this_version[1] &
+                        civis_ml_template_ids$name == "prediction", "id"]
 }
 
 #' @export
