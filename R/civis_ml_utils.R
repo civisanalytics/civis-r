@@ -20,8 +20,10 @@ CIVIS_ML_CLASSIFIERS <- c("sparse_logistic",
                           "stacking_classifier")
 
 
+#' Get template IDs for all accessible CivisML versions.
+#'
+#' @return  A data frame containing the template id, CivisML version, and job type.
 get_template_ids_all_versions <- function(){
-  # Get template IDs for all accessible CivisML versions.
 
   template_alias_objects <- fetch_until(aliases_list,
                                        limit=1000,
@@ -60,10 +62,12 @@ get_template_ids_all_versions <- function(){
 
 }
 
-get_job_type_version <- function(alias){
-  # Derive the job type and version from the given alias.
 
-  # `alias` is a character vector and length(`alias`) = 1
+#' Derive the job type and version from the given alias.
+#'
+#' @param \code{alias} A one-length character vector of the CivisML alias
+#' @return A list containing the \code{job_type} and \code{version}
+get_job_type_version <- function(alias){
 
   # A version-less alias for production, e.g., "civis-civisml-training"
   match_production <- unlist(regmatches(alias, regexec('\\Acivis-civisml-(\\w+)\\Z', alias, perl=TRUE)))
