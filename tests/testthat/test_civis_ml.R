@@ -2,6 +2,8 @@ library(mockery)
 
 context("civis_ml")
 
+ml_train_template_id <- get_train_template_id()
+
 test_that("jsonlite works", {
   # The tests below fail when run via R CMD check due with a
   # "invalid encoding argument" error. jsonlite::toJSON is the last thing in
@@ -58,7 +60,7 @@ test_that("calls scripts_post_custom", {
   )
 
   script_args <- mock_args(fake_scripts_post_custom)[[1]]
-  expect_equal(script_args$from_template_id, getOption("civis.ml_train_template_id"))
+  expect_equal(script_args$from_template_id, ml_train_template_id)
   expect_equal(script_args$name, "awesome civisml Train")
   expect_equal(script_args$notifications, list(successEmailSubject = "A success",
                                                successEmailAddresses = c("user@example.com")))
@@ -304,14 +306,12 @@ test_that("raises error if multioutput not supported", {
 # Predict
 context("predict.civis_ml")
 
-current <- tail(CIVIS_ML_TEMPLATE_IDS, n = 2)
-
 fake_model <- structure(
   list(
     job = list(
       id = 123,
       name = "model_task",
-      fromTemplateId = current[current$name == "training", "id"],
+      fromTemplateId = ml_train_template_id,
       arguments = list(
         PRIMARY_KEY = "training_primary_key"
       )
@@ -563,40 +563,35 @@ context("stash_local_dataframe")
 
 test_that("newer CivisML versions use feather", {
   # enforce newer CivisML version
-  temp_id <- getOption('civis.ml_train_template_id')
-  options(civis.ml_train_template_id = 11219)
+  temp_id <- 11219
   # factor should not cause errors when using feather
   x <- data.frame(a = 1:3, b = letters[1:3])
   fake_file <- mock(1)
   with_mock(
     `civis::write_civis_file` = fake_file,
     {
-      stash_local_dataframe(x)
+      stash_local_dataframe(x, temp_id)
       args <- mock_args(fake_file)
       expect_equal(args[[1]]$name, "modelpipeline_data.feather")
     }
   )
-  # cleanup
-  options(civis.ml_train_template_id = temp_id)
+
 })
 
 test_that("older CivisML versions use csv", {
   # enforce older CivisML version
-  temp_id <- getOption('civis.ml_train_template_id')
-  options(civis.ml_train_template_id = 9969)
+  temp_id <- 9969
   # factor type should not matter for older version
   x <- data.frame(a = 1:3, b = letters[1:3], stringsAsFactors = FALSE)
   fake_file <- mock(1)
   with_mock(
     `civis::write_civis_file` = fake_file,
     {
-      stash_local_dataframe(x)
+      stash_local_dataframe(x, temp_id)
       args <- mock_args(fake_file)
       expect_equal(args[[1]]$name, "modelpipeline_data.csv")
     }
   )
-  # cleanup
-  options(civis.ml_train_template_id = temp_id)
 })
 
 ################################################################################
@@ -615,7 +610,7 @@ test_that("uses the correct template_id", {
   )
 
   run_args <- mock_args(fake_run_model)[[1]]
-  expect_equal(run_args$template_id, getOption("civis.ml_train_template_id"))
+  expect_equal(run_args$template_id, ml_train_template_id)
 })
 
 test_that("converts parameters arg to JSON string", {

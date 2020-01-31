@@ -19,6 +19,17 @@ CIVIS_ML_CLASSIFIERS <- c("sparse_logistic",
                           "multilayer_perceptron_classifier",
                           "stacking_classifier")
 
+get_train_template_id <- function() {
+
+  civis_ml_template_ids <- get_template_ids_all_versions()
+
+  id <- civis_ml_template_ids[civis_ml_template_ids$version == "prod" &
+                              civis_ml_template_ids$name == "training", "id"]
+
+  return(id)
+
+}
+
 
 #' Get template IDs for all accessible CivisML versions.
 #'
@@ -65,8 +76,8 @@ get_template_ids_all_versions <- function(){
 
 #' Derive the job type and version from the given alias.
 #'
-#' @param \code{alias} A one-length character vector of the CivisML alias
-#' @return A list containing the \code{job_type} and \code{version}
+#' @param alias A one-length character vector of the CivisML alias
+#' @return A list containing the job_type and version
 get_job_type_version <- function(alias){
 
   # A version-less alias for production, e.g., "civis-civisml-training"

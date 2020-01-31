@@ -326,7 +326,8 @@ civis_ml.data.frame <- function(x,
     oos_scores_db_id <- get_database_id(oos_scores_db)
   }
 
-  file_id <- stash_local_dataframe(x)
+  tmpl_id <- get_train_template_id()
+  file_id <- stash_local_dataframe(x, tmpl_id)
   create_and_run_model(file_id = file_id,
                        dependent_variable = dependent_variable,
                        excluded_columns = excluded_columns,
@@ -515,11 +516,11 @@ civis_ml.character <- function(x,
 #' Stash a data frame in feather or csv format, depending on CivisML version.
 #'
 #' @param x data.frame to stash
+#' @param tmpl_id CivisML training template id
 #'
 #' @return file id where dataframe is stored
-stash_local_dataframe <- function(x) {
+stash_local_dataframe <- function(x, tmpl_id) {
   # Try to stash a dataframe in feather format.
-  tmpl_id <- getOption("civis.ml_train_template_id")
   tmp_path <- tempfile()
 
   if (tmpl_id > 9969) {
@@ -663,7 +664,7 @@ create_and_run_model <- function(file_id = NULL,
     job_name <- paste0(model_name, " Train")
   }
 
-  tmpl_id <- getOption("civis.ml_train_template_id")
+  tmpl_id <- get_train_template_id()
   run <- run_model(template_id = tmpl_id, name = job_name, arguments = args,
                    notifications = notifications,
                    polling_interval = polling_interval,
