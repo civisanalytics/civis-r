@@ -667,6 +667,7 @@ test_that("converts fit_params to JSON string", {
   with_mock(
     `civis::run_model` = fake_run_model,
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
+    `civis::get_train_template_id` = function(...) ml_train_template_id,
 
     create_and_run_model(file_id = 123,
                          fit_params = list(weights = "weight_col"))
