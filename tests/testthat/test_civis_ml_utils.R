@@ -153,17 +153,33 @@ test_that("is_multitarget works", {
 })
 
 test_that("get_predict_template_id returns correct template for train/predict version ", {
-  m <- model_list[[1]]
-  id <- m$job$fromTemplateId
-  civis_ml_template_ids <- get_template_ids_all_versions()
-  ver <- civis_ml_template_ids[civis_ml_template_ids$id == id, "version"]
-  pred_id <- civis_ml_template_ids[civis_ml_template_ids$version == ver[1] &
-                                   civis_ml_template_ids$name == "prediction", "id"]
-  expect_equal(get_predict_template_id(m), pred_id)
 
-  fake_model <- list(job = list(fromTemplateId = 9112))
-  expect_equal(get_predict_template_id(fake_model), 9113)
+  fake_civis_ml_template_ids <- data.frame(id=c(9968,9969,9968,9969,10582,10583),
+                                           version=c("prod","prod","v2.2","v2.2","v2.1","v2.1"),
+                                           name=c("training","prediction","training","prediction","training","prediction"),
+                                           stringsAsFactors=FALSE)
+
+  m <- model_list[[1]]
+
+  with_mock(
+    `civis::get_template_ids_all_versions` = function(...) fake_civis_ml_template_ids,
+
+    expect_equal(get_predict_template_id(m), 9969)
+
+    )
+
+
+  fake_model <- list(job = list(fromTemplateId = 10582))
+
+  with_mock(
+    `civis::get_template_ids_all_versions` = function(...) fake_civis_ml_template_ids,
+
+     expect_equal(get_predict_template_id(fake_model), 10583)
+
+    )
+
 })
+
 
 
 test_that("get_feature_importance returns correct feature importance matrix when available", {
