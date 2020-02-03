@@ -109,6 +109,7 @@ test_that("calls civis_ml.data.frame for local df", {
     `civis::write_civis_file` = fake_write_civis_file,
     `civis::get_database_id` = fake_get_database_id,
     `civis::create_and_run_model` = fake_create_and_run_model,
+    `civis::get_train_template_id` = function(...) ml_train_template_id,
 
     civis_ml(iris,
              model_type = "sparse_logistic",
@@ -397,6 +398,7 @@ test_that("uses training primary_key by default", {
   with_mock(
     `civis::get_database_id` = fake_get_database_id,
     `civis::create_and_run_pred` = fake_create_and_run_pred,
+    `civis::get_predict_template_id` = function(...) ml_predict_template_id,
 
     tbl <- civis_table(table_name = "schema.table", database_name = "the_db"),
     predict(fake_model, newdata = tbl)
@@ -475,6 +477,7 @@ test_that("passes a file_id directly", {
 
   with_mock(
     `civis::create_and_run_pred` = fake_create_and_run_pred,
+    `civis::get_predict_template_id` = function(...) ml_predict_template_id,
 
     predict(fake_model, civis_file(1234))
   )
@@ -482,7 +485,7 @@ test_that("passes a file_id directly", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
-              template_id = get_predict_template_id(fake_model),
+              template_id = ml_predict_template_id,
               primary_key = "training_primary_key",
               output_table = NULL,
               output_db_id = NULL,
@@ -629,6 +632,8 @@ test_that("converts parameters arg to JSON string", {
   with_mock(
     `civis::run_model` = fake_run_model,
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
+    `civis::get_train_template_id` = function(...) ml_train_template_id,
+
     create_and_run_model(file_id = 123, parameters = list(n_trees = 500, c = -1))
   )
 
@@ -643,6 +648,7 @@ test_that("converts cross_validation_parameters to JSON string", {
   with_mock(
     `civis::run_model` = fake_run_model,
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
+    `civis::get_train_template_id` = function(...) ml_train_template_id,
 
     create_and_run_model(file_id = 123,
                          model_type = "sparse_logistic",
@@ -677,6 +683,8 @@ test_that("space separates excluded_columns", {
   with_mock(
     `civis::run_model` = fake_run_model,
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
+    `civis::get_train_template_id` = function(...) ml_train_template_id,
+
     create_and_run_model(file_id = 132, excluded_columns = c("c1", "c2", "c3"))
   )
 
@@ -691,6 +699,7 @@ test_that("space separates target_column", {
   with_mock(
     `civis::run_model` = fake_run_model,
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
+    `civis::get_train_template_id` = function(...) ml_train_template_id,
 
     create_and_run_model(file_id = 132, dependent_variable = c("c1", "c2"),
                          model_type = "random_forest_regressor")
@@ -707,6 +716,8 @@ test_that("file_id is always numeric", {
   with_mock(
     `civis::run_model` = fake_run_model,
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
+    `civis::get_train_template_id` = function(...) ml_train_template_id,
+
     create_and_run_model(file_id = civis_file(132))
   )
 
