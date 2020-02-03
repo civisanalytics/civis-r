@@ -22,6 +22,47 @@ str_detect_multiple <- function(string, pattern) {
          string = string, pattern = pattern)
 }
 
+test_that("get_template_ids_all_versions", {
+
+  fake_template_alias_objects <- list(list(id = 11,
+                                           objectId = 12367,
+                                           objectType = "template_script",
+                                           alias = "civis-ShapefileExport",
+                                           userId = 3001,
+                                           displayName = "Export Shapefile"),
+                                      list(id = 14,
+                                           objectId = 11219,
+                                           objectType = "template_script",
+                                           alias = "civis-civisml-training",
+                                           userId = 400,
+                                           displayName = "Model Training"),
+                                      list(id = 21,
+                                           objectId = 10615,
+                                           objectType = "template_script",
+                                           alias = "civis-civisml-training-dev",
+                                           userId = 400,
+                                           displayName = "Model Training - DEV ONLY"),
+                                      list(id = 26,
+                                           objectId = 11221,
+                                           objectType = "template_script",
+                                           alias = "civis-civisml-registration-v2-2",
+                                           userId = 1750,
+                                           displayName = "Trained Model Registration, v2.2"))
+
+  with_mock(
+     `civis::fetch_until` = function(...) fake_template_alias_objects,
+
+      expect_equal(get_template_ids_all_versions(),
+                   data.frame(id=c(11219,10615,11221),
+                              version=c("prod","dev","v2.2"),
+                              name=c("training","training","registration"),
+                              stringsAsFactors=FALSE)
+                   )
+      )
+
+})
+
+
 test_that("get_job_type_version works", {
 
   expect_equal(get_job_type_version("civis-civisml-training"),
@@ -34,10 +75,10 @@ test_that("get_job_type_version works", {
                list(job_type = "training", version = "foo-bar"))
 
   expect_error(get_job_type_version("foo-bar"))
-  expect_error(get_job_type_version('civis-civisml'))
-  expect_error(get_job_type_version('civis-civisml-'))
-  expect_error(get_job_type_version('civis-civisml-training-'))
-  expect_error(get_job_type_version('civis-civisml-training-foobar-'))
+  expect_error(get_job_type_version("civis-civisml"))
+  expect_error(get_job_type_version("civis-civisml-"))
+  expect_error(get_job_type_version("civis-civisml-training-"))
+  expect_error(get_job_type_version("civis-civisml-training-foobar-"))
 
 })
 
