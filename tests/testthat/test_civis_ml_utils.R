@@ -22,6 +22,66 @@ str_detect_multiple <- function(string, pattern) {
          string = string, pattern = pattern)
 }
 
+test_that("get_template_ids_all_versions", {
+
+  fake_template_alias_objects <- list(list(id = 11,
+                                           objectId = 12367,
+                                           objectType = "template_script",
+                                           alias = "civis-ShapefileExport",
+                                           userId = 3001,
+                                           displayName = "Export Shapefile"),
+                                      list(id = 14,
+                                           objectId = 11219,
+                                           objectType = "template_script",
+                                           alias = "civis-civisml-training",
+                                           userId = 400,
+                                           displayName = "Model Training"),
+                                      list(id = 21,
+                                           objectId = 10615,
+                                           objectType = "template_script",
+                                           alias = "civis-civisml-training-dev",
+                                           userId = 400,
+                                           displayName = "Model Training - DEV ONLY"),
+                                      list(id = 26,
+                                           objectId = 11221,
+                                           objectType = "template_script",
+                                           alias = "civis-civisml-registration-v2-2",
+                                           userId = 1750,
+                                           displayName = "Trained Model Registration, v2.2"))
+
+  with_mock(
+     `civis::fetch_until` = function(...) fake_template_alias_objects,
+
+      expect_equal(get_template_ids_all_versions(),
+                   data.frame(id=c(11219,10615,11221),
+                              version=c("prod","dev","v2.2"),
+                              name=c("training","training","registration"),
+                              stringsAsFactors=FALSE)
+                   )
+      )
+
+})
+
+
+test_that("get_job_type_version works", {
+
+  expect_equal(get_job_type_version("civis-civisml-training"),
+               list(job_type = "training", version = "prod"))
+  expect_equal(get_job_type_version("civis-civisml-training-v2-3"),
+               list(job_type = "training", version = "v2.3"))
+  expect_equal(get_job_type_version("civis-civisml-training-dev"),
+               list(job_type = "training", version = "dev"))
+  expect_equal(get_job_type_version("civis-civisml-training-foo-bar"),
+               list(job_type = "training", version = "foo-bar"))
+
+  expect_error(get_job_type_version("foo-bar"))
+  expect_error(get_job_type_version("civis-civisml"))
+  expect_error(get_job_type_version("civis-civisml-"))
+  expect_error(get_job_type_version("civis-civisml-training-"))
+  expect_error(get_job_type_version("civis-civisml-training-foobar-"))
+
+})
+
 
 test_that("print.civis_ml_classifier works", {
   class_msg <- lapply(model_list[is_classif], function(x) utils::capture.output(x))
@@ -93,25 +153,34 @@ test_that("is_multitarget works", {
 })
 
 test_that("get_predict_template_id returns correct template for train/predict version ", {
+
+  fake_civis_ml_template_ids <- data.frame(id=c(9968,9969,9968,9969,10582,10583),
+                                           version=c("prod","prod","v2.2","v2.2","v2.1","v2.1"),
+                                           name=c("training","prediction","training","prediction","training","prediction"),
+                                           stringsAsFactors=FALSE)
+
   m <- model_list[[1]]
-  id <- m$job$fromTemplateId
-  ver <- CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$id == id, "version"]
-  pred_id <- CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$version == ver &
-                                   CIVIS_ML_TEMPLATE_IDS$name == "predict", "id"]
-  expect_equal(get_predict_template_id(m), pred_id)
 
-  fake_model <- list(job = list(fromTemplateId = 9112))
-  expect_equal(get_predict_template_id(fake_model), 9113)
+  with_mock(
+    `civis::get_template_ids_all_versions` = function(...) fake_civis_ml_template_ids,
+
+    expect_equal(get_predict_template_id(m), 9969)
+
+    )
+
+
+  fake_model <- list(job = list(fromTemplateId = 10582))
+
+  with_mock(
+    `civis::get_template_ids_all_versions` = function(...) fake_civis_ml_template_ids,
+
+     expect_equal(get_predict_template_id(fake_model), 10583)
+
+    )
+
 })
 
-test_that("get_train_template_id reverts to last id if others not available", {
-  id <- with_mock(
-    `civis:::api_key` = function(...) "key",
-    `civis::scripts_list_custom` = function(...) list(),
-    get_train_template_id())
-  ans <- CIVIS_ML_TEMPLATE_IDS[1, "id"]
-  expect_equal(id, ans)
-})
+
 
 test_that("get_feature_importance returns correct feature importance matrix when available", {
   true_feature_importances <- readRDS("data/feature_importances.rds")

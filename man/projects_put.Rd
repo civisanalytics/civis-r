@@ -4,8 +4,7 @@
 \alias{projects_put}
 \title{Update a project}
 \usage{
-projects_put(project_id, name = NULL, description = NULL,
-  note = NULL)
+projects_put(project_id, name = NULL, description = NULL, note = NULL)
 }
 \arguments{
 \item{project_id}{integer required.}

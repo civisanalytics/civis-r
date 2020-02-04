@@ -4,8 +4,14 @@
 \alias{groups_list}
 \title{List Groups}
 \usage{
-groups_list(query = NULL, permission = NULL, limit = NULL,
-  page_num = NULL, order = NULL, order_dir = NULL)
+groups_list(
+  query = NULL,
+  permission = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{query}{string optional. If specified, it will filter the groups returned. Infix matching is supported (e.g., "query=group" will return "group" and "group of people" and "my group" and "my group of people").}

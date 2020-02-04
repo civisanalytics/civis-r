@@ -4,9 +4,15 @@
 \alias{media_post_optimizations}
 \title{Create a new optimization}
 \usage{
-media_post_optimizations(runs, name = NULL, programs = NULL,
-  networks = NULL, exclude_programs = NULL, exclude_networks = NULL,
-  time_slot_percentages = NULL)
+media_post_optimizations(
+  runs,
+  name = NULL,
+  programs = NULL,
+  networks = NULL,
+  exclude_programs = NULL,
+  exclude_networks = NULL,
+  time_slot_percentages = NULL
+)
 }
 \arguments{
 \item{runs}{array required. An array containing the following fields: 

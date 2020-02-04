@@ -4,8 +4,13 @@
 \alias{aliases_list}
 \title{List Aliases}
 \usage{
-aliases_list(object_type = NULL, limit = NULL, page_num = NULL,
-  order = NULL, order_dir = NULL)
+aliases_list(
+  object_type = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{object_type}{string optional. Filter results by object type. Pass multiple object types with a comma-separatedlist. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}

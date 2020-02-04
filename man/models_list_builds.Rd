@@ -4,8 +4,13 @@
 \alias{models_list_builds}
 \title{List builds for the given model}
 \usage{
-models_list_builds(id, limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+models_list_builds(
+  id,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the model.}

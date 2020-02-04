@@ -4,8 +4,13 @@
 \alias{tables_patch}
 \title{Update a table}
 \usage{
-tables_patch(id, ontology_mapping = NULL, description = NULL,
-  primary_keys = NULL, last_modified_keys = NULL)
+tables_patch(
+  id,
+  ontology_mapping = NULL,
+  description = NULL,
+  primary_keys = NULL,
+  last_modified_keys = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the table.}

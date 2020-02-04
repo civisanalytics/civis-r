@@ -4,10 +4,19 @@
 \alias{enhancements_post_data_unification}
 \title{Create a Data Unification Enhancement}
 \usage{
-enhancements_post_data_unification(name, field_mapping1, field_mapping2,
-  schedule = NULL, parent_id = NULL, notifications = NULL,
-  table1 = NULL, table2 = NULL, output_table = NULL,
-  max_matches = NULL, threshold = NULL)
+enhancements_post_data_unification(
+  name,
+  field_mapping1,
+  field_mapping2,
+  schedule = NULL,
+  parent_id = NULL,
+  notifications = NULL,
+  table1 = NULL,
+  table2 = NULL,
+  output_table = NULL,
+  max_matches = NULL,
+  threshold = NULL
+)
 }
 \arguments{
 \item{name}{string required. The name of the enhancement job.}

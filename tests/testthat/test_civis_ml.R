@@ -2,6 +2,9 @@ library(mockery)
 
 context("civis_ml")
 
+ml_train_template_id <- 234
+ml_predict_template_id <- 456
+
 test_that("jsonlite works", {
   # The tests below fail when run via R CMD check due with a
   # "invalid encoding argument" error. jsonlite::toJSON is the last thing in
@@ -27,6 +30,7 @@ test_that("calls scripts_post_custom", {
     `civis::scripts_post_custom_runs` = fake_scripts_post_custom_runs,
     `civis::scripts_get_custom_runs` = fake_scripts_get_custom_runs,
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
+    `civis::get_train_template_id` = function(...) ml_train_template_id,
 
     tbl <- civis_table(table_name = "schema.table",
                        database_name = "a_database",
@@ -58,7 +62,7 @@ test_that("calls scripts_post_custom", {
   )
 
   script_args <- mock_args(fake_scripts_post_custom)[[1]]
-  expect_equal(script_args$from_template_id, getOption("civis.ml_train_template_id"))
+  expect_equal(script_args$from_template_id, ml_train_template_id)
   expect_equal(script_args$name, "awesome civisml Train")
   expect_equal(script_args$notifications, list(successEmailSubject = "A success",
                                                successEmailAddresses = c("user@example.com")))
@@ -105,6 +109,7 @@ test_that("calls civis_ml.data.frame for local df", {
     `civis::write_civis_file` = fake_write_civis_file,
     `civis::get_database_id` = fake_get_database_id,
     `civis::create_and_run_model` = fake_create_and_run_model,
+    `civis::get_train_template_id` = function(...) ml_train_template_id,
 
     civis_ml(iris,
              model_type = "sparse_logistic",
@@ -304,14 +309,12 @@ test_that("raises error if multioutput not supported", {
 # Predict
 context("predict.civis_ml")
 
-current <- tail(CIVIS_ML_TEMPLATE_IDS, n = 2)
-
 fake_model <- structure(
   list(
     job = list(
       id = 123,
       name = "model_task",
-      fromTemplateId = current[current$name == "train", "id"],
+      fromTemplateId = ml_train_template_id,
       arguments = list(
         PRIMARY_KEY = "training_primary_key"
       )
@@ -336,6 +339,7 @@ test_that("calls scripts_post_custom", {
     `civis::scripts_get_custom` = fake_scripts_get_custom,
     `civis::scripts_get_custom_runs` = fake_scripts_get_custom_runs,
     `civis::fetch_predict_results` = fake_fetch_predict_results,
+    `civis::get_predict_template_id` = function(...) ml_predict_template_id,
 
     tbl <- civis_table(table_name = "schema.table",
                        database_name = "a_database",
@@ -356,7 +360,7 @@ test_that("calls scripts_post_custom", {
   )
 
   script_args <- mock_args(fake_scripts_post_custom)[[1]]
-  expect_equal(script_args$from_template_id, get_predict_template_id(fake_model))
+  expect_equal(script_args$from_template_id, ml_predict_template_id)
   expect_equal(script_args$name, "model_task Predict")
 
   # These are template args/params:
@@ -394,6 +398,7 @@ test_that("uses training primary_key by default", {
   with_mock(
     `civis::get_database_id` = fake_get_database_id,
     `civis::create_and_run_pred` = fake_create_and_run_pred,
+    `civis::get_predict_template_id` = function(...) ml_predict_template_id,
 
     tbl <- civis_table(table_name = "schema.table", database_name = "the_db"),
     predict(fake_model, newdata = tbl)
@@ -410,6 +415,7 @@ test_that("uploads local df and passes a file_id", {
   with_mock(
     `civis::write_civis_file` = fake_write_civis_file,
     `civis::create_and_run_pred` = fake_create_and_run_pred,
+    `civis::get_predict_template_id` = function(...) ml_predict_template_id,
 
     predict(fake_model, iris, primary_key = NULL)
   )
@@ -417,7 +423,7 @@ test_that("uploads local df and passes a file_id", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
-              template_id = get_predict_template_id(fake_model),
+              template_id = ml_predict_template_id,
               primary_key = NULL,
               output_table = NULL,
               output_db_id = NULL,
@@ -439,6 +445,7 @@ test_that("uploads a local file and passes a file_id", {
   with_mock(
     `civis::write_civis_file` = fake_write_civis_file,
     `civis::create_and_run_pred` = fake_create_and_run_pred,
+    `civis::get_predict_template_id` = function(...) ml_predict_template_id,
 
     predict(fake_model, "fake_temp_path", primary_key = NULL)
   )
@@ -450,7 +457,7 @@ test_that("uploads a local file and passes a file_id", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
-              template_id = get_predict_template_id(fake_model),
+              template_id = ml_predict_template_id,
               primary_key = NULL,
               output_table = NULL,
               output_db_id = NULL,
@@ -470,6 +477,7 @@ test_that("passes a file_id directly", {
 
   with_mock(
     `civis::create_and_run_pred` = fake_create_and_run_pred,
+    `civis::get_predict_template_id` = function(...) ml_predict_template_id,
 
     predict(fake_model, civis_file(1234))
   )
@@ -477,7 +485,7 @@ test_that("passes a file_id directly", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
-              template_id = get_predict_template_id(fake_model),
+              template_id = ml_predict_template_id,
               primary_key = "training_primary_key",
               output_table = NULL,
               output_db_id = NULL,
@@ -497,6 +505,8 @@ test_that("passes a manifest file_id", {
 
   with_mock(
     `civis::create_and_run_pred` = fake_create_and_run_pred,
+    `civis::get_predict_template_id` = function(...) ml_predict_template_id,
+
 
     predict(fake_model, civis_file_manifest(123), primary_key = NULL)
   )
@@ -504,7 +514,7 @@ test_that("passes a manifest file_id", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
-              template_id = get_predict_template_id(fake_model),
+              template_id = ml_predict_template_id,
               primary_key = NULL,
               output_table = NULL,
               output_db_id = NULL,
@@ -526,6 +536,7 @@ test_that("passes table info", {
   with_mock(
     `civis::get_database_id` = fake_get_database_id,
     `civis::create_and_run_pred` = fake_create_and_run_pred,
+    `civis::get_predict_template_id` = function(...) ml_predict_template_id,
 
     table_to_score <- civis_table(
       table_name = "a_schema.table",
@@ -540,7 +551,7 @@ test_that("passes table info", {
   expect_args(fake_create_and_run_pred, 1,
               train_job_id = fake_model$job$id,
               train_run_id = fake_model$run$id,
-              template_id = get_predict_template_id(fake_model),
+              template_id = ml_predict_template_id,
               primary_key = NULL,
               output_table = NULL,
               output_db_id = NULL,
@@ -563,40 +574,35 @@ context("stash_local_dataframe")
 
 test_that("newer CivisML versions use feather", {
   # enforce newer CivisML version
-  temp_id <- getOption('civis.ml_train_template_id')
-  options(civis.ml_train_template_id = 11219)
+  temp_id <- 11219
   # factor should not cause errors when using feather
   x <- data.frame(a = 1:3, b = letters[1:3])
   fake_file <- mock(1)
   with_mock(
     `civis::write_civis_file` = fake_file,
     {
-      stash_local_dataframe(x)
+      stash_local_dataframe(x, temp_id)
       args <- mock_args(fake_file)
       expect_equal(args[[1]]$name, "modelpipeline_data.feather")
     }
   )
-  # cleanup
-  options(civis.ml_train_template_id = temp_id)
+
 })
 
 test_that("older CivisML versions use csv", {
   # enforce older CivisML version
-  temp_id <- getOption('civis.ml_train_template_id')
-  options(civis.ml_train_template_id = 9969)
+  temp_id <- 9969
   # factor type should not matter for older version
   x <- data.frame(a = 1:3, b = letters[1:3], stringsAsFactors = FALSE)
   fake_file <- mock(1)
   with_mock(
     `civis::write_civis_file` = fake_file,
     {
-      stash_local_dataframe(x)
+      stash_local_dataframe(x, temp_id)
       args <- mock_args(fake_file)
       expect_equal(args[[1]]$name, "modelpipeline_data.csv")
     }
   )
-  # cleanup
-  options(civis.ml_train_template_id = temp_id)
 })
 
 ################################################################################
@@ -610,12 +616,13 @@ test_that("uses the correct template_id", {
   with_mock(
     `civis::run_model` = fake_run_model,
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
+    `civis::get_train_template_id` = function(...) ml_train_template_id,
 
     create_and_run_model(file_id = 123)
   )
 
   run_args <- mock_args(fake_run_model)[[1]]
-  expect_equal(run_args$template_id, getOption("civis.ml_train_template_id"))
+  expect_equal(run_args$template_id, ml_train_template_id)
 })
 
 test_that("converts parameters arg to JSON string", {
@@ -625,6 +632,8 @@ test_that("converts parameters arg to JSON string", {
   with_mock(
     `civis::run_model` = fake_run_model,
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
+    `civis::get_train_template_id` = function(...) ml_train_template_id,
+
     create_and_run_model(file_id = 123, parameters = list(n_trees = 500, c = -1))
   )
 
@@ -639,6 +648,7 @@ test_that("converts cross_validation_parameters to JSON string", {
   with_mock(
     `civis::run_model` = fake_run_model,
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
+    `civis::get_train_template_id` = function(...) ml_train_template_id,
 
     create_and_run_model(file_id = 123,
                          model_type = "sparse_logistic",
@@ -657,6 +667,7 @@ test_that("converts fit_params to JSON string", {
   with_mock(
     `civis::run_model` = fake_run_model,
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
+    `civis::get_train_template_id` = function(...) ml_train_template_id,
 
     create_and_run_model(file_id = 123,
                          fit_params = list(weights = "weight_col"))
@@ -673,6 +684,8 @@ test_that("space separates excluded_columns", {
   with_mock(
     `civis::run_model` = fake_run_model,
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
+    `civis::get_train_template_id` = function(...) ml_train_template_id,
+
     create_and_run_model(file_id = 132, excluded_columns = c("c1", "c2", "c3"))
   )
 
@@ -687,6 +700,7 @@ test_that("space separates target_column", {
   with_mock(
     `civis::run_model` = fake_run_model,
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
+    `civis::get_train_template_id` = function(...) ml_train_template_id,
 
     create_and_run_model(file_id = 132, dependent_variable = c("c1", "c2"),
                          model_type = "random_forest_regressor")
@@ -703,6 +717,8 @@ test_that("file_id is always numeric", {
   with_mock(
     `civis::run_model` = fake_run_model,
     `civis::civis_ml_fetch_existing` = fake_civis_ml_fetch_existing,
+    `civis::get_train_template_id` = function(...) ml_train_template_id,
+
     create_and_run_model(file_id = civis_file(132))
   )
 
@@ -966,8 +982,3 @@ test_that("it calls read.csv with extra args, and dowload_civis with correct id"
   dl_args <- mock_args(fake_download_civis)[[1]]
   expect_equal(dl_args[[1]], 1)
 })
-
-
-
-
-

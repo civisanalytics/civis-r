@@ -4,8 +4,13 @@
 \alias{clusters_patch_kubernetes_partitions}
 \title{Update a Cluster Partition}
 \usage{
-clusters_patch_kubernetes_partitions(id, cluster_partition_id,
-  instance_configs = NULL, name = NULL, labels = NULL)
+clusters_patch_kubernetes_partitions(
+  id,
+  cluster_partition_id,
+  instance_configs = NULL,
+  name = NULL,
+  labels = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the cluster which this partition belongs to.}

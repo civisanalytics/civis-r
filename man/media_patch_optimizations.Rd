@@ -4,9 +4,16 @@
 \alias{media_patch_optimizations}
 \title{Edit an existing optimization}
 \usage{
-media_patch_optimizations(id, name = NULL, runs = NULL,
-  programs = NULL, networks = NULL, exclude_programs = NULL,
-  exclude_networks = NULL, time_slot_percentages = NULL)
+media_patch_optimizations(
+  id,
+  name = NULL,
+  runs = NULL,
+  programs = NULL,
+  networks = NULL,
+  exclude_programs = NULL,
+  exclude_networks = NULL,
+  time_slot_percentages = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The optimization ID.}

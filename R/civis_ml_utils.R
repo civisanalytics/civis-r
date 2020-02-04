@@ -19,19 +19,111 @@ CIVIS_ML_CLASSIFIERS <- c("sparse_logistic",
                           "multilayer_perceptron_classifier",
                           "stacking_classifier")
 
-CIVIS_ML_TEMPLATE_IDS <- data.frame(
-  id = c(9112, 9113, 9968, 9969, 10582, 10583, 11219, 11220, 11221),
-  version = c(1.1, 1.1, 2.0, 2.0, 2.1, 2.1, 2.2, 2.2, 2.2),
-  name = c("train", "predict", "train", "predict", "train", "predict", "train", "predict", "register"),
-  stringsAsFactors = FALSE
-)
+get_train_template_id <- function() {
+
+  civis_ml_template_ids <- get_template_ids_all_versions()
+
+  id <- civis_ml_template_ids[civis_ml_template_ids$version == "prod" &
+                              civis_ml_template_ids$name == "training", "id"]
+
+  return(id)
+
+}
+
+
+#' Get template IDs for all accessible CivisML versions.
+#'
+#' @return  A data frame containing the template id, CivisML version, and job type.
+get_template_ids_all_versions <- function(){
+
+  template_alias_objects <- fetch_until(aliases_list,
+                                       limit=1000,
+                                       object_type='template_script',
+                                       function(x) length(x) == 0)
+
+
+  template_aliases <- sapply(template_alias_objects, `[[`, 'alias')
+
+  # Template script aliases are not used exclusively for CivisML
+  civisml_template_alias_objects <- template_alias_objects[startsWith(template_aliases,
+                                                                      'civis-civisml-')]
+
+  ids <- lapply(civisml_template_alias_objects, function(alias_obj){
+
+        id = alias_obj$objectId
+
+        job_type_version = get_job_type_version(alias_obj$alias)
+
+        return(list(id = id,
+                    version = job_type_version$version,
+                    name = job_type_version$job_type))
+
+    })
+
+  civis_ml_template_ids <- data.frame(matrix(unlist(ids),
+                                             nrow=length(ids),
+                                             byrow=T),
+                                      stringsAsFactors=FALSE)
+
+  names(civis_ml_template_ids) <- c("id", "version", "name")
+  civis_ml_template_ids[,"id"] <- as.integer(civis_ml_template_ids[,"id"])
+
+
+  return(civis_ml_template_ids)
+
+}
+get_template_ids_all_versions <- memoise::memoise(get_template_ids_all_versions)
+
+#' Derive the job type and version from the given alias.
+#'
+#' @param alias A one-length character vector of the CivisML alias
+#' @return A list containing the job_type and version
+get_job_type_version <- function(alias){
+
+  # A version-less alias for production, e.g., "civis-civisml-training"
+  match_production <- unlist(regmatches(alias, regexec('\\Acivis-civisml-(\\w+)\\Z', alias, perl=TRUE)))
+  # A versioned alias, e.g., "civis-civisml-training-v2-3"
+  match_v <- unlist(regmatches(alias, regexec('\\Acivis-civisml-(\\w+)-v(\\d+)-(\\d+)\\Z', alias, perl=TRUE)))
+  # A special-version alias, e.g., "civis-civisml-training-dev"
+  match_special <- unlist(regmatches(alias, regexec('\\Acivis-civisml-(\\w+)-(\\S+[^-])\\Z', alias, perl=TRUE)))
+
+
+  if (!identical(match_production, character(0))) {
+
+    job_type = match_production[2]
+    version = "prod"
+
+  } else if (!identical(match_v, character(0))) {
+
+    job_type = match_v[2]
+    version = paste0("v",match_v[3],".",match_v[4])
+
+  } else if (!identical(match_special, character(0))) {
+
+    job_type = match_special[2]
+    version = match_special[3]
+
+  } else {
+
+    stop(paste('Unable to parse the job type and version from the CivisML alias:', alias))
+
+  }
+
+  return(list(job_type = job_type, version = version))
+
+}
 
 # returns a version compatible template id for a given training model without API calls.
 get_predict_template_id <- function(m) {
   train_id <- m$job$fromTemplateId
-  this_version <- CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$id == train_id, "version"]
-  CIVIS_ML_TEMPLATE_IDS[CIVIS_ML_TEMPLATE_IDS$version == this_version &
-                        CIVIS_ML_TEMPLATE_IDS$name == "predict", "id"]
+
+  civis_ml_template_ids <- get_template_ids_all_versions()
+
+  this_version <- civis_ml_template_ids[civis_ml_template_ids$id == train_id, "version"]
+
+  #  `prod` points to the same template id as the latest version (e.g. v2.2)
+  civis_ml_template_ids[civis_ml_template_ids$version == this_version[1] &
+                        civis_ml_template_ids$name == "prediction", "id"]
 }
 
 #' @export

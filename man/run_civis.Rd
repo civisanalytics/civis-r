@@ -33,8 +33,9 @@ run_civis(2+2,
 }
 }
 \seealso{
-Other script_utils: \code{\link{civis_script}},
-  \code{\link{fetch_output_file_ids}},
-  \code{\link{run_template}}
+Other script_utils: 
+\code{\link{civis_script}()},
+\code{\link{fetch_output_file_ids}()},
+\code{\link{run_template}()}
 }
 \concept{script_utils}

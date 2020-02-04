@@ -4,10 +4,19 @@
 \alias{enhancements_put_civis_data_match}
 \title{Replace all attributes of this Civis Data Match Enhancement}
 \usage{
-enhancements_put_civis_data_match(id, name, input_field_mapping,
-  match_target_id, schedule = NULL, parent_id = NULL,
-  notifications = NULL, input_table = NULL, output_table = NULL,
-  max_matches = NULL, threshold = NULL)
+enhancements_put_civis_data_match(
+  id,
+  name,
+  input_field_mapping,
+  match_target_id,
+  schedule = NULL,
+  parent_id = NULL,
+  notifications = NULL,
+  input_table = NULL,
+  output_table = NULL,
+  max_matches = NULL,
+  threshold = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the enhancement.}

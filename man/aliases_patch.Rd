@@ -4,8 +4,13 @@
 \alias{aliases_patch}
 \title{Update some attributes of this Alias}
 \usage{
-aliases_patch(id, object_id = NULL, object_type = NULL, alias = NULL,
-  display_name = NULL)
+aliases_patch(
+  id,
+  object_id = NULL,
+  object_type = NULL,
+  alias = NULL,
+  display_name = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The id of the Alias object.}

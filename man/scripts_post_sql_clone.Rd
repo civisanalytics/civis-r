@@ -4,8 +4,12 @@
 \alias{scripts_post_sql_clone}
 \title{Clone this SQL script}
 \usage{
-scripts_post_sql_clone(id, clone_schedule = NULL,
-  clone_triggers = NULL, clone_notifications = NULL)
+scripts_post_sql_clone(
+  id,
+  clone_schedule = NULL,
+  clone_triggers = NULL,
+  clone_notifications = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the script.}

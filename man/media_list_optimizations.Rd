@@ -4,8 +4,13 @@
 \alias{media_list_optimizations}
 \title{List all optimizations}
 \usage{
-media_list_optimizations(archived = NULL, limit = NULL,
-  page_num = NULL, order = NULL, order_dir = NULL)
+media_list_optimizations(
+  archived = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{archived}{string optional. The archival status of the requested item(s).}

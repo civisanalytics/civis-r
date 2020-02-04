@@ -4,10 +4,20 @@
 \alias{enhancements_patch_data_unification}
 \title{Update some attributes of this Data Unification Enhancement}
 \usage{
-enhancements_patch_data_unification(id, name = NULL, schedule = NULL,
-  parent_id = NULL, notifications = NULL, field_mapping1 = NULL,
-  table1 = NULL, field_mapping2 = NULL, table2 = NULL,
-  output_table = NULL, max_matches = NULL, threshold = NULL)
+enhancements_patch_data_unification(
+  id,
+  name = NULL,
+  schedule = NULL,
+  parent_id = NULL,
+  notifications = NULL,
+  field_mapping1 = NULL,
+  table1 = NULL,
+  field_mapping2 = NULL,
+  table2 = NULL,
+  output_table = NULL,
+  max_matches = NULL,
+  threshold = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the enhancement.}

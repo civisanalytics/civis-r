@@ -4,8 +4,14 @@
 \alias{apps_put_instances_shares_users}
 \title{Set the permissions users have on this object}
 \usage{
-apps_put_instances_shares_users(slug, id, user_ids, permission_level,
-  share_email_body = NULL, send_shared_email = NULL)
+apps_put_instances_shares_users(
+  slug,
+  id,
+  user_ids,
+  permission_level,
+  share_email_body = NULL,
+  send_shared_email = NULL
+)
 }
 \arguments{
 \item{slug}{string required. The slug for the application.}

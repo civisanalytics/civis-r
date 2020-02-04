@@ -4,8 +4,13 @@
 \alias{jobs_list_runs}
 \title{List runs for the given job}
 \usage{
-jobs_list_runs(id, limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+jobs_list_runs(
+  id,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for this job.}

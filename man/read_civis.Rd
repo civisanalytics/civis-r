@@ -14,8 +14,15 @@ read_civis(x, ...)
 
 \method{read_civis}{character}(x, database = NULL, ...)
 
-\method{read_civis}{sql}(x, database = NULL, using = utils::read.csv,
-  job_name = NULL, hidden = TRUE, verbose = FALSE, ...)
+\method{read_civis}{sql}(
+  x,
+  database = NULL,
+  using = utils::read.csv,
+  job_name = NULL,
+  hidden = TRUE,
+  verbose = FALSE,
+  ...
+)
 
 \method{read_civis}{civis_script}(x, using, regex = NULL, ...)
 }
@@ -106,9 +113,11 @@ mean_x <- tryCatch({
 }
 }
 \seealso{
-Other io: \code{\link{download_civis}},
-  \code{\link{query_civis_file}},
-  \code{\link{query_civis}},
-  \code{\link{write_civis_file}}, \code{\link{write_civis}}
+Other io: 
+\code{\link{download_civis}()},
+\code{\link{query_civis_file}()},
+\code{\link{query_civis}()},
+\code{\link{write_civis_file}()},
+\code{\link{write_civis}()}
 }
 \concept{io}

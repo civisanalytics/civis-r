@@ -4,10 +4,18 @@
 \alias{scripts_patch_custom}
 \title{Update some attributes of this Custom Script}
 \usage{
-scripts_patch_custom(id, name = NULL, parent_id = NULL,
-  arguments = NULL, remote_host_id = NULL, credential_id = NULL,
-  schedule = NULL, notifications = NULL, time_zone = NULL,
-  target_project_id = NULL)
+scripts_patch_custom(
+  id,
+  name = NULL,
+  parent_id = NULL,
+  arguments = NULL,
+  remote_host_id = NULL,
+  credential_id = NULL,
+  schedule = NULL,
+  notifications = NULL,
+  time_zone = NULL,
+  target_project_id = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the script.}

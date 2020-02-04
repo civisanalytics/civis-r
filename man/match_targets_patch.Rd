@@ -4,8 +4,14 @@
 \alias{match_targets_patch}
 \title{Update a match target}
 \usage{
-match_targets_patch(id, name = NULL, table = NULL, region = NULL,
-  target_file_name = NULL, encryption_key_credential_id = NULL)
+match_targets_patch(
+  id,
+  name = NULL,
+  table = NULL,
+  region = NULL,
+  target_file_name = NULL,
+  encryption_key_credential_id = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the match target}

@@ -4,8 +4,14 @@
 \alias{templates_put_reports}
 \title{Replace all attributes of this Report Template}
 \usage{
-templates_put_reports(id, name, code_body, category = NULL,
-  archived = NULL, provide_api_key = NULL)
+templates_put_reports(
+  id,
+  name,
+  code_body,
+  category = NULL,
+  archived = NULL,
+  provide_api_key = NULL
+)
 }
 \arguments{
 \item{id}{integer required.}

@@ -4,8 +4,12 @@
 \alias{remote_hosts_post_authenticate}
 \title{Authenticate against a remote host using either a credential or a user name and password}
 \usage{
-remote_hosts_post_authenticate(id, credential_id = NULL,
-  username = NULL, password = NULL)
+remote_hosts_post_authenticate(
+  id,
+  credential_id = NULL,
+  username = NULL,
+  password = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the remote host.}

@@ -4,8 +4,13 @@
 \alias{users_list_api_keys}
 \title{Show API keys belonging to the specified user}
 \usage{
-users_list_api_keys(id, limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+users_list_api_keys(
+  id,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{id}{string required. The ID of the user or 'me'.}

@@ -4,10 +4,18 @@
 \alias{scripts_put_custom}
 \title{Replace all attributes of this Custom Script}
 \usage{
-scripts_put_custom(id, name = NULL, parent_id = NULL,
-  arguments = NULL, remote_host_id = NULL, credential_id = NULL,
-  schedule = NULL, notifications = NULL, time_zone = NULL,
-  target_project_id = NULL)
+scripts_put_custom(
+  id,
+  name = NULL,
+  parent_id = NULL,
+  arguments = NULL,
+  remote_host_id = NULL,
+  credential_id = NULL,
+  schedule = NULL,
+  notifications = NULL,
+  time_zone = NULL,
+  target_project_id = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the script.}

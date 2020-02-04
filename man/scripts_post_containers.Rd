@@ -4,14 +4,28 @@
 \alias{scripts_post_containers}
 \title{Create a container}
 \usage{
-scripts_post_containers(required_resources, docker_image_name,
-  name = NULL, parent_id = NULL, user_context = NULL,
-  params = NULL, arguments = NULL, schedule = NULL,
-  notifications = NULL, repo_http_uri = NULL, repo_ref = NULL,
-  remote_host_credential_id = NULL, git_credential_id = NULL,
-  docker_command = NULL, docker_image_tag = NULL,
-  instance_type = NULL, cancel_timeout = NULL, time_zone = NULL,
-  hidden = NULL, target_project_id = NULL)
+scripts_post_containers(
+  required_resources,
+  docker_image_name,
+  name = NULL,
+  parent_id = NULL,
+  user_context = NULL,
+  params = NULL,
+  arguments = NULL,
+  schedule = NULL,
+  notifications = NULL,
+  repo_http_uri = NULL,
+  repo_ref = NULL,
+  remote_host_credential_id = NULL,
+  git_credential_id = NULL,
+  docker_command = NULL,
+  docker_image_tag = NULL,
+  instance_type = NULL,
+  cancel_timeout = NULL,
+  time_zone = NULL,
+  hidden = NULL,
+  target_project_id = NULL
+)
 }
 \arguments{
 \item{required_resources}{list required. A list containing the following elements: 

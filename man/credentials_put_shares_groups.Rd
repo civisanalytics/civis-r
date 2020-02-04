@@ -4,8 +4,13 @@
 \alias{credentials_put_shares_groups}
 \title{Set the permissions groups has on this object}
 \usage{
-credentials_put_shares_groups(id, group_ids, permission_level,
-  share_email_body = NULL, send_shared_email = NULL)
+credentials_put_shares_groups(
+  id,
+  group_ids,
+  permission_level,
+  share_email_body = NULL,
+  send_shared_email = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the resource that is shared.}

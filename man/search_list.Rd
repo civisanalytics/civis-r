@@ -4,9 +4,16 @@
 \alias{search_list}
 \title{Perform a search}
 \usage{
-search_list(query = NULL, type = NULL, offset = NULL, order = NULL,
-  owner = NULL, limit = NULL, archived = NULL,
-  last_run_state = NULL)
+search_list(
+  query = NULL,
+  type = NULL,
+  offset = NULL,
+  order = NULL,
+  owner = NULL,
+  limit = NULL,
+  archived = NULL,
+  last_run_state = NULL
+)
 }
 \arguments{
 \item{query}{string optional. The search query.}

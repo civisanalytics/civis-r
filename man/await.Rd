@@ -5,16 +5,29 @@
 \alias{await_all}
 \title{Call a function repeatedly until a status is reached.}
 \usage{
-await(f, ..., .status_key = "state", .success_states = c("succeeded",
-  "success"), .error_states = c("failed", "cancelled"),
+await(
+  f,
+  ...,
+  .status_key = "state",
+  .success_states = c("succeeded", "success"),
+  .error_states = c("failed", "cancelled"),
   .timeout = NULL,
   .interval = getOption("civis.default_polling_interval"),
-  .verbose = FALSE)
+  .verbose = FALSE
+)
 
-await_all(f, .x, .y = NULL, ..., .status_key = "state",
+await_all(
+  f,
+  .x,
+  .y = NULL,
+  ...,
+  .status_key = "state",
   .success_states = c("succeeded", "success"),
-  .error_states = c("failed", "cancelled"), .timeout = NULL,
-  .interval = NULL, .verbose = FALSE)
+  .error_states = c("failed", "cancelled"),
+  .timeout = NULL,
+  .interval = NULL,
+  .verbose = FALSE
+)
 }
 \arguments{
 \item{f}{function to be called repeatedly until a status is reached.}

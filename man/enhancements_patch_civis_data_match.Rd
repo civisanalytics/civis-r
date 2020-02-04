@@ -4,10 +4,19 @@
 \alias{enhancements_patch_civis_data_match}
 \title{Update some attributes of this Civis Data Match Enhancement}
 \usage{
-enhancements_patch_civis_data_match(id, name = NULL, schedule = NULL,
-  parent_id = NULL, notifications = NULL, input_field_mapping = NULL,
-  input_table = NULL, match_target_id = NULL, output_table = NULL,
-  max_matches = NULL, threshold = NULL)
+enhancements_patch_civis_data_match(
+  id,
+  name = NULL,
+  schedule = NULL,
+  parent_id = NULL,
+  notifications = NULL,
+  input_field_mapping = NULL,
+  input_table = NULL,
+  match_target_id = NULL,
+  output_table = NULL,
+  max_matches = NULL,
+  threshold = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the enhancement.}

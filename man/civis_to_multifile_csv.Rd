@@ -4,9 +4,17 @@
 \alias{civis_to_multifile_csv}
 \title{Split a Redshift table into multiple CSV parts on S3}
 \usage{
-civis_to_multifile_csv(sql, database, job_name = NULL, hidden = TRUE,
-  include_header = TRUE, compression = "gzip", delimiter = ",",
-  unquoted = FALSE, prefix = NULL)
+civis_to_multifile_csv(
+  sql,
+  database,
+  job_name = NULL,
+  hidden = TRUE,
+  include_header = TRUE,
+  compression = "gzip",
+  delimiter = ",",
+  unquoted = FALSE,
+  prefix = NULL
+)
 }
 \arguments{
 \item{sql}{string, The SQL select string to be executed.}

@@ -4,8 +4,14 @@
 \alias{publish_rmd}
 \title{Publish an R Markdown file to Platform Reports}
 \usage{
-publish_rmd(rmd_file, report_id = NULL, report_name = NULL,
-  provide_api_key = NULL, project_id = NULL, ...)
+publish_rmd(
+  rmd_file,
+  report_id = NULL,
+  report_name = NULL,
+  provide_api_key = NULL,
+  project_id = NULL,
+  ...
+)
 }
 \arguments{
 \item{rmd_file}{string, R Markdown file (.Rmd)}

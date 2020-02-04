@@ -4,8 +4,13 @@
 \alias{services_list_deployments_logs}
 \title{Get the logs for a Service deployment}
 \usage{
-services_list_deployments_logs(id, deployment_id, start_at = NULL,
-  end_at = NULL, limit = NULL)
+services_list_deployments_logs(
+  id,
+  deployment_id,
+  start_at = NULL,
+  end_at = NULL,
+  limit = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the owning Service.}

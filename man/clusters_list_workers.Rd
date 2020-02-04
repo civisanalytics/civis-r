@@ -4,8 +4,12 @@
 \alias{clusters_list_workers}
 \title{List Worker Clusters}
 \usage{
-clusters_list_workers(limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+clusters_list_workers(
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{limit}{integer optional. Number of results to return. Defaults to its maximum of 50.}

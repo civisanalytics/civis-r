@@ -4,9 +4,16 @@
 \alias{workflows_post}
 \title{Create a Workflow}
 \usage{
-workflows_post(name, description = NULL, from_job_chain = NULL,
-  definition = NULL, schedule = NULL, time_zone = NULL,
-  notifications = NULL, hidden = NULL)
+workflows_post(
+  name,
+  description = NULL,
+  from_job_chain = NULL,
+  definition = NULL,
+  schedule = NULL,
+  time_zone = NULL,
+  notifications = NULL,
+  hidden = NULL
+)
 }
 \arguments{
 \item{name}{string required. The name of this workflow.}

@@ -4,8 +4,12 @@
 \alias{scripts_post_python3_clone}
 \title{Clone this Python Script}
 \usage{
-scripts_post_python3_clone(id, clone_schedule = NULL,
-  clone_triggers = NULL, clone_notifications = NULL)
+scripts_post_python3_clone(
+  id,
+  clone_schedule = NULL,
+  clone_triggers = NULL,
+  clone_notifications = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the script.}

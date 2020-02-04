@@ -4,8 +4,7 @@
 \alias{codes_put}
 \title{Update a code}
 \usage{
-codes_put(id, name, type, body, readme, score = NULL,
-  auth_s3_url = NULL)
+codes_put(id, name, type, body, readme, score = NULL, auth_s3_url = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID for this code.}

@@ -4,8 +4,7 @@
 \alias{multipart_upload}
 \title{Upload to files endpoint in parts.}
 \usage{
-multipart_upload(file, name = "", chunk_size = 32 * 1024,
-  expires_at = NULL)
+multipart_upload(file, name = "", chunk_size = 32 * 1024, expires_at = NULL)
 }
 \arguments{
 \item{file}{the file}

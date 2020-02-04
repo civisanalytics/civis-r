@@ -4,8 +4,14 @@
 \alias{scripts_post_containers_runs_logs}
 \title{Add log messages}
 \usage{
-scripts_post_containers_runs_logs(id, run_id, message = NULL,
-  level = NULL, messages = NULL, child_job_id = NULL)
+scripts_post_containers_runs_logs(
+  id,
+  run_id,
+  message = NULL,
+  level = NULL,
+  messages = NULL,
+  child_job_id = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the script.}

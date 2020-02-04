@@ -4,11 +4,23 @@
 \alias{enhancements_put_geocode}
 \title{Replace all attributes of this Geocode Enhancement}
 \usage{
-enhancements_put_geocode(id, name, remote_host_id, credential_id,
-  source_schema_and_table, schedule = NULL, parent_id = NULL,
-  notifications = NULL, multipart_key = NULL, limiting_sql = NULL,
-  target_schema = NULL, target_table = NULL, country = NULL,
-  provider = NULL, output_address = NULL)
+enhancements_put_geocode(
+  id,
+  name,
+  remote_host_id,
+  credential_id,
+  source_schema_and_table,
+  schedule = NULL,
+  parent_id = NULL,
+  notifications = NULL,
+  multipart_key = NULL,
+  limiting_sql = NULL,
+  target_schema = NULL,
+  target_table = NULL,
+  country = NULL,
+  provider = NULL,
+  output_address = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the enhancement.}

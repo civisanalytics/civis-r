@@ -4,11 +4,20 @@
 \alias{imports_put_files_csv}
 \title{Replace all attributes of this CSV Import}
 \usage{
-imports_put_files_csv(id, source, destination, first_row_is_header,
-  column_delimiter = NULL, escaped = NULL, compression = NULL,
-  existing_table_rows = NULL, max_errors = NULL,
-  table_columns = NULL, execution = NULL,
-  redshift_destination_options = NULL)
+imports_put_files_csv(
+  id,
+  source,
+  destination,
+  first_row_is_header,
+  column_delimiter = NULL,
+  escaped = NULL,
+  compression = NULL,
+  existing_table_rows = NULL,
+  max_errors = NULL,
+  table_columns = NULL,
+  execution = NULL,
+  redshift_destination_options = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the import.}

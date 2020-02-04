@@ -4,8 +4,15 @@
 \alias{credentials_list}
 \title{List credentials}
 \usage{
-credentials_list(type = NULL, remote_host_id = NULL, default = NULL,
-  limit = NULL, page_num = NULL, order = NULL, order_dir = NULL)
+credentials_list(
+  type = NULL,
+  remote_host_id = NULL,
+  default = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{type}{string optional. The type (or types) of credentials to return. One or more of: Amazon Web Services S3, Bitbucket, BSD::API, CASS/NCOA PAF, Catalist::API, Catalist::SFTP, Certificate, Civis Platform, Custom, Database, Google, Github, JobTraits::Ftp, Salesforce User, Salesforce Client, Silverpop Application, Silverpop Refresh Token, Silverpop User, TableauUser, VAN::MyVoterFile, VAN::MyCampaign, and VAN::BothModes. Specify multiple values as a comma-separated list (e.g., "A,B").}

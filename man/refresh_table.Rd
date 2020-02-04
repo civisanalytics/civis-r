@@ -22,7 +22,8 @@ Refreshes a table on Redshift using \code{\link{tables_post_refresh}}, which run
 table scanner and updates table meta-data.
 }
 \seealso{
-Other tables: \code{\link{get_table_id}},
-  \code{\link{transfer_table}}
+Other tables: 
+\code{\link{get_table_id}()},
+\code{\link{transfer_table}()}
 }
 \concept{tables}
