@@ -4,9 +4,17 @@
 \alias{scripts_post}
 \title{Create a script}
 \usage{
-scripts_post(name, remote_host_id, credential_id, sql, params = NULL,
-  arguments = NULL, template_script_id = NULL, notifications = NULL,
-  hidden = NULL)
+scripts_post(
+  name,
+  remote_host_id,
+  credential_id,
+  sql,
+  params = NULL,
+  arguments = NULL,
+  template_script_id = NULL,
+  notifications = NULL,
+  hidden = NULL
+)
 }
 \arguments{
 \item{name}{string required. The name of the script.}

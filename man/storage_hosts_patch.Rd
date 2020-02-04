@@ -4,8 +4,13 @@
 \alias{storage_hosts_patch}
 \title{Update some attributes of this storage host}
 \usage{
-storage_hosts_patch(id, name = NULL, provider = NULL, bucket = NULL,
-  s3_options = NULL)
+storage_hosts_patch(
+  id,
+  name = NULL,
+  provider = NULL,
+  bucket = NULL,
+  s3_options = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the storage host.}

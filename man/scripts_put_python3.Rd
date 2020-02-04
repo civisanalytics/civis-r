@@ -4,12 +4,24 @@
 \alias{scripts_put_python3}
 \title{Replace all attributes of this Python Script}
 \usage{
-scripts_put_python3(id, name, source, parent_id = NULL,
-  user_context = NULL, params = NULL, arguments = NULL,
-  schedule = NULL, notifications = NULL, next_run_at = NULL,
-  time_zone = NULL, target_project_id = NULL,
-  required_resources = NULL, instance_type = NULL,
-  cancel_timeout = NULL, docker_image_tag = NULL)
+scripts_put_python3(
+  id,
+  name,
+  source,
+  parent_id = NULL,
+  user_context = NULL,
+  params = NULL,
+  arguments = NULL,
+  schedule = NULL,
+  notifications = NULL,
+  next_run_at = NULL,
+  time_zone = NULL,
+  target_project_id = NULL,
+  required_resources = NULL,
+  instance_type = NULL,
+  cancel_timeout = NULL,
+  docker_image_tag = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the script.}

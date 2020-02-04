@@ -4,8 +4,12 @@
 \alias{civis_table}
 \title{A table in the Civis Platform}
 \usage{
-civis_table(table_name, database_name = NULL, sql_where = NULL,
-  sql_limit = NULL)
+civis_table(
+  table_name,
+  database_name = NULL,
+  sql_where = NULL,
+  sql_limit = NULL
+)
 }
 \arguments{
 \item{table_name}{The table name, as \code{"schema.table"}.}

@@ -4,8 +4,13 @@
 \alias{templates_put_scripts}
 \title{Replace all attributes of this Script Template}
 \usage{
-templates_put_scripts(id, name, note = NULL, ui_report_id = NULL,
-  archived = NULL)
+templates_put_scripts(
+  id,
+  name,
+  note = NULL,
+  ui_report_id = NULL,
+  archived = NULL
+)
 }
 \arguments{
 \item{id}{integer required.}

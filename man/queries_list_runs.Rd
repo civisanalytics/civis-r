@@ -4,8 +4,13 @@
 \alias{queries_list_runs}
 \title{List runs for the given query}
 \usage{
-queries_list_runs(id, limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+queries_list_runs(
+  id,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the query.}

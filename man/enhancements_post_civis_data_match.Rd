@@ -4,10 +4,18 @@
 \alias{enhancements_post_civis_data_match}
 \title{Create a Civis Data Match Enhancement}
 \usage{
-enhancements_post_civis_data_match(name, input_field_mapping,
-  match_target_id, schedule = NULL, parent_id = NULL,
-  notifications = NULL, input_table = NULL, output_table = NULL,
-  max_matches = NULL, threshold = NULL)
+enhancements_post_civis_data_match(
+  name,
+  input_field_mapping,
+  match_target_id,
+  schedule = NULL,
+  parent_id = NULL,
+  notifications = NULL,
+  input_table = NULL,
+  output_table = NULL,
+  max_matches = NULL,
+  threshold = NULL
+)
 }
 \arguments{
 \item{name}{string required. The name of the enhancement job.}

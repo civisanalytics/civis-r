@@ -4,8 +4,12 @@
 \alias{announcements_list}
 \title{List announcements}
 \usage{
-announcements_list(limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+announcements_list(
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{limit}{integer optional. Number of results to return. Defaults to 10. Maximum allowed is 50.}

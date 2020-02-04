@@ -4,8 +4,12 @@
 \alias{predictions_patch}
 \title{Update a prediction}
 \usage{
-predictions_patch(id, output_table_name = NULL, limiting_sql = NULL,
-  primary_key = NULL)
+predictions_patch(
+  id,
+  output_table_name = NULL,
+  limiting_sql = NULL,
+  primary_key = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the prediction.}

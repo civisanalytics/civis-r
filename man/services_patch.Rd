@@ -4,13 +4,27 @@
 \alias{services_patch}
 \title{Update some attributes of this Service}
 \usage{
-services_patch(id, name = NULL, description = NULL,
-  docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL,
-  replicas = NULL, max_replicas = NULL, instance_type = NULL,
-  memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL,
-  permission_set_id = NULL, git_repo_url = NULL, git_repo_ref = NULL,
-  git_path_dir = NULL, environment_variables = NULL,
-  notifications = NULL)
+services_patch(
+  id,
+  name = NULL,
+  description = NULL,
+  docker_image_name = NULL,
+  docker_image_tag = NULL,
+  schedule = NULL,
+  replicas = NULL,
+  max_replicas = NULL,
+  instance_type = NULL,
+  memory = NULL,
+  cpu = NULL,
+  credentials = NULL,
+  api_key_id = NULL,
+  permission_set_id = NULL,
+  git_repo_url = NULL,
+  git_repo_ref = NULL,
+  git_path_dir = NULL,
+  environment_variables = NULL,
+  notifications = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for this Service.}

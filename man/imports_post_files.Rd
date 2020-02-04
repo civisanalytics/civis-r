@@ -4,11 +4,23 @@
 \alias{imports_post_files}
 \title{Initate an import of a tabular file into the platform}
 \usage{
-imports_post_files(schema, name, remote_host_id, credential_id,
-  max_errors = NULL, existing_table_rows = NULL, diststyle = NULL,
-  distkey = NULL, sortkey1 = NULL, sortkey2 = NULL,
-  column_delimiter = NULL, first_row_is_header = NULL,
-  multipart = NULL, escaped = NULL, hidden = NULL)
+imports_post_files(
+  schema,
+  name,
+  remote_host_id,
+  credential_id,
+  max_errors = NULL,
+  existing_table_rows = NULL,
+  diststyle = NULL,
+  distkey = NULL,
+  sortkey1 = NULL,
+  sortkey2 = NULL,
+  column_delimiter = NULL,
+  first_row_is_header = NULL,
+  multipart = NULL,
+  escaped = NULL,
+  hidden = NULL
+)
 }
 \arguments{
 \item{schema}{string required. The schema of the destination table.}

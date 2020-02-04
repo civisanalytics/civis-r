@@ -4,8 +4,15 @@
 \alias{codes_patch}
 \title{Update a code}
 \usage{
-codes_patch(id, name = NULL, type = NULL, body = NULL,
-  readme = NULL, score = NULL, auth_s3_url = NULL)
+codes_patch(
+  id,
+  name = NULL,
+  type = NULL,
+  body = NULL,
+  readme = NULL,
+  score = NULL,
+  auth_s3_url = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for this code.}

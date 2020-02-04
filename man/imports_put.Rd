@@ -4,9 +4,19 @@
 \alias{imports_put}
 \title{Update an import}
 \usage{
-imports_put(id, name, sync_type, is_outbound, source = NULL,
-  destination = NULL, schedule = NULL, notifications = NULL,
-  parent_id = NULL, next_run_at = NULL, time_zone = NULL)
+imports_put(
+  id,
+  name,
+  sync_type,
+  is_outbound,
+  source = NULL,
+  destination = NULL,
+  schedule = NULL,
+  notifications = NULL,
+  parent_id = NULL,
+  next_run_at = NULL,
+  time_zone = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the import.}

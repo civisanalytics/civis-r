@@ -4,8 +4,13 @@
 \alias{enhancements_list_cass_ncoa_runs}
 \title{List runs for the given cass_ncoa}
 \usage{
-enhancements_list_cass_ncoa_runs(id, limit = NULL, page_num = NULL,
-  order = NULL, order_dir = NULL)
+enhancements_list_cass_ncoa_runs(
+  id,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the cass_ncoa.}

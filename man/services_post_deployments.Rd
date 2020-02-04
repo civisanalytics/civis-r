@@ -4,8 +4,7 @@
 \alias{services_post_deployments}
 \title{Deploy a Service}
 \usage{
-services_post_deployments(service_id, deployment_id = NULL,
-  published = NULL)
+services_post_deployments(service_id, deployment_id = NULL, published = NULL)
 }
 \arguments{
 \item{service_id}{integer required. The ID of the owning Service}

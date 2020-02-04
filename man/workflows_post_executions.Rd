@@ -4,8 +4,12 @@
 \alias{workflows_post_executions}
 \title{Execute a workflow}
 \usage{
-workflows_post_executions(id, target_task = NULL, input = NULL,
-  included_tasks = NULL)
+workflows_post_executions(
+  id,
+  target_task = NULL,
+  input = NULL,
+  included_tasks = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the workflow.}

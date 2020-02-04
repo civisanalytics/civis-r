@@ -9,16 +9,33 @@
 \usage{
 download_civis(x, ...)
 
-\method{download_civis}{character}(x, database = NULL, file,
-  overwrite = FALSE, progress = FALSE, split = FALSE,
-  job_name = NULL, hidden = TRUE, verbose = FALSE, ...)
+\method{download_civis}{character}(
+  x,
+  database = NULL,
+  file,
+  overwrite = FALSE,
+  progress = FALSE,
+  split = FALSE,
+  job_name = NULL,
+  hidden = TRUE,
+  verbose = FALSE,
+  ...
+)
 
-\method{download_civis}{sql}(x, database = NULL, file,
-  overwrite = FALSE, progress = FALSE, split = FALSE,
-  job_name = NULL, hidden = TRUE, verbose = FALSE, ...)
+\method{download_civis}{sql}(
+  x,
+  database = NULL,
+  file,
+  overwrite = FALSE,
+  progress = FALSE,
+  split = FALSE,
+  job_name = NULL,
+  hidden = TRUE,
+  verbose = FALSE,
+  ...
+)
 
-\method{download_civis}{numeric}(x, file, overwrite = FALSE,
-  progress = FALSE, ...)
+\method{download_civis}{numeric}(x, file, overwrite = FALSE, progress = FALSE, ...)
 }
 \arguments{
 \item{x}{\code{"schema.table"}, \code{sql("query")}, or a file id.}
@@ -89,8 +106,11 @@ identical(df, df2)
 }
 }
 \seealso{
-Other io: \code{\link{query_civis_file}},
-  \code{\link{query_civis}}, \code{\link{read_civis}},
-  \code{\link{write_civis_file}}, \code{\link{write_civis}}
+Other io: 
+\code{\link{query_civis_file}()},
+\code{\link{query_civis}()},
+\code{\link{read_civis}()},
+\code{\link{write_civis_file}()},
+\code{\link{write_civis}()}
 }
 \concept{io}

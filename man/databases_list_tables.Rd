@@ -4,8 +4,14 @@
 \alias{databases_list_tables}
 \title{List tables in the specified database, deprecated use "GET /tables" instead}
 \usage{
-databases_list_tables(id, name = NULL, limit = NULL, page_num = NULL,
-  order = NULL, order_dir = NULL)
+databases_list_tables(
+  id,
+  name = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the database.}

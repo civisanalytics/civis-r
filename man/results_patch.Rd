@@ -4,9 +4,17 @@
 \alias{results_patch}
 \title{Update a report}
 \usage{
-results_patch(id, name = NULL, script_id = NULL, code_body = NULL,
-  config = NULL, app_state = NULL, provide_api_key = NULL,
-  template_id = NULL, use_viewers_tableau_username = NULL)
+results_patch(
+  id,
+  name = NULL,
+  script_id = NULL,
+  code_body = NULL,
+  config = NULL,
+  app_state = NULL,
+  provide_api_key = NULL,
+  template_id = NULL,
+  use_viewers_tableau_username = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the report to modify.}

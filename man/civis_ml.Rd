@@ -6,24 +6,48 @@
 \alias{predict.civis_ml}
 \title{Interface for modeling in the Civis Platform}
 \usage{
-civis_ml(x, dependent_variable, model_type, primary_key = NULL,
-  excluded_columns = NULL, parameters = NULL, fit_params = NULL,
-  cross_validation_parameters = NULL, calibration = NULL,
-  oos_scores_table = NULL, oos_scores_db = NULL,
+civis_ml(
+  x,
+  dependent_variable,
+  model_type,
+  primary_key = NULL,
+  excluded_columns = NULL,
+  parameters = NULL,
+  fit_params = NULL,
+  cross_validation_parameters = NULL,
+  calibration = NULL,
+  oos_scores_table = NULL,
+  oos_scores_db = NULL,
   oos_scores_if_exists = c("fail", "append", "drop", "truncate"),
-  model_name = NULL, cpu_requested = NULL, memory_requested = NULL,
-  disk_requested = NULL, notifications = NULL,
-  polling_interval = NULL, validation_data = c("train", "skip"),
-  n_jobs = NULL, verbose = FALSE)
+  model_name = NULL,
+  cpu_requested = NULL,
+  memory_requested = NULL,
+  disk_requested = NULL,
+  notifications = NULL,
+  polling_interval = NULL,
+  validation_data = c("train", "skip"),
+  n_jobs = NULL,
+  verbose = FALSE
+)
 
 civis_ml_fetch_existing(model_id, run_id = NULL)
 
-\method{predict}{civis_ml}(object, newdata, primary_key = NA,
-  output_table = NULL, output_db = NULL, if_output_exists = c("fail",
-  "append", "drop", "truncate"), n_jobs = NULL, cpu_requested = NULL,
-  memory_requested = NULL, disk_requested = NULL,
-  polling_interval = NULL, verbose = FALSE, dvs_to_predict = NULL,
-  ...)
+\method{predict}{civis_ml}(
+  object,
+  newdata,
+  primary_key = NA,
+  output_table = NULL,
+  output_db = NULL,
+  if_output_exists = c("fail", "append", "drop", "truncate"),
+  n_jobs = NULL,
+  cpu_requested = NULL,
+  memory_requested = NULL,
+  disk_requested = NULL,
+  polling_interval = NULL,
+  verbose = FALSE,
+  dvs_to_predict = NULL,
+  ...
+)
 }
 \arguments{
 \item{x, newdata}{See the Data Sources section below.}

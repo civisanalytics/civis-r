@@ -4,8 +4,7 @@
 \alias{git_repos_list}
 \title{List bookmarked git repositories}
 \usage{
-git_repos_list(limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+git_repos_list(limit = NULL, page_num = NULL, order = NULL, order_dir = NULL)
 }
 \arguments{
 \item{limit}{integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.}

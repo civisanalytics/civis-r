@@ -4,9 +4,19 @@
 \alias{jobs_list}
 \title{List Jobs}
 \usage{
-jobs_list(state = NULL, type = NULL, q = NULL, permission = NULL,
-  scheduled = NULL, hidden = NULL, archived = NULL, limit = NULL,
-  page_num = NULL, order = NULL, order_dir = NULL)
+jobs_list(
+  state = NULL,
+  type = NULL,
+  q = NULL,
+  permission = NULL,
+  scheduled = NULL,
+  hidden = NULL,
+  archived = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{state}{string optional. The job's state. One or more of queued, running, succeeded, failed, and cancelled. Specify multiple values as a comma-separated list (e.g., "A,B").}

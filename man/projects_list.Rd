@@ -4,9 +4,16 @@
 \alias{projects_list}
 \title{List projects}
 \usage{
-projects_list(author = NULL, permission = NULL, hidden = NULL,
-  archived = NULL, limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+projects_list(
+  author = NULL,
+  permission = NULL,
+  hidden = NULL,
+  archived = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{author}{string optional. If specified, return projects owned by this author. It accepts a comma-separated list of author ids.}

@@ -4,11 +4,22 @@
 \alias{enhancements_post_geocode}
 \title{Create a Geocode Enhancement}
 \usage{
-enhancements_post_geocode(name, remote_host_id, credential_id,
-  source_schema_and_table, schedule = NULL, parent_id = NULL,
-  notifications = NULL, multipart_key = NULL, limiting_sql = NULL,
-  target_schema = NULL, target_table = NULL, country = NULL,
-  provider = NULL, output_address = NULL)
+enhancements_post_geocode(
+  name,
+  remote_host_id,
+  credential_id,
+  source_schema_and_table,
+  schedule = NULL,
+  parent_id = NULL,
+  notifications = NULL,
+  multipart_key = NULL,
+  limiting_sql = NULL,
+  target_schema = NULL,
+  target_table = NULL,
+  country = NULL,
+  provider = NULL,
+  output_address = NULL
+)
 }
 \arguments{
 \item{name}{string required. The name of the enhancement job.}

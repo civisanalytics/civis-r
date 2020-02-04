@@ -4,11 +4,23 @@
 \alias{scripts_put_sql}
 \title{Replace all attributes of this SQL script}
 \usage{
-scripts_put_sql(id, name, sql, remote_host_id, credential_id,
-  parent_id = NULL, user_context = NULL, params = NULL,
-  arguments = NULL, schedule = NULL, notifications = NULL,
-  next_run_at = NULL, time_zone = NULL, target_project_id = NULL,
-  csv_settings = NULL)
+scripts_put_sql(
+  id,
+  name,
+  sql,
+  remote_host_id,
+  credential_id,
+  parent_id = NULL,
+  user_context = NULL,
+  params = NULL,
+  arguments = NULL,
+  schedule = NULL,
+  notifications = NULL,
+  next_run_at = NULL,
+  time_zone = NULL,
+  target_project_id = NULL,
+  csv_settings = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the script.}

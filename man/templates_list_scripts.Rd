@@ -4,8 +4,14 @@
 \alias{templates_list_scripts}
 \title{List Script Templates}
 \usage{
-templates_list_scripts(hidden = NULL, category = NULL, limit = NULL,
-  page_num = NULL, order = NULL, order_dir = NULL)
+templates_list_scripts(
+  hidden = NULL,
+  category = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}

@@ -4,8 +4,14 @@
 \alias{enhancements_list_geocode_runs_outputs}
 \title{List the outputs for a run}
 \usage{
-enhancements_list_geocode_runs_outputs(id, run_id, limit = NULL,
-  page_num = NULL, order = NULL, order_dir = NULL)
+enhancements_list_geocode_runs_outputs(
+  id,
+  run_id,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the job.}

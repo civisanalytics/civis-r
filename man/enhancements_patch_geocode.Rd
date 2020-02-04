@@ -4,12 +4,23 @@
 \alias{enhancements_patch_geocode}
 \title{Update some attributes of this Geocode Enhancement}
 \usage{
-enhancements_patch_geocode(id, name = NULL, schedule = NULL,
-  parent_id = NULL, notifications = NULL, remote_host_id = NULL,
-  credential_id = NULL, source_schema_and_table = NULL,
-  multipart_key = NULL, limiting_sql = NULL, target_schema = NULL,
-  target_table = NULL, country = NULL, provider = NULL,
-  output_address = NULL)
+enhancements_patch_geocode(
+  id,
+  name = NULL,
+  schedule = NULL,
+  parent_id = NULL,
+  notifications = NULL,
+  remote_host_id = NULL,
+  credential_id = NULL,
+  source_schema_and_table = NULL,
+  multipart_key = NULL,
+  limiting_sql = NULL,
+  target_schema = NULL,
+  target_table = NULL,
+  country = NULL,
+  provider = NULL,
+  output_address = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the enhancement.}

@@ -4,19 +4,37 @@
 \alias{civis_ml_random_forest_classifier}
 \title{CivisML Random Forest Classifier}
 \usage{
-civis_ml_random_forest_classifier(x, dependent_variable,
-  primary_key = NULL, excluded_columns = NULL, n_estimators = 500,
-  criterion = c("gini", "entropy"), max_depth = NULL,
-  min_samples_split = 2, min_samples_leaf = 1,
-  min_weight_fraction_leaf = 0, max_features = "sqrt",
-  max_leaf_nodes = NULL, min_impurity_split = 1e-07,
-  bootstrap = TRUE, random_state = 42, class_weight = NULL,
-  fit_params = NULL, cross_validation_parameters = NULL,
-  calibration = NULL, oos_scores_table = NULL, oos_scores_db = NULL,
+civis_ml_random_forest_classifier(
+  x,
+  dependent_variable,
+  primary_key = NULL,
+  excluded_columns = NULL,
+  n_estimators = 500,
+  criterion = c("gini", "entropy"),
+  max_depth = NULL,
+  min_samples_split = 2,
+  min_samples_leaf = 1,
+  min_weight_fraction_leaf = 0,
+  max_features = "sqrt",
+  max_leaf_nodes = NULL,
+  min_impurity_split = 1e-07,
+  bootstrap = TRUE,
+  random_state = 42,
+  class_weight = NULL,
+  fit_params = NULL,
+  cross_validation_parameters = NULL,
+  calibration = NULL,
+  oos_scores_table = NULL,
+  oos_scores_db = NULL,
   oos_scores_if_exists = c("fail", "append", "drop", "truncate"),
-  model_name = NULL, cpu_requested = NULL, memory_requested = NULL,
-  disk_requested = NULL, notifications = NULL,
-  polling_interval = NULL, verbose = FALSE)
+  model_name = NULL,
+  cpu_requested = NULL,
+  memory_requested = NULL,
+  disk_requested = NULL,
+  notifications = NULL,
+  polling_interval = NULL,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{x}{See the Data Sources section below.}

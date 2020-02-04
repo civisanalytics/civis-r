@@ -4,9 +4,15 @@
 \alias{clusters_list_kubernetes_deployments}
 \title{List the deployments associated with a Kubernetes Cluster}
 \usage{
-clusters_list_kubernetes_deployments(id, base_type = NULL,
-  state = NULL, limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+clusters_list_kubernetes_deployments(
+  id,
+  base_type = NULL,
+  state = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The id of the cluster.}

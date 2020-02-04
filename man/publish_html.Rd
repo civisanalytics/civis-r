@@ -4,8 +4,13 @@
 \alias{publish_html}
 \title{Publish HTML to Platform Reports}
 \usage{
-publish_html(html_file, report_id = NULL, report_name = NULL,
-  provide_api_key = NULL, project_id = NULL)
+publish_html(
+  html_file,
+  report_id = NULL,
+  report_name = NULL,
+  provide_api_key = NULL,
+  project_id = NULL
+)
 }
 \arguments{
 \item{html_file}{string, HTML file}

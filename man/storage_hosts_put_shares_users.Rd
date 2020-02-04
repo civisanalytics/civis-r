@@ -4,8 +4,13 @@
 \alias{storage_hosts_put_shares_users}
 \title{Set the permissions users have on this object}
 \usage{
-storage_hosts_put_shares_users(id, user_ids, permission_level,
-  share_email_body = NULL, send_shared_email = NULL)
+storage_hosts_put_shares_users(
+  id,
+  user_ids,
+  permission_level,
+  share_email_body = NULL,
+  send_shared_email = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the resource that is shared.}

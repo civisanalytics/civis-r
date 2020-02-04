@@ -4,9 +4,18 @@
 \alias{users_list}
 \title{List users}
 \usage{
-users_list(feature_flag = NULL, account_status = NULL, query = NULL,
-  group_id = NULL, organization_id = NULL, exclude_groups = NULL,
-  limit = NULL, page_num = NULL, order = NULL, order_dir = NULL)
+users_list(
+  feature_flag = NULL,
+  account_status = NULL,
+  query = NULL,
+  group_id = NULL,
+  organization_id = NULL,
+  exclude_groups = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{feature_flag}{string optional. Return users that have a feature flag enabled.}

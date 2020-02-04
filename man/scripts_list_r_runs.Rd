@@ -4,8 +4,13 @@
 \alias{scripts_list_r_runs}
 \title{List runs for the given r}
 \usage{
-scripts_list_r_runs(id, limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+scripts_list_r_runs(
+  id,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the r.}

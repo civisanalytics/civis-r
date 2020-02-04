@@ -4,10 +4,19 @@
 \alias{scripts_post_custom}
 \title{Create a Custom Script}
 \usage{
-scripts_post_custom(from_template_id, name = NULL, parent_id = NULL,
-  arguments = NULL, remote_host_id = NULL, credential_id = NULL,
-  schedule = NULL, notifications = NULL, time_zone = NULL,
-  hidden = NULL, target_project_id = NULL)
+scripts_post_custom(
+  from_template_id,
+  name = NULL,
+  parent_id = NULL,
+  arguments = NULL,
+  remote_host_id = NULL,
+  credential_id = NULL,
+  schedule = NULL,
+  notifications = NULL,
+  time_zone = NULL,
+  hidden = NULL,
+  target_project_id = NULL
+)
 }
 \arguments{
 \item{from_template_id}{integer required. The ID of the template script.}

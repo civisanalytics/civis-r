@@ -4,8 +4,12 @@
 \alias{scripts_post_r_clone}
 \title{Clone this R Script}
 \usage{
-scripts_post_r_clone(id, clone_schedule = NULL, clone_triggers = NULL,
-  clone_notifications = NULL)
+scripts_post_r_clone(
+  id,
+  clone_schedule = NULL,
+  clone_triggers = NULL,
+  clone_notifications = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the script.}

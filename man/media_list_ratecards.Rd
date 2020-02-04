@@ -4,8 +4,7 @@
 \alias{media_list_ratecards}
 \title{List all ratecards}
 \usage{
-media_list_ratecards(archived = NULL, filename = NULL,
-  dma_number = NULL)
+media_list_ratecards(archived = NULL, filename = NULL, dma_number = NULL)
 }
 \arguments{
 \item{archived}{string optional. The archival status of the requested item(s).}

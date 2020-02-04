@@ -4,9 +4,16 @@
 \alias{tables_list}
 \title{List tables}
 \usage{
-tables_list(database_id = NULL, schema = NULL, name = NULL,
-  search = NULL, limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+tables_list(
+  database_id = NULL,
+  schema = NULL,
+  name = NULL,
+  search = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{database_id}{integer optional. The ID of the database.}

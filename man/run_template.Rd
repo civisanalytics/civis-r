@@ -40,8 +40,9 @@ run_template(id, arguments = list(arg1 = 1, arg2 = 2), JSONValue=TRUE, ...)
 }
 }
 \seealso{
-Other script_utils: \code{\link{civis_script}},
-  \code{\link{fetch_output_file_ids}},
-  \code{\link{run_civis}}
+Other script_utils: 
+\code{\link{civis_script}()},
+\code{\link{fetch_output_file_ids}()},
+\code{\link{run_civis}()}
 }
 \concept{script_utils}
