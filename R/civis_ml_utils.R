@@ -72,7 +72,7 @@ get_template_ids_all_versions <- function(){
   return(civis_ml_template_ids)
 
 }
-
+get_template_ids_all_versions <- memoise::memoise(get_template_ids_all_versions)
 
 #' Derive the job type and version from the given alias.
 #'
