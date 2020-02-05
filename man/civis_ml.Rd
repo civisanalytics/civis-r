@@ -27,7 +27,8 @@ civis_ml(
   polling_interval = NULL,
   validation_data = c("train", "skip"),
   n_jobs = NULL,
-  verbose = FALSE
+  verbose = FALSE,
+  civisml_version = "prod"
 )
 
 civis_ml_fetch_existing(model_id, run_id = NULL)
@@ -128,6 +129,9 @@ possible without using all resources in the cluster).}
 
 \item{verbose}{Optional, If \code{TRUE}, supply debug outputs in Platform
 logs and make prediction child jobs visible.}
+
+\item{civisml_version}{Optional, a one-length character vector of the
+CivisML version.  If not provided, the latest version in production is used.}
 
 \item{model_id}{The \code{id} of CivisML model built previously.}
 
