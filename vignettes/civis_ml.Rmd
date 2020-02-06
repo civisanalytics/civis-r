@@ -346,8 +346,7 @@ By default, CivisML uses its latest version in production. Under special
 circumstances, if you would like a specific version (e.g., an older version),
 both `civis_ml` and the `civis_ml_*` functions have the optional parameter
 ``civisml_version`` that accepts a string, e.g., ``'v2.3'``
-for CivisML v2.3. Please see [here](https://civis.zendesk.com/hc/en-us
-articles/360000260011-CivisML) for the list of CivisML versions.
+for CivisML v2.3. Please see [here](https://civis.zendesk.com/hc/en-us/articles/360000260011-CivisML) for the list of CivisML versions.
 
 ### More information
 
