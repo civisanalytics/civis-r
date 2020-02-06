@@ -33,7 +33,8 @@ civis_ml_extra_trees_classifier(
   disk_requested = NULL,
   notifications = NULL,
   polling_interval = NULL,
-  verbose = FALSE
+  verbose = FALSE,
+  civisml_version = "prod"
 )
 }
 \arguments{
@@ -158,6 +159,9 @@ and URL notification.}
 
 \item{verbose}{Optional, If \code{TRUE}, supply debug outputs in Platform
 logs and make prediction child jobs visible.}
+
+\item{civisml_version}{Optional, a one-length character vector of the
+CivisML version.  If not provided, the latest version in production is used.}
 }
 \value{
 A \code{civis_ml} object, a list containing the following elements:

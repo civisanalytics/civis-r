@@ -19,12 +19,26 @@ CIVIS_ML_CLASSIFIERS <- c("sparse_logistic",
                           "multilayer_perceptron_classifier",
                           "stacking_classifier")
 
-get_train_template_id <- function() {
+#' Get training template IDs for the specified CivisML version
+#'
+#' @param civisml_version A one-length character vector of the CivisML version
+#' @return The template ID for training
+get_train_template_id <- function(civisml_version = "prod") {
 
   civis_ml_template_ids <- get_template_ids_all_versions()
 
-  id <- civis_ml_template_ids[civis_ml_template_ids$version == "prod" &
+  id <- civis_ml_template_ids[civis_ml_template_ids$version == civisml_version &
                               civis_ml_template_ids$name == "training", "id"]
+
+  # invalid CivisML version doesn't raise an error
+  if (length(id)==0) {
+
+    stop(paste(civisml_version, "is an invalid CivisML version.",
+      "Either this version does not exist or you do not have access to this version.",
+      "Versions accessible to you are:", paste(unique(civis_ml_template_ids$version),
+        collapse=", ")))
+
+  }
 
   return(id)
 

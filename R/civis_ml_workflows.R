@@ -92,7 +92,8 @@ civis_ml_sparse_logistic <- function(x,
                                      disk_requested = NULL,
                                      notifications = NULL,
                                      polling_interval = NULL,
-                                     verbose = FALSE) {
+                                     verbose = FALSE,
+                                     civisml_version = "prod") {
 
   model_type <- "sparse_logistic"
   penalty <- match.arg(penalty)
@@ -146,7 +147,7 @@ civis_ml_sparse_logistic <- function(x,
            oos_scores_if_exists = oos_scores_if_exists, model_name = model_name,
            cpu_requested = cpu_requested, memory_requested = memory_requested,
            disk_requested = disk_requested, notifications = notifications,
-           polling_interval = polling_interval, verbose = verbose)
+           polling_interval = polling_interval, verbose = verbose, civisml_version = civisml_version)
 }
 
 #' CivisML Sparse Linear Regression
@@ -190,7 +191,8 @@ civis_ml_sparse_linear_regressor <- function(x,
                                              disk_requested = NULL,
                                              notifications = NULL,
                                              polling_interval = NULL,
-                                             verbose = FALSE) {
+                                             verbose = FALSE,
+                                             civisml_version = "prod") {
   model_type <- "sparse_linear_regressor"
   params <- list(
     fit_intercept = fit_intercept,
@@ -211,7 +213,7 @@ civis_ml_sparse_linear_regressor <- function(x,
            oos_scores_if_exists = oos_scores_if_exists, model_name = model_name,
            cpu_requested = cpu_requested, memory_requested = memory_requested,
            disk_requested = disk_requested, notifications = notifications,
-           polling_interval = polling_interval, verbose = verbose)
+           polling_interval = polling_interval, verbose = verbose, civisml_version = civisml_version)
 }
 
 #' CivisML Sparse Ridge Regression
@@ -286,7 +288,8 @@ civis_ml_sparse_ridge_regressor <- function(x,
                                             disk_requested = NULL,
                                             notifications = NULL,
                                             polling_interval = NULL,
-                                            verbose = FALSE) {
+                                            verbose = FALSE,
+                                            civisml_version = "prod") {
   model_type <- "sparse_ridge_regressor"
   params <- list(
     alpha = alpha,
@@ -308,7 +311,7 @@ civis_ml_sparse_ridge_regressor <- function(x,
            oos_scores_if_exists = oos_scores_if_exists, model_name = model_name,
            cpu_requested = cpu_requested, memory_requested = memory_requested,
            disk_requested = disk_requested, notifications = notifications,
-           polling_interval = polling_interval, verbose = verbose)
+           polling_interval = polling_interval, verbose = verbose, civisml_version = civisml_version)
 }
 
 #' CivisML Gradient Boosting Classifier
@@ -429,7 +432,8 @@ civis_ml_gradient_boosting_classifier <- function(x,
                                                   disk_requested = NULL,
                                                   notifications = NULL,
                                                   polling_interval = NULL,
-                                                  verbose = FALSE) {
+                                                  verbose = FALSE,
+                                                  civisml_version = "prod") {
 
   model_type <- "gradient_boosting_classifier"
   params <- list(
@@ -463,7 +467,7 @@ civis_ml_gradient_boosting_classifier <- function(x,
            oos_scores_if_exists = oos_scores_if_exists, model_name = model_name,
            cpu_requested = cpu_requested, memory_requested = memory_requested,
            disk_requested = disk_requested, notifications = notifications,
-           polling_interval = polling_interval, verbose = verbose)
+           polling_interval = polling_interval, verbose = verbose, civisml_version = civisml_version)
 }
 
 #' CivisML Gradient Boosting Regressor
@@ -541,7 +545,8 @@ civis_ml_gradient_boosting_regressor <- function(x,
                                                  disk_requested = NULL,
                                                  notifications = NULL,
                                                  polling_interval = NULL,
-                                                 verbose = FALSE) {
+                                                 verbose = FALSE,
+                                                 civisml_version = "prod") {
 
   model_type <- "gradient_boosting_regressor"
   params <- list(
@@ -576,7 +581,7 @@ civis_ml_gradient_boosting_regressor <- function(x,
            oos_scores_if_exists = oos_scores_if_exists, model_name = model_name,
            cpu_requested = cpu_requested, memory_requested = memory_requested,
            disk_requested = disk_requested, notifications = notifications,
-           polling_interval = polling_interval, verbose = verbose)
+           polling_interval = polling_interval, verbose = verbose, civisml_version = civisml_version)
 }
 
 #' CivisML Random Forest Classifier
@@ -646,7 +651,8 @@ civis_ml_random_forest_classifier <- function(x,
                                               disk_requested = NULL,
                                               notifications = NULL,
                                               polling_interval = NULL,
-                                              verbose = FALSE) {
+                                              verbose = FALSE,
+                                              civisml_version = "prod") {
 
   model_type <- "random_forest_classifier"
   params <- list(
@@ -686,7 +692,7 @@ civis_ml_random_forest_classifier <- function(x,
            oos_scores_if_exists = oos_scores_if_exists, model_name = model_name,
            cpu_requested = cpu_requested, memory_requested = memory_requested,
            disk_requested = disk_requested, notifications = notifications,
-           polling_interval = polling_interval, verbose = verbose)
+           polling_interval = polling_interval, verbose = verbose, civisml_version = civisml_version)
 }
 
 #' CivisML Random Forest Regressor
@@ -750,7 +756,8 @@ civis_ml_random_forest_regressor <- function(x,
                                              disk_requested = NULL,
                                              notifications = NULL,
                                              polling_interval = NULL,
-                                             verbose = FALSE) {
+                                             verbose = FALSE,
+                                             civisml_version = "prod") {
 
   model_type <- "random_forest_regressor"
   params <- list(
@@ -781,7 +788,7 @@ civis_ml_random_forest_regressor <- function(x,
            oos_scores_if_exists = oos_scores_if_exists, model_name = model_name,
            cpu_requested = cpu_requested, memory_requested = memory_requested,
            disk_requested = disk_requested, notifications = notifications,
-           polling_interval = polling_interval, verbose = verbose)
+           polling_interval = polling_interval, verbose = verbose, civisml_version = civisml_version)
 }
 
 #' CivisML Extra Trees Classifier
@@ -844,7 +851,8 @@ civis_ml_extra_trees_classifier <- function(x,
                                             disk_requested = NULL,
                                             notifications = NULL,
                                             polling_interval = NULL,
-                                            verbose = FALSE) {
+                                            verbose = FALSE,
+                                            civisml_version = "prod") {
 
   model_type <- "extra_trees_classifier"
   params <- list(
@@ -884,7 +892,7 @@ civis_ml_extra_trees_classifier <- function(x,
            oos_scores_if_exists = oos_scores_if_exists, model_name = model_name,
            cpu_requested = cpu_requested, memory_requested = memory_requested,
            disk_requested = disk_requested, notifications = notifications,
-           polling_interval = polling_interval, verbose = verbose)
+           polling_interval = polling_interval, verbose = verbose, civisml_version = civisml_version)
 }
 
 #' CivisML Extra Trees Regressor
@@ -944,7 +952,8 @@ civis_ml_extra_trees_regressor <- function(x,
                                            disk_requested = NULL,
                                            notifications = NULL,
                                            polling_interval = NULL,
-                                           verbose = FALSE) {
+                                           verbose = FALSE,
+                                           civisml_version = "prod") {
 
   model_type <- "extra_trees_regressor"
   params <- list(
@@ -975,5 +984,5 @@ civis_ml_extra_trees_regressor <- function(x,
            oos_scores_if_exists = oos_scores_if_exists, model_name = model_name,
            cpu_requested = cpu_requested, memory_requested = memory_requested,
            disk_requested = disk_requested, notifications = notifications,
-           polling_interval = polling_interval, verbose = verbose)
+           polling_interval = polling_interval, verbose = verbose, civisml_version = civisml_version)
 }

@@ -136,7 +136,8 @@ test_that("calls civis_ml.data.frame for local df", {
                 validation_data = 'train',
                 n_jobs = NULL,
                 notifications = NULL,
-                verbose = FALSE)
+                verbose = FALSE,
+                civisml_version = "prod")
   )
 })
 
@@ -184,7 +185,8 @@ test_that("calls civis_ml.civis_table for table_name", {
               validation_data = 'train',
               n_jobs = NULL,
               notifications = NULL,
-              verbose = FALSE)
+              verbose = FALSE,
+              civisml_version = "prod")
 })
 
 test_that("calls civis_ml.civis_file for file_id", {
@@ -221,7 +223,8 @@ test_that("calls civis_ml.civis_file for file_id", {
               validation_data = 'train',
               n_jobs = NULL,
               notifications = NULL,
-              verbose = FALSE)
+              verbose = FALSE,
+              civisml_version = "prod")
 })
 
 test_that("calls civis_ml.character for local csv", {
@@ -264,7 +267,8 @@ test_that("calls civis_ml.character for local csv", {
               validation_data = 'train',
               n_jobs = NULL,
               notifications = NULL,
-              verbose = FALSE)
+              verbose = FALSE,
+              civisml_version = "prod")
 })
 
 test_that("raises error on invalid calibration", {

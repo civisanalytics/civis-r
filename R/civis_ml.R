@@ -71,6 +71,8 @@
 #'   data for validation, and \code{skip}, which skips the validation step.
 #' @param verbose Optional, If \code{TRUE}, supply debug outputs in Platform
 #'   logs and make prediction child jobs visible.
+#' @param civisml_version Optional, a one-length character vector of the
+#'   CivisML version. The default is "prod", the latest version in production
 #' @param dvs_to_predict Optional, For scoring, this should be a vector of column
 #'   names of dependent variables to include in the output table. It must be a
 #'   subset of the \code{dependent_variable} vector provided for training.
@@ -290,7 +292,8 @@ civis_ml <- function(x,
                      polling_interval = NULL,
                      validation_data = c('train', 'skip'),
                      n_jobs = NULL,
-                     verbose = FALSE) {
+                     verbose = FALSE,
+                     civisml_version = "prod") {
 
   UseMethod("civis_ml", x)
 }
@@ -316,7 +319,8 @@ civis_ml.data.frame <- function(x,
                                 polling_interval = NULL,
                                 validation_data = c('train', 'skip'),
                                 n_jobs = NULL,
-                                verbose = FALSE) {
+                                verbose = FALSE,
+                                civisml_version = "prod") {
 
   oos_scores_if_exists <- match.arg(oos_scores_if_exists)
   validation_data <- match.arg(validation_data)
@@ -326,7 +330,7 @@ civis_ml.data.frame <- function(x,
     oos_scores_db_id <- get_database_id(oos_scores_db)
   }
 
-  tmpl_id <- get_train_template_id()
+  tmpl_id <- get_train_template_id(civisml_version = civisml_version)
   file_id <- stash_local_dataframe(x, tmpl_id)
   create_and_run_model(file_id = file_id,
                        dependent_variable = dependent_variable,
@@ -347,7 +351,8 @@ civis_ml.data.frame <- function(x,
                        validation_data = validation_data,
                        n_jobs = n_jobs,
                        notifications = notifications,
-                       verbose = verbose)
+                       verbose = verbose,
+                       civisml_version = civisml_version)
 }
 
 #' @export
@@ -371,7 +376,8 @@ civis_ml.civis_table <- function(x,
                                  polling_interval = NULL,
                                  validation_data = c('train', 'skip'),
                                  n_jobs = NULL,
-                                 verbose = FALSE) {
+                                 verbose = FALSE,
+                                 civisml_version = "prod") {
 
   oos_scores_if_exists <- match.arg(oos_scores_if_exists)
   validation_data <- match.arg(validation_data)
@@ -403,7 +409,8 @@ civis_ml.civis_table <- function(x,
                        validation_data = validation_data,
                        n_jobs = n_jobs,
                        notifications = notifications,
-                       verbose = verbose)
+                       verbose = verbose,
+                       civisml_version = civisml_version)
 }
 
 #' @export
@@ -427,7 +434,8 @@ civis_ml.civis_file <- function(x,
                                 polling_interval = NULL,
                                 validation_data = c('train', 'skip'),
                                 n_jobs = NULL,
-                                verbose = FALSE) {
+                                verbose = FALSE,
+                                civisml_version = "prod") {
 
   oos_scores_if_exists <- match.arg(oos_scores_if_exists)
   validation_data <- match.arg(validation_data)
@@ -456,7 +464,8 @@ civis_ml.civis_file <- function(x,
                        validation_data = validation_data,
                        n_jobs = n_jobs,
                        notifications = notifications,
-                       verbose = verbose)
+                       verbose = verbose,
+                       civisml_version = civisml_version)
 }
 
 #' @export
@@ -480,7 +489,8 @@ civis_ml.character <- function(x,
                                polling_interval = NULL,
                                validation_data = c('train', 'skip'),
                                n_jobs = NULL,
-                               verbose = FALSE) {
+                               verbose = FALSE,
+                               civisml_version = "prod") {
 
   oos_scores_if_exists <- match.arg(oos_scores_if_exists)
   validation_data <- match.arg(validation_data)
@@ -510,7 +520,8 @@ civis_ml.character <- function(x,
                        validation_data = validation_data,
                        n_jobs = n_jobs,
                        notifications = notifications,
-                       verbose = verbose)
+                       verbose = verbose,
+                       civisml_version = civisml_version)
 }
 
 #' Stash a data frame in feather or csv format, depending on CivisML version.
@@ -562,7 +573,8 @@ create_and_run_model <- function(file_id = NULL,
                                  validation_data = NULL,
                                  n_jobs = NULL,
                                  notifications = NULL,
-                                 verbose = FALSE) {
+                                 verbose = FALSE,
+                                 civisml_version = "prod") {
 
   args <- list(
     MODEL = model_type,
@@ -664,7 +676,7 @@ create_and_run_model <- function(file_id = NULL,
     job_name <- paste0(model_name, " Train")
   }
 
-  tmpl_id <- get_train_template_id()
+  tmpl_id <- get_train_template_id(civisml_version = civisml_version)
   run <- run_model(template_id = tmpl_id, name = job_name, arguments = args,
                    notifications = notifications,
                    polling_interval = polling_interval,

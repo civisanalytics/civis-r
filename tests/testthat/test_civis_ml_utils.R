@@ -22,7 +22,27 @@ str_detect_multiple <- function(string, pattern) {
          string = string, pattern = pattern)
 }
 
-test_that("get_template_ids_all_versions", {
+test_that("get_train_template_id works", {
+
+  fake_civis_ml_template_ids <- data.frame(id=c(11219,11220,10615,11028,11219,7020),
+                                           version=c("prod","prod","dev","dev","v2.2","v0.5"),
+                                           name=c("training","prediction","training","registration","training","training"),
+                                           stringsAsFactors=FALSE)
+
+  with_mock(
+    `civis::get_template_ids_all_versions` = function(...) fake_civis_ml_template_ids,
+
+    expect_equal(get_train_template_id("prod"), 11219),
+    expect_equal(get_train_template_id("dev"), 10615),
+    expect_equal(get_train_template_id("v2.2"), 11219),
+    expect_equal(get_train_template_id("v0.5"), 7020),
+    expect_error(get_train_template_id("foo"))
+
+    )
+})
+
+
+test_that("get_template_ids_all_versions works", {
 
   fake_template_alias_objects <- list(list(id = 11,
                                            objectId = 12367,
