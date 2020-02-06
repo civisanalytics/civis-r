@@ -36,7 +36,7 @@ get_train_template_id <- function(civisml_version = "prod") {
     stop(paste(civisml_version, "is an invalid CivisML version.",
       "Either this version does not exist or you do not have access to this version.",
       "Versions accessible to you are:", paste(unique(civis_ml_template_ids$version),
-        collapse=", "), "as well as `prod` for the latest production version."))
+        collapse=", ")))
 
   }
 
