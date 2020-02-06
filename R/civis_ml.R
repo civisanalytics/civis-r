@@ -72,7 +72,7 @@
 #' @param verbose Optional, If \code{TRUE}, supply debug outputs in Platform
 #'   logs and make prediction child jobs visible.
 #' @param civisml_version Optional, a one-length character vector of the
-#'   CivisML version.  If not provided, the latest version in production is used.
+#'   CivisML version. The default is "prod", the latest version in production
 #' @param dvs_to_predict Optional, For scoring, this should be a vector of column
 #'   names of dependent variables to include in the output table. It must be a
 #'   subset of the \code{dependent_variable} vector provided for training.
