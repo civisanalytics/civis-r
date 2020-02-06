@@ -330,7 +330,7 @@ civis_ml.data.frame <- function(x,
     oos_scores_db_id <- get_database_id(oos_scores_db)
   }
 
-  tmpl_id <- get_train_template_id(civisml_version = "prod")
+  tmpl_id <- get_train_template_id(civisml_version = civisml_version)
   file_id <- stash_local_dataframe(x, tmpl_id)
   create_and_run_model(file_id = file_id,
                        dependent_variable = dependent_variable,
@@ -352,7 +352,7 @@ civis_ml.data.frame <- function(x,
                        n_jobs = n_jobs,
                        notifications = notifications,
                        verbose = verbose,
-                       civisml_version = "prod")
+                       civisml_version = civisml_version)
 }
 
 #' @export
@@ -410,7 +410,7 @@ civis_ml.civis_table <- function(x,
                        n_jobs = n_jobs,
                        notifications = notifications,
                        verbose = verbose,
-                       civisml_version = "prod")
+                       civisml_version = civisml_version)
 }
 
 #' @export
@@ -465,7 +465,7 @@ civis_ml.civis_file <- function(x,
                        n_jobs = n_jobs,
                        notifications = notifications,
                        verbose = verbose,
-                       civisml_version = "prod")
+                       civisml_version = civisml_version)
 }
 
 #' @export
@@ -521,7 +521,7 @@ civis_ml.character <- function(x,
                        n_jobs = n_jobs,
                        notifications = notifications,
                        verbose = verbose,
-                       civisml_version = "prod")
+                       civisml_version = civisml_version)
 }
 
 #' Stash a data frame in feather or csv format, depending on CivisML version.
@@ -676,7 +676,7 @@ create_and_run_model <- function(file_id = NULL,
     job_name <- paste0(model_name, " Train")
   }
 
-  tmpl_id <- get_train_template_id(civisml_version = "prod")
+  tmpl_id <- get_train_template_id(civisml_version = civisml_version)
   run <- run_model(template_id = tmpl_id, name = job_name, arguments = args,
                    notifications = notifications,
                    polling_interval = polling_interval,
