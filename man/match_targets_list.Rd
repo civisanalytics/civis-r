@@ -13,6 +13,9 @@ An array containing the following fields:
 \item{table}{string, The name of the DynamoDB table}
 \item{targetFileName}{string, The name of the target file}
 \item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
+\item{createdAt}{string, }
+\item{updatedAt}{string, }
+\item{archived}{boolean, Whether the match target has been archived.}
 }
 \description{
 List match targets

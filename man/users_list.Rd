@@ -44,7 +44,7 @@ An array containing the following fields:
 \item{user}{string, The username of this user.}
 \item{name}{string, The name of this user.}
 \item{email}{string, The email of this user.}
-\item{active}{string, The account status of this user.}
+\item{active}{boolean, The account status of this user.}
 \item{primaryGroupId}{integer, The ID of the primary group of this user.}
 \item{groups}{array, An array containing the following fields: 
 \itemize{

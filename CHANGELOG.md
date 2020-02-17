@@ -8,7 +8,7 @@
 objects of class `glue`.
 
 ### Changed
-
+- Updated default API client (#227)
 - CivisML uses platform aliases instead of hard-coded template IDs. (#221)
 
 ### Added

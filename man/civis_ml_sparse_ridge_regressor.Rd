@@ -130,7 +130,7 @@ and URL notification.}
 logs and make prediction child jobs visible.}
 
 \item{civisml_version}{Optional, a one-length character vector of the
-CivisML version.  If not provided, the latest version in production is used.}
+CivisML version. The default is "prod", the latest version in production}
 }
 \value{
 A \code{civis_ml} object, a list containing the following elements:

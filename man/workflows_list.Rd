@@ -8,6 +8,8 @@ workflows_list(
   hidden = NULL,
   archived = NULL,
   author = NULL,
+  state = NULL,
+  scheduled = NULL,
   limit = NULL,
   page_num = NULL,
   order = NULL,
@@ -19,7 +21,11 @@ workflows_list(
 
 \item{archived}{string optional. The archival status of the requested item(s).}
 
-\item{author}{string optional. If specified, return workflows from this author. It accepts a comma-separated list of author ids.}
+\item{author}{string optional. Author of the workflow. It accepts a comma-separated list of author ids.}
+
+\item{state}{array optional. State of the most recent execution.One or more of queued, running, succeeded, failed, cancelled, idle, and scheduled.}
+
+\item{scheduled}{boolean optional. If the workflow is scheduled.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.}
 

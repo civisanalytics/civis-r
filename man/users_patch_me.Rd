@@ -10,7 +10,7 @@ users_patch_me(preferences = NULL, last_checked_announcements = NULL)
 \item{preferences}{list optional. A list containing the following elements: 
 \itemize{
 \item appIndexOrderField string, Order field for the apps index pages.
-\item appIndexOrderDir string, Oder direction for the apps index pages.
+\item appIndexOrderDir string, Order direction for the apps index pages.
 \item resultIndexOrderField string, Order field for the results index page.
 \item resultIndexOrderDir string, Order direction for the results index page.
 \item resultIndexTypeFilter string, Type filter for the results index page.
