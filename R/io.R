@@ -753,7 +753,7 @@ query_civis_file.character <- function(x, database = NULL, job_name = NULL, hidd
     stop(msg)
   }
   sql_str <- sql(paste0("SELECT * FROM ", x))
-  query_civis_file.sql(sql_str, database = database)
+  query_civis_file.sql(sql_str, database = database, ...)
 }
 
 #' @export
