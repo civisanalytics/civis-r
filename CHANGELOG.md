@@ -2,8 +2,9 @@
 
 ## Unreleased
 
-### Fixed
+## [2.1.1] - 2020-02-18
 
+### Fixed
 - The `database` parameter in `read_civis` now accepts character
 objects of class `glue`.
 
