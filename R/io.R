@@ -722,7 +722,7 @@ query_civis.character <- function(x, database = NULL, verbose = FALSE, ...) {
 #' @param hidden bool, Whether the job is hidden.
 #' @param verbose bool, Set to TRUE to print intermediate progress indicators.
 #' @param csv_settings See \code{\link{scripts_post_sql}} for details.
-#' @param ... Currently ignored.
+#' @param ... This can currently include a credential, e.g. \code{credential = 0000}
 #' @export
 #' @family io
 #' @details
