@@ -22,7 +22,7 @@ query_civis_file(x, ...)
 \arguments{
 \item{x}{"schema.table", \code{sql("query")}, or a sql script job id.}
 
-\item{...}{Currently ignored.}
+\item{...}{This can currently include a credential, e.g. \code{credential = 0000}}
 
 \item{database}{string, Name of database where data frame is to be uploaded.
 If no database is specified, uses \code{options(civis.default_db)}.}
