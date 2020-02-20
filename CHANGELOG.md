@@ -14,6 +14,8 @@ objects of class `glue`.
 ### Added
 - Added link to full website documentation in DESCRIPTION (#226)
 - Provided parameter for user to optionally specify the CivisML version (#224, #225)
+- `query_civis`and `query_civis_file` now respect `credential` and
+`credential_id` args respectively when passed through `...` (#219)
 
 ## [2.1.0] - 2019-09-06
 
