@@ -131,7 +131,7 @@ possible without using all resources in the cluster).}
 logs and make prediction child jobs visible.}
 
 \item{civisml_version}{Optional, a one-length character vector of the
-CivisML version.  If not provided, the latest version in production is used.}
+CivisML version. The default is "prod", the latest version in production}
 
 \item{model_id}{The \code{id} of CivisML model built previously.}
 

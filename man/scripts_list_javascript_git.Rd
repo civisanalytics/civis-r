@@ -21,6 +21,7 @@ A list containing the following elements:
 \item createdAt string, 
 \item updatedAt string, 
 }}
+\item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 }
 \description{
 Get the git metadata attached to an item

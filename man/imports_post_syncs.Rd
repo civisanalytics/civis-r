@@ -51,10 +51,11 @@ imports_post_syncs(id, source, destination, advanced_options = NULL)
 \item mysqlCatalogMatchesSchema boolean, 
 \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be choosen automatically.
 \item firstRowIsHeader boolean, 
-\item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. 
+\item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "appendwksht"
 \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
 \item contactLists string, 
 \item soqlQuery string, 
+\item includeDeletedRecords boolean, 
 }}
 }
 \value{
@@ -101,10 +102,11 @@ A list containing the following elements:
 \item mysqlCatalogMatchesSchema boolean, 
 \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be choosen automatically.
 \item firstRowIsHeader boolean, 
-\item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. 
+\item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "appendwksht"
 \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
 \item contactLists string, 
 \item soqlQuery string, 
+\item includeDeletedRecords boolean, 
 }}
 }
 \description{

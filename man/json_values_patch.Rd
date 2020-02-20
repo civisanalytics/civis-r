@@ -11,7 +11,7 @@ json_values_patch(id, name = NULL, value_str = NULL)
 
 \item{name}{string optional. The name of the JSON Value.}
 
-\item{value_str}{string optional. The JSON value to store. Should be a serialized JSON string. Limited to 10000 bytes.}
+\item{value_str}{string optional. The JSON value to store. Should be a serialized JSON string. Limited to 1000000 bytes.}
 }
 \value{
 A list containing the following elements:

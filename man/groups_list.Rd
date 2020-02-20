@@ -7,6 +7,7 @@
 groups_list(
   query = NULL,
   permission = NULL,
+  include_members = NULL,
   limit = NULL,
   page_num = NULL,
   order = NULL,
@@ -17,6 +18,8 @@ groups_list(
 \item{query}{string optional. If specified, it will filter the groups returned. Infix matching is supported (e.g., "query=group" will return "group" and "group of people" and "my group" and "my group of people").}
 
 \item{permission}{string optional. A permissions string, one of "read", "write", or "manage". Lists only groups for which the current user has that permission.}
+
+\item{include_members}{boolean optional. Show members of the group.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.}
 
@@ -32,7 +35,17 @@ An array containing the following fields:
 \item{name}{string, This group's name.}
 \item{createdAt}{string, The date and time when this group was created.}
 \item{slug}{string, The slug for this group.}
-\item{organizationId}{integer, The organization associated with this group.}
+\item{organizationId}{integer, The ID of the organization this group belongs to.}
+\item{organizationName}{string, The name of the organization this group belongs to.}
+\item{memberCount}{integer, The total number of members in this group.}
+\item{members}{array, An array containing the following fields: 
+\itemize{
+\item id integer, The ID of this user.
+\item name string, This user's name.
+\item username string, This user's username.
+\item initials string, This user's initials.
+\item online boolean, Whether this user is online.
+}}
 }
 \description{
 List Groups

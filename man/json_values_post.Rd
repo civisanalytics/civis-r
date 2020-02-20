@@ -7,7 +7,7 @@
 json_values_post(value_str, name = NULL)
 }
 \arguments{
-\item{value_str}{string required. The JSON value to store. Should be a serialized JSON string. Limited to 10000 bytes.}
+\item{value_str}{string required. The JSON value to store. Should be a serialized JSON string. Limited to 1000000 bytes.}
 
 \item{name}{string optional. The name of the JSON Value.}
 }

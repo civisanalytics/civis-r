@@ -6,6 +6,7 @@
 \usage{
 imports_patch_files_csv(
   id,
+  name = NULL,
   source = NULL,
   destination = NULL,
   first_row_is_header = NULL,
@@ -15,12 +16,15 @@ imports_patch_files_csv(
   existing_table_rows = NULL,
   max_errors = NULL,
   table_columns = NULL,
+  loosen_types = NULL,
   execution = NULL,
   redshift_destination_options = NULL
 )
 }
 \arguments{
 \item{id}{integer required. The ID for the import.}
+
+\item{name}{string optional. The name of the import.}
 
 \item{source}{list optional. A list containing the following elements: 
 \itemize{
@@ -56,10 +60,13 @@ imports_patch_files_csv(
 \item sqlType string, The SQL type of the column.
 }}
 
+\item{loosen_types}{boolean optional. If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
+
 \item{execution}{string optional. In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
 
 \item{redshift_destination_options}{list optional. A list containing the following elements: 
 \itemize{
+\item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
 \item distkey string, Distkey for this table in Redshift
 \item sortkeys array, Sortkeys for this table in Redshift. Please provide a maximum of two.
 }}
@@ -67,6 +74,7 @@ imports_patch_files_csv(
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID for the import.}
+\item{name}{string, The name of the import.}
 \item{source}{list, A list containing the following elements: 
 \itemize{
 \item fileIds array, The file ID(s) to import, if importing Civis file(s).
@@ -92,9 +100,11 @@ A list containing the following elements:
 \item name string, The column name.
 \item sqlType string, The SQL type of the column.
 }}
+\item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
 \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
 \item{redshiftDestinationOptions}{list, A list containing the following elements: 
 \itemize{
+\item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
 \item distkey string, Distkey for this table in Redshift
 \item sortkeys array, Sortkeys for this table in Redshift. Please provide a maximum of two.
 }}

@@ -15,7 +15,7 @@ A list containing the following elements:
 \item{user}{string, The username of this user.}
 \item{name}{string, The name of this user.}
 \item{email}{string, The email of this user.}
-\item{active}{string, The account status of this user.}
+\item{active}{boolean, The account status of this user.}
 \item{primaryGroupId}{integer, The ID of the primary group of this user.}
 \item{groups}{array, An array containing the following fields: 
 \itemize{
@@ -30,16 +30,16 @@ A list containing the following elements:
 \item{department}{string, The department of this user.}
 \item{title}{string, The title of this user.}
 \item{githubUsername}{string, The GitHub username of this user.}
-\item{prefersSmsOtp}{string, The preference for phone authorization of this user}
-\item{vpnEnabled}{string, The availability of vpn for this user.}
-\item{ssoDisabled}{string, The availability of SSO for this user.}
-\item{otpRequiredForLogin}{string, The two factor authentication requirement for this user.}
-\item{exemptFromOrgSmsOtpDisabled}{string, Whether the user has SMS OTP enabled on an individual level. This field does not matter if the org does not have SMS OTP disabled.}
-\item{smsOtpAllowed}{string, Whether the user is allowed to receive two factor authentication codes via SMS.}
+\item{prefersSmsOtp}{boolean, The preference for phone authorization of this user}
+\item{vpnEnabled}{boolean, The availability of vpn for this user.}
+\item{ssoDisabled}{boolean, The availability of SSO for this user.}
+\item{otpRequiredForLogin}{boolean, The two factor authentication requirement for this user.}
+\item{exemptFromOrgSmsOtpDisabled}{boolean, Whether the user has SMS OTP enabled on an individual level. This field does not matter if the org does not have SMS OTP disabled.}
+\item{smsOtpAllowed}{boolean, Whether the user is allowed to receive two factor authentication codes via SMS.}
 \item{robot}{boolean, Whether the user is a robot.}
 \item{phone}{string, The phone number of this user.}
 \item{organizationSlug}{string, The slug of the organization the user belongs to.}
-\item{organizationSSODisableCapable}{string, The user's organization's ability to disable sso for their users.}
+\item{organizationSSODisableCapable}{boolean, The user's organization's ability to disable sso for their users.}
 \item{organizationLoginType}{string, The user's organization's login type.}
 \item{organizationSmsOtpDisabled}{boolean, Whether the user's organization has SMS OTP disabled.}
 }

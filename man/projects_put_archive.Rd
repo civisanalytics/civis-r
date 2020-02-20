@@ -59,6 +59,7 @@ A list containing the following elements:
 \item type string, 
 \item finishedAt string, 
 \item state string, 
+\item lastRun object, 
 }}
 \item{imports}{array, An array containing the following fields: 
 \itemize{
@@ -69,6 +70,18 @@ A list containing the following elements:
 \item type string, 
 \item finishedAt string, 
 \item state string, 
+\item lastRun object, 
+}}
+\item{exports}{array, An array containing the following fields: 
+\itemize{
+\item id integer, The item's ID.
+\item createdAt string, 
+\item updatedAt string, 
+\item name string, 
+\item type string, 
+\item finishedAt string, 
+\item state string, 
+\item lastRun object, 
 }}
 \item{models}{array, An array containing the following fields: 
 \itemize{
@@ -85,6 +98,7 @@ A list containing the following elements:
 \item updatedAt string, 
 \item name string, 
 \item currentDeploymentId integer, 
+\item lastDeploy object, 
 }}
 \item{services}{array, An array containing the following fields: 
 \itemize{
@@ -93,6 +107,7 @@ A list containing the following elements:
 \item updatedAt string, 
 \item name string, 
 \item currentDeploymentId integer, 
+\item lastDeploy object, 
 }}
 \item{workflows}{array, An array containing the following fields: 
 \itemize{
@@ -101,6 +116,7 @@ A list containing the following elements:
 \item updatedAt string, 
 \item name string, 
 \item state string, 
+\item lastExecution object, 
 }}
 \item{reports}{array, An array containing the following fields: 
 \itemize{
@@ -125,6 +141,14 @@ A list containing the following elements:
 \item fileName string, 
 \item fileSize integer, 
 \item expired boolean, 
+}}
+\item{enhancements}{array, An array containing the following fields: 
+\itemize{
+\item id integer, The item's ID.
+\item createdAt string, 
+\item updatedAt string, 
+\item name string, 
+\item lastRun object, 
 }}
 \item{appInstances}{array, An array containing the following fields: 
 \itemize{
@@ -152,12 +176,18 @@ A list containing the following elements:
 \item name string, 
 \item icon string, 
 \item author string, 
-\item archived string, The archival status of the requested item(s).
 \item updatedAt string, 
+\item archived string, The archival status of the requested item(s).
+\item hidden boolean, The hidden status of the item.
 }}
 \item{note}{string, }
 \item{hidden}{boolean, The hidden status of the item.}
 \item{archived}{string, The archival status of the requested item(s).}
+\item{parentProject}{list, A list containing the following elements: 
+\itemize{
+\item id integer, The parent project's ID.
+\item name integer, The parent project's name.
+}}
 }
 \description{
 Update the archive status of this object

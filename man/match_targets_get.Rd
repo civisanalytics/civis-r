@@ -17,6 +17,9 @@ A list containing the following elements:
 \item{region}{string, The AWS region of the DynamoDB table. By default, us-east-1.}
 \item{targetFileName}{string, The name of the target file}
 \item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
+\item{createdAt}{string, }
+\item{updatedAt}{string, }
+\item{archived}{boolean, Whether the match target has been archived.}
 }
 \description{
 Show Match Target info

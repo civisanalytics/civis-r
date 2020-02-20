@@ -13,7 +13,7 @@ aliases_get(id)
 A list containing the following elements:
 \item{id}{integer, The id of the Alias object.}
 \item{objectId}{integer, The id of the object}
-\item{objectType}{string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+\item{objectType}{string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
 \item{alias}{string, The alias of the object}
 \item{userId}{integer, The id of the user who created the alias}
 \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}

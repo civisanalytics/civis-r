@@ -9,7 +9,8 @@ scripts_put_sql_git(
   git_ref = NULL,
   git_branch = NULL,
   git_path = NULL,
-  git_repo_url = NULL
+  git_repo_url = NULL,
+  pull_from_git = NULL
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ scripts_put_sql_git(
 \item{git_path}{string optional. The path of the file in the repository.}
 
 \item{git_repo_url}{string optional. The URL of the git repository.}
+
+\item{pull_from_git}{boolean optional. Automatically pull latest commit from git. Only works for scripts.}
 }
 \value{
 A list containing the following elements:
@@ -35,6 +38,7 @@ A list containing the following elements:
 \item createdAt string, 
 \item updatedAt string, 
 }}
+\item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 }
 \description{
 Attach an item to a file in a git repo

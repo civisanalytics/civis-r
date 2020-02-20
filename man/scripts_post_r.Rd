@@ -79,8 +79,8 @@ scripts_post_r(
 
 \item{required_resources}{list optional. A list containing the following elements: 
 \itemize{
-\item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
-\item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
+\item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares. Must be at least 2 shares.
+\item memory integer, The amount of RAM to allocate for the container (in MB). Must be at least 4 MB.
 \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
 }}
 
@@ -182,8 +182,8 @@ A list containing the following elements:
 \item{archived}{string, The archival status of the requested item(s).}
 \item{requiredResources}{list, A list containing the following elements: 
 \itemize{
-\item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares. Must be at least 2 shares.
-\item memory integer, The amount of RAM to allocate for the container (in MiB). Must be at least 4 MiB.
+\item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares. Must be at least 2 shares.
+\item memory integer, The amount of RAM to allocate for the container (in MB). Must be at least 4 MB.
 \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
 }}
 \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
