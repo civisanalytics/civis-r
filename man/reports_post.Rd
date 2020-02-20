@@ -4,9 +4,15 @@
 \alias{reports_post}
 \title{Create a report}
 \usage{
-reports_post(script_id = NULL, name = NULL, code_body = NULL,
-  app_state = NULL, provide_api_key = NULL, template_id = NULL,
-  hidden = NULL)
+reports_post(
+  script_id = NULL,
+  name = NULL,
+  code_body = NULL,
+  app_state = NULL,
+  provide_api_key = NULL,
+  template_id = NULL,
+  hidden = NULL
+)
 }
 \arguments{
 \item{script_id}{integer optional. The ID of the job (a script or a query) used to create this report.}

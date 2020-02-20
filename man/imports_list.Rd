@@ -4,9 +4,19 @@
 \alias{imports_list}
 \title{List Imports}
 \usage{
-imports_list(type = NULL, author = NULL, destination = NULL,
-  source = NULL, status = NULL, hidden = NULL, archived = NULL,
-  limit = NULL, page_num = NULL, order = NULL, order_dir = NULL)
+imports_list(
+  type = NULL,
+  author = NULL,
+  destination = NULL,
+  source = NULL,
+  status = NULL,
+  hidden = NULL,
+  archived = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{type}{string optional. If specified, return imports of these types. It accepts a comma-separated list, possible values are 'AutoImport', 'DbSync', 'Salesforce', 'GdocImport'.}

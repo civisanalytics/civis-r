@@ -4,8 +4,13 @@
 \alias{templates_patch_scripts}
 \title{Update some attributes of this Script Template}
 \usage{
-templates_patch_scripts(id, name = NULL, note = NULL,
-  ui_report_id = NULL, archived = NULL)
+templates_patch_scripts(
+  id,
+  name = NULL,
+  note = NULL,
+  ui_report_id = NULL,
+  archived = NULL
+)
 }
 \arguments{
 \item{id}{integer required.}

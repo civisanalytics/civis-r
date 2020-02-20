@@ -4,11 +4,22 @@
 \alias{scripts_post_javascript}
 \title{Create a JavaScript Script}
 \usage{
-scripts_post_javascript(name, source, remote_host_id, credential_id,
-  parent_id = NULL, user_context = NULL, params = NULL,
-  arguments = NULL, schedule = NULL, notifications = NULL,
-  next_run_at = NULL, time_zone = NULL, hidden = NULL,
-  target_project_id = NULL)
+scripts_post_javascript(
+  name,
+  source,
+  remote_host_id,
+  credential_id,
+  parent_id = NULL,
+  user_context = NULL,
+  params = NULL,
+  arguments = NULL,
+  schedule = NULL,
+  notifications = NULL,
+  next_run_at = NULL,
+  time_zone = NULL,
+  hidden = NULL,
+  target_project_id = NULL
+)
 }
 \arguments{
 \item{name}{string required. The name of the script.}

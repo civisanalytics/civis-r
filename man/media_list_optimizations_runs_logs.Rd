@@ -4,8 +4,7 @@
 \alias{media_list_optimizations_runs_logs}
 \title{Get the logs for a run}
 \usage{
-media_list_optimizations_runs_logs(id, run_id, last_id = NULL,
-  limit = NULL)
+media_list_optimizations_runs_logs(id, run_id, last_id = NULL, limit = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the optimization.}

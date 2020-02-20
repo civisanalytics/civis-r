@@ -24,6 +24,7 @@ column_names <- columns \%>\% purrr::map_chr("name")
 }
 }
 \seealso{
-Other pagination: \code{\link{fetch_until}}
+Other pagination: 
+\code{\link{fetch_until}()}
 }
 \concept{pagination}

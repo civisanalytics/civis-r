@@ -9,12 +9,22 @@
 \alias{fetch_logs.CivisFuture}
 \title{Evaluate an expression in Civis Platform}
 \usage{
-CivisFuture(expr = NULL, envir = parent.frame(), substitute = FALSE,
-  globals = TRUE, packages = NULL, lazy = FALSE, local = TRUE,
-  gc = FALSE, earlySignal = FALSE, label = NULL,
+CivisFuture(
+  expr = NULL,
+  envir = parent.frame(),
+  substitute = FALSE,
+  globals = TRUE,
+  packages = NULL,
+  lazy = FALSE,
+  local = TRUE,
+  gc = FALSE,
+  earlySignal = FALSE,
+  label = NULL,
   required_resources = list(cpu = 1024, memory = 2048, diskSpace = 4),
   docker_image_name = "civisanalytics/datascience-r",
-  docker_image_tag = "3", ...)
+  docker_image_tag = "3",
+  ...
+)
 
 \method{run}{CivisFuture}(future, ...)
 
@@ -38,7 +48,7 @@ identified.}
 \item{globals}{(optional) a logical, a character vector, or a named list
 to control how globals are handled.
 For details, see section 'Globals used by future expressions'
-in the help for \code{\link{future}()}.}
+in the help for \code{\link[future]{future}()}.}
 
 \item{packages}{(optional) a character vector specifying packages
 to be attached in the \R environment evaluating the future.}

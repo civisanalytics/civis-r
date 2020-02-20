@@ -4,10 +4,12 @@
 \alias{stash_local_dataframe}
 \title{Stash a data frame in feather or csv format, depending on CivisML version.}
 \usage{
-stash_local_dataframe(x)
+stash_local_dataframe(x, tmpl_id)
 }
 \arguments{
 \item{x}{data.frame to stash}
+
+\item{tmpl_id}{CivisML training template id}
 }
 \value{
 file id where dataframe is stored

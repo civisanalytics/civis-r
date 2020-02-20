@@ -4,8 +4,12 @@
 \alias{enhancements_list_table_deduplication_runs_logs}
 \title{Get the logs for a run}
 \usage{
-enhancements_list_table_deduplication_runs_logs(id, run_id,
-  last_id = NULL, limit = NULL)
+enhancements_list_table_deduplication_runs_logs(
+  id,
+  run_id,
+  last_id = NULL,
+  limit = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the table_deduplication.}

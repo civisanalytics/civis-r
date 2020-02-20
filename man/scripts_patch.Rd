@@ -4,9 +4,17 @@
 \alias{scripts_patch}
 \title{Update a script}
 \usage{
-scripts_patch(id, name = NULL, sql = NULL, params = NULL,
-  arguments = NULL, template_script_id = NULL, schedule = NULL,
-  notifications = NULL, parent_id = NULL)
+scripts_patch(
+  id,
+  name = NULL,
+  sql = NULL,
+  params = NULL,
+  arguments = NULL,
+  template_script_id = NULL,
+  schedule = NULL,
+  notifications = NULL,
+  parent_id = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the script.}

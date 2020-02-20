@@ -4,8 +4,13 @@
 \alias{imports_list_batches}
 \title{List batch imports}
 \usage{
-imports_list_batches(hidden = NULL, limit = NULL, page_num = NULL,
-  order = NULL, order_dir = NULL)
+imports_list_batches(
+  hidden = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}

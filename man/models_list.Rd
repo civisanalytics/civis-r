@@ -4,10 +4,19 @@
 \alias{models_list}
 \title{List}
 \usage{
-models_list(model_name = NULL, training_table_name = NULL,
-  dependent_variable = NULL, author = NULL, status = NULL,
-  hidden = NULL, archived = NULL, limit = NULL, page_num = NULL,
-  order = NULL, order_dir = NULL)
+models_list(
+  model_name = NULL,
+  training_table_name = NULL,
+  dependent_variable = NULL,
+  author = NULL,
+  status = NULL,
+  hidden = NULL,
+  archived = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{model_name}{string optional. If specified, will be used to filter the models returned. Substring matching is supported. (e.g., "modelName=model" will return both "model1" and "my model").}

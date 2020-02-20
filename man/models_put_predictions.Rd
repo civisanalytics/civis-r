@@ -4,8 +4,14 @@
 \alias{models_put_predictions}
 \title{Add a table on which to apply the predictive model}
 \usage{
-models_put_predictions(id, table_name, primary_key, limiting_sql = NULL,
-  output_table = NULL, schedule = NULL)
+models_put_predictions(
+  id,
+  table_name,
+  primary_key,
+  limiting_sql = NULL,
+  output_table = NULL,
+  schedule = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the model to which to apply the prediction.}

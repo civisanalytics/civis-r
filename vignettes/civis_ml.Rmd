@@ -30,14 +30,14 @@ civis_ml(civis_table(table_name = "schema.table", database_name = "database"), .
 civis_ml(civis_file(1234), ...)
 ```
 
-The Brandable data is located in a Redshift table called `sample_project.premium_training_set`. 
+The Brandable data is located in a Redshift table called `sample_project.premium_training_set`.
 
 ```{r, eval  = FALSE}
 options(civis.default_db = "my_database")
 tab <- civis_table(table_name = "sample_project.premium_training_set")
 ```
 
-Note that `civis_table` only returns information on where to find the data for `civis_ml`, not the data itself. `civis_table` also takes two SQL statements that can be useful for limiting the rows used for training: `sql_where`, and `sql_limit`. 
+Note that `civis_table` only returns information on where to find the data for `civis_ml`, not the data itself. `civis_table` also takes two SQL statements that can be useful for limiting the rows used for training: `sql_where`, and `sql_limit`.
 
 
 ## Modeling
@@ -48,7 +48,7 @@ After the data source is specified, we next choose the model type. There are 13 
 |------|:-----------|------------|-----------|------------------|
   `sparse_logistic`	| `civis_ml_sparse_logistic` | classification	| [Logistic Regression](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)	|
   `gradient_boosting_classifier` |	`civis_ml_gradient_boosting_classifier` | classification |	[GradientBoostingClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html) |
-  `random_forest_classifier` |	`civis_ml_random_forest_classifier` | classification |	[RandomForestClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html) | 
+  `random_forest_classifier` |	`civis_ml_random_forest_classifier` | classification |	[RandomForestClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html) |
   `extra_trees_classifier` |	`civis_ml_extra_trees_classifier` | classification |	[ExtraTreesClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html)|
   `multilayer_perceptron_classifier` | | classification | [muffnn.MLPClassifier](https://github.com/civisanalytics/muffnn) |
   `stacking_classifier` | | classification | [StackedClassifier](https://github.com/civisanalytics/civisml-extensions)
@@ -56,7 +56,7 @@ After the data source is specified, we next choose the model type. There are 13 
   `sparse_ridge_regressor` |	`civis_ml_sparse_ridge_regressor` | regression |	[Ridge](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html) |
   `gradient_boosting_regressor`	| `civis_ml_gradient_boosting_regressor` | regression | [GradientBoostingRegressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html) |
   `random_forest_regressor`	| `civis_ml_random_forest_regressor` | regression | [RandomForestRegressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)|
-  `extra_trees_regressor` | `civis_ml_extra_trees_regressor` | regression	| [ExtraTreesRegressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html)| 
+  `extra_trees_regressor` | `civis_ml_extra_trees_regressor` | regression	| [ExtraTreesRegressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html)|
 `multilayer_perceptron_regressor` | | regression | [muffnn.MLPRegressor](https://github.com/civisanalytics/muffnn) |
 `stacking_regressor` | | regression | [StackedRegressor](https://github.com/civisanalytics/civisml-extensions)
 
@@ -67,13 +67,13 @@ For the Brandable data, we use a `random_forest` classifier to predict the proba
 ```{r, eval = FALSE}
 library(civis)
 tab <- civis_table("sample_project.premium_training_set")
-m   <- civis_ml(tab, dependent_variable = "upgrade", 
-                model_type = "random_forest_classifier", 
-                primary_key = "brandable_user_id", 
+m   <- civis_ml(tab, dependent_variable = "upgrade",
+                model_type = "random_forest_classifier",
+                primary_key = "brandable_user_id",
                 excluded_columns = "residential_zip")
 
 m <- civis_ml_random_forest_classifier(tab,
-      primary_key = "brandable_user_id", 
+      primary_key = "brandable_user_id",
       excluded_columns = "residential_zip")
 ```
 
@@ -91,20 +91,20 @@ For the `random_forest_classifier` in the Brandable data, we try both `"hyperban
 tab <- civis_table("sample_project.premium_training_set")
 
 # hyperband
-m_hyper <- civis_ml(tab, dependent_variable = "upgrade", 
-              model_type = "random_forest_classifier", 
-              primary_key = "brandable_user_id", 
-              excluded_columns = "residential_zip", 
+m_hyper <- civis_ml(tab, dependent_variable = "upgrade",
+              model_type = "random_forest_classifier",
+              primary_key = "brandable_user_id",
+              excluded_columns = "residential_zip",
               cross_validation_parameters = 'hyperband')
 
 # grid search
-cv_params <- list("max_depth" = c(2, 3, 5), 
+cv_params <- list("max_depth" = c(2, 3, 5),
                   "n_estimators" = c(50, 100, 500))
-  
-m_grid <- civis_ml(tab, dependent_variable = "upgrade", 
-              model_type = "random_forest_classifier", 
-              primary_key = "brandable_user_id", 
-              excluded_columns = "residential_zip", 
+
+m_grid <- civis_ml(tab, dependent_variable = "upgrade",
+              model_type = "random_forest_classifier",
+              primary_key = "brandable_user_id",
+              excluded_columns = "residential_zip",
               cross_validation_parameters = cv_params)
 
 
@@ -128,7 +128,7 @@ small values, ranging between .0003 and .03, with a mean close to
 forest and extra trees models skews toward small values, ranging
 between .01 and 1, and with a mean close to .1.
 
-### Stacking 
+### Stacking
 
 The `"stacking_classifier"` model stacks together the `"gradient_boosting_classifier"` and `"random_forest_classifier"` predefined models together with a
 `glmnet.LogitNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5,
@@ -136,9 +136,9 @@ scoring='log_loss')`. Defaults for the predefined models are documented in `?civ
 tol=1e-5, scoring='r2')`, combining them using [NonNegativeLinearRegression](https://github.com/civisanalytics/civisml-extensions).
 
 ```{r, eval = FALSE}
-m_stack <- civis_ml(tab, dependent_variable = "upgrade", 
-              model_type = "stacking_classifier", 
-              primary_key = "brandable_user_id", 
+m_stack <- civis_ml(tab, dependent_variable = "upgrade",
+              model_type = "stacking_classifier",
+              primary_key = "brandable_user_id",
               excluded_columns = "residential_zip")
 ```
 
@@ -155,14 +155,14 @@ m
 # use this chunk to actually update the model if necessary
 library(civis)
 tab       <- civis_table("sample_project.premium_training_set")
-cv_params <- list("max_depth" = c(2, 3, 5), 
+cv_params <- list("max_depth" = c(2, 3, 5),
                   "n_estimators" = c(50, 100, 500))
-  
 
-m <- civis_ml(tab, dependent_variable = "upgrade", 
-              model_type = "random_forest_classifier", 
-              primary_key = "brandable_user_id", 
-              excluded_columns = "residential_zip", 
+
+m <- civis_ml(tab, dependent_variable = "upgrade",
+              model_type = "random_forest_classifier",
+              primary_key = "brandable_user_id",
+              excluded_columns = "residential_zip",
               cross_validation_parameters = cv_params)
 saveRDS(m, file = "../inst/civis_ml_brandable.rds")
 
@@ -170,10 +170,10 @@ oos <- fetch_oos_scores(m)
 saveRDS(oos, file = "../inst/civis_ml_oos.rds")
 
 err_m <- tryCatch({
-  civis_ml(tab, dependent_variable = "upgrade", 
-           model_type = "random_fest_classifier", 
-           primary_key = "brandable_user_id", 
-           excluded_columns = "residential_zip", 
+  civis_ml(tab, dependent_variable = "upgrade",
+           model_type = "random_fest_classifier",
+           primary_key = "brandable_user_id",
+           excluded_columns = "residential_zip",
            cross_validation_parameters = cv_params)
   }, error = function(e) e)
 saveRDS(err_m, file = "../inst/civis_ml_err.rds")
@@ -207,7 +207,7 @@ oos <- readRDS(path)
 head(oos)
 ```
 
-## Diagnostics 
+## Diagnostics
 
 For classification problems, `plot` produces a a decile plot using `ggplot2`. For the premium upgrade model, the decile plot shows that the top-scoring 10\% of individuals contain 2.20 times as many targets (people who upgraded) as a randomly selected list of the same size.
 
@@ -230,15 +230,15 @@ CivisML can also be used to score models on hundreds of millions of rows, and di
 
 ```{r, eval=FALSE}
 pred_tab <- civis_table(table_name = "sample_project.brandable_all_users")
-pred_job <- predict(m, newdata = pred_tab, 
+pred_job <- predict(m, newdata = pred_tab,
                     output_table = "sample_project.brandable_user_scores")
 ```
 
 Like training and validation, scoring is distributed by default, using up to 90 percent of your computing cluster resources. If you would like to have more control over the number of jobs that are run at once, you can set a maximum using `n_jobs`:
 
 ```{r, eval=FALSE}
-pred_job <- predict(m, newdata = pred_tab, 
-                    output_table = "sample_project.brandable_user_scores", 
+pred_job <- predict(m, newdata = pred_tab,
+                    output_table = "sample_project.brandable_user_scores",
                     n_jobs = 25)
 ```
 
@@ -254,7 +254,7 @@ Note that if the table of predictions exceeds available memory, it may be helpfu
 # download from S3
 download_civis(pred_job$model_info$output_file_ids, path = "my_predictions.csv")
 
-# download from Redshift 
+# download from Redshift
 download_civis("sample_project.brandable_user_scores")
 ```
 
@@ -274,10 +274,10 @@ Unfortunately, many kinds of errors can occur. When an error occurs within Civis
 Here is an example error from misspelling the model type:
 
 ```{r, eval=FALSE}
-civis_ml(tab, dependent_variable = "upgrade", 
-         model_type = "random_fest_classifier", 
-         primary_key = "brandable_user_id", 
-         excluded_columns = "residential_zip", 
+civis_ml(tab, dependent_variable = "upgrade",
+         model_type = "random_fest_classifier",
+         primary_key = "brandable_user_id",
+         excluded_columns = "residential_zip",
          cross_validation_parameters = cv_params)
 ```
 
@@ -291,13 +291,13 @@ If you don't understand the error message, providing the error message, job, and
 
 ## Programming with `civis_ml`
 
-When programming with `civis_ml`, errors can be caught using the base R `try` or `tryCatch`. In `civis`, we provide functions for getting debugging information using `get_error` or just the logs using `fetch_logs`. 
+When programming with `civis_ml`, errors can be caught using the base R `try` or `tryCatch`. In `civis`, we provide functions for getting debugging information using `get_error` or just the logs using `fetch_logs`.
 
 ```{r, eval = FALSE}
 e <- tryCatch({
-  civis_ml(tab, dependent_variable = "upgrade", 
-        model_type = "random_fest_classifier", 
-        primary_key = "brandable_user_id", 
+  civis_ml(tab, dependent_variable = "upgrade",
+        model_type = "random_fest_classifier",
+        primary_key = "brandable_user_id",
         excluded_columns = "residential_zip")
   }, civis_ml_error = function(e) e)
 get_error(e)
@@ -311,9 +311,9 @@ retry_model <- function(max_retries = 5) {
   i <- 1
   while (i < max_retries) {
     tryCatch({
-      m <- civis_ml(tab, dependent_variable = "upgrade", 
-               model_type = "random_forest_classifier", 
-               primary_key = "brandable_user_id", 
+      m <- civis_ml(tab, dependent_variable = "upgrade",
+               model_type = "random_forest_classifier",
+               primary_key = "brandable_user_id",
                excluded_columns = "residential_zip")
       return(m)
     }, civis_ml_error = function(e) stop(e))
@@ -326,7 +326,7 @@ retry_model <- function(max_retries = 5) {
 
 Workflow programming could be further enhanced by printing the logs, storing the error object, or writing error logs to a file or database.
 
-## Appendix 
+## Appendix
 
 ### Parallelization
 
@@ -338,7 +338,16 @@ Many estimators take a `sample_weight` argument. This can be be specified with t
 
 ### Missing data
 
-Modeling data must be complete. Any missing values will be imputed with the mean of non-null values in a column. 
+Modeling data must be complete. Any missing values will be imputed with the mean of non-null values in a column.
+
+### CivisML Versions
+
+By default, CivisML uses its latest version in production.
+If you would like a specific version
+(e.g., for a production pipeline where pinning the CivisML version is desirable),
+both `civis_ml` and the `civis_ml_*` functions have the optional parameter
+``civisml_version`` that accepts a string, e.g., ``'v2.3'``
+for CivisML v2.3. Please see [here](https://civis.zendesk.com/hc/en-us/articles/360000260011-CivisML) for the list of CivisML versions.
 
 ### More information
 

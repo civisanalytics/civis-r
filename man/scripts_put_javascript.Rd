@@ -4,10 +4,22 @@
 \alias{scripts_put_javascript}
 \title{Replace all attributes of this JavaScript Script}
 \usage{
-scripts_put_javascript(id, name, source, remote_host_id, credential_id,
-  parent_id = NULL, user_context = NULL, params = NULL,
-  arguments = NULL, schedule = NULL, notifications = NULL,
-  next_run_at = NULL, time_zone = NULL, target_project_id = NULL)
+scripts_put_javascript(
+  id,
+  name,
+  source,
+  remote_host_id,
+  credential_id,
+  parent_id = NULL,
+  user_context = NULL,
+  params = NULL,
+  arguments = NULL,
+  schedule = NULL,
+  notifications = NULL,
+  next_run_at = NULL,
+  time_zone = NULL,
+  target_project_id = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the script.}

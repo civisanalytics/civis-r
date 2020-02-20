@@ -4,9 +4,16 @@
 \alias{credentials_post}
 \title{Create a credential}
 \usage{
-credentials_post(type, username, password, name = NULL,
-  description = NULL, remote_host_id = NULL, state = NULL,
-  system_credential = NULL)
+credentials_post(
+  type,
+  username,
+  password,
+  name = NULL,
+  description = NULL,
+  remote_host_id = NULL,
+  state = NULL,
+  system_credential = NULL
+)
 }
 \arguments{
 \item{type}{string required.}

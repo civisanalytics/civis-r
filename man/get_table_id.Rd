@@ -19,7 +19,8 @@ table_id integer, id of the matching table.
 Return the table id for a given table
 }
 \seealso{
-Other tables: \code{\link{refresh_table}},
-  \code{\link{transfer_table}}
+Other tables: 
+\code{\link{refresh_table}()},
+\code{\link{transfer_table}()}
 }
 \concept{tables}

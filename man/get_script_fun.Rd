@@ -4,8 +4,7 @@
 \alias{get_script_fun}
 \title{Get a script function matching a job type.}
 \usage{
-get_script_fun(job, verb = c("list", "post"), fun_type = c("outputs",
-  "logs"))
+get_script_fun(job, verb = c("list", "post"), fun_type = c("outputs", "logs"))
 }
 \arguments{
 \item{job}{output of \code{jobs_get}}

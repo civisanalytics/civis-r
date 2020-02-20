@@ -4,20 +4,40 @@
 \alias{civis_ml_gradient_boosting_classifier}
 \title{CivisML Gradient Boosting Classifier}
 \usage{
-civis_ml_gradient_boosting_classifier(x, dependent_variable,
-  primary_key = NULL, excluded_columns = NULL, loss = c("deviance",
-  "exponential"), learning_rate = 0.1, n_estimators = 500,
-  subsample = 1, criterion = c("friedman_mse", "mse", "mae"),
-  min_samples_split = 2, min_samples_leaf = 1,
-  min_weight_fraction_leaf = 0, max_depth = 2,
-  min_impurity_split = 1e-07, random_state = 42,
-  max_features = "sqrt", max_leaf_nodes = NULL, presort = c("auto",
-  TRUE, FALSE), fit_params = NULL, cross_validation_parameters = NULL,
-  calibration = NULL, oos_scores_table = NULL, oos_scores_db = NULL,
+civis_ml_gradient_boosting_classifier(
+  x,
+  dependent_variable,
+  primary_key = NULL,
+  excluded_columns = NULL,
+  loss = c("deviance", "exponential"),
+  learning_rate = 0.1,
+  n_estimators = 500,
+  subsample = 1,
+  criterion = c("friedman_mse", "mse", "mae"),
+  min_samples_split = 2,
+  min_samples_leaf = 1,
+  min_weight_fraction_leaf = 0,
+  max_depth = 2,
+  min_impurity_split = 1e-07,
+  random_state = 42,
+  max_features = "sqrt",
+  max_leaf_nodes = NULL,
+  presort = c("auto", TRUE, FALSE),
+  fit_params = NULL,
+  cross_validation_parameters = NULL,
+  calibration = NULL,
+  oos_scores_table = NULL,
+  oos_scores_db = NULL,
   oos_scores_if_exists = c("fail", "append", "drop", "truncate"),
-  model_name = NULL, cpu_requested = NULL, memory_requested = NULL,
-  disk_requested = NULL, notifications = NULL,
-  polling_interval = NULL, verbose = FALSE)
+  model_name = NULL,
+  cpu_requested = NULL,
+  memory_requested = NULL,
+  disk_requested = NULL,
+  notifications = NULL,
+  polling_interval = NULL,
+  verbose = FALSE,
+  civisml_version = "prod"
+)
 }
 \arguments{
 \item{x}{See the Data Sources section below.}
@@ -148,6 +168,9 @@ and URL notification.}
 
 \item{verbose}{Optional, If \code{TRUE}, supply debug outputs in Platform
 logs and make prediction child jobs visible.}
+
+\item{civisml_version}{Optional, a one-length character vector of the
+CivisML version.  If not provided, the latest version in production is used.}
 }
 \value{
 A \code{civis_ml} object, a list containing the following elements:

@@ -1,5 +1,5 @@
 Package: civis
-Title: R Client for the 'Civis data science API'
+Title: R Client for the 'Civis Platform API'
 Version: 2.1.0
 Authors@R: c(
   person("Patrick", "Miller", email = "pmiller@civisanalytics.com", role = c("cre", "aut")),
@@ -12,9 +12,11 @@ Authors@R: c(
   person("Danning", "Chen", email = "dchen@civisanalytics.com", role = "ctb"),
   person("Elizabeth", "Sander", email = "lsander@civisanalytics.com", role = "ctb"),
   person("Madison", "Hobbs", email = "mhobbs@g.hmc.edu", role = "ctb"),
-  person("Anna", "Bladey", email = "abladey@civisanalytics.com", role = "ctb"))
+  person("Anna", "Bladey", email = "abladey@civisanalytics.com", role = "ctb"),
+  person("Sahil", "Shah", email = "sshah2@civisanalytics.com", role = "ctb"))
 Description: A convenient interface for making
-  requests directly to the 'Civis data science API' <https://www.civisanalytics.com/platform/>.
+  requests directly to the 'Civis Platform API' <https://www.civisanalytics.com/platform/>.
+  Full documentation available 'here' <https://civisanalytics.github.io/civis-r/>.
 Depends:
     R (>= 3.2.0)
 License: BSD_3_clause + file LICENSE
@@ -40,7 +42,7 @@ Suggests:
     rstudioapi,
     testthat,
     yaml
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 VignetteBuilder: knitr
 Collate:
     'await.R'

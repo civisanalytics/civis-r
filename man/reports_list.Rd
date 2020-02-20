@@ -4,9 +4,17 @@
 \alias{reports_list}
 \title{List Reports}
 \usage{
-reports_list(type = NULL, author = NULL, template_id = NULL,
-  hidden = NULL, archived = NULL, limit = NULL, page_num = NULL,
-  order = NULL, order_dir = NULL)
+reports_list(
+  type = NULL,
+  author = NULL,
+  template_id = NULL,
+  hidden = NULL,
+  archived = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{type}{string optional. If specified, return report of these types. It accepts a comma-separated list, possible values are 'tableau' or 'other'.}

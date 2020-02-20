@@ -4,8 +4,15 @@
 \alias{apps_list_instances}
 \title{List the instances of a Decision Application}
 \usage{
-apps_list_instances(slug, archived = NULL, app_release_id = NULL,
-  limit = NULL, page_num = NULL, order = NULL, order_dir = NULL)
+apps_list_instances(
+  slug,
+  archived = NULL,
+  app_release_id = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{slug}{string required. The slug for the application.}

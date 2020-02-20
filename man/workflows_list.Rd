@@ -4,8 +4,15 @@
 \alias{workflows_list}
 \title{List Workflows}
 \usage{
-workflows_list(hidden = NULL, archived = NULL, author = NULL,
-  limit = NULL, page_num = NULL, order = NULL, order_dir = NULL)
+workflows_list(
+  hidden = NULL,
+  archived = NULL,
+  author = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}

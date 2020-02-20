@@ -4,9 +4,15 @@
 \alias{workflows_patch}
 \title{Update some attributes of this Workflow}
 \usage{
-workflows_patch(id, name = NULL, description = NULL,
-  definition = NULL, schedule = NULL, time_zone = NULL,
-  notifications = NULL)
+workflows_patch(
+  id,
+  name = NULL,
+  description = NULL,
+  definition = NULL,
+  schedule = NULL,
+  time_zone = NULL,
+  notifications = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for this workflow.}

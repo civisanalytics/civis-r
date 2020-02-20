@@ -4,8 +4,14 @@
 \alias{remote_hosts_list_data_sets}
 \title{List data sets available from a remote host}
 \usage{
-remote_hosts_list_data_sets(id, credential_id = NULL, username = NULL,
-  password = NULL, q = NULL, s = NULL)
+remote_hosts_list_data_sets(
+  id,
+  credential_id = NULL,
+  username = NULL,
+  password = NULL,
+  q = NULL,
+  s = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the remote host.}

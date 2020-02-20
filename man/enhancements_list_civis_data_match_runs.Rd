@@ -4,8 +4,13 @@
 \alias{enhancements_list_civis_data_match_runs}
 \title{List runs for the given civis_data_match}
 \usage{
-enhancements_list_civis_data_match_runs(id, limit = NULL,
-  page_num = NULL, order = NULL, order_dir = NULL)
+enhancements_list_civis_data_match_runs(
+  id,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the civis_data_match.}

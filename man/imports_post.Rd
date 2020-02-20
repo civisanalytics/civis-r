@@ -4,10 +4,19 @@
 \alias{imports_post}
 \title{Create a new import configuration}
 \usage{
-imports_post(name, sync_type, is_outbound, source = NULL,
-  destination = NULL, schedule = NULL, notifications = NULL,
-  parent_id = NULL, next_run_at = NULL, time_zone = NULL,
-  hidden = NULL)
+imports_post(
+  name,
+  sync_type,
+  is_outbound,
+  source = NULL,
+  destination = NULL,
+  schedule = NULL,
+  notifications = NULL,
+  parent_id = NULL,
+  next_run_at = NULL,
+  time_zone = NULL,
+  hidden = NULL
+)
 }
 \arguments{
 \item{name}{string required. The name of the import.}

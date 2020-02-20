@@ -4,10 +4,18 @@
 \alias{enhancements_patch_table_deduplication}
 \title{Update some attributes of this Table Deduplication Enhancement}
 \usage{
-enhancements_patch_table_deduplication(id, name = NULL,
-  schedule = NULL, parent_id = NULL, notifications = NULL,
-  input_field_mapping = NULL, input_table = NULL,
-  output_table = NULL, max_matches = NULL, threshold = NULL)
+enhancements_patch_table_deduplication(
+  id,
+  name = NULL,
+  schedule = NULL,
+  parent_id = NULL,
+  notifications = NULL,
+  input_field_mapping = NULL,
+  input_table = NULL,
+  output_table = NULL,
+  max_matches = NULL,
+  threshold = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the enhancement.}

@@ -4,8 +4,13 @@
 \alias{enhancements_list_data_unification_runs}
 \title{List runs for the given data_unification}
 \usage{
-enhancements_list_data_unification_runs(id, limit = NULL,
-  page_num = NULL, order = NULL, order_dir = NULL)
+enhancements_list_data_unification_runs(
+  id,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the data_unification.}

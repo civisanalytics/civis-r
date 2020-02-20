@@ -4,8 +4,13 @@
 \alias{match_targets_post}
 \title{Create a new match target}
 \usage{
-match_targets_post(name, table = NULL, region = NULL,
-  target_file_name = NULL, encryption_key_credential_id = NULL)
+match_targets_post(
+  name,
+  table = NULL,
+  region = NULL,
+  target_file_name = NULL,
+  encryption_key_credential_id = NULL
+)
 }
 \arguments{
 \item{name}{string required. The name of the match target}

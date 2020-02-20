@@ -4,8 +4,12 @@
 \alias{tables_post_enhancements_prepared_matchings}
 \title{Match person records against a dynamo table prepared by Civis}
 \usage{
-tables_post_enhancements_prepared_matchings(source_table_id, threshold,
-  match_table_id, max_matches = NULL)
+tables_post_enhancements_prepared_matchings(
+  source_table_id,
+  threshold,
+  match_table_id,
+  max_matches = NULL
+)
 }
 \arguments{
 \item{source_table_id}{integer required. The ID of the table to be enhanced.}

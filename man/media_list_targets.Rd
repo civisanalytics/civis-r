@@ -4,8 +4,7 @@
 \alias{media_list_targets}
 \title{List all Media Targets}
 \usage{
-media_list_targets(name = NULL, identifier = NULL,
-  data_source = NULL)
+media_list_targets(name = NULL, identifier = NULL, data_source = NULL)
 }
 \arguments{
 \item{name}{string optional. The name of the target.}

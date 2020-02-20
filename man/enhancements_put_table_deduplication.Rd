@@ -4,10 +4,18 @@
 \alias{enhancements_put_table_deduplication}
 \title{Replace all attributes of this Table Deduplication Enhancement}
 \usage{
-enhancements_put_table_deduplication(id, name, input_field_mapping,
-  schedule = NULL, parent_id = NULL, notifications = NULL,
-  input_table = NULL, output_table = NULL, max_matches = NULL,
-  threshold = NULL)
+enhancements_put_table_deduplication(
+  id,
+  name,
+  input_field_mapping,
+  schedule = NULL,
+  parent_id = NULL,
+  notifications = NULL,
+  input_table = NULL,
+  output_table = NULL,
+  max_matches = NULL,
+  threshold = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the enhancement.}

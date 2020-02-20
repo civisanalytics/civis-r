@@ -4,8 +4,14 @@
 \alias{templates_post_scripts}
 \title{Create a Script Template}
 \usage{
-templates_post_scripts(script_id, name, note = NULL,
-  ui_report_id = NULL, archived = NULL, hidden = NULL)
+templates_post_scripts(
+  script_id,
+  name,
+  note = NULL,
+  ui_report_id = NULL,
+  archived = NULL,
+  hidden = NULL
+)
 }
 \arguments{
 \item{script_id}{integer required. The id of the script that this template uses.}

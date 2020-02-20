@@ -4,8 +4,12 @@
 \alias{tables_post_enhancements_cass_ncoa}
 \title{Standardize addresses in a table}
 \usage{
-tables_post_enhancements_cass_ncoa(source_table_id, perform_ncoa = NULL,
-  ncoa_credential_id = NULL, output_level = NULL)
+tables_post_enhancements_cass_ncoa(
+  source_table_id,
+  perform_ncoa = NULL,
+  ncoa_credential_id = NULL,
+  output_level = NULL
+)
 }
 \arguments{
 \item{source_table_id}{integer required. The ID of the table to be enhanced.}

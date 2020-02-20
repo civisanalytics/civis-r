@@ -4,8 +4,14 @@
 \alias{tables_list_columns}
 \title{List columns in the specified table}
 \usage{
-tables_list_columns(id, name = NULL, limit = NULL, page_num = NULL,
-  order = NULL, order_dir = NULL)
+tables_list_columns(
+  id,
+  name = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{id}{integer required.}

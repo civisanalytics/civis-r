@@ -4,8 +4,13 @@
 \alias{media_list_optimizations_runs}
 \title{List runs for the given optimization}
 \usage{
-media_list_optimizations_runs(id, limit = NULL, page_num = NULL,
-  order = NULL, order_dir = NULL)
+media_list_optimizations_runs(
+  id,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the optimization.}

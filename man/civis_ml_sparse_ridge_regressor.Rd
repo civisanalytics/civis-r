@@ -4,16 +4,32 @@
 \alias{civis_ml_sparse_ridge_regressor}
 \title{CivisML Sparse Ridge Regression}
 \usage{
-civis_ml_sparse_ridge_regressor(x, dependent_variable,
-  primary_key = NULL, excluded_columns = NULL, alpha = 1,
-  fit_intercept = TRUE, normalize = FALSE, max_iter = NULL,
-  tol = 0.001, solver = c("auto", "svd", "cholesky", "lsqr",
-  "sparse_cg", "sag"), random_state = 42, fit_params = NULL,
-  cross_validation_parameters = NULL, oos_scores_table = NULL,
-  oos_scores_db = NULL, oos_scores_if_exists = c("fail", "append",
-  "drop", "truncate"), model_name = NULL, cpu_requested = NULL,
-  memory_requested = NULL, disk_requested = NULL,
-  notifications = NULL, polling_interval = NULL, verbose = FALSE)
+civis_ml_sparse_ridge_regressor(
+  x,
+  dependent_variable,
+  primary_key = NULL,
+  excluded_columns = NULL,
+  alpha = 1,
+  fit_intercept = TRUE,
+  normalize = FALSE,
+  max_iter = NULL,
+  tol = 0.001,
+  solver = c("auto", "svd", "cholesky", "lsqr", "sparse_cg", "sag"),
+  random_state = 42,
+  fit_params = NULL,
+  cross_validation_parameters = NULL,
+  oos_scores_table = NULL,
+  oos_scores_db = NULL,
+  oos_scores_if_exists = c("fail", "append", "drop", "truncate"),
+  model_name = NULL,
+  cpu_requested = NULL,
+  memory_requested = NULL,
+  disk_requested = NULL,
+  notifications = NULL,
+  polling_interval = NULL,
+  verbose = FALSE,
+  civisml_version = "prod"
+)
 }
 \arguments{
 \item{x}{See the Data Sources section below.}
@@ -112,6 +128,9 @@ and URL notification.}
 
 \item{verbose}{Optional, If \code{TRUE}, supply debug outputs in Platform
 logs and make prediction child jobs visible.}
+
+\item{civisml_version}{Optional, a one-length character vector of the
+CivisML version.  If not provided, the latest version in production is used.}
 }
 \value{
 A \code{civis_ml} object, a list containing the following elements:

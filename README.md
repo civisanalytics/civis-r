@@ -1,4 +1,4 @@
-Civis Data Science API Client
+Civis Platform API R Client
 ================
 [![Build Status](https://travis-ci.org/civisanalytics/civis-r.svg?branch=master)](https://travis-ci.org/civisanalytics/civis-r)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/civis)](https://cran.r-project.org/package=civis)
@@ -8,14 +8,14 @@ Civis Data Science API Client
 `civis` is an R package that helps analysts and developers interact with
 the Civis Platform. The package includes a set of tools around common
 workflows as well as a convenient interface to make requests directly to
-the Civis Data Science API. 
+the Civis Platform API.
 
 
 ## Documentation
 
 The full documentation is hosted [here](https://civisanalytics.github.io/civis-r). The fastest way to get started is with the [getting started guide](https://civisanalytics.github.io/civis-r/articles/quick_start.html).
 
-## API Keys 
+## API Keys
 
 Installing and using `civis` requires an API key.  Instructions
 for creating an API key can be found [here](https://civis.zendesk.com/hc/en-us/articles/216341583-Generating-an-API-Key).
@@ -77,7 +77,7 @@ making multiple calls to the API)
 2. Making direct calls to the API
 
 Many useful tasks will require making multiple direct calls to the API.
-`civis` includes a number of wrapper functions to make common tasks like IO 
+`civis` includes a number of wrapper functions to make common tasks like IO
 and modeling easier. For example, reading data from a table in
 Platform is as easy as
 
@@ -143,16 +143,16 @@ Contributions to the code are very welcome! Issues and bug reports can filed thr
 
 ### git-flow
 
-1. Fork the repo, make changes in your branch. 
+1. Fork the repo, make changes in your branch.
 2. Unit tests must pass, and can be run with `devtools::test()` or `cmd-shift-t` in Rstudio.
 3. New code must be backed with tests, mocking all API calls.
 4. `R CMD check` must pass, i.e. using `devtools::check()`.
-5. Make a pull request from the fork to the master branch of the main repo. In your pull request, link to the issue the pull request addresses. 
+5. Make a pull request from the fork to the master branch of the main repo. In your pull request, link to the issue the pull request addresses.
 6. Tag a maintainer for review. Once it has been approved, squash and merge!
 
 Adding the environment variable `R_CLIENT_DEV = "TRUE"` to `.Renviron` will prevent new API functions and documentation from being generated based on your API Key. The default generated API functions included in the package are only updated when this package releases to CRAN.
 
-### Integration tests 
+### Integration tests
 
 For major, potentially breaking changes, integration tests should be run with
 ```bash
@@ -162,7 +162,7 @@ Rscript smoke_test.R
 Note, integration tests require a valid API key to run, and my be slow.
 
 
-### Authorship 
+### Authorship
 
 All contributors of code should include themselves in `DESCRIPTION` by adding
 the following object in the `Authors@R` section:

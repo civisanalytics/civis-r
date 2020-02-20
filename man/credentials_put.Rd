@@ -4,9 +4,17 @@
 \alias{credentials_put}
 \title{Update an existing credential}
 \usage{
-credentials_put(id, type, username, password, name = NULL,
-  description = NULL, remote_host_id = NULL, state = NULL,
-  system_credential = NULL)
+credentials_put(
+  id,
+  type,
+  username,
+  password,
+  name = NULL,
+  description = NULL,
+  remote_host_id = NULL,
+  state = NULL,
+  system_credential = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the credential.}

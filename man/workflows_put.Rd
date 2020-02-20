@@ -4,8 +4,15 @@
 \alias{workflows_put}
 \title{Replace all attributes of this Workflow}
 \usage{
-workflows_put(id, name, description = NULL, definition = NULL,
-  schedule = NULL, time_zone = NULL, notifications = NULL)
+workflows_put(
+  id,
+  name,
+  description = NULL,
+  definition = NULL,
+  schedule = NULL,
+  time_zone = NULL,
+  notifications = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for this workflow.}

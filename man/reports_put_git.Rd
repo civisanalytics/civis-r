@@ -4,8 +4,13 @@
 \alias{reports_put_git}
 \title{Attach an item to a file in a git repo}
 \usage{
-reports_put_git(id, git_ref = NULL, git_branch = NULL,
-  git_path = NULL, git_repo_url = NULL)
+reports_put_git(
+  id,
+  git_ref = NULL,
+  git_branch = NULL,
+  git_path = NULL,
+  git_repo_url = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the file.}

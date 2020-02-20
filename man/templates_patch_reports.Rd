@@ -4,8 +4,14 @@
 \alias{templates_patch_reports}
 \title{Update some attributes of this Report Template}
 \usage{
-templates_patch_reports(id, name = NULL, category = NULL,
-  archived = NULL, code_body = NULL, provide_api_key = NULL)
+templates_patch_reports(
+  id,
+  name = NULL,
+  category = NULL,
+  archived = NULL,
+  code_body = NULL,
+  provide_api_key = NULL
+)
 }
 \arguments{
 \item{id}{integer required.}

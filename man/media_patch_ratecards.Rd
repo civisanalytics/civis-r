@@ -4,8 +4,13 @@
 \alias{media_patch_ratecards}
 \title{Update some attributes of this Ratecard}
 \usage{
-media_patch_ratecards(id, filename = NULL, start_on = NULL,
-  end_on = NULL, dma_number = NULL)
+media_patch_ratecards(
+  id,
+  filename = NULL,
+  start_on = NULL,
+  end_on = NULL,
+  dma_number = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ratecard ID.}

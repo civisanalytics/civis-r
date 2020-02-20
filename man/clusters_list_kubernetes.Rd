@@ -4,8 +4,13 @@
 \alias{clusters_list_kubernetes}
 \title{List Kubernetes Clusters}
 \usage{
-clusters_list_kubernetes(organization_slug = NULL, limit = NULL,
-  page_num = NULL, order = NULL, order_dir = NULL)
+clusters_list_kubernetes(
+  organization_slug = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{organization_slug}{string optional. The slug of this cluster's organization.}

@@ -4,9 +4,16 @@
 \alias{enhancements_list}
 \title{List Enhancements}
 \usage{
-enhancements_list(type = NULL, author = NULL, status = NULL,
-  archived = NULL, limit = NULL, page_num = NULL, order = NULL,
-  order_dir = NULL)
+enhancements_list(
+  type = NULL,
+  author = NULL,
+  status = NULL,
+  archived = NULL,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{type}{string optional. If specified, return items of these types.}

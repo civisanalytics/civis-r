@@ -4,11 +4,20 @@
 \alias{imports_patch_files_csv}
 \title{Update some attributes of this CSV Import}
 \usage{
-imports_patch_files_csv(id, source = NULL, destination = NULL,
-  first_row_is_header = NULL, column_delimiter = NULL,
-  escaped = NULL, compression = NULL, existing_table_rows = NULL,
-  max_errors = NULL, table_columns = NULL, execution = NULL,
-  redshift_destination_options = NULL)
+imports_patch_files_csv(
+  id,
+  source = NULL,
+  destination = NULL,
+  first_row_is_header = NULL,
+  column_delimiter = NULL,
+  escaped = NULL,
+  compression = NULL,
+  existing_table_rows = NULL,
+  max_errors = NULL,
+  table_columns = NULL,
+  execution = NULL,
+  redshift_destination_options = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the import.}

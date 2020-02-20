@@ -30,6 +30,7 @@ columns <- fetch_until(tables_list_columns,
 }
 }
 \seealso{
-Other pagination: \code{\link{fetch_all}}
+Other pagination: 
+\code{\link{fetch_all}()}
 }
 \concept{pagination}

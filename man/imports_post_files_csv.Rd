@@ -4,11 +4,20 @@
 \alias{imports_post_files_csv}
 \title{Create a CSV Import}
 \usage{
-imports_post_files_csv(source, destination, first_row_is_header,
-  column_delimiter = NULL, escaped = NULL, compression = NULL,
-  existing_table_rows = NULL, max_errors = NULL,
-  table_columns = NULL, execution = NULL,
-  redshift_destination_options = NULL, hidden = NULL)
+imports_post_files_csv(
+  source,
+  destination,
+  first_row_is_header,
+  column_delimiter = NULL,
+  escaped = NULL,
+  compression = NULL,
+  existing_table_rows = NULL,
+  max_errors = NULL,
+  table_columns = NULL,
+  execution = NULL,
+  redshift_destination_options = NULL,
+  hidden = NULL
+)
 }
 \arguments{
 \item{source}{list required. A list containing the following elements: 

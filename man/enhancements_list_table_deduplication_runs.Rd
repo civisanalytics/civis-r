@@ -4,8 +4,13 @@
 \alias{enhancements_list_table_deduplication_runs}
 \title{List runs for the given table_deduplication}
 \usage{
-enhancements_list_table_deduplication_runs(id, limit = NULL,
-  page_num = NULL, order = NULL, order_dir = NULL)
+enhancements_list_table_deduplication_runs(
+  id,
+  limit = NULL,
+  page_num = NULL,
+  order = NULL,
+  order_dir = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the table_deduplication.}

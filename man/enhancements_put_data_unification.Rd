@@ -4,10 +4,20 @@
 \alias{enhancements_put_data_unification}
 \title{Replace all attributes of this Data Unification Enhancement}
 \usage{
-enhancements_put_data_unification(id, name, field_mapping1, field_mapping2,
-  schedule = NULL, parent_id = NULL, notifications = NULL,
-  table1 = NULL, table2 = NULL, output_table = NULL,
-  max_matches = NULL, threshold = NULL)
+enhancements_put_data_unification(
+  id,
+  name,
+  field_mapping1,
+  field_mapping2,
+  schedule = NULL,
+  parent_id = NULL,
+  notifications = NULL,
+  table1 = NULL,
+  table2 = NULL,
+  output_table = NULL,
+  max_matches = NULL,
+  threshold = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID for the enhancement.}
