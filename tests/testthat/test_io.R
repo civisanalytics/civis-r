@@ -321,12 +321,14 @@ test_that("download_civis.numeric fails for NA", {
 # query_civis -----------------------------------------------------------------
 
 test_that("query_civis returns object from await", {
+  qp <- mockery::mock()
   with_mock(
     `civis::get_database_id` = function(...) TRUE,
-    `civis::default_credential` = function(...) TRUE,
-    `civis::queries_post` = function(...) list(id = "query_id"),
+    `civis::default_credential` = function(...) 1,
+    `civis::queries_post` = qp,
     `civis::queries_get` = function(...) list(state = 'succeeded'),
-    expect_equal(get_status(query_civis("query", "database")), 'succeeded')
+    expect_equal(get_status(query_civis("query", "database", credential = 10)), 'succeeded'),
+    expect_equal(mockery::mock_args(qp)[[1]]$credential, 10)
   )
 })
 
@@ -336,14 +338,16 @@ test_that("query_civis.numeric fails for NA", {
 })
 
 test_that("query_civis_file.sql works", {
+  qp <- mockery::mock()
   with_mock(
     `civis::get_database_id` = function(...) TRUE,
     `civis::get_db` = function(...) "asdf",
-    `civis::default_credential` = function(...) TRUE,
-    `civis:::start_scripted_sql_job` = function(...) list(script_id = 1, run_id = 1),
+    `civis::default_credential` = function(...) 1,
+    `civis:::start_scripted_sql_job` = qp,
     `civis::scripts_get_sql_runs` = function(...) list(state = "succeeded",
                                                        output = list(list(fileId = 1))),
-    expect_equal(query_civis_file(sql("asdf")), 1)
+    expect_equal(query_civis_file(sql("asdf"), credential = 10), 1),
+    expect_equal(mockery::mock_args(qp)[[1]]$credential, 10)
   )
 })
 

@@ -672,7 +672,7 @@ civis_to_multifile_csv <- function(sql, database, job_name = NULL, hidden = TRUE
 #' @family io
 #' @examples
 #' \dontrun{
-#' query_civis("GRANT ALL ON schema.my_table TO GROUP admin", "database")
+#' query_civis("GRANT ALL ON schema.my_table TO GROUP admin", "database", credential=0000)
 #' }
 #'
 #' @export
@@ -703,8 +703,10 @@ query_civis.numeric <- function(x, verbose = FALSE, ...) {
 query_civis.character <- function(x, database = NULL, verbose = FALSE, ...) {
   db <- get_db(database)
   db_id <- get_database_id(db)
-  cred_id <- default_credential()
-  q_id <- queries_post(db_id, x, preview_rows = 0, credential = cred_id, ...)[["id"]]
+  credential <- list(...)$credential
+  credential <- if (is.null(credential)) default_credential() else credential
+  args <- append(list(...), c(database = db_id, sql = x, preview_rows = 0))
+  q_id <- do.call(queries_post, args)[["id"]]
   await(queries_get, id = q_id, .verbose = verbose)
 }
 
@@ -720,7 +722,7 @@ query_civis.character <- function(x, database = NULL, verbose = FALSE, ...) {
 #' @param hidden bool, Whether the job is hidden.
 #' @param verbose bool, Set to TRUE to print intermediate progress indicators.
 #' @param csv_settings See \code{\link{scripts_post_sql}} for details.
-#' @param ... Currently ignored.
+#' @param ... Options passed to \code{\link{scripts_post_sql}}, including \code{credential}.
 #' @export
 #' @family io
 #' @details
@@ -735,7 +737,7 @@ query_civis.character <- function(x, database = NULL, verbose = FALSE, ...) {
 #' id <- query_civis_file(query)
 #' df <- read_civis(id, using = read.csv)
 #'
-#' id <- query_civis_file(query_id)
+#' id <- query_civis_file(query_id, credential_id = 0000)
 #' df <- read_civis(id, using = read.csv)
 #' }
 query_civis_file <- function(x, ...){
@@ -751,7 +753,7 @@ query_civis_file.character <- function(x, database = NULL, job_name = NULL, hidd
     stop(msg)
   }
   sql_str <- sql(paste0("SELECT * FROM ", x))
-  query_civis_file.sql(sql_str, database = database)
+  query_civis_file.sql(sql_str, database = database, ...)
 }
 
 #' @export
@@ -760,13 +762,13 @@ query_civis_file.sql <- function(x, database = NULL, job_name = NULL, hidden = T
                                  verbose = FALSE, csv_settings = NULL, ...) {
   x <- as.character(x)
   db <- get_db(database)
-  cred_id <- default_credential()
   if (is.null(job_name)) job_name <- "Civis S3 Export Via R Client"
   run <- start_scripted_sql_job(database = db,
                                 sql = x,
                                 job_name = job_name,
                                 hidden = hidden,
-                                csv_settings = csv_settings)
+                                csv_settings = csv_settings,
+                                ...)
   res <- await(scripts_get_sql_runs,
                id = run$script_id, run_id = run$run_id, .verbose = verbose)
   res$output[[1]]$fileId
@@ -783,12 +785,13 @@ query_civis_file.numeric <- function(x, database = NULL, verbose = FALSE, ...) {
 
 # Kick off a scripted sql job
 start_scripted_sql_job <- function(database, sql, job_name, hidden = TRUE,
-                                   csv_settings = NULL) {
+                                   csv_settings = NULL, ...) {
 
   db_id <- get_database_id(database)
-  creds <- default_credential()
+  credential <- list(...)$credential
+  credential <- if (is.null(credential)) default_credential() else credential
   args <- list(name = job_name, sql = sql, hidden = hidden, remote_host_id = db_id,
-               credential_id = creds)
+               credential_id = credential)
   if (!missing(csv_settings)) args <- c(args, list(csv_settings = csv_settings))
 
   script_id <- do.call(scripts_post_sql, args)[["id"]]
