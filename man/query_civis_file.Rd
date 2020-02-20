@@ -22,7 +22,7 @@ query_civis_file(x, ...)
 \arguments{
 \item{x}{"schema.table", \code{sql("query")}, or a sql script job id.}
 
-\item{...}{This can currently include a credential, e.g. \code{credential = 0000}}
+\item{...}{Options passed to \code{\link{scripts_post_sql}}, including \code{credential}.}
 
 \item{database}{string, Name of database where data frame is to be uploaded.
 If no database is specified, uses \code{options(civis.default_db)}.}
@@ -61,7 +61,7 @@ query <- sql("SELECT * FROM table JOIN other_table USING id WHERE var1 < 23")
 id <- query_civis_file(query)
 df <- read_civis(id, using = read.csv)
 
-id <- query_civis_file(query_id)
+id <- query_civis_file(query_id, credential_id = 0000)
 df <- read_civis(id, using = read.csv)
 }
 }

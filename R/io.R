@@ -672,7 +672,7 @@ civis_to_multifile_csv <- function(sql, database, job_name = NULL, hidden = TRUE
 #' @family io
 #' @examples
 #' \dontrun{
-#' query_civis("GRANT ALL ON schema.my_table TO GROUP admin", "database")
+#' query_civis("GRANT ALL ON schema.my_table TO GROUP admin", "database", credential=0000)
 #' }
 #'
 #' @export
@@ -722,7 +722,7 @@ query_civis.character <- function(x, database = NULL, verbose = FALSE, ...) {
 #' @param hidden bool, Whether the job is hidden.
 #' @param verbose bool, Set to TRUE to print intermediate progress indicators.
 #' @param csv_settings See \code{\link{scripts_post_sql}} for details.
-#' @param ... This can currently include a credential, e.g. \code{credential = 0000}
+#' @param ... Options passed to \code{\link{scripts_post_sql}}, including \code{credential}.
 #' @export
 #' @family io
 #' @details
@@ -737,7 +737,7 @@ query_civis.character <- function(x, database = NULL, verbose = FALSE, ...) {
 #' id <- query_civis_file(query)
 #' df <- read_civis(id, using = read.csv)
 #'
-#' id <- query_civis_file(query_id)
+#' id <- query_civis_file(query_id, credential_id = 0000)
 #' df <- read_civis(id, using = read.csv)
 #' }
 query_civis_file <- function(x, ...){

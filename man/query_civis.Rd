@@ -43,7 +43,7 @@ this database will automatically be used as the default.
 
 \examples{
 \dontrun{
-query_civis("GRANT ALL ON schema.my_table TO GROUP admin", "database")
+query_civis("GRANT ALL ON schema.my_table TO GROUP admin", "database", credential=0000)
 }
 
 }
