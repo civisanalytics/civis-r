@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+## [2.1.1] - 2020-02-20
 ### Fixed
 
 - The `database` parameter in `read_civis` now accepts character
