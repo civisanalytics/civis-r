@@ -123,6 +123,7 @@ A list containing the following elements:
 \item unquoted boolean, Whether or not to quote fields. Default: false
 \item forceMultifile boolean, Whether or not the csv should be split into multiple files. Default: false
 \item filenamePrefix string, A user specified filename prefix for the output file to have. Default: null
+\item maxFileSize integer, The max file size, in MB, created files will be. Only available when force_multifile is true. 
 }}
 }
 \description{

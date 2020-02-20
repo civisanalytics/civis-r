@@ -98,15 +98,15 @@ A list containing the following elements:
 }}
 \item{requiredResources}{list, A list containing the following elements: 
 \itemize{
-\item cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares.
-\item memory integer, The amount of RAM to allocate for the container (in MiB).
+\item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
+\item memory integer, The amount of RAM to allocate for the container (in MB).
 \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
 }}
 \item{repoHttpUri}{string, The location of a github repo to clone into the container, e.g. github.com/my-user/my-repo.git.}
 \item{repoRef}{string, The tag or branch of the github repo to clone into the container.}
 \item{remoteHostCredentialId}{integer, The id of the database credentials to pass into the environment of the container.}
 \item{gitCredentialId}{integer, The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. Unnecessary if no git repo is specified or the git repo is public.}
-\item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]. }
+\item{dockerCommand}{string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]. Defaults to the Docker image's ENTRYPOINT/CMD.}
 \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}

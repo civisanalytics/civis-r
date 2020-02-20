@@ -10,7 +10,8 @@ match_targets_patch(
   table = NULL,
   region = NULL,
   target_file_name = NULL,
-  encryption_key_credential_id = NULL
+  encryption_key_credential_id = NULL,
+  archived = NULL
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ match_targets_patch(
 \item{target_file_name}{string optional. The name of the target file}
 
 \item{encryption_key_credential_id}{integer optional. The ID of the encryption key credential.}
+
+\item{archived}{boolean optional. Whether the match target has been archived.}
 }
 \value{
 A list containing the following elements:
@@ -34,6 +37,9 @@ A list containing the following elements:
 \item{region}{string, The AWS region of the DynamoDB table. By default, us-east-1.}
 \item{targetFileName}{string, The name of the target file}
 \item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
+\item{createdAt}{string, }
+\item{updatedAt}{string, }
+\item{archived}{boolean, Whether the match target has been archived.}
 }
 \description{
 Update a match target

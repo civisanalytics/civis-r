@@ -71,6 +71,16 @@ A list containing the following elements:
 }}
 \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
 \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+\item{archived}{boolean, Whether the Civis Data Match Job has been archived.}
+\item{lastRun}{list, A list containing the following elements: 
+\itemize{
+\item id integer, 
+\item state string, 
+\item createdAt string, The time that the run was queued.
+\item startedAt string, The time that the run started.
+\item finishedAt string, The time that the run completed.
+\item error string, The error message for this run, if present.
+}}
 }
 \description{
 Get a Civis Data Match Enhancement
