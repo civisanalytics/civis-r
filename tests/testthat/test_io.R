@@ -292,7 +292,7 @@ test_that("write_civis_file.data.frame uploads a csv", {
     write_civis_file(iris),
     # call the temporary function given to with_tempfile
     mock_args(m)[[1]][[1]]('tmp.csv'),
-    expect_equal(read.csv('tmp.csv'), iris),
+    expect_equal(read.csv('tmp.csv', stringsAsFactors = TRUE), iris),
     unlink('tmp.csv')
   )
 })

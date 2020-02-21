@@ -285,7 +285,7 @@ get_feature_importance <- function(model){
   importance <- params$feature_importances[variable_order]
 
   feature_importance_df <- data.frame('variable_name' = variable_name,
-                                      'importance' = importance)
+                                      'importance' = importance, stringsAsFactors = TRUE)
   feature_importance_df
 }
 
