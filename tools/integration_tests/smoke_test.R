@@ -35,7 +35,7 @@ test_that("write_civis writes to redshift", {
   # Tests both write_civis.character and write_civis.default
   iris$id <- 1:nrow(iris)
   write_civis(iris, tablename, database = database, verbose = TRUE)
-  x <- read_civis(tablename)
+  x <- read_civis(tablename, stringsAsFactors = TRUE)
   colnames(x) <- colnames(iris)
   expect_equivalent(x[order(x$id), ], iris)
   query_civis(paste0("DROP TABLE IF EXISTS ", tablename), database = database)
@@ -46,7 +46,7 @@ test_that("write_civis writes to redshift", {
   write.csv(iris, file = fname, row.names = TRUE)
   fid <- write_civis_file(fname, "iris.csv")
   write_civis(fid, tablename, "redshift-general", if_exists = "drop", verbose = TRUE)
-  x <- read_civis(tablename)
+  x <- read_civis(tablename, stringsAsFactors = TRUE)
   id <- x[,1]
   x$column_0 <- NULL
   colnames(x) <- colnames(iris)
@@ -91,7 +91,7 @@ test_that("files can be uploaded", {
   # tests both write_civis_file.default and write_civis_file.character
   data(iris)
   fid <- write_civis_file(iris)
-  x <- read_civis(fid)
+  x <- read_civis(fid, using = read.csv, stringsAsFactors = TRUE)
   expect_equal(x, iris)
 
   info <- files_get(id = fid)
