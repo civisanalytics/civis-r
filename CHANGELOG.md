@@ -2,7 +2,13 @@
 
 ## Unreleased
 
-## [2.1.1] - 2020-02-20
+## [2.1.2] - 2020-02-24
+
+### Fixed
+
+- Updates required for `stringsAsFactors=FALSE` default. (#232).
+
+## [2.1.1] -  2020-02-20
 ### Fixed
 
 - The `database` parameter in `read_civis` now accepts character
