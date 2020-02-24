@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -134,8 +134,13 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>aliases_patch</span>(<span class='no'>id</span>, <span class='kw'>object_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>object_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>alias</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>display_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>aliases_patch</span>(
+  <span class='no'>id</span>,
+  <span class='kw'>object_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>object_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>alias</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>display_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,7 +155,7 @@
     </tr>
     <tr>
       <th>object_type</th>
-      <td><p>string optional. The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.</p></td>
+      <td><p>string optional. The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.</p></td>
     </tr>
     <tr>
       <th>alias</th>
@@ -167,7 +172,7 @@
     <p>A list containing the following elements:</p>
 <dt>id</dt><dd><p>integer, The id of the Alias object.</p></dd>
 <dt>objectId</dt><dd><p>integer, The id of the object</p></dd>
-<dt>objectType</dt><dd><p>string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, table_archival, table_unarchival, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.</p></dd>
+<dt>objectType</dt><dd><p>string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.</p></dd>
 <dt>alias</dt><dd><p>string, The alias of the object</p></dd>
 <dt>userId</dt><dd><p>integer, The id of the user who created the alias</p></dd>
 <dt>displayName</dt><dd><p>string, The display name of the Alias object. Defaults to object name if not provided.</p></dd>

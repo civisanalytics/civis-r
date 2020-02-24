@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -134,15 +134,29 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>models_patch</span>(<span class='no'>id</span>, <span class='kw'>table_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>database_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>interaction_terms</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>box_cox_transformation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>model_type_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>primary_key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dependent_variable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dependent_variable_order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>excluded_columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>limiting_sql</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>active_build_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cross_validation_parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>number_of_folds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>schedule</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>parent_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>time_zone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>models_patch</span>(
+  <span class='no'>id</span>,
+  <span class='kw'>table_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>database_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>interaction_terms</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>box_cox_transformation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>model_type_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>primary_key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>dependent_variable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>dependent_variable_order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>excluded_columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>limiting_sql</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>active_build_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cross_validation_parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>number_of_folds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>schedule</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>parent_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>time_zone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

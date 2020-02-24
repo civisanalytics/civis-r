@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -134,8 +134,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>imports_put_syncs</span>(<span class='no'>id</span>, <span class='no'>sync_id</span>, <span class='no'>source</span>, <span class='no'>destination</span>,
-  <span class='kw'>advanced_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>imports_put_syncs</span>(<span class='no'>id</span>, <span class='no'>sync_id</span>, <span class='no'>source</span>, <span class='no'>destination</span>, <span class='kw'>advanced_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,10 +192,11 @@
 <li><p>mysqlCatalogMatchesSchema boolean,</p></li>
 <li><p>chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be choosen automatically.</p></li>
 <li><p>firstRowIsHeader boolean,</p></li>
-<li><p>exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet.</p></li>
+<li><p>exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "appendwksht"</p></li>
 <li><p>sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.</p></li>
 <li><p>contactLists string,</p></li>
 <li><p>soqlQuery string,</p></li>
+<li><p>includeDeletedRecords boolean,</p></li>
 </ul></td>
     </tr>
     </table>
@@ -246,10 +246,11 @@
 <li><p>mysqlCatalogMatchesSchema boolean,</p></li>
 <li><p>chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be choosen automatically.</p></li>
 <li><p>firstRowIsHeader boolean,</p></li>
-<li><p>exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet.</p></li>
+<li><p>exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "appendwksht"</p></li>
 <li><p>sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.</p></li>
 <li><p>contactLists string,</p></li>
 <li><p>soqlQuery string,</p></li>
+<li><p>includeDeletedRecords boolean,</p></li>
 </ul></p></dd>
 
     

@@ -13,6 +13,30 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/CivisFuture.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/admin_delete_announcements.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/admin_get_announcements.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/admin_list_announcements.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/admin_list_organizations.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/admin_patch_announcements.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/admin_patch_themes.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/admin_post_announcements.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/admin_post_themes.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/aliases_delete.html</loc>
   </url>
   <url>
@@ -61,6 +85,12 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/apps_delete_instances_shares_users.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/apps_delete_releases_shares_groups.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/apps_delete_releases_shares_users.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/apps_get.html</loc>
   </url>
   <url>
@@ -85,10 +115,22 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/apps_list_releases.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/apps_list_releases_shares.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/apps_patch_instances.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/apps_patch_releases.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/apps_post_instances.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/apps_post_releases.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/apps_put_features.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/apps_put_instances_archive.html</loc>
@@ -101,6 +143,15 @@
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/apps_put_instances_shares_users.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/apps_put_releases_archive.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/apps_put_releases_shares_groups.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/apps_put_releases_shares_users.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/await.html</loc>
@@ -166,9 +217,6 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/clusters_get_kubernetes_partitions.html</loc>
   </url>
   <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/clusters_get_workers.html</loc>
-  </url>
-  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/clusters_list_kubernetes.html</loc>
   </url>
   <url>
@@ -181,37 +229,16 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/clusters_list_kubernetes_partitions.html</loc>
   </url>
   <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/clusters_list_workers.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/clusters_list_workers_active_jobs.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/clusters_list_workers_queued_jobs.html</loc>
+    <loc>https://civisanalytics.github.io/civis-r/reference/clusters_patch_kubernetes.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/clusters_patch_kubernetes_partitions.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/clusters_post_kubernetes.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/clusters_post_kubernetes_partitions.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/codes_delete.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/codes_get.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/codes_list.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/codes_patch.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/codes_post.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/codes_put.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/coef.civis_ml.html</loc>
@@ -301,7 +328,16 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_cass_ncoa_shares_users.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_civis_data_match_projects.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_civis_data_match_runs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_civis_data_match_shares_groups.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_civis_data_match_shares_users.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_delete_data_unification_runs.html</loc>
@@ -370,6 +406,9 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_cass_ncoa_shares.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_civis_data_match_projects.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_civis_data_match_runs.html</loc>
   </url>
   <url>
@@ -377,6 +416,9 @@
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_civis_data_match_runs_outputs.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_civis_data_match_shares.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_list_data_unification_runs.html</loc>
@@ -448,6 +490,9 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_post_civis_data_match_cancel.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_post_civis_data_match_clone.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_post_civis_data_match_runs.html</loc>
   </url>
   <url>
@@ -496,6 +541,18 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_civis_data_match.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_civis_data_match_archive.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_civis_data_match_projects.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_civis_data_match_shares_groups.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_civis_data_match_shares_users.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/enhancements_put_data_unification.html</loc>
   </url>
   <url>
@@ -520,6 +577,24 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/exports_list.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/feature_flags_delete_groups.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/feature_flags_delete_users.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/feature_flags_get.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/feature_flags_list.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/feature_flags_put_groups.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/feature_flags_put_users.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/fetch_all.html</loc>
   </url>
   <url>
@@ -541,6 +616,9 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/fetch_until.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/files_delete_preprocess_csv.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/files_delete_projects.html</loc>
   </url>
   <url>
@@ -553,10 +631,16 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/files_get.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/files_get_preprocess_csv.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/files_list_projects.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/files_list_shares.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/files_patch_preprocess_csv.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/files_post.html</loc>
@@ -566,6 +650,15 @@
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/files_post_multipart_complete.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/files_post_preprocess_csv.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/files_put_preprocess_csv.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/files_put_preprocess_csv_archive.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/files_put_projects.html</loc>
@@ -589,6 +682,9 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/get_feature_importance.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/get_job_type_version.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/get_metric.html</loc>
   </url>
   <url>
@@ -599,6 +695,12 @@
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/get_table_id.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/get_template_ids_all_versions.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/get_train_template_id.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/git_repos_delete.html</loc>
@@ -613,7 +715,43 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/git_repos_post.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/groups_delete.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/groups_delete_members.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/groups_delete_shares_groups.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/groups_delete_shares_users.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/groups_get.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/groups_list.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/groups_list_shares.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/groups_patch.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/groups_post.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/groups_put.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/groups_put_members.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/groups_put_shares_groups.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/groups_put_shares_users.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/hist.civis_ml.html</loc>
@@ -778,6 +916,9 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/jobs_post_trigger_email.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/jobs_put_archive.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/jobs_put_projects.html</loc>
   </url>
   <url>
@@ -811,16 +952,34 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/json_values_put_shares_users.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/match_targets_delete_shares_groups.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/match_targets_delete_shares_users.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/match_targets_get.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/match_targets_list.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/match_targets_list_shares.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/match_targets_patch.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/match_targets_post.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/match_targets_put_archive.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/match_targets_put_shares_groups.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/match_targets_put_shares_users.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/media_delete_optimizations_runs.html</loc>
@@ -1138,6 +1297,9 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/projects_delete.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/projects_delete_parent_projects.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/projects_delete_shares_groups.html</loc>
   </url>
   <url>
@@ -1150,6 +1312,9 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/projects_list.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/projects_list_parent_projects.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/projects_list_shares.html</loc>
   </url>
   <url>
@@ -1160,6 +1325,9 @@
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/projects_put_archive.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/projects_put_parent_projects.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/projects_put_shares_groups.html</loc>
@@ -1294,6 +1462,9 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/reports_post_grants.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/reports_post_refresh.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/reports_post_services.html</loc>
   </url>
   <url>
@@ -1319,99 +1490,6 @@
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/reports_put_shares_users.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_delete_grants.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_delete_projects.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_delete_services_projects.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_delete_services_shares_groups.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_delete_services_shares_users.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_delete_shares_groups.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_delete_shares_users.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_get.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_get_git_commits.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_get_services.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_list.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_list_git.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_list_git_commits.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_list_projects.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_list_services_projects.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_list_services_shares.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_list_shares.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_patch.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_patch_services.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_post.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_post_git_commits.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_post_grants.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_post_services.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_put_archive.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_put_git.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_put_projects.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_put_services_projects.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_put_services_shares_groups.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_put_services_shares_users.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_put_shares_groups.html</loc>
-  </url>
-  <url>
-    <loc>https://civisanalytics.github.io/civis-r/reference/results_put_shares_users.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/run_civis.html</loc>
@@ -2146,7 +2224,13 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/templates_post_reports.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/templates_post_reports_review.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/templates_post_scripts.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/templates_post_scripts_review.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/templates_put_reports.html</loc>
@@ -2176,6 +2260,9 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/users_delete_api_keys.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/users_delete_me_favorites.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/users_get.html</loc>
   </url>
   <url>
@@ -2191,10 +2278,25 @@
     <loc>https://civisanalytics.github.io/civis-r/reference/users_list_me.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/users_list_me_favorites.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/users_list_me_ui.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/users_patch.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/users_patch_me.html</loc>
   </url>
   <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/users_post.html</loc>
+  </url>
+  <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/users_post_api_keys.html</loc>
+  </url>
+  <url>
+    <loc>https://civisanalytics.github.io/civis-r/reference/users_post_me_favorites.html</loc>
   </url>
   <url>
     <loc>https://civisanalytics.github.io/civis-r/reference/with_tempfile.html</loc>

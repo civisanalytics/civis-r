@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -134,8 +134,17 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>workflows_list</span>(<span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>archived</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>author</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>page_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>workflows_list</span>(
+  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>archived</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>author</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>state</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>scheduled</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>page_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>order_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,7 +159,15 @@
     </tr>
     <tr>
       <th>author</th>
-      <td><p>string optional. If specified, return workflows from this author. It accepts a comma-separated list of author ids.</p></td>
+      <td><p>string optional. Author of the workflow. It accepts a comma-separated list of author ids.</p></td>
+    </tr>
+    <tr>
+      <th>state</th>
+      <td><p>array optional. State of the most recent execution.One or more of queued, running, succeeded, failed, cancelled, idle, and scheduled.</p></td>
+    </tr>
+    <tr>
+      <th>scheduled</th>
+      <td><p>boolean optional. If the workflow is scheduled.</p></td>
     </tr>
     <tr>
       <th>limit</th>

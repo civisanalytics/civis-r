@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -194,6 +194,7 @@
 <li><p>type string,</p></li>
 <li><p>finishedAt string,</p></li>
 <li><p>state string,</p></li>
+<li><p>lastRun object,</p></li>
 </ul></p></dd>
 <dt>imports</dt><dd><p>array, An array containing the following fields: 
 <ul>
@@ -204,6 +205,18 @@
 <li><p>type string,</p></li>
 <li><p>finishedAt string,</p></li>
 <li><p>state string,</p></li>
+<li><p>lastRun object,</p></li>
+</ul></p></dd>
+<dt>exports</dt><dd><p>array, An array containing the following fields: 
+<ul>
+<li><p>id integer, The item's ID.</p></li>
+<li><p>createdAt string,</p></li>
+<li><p>updatedAt string,</p></li>
+<li><p>name string,</p></li>
+<li><p>type string,</p></li>
+<li><p>finishedAt string,</p></li>
+<li><p>state string,</p></li>
+<li><p>lastRun object,</p></li>
 </ul></p></dd>
 <dt>models</dt><dd><p>array, An array containing the following fields: 
 <ul>
@@ -220,6 +233,7 @@
 <li><p>updatedAt string,</p></li>
 <li><p>name string,</p></li>
 <li><p>currentDeploymentId integer,</p></li>
+<li><p>lastDeploy object,</p></li>
 </ul></p></dd>
 <dt>services</dt><dd><p>array, An array containing the following fields: 
 <ul>
@@ -228,6 +242,7 @@
 <li><p>updatedAt string,</p></li>
 <li><p>name string,</p></li>
 <li><p>currentDeploymentId integer,</p></li>
+<li><p>lastDeploy object,</p></li>
 </ul></p></dd>
 <dt>workflows</dt><dd><p>array, An array containing the following fields: 
 <ul>
@@ -236,6 +251,7 @@
 <li><p>updatedAt string,</p></li>
 <li><p>name string,</p></li>
 <li><p>state string,</p></li>
+<li><p>lastExecution object,</p></li>
 </ul></p></dd>
 <dt>reports</dt><dd><p>array, An array containing the following fields: 
 <ul>
@@ -260,6 +276,14 @@
 <li><p>fileName string,</p></li>
 <li><p>fileSize integer,</p></li>
 <li><p>expired boolean,</p></li>
+</ul></p></dd>
+<dt>enhancements</dt><dd><p>array, An array containing the following fields: 
+<ul>
+<li><p>id integer, The item's ID.</p></li>
+<li><p>createdAt string,</p></li>
+<li><p>updatedAt string,</p></li>
+<li><p>name string,</p></li>
+<li><p>lastRun object,</p></li>
 </ul></p></dd>
 <dt>appInstances</dt><dd><p>array, An array containing the following fields: 
 <ul>
@@ -287,12 +311,18 @@
 <li><p>name string,</p></li>
 <li><p>icon string,</p></li>
 <li><p>author string,</p></li>
-<li><p>archived string, The archival status of the requested item(s).</p></li>
 <li><p>updatedAt string,</p></li>
+<li><p>archived string, The archival status of the requested item(s).</p></li>
+<li><p>hidden boolean, The hidden status of the item.</p></li>
 </ul></p></dd>
 <dt>note</dt><dd><p>string,</p></dd>
 <dt>hidden</dt><dd><p>boolean, The hidden status of the item.</p></dd>
 <dt>archived</dt><dd><p>string, The archival status of the requested item(s).</p></dd>
+<dt>parentProject</dt><dd><p>list, A list containing the following elements: 
+<ul>
+<li><p>id integer, The parent project's ID.</p></li>
+<li><p>name integer, The parent project's name.</p></li>
+</ul></p></dd>
 
     
 

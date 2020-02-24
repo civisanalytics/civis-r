@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -134,14 +134,28 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>scripts_post_containers</span>(<span class='no'>required_resources</span>, <span class='no'>docker_image_name</span>,
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>parent_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>user_context</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>arguments</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>schedule</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>repo_http_uri</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>repo_ref</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>remote_host_credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>git_credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>docker_command</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>docker_image_tag</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>instance_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cancel_timeout</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>time_zone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>target_project_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>scripts_post_containers</span>(
+  <span class='no'>required_resources</span>,
+  <span class='no'>docker_image_name</span>,
+  <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>parent_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>user_context</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>arguments</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>schedule</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>repo_http_uri</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>repo_ref</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>remote_host_credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>git_credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>docker_command</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>docker_image_tag</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>instance_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cancel_timeout</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>time_zone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>target_project_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,8 +163,8 @@
     <tr>
       <th>required_resources</th>
       <td><p>list required. A list containing the following elements:</p><ul>
-<li><p>cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares.</p></li>
-<li><p>memory integer, The amount of RAM to allocate for the container (in MiB).</p></li>
+<li><p>cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.</p></li>
+<li><p>memory integer, The amount of RAM to allocate for the container (in MB).</p></li>
 <li><p>diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.</p></li>
 <li><p>wholeInstance boolean, Whether or not to use the entire instance. If true, cpu, memory, and disk space are not required and will be set to an instance's max.</p></li>
 </ul></td>
@@ -231,7 +245,7 @@
     </tr>
     <tr>
       <th>docker_command</th>
-      <td><p>string optional. The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand].</p></td>
+      <td><p>string optional. The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]. Defaults to the Docker image's ENTRYPOINT/CMD.</p></td>
     </tr>
     <tr>
       <th>docker_image_tag</th>
@@ -338,15 +352,15 @@
 </ul></p></dd>
 <dt>requiredResources</dt><dd><p>list, A list containing the following elements: 
 <ul>
-<li><p>cpu integer, The number of CPU shares to allocate for the container. Each core has 1024 shares.</p></li>
-<li><p>memory integer, The amount of RAM to allocate for the container (in MiB).</p></li>
+<li><p>cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.</p></li>
+<li><p>memory integer, The amount of RAM to allocate for the container (in MB).</p></li>
 <li><p>diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.</p></li>
 </ul></p></dd>
 <dt>repoHttpUri</dt><dd><p>string, The location of a github repo to clone into the container, e.g. github.com/my-user/my-repo.git.</p></dd>
 <dt>repoRef</dt><dd><p>string, The tag or branch of the github repo to clone into the container.</p></dd>
 <dt>remoteHostCredentialId</dt><dd><p>integer, The id of the database credentials to pass into the environment of the container.</p></dd>
 <dt>gitCredentialId</dt><dd><p>integer, The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. Unnecessary if no git repo is specified or the git repo is public.</p></dd>
-<dt>dockerCommand</dt><dd><p>string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand].</p></dd>
+<dt>dockerCommand</dt><dd><p>string, The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]. Defaults to the Docker image's ENTRYPOINT/CMD.</p></dd>
 <dt>dockerImageName</dt><dd><p>string, The name of the docker image to pull from DockerHub.</p></dd>
 <dt>dockerImageTag</dt><dd><p>string, The tag of the docker image to pull from DockerHub.</p></dd>
 <dt>instanceType</dt><dd><p>string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.</p></dd>

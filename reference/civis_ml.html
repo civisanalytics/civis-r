@@ -64,7 +64,7 @@ using a set of Scikit-Learn estimators." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -136,25 +136,50 @@ using a set of Scikit-Learn estimators.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>civis_ml</span>(<span class='no'>x</span>, <span class='no'>dependent_variable</span>, <span class='no'>model_type</span>, <span class='kw'>primary_key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>excluded_columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fit_params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cross_validation_parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>calibration</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>oos_scores_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>oos_scores_db</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>civis_ml</span>(
+  <span class='no'>x</span>,
+  <span class='no'>dependent_variable</span>,
+  <span class='no'>model_type</span>,
+  <span class='kw'>primary_key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>excluded_columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>fit_params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cross_validation_parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>calibration</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>oos_scores_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>oos_scores_db</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>oos_scores_if_exists</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fail"</span>, <span class='st'>"append"</span>, <span class='st'>"drop"</span>, <span class='st'>"truncate"</span>),
-  <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cpu_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>memory_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>disk_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>polling_interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>validation_data</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"train"</span>, <span class='st'>"skip"</span>),
-  <span class='kw'>n_jobs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cpu_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>memory_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>disk_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>polling_interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>validation_data</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"train"</span>, <span class='st'>"skip"</span>),
+  <span class='kw'>n_jobs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>civisml_version</span> <span class='kw'>=</span> <span class='st'>"prod"</span>
+)
 
 <span class='fu'>civis_ml_fetch_existing</span>(<span class='no'>model_id</span>, <span class='kw'>run_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='co'># S3 method for civis_ml</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>object</span>, <span class='no'>newdata</span>, <span class='kw'>primary_key</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>output_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>output_db</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>if_output_exists</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fail"</span>,
-  <span class='st'>"append"</span>, <span class='st'>"drop"</span>, <span class='st'>"truncate"</span>), <span class='kw'>n_jobs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cpu_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>memory_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>disk_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>polling_interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>dvs_to_predict</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(
+  <span class='no'>object</span>,
+  <span class='no'>newdata</span>,
+  <span class='kw'>primary_key</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>output_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>output_db</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>if_output_exists</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fail"</span>, <span class='st'>"append"</span>, <span class='st'>"drop"</span>, <span class='st'>"truncate"</span>),
+  <span class='kw'>n_jobs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cpu_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>memory_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>disk_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>polling_interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>dvs_to_predict</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -279,6 +304,11 @@ possible without using all resources in the cluster).</p></td>
       <th>verbose</th>
       <td><p>Optional, If <code>TRUE</code>, supply debug outputs in Platform
 logs and make prediction child jobs visible.</p></td>
+    </tr>
+    <tr>
+      <th>civisml_version</th>
+      <td><p>Optional, a one-length character vector of the
+CivisML version. The default is "prod", the latest version in production</p></td>
     </tr>
     <tr>
       <th>model_id</th>

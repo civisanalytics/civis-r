@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -134,8 +134,15 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>groups_list</span>(<span class='kw'>query</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>permission</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>page_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>groups_list</span>(
+  <span class='kw'>query</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>permission</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>include_members</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>page_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>order_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,6 +154,10 @@
     <tr>
       <th>permission</th>
       <td><p>string optional. A permissions string, one of "read", "write", or "manage". Lists only groups for which the current user has that permission.</p></td>
+    </tr>
+    <tr>
+      <th>include_members</th>
+      <td><p>boolean optional. Show members of the group.</p></td>
     </tr>
     <tr>
       <th>limit</th>
@@ -173,7 +184,17 @@
 <dt>name</dt><dd><p>string, This group's name.</p></dd>
 <dt>createdAt</dt><dd><p>string, The date and time when this group was created.</p></dd>
 <dt>slug</dt><dd><p>string, The slug for this group.</p></dd>
-<dt>organizationId</dt><dd><p>integer, The organization associated with this group.</p></dd>
+<dt>organizationId</dt><dd><p>integer, The ID of the organization this group belongs to.</p></dd>
+<dt>organizationName</dt><dd><p>string, The name of the organization this group belongs to.</p></dd>
+<dt>memberCount</dt><dd><p>integer, The total number of members in this group.</p></dd>
+<dt>members</dt><dd><p>array, An array containing the following fields: 
+<ul>
+<li><p>id integer, The ID of this user.</p></li>
+<li><p>name string, This user's name.</p></li>
+<li><p>username string, This user's username.</p></li>
+<li><p>initials string, This user's initials.</p></li>
+<li><p>online boolean, Whether this user is online.</p></li>
+</ul></p></dd>
 
     
 

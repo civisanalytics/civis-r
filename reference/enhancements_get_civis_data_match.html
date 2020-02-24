@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -208,6 +208,16 @@
 </ul></p></dd>
 <dt>maxMatches</dt><dd><p>integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.</p></dd>
 <dt>threshold</dt><dd><p>number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.</p></dd>
+<dt>archived</dt><dd><p>boolean, Whether the Civis Data Match Job has been archived.</p></dd>
+<dt>lastRun</dt><dd><p>list, A list containing the following elements: 
+<ul>
+<li><p>id integer,</p></li>
+<li><p>state string,</p></li>
+<li><p>createdAt string, The time that the run was queued.</p></li>
+<li><p>startedAt string, The time that the run started.</p></li>
+<li><p>finishedAt string, The time that the run completed.</p></li>
+<li><p>error string, The error message for this run, if present.</p></li>
+</ul></p></dd>
 
     
 

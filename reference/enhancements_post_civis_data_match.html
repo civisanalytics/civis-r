@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -134,10 +134,19 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>enhancements_post_civis_data_match</span>(<span class='no'>name</span>, <span class='no'>input_field_mapping</span>,
-  <span class='no'>match_target_id</span>, <span class='kw'>schedule</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>parent_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>input_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>output_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>max_matches</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>enhancements_post_civis_data_match</span>(
+  <span class='no'>name</span>,
+  <span class='no'>input_field_mapping</span>,
+  <span class='no'>input_table</span>,
+  <span class='no'>match_target_id</span>,
+  <span class='no'>output_table</span>,
+  <span class='kw'>schedule</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>parent_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>max_matches</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>archived</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,8 +160,24 @@
       <td><p>list required. The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.</p></td>
     </tr>
     <tr>
+      <th>input_table</th>
+      <td><p>list required. A list containing the following elements:</p><ul>
+<li><p>databaseName string, The Redshift database name for the table.</p></li>
+<li><p>schema string, The schema name for the table.</p></li>
+<li><p>table string, The table name.</p></li>
+</ul></td>
+    </tr>
+    <tr>
       <th>match_target_id</th>
       <td><p>integer required. The ID of the Civis Data match target. See /match_targets for IDs.</p></td>
+    </tr>
+    <tr>
+      <th>output_table</th>
+      <td><p>list required. A list containing the following elements:</p><ul>
+<li><p>databaseName string, The Redshift database name for the table.</p></li>
+<li><p>schema string, The schema name for the table.</p></li>
+<li><p>table string, The table name.</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>schedule</th>
@@ -184,28 +209,16 @@
 </ul></td>
     </tr>
     <tr>
-      <th>input_table</th>
-      <td><p>list optional. A list containing the following elements:</p><ul>
-<li><p>databaseName string, The Redshift database name for the table.</p></li>
-<li><p>schema string, The schema name for the table.</p></li>
-<li><p>table string, The table name.</p></li>
-</ul></td>
-    </tr>
-    <tr>
-      <th>output_table</th>
-      <td><p>list optional. A list containing the following elements:</p><ul>
-<li><p>databaseName string, The Redshift database name for the table.</p></li>
-<li><p>schema string, The schema name for the table.</p></li>
-<li><p>table string, The table name.</p></li>
-</ul></td>
-    </tr>
-    <tr>
       <th>max_matches</th>
       <td><p>integer optional. The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
       <td><p>number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.</p></td>
+    </tr>
+    <tr>
+      <th>archived</th>
+      <td><p>boolean optional. Whether the Civis Data Match Job has been archived.</p></td>
     </tr>
     </table>
     
@@ -272,6 +285,16 @@
 </ul></p></dd>
 <dt>maxMatches</dt><dd><p>integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.</p></dd>
 <dt>threshold</dt><dd><p>number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.</p></dd>
+<dt>archived</dt><dd><p>boolean, Whether the Civis Data Match Job has been archived.</p></dd>
+<dt>lastRun</dt><dd><p>list, A list containing the following elements: 
+<ul>
+<li><p>id integer,</p></li>
+<li><p>state string,</p></li>
+<li><p>createdAt string, The time that the run was queued.</p></li>
+<li><p>startedAt string, The time that the run started.</p></li>
+<li><p>finishedAt string, The time that the run completed.</p></li>
+<li><p>error string, The error message for this run, if present.</p></li>
+</ul></p></dd>
 
     
 
