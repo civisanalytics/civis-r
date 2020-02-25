@@ -69,7 +69,7 @@ if a plan has been set. Files larger than 5TB cannot be uploaded." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -149,16 +149,19 @@ if a <code>plan</code> has been set. Files larger than 5TB cannot be uploaded.</
     <pre class="usage"><span class='fu'>write_civis_file</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>write_civis_file</span>(<span class='no'>x</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"r-object.rds"</span>,
-  <span class='kw'>expires_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>write_civis_file</span>(<span class='no'>x</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"r-object.rds"</span>, <span class='kw'>expires_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>write_civis_file</span>(<span class='no'>x</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"data.csv"</span>,
-  <span class='kw'>expires_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>write_civis_file</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"data.csv"</span>,
+  <span class='kw'>expires_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for character</span>
-<span class='fu'>write_civis_file</span>(<span class='no'>x</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>expires_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>)</pre>
+<span class='fu'>write_civis_file</span>(<span class='no'>x</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>expires_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -210,10 +213,12 @@ to the files endpoint. If given a filepath, the file is uploaded as-is.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other io: <code><a href='download_civis.html'>download_civis</a></code>,
-  <code><a href='query_civis_file.html'>query_civis_file</a></code>,
-  <code><a href='query_civis.html'>query_civis</a></code>, <code><a href='read_civis.html'>read_civis</a></code>,
-  <code><a href='write_civis.html'>write_civis</a></code></p></div>
+    <div class='dont-index'><p>Other io: 
+<code><a href='download_civis.html'>download_civis</a>()</code>,
+<code><a href='query_civis_file.html'>query_civis_file</a>()</code>,
+<code><a href='query_civis.html'>query_civis</a>()</code>,
+<code><a href='read_civis.html'>read_civis</a>()</code>,
+<code><a href='write_civis.html'>write_civis</a>()</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

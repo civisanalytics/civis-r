@@ -67,7 +67,7 @@ this database will automatically be used as the default." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -145,25 +145,62 @@ this database will automatically be used as the default.</p>
     <pre class="usage"><span class='fu'>write_civis</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>write_civis</span>(<span class='no'>x</span>, <span class='no'>tablename</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>if_exists</span> <span class='kw'>=</span> <span class='st'>"fail"</span>, <span class='kw'>distkey</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sortkey1</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sortkey2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max_errors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>diststyle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>import_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>write_civis</span>(
+  <span class='no'>x</span>,
+  <span class='no'>tablename</span>,
+  <span class='kw'>database</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>if_exists</span> <span class='kw'>=</span> <span class='st'>"fail"</span>,
+  <span class='kw'>distkey</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sortkey1</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sortkey2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>max_errors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>diststyle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>import_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for character</span>
-<span class='fu'>write_civis</span>(<span class='no'>x</span>, <span class='no'>tablename</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>if_exists</span> <span class='kw'>=</span> <span class='st'>"fail"</span>, <span class='kw'>distkey</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sortkey1</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sortkey2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max_errors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>diststyle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>import_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>write_civis</span>(
+  <span class='no'>x</span>,
+  <span class='no'>tablename</span>,
+  <span class='kw'>database</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>if_exists</span> <span class='kw'>=</span> <span class='st'>"fail"</span>,
+  <span class='kw'>distkey</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sortkey1</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sortkey2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>max_errors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>diststyle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>import_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>write_civis</span>(<span class='no'>x</span>, <span class='no'>tablename</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>if_exists</span> <span class='kw'>=</span> <span class='st'>"fail"</span>, <span class='kw'>distkey</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sortkey1</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sortkey2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max_errors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>delimiter</span> <span class='kw'>=</span> <span class='st'>","</span>, <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>diststyle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>import_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>write_civis</span>(
+  <span class='no'>x</span>,
+  <span class='no'>tablename</span>,
+  <span class='kw'>database</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>if_exists</span> <span class='kw'>=</span> <span class='st'>"fail"</span>,
+  <span class='kw'>distkey</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sortkey1</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sortkey2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>max_errors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>delimiter</span> <span class='kw'>=</span> <span class='st'>","</span>,
+  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>diststyle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>import_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -252,10 +289,12 @@ current user will be used.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='refresh_table.html'>refresh_table</a></code> to update table meta-data.</p>
-<p>Other io: <code><a href='download_civis.html'>download_civis</a></code>,
-  <code><a href='query_civis_file.html'>query_civis_file</a></code>,
-  <code><a href='query_civis.html'>query_civis</a></code>, <code><a href='read_civis.html'>read_civis</a></code>,
-  <code><a href='write_civis_file.html'>write_civis_file</a></code></p></div>
+<p>Other io: 
+<code><a href='download_civis.html'>download_civis</a>()</code>,
+<code><a href='query_civis_file.html'>query_civis_file</a>()</code>,
+<code><a href='query_civis.html'>query_civis</a>()</code>,
+<code><a href='read_civis.html'>read_civis</a>()</code>,
+<code><a href='write_civis_file.html'>write_civis_file</a>()</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

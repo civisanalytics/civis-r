@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -134,9 +134,18 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>users_list</span>(<span class='kw'>feature_flag</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>account_status</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>group_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>organization_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude_groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>page_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>order_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>users_list</span>(
+  <span class='kw'>feature_flag</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>account_status</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>query</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>group_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>organization_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exclude_groups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>page_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>order_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -190,7 +199,7 @@
 <dt>user</dt><dd><p>string, The username of this user.</p></dd>
 <dt>name</dt><dd><p>string, The name of this user.</p></dd>
 <dt>email</dt><dd><p>string, The email of this user.</p></dd>
-<dt>active</dt><dd><p>string, The account status of this user.</p></dd>
+<dt>active</dt><dd><p>boolean, The account status of this user.</p></dd>
 <dt>primaryGroupId</dt><dd><p>integer, The ID of the primary group of this user.</p></dd>
 <dt>groups</dt><dd><p>array, An array containing the following fields: 
 <ul>

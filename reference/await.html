@@ -71,7 +71,7 @@ errors." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -150,16 +150,29 @@ errors.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>await</span>(<span class='no'>f</span>, <span class='no'>...</span>, <span class='kw'>.status_key</span> <span class='kw'>=</span> <span class='st'>"state"</span>, <span class='kw'>.success_states</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"succeeded"</span>,
-  <span class='st'>"success"</span>), <span class='kw'>.error_states</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"failed"</span>, <span class='st'>"cancelled"</span>),
+    <pre class="usage"><span class='fu'>await</span>(
+  <span class='no'>f</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>.status_key</span> <span class='kw'>=</span> <span class='st'>"state"</span>,
+  <span class='kw'>.success_states</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"succeeded"</span>, <span class='st'>"success"</span>),
+  <span class='kw'>.error_states</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"failed"</span>, <span class='st'>"cancelled"</span>),
   <span class='kw'>.timeout</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>.interval</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"civis.default_polling_interval"</span>),
-  <span class='kw'>.verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>.verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)
 
-<span class='fu'>await_all</span>(<span class='no'>f</span>, <span class='no'>.x</span>, <span class='kw'>.y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>.status_key</span> <span class='kw'>=</span> <span class='st'>"state"</span>,
+<span class='fu'>await_all</span>(
+  <span class='no'>f</span>,
+  <span class='no'>.x</span>,
+  <span class='kw'>.y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>.status_key</span> <span class='kw'>=</span> <span class='st'>"state"</span>,
   <span class='kw'>.success_states</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"succeeded"</span>, <span class='st'>"success"</span>),
-  <span class='kw'>.error_states</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"failed"</span>, <span class='st'>"cancelled"</span>), <span class='kw'>.timeout</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>.interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>.error_states</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"failed"</span>, <span class='st'>"cancelled"</span>),
+  <span class='kw'>.timeout</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>.interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>.verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

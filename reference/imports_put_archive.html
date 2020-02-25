@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -158,14 +158,14 @@
 <ul>
 <li><p>remoteHostId integer,</p></li>
 <li><p>credentialId integer,</p></li>
-<li><p>additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.</p></li>
+<li><p>additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.</p></li>
 <li><p>name string,</p></li>
 </ul></p></dd>
 <dt>destination</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>remoteHostId integer,</p></li>
 <li><p>credentialId integer,</p></li>
-<li><p>additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.</p></li>
+<li><p>additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.</p></li>
 <li><p>name string,</p></li>
 </ul></p></dd>
 <dt>schedule</dt><dd><p>list, A list containing the following elements: 

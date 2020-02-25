@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -499,6 +499,54 @@
       <tr>
         
         <td>
+          <p><code><a href="admin_delete_announcements.html">admin_delete_announcements()</a></code> </p>
+        </td>
+        <td><p>Delete an announcement</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="admin_get_announcements.html">admin_get_announcements()</a></code> </p>
+        </td>
+        <td><p>Get a particular announcement</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="admin_list_announcements.html">admin_list_announcements()</a></code> </p>
+        </td>
+        <td><p>List announcements</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="admin_list_organizations.html">admin_list_organizations()</a></code> </p>
+        </td>
+        <td><p>List organizations</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="admin_patch_announcements.html">admin_patch_announcements()</a></code> </p>
+        </td>
+        <td><p>Edit an announcement</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="admin_patch_themes.html">admin_patch_themes()</a></code> </p>
+        </td>
+        <td><p>Edit a theme</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="admin_post_announcements.html">admin_post_announcements()</a></code> </p>
+        </td>
+        <td><p>Post an announcement</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="admin_post_themes.html">admin_post_themes()</a></code> </p>
+        </td>
+        <td><p>Create a theme</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="aliases_delete.html">aliases_delete()</a></code> </p>
         </td>
         <td><p>Delete an alias</p></td>
@@ -595,6 +643,18 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="apps_delete_releases_shares_groups.html">apps_delete_releases_shares_groups()</a></code> </p>
+        </td>
+        <td><p>Revoke the permissions a group has on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="apps_delete_releases_shares_users.html">apps_delete_releases_shares_users()</a></code> </p>
+        </td>
+        <td><p>Revoke the permissions a user has on this object</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="apps_get.html">apps_get()</a></code> </p>
         </td>
         <td><p>List details of a Decision Application</p></td>
@@ -643,15 +703,39 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="apps_list_releases_shares.html">apps_list_releases_shares()</a></code> </p>
+        </td>
+        <td><p>List users and groups permissioned on this object</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="apps_patch_instances.html">apps_patch_instances()</a></code> </p>
         </td>
         <td><p>Update a given app instance</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="apps_patch_releases.html">apps_patch_releases()</a></code> </p>
+        </td>
+        <td><p>Update an existing Decision Application release</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="apps_post_instances.html">apps_post_instances()</a></code> </p>
         </td>
         <td><p>Create a new instance of an application of the given slug</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="apps_post_releases.html">apps_post_releases()</a></code> </p>
+        </td>
+        <td><p>Create a new Decision Application release</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="apps_put_features.html">apps_put_features()</a></code> </p>
+        </td>
+        <td><p>Update the Decision Application features for a given organization</p></td>
       </tr><tr>
         
         <td>
@@ -679,6 +763,24 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="apps_put_releases_archive.html">apps_put_releases_archive()</a></code> </p>
+        </td>
+        <td><p>Update the archive status of this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="apps_put_releases_shares_groups.html">apps_put_releases_shares_groups()</a></code> </p>
+        </td>
+        <td><p>Set the permissions groups has on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="apps_put_releases_shares_users.html">apps_put_releases_shares_users()</a></code> </p>
+        </td>
+        <td><p>Set the permissions users have on this object</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="clusters_delete_kubernetes_partitions.html">clusters_delete_kubernetes_partitions()</a></code> </p>
         </td>
         <td><p>Delete a Cluster Partition</p></td>
@@ -694,12 +796,6 @@
           <p><code><a href="clusters_get_kubernetes_partitions.html">clusters_get_kubernetes_partitions()</a></code> </p>
         </td>
         <td><p>Describe a Cluster Partition</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="clusters_get_workers.html">clusters_get_workers()</a></code> </p>
-        </td>
-        <td><p>Describe a Worker Cluster</p></td>
       </tr><tr>
         
         <td>
@@ -727,21 +823,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="clusters_list_workers.html">clusters_list_workers()</a></code> </p>
+          <p><code><a href="clusters_patch_kubernetes.html">clusters_patch_kubernetes()</a></code> </p>
         </td>
-        <td><p>List Worker Clusters</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="clusters_list_workers_active_jobs.html">clusters_list_workers_active_jobs()</a></code> </p>
-        </td>
-        <td><p>List Active Jobs for a Worker Cluster</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="clusters_list_workers_queued_jobs.html">clusters_list_workers_queued_jobs()</a></code> </p>
-        </td>
-        <td><p>List Queued Jobs for a Worker Cluster</p></td>
+        <td><p>Update a Kubernetes Cluster</p></td>
       </tr><tr>
         
         <td>
@@ -751,45 +835,15 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="clusters_post_kubernetes.html">clusters_post_kubernetes()</a></code> </p>
+        </td>
+        <td><p>Create a Kubernetes Cluster</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="clusters_post_kubernetes_partitions.html">clusters_post_kubernetes_partitions()</a></code> </p>
         </td>
         <td><p>Create a Cluster Partition for given cluster</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="codes_delete.html">codes_delete()</a></code> </p>
-        </td>
-        <td><p>Delete a code</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="codes_get.html">codes_get()</a></code> </p>
-        </td>
-        <td><p>Show basic code info</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="codes_list.html">codes_list()</a></code> </p>
-        </td>
-        <td><p>List codes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="codes_patch.html">codes_patch()</a></code> </p>
-        </td>
-        <td><p>Update a code</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="codes_post.html">codes_post()</a></code> </p>
-        </td>
-        <td><p>Create a new code</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="codes_put.html">codes_put()</a></code> </p>
-        </td>
-        <td><p>Update a code</p></td>
       </tr><tr>
         
         <td>
@@ -949,9 +1003,27 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="enhancements_delete_civis_data_match_projects.html">enhancements_delete_civis_data_match_projects()</a></code> </p>
+        </td>
+        <td><p>Remove a Civis Data Match Enhancement from a project</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="enhancements_delete_civis_data_match_runs.html">enhancements_delete_civis_data_match_runs()</a></code> </p>
         </td>
         <td><p>Cancel a run</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="enhancements_delete_civis_data_match_shares_groups.html">enhancements_delete_civis_data_match_shares_groups()</a></code> </p>
+        </td>
+        <td><p>Revoke the permissions a group has on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="enhancements_delete_civis_data_match_shares_users.html">enhancements_delete_civis_data_match_shares_users()</a></code> </p>
+        </td>
+        <td><p>Revoke the permissions a user has on this object</p></td>
       </tr><tr>
         
         <td>
@@ -1087,6 +1159,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="enhancements_list_civis_data_match_projects.html">enhancements_list_civis_data_match_projects()</a></code> </p>
+        </td>
+        <td><p>List the projects a Civis Data Match Enhancement belongs to</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="enhancements_list_civis_data_match_runs.html">enhancements_list_civis_data_match_runs()</a></code> </p>
         </td>
         <td><p>List runs for the given civis_data_match</p></td>
@@ -1102,6 +1180,12 @@
           <p><code><a href="enhancements_list_civis_data_match_runs_outputs.html">enhancements_list_civis_data_match_runs_outputs()</a></code> </p>
         </td>
         <td><p>List the outputs for a run</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="enhancements_list_civis_data_match_shares.html">enhancements_list_civis_data_match_shares()</a></code> </p>
+        </td>
+        <td><p>List users and groups permissioned on this object</p></td>
       </tr><tr>
         
         <td>
@@ -1243,6 +1327,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="enhancements_post_civis_data_match_clone.html">enhancements_post_civis_data_match_clone()</a></code> </p>
+        </td>
+        <td><p>Clone this Civis Data Match Enhancement</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="enhancements_post_civis_data_match_runs.html">enhancements_post_civis_data_match_runs()</a></code> </p>
         </td>
         <td><p>Start a run</p></td>
@@ -1339,6 +1429,30 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="enhancements_put_civis_data_match_archive.html">enhancements_put_civis_data_match_archive()</a></code> </p>
+        </td>
+        <td><p>Update the archive status of this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="enhancements_put_civis_data_match_projects.html">enhancements_put_civis_data_match_projects()</a></code> </p>
+        </td>
+        <td><p>Add a Civis Data Match Enhancement to a project</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="enhancements_put_civis_data_match_shares_groups.html">enhancements_put_civis_data_match_shares_groups()</a></code> </p>
+        </td>
+        <td><p>Set the permissions groups has on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="enhancements_put_civis_data_match_shares_users.html">enhancements_put_civis_data_match_shares_users()</a></code> </p>
+        </td>
+        <td><p>Set the permissions users have on this object</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="enhancements_put_data_unification.html">enhancements_put_data_unification()</a></code> </p>
         </td>
         <td><p>Replace all attributes of this Data Unification Enhancement</p></td>
@@ -1387,6 +1501,48 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="feature_flags_delete_groups.html">feature_flags_delete_groups()</a></code> </p>
+        </td>
+        <td><p>Deactivate a feature for a group</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="feature_flags_delete_users.html">feature_flags_delete_users()</a></code> </p>
+        </td>
+        <td><p>Deactivate a feature for a user</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="feature_flags_get.html">feature_flags_get()</a></code> </p>
+        </td>
+        <td><p>Show a feature flag</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="feature_flags_list.html">feature_flags_list()</a></code> </p>
+        </td>
+        <td><p>List feature flags</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="feature_flags_put_groups.html">feature_flags_put_groups()</a></code> </p>
+        </td>
+        <td><p>Activate a feature for a group</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="feature_flags_put_users.html">feature_flags_put_users()</a></code> </p>
+        </td>
+        <td><p>Activate a feature for a user</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="files_delete_preprocess_csv.html">files_delete_preprocess_csv()</a></code> </p>
+        </td>
+        <td><p>Archive a Preprocess CSV (deprecated, use archiving endpoints instead)</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="files_delete_projects.html">files_delete_projects()</a></code> </p>
         </td>
         <td><p>Remove a File from a project</p></td>
@@ -1411,6 +1567,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="files_get_preprocess_csv.html">files_get_preprocess_csv()</a></code> </p>
+        </td>
+        <td><p>Get a Preprocess CSV</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="files_list_projects.html">files_list_projects()</a></code> </p>
         </td>
         <td><p>List the projects a File belongs to</p></td>
@@ -1420,6 +1582,12 @@
           <p><code><a href="files_list_shares.html">files_list_shares()</a></code> </p>
         </td>
         <td><p>List users and groups permissioned on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="files_patch_preprocess_csv.html">files_patch_preprocess_csv()</a></code> </p>
+        </td>
+        <td><p>Update some attributes of this Preprocess CSV</p></td>
       </tr><tr>
         
         <td>
@@ -1438,6 +1606,24 @@
           <p><code><a href="files_post_multipart_complete.html">files_post_multipart_complete()</a></code> </p>
         </td>
         <td><p>Complete a multipart upload</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="files_post_preprocess_csv.html">files_post_preprocess_csv()</a></code> </p>
+        </td>
+        <td><p>Create a Preprocess CSV</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="files_put_preprocess_csv.html">files_put_preprocess_csv()</a></code> </p>
+        </td>
+        <td><p>Replace all attributes of this Preprocess CSV</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="files_put_preprocess_csv_archive.html">files_put_preprocess_csv_archive()</a></code> </p>
+        </td>
+        <td><p>Update the archive status of this object</p></td>
       </tr><tr>
         
         <td>
@@ -1483,9 +1669,81 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="groups_delete.html">groups_delete()</a></code> </p>
+        </td>
+        <td><p>Delete a Group (deprecated)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="groups_delete_members.html">groups_delete_members()</a></code> </p>
+        </td>
+        <td><p>Remove a user from a group</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="groups_delete_shares_groups.html">groups_delete_shares_groups()</a></code> </p>
+        </td>
+        <td><p>Revoke the permissions a group has on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="groups_delete_shares_users.html">groups_delete_shares_users()</a></code> </p>
+        </td>
+        <td><p>Revoke the permissions a user has on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="groups_get.html">groups_get()</a></code> </p>
+        </td>
+        <td><p>Get a Group</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="groups_list.html">groups_list()</a></code> </p>
         </td>
         <td><p>List Groups</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="groups_list_shares.html">groups_list_shares()</a></code> </p>
+        </td>
+        <td><p>List users and groups permissioned on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="groups_patch.html">groups_patch()</a></code> </p>
+        </td>
+        <td><p>Update some attributes of this Group</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="groups_post.html">groups_post()</a></code> </p>
+        </td>
+        <td><p>Create a Group</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="groups_put.html">groups_put()</a></code> </p>
+        </td>
+        <td><p>Replace all attributes of this Group</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="groups_put_members.html">groups_put_members()</a></code> </p>
+        </td>
+        <td><p>Add a user to a group</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="groups_put_shares_groups.html">groups_put_shares_groups()</a></code> </p>
+        </td>
+        <td><p>Set the permissions groups has on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="groups_put_shares_users.html">groups_put_shares_users()</a></code> </p>
+        </td>
+        <td><p>Set the permissions users have on this object</p></td>
       </tr><tr>
         
         <td>
@@ -1807,6 +2065,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="jobs_put_archive.html">jobs_put_archive()</a></code> </p>
+        </td>
+        <td><p>Update the archive status of this object</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="jobs_put_projects.html">jobs_put_projects()</a></code> </p>
         </td>
         <td><p>Add a Job to a project</p></td>
@@ -1873,6 +2137,18 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="match_targets_delete_shares_groups.html">match_targets_delete_shares_groups()</a></code> </p>
+        </td>
+        <td><p>Revoke the permissions a group has on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="match_targets_delete_shares_users.html">match_targets_delete_shares_users()</a></code> </p>
+        </td>
+        <td><p>Revoke the permissions a user has on this object</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="match_targets_get.html">match_targets_get()</a></code> </p>
         </td>
         <td><p>Show Match Target info</p></td>
@@ -1885,6 +2161,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="match_targets_list_shares.html">match_targets_list_shares()</a></code> </p>
+        </td>
+        <td><p>List users and groups permissioned on this object</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="match_targets_patch.html">match_targets_patch()</a></code> </p>
         </td>
         <td><p>Update a match target</p></td>
@@ -1894,6 +2176,24 @@
           <p><code><a href="match_targets_post.html">match_targets_post()</a></code> </p>
         </td>
         <td><p>Create a new match target</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="match_targets_put_archive.html">match_targets_put_archive()</a></code> </p>
+        </td>
+        <td><p>Update the archive status of this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="match_targets_put_shares_groups.html">match_targets_put_shares_groups()</a></code> </p>
+        </td>
+        <td><p>Set the permissions groups has on this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="match_targets_put_shares_users.html">match_targets_put_shares_users()</a></code> </p>
+        </td>
+        <td><p>Set the permissions users have on this object</p></td>
       </tr><tr>
         
         <td>
@@ -2371,6 +2671,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="projects_delete_parent_projects.html">projects_delete_parent_projects()</a></code> </p>
+        </td>
+        <td><p>Remove an item from a Parent Project</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="projects_delete_shares_groups.html">projects_delete_shares_groups()</a></code> </p>
         </td>
         <td><p>Revoke the permissions a group has on this object</p></td>
@@ -2395,6 +2701,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="projects_list_parent_projects.html">projects_list_parent_projects()</a></code> </p>
+        </td>
+        <td><p>List the Parent Projects an item belongs to</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="projects_list_shares.html">projects_list_shares()</a></code> </p>
         </td>
         <td><p>List users and groups permissioned on this object</p></td>
@@ -2416,6 +2728,12 @@
           <p><code><a href="projects_put_archive.html">projects_put_archive()</a></code> </p>
         </td>
         <td><p>Update the archive status of this object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="projects_put_parent_projects.html">projects_put_parent_projects()</a></code> </p>
+        </td>
+        <td><p>Add an item to a Parent Project</p></td>
       </tr><tr>
         
         <td>
@@ -2641,6 +2959,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="reports_post_refresh.html">reports_post_refresh()</a></code> </p>
+        </td>
+        <td><p>Refresh the data in this Tableau report</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="reports_post_services.html">reports_post_services()</a></code> </p>
         </td>
         <td><p>Create a service report</p></td>
@@ -2690,192 +3014,6 @@
         
         <td>
           <p><code><a href="reports_put_shares_users.html">reports_put_shares_users()</a></code> </p>
-        </td>
-        <td><p>Set the permissions users have on this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_delete_grants.html">results_delete_grants()</a></code> </p>
-        </td>
-        <td><p>Revoke permission for this report to perform Civis platform API operations on your behalf</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_delete_projects.html">results_delete_projects()</a></code> </p>
-        </td>
-        <td><p>Remove a Report from a project</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_delete_services_projects.html">results_delete_services_projects()</a></code> </p>
-        </td>
-        <td><p>Remove a Service Report from a project</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_delete_services_shares_groups.html">results_delete_services_shares_groups()</a></code> </p>
-        </td>
-        <td><p>Revoke the permissions a group has on this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_delete_services_shares_users.html">results_delete_services_shares_users()</a></code> </p>
-        </td>
-        <td><p>Revoke the permissions a user has on this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_delete_shares_groups.html">results_delete_shares_groups()</a></code> </p>
-        </td>
-        <td><p>Revoke the permissions a group has on this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_delete_shares_users.html">results_delete_shares_users()</a></code> </p>
-        </td>
-        <td><p>Revoke the permissions a user has on this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_get.html">results_get()</a></code> </p>
-        </td>
-        <td><p>Show a single report</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_get_git_commits.html">results_get_git_commits()</a></code> </p>
-        </td>
-        <td><p>Get file contents at commit_hash</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_get_services.html">results_get_services()</a></code> </p>
-        </td>
-        <td><p>Show a single service report</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_list.html">results_list()</a></code> </p>
-        </td>
-        <td><p>List Reports</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_list_git.html">results_list_git()</a></code> </p>
-        </td>
-        <td><p>Get the git metadata attached to an item</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_list_git_commits.html">results_list_git_commits()</a></code> </p>
-        </td>
-        <td><p>Get the git commits for an item</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_list_projects.html">results_list_projects()</a></code> </p>
-        </td>
-        <td><p>List the projects a Report belongs to</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_list_services_projects.html">results_list_services_projects()</a></code> </p>
-        </td>
-        <td><p>List the projects a Service Report belongs to</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_list_services_shares.html">results_list_services_shares()</a></code> </p>
-        </td>
-        <td><p>List users and groups permissioned on this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_list_shares.html">results_list_shares()</a></code> </p>
-        </td>
-        <td><p>List users and groups permissioned on this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_patch.html">results_patch()</a></code> </p>
-        </td>
-        <td><p>Update a report</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_patch_services.html">results_patch_services()</a></code> </p>
-        </td>
-        <td><p>Update some attributes of this service report</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_post.html">results_post()</a></code> </p>
-        </td>
-        <td><p>Create a report</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_post_git_commits.html">results_post_git_commits()</a></code> </p>
-        </td>
-        <td><p>Commit and push a new version of the file</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_post_grants.html">results_post_grants()</a></code> </p>
-        </td>
-        <td><p>Grant this report the ability to perform Civis platform API operations on your behalf</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_post_services.html">results_post_services()</a></code> </p>
-        </td>
-        <td><p>Create a service report</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_put_archive.html">results_put_archive()</a></code> </p>
-        </td>
-        <td><p>Update the archive status of this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_put_git.html">results_put_git()</a></code> </p>
-        </td>
-        <td><p>Attach an item to a file in a git repo</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_put_projects.html">results_put_projects()</a></code> </p>
-        </td>
-        <td><p>Add a Report to a project</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_put_services_projects.html">results_put_services_projects()</a></code> </p>
-        </td>
-        <td><p>Add a Service Report to a project</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_put_services_shares_groups.html">results_put_services_shares_groups()</a></code> </p>
-        </td>
-        <td><p>Set the permissions groups has on this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_put_services_shares_users.html">results_put_services_shares_users()</a></code> </p>
-        </td>
-        <td><p>Set the permissions users have on this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_put_shares_groups.html">results_put_shares_groups()</a></code> </p>
-        </td>
-        <td><p>Set the permissions groups has on this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="results_put_shares_users.html">results_put_shares_users()</a></code> </p>
         </td>
         <td><p>Set the permissions users have on this object</p></td>
       </tr><tr>
@@ -4321,9 +4459,21 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="templates_post_reports_review.html">templates_post_reports_review()</a></code> </p>
+        </td>
+        <td><p>Review a template for security vulnerability and correctness (admin-only)</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="templates_post_scripts.html">templates_post_scripts()</a></code> </p>
         </td>
         <td><p>Create a Script Template</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="templates_post_scripts_review.html">templates_post_scripts_review()</a></code> </p>
+        </td>
+        <td><p>Review a template for security vulnerability and correctness (admin-only)</p></td>
       </tr><tr>
         
         <td>
@@ -4375,6 +4525,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="users_delete_me_favorites.html">users_delete_me_favorites()</a></code> </p>
+        </td>
+        <td><p>Unfavorite an item</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="users_get.html">users_get()</a></code> </p>
         </td>
         <td><p>Show info about a user</p></td>
@@ -4405,15 +4561,45 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="users_list_me_favorites.html">users_list_me_favorites()</a></code> </p>
+        </td>
+        <td><p>List Favorites</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="users_list_me_ui.html">users_list_me_ui()</a></code> </p>
+        </td>
+        <td><p>UI configuration for logged-in user</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="users_patch.html">users_patch()</a></code> </p>
+        </td>
+        <td><p>Update info about a user (must be an admin or client user admin)</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="users_patch_me.html">users_patch_me()</a></code> </p>
         </td>
         <td><p>Update info about the logged-in user</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="users_post.html">users_post()</a></code> </p>
+        </td>
+        <td><p>Create a new user (must be an admin or client user admin)</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="users_post_api_keys.html">users_post_api_keys()</a></code> </p>
         </td>
         <td><p>Create a new API key belonging to the logged-in user</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="users_post_me_favorites.html">users_post_me_favorites()</a></code> </p>
+        </td>
+        <td><p>Favorite an item</p></td>
       </tr><tr>
         
         <td>

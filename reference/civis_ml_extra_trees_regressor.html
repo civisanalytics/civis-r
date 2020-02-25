@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -134,18 +134,36 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>civis_ml_extra_trees_regressor</span>(<span class='no'>x</span>, <span class='no'>dependent_variable</span>, <span class='kw'>primary_key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>excluded_columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n_estimators</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>criterion</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"mse"</span>,
-  <span class='st'>"mae"</span>), <span class='kw'>max_depth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>min_samples_split</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>min_samples_leaf</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>min_weight_fraction_leaf</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='st'>"sqrt"</span>, <span class='kw'>max_leaf_nodes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>min_impurity_split</span> <span class='kw'>=</span> <span class='fl'>1e-07</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>random_state</span> <span class='kw'>=</span> <span class='fl'>42</span>,
-  <span class='kw'>fit_params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cross_validation_parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>oos_scores_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>oos_scores_db</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>civis_ml_extra_trees_regressor</span>(
+  <span class='no'>x</span>,
+  <span class='no'>dependent_variable</span>,
+  <span class='kw'>primary_key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>excluded_columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>n_estimators</span> <span class='kw'>=</span> <span class='fl'>500</span>,
+  <span class='kw'>criterion</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"mse"</span>, <span class='st'>"mae"</span>),
+  <span class='kw'>max_depth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>min_samples_split</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>min_samples_leaf</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>min_weight_fraction_leaf</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>max_features</span> <span class='kw'>=</span> <span class='st'>"sqrt"</span>,
+  <span class='kw'>max_leaf_nodes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>min_impurity_split</span> <span class='kw'>=</span> <span class='fl'>1e-07</span>,
+  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>random_state</span> <span class='kw'>=</span> <span class='fl'>42</span>,
+  <span class='kw'>fit_params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cross_validation_parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>oos_scores_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>oos_scores_db</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>oos_scores_if_exists</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fail"</span>, <span class='st'>"append"</span>, <span class='st'>"drop"</span>, <span class='st'>"truncate"</span>),
-  <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cpu_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>memory_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>disk_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>polling_interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cpu_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>memory_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>disk_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>polling_interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>civisml_version</span> <span class='kw'>=</span> <span class='st'>"prod"</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -311,6 +329,11 @@ and URL notification.</p></td>
       <th>verbose</th>
       <td><p>Optional, If <code>TRUE</code>, supply debug outputs in Platform
 logs and make prediction child jobs visible.</p></td>
+    </tr>
+    <tr>
+      <th>civisml_version</th>
+      <td><p>Optional, a one-length character vector of the
+CivisML version. The default is "prod", the latest version in production</p></td>
     </tr>
     </table>
     

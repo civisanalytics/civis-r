@@ -66,7 +66,7 @@ this database will automatically be used as the default." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -149,8 +149,7 @@ this database will automatically be used as the default.</p>
 <span class='fu'>query_civis</span>(<span class='no'>x</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for character</span>
-<span class='fu'>query_civis</span>(<span class='no'>x</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>)</pre>
+<span class='fu'>query_civis</span>(<span class='no'>x</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,14 +184,17 @@ this database will automatically be used as the default.</p>
 
     <div class='dont-index'><p><code><a href='read_civis.html'>read_civis</a></code> for downloading results of SQL scripts from Civis Platform as a data frame.</p>
 <p>io</p>
-<p>Other io: <code><a href='download_civis.html'>download_civis</a></code>,
-  <code><a href='query_civis_file.html'>query_civis_file</a></code>, <code><a href='read_civis.html'>read_civis</a></code>,
-  <code><a href='write_civis_file.html'>write_civis_file</a></code>, <code><a href='write_civis.html'>write_civis</a></code></p></div>
+<p>Other io: 
+<code><a href='download_civis.html'>download_civis</a>()</code>,
+<code><a href='query_civis_file.html'>query_civis_file</a>()</code>,
+<code><a href='read_civis.html'>read_civis</a>()</code>,
+<code><a href='write_civis_file.html'>write_civis_file</a>()</code>,
+<code><a href='write_civis.html'>write_civis</a>()</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>query_civis</span>(<span class='st'>"GRANT ALL ON schema.my_table TO GROUP admin"</span>, <span class='st'>"database"</span>)
+<span class='fu'>query_civis</span>(<span class='st'>"GRANT ALL ON schema.my_table TO GROUP admin"</span>, <span class='st'>"database"</span>, <span class='kw'>credential</span><span class='kw'>=</span><span class='fl'>0000</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>

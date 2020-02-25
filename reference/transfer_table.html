@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -134,10 +134,18 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>transfer_table</span>(<span class='no'>source_db</span>, <span class='no'>dest_db</span>, <span class='no'>source_table</span>, <span class='no'>dest_table</span>,
-  <span class='kw'>job_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>source_credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dest_credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>advanced_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>transfer_table</span>(
+  <span class='no'>source_db</span>,
+  <span class='no'>dest_db</span>,
+  <span class='no'>source_table</span>,
+  <span class='no'>dest_table</span>,
+  <span class='kw'>job_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>source_credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>dest_credential_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>advanced_options</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -199,8 +207,9 @@ details.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other tables: <code><a href='get_table_id.html'>get_table_id</a></code>,
-  <code><a href='refresh_table.html'>refresh_table</a></code></p></div>
+    <div class='dont-index'><p>Other tables: 
+<code><a href='get_table_id.html'>get_table_id</a>()</code>,
+<code><a href='refresh_table.html'>refresh_table</a>()</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

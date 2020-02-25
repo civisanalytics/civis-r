@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -134,10 +134,19 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>imports_post</span>(<span class='no'>name</span>, <span class='no'>sync_type</span>, <span class='no'>is_outbound</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>destination</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>schedule</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>parent_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>next_run_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>time_zone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>imports_post</span>(
+  <span class='no'>name</span>,
+  <span class='no'>sync_type</span>,
+  <span class='no'>is_outbound</span>,
+  <span class='kw'>source</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>destination</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>schedule</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>parent_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>next_run_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>time_zone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,7 +168,7 @@
       <td><p>list optional. A list containing the following elements:</p><ul>
 <li><p>remoteHostId integer,</p></li>
 <li><p>credentialId integer,</p></li>
-<li><p>additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.</p></li>
+<li><p>additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -167,7 +176,7 @@
       <td><p>list optional. A list containing the following elements:</p><ul>
 <li><p>remoteHostId integer,</p></li>
 <li><p>credentialId integer,</p></li>
-<li><p>additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.</p></li>
+<li><p>additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -222,14 +231,14 @@
 <ul>
 <li><p>remoteHostId integer,</p></li>
 <li><p>credentialId integer,</p></li>
-<li><p>additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.</p></li>
+<li><p>additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.</p></li>
 <li><p>name string,</p></li>
 </ul></p></dd>
 <dt>destination</dt><dd><p>list, A list containing the following elements: 
 <ul>
 <li><p>remoteHostId integer,</p></li>
 <li><p>credentialId integer,</p></li>
-<li><p>additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id.</p></li>
+<li><p>additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.</p></li>
 <li><p>name string,</p></li>
 </ul></p></dd>
 <dt>schedule</dt><dd><p>list, A list containing the following elements: 

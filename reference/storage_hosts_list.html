@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -140,6 +140,14 @@
 
     <p>An array containing the following fields:</p>
 <dt>id</dt><dd><p>integer, The ID of the storage host.</p></dd>
+<dt>owner</dt><dd><p>list, A list containing the following elements: 
+<ul>
+<li><p>id integer, The ID of this user.</p></li>
+<li><p>name string, This user's name.</p></li>
+<li><p>username string, This user's username.</p></li>
+<li><p>initials string, This user's initials.</p></li>
+<li><p>online boolean, Whether this user is online.</p></li>
+</ul></p></dd>
 <dt>name</dt><dd><p>string, The human readable name for the storage host.</p></dd>
 <dt>provider</dt><dd><p>string, The storage provider.One of: s3.</p></dd>
 <dt>bucket</dt><dd><p>string, The bucket for this storage host.</p></dd>

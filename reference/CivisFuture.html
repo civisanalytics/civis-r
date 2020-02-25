@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -134,12 +134,22 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>CivisFuture</span>(<span class='kw'>expr</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sys.parent'>parent.frame</a></span>(), <span class='kw'>substitute</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>globals</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>packages</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lazy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>local</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>gc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>earlySignal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>CivisFuture</span>(
+  <span class='kw'>expr</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sys.parent'>parent.frame</a></span>(),
+  <span class='kw'>substitute</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>globals</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>packages</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>lazy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>local</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>gc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>earlySignal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>required_resources</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>cpu</span> <span class='kw'>=</span> <span class='fl'>1024</span>, <span class='kw'>memory</span> <span class='kw'>=</span> <span class='fl'>2048</span>, <span class='kw'>diskSpace</span> <span class='kw'>=</span> <span class='fl'>4</span>),
   <span class='kw'>docker_image_name</span> <span class='kw'>=</span> <span class='st'>"civisanalytics/datascience-r"</span>,
-  <span class='kw'>docker_image_tag</span> <span class='kw'>=</span> <span class='st'>"3"</span>, <span class='no'>...</span>)
+  <span class='kw'>docker_image_tag</span> <span class='kw'>=</span> <span class='st'>"3"</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for CivisFuture</span>
 <span class='fu'>run</span>(<span class='no'>future</span>, <span class='no'>...</span>)
@@ -178,7 +188,7 @@ identified.</p></td>
       <td><p>(optional) a logical, a character vector, or a named list
 to control how globals are handled.
 For details, see section 'Globals used by future expressions'
-in the help for <code>future()</code>.</p></td>
+in the help for <code><a href='https://www.rdocumentation.org/packages/future/topics/future'>future</a>()</code>.</p></td>
     </tr>
     <tr>
       <th>packages</th>

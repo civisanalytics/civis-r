@@ -64,7 +64,7 @@ with read_civis or download_civis." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -139,17 +139,29 @@ with <code><a href='read_civis.html'>read_civis</a></code> or <code><a href='dow
     <pre class="usage"><span class='fu'>query_civis_file</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for character</span>
-<span class='fu'>query_civis_file</span>(<span class='no'>x</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>job_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='no'>verbose</span>,
-  <span class='kw'>csv_settings</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>query_civis_file</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>database</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>job_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='no'>verbose</span>,
+  <span class='kw'>csv_settings</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for sql</span>
-<span class='fu'>query_civis_file</span>(<span class='no'>x</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>job_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>csv_settings</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>query_civis_file</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>database</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>job_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>csv_settings</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>query_civis_file</span>(<span class='no'>x</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>)</pre>
+<span class='fu'>query_civis_file</span>(<span class='no'>x</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,7 +172,7 @@ with <code><a href='read_civis.html'>read_civis</a></code> or <code><a href='dow
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Currently ignored.</p></td>
+      <td><p>Options passed to <code><a href='scripts_post_sql.html'>scripts_post_sql</a></code>, including <code>credential</code>.</p></td>
     </tr>
     <tr>
       <th>database</th>
@@ -200,9 +212,12 @@ which is a gzipped csv.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other io: <code><a href='download_civis.html'>download_civis</a></code>,
-  <code><a href='query_civis.html'>query_civis</a></code>, <code><a href='read_civis.html'>read_civis</a></code>,
-  <code><a href='write_civis_file.html'>write_civis_file</a></code>, <code><a href='write_civis.html'>write_civis</a></code></p></div>
+    <div class='dont-index'><p>Other io: 
+<code><a href='download_civis.html'>download_civis</a>()</code>,
+<code><a href='query_civis.html'>query_civis</a>()</code>,
+<code><a href='read_civis.html'>read_civis</a>()</code>,
+<code><a href='write_civis_file.html'>write_civis_file</a>()</code>,
+<code><a href='write_civis.html'>write_civis</a>()</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -214,7 +229,7 @@ which is a gzipped csv.</p>
 <span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'>query_civis_file</span>(<span class='no'>query</span>)
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_civis.html'>read_civis</a></span>(<span class='no'>id</span>, <span class='kw'>using</span> <span class='kw'>=</span> <span class='no'>read.csv</span>)
 
-<span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'>query_civis_file</span>(<span class='no'>query_id</span>)
+<span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'>query_civis_file</span>(<span class='no'>query_id</span>, <span class='kw'>credential_id</span> <span class='kw'>=</span> <span class='fl'>0000</span>)
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_civis.html'>read_civis</a></span>(<span class='no'>id</span>, <span class='kw'>using</span> <span class='kw'>=</span> <span class='no'>read.csv</span>)
 <span class='co'># }</span></pre>
   </div>

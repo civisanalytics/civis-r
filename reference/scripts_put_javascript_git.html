@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
       </span>
     </div>
 
@@ -134,8 +134,14 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>scripts_put_javascript_git</span>(<span class='no'>id</span>, <span class='kw'>git_ref</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>git_branch</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>git_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>git_repo_url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>scripts_put_javascript_git</span>(
+  <span class='no'>id</span>,
+  <span class='kw'>git_ref</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>git_branch</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>git_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>git_repo_url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>pull_from_git</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,6 +166,10 @@
       <th>git_repo_url</th>
       <td><p>string optional. The URL of the git repository.</p></td>
     </tr>
+    <tr>
+      <th>pull_from_git</th>
+      <td><p>boolean optional. Automatically pull latest commit from git. Only works for scripts.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -175,6 +185,7 @@
 <li><p>createdAt string,</p></li>
 <li><p>updatedAt string,</p></li>
 </ul></p></dd>
+<dt>pullFromGit</dt><dd><p>boolean, Automatically pull latest commit from git. Only works for scripts.</p></dd>
 
     
 
