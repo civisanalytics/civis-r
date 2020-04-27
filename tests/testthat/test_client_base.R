@@ -35,7 +35,6 @@ body_params <- NULL
 test_that("call api extracts json content correctly", {
   response <- with_mock(
     `civis::api_key` = function(...) "fake_key",
-    `httr::VERB` = function(...) httr_200,
     `httr::RETRY` = function(...) httr_200,
     call_api("GET", path, path_params, query_params, body_params))
   expect_equal(response[[1]]$name, "Leanne Graham")
@@ -45,7 +44,6 @@ test_that("call api extracts json content correctly", {
 test_that("print and str methods for civis_api", {
   response <- with_mock(
     `civis::api_key` = function(...) "fake_key",
-    `httr::VERB` = function(...) httr_200,
     `httr::RETRY` = function(...) httr_200,
     call_api("GET", path, path_params, query_params, body_params))
 
@@ -62,7 +60,6 @@ test_that("print and str methods for civis_api", {
 test_that("call api catches http error", {
   with_mock(
     `civis::api_key` = function(...) "fake_key",
-    `httr::VERB` = function(...) httr_504,
     `httr::RETRY` = function(...) httr_504,
     expect_error(
       call_api("GET", path, path_params, query_params, body_params),

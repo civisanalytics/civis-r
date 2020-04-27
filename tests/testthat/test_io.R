@@ -48,7 +48,7 @@ test_that("read_civis.numeric reads a csv", {
   }
   with_mock(
     `civis::files_get` =  function(...) list(fileUrl = "fakeurl.com"),
-    `httr::GET` = mock_response,
+    `httr::RETRY` = mock_response,
     `civis::download_civis` = function(id, fn) write.csv(d, file = fn),
     expect_equal(d, read_civis(123, using = read.csv, row.names = 1))
   )
@@ -101,7 +101,7 @@ test_that("write_civis.character returns meta data if successful", {
     },
     `civis::default_credential` = function(...) 1234,
     `civis::tables_post_refresh` = function(id) "",
-    `httr::PUT` = function(...) list(status_code = 200),
+    `httr::RETRY` = function(...) list(status_code = 200),
     `civis::imports_post_files_runs` = function(...) list(""),
     `civis::imports_get_files_runs` = function(...) list(state = "succeeded"),
       write_civis("mockfile", "mock.table", "mockdb")
@@ -116,7 +116,7 @@ test_that("write_civis.character fails if file doesn't exist", {
     `civis::start_import_job` = function(...) {
       list(uploadUri = "fake")
     },
-    `httr::PUT` = function(...) list(status_code = 200),
+    `httr::RETRY` = function(...) list(status_code = 200),
     `civis::imports_post_files_runs` = function(...) list(""),
     `civis::imports_get_files_runs` = function(...) list(state = "succeeded"),
     tryCatch(write_civis("mockfile", "mock.table", "mockdb"), error = function(e) e$message)
@@ -133,7 +133,7 @@ test_that("write_civis.data.frame returns meta data if successful", {
     },
     `civis::default_credential` = function(...) 1,
     `civis::tables_post_refresh` = function(id) "",
-    `httr::PUT` = function(...) list(status_code = 200),
+    `httr::RETRY` = function(...) list(status_code = 200),
     `civis::imports_post_files_runs` = function(...) list(""),
     `civis::imports_get_files_runs` = function(...) list(state = "succeeded"),
     `civis::tables_list` = function(...) 1,
@@ -148,7 +148,7 @@ test_that("write_civis.character warns under failure", {
     `civis::start_import_job` = function(...) {
       list(uploadUri = "fake", id = -999)
     },
-    `httr::PUT` = function(...) list(status_code = 200),
+    `httr::RETRY` = function(...) list(status_code = 200),
     `civis::imports_post_files_runs` = function(...) "",
     `civis::imports_get_files_runs` = function(...) list(state = "failed"),
     `httr::content` = function(...) "error",
@@ -167,7 +167,7 @@ test_that("write_civis.character calls imports endpoints correctly", {
     `civis::imports_post_files` = ipf,
     `civis::imports_post_files_runs` = function(...) list(id = 44),
     `civis::imports_get_files_runs` = function(...) list(state = "succeeded"),
-    `httr::PUT` = mock(list(status_code = 200)),
+    `httr::RETRY` = mock(list(status_code = 200)),
     res <- write_civis(fn, "mock.table", "mockdb", credential_id = 1),
     expect_equal(get_status(res), "succeeded"),
     expect_args(ipf, n = 1,

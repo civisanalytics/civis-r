@@ -258,7 +258,7 @@ write_civis.character <- function(x, tablename, database = NULL, if_exists = "fa
           credential_id = credential_id),
       import_args)
     job_r <- do.call(start_import_job, args)
-    put_r <- httr::PUT(job_r[["uploadUri"]], body = httr::upload_file(x))
+    put_r <- httr::RETRY("PUT", job_r[["uploadUri"]], body = httr::upload_file(x), terminate_on = setdiff(400:499, 429))
     if (put_r$status_code != 200) {
       msg <- httr::content(put_r)
       stop(msg)
@@ -562,9 +562,11 @@ download_civis.numeric <- function(x, file,
   }
 
   args <- c(list(files_get(x)$fileUrl),
-            list(httr::write_disk(file, overwrite = overwrite)))
+            list(httr::write_disk(file, overwrite = overwrite)),
+            verb = "GET",
+            terminate_on = setdiff(400:499, 429))
   if (progress) args <- c(args, list(httr::progress()))
-  resp <- do.call(httr::GET, args)
+  resp <- do.call(httr::RETRY, args)
 
   httr::stop_for_status(resp, task = "download file from S3")
   invisible(file)
@@ -902,14 +904,14 @@ download_script_results <- function(script_id, run_id,
   stop_if_no_output(script_results)
 
   url <- script_results[["output"]][[1]][["path"]]
-  args <- list(url)
+  args <- list(url, verb = "GET", terminate_on = setdiff(400:499, 429))
   if (!is.null(filename)) {
     args <- c(args, list(httr::write_disk(filename, overwrite = TRUE)))
   }
   if (progress) {
     args <- c(args, list(httr::progress()))
   }
-  r <- do.call(httr::GET, args)
+  r <- do.call(httr::RETRY, args)
   httr::stop_for_status(r)
   r
 }

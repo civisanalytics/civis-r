@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Changed
+- Failed HTTP requests are now retried before raising errors (#235)
+
 ## [2.1.2] - 2020-02-24
 
 ### Fixed
