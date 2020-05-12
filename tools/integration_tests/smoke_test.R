@@ -162,7 +162,9 @@ library(future)
 
 test_that("futures work", {
   plan(civis_platform)
-  fut <- future({read_civis("datascience.iris", "redshift-general")})
+  fut <- future({read_civis("datascience.iris", "redshift-general")},
+                docker_image_name = "civisanalytics/datascience-r",
+                docker_image_tag = "latest")
   d <- read_civis("datascience.iris", verbose = TRUE)
   expect_is(fut, "CivisFuture")
   d2 <- value(fut)
@@ -172,7 +174,9 @@ test_that("futures work", {
 test_that("additional packages get installed", {
   library(purrr)
   plan(civis_platform)
-  fut <- future({map(1:2, c)})
+  fut <- future({map(1:2, c)},
+                docker_image_name = "civisanalytics/datascience-r",
+                docker_image_tag = "latest")
   res <- value(fut)
   expect_equal(res, list(1, 2))
 })
@@ -181,7 +185,9 @@ test_that("environment is attached", {
   plan(civis_platform)
   f <- function(x) g(x)
   g <- function(x) x
-  fut <- future({f(1)})
+  fut <- future({f(1)},
+                docker_image_name = "civisanalytics/datascience-r",
+                docker_image_tag = "latest")
   res <- value(fut)
   expect_equal(res, 1)
 })
