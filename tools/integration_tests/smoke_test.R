@@ -74,7 +74,7 @@ test_that("queries are executed", {
 
 test_that("civis_to_multifile produces csv links", {
   x <- civis_to_multifile_csv("SELECT * FROM datascience.iris", "redshift-general")
-  expect_equal(length(x$entries), 31)
+  expect_gt(length(x$entries), 1)
   expect_equal(x$query, "SELECT * FROM datascience.iris")
 })
 
