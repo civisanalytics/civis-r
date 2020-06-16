@@ -22,7 +22,7 @@ CivisFuture(
   label = NULL,
   required_resources = list(cpu = 1024, memory = 2048, diskSpace = 4),
   docker_image_name = "civisanalytics/datascience-r",
-  docker_image_tag = "3",
+  docker_image_tag = "latest",
   ...
 )
 
@@ -48,12 +48,12 @@ identified.}
 \item{globals}{(optional) a logical, a character vector, or a named list
 to control how globals are handled.
 For details, see section 'Globals used by future expressions'
-in the help for \code{\link[future]{future}()}.}
+in the help for \code{\link[future:future]{future()}}.}
 
 \item{packages}{(optional) a character vector specifying packages
 to be attached in the \R environment evaluating the future.}
 
-\item{lazy}{If \code{FALSE} (default), the future is resolved
+\item{lazy}{If FALSE (default), the future is resolved
 eagerly (starting immediately), otherwise not.}
 
 \item{local}{If TRUE, the expression is evaluated such that

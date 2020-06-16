@@ -162,13 +162,10 @@ library(future)
 
 test_that("futures work", {
   plan(civis_platform)
-  fut <- future({read_civis("datascience.iris", "redshift-general")},
-                docker_image_name = "civisanalytics/datascience-r",
-                docker_image_tag = "latest")
-  d <- read_civis("datascience.iris", verbose = TRUE)
+  fut <- future({2+2})
   expect_is(fut, "CivisFuture")
-  d2 <- value(fut)
-  expect_equal(d[order(d$index), ], d2[order(d2$index), ], check.attributes = FALSE)
+  val <- value(fut)
+  expect_equal(val, 4)
 })
 
 test_that("additional packages get installed", {
