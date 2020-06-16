@@ -48,7 +48,7 @@ test_that("read_civis.numeric reads a csv", {
   }
   with_mock(
     `civis::files_get` =  function(...) list(fileUrl = "fakeurl.com"),
-    `httr::RETRY` = mock_response,
+    `httr::GET` = mock_response,
     `civis::download_civis` = function(id, fn) write.csv(d, file = fn),
     expect_equal(d, read_civis(123, using = read.csv, row.names = 1))
   )
