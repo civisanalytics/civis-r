@@ -4,7 +4,9 @@
 \name{CIVIS_ML_CLASSIFIERS}
 \alias{CIVIS_ML_CLASSIFIERS}
 \title{List of classification models.}
-\format{An object of class \code{character} of length 6.}
+\format{
+An object of class \code{character} of length 6.
+}
 \usage{
 CIVIS_ML_CLASSIFIERS
 }
