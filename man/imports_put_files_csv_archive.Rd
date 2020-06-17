@@ -18,7 +18,7 @@ A list containing the following elements:
 \item{source}{list, A list containing the following elements: 
 \itemize{
 \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-\item storagePaths object, 
+\item storagePath object, 
 }}
 \item{destination}{list, A list containing the following elements: 
 \itemize{
@@ -26,7 +26,7 @@ A list containing the following elements:
 \item table string, The destination table name.
 \item remoteHostId integer, The ID of the destination database host.
 \item credentialId integer, The ID of the credentials for the destination database.
-\item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+\item primaryKeys array, A list of column(s) which together uniquely identify a row in the destination table.These columns must not contain NULL values. If the import mode is "upsert", this field is required;see the Civis Helpdesk article on "Advanced CSV Imports via the Civis API" for more information.
 \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
 }}
 \item{firstRowIsHeader}{boolean, A boolean value indicating whether or not the first row of the source file is a header row.}

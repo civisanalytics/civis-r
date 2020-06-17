@@ -4,28 +4,14 @@
 \alias{match_targets_patch}
 \title{Update a match target}
 \usage{
-match_targets_patch(
-  id,
-  name = NULL,
-  table = NULL,
-  region = NULL,
-  target_file_name = NULL,
-  encryption_key_credential_id = NULL,
-  archived = NULL
-)
+match_targets_patch(id, name = NULL, target_file_name = NULL, archived = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the match target}
 
 \item{name}{string optional. The name of the match target}
 
-\item{table}{string optional. The name of the DynamoDB table}
-
-\item{region}{string optional. The AWS region of the DynamoDB table. By default, us-east-1.}
-
 \item{target_file_name}{string optional. The name of the target file}
-
-\item{encryption_key_credential_id}{integer optional. The ID of the encryption key credential.}
 
 \item{archived}{boolean optional. Whether the match target has been archived.}
 }
@@ -33,10 +19,7 @@ match_targets_patch(
 A list containing the following elements:
 \item{id}{integer, The ID of the match target}
 \item{name}{string, The name of the match target}
-\item{table}{string, The name of the DynamoDB table}
-\item{region}{string, The AWS region of the DynamoDB table. By default, us-east-1.}
 \item{targetFileName}{string, The name of the target file}
-\item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
 \item{archived}{boolean, Whether the match target has been archived.}

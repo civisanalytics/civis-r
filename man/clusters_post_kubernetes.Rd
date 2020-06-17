@@ -32,6 +32,7 @@ A list containing the following elements:
 \item defaultInstanceConfigId integer, The id of the InstanceConfig that is the default for this partition.
 }}
 \item{isNatEnabled}{boolean, Whether this cluster needs a NAT gateway or not.}
+\item{hours}{number, The number of hours used this month for this cluster }
 }
 \description{
 Create a Kubernetes Cluster

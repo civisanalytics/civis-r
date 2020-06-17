@@ -12,6 +12,12 @@ feature_flags_get(name)
 \value{
 A list containing the following elements:
 \item{name}{string, The name of the feature flag}
+\item{organizations}{array, An array containing the following fields: 
+\itemize{
+\item id integer, Organization ID
+\item name string, Organization name
+\item slug string, Organization slug
+}}
 \item{groups}{array, An array containing the following fields: 
 \itemize{
 \item id integer, Group ID

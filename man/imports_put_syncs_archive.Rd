@@ -48,16 +48,16 @@ A list containing the following elements:
 \item truncateLongLines boolean, 
 \item invalidCharReplacement string, 
 \item verifyTableRowCounts boolean, 
-\item partitionColumnName string, 
-\item partitionSchemaName string, 
-\item partitionTableName string, 
-\item partitionTablePartitionColumnMinName string, 
-\item partitionTablePartitionColumnMaxName string, 
+\item partitionColumnName string, This parameter is deprecated
+\item partitionSchemaName string, This parameter is deprecated
+\item partitionTableName string, This parameter is deprecated
+\item partitionTablePartitionColumnMinName string, This parameter is deprecated
+\item partitionTablePartitionColumnMaxName string, This parameter is deprecated
 \item lastModifiedColumn string, 
-\item mysqlCatalogMatchesSchema boolean, 
+\item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
 \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be choosen automatically.
 \item firstRowIsHeader boolean, 
-\item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "appendwksht"
+\item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
 \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
 \item contactLists string, 
 \item soqlQuery string, 

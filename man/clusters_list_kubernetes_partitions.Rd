@@ -4,10 +4,12 @@
 \alias{clusters_list_kubernetes_partitions}
 \title{List Cluster Partitions for given cluster}
 \usage{
-clusters_list_kubernetes_partitions(id)
+clusters_list_kubernetes_partitions(id, include_usage_stats = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of this cluster.}
+\item{id}{integer required.}
+
+\item{include_usage_stats}{boolean optional. When true, usage stats are returned in instance config objects. Defaults to false.}
 }
 \value{
 An array containing the following fields:
@@ -23,6 +25,7 @@ An array containing the following fields:
 \item instanceMaxMemory integer, The amount of memory (RAM) available to a single instance of that type in megabytes.
 \item instanceMaxCpu integer, The number of processor shares available to a single instance of that type in millicores.
 \item instanceMaxDisk integer, The amount of disk available to a single instance of that type in gigabytes.
+\item usageStats object, 
 }}
 \item{defaultInstanceConfigId}{integer, The id of the InstanceConfig that is the default for this partition.}
 }

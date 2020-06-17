@@ -18,6 +18,7 @@ A list containing the following elements:
 \item{roles}{array, The roles this user has, listed by slug.}
 \item{preferences}{list, This user's preferences.}
 \item{customBranding}{string, The branding of Platform for this user.}
+\item{primaryGroupId}{integer, The ID of the primary group of this user.}
 \item{groups}{array, An array containing the following fields: 
 \itemize{
 \item id integer, The ID of this group.

@@ -4,7 +4,20 @@
 \alias{groups_put}
 \title{Replace all attributes of this Group}
 \usage{
-groups_put(id, name, description = NULL)
+groups_put(
+  id,
+  name,
+  description = NULL,
+  slug = NULL,
+  organization_id = NULL,
+  must_agree_to_eula = NULL,
+  default_otp_required_for_login = NULL,
+  role_ids = NULL,
+  default_time_zone = NULL,
+  default_jobs_label = NULL,
+  default_notebooks_label = NULL,
+  default_services_label = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of this group.}
@@ -12,6 +25,24 @@ groups_put(id, name, description = NULL)
 \item{name}{string required. This group's name.}
 
 \item{description}{string optional. The description of the group.}
+
+\item{slug}{string optional. The slug for this group.}
+
+\item{organization_id}{integer optional. The ID of the organization this group belongs to.}
+
+\item{must_agree_to_eula}{boolean optional. Whether or not members of this group must sign the EULA.}
+
+\item{default_otp_required_for_login}{boolean optional. The two factor authentication requirement for this group.}
+
+\item{role_ids}{array optional. An array of ids of all the roles this group has.}
+
+\item{default_time_zone}{string optional. The default time zone of this group.}
+
+\item{default_jobs_label}{string optional. The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+
+\item{default_notebooks_label}{string optional. The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+
+\item{default_services_label}{string optional. The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
 }
 \value{
 A list containing the following elements:
@@ -23,6 +54,13 @@ A list containing the following elements:
 \item{organizationId}{integer, The ID of the organization this group belongs to.}
 \item{organizationName}{string, The name of the organization this group belongs to.}
 \item{memberCount}{integer, The total number of members in this group.}
+\item{mustAgreeToEula}{boolean, Whether or not members of this group must sign the EULA.}
+\item{defaultOtpRequiredForLogin}{boolean, The two factor authentication requirement for this group.}
+\item{roleIds}{array, An array of ids of all the roles this group has.}
+\item{defaultTimeZone}{string, The default time zone of this group.}
+\item{defaultJobsLabel}{string, The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+\item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+\item{defaultServicesLabel}{string, The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
 \item{members}{array, An array containing the following fields: 
 \itemize{
 \item id integer, The ID of this user.

@@ -15,6 +15,7 @@ An array containing the following fields:
 \item{jira}{string, }
 \item{added}{string, }
 \item{groupCount}{integer, }
+\item{organizationCount}{integer, }
 \item{percentage}{integer, The target percentage of users who should have this feature flag enabled.}
 \item{activeForMe}{boolean, Whether the feature flag is active for the current user.}
 }
