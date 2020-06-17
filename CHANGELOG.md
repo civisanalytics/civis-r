@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [3.0.0] - 2020-06-17
+
 ### Changed
 - Failed HTTP requests are now retried before raising errors (#235)
 - Default docker image for Civis Futures is now `latest` rather than `3` (#238)
