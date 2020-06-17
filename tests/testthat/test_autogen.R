@@ -2,6 +2,8 @@
 # RRV: 2017-11-20 for 1.1.1
 context("autogen")
 
+# 2020-06-17: this is just a cached spec from a few years ago, updating will require
+# refactoring the tests.
 spec <- readRDS("data/full_spec.rds")
 paths <- spec$paths
 
