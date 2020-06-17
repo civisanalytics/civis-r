@@ -223,8 +223,12 @@ write_nested_docs <- function(x) {
     doc_str <- paste0(doc_str,
         "A list containing the following elements: \n#' \\itemize{\n")
     for (i in seq_along(ps)) {
-      doc_str <- paste0(doc_str,
-        sprintf(fmt, names(ps)[i], ps[[i]]$type, get_descr_str(ps[[i]])), "\n")
+      if(is_obj(ps[[i]])) {
+        doc_str <- paste0(doc_str, write_properties(ps[i], fmt = "#' \\item %s %s %s. %s"))
+      } else {
+        doc_str <- paste0(doc_str,
+          sprintf(fmt, names(ps)[i], ps[[i]]$type, get_descr_str(ps[[i]])), "\n")
+      }
     }
     doc_str <- paste0(doc_str, "#' }")
   }
