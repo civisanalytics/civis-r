@@ -71,10 +71,7 @@ test_that("function names are correct", {
   pkg_names <- lsf.str("package:civis")
 
   # test on examples from io.R, models.R, etc
-  sample_names <- c("predictions_patch", "predictions_post_runs",
-                    "models_put_predictions", "scripts_post_sql_runs", "predictions_get",
-                    "models_get", "tables_post_refresh", "models_list",
-                    "notebooks_put")
+  sample_names <- c("scripts_post_sql_runs", "tables_list_projects", "notebooks_get", "workflows_get")
   expect_true(all(sample_names %in% pkg_names))
 })
 
