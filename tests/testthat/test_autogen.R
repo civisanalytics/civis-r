@@ -2,13 +2,7 @@
 # RRV: 2017-11-20 for 1.1.1
 context("autogen")
 
-if (file.exists("data/full_spec.rds")) {
-  spec <- readRDS("data/full_spec.rds")
-} else {
-  spec <- suppressMessages(get_spec())
-  saveRDS(spec, "data/full_spec.rds")
-}
-
+spec <- readRDS("data/full_spec.rds")
 paths <- spec$paths
 
 # ---- example data from spec
@@ -418,3 +412,4 @@ test_that("escape_percent", {
 test_that("camel_to_snake", {
   expect_equal(camel_to_snake("TinaEatYourFood"), "tina_eat_your_food")
 })
+
