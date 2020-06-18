@@ -12,17 +12,42 @@ imports_post_syncs(id, source, destination, advanced_options = NULL)
 \item{source}{list required. A list containing the following elements: 
 \itemize{
 \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce
-\item databaseTable object, 
-\item file object, 
-\item googleWorksheet object, 
-\item salesforce object, 
+\item databaseTable list . A list containing the following elements: 
+\itemize{
+\item schema string, The database schema name.
+\item table string, The database table name.
+\item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+}
+\item file list . 
+\item googleWorksheet list . A list containing the following elements: 
+\itemize{
+\item spreadsheet string, The spreadsheet document name.
+\item spreadsheetId string, The spreadsheet document id.
+\item worksheet string, The worksheet tab name.
+\item worksheetId integer, The worksheet tab id.
+}
+\item salesforce list . A list containing the following elements: 
+\itemize{
+\item objectName string, The Salesforce object name.
+}
 }}
 
 \item{destination}{list required. A list containing the following elements: 
 \itemize{
 \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
-\item databaseTable object, 
-\item googleWorksheet object, 
+\item databaseTable list . A list containing the following elements: 
+\itemize{
+\item schema string, The database schema name.
+\item table string, The database table name.
+\item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+}
+\item googleWorksheet list . A list containing the following elements: 
+\itemize{
+\item spreadsheet string, The spreadsheet document name.
+\item spreadsheetId string, The spreadsheet document id.
+\item worksheet string, The worksheet tab name.
+\item worksheetId integer, The worksheet tab id.
+}
 }}
 
 \item{advanced_options}{list optional. A list containing the following elements: 
@@ -65,16 +90,44 @@ A list containing the following elements:
 \itemize{
 \item id integer, The ID of the table or file, if available.
 \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce
-\item databaseTable object, 
-\item file object, 
-\item googleWorksheet object, 
-\item salesforce object, 
+\item databaseTable list . A list containing the following elements: 
+\itemize{
+\item schema string, The database schema name.
+\item table string, The database table name.
+\item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+}
+\item file list . A list containing the following elements: 
+\itemize{
+\item id integer, The file id.
+}
+\item googleWorksheet list . A list containing the following elements: 
+\itemize{
+\item spreadsheet string, The spreadsheet document name.
+\item spreadsheetId string, The spreadsheet document id.
+\item worksheet string, The worksheet tab name.
+\item worksheetId integer, The worksheet tab id.
+}
+\item salesforce list . A list containing the following elements: 
+\itemize{
+\item objectName string, The Salesforce object name.
+}
 }}
 \item{destination}{list, A list containing the following elements: 
 \itemize{
 \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
-\item databaseTable object, 
-\item googleWorksheet object, 
+\item databaseTable list . A list containing the following elements: 
+\itemize{
+\item schema string, The database schema name.
+\item table string, The database table name.
+\item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+}
+\item googleWorksheet list . A list containing the following elements: 
+\itemize{
+\item spreadsheet string, The spreadsheet document name.
+\item spreadsheetId string, The spreadsheet document id.
+\item worksheet string, The worksheet tab name.
+\item worksheetId integer, The worksheet tab id.
+}
 }}
 \item{advancedOptions}{list, A list containing the following elements: 
 \itemize{

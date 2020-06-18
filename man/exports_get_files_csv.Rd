@@ -22,7 +22,13 @@ A list containing the following elements:
 \item{destination}{list, A list containing the following elements: 
 \itemize{
 \item filenamePrefix string, The prefix of the name of the file returned to the user.
-\item storagePath object, 
+\item storagePath list . A list containing the following elements: 
+\itemize{
+\item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+\item storageHostId integer, The ID of the destination storage host.
+\item credentialId integer, The ID of the credentials for the destination storage host.
+\item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+}
 }}
 \item{includeHeader}{boolean, A boolean value indicating whether or not the header should be included. Defaults to true.}
 \item{compression}{string, The compression of the output file. Valid arguments are "gzip" and "none". Defaults to "gzip".}

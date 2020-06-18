@@ -29,7 +29,12 @@ imports_patch_files_csv(
 \item{source}{list optional. A list containing the following elements: 
 \itemize{
 \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-\item storagePath object, 
+\item storagePath list . A list containing the following elements: 
+\itemize{
+\item storageHostId integer, The ID of the source storage host.
+\item credentialId integer, The ID of the credentials for the source storage host.
+\item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+}
 }}
 
 \item{destination}{list optional. A list containing the following elements: 
@@ -78,7 +83,12 @@ A list containing the following elements:
 \item{source}{list, A list containing the following elements: 
 \itemize{
 \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-\item storagePath object, 
+\item storagePath list . A list containing the following elements: 
+\itemize{
+\item storageHostId integer, The ID of the source storage host.
+\item credentialId integer, The ID of the credentials for the source storage host.
+\item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+}
 }}
 \item{destination}{list, A list containing the following elements: 
 \itemize{

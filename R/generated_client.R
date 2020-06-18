@@ -4094,7 +4094,14 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' @param name string required. The name of the enhancement job.
 #' @param source list required. A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name of the source table.
+#' \item table string, The name of the source table.
+#' \item remoteHostId integer, The ID of the database host for the table.
+#' \item credentialId integer, The id of the credentials to be used when performing the enhancement.
+#' \item multipartKey array, The source table primary key.
+#' }
 #' }
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
@@ -4120,7 +4127,11 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' }
 #' @param destination list optional. A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name for the output data.
+#' \item table string, The table name for the output data.
+#' }
 #' }
 #' @param column_mapping list optional. A list containing the following elements: 
 #' \itemize{
@@ -4185,11 +4196,22 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' }}
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name of the source table.
+#' \item table string, The name of the source table.
+#' \item remoteHostId integer, The ID of the database host for the table.
+#' \item credentialId integer, The id of the credentials to be used when performing the enhancement.
+#' \item multipartKey array, The source table primary key.
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name for the output data.
+#' \item table string, The table name for the output data.
+#' }
 #' }}
 #' \item{columnMapping}{list, A list containing the following elements: 
 #' \itemize{
@@ -4275,11 +4297,22 @@ enhancements_post_cass_ncoa <- function(name, source, schedule = NULL, parent_id
 #' }}
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name of the source table.
+#' \item table string, The name of the source table.
+#' \item remoteHostId integer, The ID of the database host for the table.
+#' \item credentialId integer, The id of the credentials to be used when performing the enhancement.
+#' \item multipartKey array, The source table primary key.
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name for the output data.
+#' \item table string, The table name for the output data.
+#' }
 #' }}
 #' \item{columnMapping}{list, A list containing the following elements: 
 #' \itemize{
@@ -4320,7 +4353,14 @@ enhancements_get_cass_ncoa <- function(id) {
 #' @param name string required. The name of the enhancement job.
 #' @param source list required. A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name of the source table.
+#' \item table string, The name of the source table.
+#' \item remoteHostId integer, The ID of the database host for the table.
+#' \item credentialId integer, The id of the credentials to be used when performing the enhancement.
+#' \item multipartKey array, The source table primary key.
+#' }
 #' }
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
@@ -4346,7 +4386,11 @@ enhancements_get_cass_ncoa <- function(id) {
 #' }
 #' @param destination list optional. A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name for the output data.
+#' \item table string, The table name for the output data.
+#' }
 #' }
 #' @param column_mapping list optional. A list containing the following elements: 
 #' \itemize{
@@ -4411,11 +4455,22 @@ enhancements_get_cass_ncoa <- function(id) {
 #' }}
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name of the source table.
+#' \item table string, The name of the source table.
+#' \item remoteHostId integer, The ID of the database host for the table.
+#' \item credentialId integer, The id of the credentials to be used when performing the enhancement.
+#' \item multipartKey array, The source table primary key.
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name for the output data.
+#' \item table string, The table name for the output data.
+#' }
 #' }}
 #' \item{columnMapping}{list, A list containing the following elements: 
 #' \itemize{
@@ -4478,11 +4533,22 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' }
 #' @param source list optional. A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name of the source table.
+#' \item table string, The name of the source table.
+#' \item remoteHostId integer, The ID of the database host for the table.
+#' \item credentialId integer, The id of the credentials to be used when performing the enhancement.
+#' \item multipartKey array, The source table primary key.
+#' }
 #' }
 #' @param destination list optional. A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name for the output data.
+#' \item table string, The table name for the output data.
+#' }
 #' }
 #' @param column_mapping list optional. A list containing the following elements: 
 #' \itemize{
@@ -4547,11 +4613,22 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' }}
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name of the source table.
+#' \item table string, The name of the source table.
+#' \item remoteHostId integer, The ID of the database host for the table.
+#' \item credentialId integer, The id of the credentials to be used when performing the enhancement.
+#' \item multipartKey array, The source table primary key.
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name for the output data.
+#' \item table string, The table name for the output data.
+#' }
 #' }}
 #' \item{columnMapping}{list, A list containing the following elements: 
 #' \itemize{
@@ -5709,11 +5786,22 @@ enhancements_delete_cass_ncoa_projects <- function(id, project_id) {
 #' }}
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name of the source table.
+#' \item table string, The name of the source table.
+#' \item remoteHostId integer, The ID of the database host for the table.
+#' \item credentialId integer, The id of the credentials to be used when performing the enhancement.
+#' \item multipartKey array, The source table primary key.
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name for the output data.
+#' \item table string, The table name for the output data.
+#' }
 #' }}
 #' \item{columnMapping}{list, A list containing the following elements: 
 #' \itemize{
@@ -6153,7 +6241,13 @@ exports_list <- function(type = NULL, author = NULL, status = NULL, hidden = NUL
 #' @param destination list required. A list containing the following elements: 
 #' \itemize{
 #' \item filenamePrefix string, The prefix of the name of the file returned to the user.
-#' \item storagePath object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+#' \item storageHostId integer, The ID of the destination storage host.
+#' \item credentialId integer, The ID of the credentials for the destination storage host.
+#' \item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+#' }
 #' }
 #' @param name string optional. The name of this Csv Export job.
 #' @param include_header boolean optional. A boolean value indicating whether or not the header should be included. Defaults to true.
@@ -6175,7 +6269,13 @@ exports_list <- function(type = NULL, author = NULL, status = NULL, hidden = NUL
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item filenamePrefix string, The prefix of the name of the file returned to the user.
-#' \item storagePath object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+#' \item storageHostId integer, The ID of the destination storage host.
+#' \item credentialId integer, The ID of the credentials for the destination storage host.
+#' \item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+#' }
 #' }}
 #' \item{includeHeader}{boolean, A boolean value indicating whether or not the header should be included. Defaults to true.}
 #' \item{compression}{string, The compression of the output file. Valid arguments are "gzip" and "none". Defaults to "gzip".}
@@ -6216,7 +6316,13 @@ exports_post_files_csv <- function(source, destination, name = NULL, include_hea
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item filenamePrefix string, The prefix of the name of the file returned to the user.
-#' \item storagePath object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+#' \item storageHostId integer, The ID of the destination storage host.
+#' \item credentialId integer, The ID of the credentials for the destination storage host.
+#' \item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+#' }
 #' }}
 #' \item{includeHeader}{boolean, A boolean value indicating whether or not the header should be included. Defaults to true.}
 #' \item{compression}{string, The compression of the output file. Valid arguments are "gzip" and "none". Defaults to "gzip".}
@@ -6253,7 +6359,13 @@ exports_get_files_csv <- function(id) {
 #' @param destination list required. A list containing the following elements: 
 #' \itemize{
 #' \item filenamePrefix string, The prefix of the name of the file returned to the user.
-#' \item storagePath object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+#' \item storageHostId integer, The ID of the destination storage host.
+#' \item credentialId integer, The ID of the credentials for the destination storage host.
+#' \item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+#' }
 #' }
 #' @param name string optional. The name of this Csv Export job.
 #' @param include_header boolean optional. A boolean value indicating whether or not the header should be included. Defaults to true.
@@ -6275,7 +6387,13 @@ exports_get_files_csv <- function(id) {
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item filenamePrefix string, The prefix of the name of the file returned to the user.
-#' \item storagePath object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+#' \item storageHostId integer, The ID of the destination storage host.
+#' \item credentialId integer, The ID of the credentials for the destination storage host.
+#' \item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+#' }
 #' }}
 #' \item{includeHeader}{boolean, A boolean value indicating whether or not the header should be included. Defaults to true.}
 #' \item{compression}{string, The compression of the output file. Valid arguments are "gzip" and "none". Defaults to "gzip".}
@@ -6313,7 +6431,13 @@ exports_put_files_csv <- function(id, source, destination, name = NULL, include_
 #' @param destination list optional. A list containing the following elements: 
 #' \itemize{
 #' \item filenamePrefix string, The prefix of the name of the file returned to the user.
-#' \item storagePath object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+#' \item storageHostId integer, The ID of the destination storage host.
+#' \item credentialId integer, The ID of the credentials for the destination storage host.
+#' \item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+#' }
 #' }
 #' @param include_header boolean optional. A boolean value indicating whether or not the header should be included. Defaults to true.
 #' @param compression string optional. The compression of the output file. Valid arguments are "gzip" and "none". Defaults to "gzip".
@@ -6334,7 +6458,13 @@ exports_put_files_csv <- function(id, source, destination, name = NULL, include_
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item filenamePrefix string, The prefix of the name of the file returned to the user.
-#' \item storagePath object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+#' \item storageHostId integer, The ID of the destination storage host.
+#' \item credentialId integer, The ID of the credentials for the destination storage host.
+#' \item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+#' }
 #' }}
 #' \item{includeHeader}{boolean, A boolean value indicating whether or not the header should be included. Defaults to true.}
 #' \item{compression}{string, The compression of the output file. Valid arguments are "gzip" and "none". Defaults to "gzip".}
@@ -6376,7 +6506,13 @@ exports_patch_files_csv <- function(id, name = NULL, source = NULL, destination 
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item filenamePrefix string, The prefix of the name of the file returned to the user.
-#' \item storagePath object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+#' \item storageHostId integer, The ID of the destination storage host.
+#' \item credentialId integer, The ID of the credentials for the destination storage host.
+#' \item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+#' }
 #' }}
 #' \item{includeHeader}{boolean, A boolean value indicating whether or not the header should be included. Defaults to true.}
 #' \item{compression}{string, The compression of the output file. Valid arguments are "gzip" and "none". Defaults to "gzip".}
@@ -8686,7 +8822,12 @@ imports_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' @param source list required. A list containing the following elements: 
 #' \itemize{
 #' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-#' \item storagePath object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item storageHostId integer, The ID of the source storage host.
+#' \item credentialId integer, The ID of the credentials for the source storage host.
+#' \item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+#' }
 #' }
 #' @param destination list required. A list containing the following elements: 
 #' \itemize{
@@ -8725,7 +8866,12 @@ imports_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-#' \item storagePath object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item storageHostId integer, The ID of the source storage host.
+#' \item credentialId integer, The ID of the credentials for the source storage host.
+#' \item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
@@ -8783,7 +8929,12 @@ imports_post_files_csv <- function(source, destination, first_row_is_header, nam
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-#' \item storagePath object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item storageHostId integer, The ID of the source storage host.
+#' \item credentialId integer, The ID of the credentials for the source storage host.
+#' \item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
@@ -8837,7 +8988,12 @@ imports_get_files_csv <- function(id) {
 #' @param source list required. A list containing the following elements: 
 #' \itemize{
 #' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-#' \item storagePath object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item storageHostId integer, The ID of the source storage host.
+#' \item credentialId integer, The ID of the credentials for the source storage host.
+#' \item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+#' }
 #' }
 #' @param destination list required. A list containing the following elements: 
 #' \itemize{
@@ -8875,7 +9031,12 @@ imports_get_files_csv <- function(id) {
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-#' \item storagePath object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item storageHostId integer, The ID of the source storage host.
+#' \item credentialId integer, The ID of the credentials for the source storage host.
+#' \item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
@@ -8930,7 +9091,12 @@ imports_put_files_csv <- function(id, source, destination, first_row_is_header, 
 #' @param source list optional. A list containing the following elements: 
 #' \itemize{
 #' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-#' \item storagePath object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item storageHostId integer, The ID of the source storage host.
+#' \item credentialId integer, The ID of the credentials for the source storage host.
+#' \item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+#' }
 #' }
 #' @param destination list optional. A list containing the following elements: 
 #' \itemize{
@@ -8967,7 +9133,12 @@ imports_put_files_csv <- function(id, source, destination, first_row_is_header, 
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-#' \item storagePath object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item storageHostId integer, The ID of the source storage host.
+#' \item credentialId integer, The ID of the credentials for the source storage host.
+#' \item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
@@ -9048,7 +9219,12 @@ imports_delete_files_csv <- function(id) {
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-#' \item storagePath object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item storageHostId integer, The ID of the source storage host.
+#' \item credentialId integer, The ID of the credentials for the source storage host.
+#' \item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
@@ -9525,16 +9701,41 @@ imports_post_cancel <- function(id) {
 #' @param source list required. A list containing the following elements: 
 #' \itemize{
 #' \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce
-#' \item databaseTable object, 
-#' \item file object, 
-#' \item googleWorksheet object, 
-#' \item salesforce object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item file list . 
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
+#' \item salesforce list . A list containing the following elements: 
+#' \itemize{
+#' \item objectName string, The Salesforce object name.
+#' }
 #' }
 #' @param destination list required. A list containing the following elements: 
 #' \itemize{
 #' \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
-#' \item databaseTable object, 
-#' \item googleWorksheet object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
 #' }
 #' @param advanced_options list optional. A list containing the following elements: 
 #' \itemize{
@@ -9575,16 +9776,44 @@ imports_post_cancel <- function(id) {
 #' \itemize{
 #' \item id integer, The ID of the table or file, if available.
 #' \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce
-#' \item databaseTable object, 
-#' \item file object, 
-#' \item googleWorksheet object, 
-#' \item salesforce object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item file list . A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The file id.
+#' }
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
+#' \item salesforce list . A list containing the following elements: 
+#' \itemize{
+#' \item objectName string, The Salesforce object name.
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
-#' \item databaseTable object, 
-#' \item googleWorksheet object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
 #' }}
 #' \item{advancedOptions}{list, A list containing the following elements: 
 #' \itemize{
@@ -9642,16 +9871,41 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' @param source list required. A list containing the following elements: 
 #' \itemize{
 #' \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce
-#' \item databaseTable object, 
-#' \item file object, 
-#' \item googleWorksheet object, 
-#' \item salesforce object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item file list . 
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
+#' \item salesforce list . A list containing the following elements: 
+#' \itemize{
+#' \item objectName string, The Salesforce object name.
+#' }
 #' }
 #' @param destination list required. A list containing the following elements: 
 #' \itemize{
 #' \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
-#' \item databaseTable object, 
-#' \item googleWorksheet object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
 #' }
 #' @param advanced_options list optional. A list containing the following elements: 
 #' \itemize{
@@ -9692,16 +9946,44 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' \itemize{
 #' \item id integer, The ID of the table or file, if available.
 #' \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce
-#' \item databaseTable object, 
-#' \item file object, 
-#' \item googleWorksheet object, 
-#' \item salesforce object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item file list . A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The file id.
+#' }
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
+#' \item salesforce list . A list containing the following elements: 
+#' \itemize{
+#' \item objectName string, The Salesforce object name.
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
-#' \item databaseTable object, 
-#' \item googleWorksheet object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
 #' }}
 #' \item{advancedOptions}{list, A list containing the following elements: 
 #' \itemize{
@@ -9787,16 +10069,44 @@ imports_delete_syncs <- function(id, sync_id) {
 #' \itemize{
 #' \item id integer, The ID of the table or file, if available.
 #' \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce
-#' \item databaseTable object, 
-#' \item file object, 
-#' \item googleWorksheet object, 
-#' \item salesforce object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item file list . A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The file id.
+#' }
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
+#' \item salesforce list . A list containing the following elements: 
+#' \itemize{
+#' \item objectName string, The Salesforce object name.
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
-#' \item databaseTable object, 
-#' \item googleWorksheet object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
 #' }}
 #' \item{advancedOptions}{list, A list containing the following elements: 
 #' \itemize{
@@ -30969,64 +31279,6 @@ users_list_me_ui <- function() {
   args <- as.list(match.call())[-1]
   path <- "/users/me/ui"
   path_params  <- list()
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List themes
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID of this theme.}
-#' \item{name}{string, The name of this theme.}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' @export
-users_list_me_themes <- function() {
-
-  args <- as.list(match.call())[-1]
-  path <- "/users/me/themes"
-  path_params  <- list()
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Show a theme
-#' @param id integer required. The ID of this theme.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of this theme.}
-#' \item{name}{string, The name of this theme.}
-#' \item{organizationIds}{array, List of organization ID's allowed to use this theme.}
-#' \item{settings}{string, The theme configuration object.}
-#' \item{logoFile}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of the logo image file.
-#' \item downloadUrl string, The URL of the logo image file.
-#' }}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' @export
-users_get_me_themes <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/users/me/themes/{id}"
-  path_params  <- list(id = id)
   query_params <- list()
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
