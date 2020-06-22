@@ -233,6 +233,10 @@ admin_patch_themes <- function(id, name = NULL, organization_ids = NULL, setting
 #' \item{csMetadata}{string, Additional metadata about the organization in JSON format.}
 #' \item{removeFooterInEmails}{boolean, If true, emails sent by platform will not include Civis text.}
 #' \item{salesforceAccountId}{string, The SalesForce Account ID for this organization.}
+#' \item{advancedSettings}{list, A list containing the following elements: 
+#' \itemize{
+#' \item dedicatedDjPoolEnabled boolean, If true, the Organization has a dedicated delayed jobs pool. Defaults to false.
+#' }}
 #' \item{tableauRefreshHistory}{array, The number of tableau refreshes used this month.}
 #' @export
 admin_list_organizations <- function(status = NULL, org_type = NULL) {
@@ -424,7 +428,7 @@ aliases_delete_shares_groups <- function(id, group_id) {
 
 
 #' List Aliases
-#' @param object_type string optional. Filter results by object type. Pass multiple object types with a comma-separatedlist. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
+#' @param object_type string optional. Filter results by object type. Pass multiple object types with a comma-separatedlist. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
 #' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
 #' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id, object_type.
@@ -433,7 +437,7 @@ aliases_delete_shares_groups <- function(id, group_id) {
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The id of the Alias object.}
 #' \item{objectId}{integer, The id of the object}
-#' \item{objectType}{string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{objectType}{string, The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
 #' \item{alias}{string, The alias of the object}
 #' \item{userId}{integer, The id of the user who created the alias}
 #' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
@@ -457,14 +461,14 @@ aliases_list <- function(object_type = NULL, limit = NULL, page_num = NULL, orde
 
 #' Create an Alias
 #' @param object_id integer required. The id of the object
-#' @param object_type string required. The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
+#' @param object_type string required. The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
 #' @param alias string required. The alias of the object
 #' @param display_name string optional. The display name of the Alias object. Defaults to object name if not provided.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The id of the Alias object.}
 #' \item{objectId}{integer, The id of the object}
-#' \item{objectType}{string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{objectType}{string, The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
 #' \item{alias}{string, The alias of the object}
 #' \item{userId}{integer, The id of the user who created the alias}
 #' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
@@ -492,7 +496,7 @@ aliases_post <- function(object_id, object_type, alias, display_name = NULL) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The id of the Alias object.}
 #' \item{objectId}{integer, The id of the object}
-#' \item{objectType}{string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{objectType}{string, The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
 #' \item{alias}{string, The alias of the object}
 #' \item{userId}{integer, The id of the user who created the alias}
 #' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
@@ -517,14 +521,14 @@ aliases_get <- function(id) {
 #' Replace all attributes of this Alias
 #' @param id integer required. The id of the Alias object.
 #' @param object_id integer required. The id of the object
-#' @param object_type string required. The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
+#' @param object_type string required. The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
 #' @param alias string required. The alias of the object
 #' @param display_name string optional. The display name of the Alias object. Defaults to object name if not provided.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The id of the Alias object.}
 #' \item{objectId}{integer, The id of the object}
-#' \item{objectType}{string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{objectType}{string, The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
 #' \item{alias}{string, The alias of the object}
 #' \item{userId}{integer, The id of the user who created the alias}
 #' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
@@ -549,14 +553,14 @@ aliases_put <- function(id, object_id, object_type, alias, display_name = NULL) 
 #' Update some attributes of this Alias
 #' @param id integer required. The id of the Alias object.
 #' @param object_id integer optional. The id of the object
-#' @param object_type string optional. The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
+#' @param object_type string optional. The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
 #' @param alias string optional. The alias of the object
 #' @param display_name string optional. The display name of the Alias object. Defaults to object name if not provided.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The id of the Alias object.}
 #' \item{objectId}{integer, The id of the object}
-#' \item{objectType}{string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{objectType}{string, The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
 #' \item{alias}{string, The alias of the object}
 #' \item{userId}{integer, The id of the user who created the alias}
 #' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
@@ -601,13 +605,13 @@ aliases_delete <- function(id) {
 
 
 #' Get details about an alias within an FCO type
-#' @param object_type string required. The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
+#' @param object_type string required. The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
 #' @param alias string required. The alias of the object
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The id of the Alias object.}
 #' \item{objectId}{integer, The id of the object}
-#' \item{objectType}{string, The type of the object. Valid types include: bsd_cons_export, model, cass_ncoa, container_script, gdoc_export, geocode, match, media_optimizer, python_script, ratecard_import, r_script, salesforce_export, javascript_script, sql_script, van_list_import, van_list_export, van_person_export, van_score_export, van_sync, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{objectType}{string, The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
 #' \item{alias}{string, The alias of the object}
 #' \item{userId}{integer, The id of the user who created the alias}
 #' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
@@ -1615,6 +1619,7 @@ clusters_list_kubernetes <- function(organization_slug = NULL, limit = NULL, pag
 #' \item defaultInstanceConfigId integer, The id of the InstanceConfig that is the default for this partition.
 #' }}
 #' \item{isNatEnabled}{boolean, Whether this cluster needs a NAT gateway or not.}
+#' \item{hours}{number, The number of hours used this month for this cluster }
 #' @export
 clusters_post_kubernetes <- function(organization_id = NULL, organization_slug = NULL, is_nat_enabled = NULL) {
 
@@ -1634,7 +1639,8 @@ clusters_post_kubernetes <- function(organization_id = NULL, organization_slug =
 
 
 #' Describe a Kubernetes Cluster
-#' @param id integer required. The ID of this cluster.
+#' @param id integer required. 
+#' @param include_usage_stats boolean optional. When true, usage stats are returned in instance config objects. Defaults to false.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this cluster.}
@@ -1650,13 +1656,14 @@ clusters_post_kubernetes <- function(organization_id = NULL, organization_slug =
 #' \item defaultInstanceConfigId integer, The id of the InstanceConfig that is the default for this partition.
 #' }}
 #' \item{isNatEnabled}{boolean, Whether this cluster needs a NAT gateway or not.}
+#' \item{hours}{number, The number of hours used this month for this cluster }
 #' @export
-clusters_get_kubernetes <- function(id) {
+clusters_get_kubernetes <- function(id, include_usage_stats = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/clusters/kubernetes/{id}"
   path_params  <- list(id = id)
-  query_params <- list()
+  query_params <- list(include_usage_stats = include_usage_stats)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -1686,6 +1693,7 @@ clusters_get_kubernetes <- function(id) {
 #' \item defaultInstanceConfigId integer, The id of the InstanceConfig that is the default for this partition.
 #' }}
 #' \item{isNatEnabled}{boolean, Whether this cluster needs a NAT gateway or not.}
+#' \item{hours}{number, The number of hours used this month for this cluster }
 #' @export
 clusters_patch_kubernetes <- function(id, is_nat_enabled = NULL) {
 
@@ -1779,7 +1787,8 @@ clusters_list_kubernetes_deployment_stats <- function(id) {
 
 
 #' List Cluster Partitions for given cluster
-#' @param id integer required. The ID of this cluster.
+#' @param id integer required. 
+#' @param include_usage_stats boolean optional. When true, usage stats are returned in instance config objects. Defaults to false.
 #' 
 #' @return  An array containing the following fields:
 #' \item{clusterPartitionId}{integer, The ID of this cluster partition.}
@@ -1794,15 +1803,16 @@ clusters_list_kubernetes_deployment_stats <- function(id) {
 #' \item instanceMaxMemory integer, The amount of memory (RAM) available to a single instance of that type in megabytes.
 #' \item instanceMaxCpu integer, The number of processor shares available to a single instance of that type in millicores.
 #' \item instanceMaxDisk integer, The amount of disk available to a single instance of that type in gigabytes.
+#' \item usageStats object, 
 #' }}
 #' \item{defaultInstanceConfigId}{integer, The id of the InstanceConfig that is the default for this partition.}
 #' @export
-clusters_list_kubernetes_partitions <- function(id) {
+clusters_list_kubernetes_partitions <- function(id, include_usage_stats = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/clusters/kubernetes/{id}/partitions"
   path_params  <- list(id = id)
-  query_params <- list()
+  query_params <- list(include_usage_stats = include_usage_stats)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -1838,6 +1848,7 @@ clusters_list_kubernetes_partitions <- function(id) {
 #' \item instanceMaxMemory integer, The amount of memory (RAM) available to a single instance of that type in megabytes.
 #' \item instanceMaxCpu integer, The number of processor shares available to a single instance of that type in millicores.
 #' \item instanceMaxDisk integer, The amount of disk available to a single instance of that type in gigabytes.
+#' \item usageStats object, 
 #' }}
 #' \item{defaultInstanceConfigId}{integer, The id of the InstanceConfig that is the default for this partition.}
 #' @export
@@ -1883,6 +1894,7 @@ clusters_post_kubernetes_partitions <- function(id, instance_configs, name, labe
 #' \item instanceMaxMemory integer, The amount of memory (RAM) available to a single instance of that type in megabytes.
 #' \item instanceMaxCpu integer, The number of processor shares available to a single instance of that type in millicores.
 #' \item instanceMaxDisk integer, The amount of disk available to a single instance of that type in gigabytes.
+#' \item usageStats object, 
 #' }}
 #' \item{defaultInstanceConfigId}{integer, The id of the InstanceConfig that is the default for this partition.}
 #' @export
@@ -1929,6 +1941,7 @@ clusters_delete_kubernetes_partitions <- function(id, cluster_partition_id) {
 #' Describe a Cluster Partition
 #' @param id integer required. The ID of the cluster which this partition belongs to.
 #' @param cluster_partition_id integer required. The ID of this cluster partition.
+#' @param include_usage_stats boolean optional. When true, usage stats are returned in instance config objects. Defaults to false.
 #' 
 #' @return  A list containing the following elements:
 #' \item{clusterPartitionId}{integer, The ID of this cluster partition.}
@@ -1943,15 +1956,112 @@ clusters_delete_kubernetes_partitions <- function(id, cluster_partition_id) {
 #' \item instanceMaxMemory integer, The amount of memory (RAM) available to a single instance of that type in megabytes.
 #' \item instanceMaxCpu integer, The number of processor shares available to a single instance of that type in millicores.
 #' \item instanceMaxDisk integer, The amount of disk available to a single instance of that type in gigabytes.
+#' \item usageStats object, 
 #' }}
 #' \item{defaultInstanceConfigId}{integer, The id of the InstanceConfig that is the default for this partition.}
 #' @export
-clusters_get_kubernetes_partitions <- function(id, cluster_partition_id) {
+clusters_get_kubernetes_partitions <- function(id, cluster_partition_id, include_usage_stats = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/clusters/kubernetes/{id}/partitions/{cluster_partition_id}"
   path_params  <- list(id = id, cluster_partition_id = cluster_partition_id)
-  query_params <- list()
+  query_params <- list(include_usage_stats = include_usage_stats)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Describe an Instance Config
+#' @param instance_config_id integer required. The ID of this instance config.
+#' @param include_usage_stats boolean optional. When true, usage stats are returned in instance config objects. Defaults to false.
+#' 
+#' @return  A list containing the following elements:
+#' \item{instanceConfigId}{integer, The ID of this InstanceConfig.}
+#' \item{instanceType}{string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.}
+#' \item{minInstances}{integer, The minimum number of instances of that type in this cluster.}
+#' \item{maxInstances}{integer, The maximum number of instances of that type in this cluster.}
+#' \item{instanceMaxMemory}{integer, The amount of memory (RAM) available to a single instance of that type in megabytes.}
+#' \item{instanceMaxCpu}{integer, The number of processor shares available to a single instance of that type in millicores.}
+#' \item{instanceMaxDisk}{integer, The amount of disk available to a single instance of that type in gigabytes.}
+#' \item{usageStats}{list, A list containing the following elements: 
+#' \itemize{
+#' \item pendingMemoryRequested integer, The sum of memory requests (in MB) for pending deployments in this instance config.
+#' \item pendingCpuRequested integer, The sum of cpu requests (in millicores) for pending deployments in this instance config.
+#' \item runningMemoryRequested integer, The sum of memory requests (in MB) for running deployments in this instance config.
+#' \item runningCpuRequested integer, The sum of cpu requests (in millicores) for running deployments in this instance config.
+#' \item pendingDeployments integer, The number of pending deployments in this instance config.
+#' \item runningDeployments integer, The number of running deployments in this instance config.
+#' }}
+#' @export
+clusters_get_kubernetes_instance_configs <- function(instance_config_id, include_usage_stats = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/clusters/kubernetes/instance_configs/{instance_config_id}"
+  path_params  <- list(instance_config_id = instance_config_id)
+  query_params <- list(include_usage_stats = include_usage_stats)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get statistics about the current users of an Instance Config
+#' @param instance_config_id integer required. The ID of this instance config.
+#' @param order string optional. The field on which to order the result set. Defaults to running_deployments. Must be one of pending_memory_requested, pending_cpu_requested, running_memory_requested, running_cpu_requested, pending_deployments, running_deployments.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending). Defaults to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{userId}{string, The owning user's ID}
+#' \item{userName}{string, The owning user's name}
+#' \item{pendingDeployments}{integer, The number of deployments belonging to the owning user in "pending" state}
+#' \item{pendingMemoryRequested}{integer, The sum of memory requests (in MB) for deployments belonging to the owning user in "pending" state}
+#' \item{pendingCpuRequested}{integer, The sum of CPU requests (in millicores) for deployments belonging to the owning user in "pending" state}
+#' \item{runningDeployments}{integer, The number of deployments belonging to the owning user in "running" state}
+#' \item{runningMemoryRequested}{integer, The sum of memory requests (in MB) for deployments belonging to the owning user in "running" state}
+#' \item{runningCpuRequested}{integer, The sum of CPU requests (in millicores) for deployments belonging to the owning user in "running" state}
+#' @export
+clusters_list_kubernetes_instance_configs_user_statistics <- function(instance_config_id, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/clusters/kubernetes/instance_configs/{instance_config_id}/user_statistics"
+  path_params  <- list(instance_config_id = instance_config_id)
+  query_params <- list(order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get graphs of historical resource usage in an Instance Config
+#' @param instance_config_id integer required. The ID of this instance config.
+#' @param timeframe string optional. The span of time that the graphs cover. Must be one of 1_day, 1_week.
+#' 
+#' @return  A list containing the following elements:
+#' \item{cpuGraphUrl}{string, URL for the graph of historical CPU usage in this instance config.}
+#' \item{memGraphUrl}{string, URL for the graph of historical memory usage in this instance config.}
+#' @export
+clusters_list_kubernetes_instance_configs_historical_graphs <- function(instance_config_id, timeframe = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/clusters/kubernetes/instance_configs/{instance_config_id}/historical_graphs"
+  path_params  <- list(instance_config_id = instance_config_id)
+  query_params <- list(timeframe = timeframe)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -1964,7 +2074,7 @@ clusters_get_kubernetes_partitions <- function(id, cluster_partition_id) {
 
 
 #' List credentials
-#' @param type string optional. The type (or types) of credentials to return. One or more of: Amazon Web Services S3, Bitbucket, BSD::API, CASS/NCOA PAF, Catalist::API, Catalist::SFTP, Certificate, Civis Platform, Custom, Database, Google, Github, JobTraits::Ftp, Salesforce User, Salesforce Client, Silverpop Application, Silverpop Refresh Token, Silverpop User, TableauUser, VAN::MyVoterFile, VAN::MyCampaign, and VAN::BothModes. Specify multiple values as a comma-separated list (e.g., "A,B").
+#' @param type string optional. The type (or types) of credentials to return. One or more of: Amazon Web Services S3, Bitbucket, CASS/NCOA PAF, Certificate, Civis Platform, Custom, Database, Google, Github, Salesforce User, Salesforce Client, and TableauUser. Specify multiple values as a comma-separated list (e.g., "A,B").
 #' @param remote_host_id integer optional. The ID of the remote host associated with the credentials to return.
 #' @param default boolean optional. If true, will return a list with a single credential which is the current user's default credential.
 #' @param limit integer optional. Number of results to return. Defaults to its maximum of 1000.
@@ -2118,7 +2228,7 @@ credentials_get <- function(id) {
 
 #' Authenticate against a remote host
 #' @param url string required. The URL to your host.
-#' @param remote_host_type string required. The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, RemoteHostTypes::Salesforce, RemoteHostTypes::Snowflake, and RemoteHostTypes::Van
+#' @param remote_host_type string required. The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce
 #' @param username string required. The username for the credential.
 #' @param password string required. The password for the credential.
 #' 
@@ -2654,6 +2764,77 @@ databases_delete_whitelist_ips <- function(id, whitelisted_ip_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get the advanced settings for this database
+#' @param id integer required. The ID of the database this advanced settings object belongs to.
+#' 
+#' @return  A list containing the following elements:
+#' \item{exportCachingEnabled}{boolean, Whether or not caching is enabled for export jobs run on this database server.}
+#' @export
+databases_list_advanced_settings <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/databases/{id}/advanced-settings"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update the advanced settings for this database
+#' @param id integer required. The ID of the database this advanced settings object belongs to.
+#' @param export_caching_enabled boolean optional. Whether or not caching is enabled for export jobs run on this database server.
+#' 
+#' @return  A list containing the following elements:
+#' \item{exportCachingEnabled}{boolean, Whether or not caching is enabled for export jobs run on this database server.}
+#' @export
+databases_patch_advanced_settings <- function(id, export_caching_enabled = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/databases/{id}/advanced-settings"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(exportCachingEnabled = export_caching_enabled)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Edit the advanced settings for this database
+#' @param id integer required. The ID of the database this advanced settings object belongs to.
+#' @param export_caching_enabled boolean required. Whether or not caching is enabled for export jobs run on this database server.
+#' 
+#' @return  A list containing the following elements:
+#' \item{exportCachingEnabled}{boolean, Whether or not caching is enabled for export jobs run on this database server.}
+#' @export
+databases_put_advanced_settings <- function(id, export_caching_enabled) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/databases/{id}/advanced-settings"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(exportCachingEnabled = export_caching_enabled)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -3913,7 +4094,14 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' @param name string required. The name of the enhancement job.
 #' @param source list required. A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name of the source table.
+#' \item table string, The name of the source table.
+#' \item remoteHostId integer, The ID of the database host for the table.
+#' \item credentialId integer, The id of the credentials to be used when performing the enhancement.
+#' \item multipartKey array, The source table primary key.
+#' }
 #' }
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
@@ -3939,7 +4127,11 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' }
 #' @param destination list optional. A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name for the output data.
+#' \item table string, The table name for the output data.
+#' }
 #' }
 #' @param column_mapping list optional. A list containing the following elements: 
 #' \itemize{
@@ -4004,11 +4196,22 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' }}
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name of the source table.
+#' \item table string, The name of the source table.
+#' \item remoteHostId integer, The ID of the database host for the table.
+#' \item credentialId integer, The id of the credentials to be used when performing the enhancement.
+#' \item multipartKey array, The source table primary key.
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name for the output data.
+#' \item table string, The table name for the output data.
+#' }
 #' }}
 #' \item{columnMapping}{list, A list containing the following elements: 
 #' \itemize{
@@ -4094,11 +4297,22 @@ enhancements_post_cass_ncoa <- function(name, source, schedule = NULL, parent_id
 #' }}
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name of the source table.
+#' \item table string, The name of the source table.
+#' \item remoteHostId integer, The ID of the database host for the table.
+#' \item credentialId integer, The id of the credentials to be used when performing the enhancement.
+#' \item multipartKey array, The source table primary key.
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name for the output data.
+#' \item table string, The table name for the output data.
+#' }
 #' }}
 #' \item{columnMapping}{list, A list containing the following elements: 
 #' \itemize{
@@ -4139,7 +4353,14 @@ enhancements_get_cass_ncoa <- function(id) {
 #' @param name string required. The name of the enhancement job.
 #' @param source list required. A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name of the source table.
+#' \item table string, The name of the source table.
+#' \item remoteHostId integer, The ID of the database host for the table.
+#' \item credentialId integer, The id of the credentials to be used when performing the enhancement.
+#' \item multipartKey array, The source table primary key.
+#' }
 #' }
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
@@ -4165,7 +4386,11 @@ enhancements_get_cass_ncoa <- function(id) {
 #' }
 #' @param destination list optional. A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name for the output data.
+#' \item table string, The table name for the output data.
+#' }
 #' }
 #' @param column_mapping list optional. A list containing the following elements: 
 #' \itemize{
@@ -4230,11 +4455,22 @@ enhancements_get_cass_ncoa <- function(id) {
 #' }}
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name of the source table.
+#' \item table string, The name of the source table.
+#' \item remoteHostId integer, The ID of the database host for the table.
+#' \item credentialId integer, The id of the credentials to be used when performing the enhancement.
+#' \item multipartKey array, The source table primary key.
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name for the output data.
+#' \item table string, The table name for the output data.
+#' }
 #' }}
 #' \item{columnMapping}{list, A list containing the following elements: 
 #' \itemize{
@@ -4297,11 +4533,22 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' }
 #' @param source list optional. A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name of the source table.
+#' \item table string, The name of the source table.
+#' \item remoteHostId integer, The ID of the database host for the table.
+#' \item credentialId integer, The id of the credentials to be used when performing the enhancement.
+#' \item multipartKey array, The source table primary key.
+#' }
 #' }
 #' @param destination list optional. A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name for the output data.
+#' \item table string, The table name for the output data.
+#' }
 #' }
 #' @param column_mapping list optional. A list containing the following elements: 
 #' \itemize{
@@ -4366,11 +4613,22 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' }}
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name of the source table.
+#' \item table string, The name of the source table.
+#' \item remoteHostId integer, The ID of the database host for the table.
+#' \item credentialId integer, The id of the credentials to be used when performing the enhancement.
+#' \item multipartKey array, The source table primary key.
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name for the output data.
+#' \item table string, The table name for the output data.
+#' }
 #' }}
 #' \item{columnMapping}{list, A list containing the following elements: 
 #' \itemize{
@@ -5214,1331 +5472,6 @@ enhancements_list_geocode_runs_outputs <- function(id, run_id, limit = NULL, pag
  }
 
 
-#' Create a Data Unification Enhancement
-#' @param name string required. The name of the enhancement job.
-#' @param field_mapping1 list required. The column mapping for Table 1. See /enhancements/field_mapping for list of valid fields.
-#' @param field_mapping2 list required. The column mapping for Table 2. See /enhancements/field_mapping for list of valid fields.
-#' @param schedule list optional. A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }
-#' @param parent_id integer optional. Parent ID that triggers this enhancement.
-#' @param notifications list optional. A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }
-#' @param table1 list optional. A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }
-#' @param table2 list optional. A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }
-#' @param output_table list optional. A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }
-#' @param max_matches integer optional. The maximum number of matches per record in Table 1 to return. Must be between 0 and 10. 0 returns all matches.
-#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for the enhancement.}
-#' \item{name}{string, The name of the enhancement job.}
-#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
-#' \item{createdAt}{string, The time this enhancement was created.}
-#' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{list, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }}
-#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{list, A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }}
-#' \item{runningAs}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{fieldMapping1}{list, The column mapping for Table 1. See /enhancements/field_mapping for list of valid fields.}
-#' \item{table1}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{fieldMapping2}{list, The column mapping for Table 2. See /enhancements/field_mapping for list of valid fields.}
-#' \item{table2}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{outputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{maxMatches}{integer, The maximum number of matches per record in Table 1 to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
-#' @export
-enhancements_post_data_unification <- function(name, field_mapping1, field_mapping2, schedule = NULL, parent_id = NULL, notifications = NULL, table1 = NULL, table2 = NULL, output_table = NULL, max_matches = NULL, threshold = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification"
-  path_params  <- list()
-  query_params <- list()
-  body_params  <- list(name = name, fieldMapping1 = field_mapping1, fieldMapping2 = field_mapping2, schedule = schedule, parentId = parent_id, notifications = notifications, table1 = table1, table2 = table2, outputTable = output_table, maxMatches = max_matches, threshold = threshold)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get a Data Unification Enhancement
-#' @param id integer required. 
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for the enhancement.}
-#' \item{name}{string, The name of the enhancement job.}
-#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
-#' \item{createdAt}{string, The time this enhancement was created.}
-#' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{list, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }}
-#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{list, A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }}
-#' \item{runningAs}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{fieldMapping1}{list, The column mapping for Table 1. See /enhancements/field_mapping for list of valid fields.}
-#' \item{table1}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{fieldMapping2}{list, The column mapping for Table 2. See /enhancements/field_mapping for list of valid fields.}
-#' \item{table2}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{outputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{maxMatches}{integer, The maximum number of matches per record in Table 1 to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
-#' @export
-enhancements_get_data_unification <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Replace all attributes of this Data Unification Enhancement
-#' @param id integer required. The ID for the enhancement.
-#' @param name string required. The name of the enhancement job.
-#' @param field_mapping1 list required. The column mapping for Table 1. See /enhancements/field_mapping for list of valid fields.
-#' @param field_mapping2 list required. The column mapping for Table 2. See /enhancements/field_mapping for list of valid fields.
-#' @param schedule list optional. A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }
-#' @param parent_id integer optional. Parent ID that triggers this enhancement.
-#' @param notifications list optional. A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }
-#' @param table1 list optional. A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }
-#' @param table2 list optional. A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }
-#' @param output_table list optional. A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }
-#' @param max_matches integer optional. The maximum number of matches per record in Table 1 to return. Must be between 0 and 10. 0 returns all matches.
-#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for the enhancement.}
-#' \item{name}{string, The name of the enhancement job.}
-#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
-#' \item{createdAt}{string, The time this enhancement was created.}
-#' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{list, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }}
-#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{list, A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }}
-#' \item{runningAs}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{fieldMapping1}{list, The column mapping for Table 1. See /enhancements/field_mapping for list of valid fields.}
-#' \item{table1}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{fieldMapping2}{list, The column mapping for Table 2. See /enhancements/field_mapping for list of valid fields.}
-#' \item{table2}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{outputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{maxMatches}{integer, The maximum number of matches per record in Table 1 to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
-#' @export
-enhancements_put_data_unification <- function(id, name, field_mapping1, field_mapping2, schedule = NULL, parent_id = NULL, notifications = NULL, table1 = NULL, table2 = NULL, output_table = NULL, max_matches = NULL, threshold = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(name = name, fieldMapping1 = field_mapping1, fieldMapping2 = field_mapping2, schedule = schedule, parentId = parent_id, notifications = notifications, table1 = table1, table2 = table2, outputTable = output_table, maxMatches = max_matches, threshold = threshold)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Update some attributes of this Data Unification Enhancement
-#' @param id integer required. The ID for the enhancement.
-#' @param name string optional. The name of the enhancement job.
-#' @param schedule list optional. A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }
-#' @param parent_id integer optional. Parent ID that triggers this enhancement.
-#' @param notifications list optional. A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }
-#' @param field_mapping1 list optional. The column mapping for Table 1. See /enhancements/field_mapping for list of valid fields.
-#' @param table1 list optional. A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }
-#' @param field_mapping2 list optional. The column mapping for Table 2. See /enhancements/field_mapping for list of valid fields.
-#' @param table2 list optional. A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }
-#' @param output_table list optional. A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }
-#' @param max_matches integer optional. The maximum number of matches per record in Table 1 to return. Must be between 0 and 10. 0 returns all matches.
-#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for the enhancement.}
-#' \item{name}{string, The name of the enhancement job.}
-#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
-#' \item{createdAt}{string, The time this enhancement was created.}
-#' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{list, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }}
-#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{list, A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }}
-#' \item{runningAs}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{fieldMapping1}{list, The column mapping for Table 1. See /enhancements/field_mapping for list of valid fields.}
-#' \item{table1}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{fieldMapping2}{list, The column mapping for Table 2. See /enhancements/field_mapping for list of valid fields.}
-#' \item{table2}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{outputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{maxMatches}{integer, The maximum number of matches per record in Table 1 to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
-#' @export
-enhancements_patch_data_unification <- function(id, name = NULL, schedule = NULL, parent_id = NULL, notifications = NULL, field_mapping1 = NULL, table1 = NULL, field_mapping2 = NULL, table2 = NULL, output_table = NULL, max_matches = NULL, threshold = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(name = name, schedule = schedule, parentId = parent_id, notifications = notifications, fieldMapping1 = field_mapping1, table1 = table1, fieldMapping2 = field_mapping2, table2 = table2, outputTable = output_table, maxMatches = max_matches, threshold = threshold)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Start a run
-#' @param id integer required. The ID of the data_unification.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the run.}
-#' \item{dataUnificationId}{integer, The ID of the data_unification.}
-#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{startedAt}{string, The time the last run started at.}
-#' \item{finishedAt}{string, The time the last run completed.}
-#' \item{error}{string, The error, if any, returned by the run.}
-#' @export
-enhancements_post_data_unification_runs <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}/runs"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List runs for the given data_unification
-#' @param id integer required. The ID of the data_unification.
-#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID of the run.}
-#' \item{dataUnificationId}{integer, The ID of the data_unification.}
-#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{startedAt}{string, The time the last run started at.}
-#' \item{finishedAt}{string, The time the last run completed.}
-#' \item{error}{string, The error, if any, returned by the run.}
-#' @export
-enhancements_list_data_unification_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}/runs"
-  path_params  <- list(id = id)
-  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Check status of a run
-#' @param id integer required. The ID of the data_unification.
-#' @param run_id integer required. The ID of the run.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the run.}
-#' \item{dataUnificationId}{integer, The ID of the data_unification.}
-#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{startedAt}{string, The time the last run started at.}
-#' \item{finishedAt}{string, The time the last run completed.}
-#' \item{error}{string, The error, if any, returned by the run.}
-#' @export
-enhancements_get_data_unification_runs <- function(id, run_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Cancel a run
-#' @param id integer required. The ID of the data_unification.
-#' @param run_id integer required. The ID of the run.
-#' 
-#' @return  An empty HTTP response
-#' @export
-enhancements_delete_data_unification_runs <- function(id, run_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get the logs for a run
-#' @param id integer required. The ID of the data_unification.
-#' @param run_id integer required. The ID of the run.
-#' @param last_id integer optional. The ID of the last log message received. Log entries with this ID value or lower will be omitted.Logs are sorted by ID if this value is provided, and are otherwise sorted by createdAt.
-#' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID of the log.}
-#' \item{createdAt}{string, The time the log was created.}
-#' \item{message}{string, The log message.}
-#' \item{level}{string, The level of the log. One of unknown,fatal,error,warn,info,debug.}
-#' @export
-enhancements_list_data_unification_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}/runs/{run_id}/logs"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list(last_id = last_id, limit = limit)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Cancel a run
-#' @param id integer required. The ID of the job.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the run.}
-#' \item{state}{string, The state of the run, one of 'queued', 'running' or 'cancelled'.}
-#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' @export
-enhancements_post_data_unification_cancel <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}/cancel"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List the outputs for a run
-#' @param id integer required. The ID of the job.
-#' @param run_id integer required. The ID of the run.
-#' @param limit integer optional. Number of results to return. Defaults to its maximum of 50.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at, id.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, The type of the output. Valid values are File, Table, Report, Project, Credential, or JSONValue}
-#' \item{objectId}{integer, The ID of the output.}
-#' \item{name}{string, The name of the output.}
-#' \item{link}{string, The hypermedia link to the output.}
-#' \item{value}{string, }
-#' @export
-enhancements_list_data_unification_runs_outputs <- function(id, run_id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/data-unification/{id}/runs/{run_id}/outputs"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Create a Table Deduplication Enhancement
-#' @param name string required. The name of the enhancement job.
-#' @param input_field_mapping list required. The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.
-#' @param schedule list optional. A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }
-#' @param parent_id integer optional. Parent ID that triggers this enhancement.
-#' @param notifications list optional. A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }
-#' @param input_table list optional. A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }
-#' @param output_table list optional. A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }
-#' @param max_matches integer optional. The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.
-#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for the enhancement.}
-#' \item{name}{string, The name of the enhancement job.}
-#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
-#' \item{createdAt}{string, The time this enhancement was created.}
-#' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{list, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }}
-#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{list, A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }}
-#' \item{runningAs}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
-#' \item{inputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{outputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
-#' @export
-enhancements_post_table_deduplication <- function(name, input_field_mapping, schedule = NULL, parent_id = NULL, notifications = NULL, input_table = NULL, output_table = NULL, max_matches = NULL, threshold = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication"
-  path_params  <- list()
-  query_params <- list()
-  body_params  <- list(name = name, inputFieldMapping = input_field_mapping, schedule = schedule, parentId = parent_id, notifications = notifications, inputTable = input_table, outputTable = output_table, maxMatches = max_matches, threshold = threshold)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get a Table Deduplication Enhancement
-#' @param id integer required. 
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for the enhancement.}
-#' \item{name}{string, The name of the enhancement job.}
-#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
-#' \item{createdAt}{string, The time this enhancement was created.}
-#' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{list, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }}
-#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{list, A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }}
-#' \item{runningAs}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
-#' \item{inputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{outputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
-#' @export
-enhancements_get_table_deduplication <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Replace all attributes of this Table Deduplication Enhancement
-#' @param id integer required. The ID for the enhancement.
-#' @param name string required. The name of the enhancement job.
-#' @param input_field_mapping list required. The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.
-#' @param schedule list optional. A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }
-#' @param parent_id integer optional. Parent ID that triggers this enhancement.
-#' @param notifications list optional. A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }
-#' @param input_table list optional. A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }
-#' @param output_table list optional. A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }
-#' @param max_matches integer optional. The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.
-#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for the enhancement.}
-#' \item{name}{string, The name of the enhancement job.}
-#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
-#' \item{createdAt}{string, The time this enhancement was created.}
-#' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{list, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }}
-#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{list, A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }}
-#' \item{runningAs}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
-#' \item{inputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{outputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
-#' @export
-enhancements_put_table_deduplication <- function(id, name, input_field_mapping, schedule = NULL, parent_id = NULL, notifications = NULL, input_table = NULL, output_table = NULL, max_matches = NULL, threshold = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(name = name, inputFieldMapping = input_field_mapping, schedule = schedule, parentId = parent_id, notifications = notifications, inputTable = input_table, outputTable = output_table, maxMatches = max_matches, threshold = threshold)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Update some attributes of this Table Deduplication Enhancement
-#' @param id integer required. The ID for the enhancement.
-#' @param name string optional. The name of the enhancement job.
-#' @param schedule list optional. A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }
-#' @param parent_id integer optional. Parent ID that triggers this enhancement.
-#' @param notifications list optional. A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }
-#' @param input_field_mapping list optional. The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.
-#' @param input_table list optional. A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }
-#' @param output_table list optional. A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }
-#' @param max_matches integer optional. The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.
-#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for the enhancement.}
-#' \item{name}{string, The name of the enhancement job.}
-#' \item{type}{string, The type of the enhancement (e.g CASS-NCOA)}
-#' \item{createdAt}{string, The time this enhancement was created.}
-#' \item{updatedAt}{string, The time the enhancement was last updated.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{state}{string, The status of the enhancement's last run}
-#' \item{schedule}{list, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }}
-#' \item{parentId}{integer, Parent ID that triggers this enhancement.}
-#' \item{notifications}{list, A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }}
-#' \item{runningAs}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
-#' \item{inputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{outputTable}{list, A list containing the following elements: 
-#' \itemize{
-#' \item databaseName string, The Redshift database name for the table.
-#' \item schema string, The schema name for the table.
-#' \item table string, The table name.
-#' }}
-#' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
-#' @export
-enhancements_patch_table_deduplication <- function(id, name = NULL, schedule = NULL, parent_id = NULL, notifications = NULL, input_field_mapping = NULL, input_table = NULL, output_table = NULL, max_matches = NULL, threshold = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(name = name, schedule = schedule, parentId = parent_id, notifications = notifications, inputFieldMapping = input_field_mapping, inputTable = input_table, outputTable = output_table, maxMatches = max_matches, threshold = threshold)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Start a run
-#' @param id integer required. The ID of the table_deduplication.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the run.}
-#' \item{tableDeduplicationId}{integer, The ID of the table_deduplication.}
-#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{startedAt}{string, The time the last run started at.}
-#' \item{finishedAt}{string, The time the last run completed.}
-#' \item{error}{string, The error, if any, returned by the run.}
-#' @export
-enhancements_post_table_deduplication_runs <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}/runs"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List runs for the given table_deduplication
-#' @param id integer required. The ID of the table_deduplication.
-#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID of the run.}
-#' \item{tableDeduplicationId}{integer, The ID of the table_deduplication.}
-#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{startedAt}{string, The time the last run started at.}
-#' \item{finishedAt}{string, The time the last run completed.}
-#' \item{error}{string, The error, if any, returned by the run.}
-#' @export
-enhancements_list_table_deduplication_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}/runs"
-  path_params  <- list(id = id)
-  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Check status of a run
-#' @param id integer required. The ID of the table_deduplication.
-#' @param run_id integer required. The ID of the run.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the run.}
-#' \item{tableDeduplicationId}{integer, The ID of the table_deduplication.}
-#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{startedAt}{string, The time the last run started at.}
-#' \item{finishedAt}{string, The time the last run completed.}
-#' \item{error}{string, The error, if any, returned by the run.}
-#' @export
-enhancements_get_table_deduplication_runs <- function(id, run_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Cancel a run
-#' @param id integer required. The ID of the table_deduplication.
-#' @param run_id integer required. The ID of the run.
-#' 
-#' @return  An empty HTTP response
-#' @export
-enhancements_delete_table_deduplication_runs <- function(id, run_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get the logs for a run
-#' @param id integer required. The ID of the table_deduplication.
-#' @param run_id integer required. The ID of the run.
-#' @param last_id integer optional. The ID of the last log message received. Log entries with this ID value or lower will be omitted.Logs are sorted by ID if this value is provided, and are otherwise sorted by createdAt.
-#' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID of the log.}
-#' \item{createdAt}{string, The time the log was created.}
-#' \item{message}{string, The log message.}
-#' \item{level}{string, The level of the log. One of unknown,fatal,error,warn,info,debug.}
-#' @export
-enhancements_list_table_deduplication_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}/runs/{run_id}/logs"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list(last_id = last_id, limit = limit)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Cancel a run
-#' @param id integer required. The ID of the job.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the run.}
-#' \item{state}{string, The state of the run, one of 'queued', 'running' or 'cancelled'.}
-#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' @export
-enhancements_post_table_deduplication_cancel <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}/cancel"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List the outputs for a run
-#' @param id integer required. The ID of the job.
-#' @param run_id integer required. The ID of the run.
-#' @param limit integer optional. Number of results to return. Defaults to its maximum of 50.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at, id.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, The type of the output. Valid values are File, Table, Report, Project, Credential, or JSONValue}
-#' \item{objectId}{integer, The ID of the output.}
-#' \item{name}{string, The name of the output.}
-#' \item{link}{string, The hypermedia link to the output.}
-#' \item{value}{string, }
-#' @export
-enhancements_list_table_deduplication_runs_outputs <- function(id, run_id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/table-deduplication/{id}/runs/{run_id}/outputs"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List users and groups permissioned on this object
 #' @param id integer required. The ID of the resource that is shared.
 #' 
@@ -6853,11 +5786,22 @@ enhancements_delete_cass_ncoa_projects <- function(id, project_id) {
 #' }}
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name of the source table.
+#' \item table string, The name of the source table.
+#' \item remoteHostId integer, The ID of the database host for the table.
+#' \item credentialId integer, The id of the credentials to be used when performing the enhancement.
+#' \item multipartKey array, The source table primary key.
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
-#' \item databaseTable object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The schema name for the output data.
+#' \item table string, The table name for the output data.
+#' }
 #' }}
 #' \item{columnMapping}{list, A list containing the following elements: 
 #' \itemize{
@@ -7287,6 +6231,313 @@ exports_list <- function(type = NULL, author = NULL, status = NULL, hidden = NUL
  }
 
 
+#' Create a CSV Export
+#' @param source list required. A list containing the following elements: 
+#' \itemize{
+#' \item sql string, The SQL query for this Csv Export job
+#' \item remoteHostId integer, The ID of the destination database host.
+#' \item credentialId integer, The ID of the credentials for the destination database.
+#' }
+#' @param destination list required. A list containing the following elements: 
+#' \itemize{
+#' \item filenamePrefix string, The prefix of the name of the file returned to the user.
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+#' \item storageHostId integer, The ID of the destination storage host.
+#' \item credentialId integer, The ID of the credentials for the destination storage host.
+#' \item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+#' }
+#' }
+#' @param name string optional. The name of this Csv Export job.
+#' @param include_header boolean optional. A boolean value indicating whether or not the header should be included. Defaults to true.
+#' @param compression string optional. The compression of the output file. Valid arguments are "gzip" and "none". Defaults to "gzip".
+#' @param column_delimiter string optional. The column delimiter for the output file. Valid arguments are "comma", "tab", and "pipe". Defaults to "comma".
+#' @param hidden boolean optional. A boolean value indicating whether or not this request should be hidden. Defaults to false.
+#' @param force_multifile boolean optional. Whether or not the csv should be split into multiple files. Default: false
+#' @param max_file_size integer optional. The max file size, in MB, created files will be. Only available when force_multifile is true. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this Csv Export job.}
+#' \item{name}{string, The name of this Csv Export job.}
+#' \item{source}{list, A list containing the following elements: 
+#' \itemize{
+#' \item sql string, The SQL query for this Csv Export job
+#' \item remoteHostId integer, The ID of the destination database host.
+#' \item credentialId integer, The ID of the credentials for the destination database.
+#' }}
+#' \item{destination}{list, A list containing the following elements: 
+#' \itemize{
+#' \item filenamePrefix string, The prefix of the name of the file returned to the user.
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+#' \item storageHostId integer, The ID of the destination storage host.
+#' \item credentialId integer, The ID of the credentials for the destination storage host.
+#' \item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+#' }
+#' }}
+#' \item{includeHeader}{boolean, A boolean value indicating whether or not the header should be included. Defaults to true.}
+#' \item{compression}{string, The compression of the output file. Valid arguments are "gzip" and "none". Defaults to "gzip".}
+#' \item{columnDelimiter}{string, The column delimiter for the output file. Valid arguments are "comma", "tab", and "pipe". Defaults to "comma".}
+#' \item{hidden}{boolean, A boolean value indicating whether or not this request should be hidden. Defaults to false.}
+#' \item{forceMultifile}{boolean, Whether or not the csv should be split into multiple files. Default: false}
+#' \item{maxFileSize}{integer, The max file size, in MB, created files will be. Only available when force_multifile is true. }
+#' @export
+exports_post_files_csv <- function(source, destination, name = NULL, include_header = NULL, compression = NULL, column_delimiter = NULL, hidden = NULL, force_multifile = NULL, max_file_size = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/exports/files/csv"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(source = source, destination = destination, name = name, includeHeader = include_header, compression = compression, columnDelimiter = column_delimiter, hidden = hidden, forceMultifile = force_multifile, maxFileSize = max_file_size)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get a CSV Export
+#' @param id integer required. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this Csv Export job.}
+#' \item{name}{string, The name of this Csv Export job.}
+#' \item{source}{list, A list containing the following elements: 
+#' \itemize{
+#' \item sql string, The SQL query for this Csv Export job
+#' \item remoteHostId integer, The ID of the destination database host.
+#' \item credentialId integer, The ID of the credentials for the destination database.
+#' }}
+#' \item{destination}{list, A list containing the following elements: 
+#' \itemize{
+#' \item filenamePrefix string, The prefix of the name of the file returned to the user.
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+#' \item storageHostId integer, The ID of the destination storage host.
+#' \item credentialId integer, The ID of the credentials for the destination storage host.
+#' \item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+#' }
+#' }}
+#' \item{includeHeader}{boolean, A boolean value indicating whether or not the header should be included. Defaults to true.}
+#' \item{compression}{string, The compression of the output file. Valid arguments are "gzip" and "none". Defaults to "gzip".}
+#' \item{columnDelimiter}{string, The column delimiter for the output file. Valid arguments are "comma", "tab", and "pipe". Defaults to "comma".}
+#' \item{hidden}{boolean, A boolean value indicating whether or not this request should be hidden. Defaults to false.}
+#' \item{forceMultifile}{boolean, Whether or not the csv should be split into multiple files. Default: false}
+#' \item{maxFileSize}{integer, The max file size, in MB, created files will be. Only available when force_multifile is true. }
+#' @export
+exports_get_files_csv <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/exports/files/csv/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Replace all attributes of this CSV Export
+#' @param id integer required. The ID of this Csv Export job.
+#' @param source list required. A list containing the following elements: 
+#' \itemize{
+#' \item sql string, The SQL query for this Csv Export job
+#' \item remoteHostId integer, The ID of the destination database host.
+#' \item credentialId integer, The ID of the credentials for the destination database.
+#' }
+#' @param destination list required. A list containing the following elements: 
+#' \itemize{
+#' \item filenamePrefix string, The prefix of the name of the file returned to the user.
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+#' \item storageHostId integer, The ID of the destination storage host.
+#' \item credentialId integer, The ID of the credentials for the destination storage host.
+#' \item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+#' }
+#' }
+#' @param name string optional. The name of this Csv Export job.
+#' @param include_header boolean optional. A boolean value indicating whether or not the header should be included. Defaults to true.
+#' @param compression string optional. The compression of the output file. Valid arguments are "gzip" and "none". Defaults to "gzip".
+#' @param column_delimiter string optional. The column delimiter for the output file. Valid arguments are "comma", "tab", and "pipe". Defaults to "comma".
+#' @param hidden boolean optional. A boolean value indicating whether or not this request should be hidden. Defaults to false.
+#' @param force_multifile boolean optional. Whether or not the csv should be split into multiple files. Default: false
+#' @param max_file_size integer optional. The max file size, in MB, created files will be. Only available when force_multifile is true. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this Csv Export job.}
+#' \item{name}{string, The name of this Csv Export job.}
+#' \item{source}{list, A list containing the following elements: 
+#' \itemize{
+#' \item sql string, The SQL query for this Csv Export job
+#' \item remoteHostId integer, The ID of the destination database host.
+#' \item credentialId integer, The ID of the credentials for the destination database.
+#' }}
+#' \item{destination}{list, A list containing the following elements: 
+#' \itemize{
+#' \item filenamePrefix string, The prefix of the name of the file returned to the user.
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+#' \item storageHostId integer, The ID of the destination storage host.
+#' \item credentialId integer, The ID of the credentials for the destination storage host.
+#' \item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+#' }
+#' }}
+#' \item{includeHeader}{boolean, A boolean value indicating whether or not the header should be included. Defaults to true.}
+#' \item{compression}{string, The compression of the output file. Valid arguments are "gzip" and "none". Defaults to "gzip".}
+#' \item{columnDelimiter}{string, The column delimiter for the output file. Valid arguments are "comma", "tab", and "pipe". Defaults to "comma".}
+#' \item{hidden}{boolean, A boolean value indicating whether or not this request should be hidden. Defaults to false.}
+#' \item{forceMultifile}{boolean, Whether or not the csv should be split into multiple files. Default: false}
+#' \item{maxFileSize}{integer, The max file size, in MB, created files will be. Only available when force_multifile is true. }
+#' @export
+exports_put_files_csv <- function(id, source, destination, name = NULL, include_header = NULL, compression = NULL, column_delimiter = NULL, hidden = NULL, force_multifile = NULL, max_file_size = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/exports/files/csv/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(source = source, destination = destination, name = name, includeHeader = include_header, compression = compression, columnDelimiter = column_delimiter, hidden = hidden, forceMultifile = force_multifile, maxFileSize = max_file_size)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update some attributes of this CSV Export
+#' @param id integer required. The ID of this Csv Export job.
+#' @param name string optional. The name of this Csv Export job.
+#' @param source list optional. A list containing the following elements: 
+#' \itemize{
+#' \item sql string, The SQL query for this Csv Export job
+#' \item remoteHostId integer, The ID of the destination database host.
+#' \item credentialId integer, The ID of the credentials for the destination database.
+#' }
+#' @param destination list optional. A list containing the following elements: 
+#' \itemize{
+#' \item filenamePrefix string, The prefix of the name of the file returned to the user.
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+#' \item storageHostId integer, The ID of the destination storage host.
+#' \item credentialId integer, The ID of the credentials for the destination storage host.
+#' \item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+#' }
+#' }
+#' @param include_header boolean optional. A boolean value indicating whether or not the header should be included. Defaults to true.
+#' @param compression string optional. The compression of the output file. Valid arguments are "gzip" and "none". Defaults to "gzip".
+#' @param column_delimiter string optional. The column delimiter for the output file. Valid arguments are "comma", "tab", and "pipe". Defaults to "comma".
+#' @param hidden boolean optional. A boolean value indicating whether or not this request should be hidden. Defaults to false.
+#' @param force_multifile boolean optional. Whether or not the csv should be split into multiple files. Default: false
+#' @param max_file_size integer optional. The max file size, in MB, created files will be. Only available when force_multifile is true. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this Csv Export job.}
+#' \item{name}{string, The name of this Csv Export job.}
+#' \item{source}{list, A list containing the following elements: 
+#' \itemize{
+#' \item sql string, The SQL query for this Csv Export job
+#' \item remoteHostId integer, The ID of the destination database host.
+#' \item credentialId integer, The ID of the credentials for the destination database.
+#' }}
+#' \item{destination}{list, A list containing the following elements: 
+#' \itemize{
+#' \item filenamePrefix string, The prefix of the name of the file returned to the user.
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+#' \item storageHostId integer, The ID of the destination storage host.
+#' \item credentialId integer, The ID of the credentials for the destination storage host.
+#' \item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+#' }
+#' }}
+#' \item{includeHeader}{boolean, A boolean value indicating whether or not the header should be included. Defaults to true.}
+#' \item{compression}{string, The compression of the output file. Valid arguments are "gzip" and "none". Defaults to "gzip".}
+#' \item{columnDelimiter}{string, The column delimiter for the output file. Valid arguments are "comma", "tab", and "pipe". Defaults to "comma".}
+#' \item{hidden}{boolean, A boolean value indicating whether or not this request should be hidden. Defaults to false.}
+#' \item{forceMultifile}{boolean, Whether or not the csv should be split into multiple files. Default: false}
+#' \item{maxFileSize}{integer, The max file size, in MB, created files will be. Only available when force_multifile is true. }
+#' @export
+exports_patch_files_csv <- function(id, name = NULL, source = NULL, destination = NULL, include_header = NULL, compression = NULL, column_delimiter = NULL, hidden = NULL, force_multifile = NULL, max_file_size = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/exports/files/csv/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, source = source, destination = destination, includeHeader = include_header, compression = compression, columnDelimiter = column_delimiter, hidden = hidden, forceMultifile = force_multifile, maxFileSize = max_file_size)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update the archive status of this object
+#' @param id integer required. The ID of the object.
+#' @param status boolean required. The desired archived status of the object.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this Csv Export job.}
+#' \item{name}{string, The name of this Csv Export job.}
+#' \item{source}{list, A list containing the following elements: 
+#' \itemize{
+#' \item sql string, The SQL query for this Csv Export job
+#' \item remoteHostId integer, The ID of the destination database host.
+#' \item credentialId integer, The ID of the credentials for the destination database.
+#' }}
+#' \item{destination}{list, A list containing the following elements: 
+#' \itemize{
+#' \item filenamePrefix string, The prefix of the name of the file returned to the user.
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item filePath string, The path within the bucket where the exported file will be saved. E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"
+#' \item storageHostId integer, The ID of the destination storage host.
+#' \item credentialId integer, The ID of the credentials for the destination storage host.
+#' \item existingFiles string, Notifies the job of what to do in the case that the exported file already exists at the provided path.One of: fail, append, overwrite. Default: fail. If "append" is specified,the new file will always be added to the provided path. If "overwrite" is specifiedall existing files at the provided path will be deleted and the new file will be added.By default, or if "fail" is specified, the export will fail if a file exists at the provided path.
+#' }
+#' }}
+#' \item{includeHeader}{boolean, A boolean value indicating whether or not the header should be included. Defaults to true.}
+#' \item{compression}{string, The compression of the output file. Valid arguments are "gzip" and "none". Defaults to "gzip".}
+#' \item{columnDelimiter}{string, The column delimiter for the output file. Valid arguments are "comma", "tab", and "pipe". Defaults to "comma".}
+#' \item{hidden}{boolean, A boolean value indicating whether or not this request should be hidden. Defaults to false.}
+#' \item{forceMultifile}{boolean, Whether or not the csv should be split into multiple files. Default: false}
+#' \item{maxFileSize}{integer, The max file size, in MB, created files will be. Only available when force_multifile is true. }
+#' @export
+exports_put_files_csv_archive <- function(id, status) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/exports/files/csv/{id}/archive"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(status = status)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List feature flags
 #' 
 #' @return  An array containing the following fields:
@@ -7297,6 +6548,7 @@ exports_list <- function(type = NULL, author = NULL, status = NULL, hidden = NUL
 #' \item{jira}{string, }
 #' \item{added}{string, }
 #' \item{groupCount}{integer, }
+#' \item{organizationCount}{integer, }
 #' \item{percentage}{integer, The target percentage of users who should have this feature flag enabled.}
 #' \item{activeForMe}{boolean, Whether the feature flag is active for the current user.}
 #' @export
@@ -7322,6 +6574,12 @@ feature_flags_list <- function() {
 #' 
 #' @return  A list containing the following elements:
 #' \item{name}{string, The name of the feature flag}
+#' \item{organizations}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, Organization ID
+#' \item name string, Organization name
+#' \item slug string, Organization slug
+#' }}
 #' \item{groups}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, Group ID
@@ -7365,6 +6623,7 @@ feature_flags_get <- function(name) {
 #' \item{jira}{string, }
 #' \item{added}{string, }
 #' \item{groupCount}{integer, }
+#' \item{organizationCount}{integer, }
 #' \item{percentage}{integer, The target percentage of users who should have this feature flag enabled.}
 #' \item{activeForMe}{boolean, Whether the feature flag is active for the current user.}
 #' @export
@@ -7420,6 +6679,7 @@ feature_flags_delete_users <- function(flag_name, user_id) {
 #' \item{jira}{string, }
 #' \item{added}{string, }
 #' \item{groupCount}{integer, }
+#' \item{organizationCount}{integer, }
 #' \item{percentage}{integer, The target percentage of users who should have this feature flag enabled.}
 #' \item{activeForMe}{boolean, Whether the feature flag is active for the current user.}
 #' @export
@@ -7854,6 +7114,98 @@ files_get <- function(id, link_expires_at = NULL, inline = NULL) {
  }
 
 
+#' Update details about a file
+#' @param id integer required. The ID of the file.
+#' @param name string required. The file name. The extension must match the previous extension.
+#' @param expires_at string required. The date and time the file will expire. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the file.}
+#' \item{name}{string, The file name.}
+#' \item{createdAt}{string, The date and time the file was created.}
+#' \item{fileSize}{integer, The file size.}
+#' \item{expiresAt}{string, The date and time the file will expire. If not specified, the file will expire in 30 days. To keep a file indefinitely, specify null.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{downloadUrl}{string, A JSON string containing information about the URL of the file.}
+#' \item{fileUrl}{string, The URL that may be used to download the file.}
+#' \item{detectedInfo}{list, A list containing the following elements: 
+#' \itemize{
+#' \item includeHeader boolean, A boolean value indicating whether or not the first row of the file is a header row.
+#' \item columnDelimiter string, The column delimiter for the file. One of "comma", "tab", or "pipe".
+#' \item compression string, The type of compression of the file. One of "gzip", or "none".
+#' \item tableColumns array, An array of hashes corresponding to the columns in the file. Each hash should have keys for column "name" and "sql_type"
+#' }}
+#' @export
+files_put <- function(id, name, expires_at) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/files/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, expiresAt = expires_at)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update details about a file
+#' @param id integer required. The ID of the file.
+#' @param name string optional. The file name. The extension must match the previous extension.
+#' @param expires_at string optional. The date and time the file will expire. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the file.}
+#' \item{name}{string, The file name.}
+#' \item{createdAt}{string, The date and time the file was created.}
+#' \item{fileSize}{integer, The file size.}
+#' \item{expiresAt}{string, The date and time the file will expire. If not specified, the file will expire in 30 days. To keep a file indefinitely, specify null.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{downloadUrl}{string, A JSON string containing information about the URL of the file.}
+#' \item{fileUrl}{string, The URL that may be used to download the file.}
+#' \item{detectedInfo}{list, A list containing the following elements: 
+#' \itemize{
+#' \item includeHeader boolean, A boolean value indicating whether or not the first row of the file is a header row.
+#' \item columnDelimiter string, The column delimiter for the file. One of "comma", "tab", or "pipe".
+#' \item compression string, The type of compression of the file. One of "gzip", or "none".
+#' \item tableColumns array, An array of hashes corresponding to the columns in the file. Each hash should have keys for column "name" and "sql_type"
+#' }}
+#' @export
+files_patch <- function(id, name = NULL, expires_at = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/files/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, expiresAt = expires_at)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Create a Preprocess CSV
 #' @param file_id integer required. The ID of the file.
 #' @param in_place boolean optional. If true, the file is cleaned in place. If false, a new file ID is created. Defaults to true.
@@ -8194,6 +7546,15 @@ groups_list <- function(query = NULL, permission = NULL, include_members = NULL,
 #' Create a Group
 #' @param name string required. This group's name.
 #' @param description string optional. The description of the group.
+#' @param slug string optional. The slug for this group.
+#' @param organization_id integer optional. The ID of the organization this group belongs to.
+#' @param must_agree_to_eula boolean optional. Whether or not members of this group must sign the EULA.
+#' @param default_otp_required_for_login boolean optional. The two factor authentication requirement for this group.
+#' @param role_ids array optional. An array of ids of all the roles this group has.
+#' @param default_time_zone string optional. The default time zone of this group.
+#' @param default_jobs_label string optional. The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
+#' @param default_notebooks_label string optional. The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
+#' @param default_services_label string optional. The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this group.}
@@ -8204,6 +7565,13 @@ groups_list <- function(query = NULL, permission = NULL, include_members = NULL,
 #' \item{organizationId}{integer, The ID of the organization this group belongs to.}
 #' \item{organizationName}{string, The name of the organization this group belongs to.}
 #' \item{memberCount}{integer, The total number of members in this group.}
+#' \item{mustAgreeToEula}{boolean, Whether or not members of this group must sign the EULA.}
+#' \item{defaultOtpRequiredForLogin}{boolean, The two factor authentication requirement for this group.}
+#' \item{roleIds}{array, An array of ids of all the roles this group has.}
+#' \item{defaultTimeZone}{string, The default time zone of this group.}
+#' \item{defaultJobsLabel}{string, The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultServicesLabel}{string, The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
 #' \item{members}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -8213,13 +7581,13 @@ groups_list <- function(query = NULL, permission = NULL, include_members = NULL,
 #' \item online boolean, Whether this user is online.
 #' }}
 #' @export
-groups_post <- function(name, description = NULL) {
+groups_post <- function(name, description = NULL, slug = NULL, organization_id = NULL, must_agree_to_eula = NULL, default_otp_required_for_login = NULL, role_ids = NULL, default_time_zone = NULL, default_jobs_label = NULL, default_notebooks_label = NULL, default_services_label = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/groups/"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, description = description)
+  body_params  <- list(name = name, description = description, slug = slug, organizationId = organization_id, mustAgreeToEula = must_agree_to_eula, defaultOtpRequiredForLogin = default_otp_required_for_login, roleIds = role_ids, defaultTimeZone = default_time_zone, defaultJobsLabel = default_jobs_label, defaultNotebooksLabel = default_notebooks_label, defaultServicesLabel = default_services_label)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -8242,6 +7610,13 @@ groups_post <- function(name, description = NULL) {
 #' \item{organizationId}{integer, The ID of the organization this group belongs to.}
 #' \item{organizationName}{string, The name of the organization this group belongs to.}
 #' \item{memberCount}{integer, The total number of members in this group.}
+#' \item{mustAgreeToEula}{boolean, Whether or not members of this group must sign the EULA.}
+#' \item{defaultOtpRequiredForLogin}{boolean, The two factor authentication requirement for this group.}
+#' \item{roleIds}{array, An array of ids of all the roles this group has.}
+#' \item{defaultTimeZone}{string, The default time zone of this group.}
+#' \item{defaultJobsLabel}{string, The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultServicesLabel}{string, The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
 #' \item{members}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -8272,6 +7647,15 @@ groups_get <- function(id) {
 #' @param id integer required. The ID of this group.
 #' @param name string required. This group's name.
 #' @param description string optional. The description of the group.
+#' @param slug string optional. The slug for this group.
+#' @param organization_id integer optional. The ID of the organization this group belongs to.
+#' @param must_agree_to_eula boolean optional. Whether or not members of this group must sign the EULA.
+#' @param default_otp_required_for_login boolean optional. The two factor authentication requirement for this group.
+#' @param role_ids array optional. An array of ids of all the roles this group has.
+#' @param default_time_zone string optional. The default time zone of this group.
+#' @param default_jobs_label string optional. The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
+#' @param default_notebooks_label string optional. The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
+#' @param default_services_label string optional. The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this group.}
@@ -8282,6 +7666,13 @@ groups_get <- function(id) {
 #' \item{organizationId}{integer, The ID of the organization this group belongs to.}
 #' \item{organizationName}{string, The name of the organization this group belongs to.}
 #' \item{memberCount}{integer, The total number of members in this group.}
+#' \item{mustAgreeToEula}{boolean, Whether or not members of this group must sign the EULA.}
+#' \item{defaultOtpRequiredForLogin}{boolean, The two factor authentication requirement for this group.}
+#' \item{roleIds}{array, An array of ids of all the roles this group has.}
+#' \item{defaultTimeZone}{string, The default time zone of this group.}
+#' \item{defaultJobsLabel}{string, The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultServicesLabel}{string, The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
 #' \item{members}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -8291,13 +7682,13 @@ groups_get <- function(id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' @export
-groups_put <- function(id, name, description = NULL) {
+groups_put <- function(id, name, description = NULL, slug = NULL, organization_id = NULL, must_agree_to_eula = NULL, default_otp_required_for_login = NULL, role_ids = NULL, default_time_zone = NULL, default_jobs_label = NULL, default_notebooks_label = NULL, default_services_label = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/groups/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, description = description)
+  body_params  <- list(name = name, description = description, slug = slug, organizationId = organization_id, mustAgreeToEula = must_agree_to_eula, defaultOtpRequiredForLogin = default_otp_required_for_login, roleIds = role_ids, defaultTimeZone = default_time_zone, defaultJobsLabel = default_jobs_label, defaultNotebooksLabel = default_notebooks_label, defaultServicesLabel = default_services_label)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -8312,6 +7703,15 @@ groups_put <- function(id, name, description = NULL) {
 #' @param id integer required. The ID of this group.
 #' @param name string optional. This group's name.
 #' @param description string optional. The description of the group.
+#' @param slug string optional. The slug for this group.
+#' @param organization_id integer optional. The ID of the organization this group belongs to.
+#' @param must_agree_to_eula boolean optional. Whether or not members of this group must sign the EULA.
+#' @param default_otp_required_for_login boolean optional. The two factor authentication requirement for this group.
+#' @param role_ids array optional. An array of ids of all the roles this group has.
+#' @param default_time_zone string optional. The default time zone of this group.
+#' @param default_jobs_label string optional. The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
+#' @param default_notebooks_label string optional. The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
+#' @param default_services_label string optional. The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this group.}
@@ -8322,6 +7722,13 @@ groups_put <- function(id, name, description = NULL) {
 #' \item{organizationId}{integer, The ID of the organization this group belongs to.}
 #' \item{organizationName}{string, The name of the organization this group belongs to.}
 #' \item{memberCount}{integer, The total number of members in this group.}
+#' \item{mustAgreeToEula}{boolean, Whether or not members of this group must sign the EULA.}
+#' \item{defaultOtpRequiredForLogin}{boolean, The two factor authentication requirement for this group.}
+#' \item{roleIds}{array, An array of ids of all the roles this group has.}
+#' \item{defaultTimeZone}{string, The default time zone of this group.}
+#' \item{defaultJobsLabel}{string, The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultServicesLabel}{string, The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
 #' \item{members}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -8331,13 +7738,13 @@ groups_put <- function(id, name, description = NULL) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' @export
-groups_patch <- function(id, name = NULL, description = NULL) {
+groups_patch <- function(id, name = NULL, description = NULL, slug = NULL, organization_id = NULL, must_agree_to_eula = NULL, default_otp_required_for_login = NULL, role_ids = NULL, default_time_zone = NULL, default_jobs_label = NULL, default_notebooks_label = NULL, default_services_label = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/groups/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, description = description)
+  body_params  <- list(name = name, description = description, slug = slug, organizationId = organization_id, mustAgreeToEula = must_agree_to_eula, defaultOtpRequiredForLogin = default_otp_required_for_login, roleIds = role_ids, defaultTimeZone = default_time_zone, defaultJobsLabel = default_jobs_label, defaultNotebooksLabel = default_notebooks_label, defaultServicesLabel = default_services_label)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -8554,6 +7961,13 @@ groups_delete_shares_groups <- function(id, group_id) {
 #' \item{organizationId}{integer, The ID of the organization this group belongs to.}
 #' \item{organizationName}{string, The name of the organization this group belongs to.}
 #' \item{memberCount}{integer, The total number of members in this group.}
+#' \item{mustAgreeToEula}{boolean, Whether or not members of this group must sign the EULA.}
+#' \item{defaultOtpRequiredForLogin}{boolean, The two factor authentication requirement for this group.}
+#' \item{roleIds}{array, An array of ids of all the roles this group has.}
+#' \item{defaultTimeZone}{string, The default time zone of this group.}
+#' \item{defaultJobsLabel}{string, The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultServicesLabel}{string, The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
 #' \item{members}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -9408,7 +8822,12 @@ imports_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' @param source list required. A list containing the following elements: 
 #' \itemize{
 #' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-#' \item storagePaths object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item storageHostId integer, The ID of the source storage host.
+#' \item credentialId integer, The ID of the credentials for the source storage host.
+#' \item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+#' }
 #' }
 #' @param destination list required. A list containing the following elements: 
 #' \itemize{
@@ -9416,7 +8835,7 @@ imports_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' \item table string, The destination table name.
 #' \item remoteHostId integer, The ID of the destination database host.
 #' \item credentialId integer, The ID of the credentials for the destination database.
-#' \item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' \item primaryKeys array, A list of column(s) which together uniquely identify a row in the destination table.These columns must not contain NULL values. If the import mode is "upsert", this field is required;see the Civis Helpdesk article on "Advanced CSV Imports via the Civis API" for more information.
 #' \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
 #' }
 #' @param first_row_is_header boolean required. A boolean value indicating whether or not the first row of the source file is a header row.
@@ -9431,8 +8850,8 @@ imports_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' \item name string, The column name.
 #' \item sqlType string, The SQL type of the column.
 #' }
-#' @param loosen_types boolean optional. If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.
-#' @param execution string optional. In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.
+#' @param loosen_types boolean optional. If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.
+#' @param execution string optional. In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.
 #' @param redshift_destination_options list optional. A list containing the following elements: 
 #' \itemize{
 #' \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
@@ -9447,7 +8866,12 @@ imports_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-#' \item storagePaths object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item storageHostId integer, The ID of the source storage host.
+#' \item credentialId integer, The ID of the credentials for the source storage host.
+#' \item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
@@ -9455,7 +8879,7 @@ imports_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' \item table string, The destination table name.
 #' \item remoteHostId integer, The ID of the destination database host.
 #' \item credentialId integer, The ID of the credentials for the destination database.
-#' \item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' \item primaryKeys array, A list of column(s) which together uniquely identify a row in the destination table.These columns must not contain NULL values. If the import mode is "upsert", this field is required;see the Civis Helpdesk article on "Advanced CSV Imports via the Civis API" for more information.
 #' \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
 #' }}
 #' \item{firstRowIsHeader}{boolean, A boolean value indicating whether or not the first row of the source file is a header row.}
@@ -9469,8 +8893,8 @@ imports_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' \item name string, The column name.
 #' \item sqlType string, The SQL type of the column.
 #' }}
-#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
-#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
+#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
+#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.}
 #' \item{redshiftDestinationOptions}{list, A list containing the following elements: 
 #' \itemize{
 #' \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
@@ -9505,7 +8929,12 @@ imports_post_files_csv <- function(source, destination, first_row_is_header, nam
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-#' \item storagePaths object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item storageHostId integer, The ID of the source storage host.
+#' \item credentialId integer, The ID of the credentials for the source storage host.
+#' \item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
@@ -9513,7 +8942,7 @@ imports_post_files_csv <- function(source, destination, first_row_is_header, nam
 #' \item table string, The destination table name.
 #' \item remoteHostId integer, The ID of the destination database host.
 #' \item credentialId integer, The ID of the credentials for the destination database.
-#' \item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' \item primaryKeys array, A list of column(s) which together uniquely identify a row in the destination table.These columns must not contain NULL values. If the import mode is "upsert", this field is required;see the Civis Helpdesk article on "Advanced CSV Imports via the Civis API" for more information.
 #' \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
 #' }}
 #' \item{firstRowIsHeader}{boolean, A boolean value indicating whether or not the first row of the source file is a header row.}
@@ -9527,8 +8956,8 @@ imports_post_files_csv <- function(source, destination, first_row_is_header, nam
 #' \item name string, The column name.
 #' \item sqlType string, The SQL type of the column.
 #' }}
-#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
-#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
+#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
+#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.}
 #' \item{redshiftDestinationOptions}{list, A list containing the following elements: 
 #' \itemize{
 #' \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
@@ -9559,7 +8988,12 @@ imports_get_files_csv <- function(id) {
 #' @param source list required. A list containing the following elements: 
 #' \itemize{
 #' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-#' \item storagePaths object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item storageHostId integer, The ID of the source storage host.
+#' \item credentialId integer, The ID of the credentials for the source storage host.
+#' \item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+#' }
 #' }
 #' @param destination list required. A list containing the following elements: 
 #' \itemize{
@@ -9567,7 +9001,7 @@ imports_get_files_csv <- function(id) {
 #' \item table string, The destination table name.
 #' \item remoteHostId integer, The ID of the destination database host.
 #' \item credentialId integer, The ID of the credentials for the destination database.
-#' \item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' \item primaryKeys array, A list of column(s) which together uniquely identify a row in the destination table.These columns must not contain NULL values. If the import mode is "upsert", this field is required;see the Civis Helpdesk article on "Advanced CSV Imports via the Civis API" for more information.
 #' \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
 #' }
 #' @param first_row_is_header boolean required. A boolean value indicating whether or not the first row of the source file is a header row.
@@ -9582,8 +9016,8 @@ imports_get_files_csv <- function(id) {
 #' \item name string, The column name.
 #' \item sqlType string, The SQL type of the column.
 #' }
-#' @param loosen_types boolean optional. If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.
-#' @param execution string optional. In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.
+#' @param loosen_types boolean optional. If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.
+#' @param execution string optional. In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.
 #' @param redshift_destination_options list optional. A list containing the following elements: 
 #' \itemize{
 #' \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
@@ -9597,7 +9031,12 @@ imports_get_files_csv <- function(id) {
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-#' \item storagePaths object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item storageHostId integer, The ID of the source storage host.
+#' \item credentialId integer, The ID of the credentials for the source storage host.
+#' \item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
@@ -9605,7 +9044,7 @@ imports_get_files_csv <- function(id) {
 #' \item table string, The destination table name.
 #' \item remoteHostId integer, The ID of the destination database host.
 #' \item credentialId integer, The ID of the credentials for the destination database.
-#' \item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' \item primaryKeys array, A list of column(s) which together uniquely identify a row in the destination table.These columns must not contain NULL values. If the import mode is "upsert", this field is required;see the Civis Helpdesk article on "Advanced CSV Imports via the Civis API" for more information.
 #' \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
 #' }}
 #' \item{firstRowIsHeader}{boolean, A boolean value indicating whether or not the first row of the source file is a header row.}
@@ -9619,8 +9058,8 @@ imports_get_files_csv <- function(id) {
 #' \item name string, The column name.
 #' \item sqlType string, The SQL type of the column.
 #' }}
-#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
-#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
+#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
+#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.}
 #' \item{redshiftDestinationOptions}{list, A list containing the following elements: 
 #' \itemize{
 #' \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
@@ -9652,7 +9091,12 @@ imports_put_files_csv <- function(id, source, destination, first_row_is_header, 
 #' @param source list optional. A list containing the following elements: 
 #' \itemize{
 #' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-#' \item storagePaths object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item storageHostId integer, The ID of the source storage host.
+#' \item credentialId integer, The ID of the credentials for the source storage host.
+#' \item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+#' }
 #' }
 #' @param destination list optional. A list containing the following elements: 
 #' \itemize{
@@ -9660,7 +9104,7 @@ imports_put_files_csv <- function(id, source, destination, first_row_is_header, 
 #' \item table string, The destination table name.
 #' \item remoteHostId integer, The ID of the destination database host.
 #' \item credentialId integer, The ID of the credentials for the destination database.
-#' \item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' \item primaryKeys array, A list of column(s) which together uniquely identify a row in the destination table.These columns must not contain NULL values. If the import mode is "upsert", this field is required;see the Civis Helpdesk article on "Advanced CSV Imports via the Civis API" for more information.
 #' \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
 #' }
 #' @param first_row_is_header boolean optional. A boolean value indicating whether or not the first row of the source file is a header row.
@@ -9674,8 +9118,8 @@ imports_put_files_csv <- function(id, source, destination, first_row_is_header, 
 #' \item name string, The column name.
 #' \item sqlType string, The SQL type of the column.
 #' }
-#' @param loosen_types boolean optional. If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.
-#' @param execution string optional. In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.
+#' @param loosen_types boolean optional. If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.
+#' @param execution string optional. In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.
 #' @param redshift_destination_options list optional. A list containing the following elements: 
 #' \itemize{
 #' \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
@@ -9689,7 +9133,12 @@ imports_put_files_csv <- function(id, source, destination, first_row_is_header, 
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-#' \item storagePaths object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item storageHostId integer, The ID of the source storage host.
+#' \item credentialId integer, The ID of the credentials for the source storage host.
+#' \item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
@@ -9697,7 +9146,7 @@ imports_put_files_csv <- function(id, source, destination, first_row_is_header, 
 #' \item table string, The destination table name.
 #' \item remoteHostId integer, The ID of the destination database host.
 #' \item credentialId integer, The ID of the credentials for the destination database.
-#' \item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' \item primaryKeys array, A list of column(s) which together uniquely identify a row in the destination table.These columns must not contain NULL values. If the import mode is "upsert", this field is required;see the Civis Helpdesk article on "Advanced CSV Imports via the Civis API" for more information.
 #' \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
 #' }}
 #' \item{firstRowIsHeader}{boolean, A boolean value indicating whether or not the first row of the source file is a header row.}
@@ -9711,8 +9160,8 @@ imports_put_files_csv <- function(id, source, destination, first_row_is_header, 
 #' \item name string, The column name.
 #' \item sqlType string, The SQL type of the column.
 #' }}
-#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
-#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
+#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
+#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.}
 #' \item{redshiftDestinationOptions}{list, A list containing the following elements: 
 #' \itemize{
 #' \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
@@ -9770,7 +9219,12 @@ imports_delete_files_csv <- function(id) {
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-#' \item storagePaths object, 
+#' \item storagePath list . A list containing the following elements: 
+#' \itemize{
+#' \item storageHostId integer, The ID of the source storage host.
+#' \item credentialId integer, The ID of the credentials for the source storage host.
+#' \item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
@@ -9778,7 +9232,7 @@ imports_delete_files_csv <- function(id) {
 #' \item table string, The destination table name.
 #' \item remoteHostId integer, The ID of the destination database host.
 #' \item credentialId integer, The ID of the credentials for the destination database.
-#' \item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+#' \item primaryKeys array, A list of column(s) which together uniquely identify a row in the destination table.These columns must not contain NULL values. If the import mode is "upsert", this field is required;see the Civis Helpdesk article on "Advanced CSV Imports via the Civis API" for more information.
 #' \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
 #' }}
 #' \item{firstRowIsHeader}{boolean, A boolean value indicating whether or not the first row of the source file is a header row.}
@@ -9792,8 +9246,8 @@ imports_delete_files_csv <- function(id) {
 #' \item name string, The column name.
 #' \item sqlType string, The SQL type of the column.
 #' }}
-#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
-#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
+#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
+#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.}
 #' \item{redshiftDestinationOptions}{list, A list containing the following elements: 
 #' \itemize{
 #' \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
@@ -10247,16 +9701,41 @@ imports_post_cancel <- function(id) {
 #' @param source list required. A list containing the following elements: 
 #' \itemize{
 #' \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce
-#' \item databaseTable object, 
-#' \item file object, 
-#' \item googleWorksheet object, 
-#' \item salesforce object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item file list . 
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
+#' \item salesforce list . A list containing the following elements: 
+#' \itemize{
+#' \item objectName string, The Salesforce object name.
+#' }
 #' }
 #' @param destination list required. A list containing the following elements: 
 #' \itemize{
 #' \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
-#' \item databaseTable object, 
-#' \item googleWorksheet object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
 #' }
 #' @param advanced_options list optional. A list containing the following elements: 
 #' \itemize{
@@ -10275,16 +9754,16 @@ imports_post_cancel <- function(id) {
 #' \item truncateLongLines boolean, 
 #' \item invalidCharReplacement string, 
 #' \item verifyTableRowCounts boolean, 
-#' \item partitionColumnName string, 
-#' \item partitionSchemaName string, 
-#' \item partitionTableName string, 
-#' \item partitionTablePartitionColumnMinName string, 
-#' \item partitionTablePartitionColumnMaxName string, 
+#' \item partitionColumnName string, This parameter is deprecated
+#' \item partitionSchemaName string, This parameter is deprecated
+#' \item partitionTableName string, This parameter is deprecated
+#' \item partitionTablePartitionColumnMinName string, This parameter is deprecated
+#' \item partitionTablePartitionColumnMaxName string, This parameter is deprecated
 #' \item lastModifiedColumn string, 
-#' \item mysqlCatalogMatchesSchema boolean, 
-#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be choosen automatically.
+#' \item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
+#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be chosen automatically.
 #' \item firstRowIsHeader boolean, 
-#' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "appendwksht"
+#' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
 #' \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
 #' \item contactLists string, 
 #' \item soqlQuery string, 
@@ -10297,16 +9776,44 @@ imports_post_cancel <- function(id) {
 #' \itemize{
 #' \item id integer, The ID of the table or file, if available.
 #' \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce
-#' \item databaseTable object, 
-#' \item file object, 
-#' \item googleWorksheet object, 
-#' \item salesforce object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item file list . A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The file id.
+#' }
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
+#' \item salesforce list . A list containing the following elements: 
+#' \itemize{
+#' \item objectName string, The Salesforce object name.
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
-#' \item databaseTable object, 
-#' \item googleWorksheet object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
 #' }}
 #' \item{advancedOptions}{list, A list containing the following elements: 
 #' \itemize{
@@ -10325,16 +9832,16 @@ imports_post_cancel <- function(id) {
 #' \item truncateLongLines boolean, 
 #' \item invalidCharReplacement string, 
 #' \item verifyTableRowCounts boolean, 
-#' \item partitionColumnName string, 
-#' \item partitionSchemaName string, 
-#' \item partitionTableName string, 
-#' \item partitionTablePartitionColumnMinName string, 
-#' \item partitionTablePartitionColumnMaxName string, 
+#' \item partitionColumnName string, This parameter is deprecated
+#' \item partitionSchemaName string, This parameter is deprecated
+#' \item partitionTableName string, This parameter is deprecated
+#' \item partitionTablePartitionColumnMinName string, This parameter is deprecated
+#' \item partitionTablePartitionColumnMaxName string, This parameter is deprecated
 #' \item lastModifiedColumn string, 
-#' \item mysqlCatalogMatchesSchema boolean, 
-#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be choosen automatically.
+#' \item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
+#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be chosen automatically.
 #' \item firstRowIsHeader boolean, 
-#' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "appendwksht"
+#' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
 #' \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
 #' \item contactLists string, 
 #' \item soqlQuery string, 
@@ -10364,16 +9871,41 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' @param source list required. A list containing the following elements: 
 #' \itemize{
 #' \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce
-#' \item databaseTable object, 
-#' \item file object, 
-#' \item googleWorksheet object, 
-#' \item salesforce object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item file list . 
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
+#' \item salesforce list . A list containing the following elements: 
+#' \itemize{
+#' \item objectName string, The Salesforce object name.
+#' }
 #' }
 #' @param destination list required. A list containing the following elements: 
 #' \itemize{
 #' \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
-#' \item databaseTable object, 
-#' \item googleWorksheet object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
 #' }
 #' @param advanced_options list optional. A list containing the following elements: 
 #' \itemize{
@@ -10392,16 +9924,16 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' \item truncateLongLines boolean, 
 #' \item invalidCharReplacement string, 
 #' \item verifyTableRowCounts boolean, 
-#' \item partitionColumnName string, 
-#' \item partitionSchemaName string, 
-#' \item partitionTableName string, 
-#' \item partitionTablePartitionColumnMinName string, 
-#' \item partitionTablePartitionColumnMaxName string, 
+#' \item partitionColumnName string, This parameter is deprecated
+#' \item partitionSchemaName string, This parameter is deprecated
+#' \item partitionTableName string, This parameter is deprecated
+#' \item partitionTablePartitionColumnMinName string, This parameter is deprecated
+#' \item partitionTablePartitionColumnMaxName string, This parameter is deprecated
 #' \item lastModifiedColumn string, 
-#' \item mysqlCatalogMatchesSchema boolean, 
-#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be choosen automatically.
+#' \item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
+#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be chosen automatically.
 #' \item firstRowIsHeader boolean, 
-#' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "appendwksht"
+#' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
 #' \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
 #' \item contactLists string, 
 #' \item soqlQuery string, 
@@ -10414,16 +9946,44 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' \itemize{
 #' \item id integer, The ID of the table or file, if available.
 #' \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce
-#' \item databaseTable object, 
-#' \item file object, 
-#' \item googleWorksheet object, 
-#' \item salesforce object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item file list . A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The file id.
+#' }
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
+#' \item salesforce list . A list containing the following elements: 
+#' \itemize{
+#' \item objectName string, The Salesforce object name.
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
-#' \item databaseTable object, 
-#' \item googleWorksheet object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
 #' }}
 #' \item{advancedOptions}{list, A list containing the following elements: 
 #' \itemize{
@@ -10442,16 +10002,16 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' \item truncateLongLines boolean, 
 #' \item invalidCharReplacement string, 
 #' \item verifyTableRowCounts boolean, 
-#' \item partitionColumnName string, 
-#' \item partitionSchemaName string, 
-#' \item partitionTableName string, 
-#' \item partitionTablePartitionColumnMinName string, 
-#' \item partitionTablePartitionColumnMaxName string, 
+#' \item partitionColumnName string, This parameter is deprecated
+#' \item partitionSchemaName string, This parameter is deprecated
+#' \item partitionTableName string, This parameter is deprecated
+#' \item partitionTablePartitionColumnMinName string, This parameter is deprecated
+#' \item partitionTablePartitionColumnMaxName string, This parameter is deprecated
 #' \item lastModifiedColumn string, 
-#' \item mysqlCatalogMatchesSchema boolean, 
-#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be choosen automatically.
+#' \item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
+#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be chosen automatically.
 #' \item firstRowIsHeader boolean, 
-#' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "appendwksht"
+#' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
 #' \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
 #' \item contactLists string, 
 #' \item soqlQuery string, 
@@ -10509,16 +10069,44 @@ imports_delete_syncs <- function(id, sync_id) {
 #' \itemize{
 #' \item id integer, The ID of the table or file, if available.
 #' \item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce
-#' \item databaseTable object, 
-#' \item file object, 
-#' \item googleWorksheet object, 
-#' \item salesforce object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item file list . A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The file id.
+#' }
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
+#' \item salesforce list . A list containing the following elements: 
+#' \itemize{
+#' \item objectName string, The Salesforce object name.
+#' }
 #' }}
 #' \item{destination}{list, A list containing the following elements: 
 #' \itemize{
 #' \item path string, The schema.tablename to sync to. If you are doing a Google Sheet export, this is the spreadsheet and sheet name separated by a period. i.e. if you have a spreadsheet named "MySpreadsheet" and a sheet called "Sheet1" this field would be "MySpreadsheet.Sheet1". This is a legacy parameter, it is recommended you use one of the following: databaseTable, googleWorksheet
-#' \item databaseTable object, 
-#' \item googleWorksheet object, 
+#' \item databaseTable list . A list containing the following elements: 
+#' \itemize{
+#' \item schema string, The database schema name.
+#' \item table string, The database table name.
+#' \item useWithoutSchema boolean, This attribute is no longer available; defaults to false but cannot be used.
+#' }
+#' \item googleWorksheet list . A list containing the following elements: 
+#' \itemize{
+#' \item spreadsheet string, The spreadsheet document name.
+#' \item spreadsheetId string, The spreadsheet document id.
+#' \item worksheet string, The worksheet tab name.
+#' \item worksheetId integer, The worksheet tab id.
+#' }
 #' }}
 #' \item{advancedOptions}{list, A list containing the following elements: 
 #' \itemize{
@@ -10537,16 +10125,16 @@ imports_delete_syncs <- function(id, sync_id) {
 #' \item truncateLongLines boolean, 
 #' \item invalidCharReplacement string, 
 #' \item verifyTableRowCounts boolean, 
-#' \item partitionColumnName string, 
-#' \item partitionSchemaName string, 
-#' \item partitionTableName string, 
-#' \item partitionTablePartitionColumnMinName string, 
-#' \item partitionTablePartitionColumnMaxName string, 
+#' \item partitionColumnName string, This parameter is deprecated
+#' \item partitionSchemaName string, This parameter is deprecated
+#' \item partitionTableName string, This parameter is deprecated
+#' \item partitionTablePartitionColumnMinName string, This parameter is deprecated
+#' \item partitionTablePartitionColumnMaxName string, This parameter is deprecated
 #' \item lastModifiedColumn string, 
-#' \item mysqlCatalogMatchesSchema boolean, 
-#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be choosen automatically.
+#' \item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
+#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be chosen automatically.
 #' \item firstRowIsHeader boolean, 
-#' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "appendwksht"
+#' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
 #' \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
 #' \item contactLists string, 
 #' \item soqlQuery string, 
@@ -11020,6 +10608,7 @@ jobs_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
+#' \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 #' \item{timeZone}{string, The time zone of this workflow.}
 #' \item{nextExecutionAt}{string, The time of the next scheduled execution.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -11795,10 +11384,7 @@ match_targets_delete_shares_groups <- function(id, group_id) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of the match target}
 #' \item{name}{string, The name of the match target}
-#' \item{table}{string, The name of the DynamoDB table}
-#' \item{region}{string, The AWS region of the DynamoDB table. By default, us-east-1.}
 #' \item{targetFileName}{string, The name of the target file}
-#' \item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' \item{archived}{boolean, Whether the match target has been archived.}
@@ -11825,9 +11411,7 @@ match_targets_put_archive <- function(id, status) {
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID of the match target}
 #' \item{name}{string, The name of the match target}
-#' \item{table}{string, The name of the DynamoDB table}
 #' \item{targetFileName}{string, The name of the target file}
-#' \item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' \item{archived}{boolean, Whether the match target has been archived.}
@@ -11851,30 +11435,24 @@ match_targets_list <- function() {
 
 #' Create a new match target
 #' @param name string required. The name of the match target
-#' @param table string optional. The name of the DynamoDB table
-#' @param region string optional. The AWS region of the DynamoDB table. By default, us-east-1.
 #' @param target_file_name string optional. The name of the target file
-#' @param encryption_key_credential_id integer optional. The ID of the encryption key credential.
 #' @param archived boolean optional. Whether the match target has been archived.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of the match target}
 #' \item{name}{string, The name of the match target}
-#' \item{table}{string, The name of the DynamoDB table}
-#' \item{region}{string, The AWS region of the DynamoDB table. By default, us-east-1.}
 #' \item{targetFileName}{string, The name of the target file}
-#' \item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' \item{archived}{boolean, Whether the match target has been archived.}
 #' @export
-match_targets_post <- function(name, table = NULL, region = NULL, target_file_name = NULL, encryption_key_credential_id = NULL, archived = NULL) {
+match_targets_post <- function(name, target_file_name = NULL, archived = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/match_targets/"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, table = table, region = region, targetFileName = target_file_name, encryptionKeyCredentialId = encryption_key_credential_id, archived = archived)
+  body_params  <- list(name = name, targetFileName = target_file_name, archived = archived)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -11891,10 +11469,7 @@ match_targets_post <- function(name, table = NULL, region = NULL, target_file_na
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of the match target}
 #' \item{name}{string, The name of the match target}
-#' \item{table}{string, The name of the DynamoDB table}
-#' \item{region}{string, The AWS region of the DynamoDB table. By default, us-east-1.}
 #' \item{targetFileName}{string, The name of the target file}
-#' \item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' \item{archived}{boolean, Whether the match target has been archived.}
@@ -11919,30 +11494,24 @@ match_targets_get <- function(id) {
 #' Update a match target
 #' @param id integer required. The ID of the match target
 #' @param name string optional. The name of the match target
-#' @param table string optional. The name of the DynamoDB table
-#' @param region string optional. The AWS region of the DynamoDB table. By default, us-east-1.
 #' @param target_file_name string optional. The name of the target file
-#' @param encryption_key_credential_id integer optional. The ID of the encryption key credential.
 #' @param archived boolean optional. Whether the match target has been archived.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of the match target}
 #' \item{name}{string, The name of the match target}
-#' \item{table}{string, The name of the DynamoDB table}
-#' \item{region}{string, The AWS region of the DynamoDB table. By default, us-east-1.}
 #' \item{targetFileName}{string, The name of the target file}
-#' \item{encryptionKeyCredentialId}{integer, The ID of the encryption key credential.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' \item{archived}{boolean, Whether the match target has been archived.}
 #' @export
-match_targets_patch <- function(id, name = NULL, table = NULL, region = NULL, target_file_name = NULL, encryption_key_credential_id = NULL, archived = NULL) {
+match_targets_patch <- function(id, name = NULL, target_file_name = NULL, archived = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/match_targets/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, table = table, region = region, targetFileName = target_file_name, encryptionKeyCredentialId = encryption_key_credential_id, archived = archived)
+  body_params  <- list(name = name, targetFileName = target_file_name, archived = archived)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -13375,159 +12944,6 @@ models_list_types <- function() {
  }
 
 
-#' Create new configuration for a model
-#' @param table_name string optional. The qualified name of the table containing the training set from which to build the model.
-#' @param database_id integer optional. The ID of the database holding the training set table used to build the model.
-#' @param credential_id integer optional. The ID of the credential used to read the target table. Defaults to the user's default credential.
-#' @param model_name string optional. The name of the model.
-#' @param description string optional. A description of the model.
-#' @param interaction_terms boolean optional. Whether to search for interaction terms.
-#' @param box_cox_transformation boolean optional. Whether to transform data so that it assumes a normal distribution. Valid only with continuous models.
-#' @param model_type_id integer optional. The ID of the model's type.
-#' @param primary_key string optional. The unique ID (primary key) of the training dataset.
-#' @param dependent_variable string optional. The dependent variable of the training dataset.
-#' @param dependent_variable_order array optional. The order of dependent variables, especially useful for Ordinal Modeling.
-#' @param excluded_columns array optional. A list of columns which will be considered ineligible to be independent variables.
-#' @param limiting_sql string optional. A custom SQL WHERE clause used to filter the rows used to build the model. (e.g., "id > 105").
-#' @param active_build_id integer optional. The ID of the current active build, the build used to score predictions.
-#' @param cross_validation_parameters list optional. Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.
-#' @param number_of_folds integer optional. Number of folds for cross validation. Default value is 5.
-#' @param notifications list optional. A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }
-#' @param schedule list optional. A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }
-#' @param parent_id integer optional. The ID of the parent job that will trigger this model.
-#' @param time_zone string optional. The time zone of this model.
-#' @param hidden boolean optional. The hidden status of the item.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the model.}
-#' \item{tableName}{string, The qualified name of the table containing the training set from which to build the model.}
-#' \item{databaseId}{integer, The ID of the database holding the training set table used to build the model.}
-#' \item{credentialId}{integer, The ID of the credential used to read the target table. Defaults to the user's default credential.}
-#' \item{modelName}{string, The name of the model.}
-#' \item{description}{string, A description of the model.}
-#' \item{interactionTerms}{boolean, Whether to search for interaction terms.}
-#' \item{boxCoxTransformation}{boolean, Whether to transform data so that it assumes a normal distribution. Valid only with continuous models.}
-#' \item{modelTypeId}{integer, The ID of the model's type.}
-#' \item{primaryKey}{string, The unique ID (primary key) of the training dataset.}
-#' \item{dependentVariable}{string, The dependent variable of the training dataset.}
-#' \item{dependentVariableOrder}{array, The order of dependent variables, especially useful for Ordinal Modeling.}
-#' \item{excludedColumns}{array, A list of columns which will be considered ineligible to be independent variables.}
-#' \item{limitingSQL}{string, A custom SQL WHERE clause used to filter the rows used to build the model. (e.g., "id > 105").}
-#' \item{activeBuildId}{integer, The ID of the current active build, the build used to score predictions.}
-#' \item{crossValidationParameters}{list, Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.}
-#' \item{numberOfFolds}{integer, Number of folds for cross validation. Default value is 5.}
-#' \item{notifications}{list, A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }}
-#' \item{schedule}{list, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }}
-#' \item{parentId}{integer, The ID of the parent job that will trigger this model.}
-#' \item{runningAs}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{timeZone}{string, The time zone of this model.}
-#' \item{lastRun}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, 
-#' \item state string, 
-#' \item createdAt string, The time that the run was queued.
-#' \item startedAt string, The time that the run started.
-#' \item finishedAt string, The time that the run completed.
-#' \item error string, The error message for this run, if present.
-#' }}
-#' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{user}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{createdAt}{string, The time the model was created.}
-#' \item{updatedAt}{string, The time the model was updated.}
-#' \item{currentBuildState}{string, The status of the current model build. One of "succeeded", "failed", "queued", or "running,"or "idle", if no build has been attempted.}
-#' \item{currentBuildException}{string, Exception message, if applicable, of the current model build.}
-#' \item{builds}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The ID of the model build.
-#' \item name string, The name of the model build.
-#' \item createdAt string, The time the model build was created.
-#' \item description string, A description of the model build.
-#' \item rootMeanSquaredError number, A key metric for continuous models. Nil for other model types.
-#' \item rSquaredError number, A key metric for continuous models. Nil for other model types.
-#' \item rocAuc number, A key metric for binary, multinomial, and ordinal models. Nil for other model types.
-#' }}
-#' \item{predictions}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The ID of the model to which to apply the prediction.
-#' \item tableName string, The qualified name of the table on which to apply the predictive model.
-#' \item primaryKey array, The primary key or composite keys of the table being predicted.
-#' \item limitingSQL string, A SQL WHERE clause used to scope the rows to be predicted.
-#' \item outputTable string, The qualified name of the table to be created which will contain the model's predictions.
-#' \item schedule object, 
-#' \item state string, The status of the prediction. One of: "succeeded", "failed", "queued", or "running,"or "idle", if no build has been attempted.
-#' }}
-#' \item{lastOutputLocation}{string, The output JSON for the last build.}
-#' \item{archived}{string, The archival status of the requested item(s).}
-#' @export
-models_post <- function(table_name = NULL, database_id = NULL, credential_id = NULL, model_name = NULL, description = NULL, interaction_terms = NULL, box_cox_transformation = NULL, model_type_id = NULL, primary_key = NULL, dependent_variable = NULL, dependent_variable_order = NULL, excluded_columns = NULL, limiting_sql = NULL, active_build_id = NULL, cross_validation_parameters = NULL, number_of_folds = NULL, notifications = NULL, schedule = NULL, parent_id = NULL, time_zone = NULL, hidden = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/models/"
-  path_params  <- list()
-  query_params <- list()
-  body_params  <- list(tableName = table_name, databaseId = database_id, credentialId = credential_id, modelName = model_name, description = description, interactionTerms = interaction_terms, boxCoxTransformation = box_cox_transformation, modelTypeId = model_type_id, primaryKey = primary_key, dependentVariable = dependent_variable, dependentVariableOrder = dependent_variable_order, excludedColumns = excluded_columns, limitingSQL = limiting_sql, activeBuildId = active_build_id, crossValidationParameters = cross_validation_parameters, numberOfFolds = number_of_folds, notifications = notifications, schedule = schedule, parentId = parent_id, timeZone = time_zone, hidden = hidden)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List 
 #' @param model_name string optional. If specified, will be used to filter the models returned. Substring matching is supported. (e.g., "modelName=model" will return both "model1" and "my model").
 #' @param training_table_name string optional. If specified, will be used to filter the models returned by the training dataset table name. Substring matching is supported. (e.g., "trainingTableName=table" will return both "table1" and "my_table").
@@ -13622,67 +13038,6 @@ models_list <- function(model_name = NULL, training_table_name = NULL, dependent
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Update model configuration
-#' @param id integer required. The ID of the model.
-#' @param table_name string optional. The qualified name of the table containing the training set from which to build the model.
-#' @param database_id integer optional. The ID of the database holding the training set table used to build the model.
-#' @param credential_id integer optional. The ID of the credential used to read the target table. Defaults to the user's default credential.
-#' @param model_name string optional. The name of the model.
-#' @param description string optional. A description of the model.
-#' @param interaction_terms boolean optional. Whether to search for interaction terms.
-#' @param box_cox_transformation boolean optional. Whether to transform data so that it assumes a normal distribution. Valid only with continuous models.
-#' @param model_type_id integer optional. The ID of the model's type.
-#' @param primary_key string optional. The unique ID (primary key) of the training dataset.
-#' @param dependent_variable string optional. The dependent variable of the training dataset.
-#' @param dependent_variable_order array optional. The order of dependent variables, especially useful for Ordinal Modeling.
-#' @param excluded_columns array optional. A list of columns which will be considered ineligible to be independent variables.
-#' @param limiting_sql string optional. A custom SQL WHERE clause used to filter the rows used to build the model. (e.g., "id > 105").
-#' @param active_build_id integer optional. The ID of the current active build, the build used to score predictions.
-#' @param cross_validation_parameters list optional. Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.
-#' @param number_of_folds integer optional. Number of folds for cross validation. Default value is 5.
-#' @param notifications list optional. A list containing the following elements: 
-#' \itemize{
-#' \item urls array, URLs to receive a POST request at job completion
-#' \item successEmailSubject string, Custom subject line for success e-mail.
-#' \item successEmailBody string, Custom body text for success e-mail, written in Markdown.
-#' \item successEmailAddresses array, Addresses to notify by e-mail when the job completes successfully.
-#' \item successEmailFromName string, Name from which success emails are sent; defaults to "Civis."
-#' \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
-#' \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
-#' \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-#' \item successOn boolean, If success email notifications are on.
-#' \item failureOn boolean, If failure email notifications are on.
-#' }
-#' @param schedule list optional. A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }
-#' @param parent_id integer optional. The ID of the parent job that will trigger this model.
-#' @param time_zone string optional. The time zone of this model.
-#' 
-#' @return  An empty HTTP response
-#' @export
-models_patch <- function(id, table_name = NULL, database_id = NULL, credential_id = NULL, model_name = NULL, description = NULL, interaction_terms = NULL, box_cox_transformation = NULL, model_type_id = NULL, primary_key = NULL, dependent_variable = NULL, dependent_variable_order = NULL, excluded_columns = NULL, limiting_sql = NULL, active_build_id = NULL, cross_validation_parameters = NULL, number_of_folds = NULL, notifications = NULL, schedule = NULL, parent_id = NULL, time_zone = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/models/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(tableName = table_name, databaseId = database_id, credentialId = credential_id, modelName = model_name, description = description, interactionTerms = interaction_terms, boxCoxTransformation = box_cox_transformation, modelTypeId = model_type_id, primaryKey = primary_key, dependentVariable = dependent_variable, dependentVariableOrder = dependent_variable_order, excludedColumns = excluded_columns, limitingSQL = limiting_sql, activeBuildId = active_build_id, crossValidationParameters = cross_validation_parameters, numberOfFolds = number_of_folds, notifications = notifications, schedule = schedule, parentId = parent_id, timeZone = time_zone)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -13803,78 +13158,6 @@ models_get <- function(id) {
  }
 
 
-#' Start a build
-#' @param id integer required. The ID of the model.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the model build.}
-#' \item{state}{string, The state of the model build.one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{error}{string, The error, if any, returned by the build.}
-#' \item{name}{string, The name of the model build.}
-#' \item{createdAt}{string, The time the model build was created.}
-#' \item{description}{string, A description of the model build.}
-#' \item{rootMeanSquaredError}{number, A key metric for continuous models. Nil for other model types.}
-#' \item{rSquaredError}{number, A key metric for continuous models. Nil for other model types.}
-#' \item{rocAuc}{number, A key metric for binary, multinomial, and ordinal models. Nil for other model types.}
-#' \item{transformationMetadata}{string, A string representing the full JSON output of the metadata for transformation of column names}
-#' \item{output}{string, A string representing the JSON output for the specified build. Only present when smaller than 10KB in size.}
-#' \item{outputLocation}{string, A URL representing the location of the full JSON output for the specified build.The URL link will be valid for 5 minutes.}
-#' @export
-models_post_builds <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/models/{id}/builds"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List builds for the given model
-#' @param id integer required. The ID of the model.
-#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID of the model build.}
-#' \item{state}{string, The state of the model build.one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{error}{string, The error, if any, returned by the build.}
-#' \item{name}{string, The name of the model build.}
-#' \item{createdAt}{string, The time the model build was created.}
-#' \item{description}{string, A description of the model build.}
-#' \item{rootMeanSquaredError}{number, A key metric for continuous models. Nil for other model types.}
-#' \item{rSquaredError}{number, A key metric for continuous models. Nil for other model types.}
-#' \item{rocAuc}{number, A key metric for binary, multinomial, and ordinal models. Nil for other model types.}
-#' \item{transformationMetadata}{string, A string representing the full JSON output of the metadata for transformation of column names}
-#' \item{output}{string, A string representing the JSON output for the specified build. Only present when smaller than 10KB in size.}
-#' \item{outputLocation}{string, A URL representing the location of the full JSON output for the specified build.The URL link will be valid for 5 minutes.}
-#' @export
-models_list_builds <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/models/{id}/builds"
-  path_params  <- list(id = id)
-  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Check status of a build
 #' @param id integer required. The ID of the model.
 #' @param build_id integer required. The ID of the build.
@@ -13927,6 +13210,44 @@ models_delete_builds <- function(id, build_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List builds for the given model
+#' @param id integer required. The ID of the model.
+#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID of the model build.}
+#' \item{state}{string, The state of the model build.one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{error}{string, The error, if any, returned by the build.}
+#' \item{name}{string, The name of the model build.}
+#' \item{createdAt}{string, The time the model build was created.}
+#' \item{description}{string, A description of the model build.}
+#' \item{rootMeanSquaredError}{number, A key metric for continuous models. Nil for other model types.}
+#' \item{rSquaredError}{number, A key metric for continuous models. Nil for other model types.}
+#' \item{rocAuc}{number, A key metric for binary, multinomial, and ordinal models. Nil for other model types.}
+#' \item{transformationMetadata}{string, A string representing the full JSON output of the metadata for transformation of column names}
+#' \item{output}{string, A string representing the JSON output for the specified build. Only present when smaller than 10KB in size.}
+#' \item{outputLocation}{string, A URL representing the location of the full JSON output for the specified build.The URL link will be valid for 5 minutes.}
+#' @export
+models_list_builds <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/models/{id}/builds"
+  path_params  <- list(id = id)
+  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14340,54 +13661,6 @@ models_put_archive <- function(id, status) {
  }
 
 
-#' Add a table on which to apply the predictive model
-#' @param id integer required. The ID of the model to which to apply the prediction.
-#' @param table_name string required. The qualified name of the table on which to apply the predictive model.
-#' @param primary_key array required. The primary key or composite keys of the table being predicted.
-#' @param limiting_sql string optional. A SQL WHERE clause used to scope the rows to be predicted.
-#' @param output_table string optional. The qualified name of the table to be created which will contain the model's predictions.
-#' @param schedule list optional. A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the model to which to apply the prediction.}
-#' \item{tableName}{string, The qualified name of the table on which to apply the predictive model.}
-#' \item{primaryKey}{array, The primary key or composite keys of the table being predicted.}
-#' \item{limitingSQL}{string, A SQL WHERE clause used to scope the rows to be predicted.}
-#' \item{outputTable}{string, The qualified name of the table to be created which will contain the model's predictions.}
-#' \item{schedule}{list, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }}
-#' \item{state}{string, The status of the prediction. One of: "succeeded", "failed", "queued", or "running,"or "idle", if no build has been attempted.}
-#' @export
-models_put_predictions <- function(id, table_name, primary_key, limiting_sql = NULL, output_table = NULL, schedule = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/models/{id}/predictions"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(tableName = table_name, primaryKey = primary_key, limitingSQL = limiting_sql, outputTable = output_table, schedule = schedule)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Show the model build schedule
 #' @param id integer required. The ID of the model associated with this schedule.
 #' 
@@ -14413,45 +13686,6 @@ models_list_schedules <- function(id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Schedule the model build
-#' @param id integer required. The ID of the model associated with this schedule.
-#' @param schedule list required. A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the model associated with this schedule.}
-#' \item{schedule}{list, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }}
-#' @export
-models_put_schedules <- function(id, schedule) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/models/{id}/schedules"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(schedule = schedule)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15800,67 +15034,6 @@ predictions_get <- function(id) {
  }
 
 
-#' Update a prediction
-#' @param id integer required. The ID of the prediction.
-#' @param output_table_name string optional. The name of the output table for this prediction.
-#' @param limiting_sql string optional. A SQL WHERE clause used to scope the rows to be predicted.
-#' @param primary_key array optional. The primary key or composite keys of the table being predicted.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the prediction.}
-#' \item{modelId}{integer, The ID of the model used for this prediction.}
-#' \item{scoredTableId}{integer, The ID of the source table for this prediction.}
-#' \item{scoredTableName}{string, The name of the source table for this prediction.}
-#' \item{outputTableName}{string, The name of the output table for this prediction.}
-#' \item{state}{string, The state of the last run of this prediction.}
-#' \item{error}{string, The error, if any, of the last run of this prediction.}
-#' \item{startedAt}{string, The start time of the last run of this prediction.}
-#' \item{finishedAt}{string, The end time of the last run of this prediction.}
-#' \item{lastRun}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, 
-#' \item state string, 
-#' \item createdAt string, The time that the run was queued.
-#' \item startedAt string, The time that the run started.
-#' \item finishedAt string, The time that the run completed.
-#' \item error string, The error message for this run, if present.
-#' }}
-#' \item{scoredTables}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The ID of the table with created predictions.
-#' \item schema string, The schema of table with created predictions.
-#' \item name string, The name of table with created predictions.
-#' \item createdAt string, The time when the table with created predictions was created.
-#' \item scoreStats array, An array of metrics on the created predictions.
-#' }}
-#' \item{schedule}{list, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }}
-#' \item{limitingSQL}{string, A SQL WHERE clause used to scope the rows to be predicted.}
-#' \item{primaryKey}{array, The primary key or composite keys of the table being predicted.}
-#' @export
-predictions_patch <- function(id, output_table_name = NULL, limiting_sql = NULL, primary_key = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/predictions/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(outputTableName = output_table_name, limitingSQL = limiting_sql, primaryKey = primary_key)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Show the prediction schedule
 #' @param id integer required. ID of the prediction associated with this schedule.
 #' 
@@ -15882,212 +15055,6 @@ predictions_list_schedules <- function(id) {
   path <- "/predictions/{id}/schedules"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Schedule the prediction
-#' @param id integer required. ID of the prediction associated with this schedule.
-#' @param schedule list optional. A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }
-#' @param score_on_model_build boolean optional. Whether the prediction will run after a rebuild of the associated model.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, ID of the prediction associated with this schedule.}
-#' \item{schedule}{list, A list containing the following elements: 
-#' \itemize{
-#' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
-#' \item scheduledHours array, Hours of the day it is scheduled on.
-#' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
-#' }}
-#' \item{scoreOnModelBuild}{boolean, Whether the prediction will run after a rebuild of the associated model.}
-#' @export
-predictions_put_schedules <- function(id, schedule = NULL, score_on_model_build = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/predictions/{id}/schedules"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(schedule = schedule, scoreOnModelBuild = score_on_model_build)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Start a run
-#' @param id integer required. The ID of the prediction.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the prediction run.}
-#' \item{predictionId}{integer, The ID of the prediction.}
-#' \item{state}{string, The state of the prediction run.}
-#' \item{exception}{string, The exception, if any, returned by the prediction run.}
-#' \item{name}{string, The name of table created by this predictions run.}
-#' \item{createdAt}{string, The time when the table with created predictions was created.}
-#' \item{scoreStats}{array, An array containing the following fields: 
-#' \itemize{
-#' \item scoreName string, The name of the score.
-#' \item histogram array, The histogram of the distribution of scores.
-#' \item avgScore number, The average score.
-#' \item minScore number, The minimum score.
-#' \item maxScore number, The maximum score.
-#' }}
-#' @export
-predictions_post_runs <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/predictions/{id}/runs"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List runs for the given prediction
-#' @param id integer required. The ID of the prediction.
-#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID of the prediction run.}
-#' \item{predictionId}{integer, The ID of the prediction.}
-#' \item{state}{string, The state of the prediction run.}
-#' \item{exception}{string, The exception, if any, returned by the prediction run.}
-#' \item{name}{string, The name of table created by this predictions run.}
-#' \item{createdAt}{string, The time when the table with created predictions was created.}
-#' \item{scoreStats}{array, An array containing the following fields: 
-#' \itemize{
-#' \item scoreName string, The name of the score.
-#' \item histogram array, The histogram of the distribution of scores.
-#' \item avgScore number, The average score.
-#' \item minScore number, The minimum score.
-#' \item maxScore number, The maximum score.
-#' }}
-#' @export
-predictions_list_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/predictions/{id}/runs"
-  path_params  <- list(id = id)
-  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Check status of a run
-#' @param id integer required. The ID of the prediction.
-#' @param run_id integer required. The ID of the run.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the prediction run.}
-#' \item{predictionId}{integer, The ID of the prediction.}
-#' \item{state}{string, The state of the prediction run.}
-#' \item{exception}{string, The exception, if any, returned by the prediction run.}
-#' \item{name}{string, The name of table created by this predictions run.}
-#' \item{createdAt}{string, The time when the table with created predictions was created.}
-#' \item{scoreStats}{array, An array containing the following fields: 
-#' \itemize{
-#' \item scoreName string, The name of the score.
-#' \item histogram array, The histogram of the distribution of scores.
-#' \item avgScore number, The average score.
-#' \item minScore number, The minimum score.
-#' \item maxScore number, The maximum score.
-#' }}
-#' @export
-predictions_get_runs <- function(id, run_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/predictions/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Cancel a run
-#' @param id integer required. The ID of the prediction.
-#' @param run_id integer required. The ID of the run.
-#' 
-#' @return  An empty HTTP response
-#' @export
-predictions_delete_runs <- function(id, run_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/predictions/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get the logs for a run
-#' @param id integer required. The ID of the prediction.
-#' @param run_id integer required. The ID of the run.
-#' @param last_id integer optional. The ID of the last log message received. Log entries with this ID value or lower will be omitted.Logs are sorted by ID if this value is provided, and are otherwise sorted by createdAt.
-#' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID of the log.}
-#' \item{createdAt}{string, The time the log was created.}
-#' \item{message}{string, The log message.}
-#' \item{level}{string, The level of the log. One of unknown,fatal,error,warn,info,debug.}
-#' @export
-predictions_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/predictions/{id}/runs/{run_id}/logs"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list(last_id = last_id, limit = limit)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -17577,12 +16544,12 @@ queries_get <- function(id) {
 
 
 #' List the remote hosts
-#' @param type string optional. The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, RemoteHostTypes::Salesforce, RemoteHostTypes::Snowflake, and RemoteHostTypes::Van
+#' @param type string optional. The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID of the remote host.}
 #' \item{name}{string, The name of the remote host.}
-#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, RemoteHostTypes::Salesforce, RemoteHostTypes::Snowflake, and RemoteHostTypes::Van}
+#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
 #' \item{url}{string, The URL for remote host.}
 #' @export
 remote_hosts_list <- function(type = NULL) {
@@ -17605,12 +16572,12 @@ remote_hosts_list <- function(type = NULL) {
 #' Create a new remote host
 #' @param name string required. The human readable name for the remote host.
 #' @param url string required. The URL to your host.
-#' @param type string required. The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, RemoteHostTypes::Salesforce, RemoteHostTypes::Snowflake, and RemoteHostTypes::Van
+#' @param type string required. The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of the remote host.}
 #' \item{name}{string, The name of the remote host.}
-#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::BSD, RemoteHostTypes::Bitbucket, RemoteHostTypes::Ftp, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, RemoteHostTypes::Salesforce, RemoteHostTypes::Snowflake, and RemoteHostTypes::Van}
+#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
 #' \item{url}{string, The URL for remote host.}
 #' @export
 remote_hosts_post <- function(name, url, type) {
@@ -30429,30 +29396,6 @@ storage_hosts_delete_shares_groups <- function(id, group_id) {
  }
 
 
-#' Run an enhancement on a table, deprecated use "POST /tables/:source_table_id/enhancements/<enhancement-type>" instead
-#' @param id integer required. ID of table to enhance
-#' @param job_type string required. Job type
-#' @param metadata string optional. 
-#' 
-#' @return  An empty HTTP response
-#' @export
-tables_post_enhance <- function(id, job_type, metadata = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/tables/{id}/enhance"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(jobType = job_type, metadata = metadata)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Geocode a table
 #' @param source_table_id integer required. The ID of the table to be enhanced.
 #' 
@@ -30503,72 +29446,6 @@ tables_post_enhancements_cass_ncoa <- function(source_table_id, perform_ncoa = N
   path_params  <- list(source_table_id = source_table_id)
   query_params <- list()
   body_params  <- list(performNcoa = perform_ncoa, ncoaCredentialId = ncoa_credential_id, outputLevel = output_level)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Match person records against a dynamo table prepared by Civis
-#' @param source_table_id integer required. The ID of the table to be enhanced.
-#' @param threshold number required. The confidence threshold which must be met for two individuals to be declared a match. Must be less than or equal to 1 and greater than or equal to 0.
-#' @param match_table_id integer required. The ID of the Dynamo table to match against.
-#' @param max_matches integer optional. The maximum number of individuals a person may be matched with.A value of 0 indicates that all matches should be returned.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the enhancement.}
-#' \item{sourceTableId}{integer, The ID of the table that was enhanced.}
-#' \item{state}{string, The state of the enhancement, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{enhancedTableSchema}{string, The schema name of the table created by the enhancement.}
-#' \item{enhancedTableName}{string, The name of the table created by the enhancement.}
-#' \item{threshold}{number, The confidence threshold which must be met for two individuals to be declared a match. Must be less than or equal to 1 and greater than or equal to 0.}
-#' \item{maxMatches}{integer, The maximum number of individuals a person may be matched with.A value of 0 indicates that all matches should be returned.}
-#' \item{matchTableId}{integer, The ID of the Dynamo table to match against.}
-#' @export
-tables_post_enhancements_prepared_matchings <- function(source_table_id, threshold, match_table_id, max_matches = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/tables/{source_table_id}/enhancements/prepared-matchings"
-  path_params  <- list(source_table_id = source_table_id)
-  query_params <- list()
-  body_params  <- list(threshold = threshold, matchTableId = match_table_id, maxMatches = max_matches)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Match person records against an arbitrary Redshift table
-#' @param source_table_id integer required. The ID of the table to be enhanced.
-#' @param threshold number required. The confidence threshold which must be met for two individuals to be declared a match. Must be less than or equal to 1 and greater than or equal to 0.
-#' @param match_table_id integer required. The ID of the Redshift table to match against.
-#' @param max_matches integer optional. The maximum number of individuals a person may be matched with.A value of 0 indicates that all matches should be returned.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the enhancement.}
-#' \item{sourceTableId}{integer, The ID of the table that was enhanced.}
-#' \item{state}{string, The state of the enhancement, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{enhancedTableSchema}{string, The schema name of the table created by the enhancement.}
-#' \item{enhancedTableName}{string, The name of the table created by the enhancement.}
-#' \item{threshold}{number, The confidence threshold which must be met for two individuals to be declared a match. Must be less than or equal to 1 and greater than or equal to 0.}
-#' \item{maxMatches}{integer, The maximum number of individuals a person may be matched with.A value of 0 indicates that all matches should be returned.}
-#' \item{matchTableId}{integer, The ID of the Redshift table to match against.}
-#' @export
-tables_post_enhancements_table_matchings <- function(source_table_id, threshold, match_table_id, max_matches = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/tables/{source_table_id}/enhancements/table-matchings"
-  path_params  <- list(source_table_id = source_table_id)
-  query_params <- list()
-  body_params  <- list(threshold = threshold, matchTableId = match_table_id, maxMatches = max_matches)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -30638,68 +29515,6 @@ tables_get_enhancements_cass_ncoa <- function(id, source_table_id) {
  }
 
 
-#' View a prepared matching enhancement
-#' @param id integer required. The ID of the enhancement.
-#' @param source_table_id integer required. The ID of the table that was enhanced.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the enhancement.}
-#' \item{sourceTableId}{integer, The ID of the table that was enhanced.}
-#' \item{state}{string, The state of the enhancement, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{enhancedTableSchema}{string, The schema name of the table created by the enhancement.}
-#' \item{enhancedTableName}{string, The name of the table created by the enhancement.}
-#' \item{threshold}{number, The confidence threshold which must be met for two individuals to be declared a match. Must be less than or equal to 1 and greater than or equal to 0.}
-#' \item{maxMatches}{integer, The maximum number of individuals a person may be matched with.A value of 0 indicates that all matches should be returned.}
-#' \item{matchTableId}{integer, The ID of the Dynamo table to match against.}
-#' @export
-tables_get_enhancements_prepared_matchings <- function(id, source_table_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/tables/{source_table_id}/enhancements/prepared-matchings/{id}"
-  path_params  <- list(id = id, source_table_id = source_table_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' View a table matching enhancement
-#' @param id integer required. The ID of the enhancement.
-#' @param source_table_id integer required. The ID of the table that was enhanced.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the enhancement.}
-#' \item{sourceTableId}{integer, The ID of the table that was enhanced.}
-#' \item{state}{string, The state of the enhancement, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{enhancedTableSchema}{string, The schema name of the table created by the enhancement.}
-#' \item{enhancedTableName}{string, The name of the table created by the enhancement.}
-#' \item{threshold}{number, The confidence threshold which must be met for two individuals to be declared a match. Must be less than or equal to 1 and greater than or equal to 0.}
-#' \item{maxMatches}{integer, The maximum number of individuals a person may be matched with.A value of 0 indicates that all matches should be returned.}
-#' \item{matchTableId}{integer, The ID of the Redshift table to match against.}
-#' @export
-tables_get_enhancements_table_matchings <- function(id, source_table_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/tables/{source_table_id}/enhancements/table-matchings/{id}"
-  path_params  <- list(id = id, source_table_id = source_table_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Creates and enqueues a single table scanner job on a new table
 #' @param database_id integer required. The ID of the database.
 #' @param schema string required. The name of the schema containing the table.
@@ -30745,6 +29560,8 @@ tables_post_scan <- function(database_id, schema, table_name, stats_priority = N
 #' \item{sortkeys}{string, The column used as the Amazon Redshift sortkey.}
 #' \item{refreshStatus}{string, How up-to-date the table's statistics on row counts, null counts, distinct counts, and values distributions are. One of: refreshing, stale, or current.}
 #' \item{lastRefresh}{string, The time of the last statistics refresh.}
+#' \item{dataUpdatedAt}{string, The last time that Civis Platform captured a change in this table.Only applicable for Redshift tables; please see the Civis help desk for more info.}
+#' \item{schemaUpdatedAt}{string, The last time that Civis Platform captured a change to the table attributes/structure.Only applicable for Redshift tables; please see the Civis help desk for more info.}
 #' \item{refreshId}{string, The ID of the most recent statistics refresh.}
 #' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
@@ -30899,6 +29716,8 @@ tables_list <- function(database_id = NULL, schema = NULL, name = NULL, search =
 #' \item{sortkeys}{string, The column used as the Amazon Redshift sortkey.}
 #' \item{refreshStatus}{string, How up-to-date the table's statistics on row counts, null counts, distinct counts, and values distributions are. One of: refreshing, stale, or current.}
 #' \item{lastRefresh}{string, The time of the last statistics refresh.}
+#' \item{dataUpdatedAt}{string, The last time that Civis Platform captured a change in this table.Only applicable for Redshift tables; please see the Civis help desk for more info.}
+#' \item{schemaUpdatedAt}{string, The last time that Civis Platform captured a change to the table attributes/structure.Only applicable for Redshift tables; please see the Civis help desk for more info.}
 #' \item{refreshId}{string, The ID of the most recent statistics refresh.}
 #' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
@@ -30986,7 +29805,7 @@ tables_get <- function(id) {
 #' @param id integer required. The ID of the table.
 #' @param ontology_mapping list optional. The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.
 #' @param description string optional. The user-defined description of the table.
-#' @param primary_keys array optional. The columns comprising the primary key of this table.
+#' @param primary_keys array optional. A list of column(s) which together uniquely identify a row in the data.These columns must not contain NULL values.
 #' @param last_modified_keys array optional. The columns indicating when a row was last modified.
 #' 
 #' @return  A list containing the following elements:
@@ -31004,6 +29823,8 @@ tables_get <- function(id) {
 #' \item{sortkeys}{string, The column used as the Amazon Redshift sortkey.}
 #' \item{refreshStatus}{string, How up-to-date the table's statistics on row counts, null counts, distinct counts, and values distributions are. One of: refreshing, stale, or current.}
 #' \item{lastRefresh}{string, The time of the last statistics refresh.}
+#' \item{dataUpdatedAt}{string, The last time that Civis Platform captured a change in this table.Only applicable for Redshift tables; please see the Civis help desk for more info.}
+#' \item{schemaUpdatedAt}{string, The last time that Civis Platform captured a change to the table attributes/structure.Only applicable for Redshift tables; please see the Civis help desk for more info.}
 #' \item{refreshId}{string, The ID of the most recent statistics refresh.}
 #' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
@@ -31903,6 +30724,7 @@ templates_delete_scripts_projects <- function(id, project_id) {
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, }
+#' \item{public}{boolean, If the template is public or not.}
 #' \item{scriptId}{integer, The id of the script that this template uses.}
 #' \item{userContext}{string, The user context of the script that this template uses.}
 #' \item{name}{string, The name of the template.}
@@ -31941,6 +30763,7 @@ templates_list_scripts <- function(hidden = NULL, category = NULL, limit = NULL,
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, }
+#' \item{public}{boolean, If the template is public or not.}
 #' \item{scriptId}{integer, The id of the script that this template uses.}
 #' \item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{userContext}{string, The user context of the script that this template uses.}
@@ -31977,6 +30800,7 @@ templates_post_scripts <- function(script_id, name, note = NULL, ui_report_id = 
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, }
+#' \item{public}{boolean, If the template is public or not.}
 #' \item{scriptId}{integer, The id of the script that this template uses.}
 #' \item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{userContext}{string, The user context of the script that this template uses.}
@@ -32017,6 +30841,7 @@ templates_get_scripts <- function(id) {
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, }
+#' \item{public}{boolean, If the template is public or not.}
 #' \item{scriptId}{integer, The id of the script that this template uses.}
 #' \item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{userContext}{string, The user context of the script that this template uses.}
@@ -32057,6 +30882,7 @@ templates_put_scripts <- function(id, name, note = NULL, ui_report_id = NULL, ar
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, }
+#' \item{public}{boolean, If the template is public or not.}
 #' \item{scriptId}{integer, The id of the script that this template uses.}
 #' \item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{userContext}{string, The user context of the script that this template uses.}
@@ -32116,6 +30942,7 @@ templates_delete_scripts <- function(id) {
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, }
+#' \item{public}{boolean, If the template is public or not.}
 #' \item{scriptId}{integer, The id of the script that this template uses.}
 #' \item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{userContext}{string, The user context of the script that this template uses.}
@@ -32276,6 +31103,7 @@ users_post <- function(name, email, primary_group_id, user, active = NULL, city 
 #' \item{roles}{array, The roles this user has, listed by slug.}
 #' \item{preferences}{list, This user's preferences.}
 #' \item{customBranding}{string, The branding of Platform for this user.}
+#' \item{primaryGroupId}{integer, The ID of the primary group of this user.}
 #' \item{groups}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this group.
@@ -32377,6 +31205,7 @@ users_list_me <- function() {
 #' \item workflowIndexOrderField string, Order field for the workflows page.
 #' \item workflowIndexOrderDir string, Order direction for the workflows page.
 #' \item workflowIndexAuthorFilter string, Author filter for the workflows page.
+#' \item workflowIndexArchivedFilter string, Archived filter for the workflows page.
 #' \item serviceOrderField string, Order field for the services page.
 #' \item serviceOrderDir string, Order direction for the services page.
 #' \item serviceAuthorFilter string, Author filter for the services page.
@@ -32395,6 +31224,7 @@ users_list_me <- function() {
 #' \item{roles}{array, The roles this user has, listed by slug.}
 #' \item{preferences}{list, This user's preferences.}
 #' \item{customBranding}{string, The branding of Platform for this user.}
+#' \item{primaryGroupId}{integer, The ID of the primary group of this user.}
 #' \item{groups}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this group.
@@ -32435,7 +31265,7 @@ users_patch_me <- function(preferences = NULL, last_checked_announcements = NULL
 #' \item{userMenus}{list, User profile menu items available to this user.}
 #' \item{userType}{list, A list containing the following elements: 
 #' \itemize{
-#' \item vendor boolean, True if this user is a member of any groups with a vendor ID.
+#' \item vendor boolean, This attribute is deprecated
 #' \item media boolean, True if user has access to the Media Optimizer job type.
 #' \item mainApp string, The slug for the main app for an app-only user account.
 #' \item appCount integer, Number of apps this user has access to.
@@ -32884,6 +31714,7 @@ users_delete_me_favorites <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
+#' \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 #' \item{timeZone}{string, The time zone of this workflow.}
 #' \item{nextExecutionAt}{string, The time of the next scheduled execution.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -32920,6 +31751,7 @@ workflows_list <- function(hidden = NULL, archived = NULL, author = NULL, state 
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
+#' @param allow_concurrent_executions boolean optional. Whether the workflow can execute when already running.
 #' @param time_zone string optional. The time zone of this workflow.
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -32959,6 +31791,7 @@ workflows_list <- function(hidden = NULL, archived = NULL, author = NULL, state 
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
+#' \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 #' \item{timeZone}{string, The time zone of this workflow.}
 #' \item{nextExecutionAt}{string, The time of the next scheduled execution.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -32977,13 +31810,13 @@ workflows_list <- function(hidden = NULL, archived = NULL, author = NULL, state 
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' @export
-workflows_post <- function(name, description = NULL, from_job_chain = NULL, definition = NULL, schedule = NULL, time_zone = NULL, notifications = NULL, hidden = NULL) {
+workflows_post <- function(name, description = NULL, from_job_chain = NULL, definition = NULL, schedule = NULL, allow_concurrent_executions = NULL, time_zone = NULL, notifications = NULL, hidden = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/workflows/"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, description = description, fromJobChain = from_job_chain, definition = definition, schedule = schedule, timeZone = time_zone, notifications = notifications, hidden = hidden)
+  body_params  <- list(name = name, description = description, fromJobChain = from_job_chain, definition = definition, schedule = schedule, allowConcurrentExecutions = allow_concurrent_executions, timeZone = time_zone, notifications = notifications, hidden = hidden)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -33022,6 +31855,7 @@ workflows_post <- function(name, description = NULL, from_job_chain = NULL, defi
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
+#' \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 #' \item{timeZone}{string, The time zone of this workflow.}
 #' \item{nextExecutionAt}{string, The time of the next scheduled execution.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -33070,6 +31904,7 @@ workflows_get <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
+#' @param allow_concurrent_executions boolean optional. Whether the workflow can execute when already running.
 #' @param time_zone string optional. The time zone of this workflow.
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -33108,6 +31943,7 @@ workflows_get <- function(id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
+#' \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 #' \item{timeZone}{string, The time zone of this workflow.}
 #' \item{nextExecutionAt}{string, The time of the next scheduled execution.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -33126,13 +31962,13 @@ workflows_get <- function(id) {
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' @export
-workflows_put <- function(id, name, description = NULL, definition = NULL, schedule = NULL, time_zone = NULL, notifications = NULL) {
+workflows_put <- function(id, name, description = NULL, definition = NULL, schedule = NULL, allow_concurrent_executions = NULL, time_zone = NULL, notifications = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/workflows/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, description = description, definition = definition, schedule = schedule, timeZone = time_zone, notifications = notifications)
+  body_params  <- list(name = name, description = description, definition = definition, schedule = schedule, allowConcurrentExecutions = allow_concurrent_executions, timeZone = time_zone, notifications = notifications)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -33156,6 +31992,7 @@ workflows_put <- function(id, name, description = NULL, definition = NULL, sched
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
+#' @param allow_concurrent_executions boolean optional. Whether the workflow can execute when already running.
 #' @param time_zone string optional. The time zone of this workflow.
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -33194,6 +32031,7 @@ workflows_put <- function(id, name, description = NULL, definition = NULL, sched
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
+#' \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 #' \item{timeZone}{string, The time zone of this workflow.}
 #' \item{nextExecutionAt}{string, The time of the next scheduled execution.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -33212,13 +32050,13 @@ workflows_put <- function(id, name, description = NULL, definition = NULL, sched
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' @export
-workflows_patch <- function(id, name = NULL, description = NULL, definition = NULL, schedule = NULL, time_zone = NULL, notifications = NULL) {
+workflows_patch <- function(id, name = NULL, description = NULL, definition = NULL, schedule = NULL, allow_concurrent_executions = NULL, time_zone = NULL, notifications = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/workflows/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, description = description, definition = definition, schedule = schedule, timeZone = time_zone, notifications = notifications)
+  body_params  <- list(name = name, description = description, definition = definition, schedule = schedule, allowConcurrentExecutions = allow_concurrent_executions, timeZone = time_zone, notifications = notifications)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -33429,6 +32267,7 @@ workflows_delete_shares_groups <- function(id, group_id) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
+#' \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 #' \item{timeZone}{string, The time zone of this workflow.}
 #' \item{nextExecutionAt}{string, The time of the next scheduled execution.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -33739,6 +32578,7 @@ workflows_get_git_commits <- function(id, commit_hash) {
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
 #' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
+#' \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 #' \item{timeZone}{string, The time zone of this workflow.}
 #' \item{nextExecutionAt}{string, The time of the next scheduled execution.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -33841,7 +32681,7 @@ workflows_list_executions <- function(id, limit = NULL, page_num = NULL, order =
 #' \item{tasks}{array, An array containing the following fields: 
 #' \itemize{
 #' \item name string, The name of the task.
-#' \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, or error
+#' \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, error, or cancelled
 #' \item mistralStateInfo string, Extra info associated with the state of the task.
 #' \item runs array, The runs associated with this task, in descending order by id.
 #' \item executions array, The executions run by this task, in descending order by id.
@@ -33891,7 +32731,7 @@ workflows_post_executions <- function(id, target_task = NULL, input = NULL, incl
 #' \item{tasks}{array, An array containing the following fields: 
 #' \itemize{
 #' \item name string, The name of the task.
-#' \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, or error
+#' \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, error, or cancelled
 #' \item mistralStateInfo string, Extra info associated with the state of the task.
 #' \item runs array, The runs associated with this task, in descending order by id.
 #' \item executions array, The executions run by this task, in descending order by id.
@@ -33941,7 +32781,7 @@ workflows_get_executions <- function(id, execution_id) {
 #' \item{tasks}{array, An array containing the following fields: 
 #' \itemize{
 #' \item name string, The name of the task.
-#' \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, or error
+#' \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, error, or cancelled
 #' \item mistralStateInfo string, Extra info associated with the state of the task.
 #' \item runs array, The runs associated with this task, in descending order by id.
 #' \item executions array, The executions run by this task, in descending order by id.
@@ -33991,7 +32831,7 @@ workflows_post_executions_cancel <- function(id, execution_id) {
 #' \item{tasks}{array, An array containing the following fields: 
 #' \itemize{
 #' \item name string, The name of the task.
-#' \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, or error
+#' \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, error, or cancelled
 #' \item mistralStateInfo string, Extra info associated with the state of the task.
 #' \item runs array, The runs associated with this task, in descending order by id.
 #' \item executions array, The executions run by this task, in descending order by id.
@@ -34042,7 +32882,7 @@ workflows_post_executions_resume <- function(id, execution_id) {
 #' \item{tasks}{array, An array containing the following fields: 
 #' \itemize{
 #' \item name string, The name of the task.
-#' \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, or error
+#' \item mistralState string, The state of this task. One of idle, waiting, running, delayed, success, error, or cancelled
 #' \item mistralStateInfo string, Extra info associated with the state of the task.
 #' \item runs array, The runs associated with this task, in descending order by id.
 #' \item executions array, The executions run by this task, in descending order by id.
@@ -34076,7 +32916,7 @@ workflows_post_executions_retry <- function(id, execution_id, task_name = NULL) 
 #' 
 #' @return  A list containing the following elements:
 #' \item{name}{string, The name of the task.}
-#' \item{mistralState}{string, The state of this task. One of idle, waiting, running, delayed, success, or error}
+#' \item{mistralState}{string, The state of this task. One of idle, waiting, running, delayed, success, error, or cancelled}
 #' \item{mistralStateInfo}{string, Extra info associated with the state of the task.}
 #' \item{runs}{array, An array containing the following fields: 
 #' \itemize{

@@ -2,10 +2,13 @@
 
 ## Unreleased
 
+## [3.0.0] - 2020-06-22
 
 ### Changed
 - Failed HTTP requests are now retried before raising errors (#235)
-- Default docker image for Civis Futures is now `latest` rather than `3` (#238)
+- Default docker image for Civis Futures is now `latest` rather than `3` (#238).
+This could require users to update code as it will automatically be updated to the latest version of 
+R deployed on Civis Platform moving forward (including R 4.0.0) (#238)
 
 ### Fixed
 - Fixed auto-documentation bug for some endpoints with parameters that are nested objects. `enhancements_[verb]_cass_ncoa`, `exports_[verb]_files,`
@@ -18,6 +21,7 @@ and `imports_[verb]_files` have updated documentation as a result. (#240)
 - Updates required for `stringsAsFactors=FALSE` default. (#232).
 
 ## [2.1.1] -  2020-02-20
+
 ### Fixed
 
 - The `database` parameter in `read_civis` now accepts character

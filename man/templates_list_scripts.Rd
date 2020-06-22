@@ -29,6 +29,7 @@ templates_list_scripts(
 \value{
 An array containing the following fields:
 \item{id}{integer, }
+\item{public}{boolean, If the template is public or not.}
 \item{scriptId}{integer, The id of the script that this template uses.}
 \item{userContext}{string, The user context of the script that this template uses.}
 \item{name}{string, The name of the template.}

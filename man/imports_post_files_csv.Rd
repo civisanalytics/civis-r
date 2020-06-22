@@ -25,7 +25,12 @@ imports_post_files_csv(
 \item{source}{list required. A list containing the following elements: 
 \itemize{
 \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-\item storagePaths object, 
+\item storagePath list . A list containing the following elements: 
+\itemize{
+\item storageHostId integer, The ID of the source storage host.
+\item credentialId integer, The ID of the credentials for the source storage host.
+\item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+}
 }}
 
 \item{destination}{list required. A list containing the following elements: 
@@ -34,7 +39,7 @@ imports_post_files_csv(
 \item table string, The destination table name.
 \item remoteHostId integer, The ID of the destination database host.
 \item credentialId integer, The ID of the credentials for the destination database.
-\item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+\item primaryKeys array, A list of column(s) which together uniquely identify a row in the destination table.These columns must not contain NULL values. If the import mode is "upsert", this field is required;see the Civis Helpdesk article on "Advanced CSV Imports via the Civis API" for more information.
 \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
 }}
 
@@ -58,9 +63,9 @@ imports_post_files_csv(
 \item sqlType string, The SQL type of the column.
 }}
 
-\item{loosen_types}{boolean optional. If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
+\item{loosen_types}{boolean optional. If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
 
-\item{execution}{string optional. In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
+\item{execution}{string optional. In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.}
 
 \item{redshift_destination_options}{list optional. A list containing the following elements: 
 \itemize{
@@ -78,7 +83,12 @@ A list containing the following elements:
 \item{source}{list, A list containing the following elements: 
 \itemize{
 \item fileIds array, The file ID(s) to import, if importing Civis file(s).
-\item storagePaths object, 
+\item storagePath list . A list containing the following elements: 
+\itemize{
+\item storageHostId integer, The ID of the source storage host.
+\item credentialId integer, The ID of the credentials for the source storage host.
+\item filePaths array, The file or directory path(s) within the bucket from which to import.  E.g. the file_path for "s3://mybucket/files/all/" would be "/files/all/"If specifying a directory path, the job will import every file found under that path. All files must have the same column layout and file format (e.g., compression, columnDelimiter, etc.).
+}
 }}
 \item{destination}{list, A list containing the following elements: 
 \itemize{
@@ -86,7 +96,7 @@ A list containing the following elements:
 \item table string, The destination table name.
 \item remoteHostId integer, The ID of the destination database host.
 \item credentialId integer, The ID of the credentials for the destination database.
-\item primaryKeys array, A list of the primary key column(s) of the destination table.If the destination table does not exist, and the import mode is "upsert", this field is required.
+\item primaryKeys array, A list of column(s) which together uniquely identify a row in the destination table.These columns must not contain NULL values. If the import mode is "upsert", this field is required;see the Civis Helpdesk article on "Advanced CSV Imports via the Civis API" for more information.
 \item lastModifiedKeys array, A list of the columns indicating a record has been updated.If the destination table does not exist, and the import mode is "upsert", this field is required.
 }}
 \item{firstRowIsHeader}{boolean, A boolean value indicating whether or not the first row of the source file is a header row.}
@@ -100,8 +110,8 @@ A list containing the following elements:
 \item name string, The column name.
 \item sqlType string, The SQL type of the column.
 }}
-\item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
-\item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
+\item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
+\item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.}
 \item{redshiftDestinationOptions}{list, A list containing the following elements: 
 \itemize{
 \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".

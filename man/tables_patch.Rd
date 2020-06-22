@@ -19,7 +19,7 @@ tables_patch(
 
 \item{description}{string optional. The user-defined description of the table.}
 
-\item{primary_keys}{array optional. The columns comprising the primary key of this table.}
+\item{primary_keys}{array optional. A list of column(s) which together uniquely identify a row in the data.These columns must not contain NULL values.}
 
 \item{last_modified_keys}{array optional. The columns indicating when a row was last modified.}
 }
@@ -39,6 +39,8 @@ A list containing the following elements:
 \item{sortkeys}{string, The column used as the Amazon Redshift sortkey.}
 \item{refreshStatus}{string, How up-to-date the table's statistics on row counts, null counts, distinct counts, and values distributions are. One of: refreshing, stale, or current.}
 \item{lastRefresh}{string, The time of the last statistics refresh.}
+\item{dataUpdatedAt}{string, The last time that Civis Platform captured a change in this table.Only applicable for Redshift tables; please see the Civis help desk for more info.}
+\item{schemaUpdatedAt}{string, The last time that Civis Platform captured a change to the table attributes/structure.Only applicable for Redshift tables; please see the Civis help desk for more info.}
 \item{refreshId}{string, The ID of the most recent statistics refresh.}
 \item{lastRun}{list, A list containing the following elements: 
 \itemize{

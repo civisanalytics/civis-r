@@ -28,6 +28,10 @@ An array containing the following fields:
 \item{csMetadata}{string, Additional metadata about the organization in JSON format.}
 \item{removeFooterInEmails}{boolean, If true, emails sent by platform will not include Civis text.}
 \item{salesforceAccountId}{string, The SalesForce Account ID for this organization.}
+\item{advancedSettings}{list, A list containing the following elements: 
+\itemize{
+\item dedicatedDjPoolEnabled boolean, If true, the Organization has a dedicated delayed jobs pool. Defaults to false.
+}}
 \item{tableauRefreshHistory}{array, The number of tableau refreshes used this month.}
 }
 \description{

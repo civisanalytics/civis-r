@@ -16,7 +16,7 @@ workflows_get_executions_tasks(id, execution_id, task_name)
 \value{
 A list containing the following elements:
 \item{name}{string, The name of the task.}
-\item{mistralState}{string, The state of this task. One of idle, waiting, running, delayed, success, or error}
+\item{mistralState}{string, The state of this task. One of idle, waiting, running, delayed, success, error, or cancelled}
 \item{mistralStateInfo}{string, Extra info associated with the state of the task.}
 \item{runs}{array, An array containing the following fields: 
 \itemize{

@@ -4,10 +4,12 @@
 \alias{clusters_get_kubernetes}
 \title{Describe a Kubernetes Cluster}
 \usage{
-clusters_get_kubernetes(id)
+clusters_get_kubernetes(id, include_usage_stats = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of this cluster.}
+\item{id}{integer required.}
+
+\item{include_usage_stats}{boolean optional. When true, usage stats are returned in instance config objects. Defaults to false.}
 }
 \value{
 A list containing the following elements:
@@ -24,6 +26,7 @@ A list containing the following elements:
 \item defaultInstanceConfigId integer, The id of the InstanceConfig that is the default for this partition.
 }}
 \item{isNatEnabled}{boolean, Whether this cluster needs a NAT gateway or not.}
+\item{hours}{number, The number of hours used this month for this cluster }
 }
 \description{
 Describe a Kubernetes Cluster

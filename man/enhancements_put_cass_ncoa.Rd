@@ -27,7 +27,14 @@ enhancements_put_cass_ncoa(
 
 \item{source}{list required. A list containing the following elements: 
 \itemize{
-\item databaseTable object, 
+\item databaseTable list . A list containing the following elements: 
+\itemize{
+\item schema string, The schema name of the source table.
+\item table string, The name of the source table.
+\item remoteHostId integer, The ID of the database host for the table.
+\item credentialId integer, The id of the credentials to be used when performing the enhancement.
+\item multipartKey array, The source table primary key.
+}
 }}
 
 \item{schedule}{list optional. A list containing the following elements: 
@@ -57,7 +64,11 @@ enhancements_put_cass_ncoa(
 
 \item{destination}{list optional. A list containing the following elements: 
 \itemize{
-\item databaseTable object, 
+\item databaseTable list . A list containing the following elements: 
+\itemize{
+\item schema string, The schema name for the output data.
+\item table string, The table name for the output data.
+}
 }}
 
 \item{column_mapping}{list optional. A list containing the following elements: 
@@ -129,11 +140,22 @@ A list containing the following elements:
 }}
 \item{source}{list, A list containing the following elements: 
 \itemize{
-\item databaseTable object, 
+\item databaseTable list . A list containing the following elements: 
+\itemize{
+\item schema string, The schema name of the source table.
+\item table string, The name of the source table.
+\item remoteHostId integer, The ID of the database host for the table.
+\item credentialId integer, The id of the credentials to be used when performing the enhancement.
+\item multipartKey array, The source table primary key.
+}
 }}
 \item{destination}{list, A list containing the following elements: 
 \itemize{
-\item databaseTable object, 
+\item databaseTable list . A list containing the following elements: 
+\itemize{
+\item schema string, The schema name for the output data.
+\item table string, The table name for the output data.
+}
 }}
 \item{columnMapping}{list, A list containing the following elements: 
 \itemize{

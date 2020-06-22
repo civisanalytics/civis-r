@@ -35,6 +35,7 @@ An array containing the following fields:
 \item scheduledMinutes array, Minutes of the day it is scheduled on.
 \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
+\item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 \item{timeZone}{string, The time zone of this workflow.}
 \item{nextExecutionAt}{string, The time of the next scheduled execution.}
 \item{archived}{string, The archival status of the requested item(s).}

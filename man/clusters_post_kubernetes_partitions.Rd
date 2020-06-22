@@ -34,6 +34,7 @@ A list containing the following elements:
 \item instanceMaxMemory integer, The amount of memory (RAM) available to a single instance of that type in megabytes.
 \item instanceMaxCpu integer, The number of processor shares available to a single instance of that type in millicores.
 \item instanceMaxDisk integer, The amount of disk available to a single instance of that type in gigabytes.
+\item usageStats object, 
 }}
 \item{defaultInstanceConfigId}{integer, The id of the InstanceConfig that is the default for this partition.}
 }

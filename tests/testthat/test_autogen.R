@@ -2,13 +2,9 @@
 # RRV: 2017-11-20 for 1.1.1
 context("autogen")
 
-if (file.exists("data/full_spec.rds")) {
-  spec <- readRDS("data/full_spec.rds")
-} else {
-  spec <- suppressMessages(get_spec())
-  saveRDS(spec, "data/full_spec.rds")
-}
-
+# 2020-06-17: this is just a cached spec from a few years ago, updating will require
+# refactoring the tests.
+spec <- readRDS("data/full_spec.rds")
 paths <- spec$paths
 
 # ---- example data from spec
@@ -77,10 +73,7 @@ test_that("function names are correct", {
   pkg_names <- lsf.str("package:civis")
 
   # test on examples from io.R, models.R, etc
-  sample_names <- c("predictions_patch", "predictions_post_runs",
-                    "models_put_predictions", "scripts_post_sql_runs", "predictions_get",
-                    "models_get", "tables_post_refresh", "models_list",
-                    "notebooks_put")
+  sample_names <- c("scripts_post_sql_runs", "tables_list_projects", "notebooks_get", "workflows_get")
   expect_true(all(sample_names %in% pkg_names))
 })
 
@@ -418,3 +411,4 @@ test_that("escape_percent", {
 test_that("camel_to_snake", {
   expect_equal(camel_to_snake("TinaEatYourFood"), "tina_eat_your_food")
 })
+

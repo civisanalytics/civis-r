@@ -75,6 +75,7 @@ users_patch_me(preferences = NULL, last_checked_announcements = NULL)
 \item workflowIndexOrderField string, Order field for the workflows page.
 \item workflowIndexOrderDir string, Order direction for the workflows page.
 \item workflowIndexAuthorFilter string, Author filter for the workflows page.
+\item workflowIndexArchivedFilter string, Archived filter for the workflows page.
 \item serviceOrderField string, Order field for the services page.
 \item serviceOrderDir string, Order direction for the services page.
 \item serviceAuthorFilter string, Author filter for the services page.
@@ -95,6 +96,7 @@ A list containing the following elements:
 \item{roles}{array, The roles this user has, listed by slug.}
 \item{preferences}{list, This user's preferences.}
 \item{customBranding}{string, The branding of Platform for this user.}
+\item{primaryGroupId}{integer, The ID of the primary group of this user.}
 \item{groups}{array, An array containing the following fields: 
 \itemize{
 \item id integer, The ID of this group.

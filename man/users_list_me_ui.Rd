@@ -13,7 +13,7 @@ A list containing the following elements:
 \item{userMenus}{list, User profile menu items available to this user.}
 \item{userType}{list, A list containing the following elements: 
 \itemize{
-\item vendor boolean, True if this user is a member of any groups with a vendor ID.
+\item vendor boolean, This attribute is deprecated
 \item media boolean, True if user has access to the Media Optimizer job type.
 \item mainApp string, The slug for the main app for an app-only user account.
 \item appCount integer, Number of apps this user has access to.

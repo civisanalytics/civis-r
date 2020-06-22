@@ -26,6 +26,7 @@ templates_patch_scripts(
 \value{
 A list containing the following elements:
 \item{id}{integer, }
+\item{public}{boolean, If the template is public or not.}
 \item{scriptId}{integer, The id of the script that this template uses.}
 \item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 \item{userContext}{string, The user context of the script that this template uses.}
