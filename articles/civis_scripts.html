@@ -6,18 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Productionizing with Civis Scripts • civis</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Productionizing with Civis Scripts">
-<meta property="og:description" content="">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="civis">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -72,8 +73,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/civisanalytics/civis-r">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/civisanalytics/civis-r/">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -86,13 +87,14 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Productionizing with Civis Scripts</h1>
+      <h1 data-toc-skip>Productionizing with Civis Scripts</h1>
                         <h4 class="author">Patrick Miller</h4>
             
-            <h4 class="date">2020-02-24</h4>
+            <h4 class="date">2020-06-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/civisanalytics/civis-r/blob/master/vignettes/civis_scripts.Rmd"><code>vignettes/civis_scripts.Rmd</code></a></small>
       <div class="hidden name"><code>civis_scripts.Rmd</code></div>
@@ -123,38 +125,38 @@
 <div id="quick-start" class="section level2">
 <h2 class="hasAnchor">
 <a href="#quick-start" class="anchor"></a>Quick Start</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># create a container script with a parameter</span></a>
-<a class="sourceLine" id="cb1-2" title="2">script &lt;-<span class="st"> </span><span class="kw"><a href="../reference/scripts_post_containers.html">scripts_post_containers</a></span>(</a>
-<a class="sourceLine" id="cb1-3" title="3">  <span class="dt">required_resources =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">cpu =</span> <span class="dv">1024</span>, <span class="dt">memory =</span> <span class="dv">50</span>, <span class="dt">diskSpace =</span> <span class="dv">15</span>),</a>
-<a class="sourceLine" id="cb1-4" title="4">  <span class="dt">docker_command =</span> <span class="st">'cd /package_dir &amp;&amp; Rscript inst/run_script.R'</span>,</a>
-<a class="sourceLine" id="cb1-5" title="5">  <span class="dt">docker_image_name =</span> <span class="st">'civisanalytics/datascience-r'</span>,</a>
-<a class="sourceLine" id="cb1-6" title="6">  <span class="dt">name =</span> <span class="st">'SCRIPT NAME'</span>,</a>
-<a class="sourceLine" id="cb1-7" title="7">  <span class="dt">params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(</a>
-<a class="sourceLine" id="cb1-8" title="8">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">name =</span> <span class="st">'NAME_OF_ENV_VAR'</span>,</a>
-<a class="sourceLine" id="cb1-9" title="9">         <span class="dt">label =</span> <span class="st">'Name User Sees'</span>, </a>
-<a class="sourceLine" id="cb1-10" title="10">         <span class="dt">type =</span> <span class="st">'string'</span>,</a>
-<a class="sourceLine" id="cb1-11" title="11">         <span class="dt">required =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb1-12" title="12">  )</a>
-<a class="sourceLine" id="cb1-13" title="13">)</a>
-<a class="sourceLine" id="cb1-14" title="14"></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="co"># publish the container script as a template </span></a>
-<a class="sourceLine" id="cb1-16" title="16">template &lt;-<span class="st"> </span><span class="kw"><a href="../reference/templates_post_scripts.html">templates_post_scripts</a></span>(script<span class="op">$</span>id, <span class="dt">name =</span> <span class="st">'TEMPLATE NAME'</span>, <span class="dt">note =</span> <span class="st">'Markdown Docs'</span>)</a>
-<a class="sourceLine" id="cb1-17" title="17"></a>
-<a class="sourceLine" id="cb1-18" title="18"><span class="co"># run a template script, returning file ids of run outputs</span></a>
-<a class="sourceLine" id="cb1-19" title="19">out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_template.html">run_template</a></span>(template<span class="op">$</span>id)</a>
-<a class="sourceLine" id="cb1-20" title="20"></a>
-<a class="sourceLine" id="cb1-21" title="21"><span class="co"># post a file or JSONValue run output within a script</span></a>
-<a class="sourceLine" id="cb1-22" title="22"><span class="kw"><a href="../reference/write_job_output.html">write_job_output</a></span>(<span class="st">'filename.csv'</span>)</a>
-<a class="sourceLine" id="cb1-23" title="23"><span class="kw"><a href="../reference/json_values_post.html">json_values_post</a></span>(jsonlite<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON">toJSON</a></span>(my_list), <span class="st">'my_list.json'</span>)</a>
-<a class="sourceLine" id="cb1-24" title="24"></a>
-<a class="sourceLine" id="cb1-25" title="25"><span class="co"># get run output file ids of a script</span></a>
-<a class="sourceLine" id="cb1-26" title="26">out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/fetch_output_file_ids.html">fetch_output_file_ids</a></span>(<span class="kw"><a href="../reference/civis_script.html">civis_script</a></span>(id))</a>
-<a class="sourceLine" id="cb1-27" title="27"></a>
-<a class="sourceLine" id="cb1-28" title="28"><span class="co"># get csv run outputs of a script</span></a>
-<a class="sourceLine" id="cb1-29" title="29">df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="kw"><a href="../reference/civis_script.html">civis_script</a></span>(id), <span class="dt">regex =</span> <span class="st">'.csv'</span>, <span class="dt">using =</span> read.csv)</a>
-<a class="sourceLine" id="cb1-30" title="30"></a>
-<a class="sourceLine" id="cb1-31" title="31"><span class="co"># get JSONValue run outputs</span></a>
-<a class="sourceLine" id="cb1-32" title="32">my_list &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="kw"><a href="../reference/civis_script.html">civis_script</a></span>(id))</a></code></pre></div>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># create a container script with a parameter</span>
+<span class="no">script</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/scripts_post_containers.html">scripts_post_containers</a></span>(
+  <span class="kw">required_resources</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">cpu</span> <span class="kw">=</span> <span class="fl">1024</span>, <span class="kw">memory</span> <span class="kw">=</span> <span class="fl">50</span>, <span class="kw">diskSpace</span> <span class="kw">=</span> <span class="fl">15</span>),
+  <span class="kw">docker_command</span> <span class="kw">=</span> <span class="st">'cd /package_dir &amp;&amp; Rscript inst/run_script.R'</span>,
+  <span class="kw">docker_image_name</span> <span class="kw">=</span> <span class="st">'civisanalytics/datascience-r'</span>,
+  <span class="kw">name</span> <span class="kw">=</span> <span class="st">'SCRIPT NAME'</span>,
+  <span class="kw">params</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">'NAME_OF_ENV_VAR'</span>,
+         <span class="kw">label</span> <span class="kw">=</span> <span class="st">'Name User Sees'</span>,
+         <span class="kw">type</span> <span class="kw">=</span> <span class="st">'string'</span>,
+         <span class="kw">required</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+  )
+)
+
+<span class="co"># publish the container script as a template </span>
+<span class="no">template</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/templates_post_scripts.html">templates_post_scripts</a></span>(<span class="no">script</span>$<span class="no">id</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">'TEMPLATE NAME'</span>, <span class="kw">note</span> <span class="kw">=</span> <span class="st">'Markdown Docs'</span>)
+
+<span class="co"># run a template script, returning file ids of run outputs</span>
+<span class="no">out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/run_template.html">run_template</a></span>(<span class="no">template</span>$<span class="no">id</span>)
+
+<span class="co"># post a file or JSONValue run output within a script</span>
+<span class="fu"><a href="../reference/write_job_output.html">write_job_output</a></span>(<span class="st">'filename.csv'</span>)
+<span class="fu"><a href="../reference/json_values_post.html">json_values_post</a></span>(<span class="kw pkg">jsonlite</span><span class="kw ns">::</span><span class="fu"><a href="https://jeroen.cran.dev/jsonlite/reference/fromJSON.html">toJSON</a></span>(<span class="no">my_list</span>), <span class="st">'my_list.json'</span>)
+
+<span class="co"># get run output file ids of a script</span>
+<span class="no">out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/fetch_output_file_ids.html">fetch_output_file_ids</a></span>(<span class="fu"><a href="../reference/civis_script.html">civis_script</a></span>(<span class="no">id</span>))
+
+<span class="co"># get csv run outputs of a script</span>
+<span class="no">df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="fu"><a href="../reference/civis_script.html">civis_script</a></span>(<span class="no">id</span>), <span class="kw">regex</span> <span class="kw">=</span> <span class="st">'.csv'</span>, <span class="kw">using</span> <span class="kw">=</span> <span class="no">read.csv</span>)
+
+<span class="co"># get JSONValue run outputs</span>
+<span class="no">my_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="fu"><a href="../reference/civis_script.html">civis_script</a></span>(<span class="no">id</span>))</pre></body></html></div>
 </div>
 <div id="creating-and-running-scripts" class="section level2">
 <h2 class="hasAnchor">
@@ -164,26 +166,26 @@
 <h3 class="hasAnchor">
 <a href="#an-example-script" class="anchor"></a>An Example Script</h3>
 <p>The <code>post</code> method creates the job and returns a list of metadata about it, including its type.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">source &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="st"> print("Hello World!")</span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="st">'</span>)</a>
-<a class="sourceLine" id="cb2-4" title="4">job &lt;-<span class="st"> </span><span class="kw"><a href="../reference/scripts_post_r.html">scripts_post_r</a></span>(<span class="dt">name =</span> <span class="st">'Hello!'</span>, <span class="dt">source =</span> source)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">source</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'
+ print("Hello World!")
+'</span>)
+<span class="no">job</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/scripts_post_r.html">scripts_post_r</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">'Hello!'</span>, <span class="kw">source</span> <span class="kw">=</span> <span class="no">source</span>)</pre></body></html></div>
 <p>Each script can be uniquely identified by its <em>job id</em>. If you have a job id but don’t know what kind of script it is, you can do <code><a href="../reference/jobs_get.html">jobs_get(id)</a></code>.</p>
 <p>Each script type is associated with its own API endpoints. For instance, to post a job of each script type, you need <code>scripts_post_r</code>, <code>scripts_post_containers</code>, <code>scripts_post_custom</code>, or <code>templates_post_scripts</code>.</p>
 <p>This job hasn’t been run yet. To kick off a run do:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">run &lt;-<span class="st"> </span><span class="kw"><a href="../reference/scripts_post_r_runs.html">scripts_post_r_runs</a></span>(job<span class="op">$</span>id)</a>
-<a class="sourceLine" id="cb3-2" title="2"></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co"># check the status</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="kw"><a href="../reference/scripts_get_r_runs.html">scripts_get_r_runs</a></span>(job<span class="op">$</span>id, run<span class="op">$</span>id)</a>
-<a class="sourceLine" id="cb3-5" title="5"></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co"># automatically poll until the job completes</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="kw"><a href="../reference/await.html">await</a></span>(scripts_get_r_runs, <span class="dt">id =</span> job<span class="op">$</span>id, <span class="dt">run_id =</span> run<span class="op">$</span>id)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">run</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/scripts_post_r_runs.html">scripts_post_r_runs</a></span>(<span class="no">job</span>$<span class="no">id</span>)
+
+<span class="co"># check the status</span>
+<span class="fu"><a href="../reference/scripts_get_r_runs.html">scripts_get_r_runs</a></span>(<span class="no">job</span>$<span class="no">id</span>, <span class="no">run</span>$<span class="no">id</span>)
+
+<span class="co"># automatically poll until the job completes</span>
+<span class="fu"><a href="../reference/await.html">await</a></span>(<span class="no">scripts_get_r_runs</span>, <span class="kw">id</span> <span class="kw">=</span> <span class="no">job</span>$<span class="no">id</span>, <span class="kw">run_id</span> <span class="kw">=</span> <span class="no">run</span>$<span class="no">id</span>)</pre></body></html></div>
 <p>Since kicking off a job and polling until it completes is a really common task for this guide, let’s make it a function:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">run_script &lt;-<span class="st"> </span><span class="cf">function</span>(source, <span class="dt">name =</span> <span class="st">'Cool'</span>) {</a>
-<a class="sourceLine" id="cb4-2" title="2">  job &lt;-<span class="st"> </span><span class="kw"><a href="../reference/scripts_post_r.html">scripts_post_r</a></span>(<span class="dt">name =</span> name, <span class="dt">source =</span> source)</a>
-<a class="sourceLine" id="cb4-3" title="3">  run &lt;-<span class="st"> </span><span class="kw"><a href="../reference/scripts_post_r_runs.html">scripts_post_r_runs</a></span>(job<span class="op">$</span>id)</a>
-<a class="sourceLine" id="cb4-4" title="4">  <span class="kw"><a href="../reference/await.html">await</a></span>(scripts_get_r_runs, <span class="dt">id =</span> job<span class="op">$</span>id, <span class="dt">run_id =</span> run<span class="op">$</span>id)</a>
-<a class="sourceLine" id="cb4-5" title="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">run_script</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">source</span>, <span class="no">name</span> <span class="kw">=</span> <span class="st">'Cool'</span>) {
+  <span class="no">job</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/scripts_post_r.html">scripts_post_r</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="no">name</span>, <span class="kw">source</span> <span class="kw">=</span> <span class="no">source</span>)
+  <span class="no">run</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/scripts_post_r_runs.html">scripts_post_r_runs</a></span>(<span class="no">job</span>$<span class="no">id</span>)
+  <span class="fu"><a href="../reference/await.html">await</a></span>(<span class="no">scripts_get_r_runs</span>, <span class="kw">id</span> <span class="kw">=</span> <span class="no">job</span>$<span class="no">id</span>, <span class="kw">run_id</span> <span class="kw">=</span> <span class="no">run</span>$<span class="no">id</span>)
+}</pre></body></html></div>
 </div>
 <div id="run-outputs" class="section level3">
 <h3 class="hasAnchor">
@@ -193,148 +195,148 @@
 <h4 class="hasAnchor">
 <a href="#files" class="anchor"></a>Files</h4>
 <p>We can specify adding a <code>File</code> as a run output by uploading the object to S3 with <code>write_civis_file</code> and setting <code>object_type</code> in <code>scripts_post_r_runs_outputs</code> to <code>File</code>. Notice that the environment variables <code>CIVIS_JOB_ID</code> and <code>CIVIS_RUN_ID</code> are automatically inserted into the environment for us to have access to.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">source &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="st"> library(civis)</span></a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="st"> data(iris)</span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="st"> write.csv(iris, 'iris.csv')</span></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="st"> job_id &lt;- as.numeric(Sys.getenv('CIVIS_JOB_ID'))</span></a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="st"> run_id &lt;- as.numeric(Sys.getenv('CIVIS_RUN_ID'))</span></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="st"> file_id &lt;- write_civis_file('iris.csv')</span></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="st"> scripts_post_r_runs_outputs(job_id, run_id, object_type = 'File', object_id = file_id)</span></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="st">"</span>)</a>
-<a class="sourceLine" id="cb5-10" title="10">run &lt;-<span class="st"> </span><span class="kw">run_script</span>(source)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">source</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"
+ library(civis)
+ data(iris)
+ write.csv(iris, 'iris.csv')
+ job_id &lt;- as.numeric(Sys.getenv('CIVIS_JOB_ID'))
+ run_id &lt;- as.numeric(Sys.getenv('CIVIS_RUN_ID'))
+ file_id &lt;- write_civis_file('iris.csv')
+ scripts_post_r_runs_outputs(job_id, run_id, object_type = 'File', object_id = file_id)
+"</span>)
+<span class="no">run</span> <span class="kw">&lt;-</span> <span class="fu">run_script</span>(<span class="no">source</span>)</pre></body></html></div>
 <p>Since this pattern is so common, we replaced it with the function <code>write_job_output</code> which you can use to post a filename as a run output for any script type.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">source &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"</span></a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="st"> library(civis)</span></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="st"> data(iris)</span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="st"> write.csv(iris, 'iris.csv')</span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="st"> write_job_output('iris.csv')</span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="st">"</span>)</a>
-<a class="sourceLine" id="cb6-7" title="7">run &lt;-<span class="st"> </span><span class="kw">run_script</span>(source)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">source</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"
+ library(civis)
+ data(iris)
+ write.csv(iris, 'iris.csv')
+ write_job_output('iris.csv')
+"</span>)
+<span class="no">run</span> <span class="kw">&lt;-</span> <span class="fu">run_script</span>(<span class="no">source</span>)</pre></body></html></div>
 </div>
 <div id="jsonvalues" class="section level4">
 <h4 class="hasAnchor">
 <a href="#jsonvalues" class="anchor"></a>JSONValues</h4>
 <p>It is best practice to make run outputs as portable as possible because the script can be called by any language. For arbitrary data, JSONValues are often the best choice. Regardless, it is user friendly to add the file extension to the name of the run output.</p>
 <p>Adding JSONValue run outputs is common enough for it to be implemented directly as a Civis API endpoint, <code>json_values_post</code>:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">source &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"</span></a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="st"> library(civis)</span></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="st"> library(jsonlite)</span></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="st"> my_farm &lt;- list(cows = 1, ducks = list(mallard = 2, goldeneye = 1))</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="st"> json_values_post(jsonlite::toJSON(my_farm), name = 'my_farm.json')</span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="st">"</span>)</a>
-<a class="sourceLine" id="cb7-7" title="7">run_farm &lt;-<span class="st"> </span><span class="kw">run_script</span>(source)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">source</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"
+ library(civis)
+ library(jsonlite)
+ my_farm &lt;- list(cows = 1, ducks = list(mallard = 2, goldeneye = 1))
+ json_values_post(jsonlite::toJSON(my_farm), name = 'my_farm.json')
+"</span>)
+<span class="no">run_farm</span> <span class="kw">&lt;-</span> <span class="fu">run_script</span>(<span class="no">source</span>)</pre></body></html></div>
 <p>To retrieve script outputs we can use <code>scripts_list_r_runs_outputs</code>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/scripts_list_r_runs_outputs.html">scripts_list_r_runs_outputs</a></span>(run<span class="op">$</span>rId, run<span class="op">$</span>id)</a>
-<a class="sourceLine" id="cb8-2" title="2">iris &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(out<span class="op">$</span>objectId, <span class="dt">using =</span> read.csv)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/scripts_list_r_runs_outputs.html">scripts_list_r_runs_outputs</a></span>(<span class="no">run</span>$<span class="no">rId</span>, <span class="no">run</span>$<span class="no">id</span>)
+<span class="no">iris</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="no">out</span>$<span class="no">objectId</span>, <span class="kw">using</span> <span class="kw">=</span> <span class="no">read.csv</span>)</pre></body></html></div>
 <p>Since this pattern is also common, you can simply use <code>read_civis</code> directly. This will work for any script type. Use <code>regex</code> and <code>using</code> to filter run outputs by file extension, and provide the appropriate reading function. JSONValues can be read automatically.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># get csv run outputs</span></a>
-<a class="sourceLine" id="cb9-2" title="2">iris &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="kw"><a href="../reference/civis_script.html">civis_script</a></span>(run<span class="op">$</span>rId), <span class="dt">regex =</span> <span class="st">'.csv'</span>, <span class="dt">using =</span> read.csv)</a>
-<a class="sourceLine" id="cb9-3" title="3"></a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="co"># get JSONValues</span></a>
-<a class="sourceLine" id="cb9-5" title="5">my_farm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="kw"><a href="../reference/civis_script.html">civis_script</a></span>(run_farm<span class="op">$</span>rId))</a></code></pre></div>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># get csv run outputs</span>
+<span class="no">iris</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="fu"><a href="../reference/civis_script.html">civis_script</a></span>(<span class="no">run</span>$<span class="no">rId</span>), <span class="kw">regex</span> <span class="kw">=</span> <span class="st">'.csv'</span>, <span class="kw">using</span> <span class="kw">=</span> <span class="no">read.csv</span>)
+
+<span class="co"># get JSONValues</span>
+<span class="no">my_farm</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/read_civis.html">read_civis</a></span>(<span class="fu"><a href="../reference/civis_script.html">civis_script</a></span>(<span class="no">run_farm</span>$<span class="no">rId</span>))</pre></body></html></div>
 </div>
 </div>
 <div id="script-parameters" class="section level3">
 <h3 class="hasAnchor">
 <a href="#script-parameters" class="anchor"></a>Script Parameters</h3>
 <p>Scripts are more useful if their behavior can be configured by the user, which can be done with script parameters. Script <em>parameters</em> are placeholders for input by the user. Specific values of the parameters input by the user are called <em>arguments</em>. Here, we modify <code>run_script</code> to automatically add a parameter, and simultaneously take a value of that parameter provided by the user. In the script itself, we can access the parameter as an environment variable.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># Add 'params' and 'arguments' to run_script</span></a>
-<a class="sourceLine" id="cb10-2" title="2">run_script &lt;-<span class="st"> </span><span class="cf">function</span>(source, args, <span class="dt">name =</span> <span class="st">'Cool'</span>) {</a>
-<a class="sourceLine" id="cb10-3" title="3">  params &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(          <span class="co"># params is a list of individual parameters</span></a>
-<a class="sourceLine" id="cb10-4" title="4">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(</a>
-<a class="sourceLine" id="cb10-5" title="5">      <span class="dt">name =</span> <span class="st">'PET_NAME'</span>,   <span class="co"># name of the environment variable with the user value</span></a>
-<a class="sourceLine" id="cb10-6" title="6">      <span class="dt">label =</span> <span class="st">'Pet Name'</span>,  <span class="co"># name displaayed to the user</span></a>
-<a class="sourceLine" id="cb10-7" title="7">      <span class="dt">type =</span> <span class="st">'string'</span>,     <span class="co"># type </span></a>
-<a class="sourceLine" id="cb10-8" title="8">      <span class="dt">required =</span> <span class="ot">TRUE</span>      <span class="co"># required?</span></a>
-<a class="sourceLine" id="cb10-9" title="9">    )</a>
-<a class="sourceLine" id="cb10-10" title="10">  )</a>
-<a class="sourceLine" id="cb10-11" title="11">  job &lt;-<span class="st"> </span><span class="kw"><a href="../reference/scripts_post_r.html">scripts_post_r</a></span>(<span class="dt">name =</span> name, </a>
-<a class="sourceLine" id="cb10-12" title="12">                        <span class="dt">source =</span> source, </a>
-<a class="sourceLine" id="cb10-13" title="13">                        <span class="dt">params =</span> params, </a>
-<a class="sourceLine" id="cb10-14" title="14">                        <span class="dt">arguments =</span> args)</a>
-<a class="sourceLine" id="cb10-15" title="15">  run &lt;-<span class="st"> </span><span class="kw"><a href="../reference/scripts_post_r_runs.html">scripts_post_r_runs</a></span>(job<span class="op">$</span>id)</a>
-<a class="sourceLine" id="cb10-16" title="16">  <span class="kw"><a href="../reference/await.html">await</a></span>(scripts_get_r_runs, <span class="dt">id =</span> job<span class="op">$</span>id, <span class="dt">run_id =</span> run<span class="op">$</span>id)</a>
-<a class="sourceLine" id="cb10-17" title="17">}</a>
-<a class="sourceLine" id="cb10-18" title="18"></a>
-<a class="sourceLine" id="cb10-19" title="19"><span class="co"># Access the PET_NAME variable</span></a>
-<a class="sourceLine" id="cb10-20" title="20">source &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'</span></a>
-<a class="sourceLine" id="cb10-21" title="21"><span class="st">  library(civis)</span></a>
-<a class="sourceLine" id="cb10-22" title="22"><span class="st">  pet_name &lt;- Sys.getenv("PET_NAME")</span></a>
-<a class="sourceLine" id="cb10-23" title="23"><span class="st">  msg &lt;- paste0("Hello", pet_name, "!")</span></a>
-<a class="sourceLine" id="cb10-24" title="24"><span class="st">  print(msg)</span></a>
-<a class="sourceLine" id="cb10-25" title="25"><span class="st">'</span>)</a>
-<a class="sourceLine" id="cb10-26" title="26"></a>
-<a class="sourceLine" id="cb10-27" title="27"><span class="co"># Let's run it! Here we pass the argument 'Fitzgerald' to the </span></a>
-<a class="sourceLine" id="cb10-28" title="28"><span class="co"># parameter 'PET_NAME' that we created.</span></a>
-<a class="sourceLine" id="cb10-29" title="29"><span class="kw">run_script</span>(source, <span class="dt">name =</span> <span class="st">'Pet Greeting'</span>, <span class="dt">args =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">PET_NAME =</span> <span class="st">'Fitzgerald'</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co"># Add 'params' and 'arguments' to run_script</span>
+<span class="no">run_script</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">source</span>, <span class="no">args</span>, <span class="no">name</span> <span class="kw">=</span> <span class="st">'Cool'</span>) {
+  <span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(          <span class="co"># params is a list of individual parameters</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+      <span class="kw">name</span> <span class="kw">=</span> <span class="st">'PET_NAME'</span>,   <span class="co"># name of the environment variable with the user value</span>
+      <span class="kw">label</span> <span class="kw">=</span> <span class="st">'Pet Name'</span>,  <span class="co"># name displaayed to the user</span>
+      <span class="kw">type</span> <span class="kw">=</span> <span class="st">'string'</span>,     <span class="co"># type </span>
+      <span class="kw">required</span> <span class="kw">=</span> <span class="fl">TRUE</span>      <span class="co"># required?</span>
+    )
+  )
+  <span class="no">job</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/scripts_post_r.html">scripts_post_r</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="no">name</span>,
+                        <span class="kw">source</span> <span class="kw">=</span> <span class="no">source</span>,
+                        <span class="kw">params</span> <span class="kw">=</span> <span class="no">params</span>,
+                        <span class="kw">arguments</span> <span class="kw">=</span> <span class="no">args</span>)
+  <span class="no">run</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/scripts_post_r_runs.html">scripts_post_r_runs</a></span>(<span class="no">job</span>$<span class="no">id</span>)
+  <span class="fu"><a href="../reference/await.html">await</a></span>(<span class="no">scripts_get_r_runs</span>, <span class="kw">id</span> <span class="kw">=</span> <span class="no">job</span>$<span class="no">id</span>, <span class="kw">run_id</span> <span class="kw">=</span> <span class="no">run</span>$<span class="no">id</span>)
+}
+
+<span class="co"># Access the PET_NAME variable</span>
+<span class="no">source</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'
+  library(civis)
+  pet_name &lt;- Sys.getenv("PET_NAME")
+  msg &lt;- paste0("Hello", pet_name, "!")
+  print(msg)
+'</span>)
+
+<span class="co"># Let's run it! Here we pass the argument 'Fitzgerald' to the </span>
+<span class="co"># parameter 'PET_NAME' that we created.</span>
+<span class="fu">run_script</span>(<span class="no">source</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">'Pet Greeting'</span>, <span class="kw">args</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">PET_NAME</span> <span class="kw">=</span> <span class="st">'Fitzgerald'</span>))</pre></body></html></div>
 </div>
 </div>
 <div id="sharing-scripts-with-templates" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sharing-scripts-with-templates" class="anchor"></a>Sharing Scripts with Templates</h2>
 <p>Now we have a script. How can we share it with others so that they can use it? The best way to share scripts is with <code>templates</code>. Let’s start by simply posting the script above:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">params &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(          </a>
-<a class="sourceLine" id="cb11-2" title="2">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(</a>
-<a class="sourceLine" id="cb11-3" title="3">    <span class="dt">name =</span> <span class="st">'PET_NAME'</span>,   </a>
-<a class="sourceLine" id="cb11-4" title="4">    <span class="dt">label =</span> <span class="st">'Pet Name'</span>,  </a>
-<a class="sourceLine" id="cb11-5" title="5">    <span class="dt">type =</span> <span class="st">'string'</span>,     </a>
-<a class="sourceLine" id="cb11-6" title="6">    <span class="dt">required =</span> <span class="ot">TRUE</span>      </a>
-<a class="sourceLine" id="cb11-7" title="7">  )</a>
-<a class="sourceLine" id="cb11-8" title="8">)</a>
-<a class="sourceLine" id="cb11-9" title="9">job &lt;-<span class="st"> </span><span class="kw"><a href="../reference/scripts_post_r.html">scripts_post_r</a></span>(<span class="dt">name =</span> <span class="st">'Pet Greeter'</span>, </a>
-<a class="sourceLine" id="cb11-10" title="10">                      <span class="dt">source =</span> source, </a>
-<a class="sourceLine" id="cb11-11" title="11">                      <span class="dt">params =</span> params)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+    <span class="kw">name</span> <span class="kw">=</span> <span class="st">'PET_NAME'</span>,
+    <span class="kw">label</span> <span class="kw">=</span> <span class="st">'Pet Name'</span>,
+    <span class="kw">type</span> <span class="kw">=</span> <span class="st">'string'</span>,
+    <span class="kw">required</span> <span class="kw">=</span> <span class="fl">TRUE</span>
+  )
+)
+<span class="no">job</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/scripts_post_r.html">scripts_post_r</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">'Pet Greeter'</span>,
+                      <span class="kw">source</span> <span class="kw">=</span> <span class="no">source</span>,
+                      <span class="kw">params</span> <span class="kw">=</span> <span class="no">params</span>)</pre></body></html></div>
 <p>To make this job a template use <code>templates_post_scripts</code>. Adding a notes field (markdown format) describing what the script does, what the parameters are, and what outputs it posts is often helpful for users.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">note &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"</span></a>
-<a class="sourceLine" id="cb12-2" title="2"><span class="st"># Pet Greeter</span></a>
-<a class="sourceLine" id="cb12-3" title="3"></a>
-<a class="sourceLine" id="cb12-4" title="4"><span class="st">Greets your pet, given its name! </span></a>
-<a class="sourceLine" id="cb12-5" title="5"><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-6" title="6"><span class="st">For your pet to receive the greeting, it must be a Civis Platform</span></a>
-<a class="sourceLine" id="cb12-7" title="7"><span class="st">user with the ability to read.</span></a>
-<a class="sourceLine" id="cb12-8" title="8"><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-9" title="9"><span class="st">Parameters:</span></a>
-<a class="sourceLine" id="cb12-10" title="10"><span class="st">  * Pet Name: string, Name of pet.</span></a>
-<a class="sourceLine" id="cb12-11" title="11"></a>
-<a class="sourceLine" id="cb12-12" title="12"><span class="st">  </span></a>
-<a class="sourceLine" id="cb12-13" title="13"><span class="st">Returns:</span></a>
-<a class="sourceLine" id="cb12-14" title="14"><span class="st">  * Nothing</span></a>
-<a class="sourceLine" id="cb12-15" title="15"><span class="st">"</span>)</a>
-<a class="sourceLine" id="cb12-16" title="16">template &lt;-<span class="st"> </span><span class="kw"><a href="../reference/templates_post_scripts.html">templates_post_scripts</a></span>(<span class="dt">script_id =</span> job<span class="op">$</span>id, <span class="dt">note =</span> note, <span class="dt">name =</span> <span class="st">'Pet Greeter'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">note</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"
+# Pet Greeter
+
+Greets your pet, given its name! 
+ 
+For your pet to receive the greeting, it must be a Civis Platform
+user with the ability to read.
+ 
+Parameters:
+  * Pet Name: string, Name of pet.
+
+  
+Returns:
+  * Nothing
+"</span>)
+<span class="no">template</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/templates_post_scripts.html">templates_post_scripts</a></span>(<span class="kw">script_id</span> <span class="kw">=</span> <span class="no">job</span>$<span class="no">id</span>, <span class="kw">note</span> <span class="kw">=</span> <span class="no">note</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">'Pet Greeter'</span>)</pre></body></html></div>
 <div id="custom-scripts" class="section level3">
 <h3 class="hasAnchor">
 <a href="#custom-scripts" class="anchor"></a>Custom Scripts</h3>
 <p><code>scripts_post_custom</code> creates an instance of a template that inherits all changes made to the template. We can now make a simple program to call and run an instance of the template.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">job &lt;-<span class="st"> </span><span class="kw"><a href="../reference/scripts_post_custom.html">scripts_post_custom</a></span>(id, <span class="dt">arguments =</span> arguments, ...)</a>
-<a class="sourceLine" id="cb13-2" title="2">run &lt;-<span class="st"> </span><span class="kw"><a href="../reference/scripts_post_custom_runs.html">scripts_post_custom_runs</a></span>(job<span class="op">$</span>id)</a>
-<a class="sourceLine" id="cb13-3" title="3"><span class="kw"><a href="../reference/await.html">await</a></span>(scripts_get_custom_runs, <span class="dt">id =</span> job<span class="op">$</span>id, <span class="dt">run_id =</span> run<span class="op">$</span>id)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">job</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/scripts_post_custom.html">scripts_post_custom</a></span>(<span class="no">id</span>, <span class="kw">arguments</span> <span class="kw">=</span> <span class="no">arguments</span>, <span class="no">...</span>)
+<span class="no">run</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/scripts_post_custom_runs.html">scripts_post_custom_runs</a></span>(<span class="no">job</span>$<span class="no">id</span>)
+<span class="fu"><a href="../reference/await.html">await</a></span>(<span class="no">scripts_get_custom_runs</span>, <span class="kw">id</span> <span class="kw">=</span> <span class="no">job</span>$<span class="no">id</span>, <span class="kw">run_id</span> <span class="kw">=</span> <span class="no">run</span>$<span class="no">id</span>)</pre></body></html></div>
 <p>Conveniently, <code>run_template</code> does exactly this and is already provided in <code>civis</code>. It returns the output file ids of the job for you to use later on in your program.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_template.html">run_template</a></span>(template<span class="op">$</span>id, <span class="dt">arguments =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">PET_NAME =</span> <span class="st">'CHARLES'</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/run_template.html">run_template</a></span>(<span class="no">template</span>$<span class="no">id</span>, <span class="kw">arguments</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">PET_NAME</span> <span class="kw">=</span> <span class="st">'CHARLES'</span>))</pre></body></html></div>
 <p>To stay organized, let’s automatically add the script to an existing project:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># We might need to find the project id first</span></a>
-<a class="sourceLine" id="cb15-2" title="2"><span class="kw"><a href="../reference/search_list.html">search_list</a></span>(<span class="dt">type =</span> <span class="st">'project'</span>, <span class="st">'My project Name'</span>)</a>
-<a class="sourceLine" id="cb15-3" title="3">out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_template.html">run_template</a></span>(template<span class="op">$</span>id, <span class="dt">arguments =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">PET_NAME =</span> <span class="st">'CHARLES'</span>),</a>
-<a class="sourceLine" id="cb15-4" title="4">                    <span class="dt">target_project_id =</span> project_id)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="co"># We might need to find the project id first</span>
+<span class="fu"><a href="../reference/search_list.html">search_list</a></span>(<span class="kw">type</span> <span class="kw">=</span> <span class="st">'project'</span>, <span class="st">'My project Name'</span>)
+<span class="no">out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/run_template.html">run_template</a></span>(<span class="no">template</span>$<span class="no">id</span>, <span class="kw">arguments</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">PET_NAME</span> <span class="kw">=</span> <span class="st">'CHARLES'</span>),
+                    <span class="kw">target_project_id</span> <span class="kw">=</span> <span class="no">project_id</span>)</pre></body></html></div>
 </div>
 <div id="making-changes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#making-changes" class="anchor"></a>Making Changes</h3>
 <p>To make changes to the template note or name, use <code>templates_patch_scripts</code>.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="../reference/templates_patch_scripts.html">templates_patch_scripts</a></span>(template_id<span class="op">$</span>id, <span class="dt">note =</span> new_note)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="../reference/templates_patch_scripts.html">templates_patch_scripts</a></span>(<span class="no">template_id</span>$<span class="no">id</span>, <span class="kw">note</span> <span class="kw">=</span> <span class="no">new_note</span>)</pre></body></html></div>
 <p>To change the behavior, name, or parameters of the script, update the backing script using <code>scripts_patch_r</code>.</p>
 <ul>
 <li>Note: It is <em>not recommended</em> to make breaking changes to the API of a script by adding a required parameter, changing a parameter default, or removing a run output. This will break workflows of your users. Instead of making breaking changes, release a new version of the script.</li>
 </ul>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">source &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'</span></a>
-<a class="sourceLine" id="cb17-2" title="2"><span class="st">  library(civis)</span></a>
-<a class="sourceLine" id="cb17-3" title="3"><span class="st">  pet_name &lt;- Sys.getenv("PET_NAME")</span></a>
-<a class="sourceLine" id="cb17-4" title="4"><span class="st">  msg &lt;- paste0("Hello ", pet_name, "! Would you care for a sandwich?")</span></a>
-<a class="sourceLine" id="cb17-5" title="5"><span class="st">  print(msg)</span></a>
-<a class="sourceLine" id="cb17-6" title="6"><span class="st">'</span>)</a>
-<a class="sourceLine" id="cb17-7" title="7"><span class="kw"><a href="../reference/scripts_patch_r.html">scripts_patch_r</a></span>(<span class="dt">id =</span> job<span class="op">$</span>id, <span class="dt">name =</span> <span class="st">'Pet Greeter'</span>,</a>
-<a class="sourceLine" id="cb17-8" title="8">                <span class="dt">source =</span> source,</a>
-<a class="sourceLine" id="cb17-9" title="9">                <span class="dt">params =</span> params)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">source</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'
+  library(civis)
+  pet_name &lt;- Sys.getenv("PET_NAME")
+  msg &lt;- paste0("Hello ", pet_name, "! Would you care for a sandwich?")
+  print(msg)
+'</span>)
+<span class="fu"><a href="../reference/scripts_patch_r.html">scripts_patch_r</a></span>(<span class="kw">id</span> <span class="kw">=</span> <span class="no">job</span>$<span class="no">id</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">'Pet Greeter'</span>,
+                <span class="kw">source</span> <span class="kw">=</span> <span class="no">source</span>,
+                <span class="kw">params</span> <span class="kw">=</span> <span class="no">params</span>)</pre></body></html></div>
 </div>
 <div id="discoverability" class="section level3">
 <h3 class="hasAnchor">
@@ -343,7 +345,7 @@
 <p>This link will automatically direct the user to a new instance of the template.</p>
 <p>It’s a good idea to archive unused templates so that it’s easy for users to find the right template quickly. This is important if you automatically deploy your templates.</p>
 <p>Let’s clean up our experiment by archiving our Pet Greeter Template:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw"><a href="../reference/templates_patch_scripts.html">templates_patch_scripts</a></span>(template<span class="op">$</span>id, <span class="dt">archived =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="fu"><a href="../reference/templates_patch_scripts.html">templates_patch_scripts</a></span>(<span class="no">template</span>$<span class="no">id</span>, <span class="kw">archived</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 </div>
 </div>
 <div id="conclusion" class="section level2">
@@ -353,21 +355,14 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#script-concepts-and-overview">Script Concepts and Overview</a></li>
-      <li><a href="#quick-start">Quick Start</a></li>
-      <li><a href="#creating-and-running-scripts">Creating and Running Scripts</a></li>
-      <li><a href="#sharing-scripts-with-templates">Sharing Scripts with Templates</a></li>
-      <li><a href="#conclusion">Conclusion</a></li>
-      </ul>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
 </div>
-      </div>
 
 </div>
+
 
 
       <footer><div class="copyright">
@@ -375,12 +370,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

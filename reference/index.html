@@ -8,21 +8,29 @@
 
 <title>Function reference • civis</title>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,7 +38,9 @@
 
 
 
+
 <meta property="og:title" content="Function reference" />
+
 
 
 
@@ -44,9 +54,10 @@
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -60,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -68,7 +79,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -100,11 +111,10 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/civisanalytics/civis-r">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/civisanalytics/civis-r/">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -115,6 +125,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -138,6 +149,11 @@
           <p class="section-desc"><p>Moving data to and from the Civis Platform</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -188,6 +204,11 @@
           <p class="section-desc"><p>Training and scoring models with CivisML</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -250,6 +271,11 @@
           <p class="section-desc"><p>Named workflows for CivisML models</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -312,6 +338,11 @@
           <p class="section-desc"><p>Executing custom tasks in the Civis Platform in parallel</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -332,6 +363,11 @@
           <p class="section-desc"><p>Publishing reports to the Civis Platform</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -352,6 +388,11 @@
           <p class="section-desc"><p>Using Civis Scripts</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -390,6 +431,11 @@
           <p class="section-desc"><p>Utilities for working with Redshift Tables</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -416,6 +462,11 @@
           <p class="section-desc"><p>Retrieve data from paginated endpoints</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -436,6 +487,11 @@
           <p class="section-desc"><p>Polling the status of long running tasks</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -456,6 +512,11 @@
           <p class="section-desc"><p>Helper tools for debugging</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -476,6 +537,11 @@
           <p class="section-desc"><p>Utilities for common tasks when using direct API calls</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -496,6 +562,11 @@
           <p class="section-desc"><p>Direct API calls to the Civis Platform</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -793,6 +864,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="clusters_get_kubernetes_instance_configs.html">clusters_get_kubernetes_instance_configs()</a></code> </p>
+        </td>
+        <td><p>Describe an Instance Config</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="clusters_get_kubernetes_partitions.html">clusters_get_kubernetes_partitions()</a></code> </p>
         </td>
         <td><p>Describe a Cluster Partition</p></td>
@@ -814,6 +891,18 @@
           <p><code><a href="clusters_list_kubernetes_deployments.html">clusters_list_kubernetes_deployments()</a></code> </p>
         </td>
         <td><p>List the deployments associated with a Kubernetes Cluster</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="clusters_list_kubernetes_instance_configs_historical_graphs.html">clusters_list_kubernetes_instance_configs_historical_graphs()</a></code> </p>
+        </td>
+        <td><p>Get graphs of historical resource usage in an Instance Config</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="clusters_list_kubernetes_instance_configs_user_statistics.html">clusters_list_kubernetes_instance_configs_user_statistics()</a></code> </p>
+        </td>
+        <td><p>Get statistics about the current users of an Instance Config</p></td>
       </tr><tr>
         
         <td>
@@ -937,6 +1026,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="databases_list_advanced_settings.html">databases_list_advanced_settings()</a></code> </p>
+        </td>
+        <td><p>Get the advanced settings for this database</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="databases_list_schemas.html">databases_list_schemas()</a></code> </p>
         </td>
         <td><p>List schemas in this database</p></td>
@@ -961,6 +1056,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="databases_patch_advanced_settings.html">databases_patch_advanced_settings()</a></code> </p>
+        </td>
+        <td><p>Update the advanced settings for this database</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="databases_post_schemas_scan.html">databases_post_schemas_scan()</a></code> </p>
         </td>
         <td><p>Creates and enqueues a schema scanner job</p></td>
@@ -970,6 +1071,12 @@
           <p><code><a href="databases_post_whitelist_ips.html">databases_post_whitelist_ips()</a></code> </p>
         </td>
         <td><p>Whitelist an IP address</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="databases_put_advanced_settings.html">databases_put_advanced_settings()</a></code> </p>
+        </td>
+        <td><p>Edit the advanced settings for this database</p></td>
       </tr><tr>
         
         <td>
@@ -1027,12 +1134,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="enhancements_delete_data_unification_runs.html">enhancements_delete_data_unification_runs()</a></code> </p>
-        </td>
-        <td><p>Cancel a run</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="enhancements_delete_geocode_projects.html">enhancements_delete_geocode_projects()</a></code> </p>
         </td>
         <td><p>Remove a Geocode Enhancement from a project</p></td>
@@ -1054,12 +1155,6 @@
           <p><code><a href="enhancements_delete_geocode_shares_users.html">enhancements_delete_geocode_shares_users()</a></code> </p>
         </td>
         <td><p>Revoke the permissions a user has on this object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enhancements_delete_table_deduplication_runs.html">enhancements_delete_table_deduplication_runs()</a></code> </p>
-        </td>
-        <td><p>Cancel a run</p></td>
       </tr><tr>
         
         <td>
@@ -1087,18 +1182,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="enhancements_get_data_unification.html">enhancements_get_data_unification()</a></code> </p>
-        </td>
-        <td><p>Get a Data Unification Enhancement</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enhancements_get_data_unification_runs.html">enhancements_get_data_unification_runs()</a></code> </p>
-        </td>
-        <td><p>Check status of a run</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="enhancements_get_geocode.html">enhancements_get_geocode()</a></code> </p>
         </td>
         <td><p>Get a Geocode Enhancement</p></td>
@@ -1106,18 +1189,6 @@
         
         <td>
           <p><code><a href="enhancements_get_geocode_runs.html">enhancements_get_geocode_runs()</a></code> </p>
-        </td>
-        <td><p>Check status of a run</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enhancements_get_table_deduplication.html">enhancements_get_table_deduplication()</a></code> </p>
-        </td>
-        <td><p>Get a Table Deduplication Enhancement</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enhancements_get_table_deduplication_runs.html">enhancements_get_table_deduplication_runs()</a></code> </p>
         </td>
         <td><p>Check status of a run</p></td>
       </tr><tr>
@@ -1189,24 +1260,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="enhancements_list_data_unification_runs.html">enhancements_list_data_unification_runs()</a></code> </p>
-        </td>
-        <td><p>List runs for the given data_unification</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enhancements_list_data_unification_runs_logs.html">enhancements_list_data_unification_runs_logs()</a></code> </p>
-        </td>
-        <td><p>Get the logs for a run</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enhancements_list_data_unification_runs_outputs.html">enhancements_list_data_unification_runs_outputs()</a></code> </p>
-        </td>
-        <td><p>List the outputs for a run</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="enhancements_list_field_mapping.html">enhancements_list_field_mapping()</a></code> </p>
         </td>
         <td><p>List the fields in a field mapping for Civis Data Match, Data Unification, and Table Deduplication jobs</p></td>
@@ -1243,24 +1296,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="enhancements_list_table_deduplication_runs.html">enhancements_list_table_deduplication_runs()</a></code> </p>
-        </td>
-        <td><p>List runs for the given table_deduplication</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enhancements_list_table_deduplication_runs_logs.html">enhancements_list_table_deduplication_runs_logs()</a></code> </p>
-        </td>
-        <td><p>Get the logs for a run</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enhancements_list_table_deduplication_runs_outputs.html">enhancements_list_table_deduplication_runs_outputs()</a></code> </p>
-        </td>
-        <td><p>List the outputs for a run</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="enhancements_list_types.html">enhancements_list_types()</a></code> </p>
         </td>
         <td><p>List available enhancement types</p></td>
@@ -1279,21 +1314,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="enhancements_patch_data_unification.html">enhancements_patch_data_unification()</a></code> </p>
-        </td>
-        <td><p>Update some attributes of this Data Unification Enhancement</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="enhancements_patch_geocode.html">enhancements_patch_geocode()</a></code> </p>
         </td>
         <td><p>Update some attributes of this Geocode Enhancement</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enhancements_patch_table_deduplication.html">enhancements_patch_table_deduplication()</a></code> </p>
-        </td>
-        <td><p>Update some attributes of this Table Deduplication Enhancement</p></td>
       </tr><tr>
         
         <td>
@@ -1339,24 +1362,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="enhancements_post_data_unification.html">enhancements_post_data_unification()</a></code> </p>
-        </td>
-        <td><p>Create a Data Unification Enhancement</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enhancements_post_data_unification_cancel.html">enhancements_post_data_unification_cancel()</a></code> </p>
-        </td>
-        <td><p>Cancel a run</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enhancements_post_data_unification_runs.html">enhancements_post_data_unification_runs()</a></code> </p>
-        </td>
-        <td><p>Start a run</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="enhancements_post_geocode.html">enhancements_post_geocode()</a></code> </p>
         </td>
         <td><p>Create a Geocode Enhancement</p></td>
@@ -1370,24 +1375,6 @@
         
         <td>
           <p><code><a href="enhancements_post_geocode_runs.html">enhancements_post_geocode_runs()</a></code> </p>
-        </td>
-        <td><p>Start a run</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enhancements_post_table_deduplication.html">enhancements_post_table_deduplication()</a></code> </p>
-        </td>
-        <td><p>Create a Table Deduplication Enhancement</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enhancements_post_table_deduplication_cancel.html">enhancements_post_table_deduplication_cancel()</a></code> </p>
-        </td>
-        <td><p>Cancel a run</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enhancements_post_table_deduplication_runs.html">enhancements_post_table_deduplication_runs()</a></code> </p>
         </td>
         <td><p>Start a run</p></td>
       </tr><tr>
@@ -1453,12 +1440,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="enhancements_put_data_unification.html">enhancements_put_data_unification()</a></code> </p>
-        </td>
-        <td><p>Replace all attributes of this Data Unification Enhancement</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="enhancements_put_geocode.html">enhancements_put_geocode()</a></code> </p>
         </td>
         <td><p>Replace all attributes of this Geocode Enhancement</p></td>
@@ -1489,15 +1470,39 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="enhancements_put_table_deduplication.html">enhancements_put_table_deduplication()</a></code> </p>
+          <p><code><a href="exports_get_files_csv.html">exports_get_files_csv()</a></code> </p>
         </td>
-        <td><p>Replace all attributes of this Table Deduplication Enhancement</p></td>
+        <td><p>Get a CSV Export</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="exports_list.html">exports_list()</a></code> </p>
         </td>
         <td><p>List</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exports_patch_files_csv.html">exports_patch_files_csv()</a></code> </p>
+        </td>
+        <td><p>Update some attributes of this CSV Export</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exports_post_files_csv.html">exports_post_files_csv()</a></code> </p>
+        </td>
+        <td><p>Create a CSV Export</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exports_put_files_csv.html">exports_put_files_csv()</a></code> </p>
+        </td>
+        <td><p>Replace all attributes of this CSV Export</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="exports_put_files_csv_archive.html">exports_put_files_csv_archive()</a></code> </p>
+        </td>
+        <td><p>Update the archive status of this object</p></td>
       </tr><tr>
         
         <td>
@@ -1585,6 +1590,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="files_patch.html">files_patch()</a></code> </p>
+        </td>
+        <td><p>Update details about a file</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="files_patch_preprocess_csv.html">files_patch_preprocess_csv()</a></code> </p>
         </td>
         <td><p>Update some attributes of this Preprocess CSV</p></td>
@@ -1612,6 +1623,12 @@
           <p><code><a href="files_post_preprocess_csv.html">files_post_preprocess_csv()</a></code> </p>
         </td>
         <td><p>Create a Preprocess CSV</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="files_put.html">files_put()</a></code> </p>
+        </td>
+        <td><p>Update details about a file</p></td>
       </tr><tr>
         
         <td>
@@ -2605,21 +2622,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="predictions_delete_runs.html">predictions_delete_runs()</a></code> </p>
-        </td>
-        <td><p>Cancel a run</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="predictions_get.html">predictions_get()</a></code> </p>
         </td>
         <td><p>Show the specified prediction</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="predictions_get_runs.html">predictions_get_runs()</a></code> </p>
-        </td>
-        <td><p>Check status of a run</p></td>
       </tr><tr>
         
         <td>
@@ -2629,39 +2634,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="predictions_list_runs.html">predictions_list_runs()</a></code> </p>
-        </td>
-        <td><p>List runs for the given prediction</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="predictions_list_runs_logs.html">predictions_list_runs_logs()</a></code> </p>
-        </td>
-        <td><p>Get the logs for a run</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="predictions_list_schedules.html">predictions_list_schedules()</a></code> </p>
         </td>
         <td><p>Show the prediction schedule</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="predictions_patch.html">predictions_patch()</a></code> </p>
-        </td>
-        <td><p>Update a prediction</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="predictions_post_runs.html">predictions_post_runs()</a></code> </p>
-        </td>
-        <td><p>Start a run</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="predictions_put_schedules.html">predictions_put_schedules()</a></code> </p>
-        </td>
-        <td><p>Schedule the prediction</p></td>
       </tr><tr>
         
         <td>
@@ -4273,18 +4248,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="tables_get_enhancements_prepared_matchings.html">tables_get_enhancements_prepared_matchings()</a></code> </p>
-        </td>
-        <td><p>View a prepared matching enhancement</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tables_get_enhancements_table_matchings.html">tables_get_enhancements_table_matchings()</a></code> </p>
-        </td>
-        <td><p>View a table matching enhancement</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="tables_list.html">tables_list()</a></code> </p>
         </td>
         <td><p>List tables</p></td>
@@ -4309,12 +4272,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="tables_post_enhance.html">tables_post_enhance()</a></code> </p>
-        </td>
-        <td><p>Run an enhancement on a table, deprecated use "POST /tables/:source_table_id/enhancements/&lt;enhancement-type&gt;" instead</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="tables_post_enhancements_cass_ncoa.html">tables_post_enhancements_cass_ncoa()</a></code> </p>
         </td>
         <td><p>Standardize addresses in a table</p></td>
@@ -4324,18 +4281,6 @@
           <p><code><a href="tables_post_enhancements_geocodings.html">tables_post_enhancements_geocodings()</a></code> </p>
         </td>
         <td><p>Geocode a table</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tables_post_enhancements_prepared_matchings.html">tables_post_enhancements_prepared_matchings()</a></code> </p>
-        </td>
-        <td><p>Match person records against a dynamo table prepared by Civis</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tables_post_enhancements_table_matchings.html">tables_post_enhancements_table_matchings()</a></code> </p>
-        </td>
-        <td><p>Match person records against an arbitrary Redshift table</p></td>
       </tr><tr>
         
         <td>
@@ -4767,24 +4712,13 @@
     </table>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-io">IO</a></li>
-      <li><a href="#section-civisml">CivisML</a></li>
-      <li><a href="#section-civisml-workflows">CivisML Workflows</a></li>
-      <li><a href="#section-parallel-computing">Parallel Computing</a></li>
-      <li><a href="#section-reports">Reports</a></li>
-      <li><a href="#section-scripts">Scripts</a></li>
-      <li><a href="#section-tables">Tables</a></li>
-      <li><a href="#section-pagination">Pagination</a></li>
-      <li><a href="#section-polling">Polling</a></li>
-      <li><a href="#section-debugging">Debugging</a></li>
-      <li><a href="#section-api-utilities">API Utilities</a></li>
-      <li><a href="#section-api">API</a></li>
-    </ul>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -4792,13 +4726,16 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
