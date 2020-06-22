@@ -8850,8 +8850,8 @@ imports_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' \item name string, The column name.
 #' \item sqlType string, The SQL type of the column.
 #' }
-#' @param loosen_types boolean optional. If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.
-#' @param execution string optional. In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.
+#' @param loosen_types boolean optional. If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.
+#' @param execution string optional. In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.
 #' @param redshift_destination_options list optional. A list containing the following elements: 
 #' \itemize{
 #' \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
@@ -8893,8 +8893,8 @@ imports_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' \item name string, The column name.
 #' \item sqlType string, The SQL type of the column.
 #' }}
-#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
-#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
+#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
+#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.}
 #' \item{redshiftDestinationOptions}{list, A list containing the following elements: 
 #' \itemize{
 #' \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
@@ -8956,8 +8956,8 @@ imports_post_files_csv <- function(source, destination, first_row_is_header, nam
 #' \item name string, The column name.
 #' \item sqlType string, The SQL type of the column.
 #' }}
-#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
-#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
+#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
+#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.}
 #' \item{redshiftDestinationOptions}{list, A list containing the following elements: 
 #' \itemize{
 #' \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
@@ -9016,8 +9016,8 @@ imports_get_files_csv <- function(id) {
 #' \item name string, The column name.
 #' \item sqlType string, The SQL type of the column.
 #' }
-#' @param loosen_types boolean optional. If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.
-#' @param execution string optional. In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.
+#' @param loosen_types boolean optional. If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.
+#' @param execution string optional. In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.
 #' @param redshift_destination_options list optional. A list containing the following elements: 
 #' \itemize{
 #' \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
@@ -9058,8 +9058,8 @@ imports_get_files_csv <- function(id) {
 #' \item name string, The column name.
 #' \item sqlType string, The SQL type of the column.
 #' }}
-#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
-#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
+#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
+#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.}
 #' \item{redshiftDestinationOptions}{list, A list containing the following elements: 
 #' \itemize{
 #' \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
@@ -9118,8 +9118,8 @@ imports_put_files_csv <- function(id, source, destination, first_row_is_header, 
 #' \item name string, The column name.
 #' \item sqlType string, The SQL type of the column.
 #' }
-#' @param loosen_types boolean optional. If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.
-#' @param execution string optional. In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.
+#' @param loosen_types boolean optional. If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.
+#' @param execution string optional. In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.
 #' @param redshift_destination_options list optional. A list containing the following elements: 
 #' \itemize{
 #' \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
@@ -9160,8 +9160,8 @@ imports_put_files_csv <- function(id, source, destination, first_row_is_header, 
 #' \item name string, The column name.
 #' \item sqlType string, The SQL type of the column.
 #' }}
-#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
-#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
+#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
+#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.}
 #' \item{redshiftDestinationOptions}{list, A list containing the following elements: 
 #' \itemize{
 #' \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
@@ -9246,8 +9246,8 @@ imports_delete_files_csv <- function(id) {
 #' \item name string, The column name.
 #' \item sqlType string, The SQL type of the column.
 #' }}
-#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accomodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
-#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accomodate concurrent upserts to the same table and speedier non-upsert imports.}
+#' \item{loosenTypes}{boolean, If true, SQL types with precisions/lengths will have these values increased to accommodate data growth in future loads. Type loosening only occurs on table creation. Defaults to false.}
+#' \item{execution}{string, In upsert mode, controls the movement of data in upsert mode. If set to "delayed", the data will be moved after a brief delay. If set to "immediate", the data will be moved immediately. In non-upsert modes, controls the speed at which detailed column stats appear in the data catalogue. Defaults to "delayed", to accommodate concurrent upserts to the same table and speedier non-upsert imports.}
 #' \item{redshiftDestinationOptions}{list, A list containing the following elements: 
 #' \itemize{
 #' \item diststyle string, The diststyle to use for the table. One of "even", "all", or "key".
@@ -9761,7 +9761,7 @@ imports_post_cancel <- function(id) {
 #' \item partitionTablePartitionColumnMaxName string, This parameter is deprecated
 #' \item lastModifiedColumn string, 
 #' \item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
-#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be choosen automatically.
+#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be chosen automatically.
 #' \item firstRowIsHeader boolean, 
 #' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
 #' \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
@@ -9839,7 +9839,7 @@ imports_post_cancel <- function(id) {
 #' \item partitionTablePartitionColumnMaxName string, This parameter is deprecated
 #' \item lastModifiedColumn string, 
 #' \item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
-#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be choosen automatically.
+#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be chosen automatically.
 #' \item firstRowIsHeader boolean, 
 #' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
 #' \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
@@ -9931,7 +9931,7 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' \item partitionTablePartitionColumnMaxName string, This parameter is deprecated
 #' \item lastModifiedColumn string, 
 #' \item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
-#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be choosen automatically.
+#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be chosen automatically.
 #' \item firstRowIsHeader boolean, 
 #' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
 #' \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
@@ -10009,7 +10009,7 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' \item partitionTablePartitionColumnMaxName string, This parameter is deprecated
 #' \item lastModifiedColumn string, 
 #' \item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
-#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be choosen automatically.
+#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be chosen automatically.
 #' \item firstRowIsHeader boolean, 
 #' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
 #' \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
@@ -10132,7 +10132,7 @@ imports_delete_syncs <- function(id, sync_id) {
 #' \item partitionTablePartitionColumnMaxName string, This parameter is deprecated
 #' \item lastModifiedColumn string, 
 #' \item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
-#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be choosen automatically.
+#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be chosen automatically.
 #' \item firstRowIsHeader boolean, 
 #' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
 #' \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
