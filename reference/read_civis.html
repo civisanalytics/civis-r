@@ -8,21 +8,29 @@
 
 <title>Read tables and files from Civis Platform — read_civis • civis</title>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,8 +38,8 @@
 
 
 
-<meta property="og:title" content="Read tables and files from Civis Platform — read_civis" />
 
+<meta property="og:title" content="Read tables and files from Civis Platform — read_civis" />
 <meta property="og:description" content="read_civis loads a table from Redshift as a data frame if
 given a &quot;schema.table&quot; or sql(&quot;query&quot;) as the first argument, or
 loads a file from Amazon S3 (the files endpoint) if a file id is given.
@@ -40,7 +48,7 @@ are returned if a civis_script is given.
 A default database can be set using options(civis.default_db = &quot;my_database&quot;).
 If there is only one database available,
 this database will automatically be used as the default." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -54,9 +62,10 @@ this database will automatically be used as the default." />
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -70,7 +79,7 @@ this database will automatically be used as the default." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -78,7 +87,7 @@ this database will automatically be used as the default." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -110,11 +119,10 @@ this database will automatically be used as the default." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/civisanalytics/civis-r">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/civisanalytics/civis-r/">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -125,6 +133,7 @@ this database will automatically be used as the default." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -136,16 +145,14 @@ this database will automatically be used as the default." />
     </div>
 
     <div class="ref-description">
-    
     <p><code>read_civis</code> loads a table from Redshift as a data frame if
 given a <code>"schema.table"</code> or <code><a href='sql.html'>sql("query")</a></code> as the first argument, or
 loads a file from Amazon S3 (the files endpoint) if a file id is given.
 Run outputs from any Civis platform script
 are returned if a <code><a href='civis_script.html'>civis_script</a></code> is given.</p>
-<p>A default database can be set using <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options(civis.default_db = "my_database")</a></code>.
+<p>A default database can be set using <code><a href='https://rdrr.io/r/base/options.html'>options(civis.default_db = "my_database")</a></code>.
 If there is only one database available,
 this database will automatically be used as the default.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>read_civis</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -160,7 +167,7 @@ this database will automatically be used as the default.</p>
 <span class='fu'>read_civis</span>(
   <span class='no'>x</span>,
   <span class='kw'>database</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>using</span> <span class='kw'>=</span> <span class='kw pkg'>utils</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/utils/topics/read.table'>read.csv</a></span>,
+  <span class='kw'>using</span> <span class='kw'>=</span> <span class='kw pkg'>utils</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span>,
   <span class='kw'>job_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -169,7 +176,7 @@ this database will automatically be used as the default.</p>
 
 <span class='co'># S3 method for civis_script</span>
 <span class='fu'>read_civis</span>(<span class='no'>x</span>, <span class='no'>using</span>, <span class='kw'>regex</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -193,7 +200,7 @@ the file (e.g. <code>read.csv</code> or <code>readRDS</code>).</p></td>
     <tr>
       <th>database</th>
       <td><p>string, Name of database where data frame is to be uploaded.
-If no database is specified, uses <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options(civis.default_db)</a></code>.</p></td>
+If no database is specified, uses <code><a href='https://rdrr.io/r/base/options.html'>options(civis.default_db)</a></code>.</p></td>
     </tr>
     <tr>
       <th>job_name</th>
@@ -208,7 +215,7 @@ If no database is specified, uses <code><a href='https://www.rdocumentation.org/
       <td><p>Regex of matching run output names.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>By default, <code>read_civis.numeric</code> assumes the file is a CSV. For reading
@@ -219,16 +226,15 @@ Otherwise all File run outputs matching <code>regex</code> will be read into mem
 with <code>using</code>.
 Results are always a named list.
 If the script has no outputs, an empty list will be returned.</p>
-    
     <h2 class="hasAnchor" id="methods-by-class-"><a class="anchor" href="#methods-by-class-"></a>Methods (by class)</h2>
 
-    <ul>
+    
+<ul>
 <li><p><code>numeric</code>: Return a file as a data frame</p></li>
 <li><p><code>character</code>: Return all columns from a table as a data frame.</p></li>
 <li><p><code>sql</code>: Return a SQL query as a data frame.</p></li>
 <li><p><code>civis_script</code>: Return run outputs of a <code>civis_script</code> as a named list.</p></li>
 </ul>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other io: 
@@ -237,10 +243,9 @@ If the script has no outputs, an empty list will be returned.</p>
 <code><a href='query_civis.html'>query_civis</a>()</code>,
 <code><a href='write_civis_file.html'>write_civis_file</a>()</code>,
 <code><a href='write_civis.html'>write_civis</a>()</code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Read all columns in a single table</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>read_civis</span>(<span class='st'>"schema.my_table"</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='st'>"my_database"</span>)
 
@@ -265,30 +270,21 @@ If the script has no outputs, an empty list will be returned.</p>
 
 <span class='co'># Gracefully handle when read_civis.sql returns no rows</span>
 <span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sql.html'>sql</a></span>(<span class='st'>"SELECT * FROM table WHERE 1 = 2"</span>)
-<span class='no'>mean_x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/conditions'>tryCatch</a></span>({
+<span class='no'>mean_x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/conditions.html'>tryCatch</a></span>({
   <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>read_civis</span>(<span class='no'>query</span>, <span class='kw'>database</span> <span class='kw'>=</span> <span class='st'>"my_database"</span>)
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>df</span>$<span class='no'>x</span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>df</span>$<span class='no'>x</span>)
 }, <span class='kw'>empty_result_error</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>e</span>) {
    <span class='fl'>NA</span>
 })
-<span class='co'># }</span></pre>
+}</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#methods-by-class-">Methods (by class)</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -296,13 +292,16 @@ If the script has no outputs, an empty list will be returned.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

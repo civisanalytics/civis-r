@@ -8,21 +8,29 @@
 
 <title>Interface for modeling in the Civis Platform — civis_ml • civis</title>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,11 +38,11 @@
 
 
 
-<meta property="og:title" content="Interface for modeling in the Civis Platform — civis_ml" />
 
+<meta property="og:title" content="Interface for modeling in the Civis Platform — civis_ml" />
 <meta property="og:description" content="An interface for training and scoring data on Civis Platform
 using a set of Scikit-Learn estimators." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -48,9 +56,10 @@ using a set of Scikit-Learn estimators." />
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -64,7 +73,7 @@ using a set of Scikit-Learn estimators." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">civis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -72,7 +81,7 @@ using a set of Scikit-Learn estimators." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -104,11 +113,10 @@ using a set of Scikit-Learn estimators." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/civisanalytics/civis-r">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/civisanalytics/civis-r/">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -119,6 +127,7 @@ using a set of Scikit-Learn estimators." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -130,10 +139,8 @@ using a set of Scikit-Learn estimators." />
     </div>
 
     <div class="ref-description">
-    
     <p>An interface for training and scoring data on Civis Platform
 using a set of Scikit-Learn estimators.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>civis_ml</span>(
@@ -148,14 +155,14 @@ using a set of Scikit-Learn estimators.</p>
   <span class='kw'>calibration</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>oos_scores_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>oos_scores_db</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>oos_scores_if_exists</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fail"</span>, <span class='st'>"append"</span>, <span class='st'>"drop"</span>, <span class='st'>"truncate"</span>),
+  <span class='kw'>oos_scores_if_exists</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fail"</span>, <span class='st'>"append"</span>, <span class='st'>"drop"</span>, <span class='st'>"truncate"</span>),
   <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>cpu_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>memory_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>disk_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>notifications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>polling_interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>validation_data</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"train"</span>, <span class='st'>"skip"</span>),
+  <span class='kw'>validation_data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"train"</span>, <span class='st'>"skip"</span>),
   <span class='kw'>n_jobs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>civisml_version</span> <span class='kw'>=</span> <span class='st'>"prod"</span>
@@ -164,13 +171,13 @@ using a set of Scikit-Learn estimators.</p>
 <span class='fu'>civis_ml_fetch_existing</span>(<span class='no'>model_id</span>, <span class='kw'>run_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='co'># S3 method for civis_ml</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(
+<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(
   <span class='no'>object</span>,
   <span class='no'>newdata</span>,
   <span class='kw'>primary_key</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>output_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>output_db</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>if_output_exists</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fail"</span>, <span class='st'>"append"</span>, <span class='st'>"drop"</span>, <span class='st'>"truncate"</span>),
+  <span class='kw'>if_output_exists</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fail"</span>, <span class='st'>"append"</span>, <span class='st'>"drop"</span>, <span class='st'>"truncate"</span>),
   <span class='kw'>n_jobs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>cpu_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>memory_requested</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -180,7 +187,7 @@ using a set of Scikit-Learn estimators.</p>
   <span class='kw'>dvs_to_predict</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>
 )</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -216,19 +223,19 @@ considered ineligible to be independent variables.</p></td>
     <tr>
       <th>parameters</th>
       <td><p>Optional, parameters for the final stage estimator in a
-predefined model, e.g. <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list(C = 2)</a></code> for a "sparse_logistic"
+predefined model, e.g. <code><a href='https://rdrr.io/r/base/list.html'>list(C = 2)</a></code> for a "sparse_logistic"
 model.</p></td>
     </tr>
     <tr>
       <th>fit_params</th>
       <td><p>Optional, a mapping from parameter names in the model's
 <code>fit</code> method to the column names which hold the data, e.g.
-<code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list(sample_weight = 'survey_weight_column')</a></code>.</p></td>
+<code><a href='https://rdrr.io/r/base/list.html'>list(sample_weight = 'survey_weight_column')</a></code>.</p></td>
     </tr>
     <tr>
       <th>cross_validation_parameters</th>
       <td><p>Optional, parameter grid for learner
-parameters, e.g. <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list(n_estimators = c(100, 200, 500),
+parameters, e.g. <code><a href='https://rdrr.io/r/base/list.html'>list(n_estimators = c(100, 200, 500),
 learning_rate = c(0.01, 0.1), max_depth = c(2, 3))</a></code>
 or <code>"hyperband"</code> for supported models.</p></td>
     </tr>
@@ -349,11 +356,11 @@ of the model's outputs will let predictions complete faster and use less disk sp
 If not provided, the entire model output will be written to the output table.</p></td>
     </tr>
     <tr>
-      <th>&#8230;</th>
+      <th>...</th>
       <td><p>Unused</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>civis_ml</code> object, a list containing the following elements:</p>
@@ -382,11 +389,12 @@ If not provided, the entire model output will be written to the output table.</p
 <li><p>data_platform list, training data location.</p></li>
 </ul></p></dd>
 
-    
     <h2 class="hasAnchor" id="civisml-workflows"><a class="anchor" href="#civisml-workflows"></a>CivisML Workflows</h2>
 
     
-    <p>You can use the following pre-defined models with <code>civis_ml</code>. All models
+
+
+<p>You can use the following pre-defined models with <code>civis_ml</code>. All models
 start by imputing missing values with the mean of non-null values in a
 column. The <code>"sparse_*"</code> models include a LASSO regression step
 (using <code>glmnet</code>) to do feature selection before passing data to the
@@ -395,47 +403,28 @@ final model. In some models, CivisML uses default parameters from those in
 All models also have <code>random_state=42</code>.</p>
 <p>Specific workflows can also be called directly using the R workflow functions.</p>
 <table class='table'>
-<tr><td></td><td>Name</td><td>R Workflow</td><td>Model Type</td><td>Algorithm</td></tr>
-<tr><td>Altered Defaults</td><td></td><td></td><td><code>sparse_logistic</code></td><td></td></tr>
-<tr><td></td><td><code><a href='civis_ml_sparse_logistic.html'>civis_ml_sparse_logistic</a></code></td><td></td><td>classification</td><td></td></tr>
-<tr><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html'>LogisticRegression</a></td><td></td><td></td><td><code>C=499999950, tol=1e-08</code></td><td></td></tr>
-<tr><td></td><td></td><td><code>gradient_boosting_classifier</code></td><td></td><td></td></tr>
-<tr><td><code><a href='civis_ml_gradient_boosting_classifier.html'>civis_ml_gradient_boosting_classifier</a></code></td><td></td><td>classification</td><td></td><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html'>GradientBoostingClassifier</a></td></tr>
-<tr><td></td><td></td><td><code>n_estimators=500, max_depth=2</code></td><td></td><td></td></tr>
-<tr><td></td><td><code>random_forest_classifier</code></td><td></td><td></td><td><code><a href='civis_ml_random_forest_classifier.html'>civis_ml_random_forest_classifier</a></code></td></tr>
-<tr><td></td><td>classification</td><td></td><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html'>RandomForestClassifier</a></td><td></td></tr>
-<tr><td></td><td><code>n_estimators=500</code></td><td></td><td></td><td></td></tr>
-<tr><td><code>extra_trees_classifier</code></td><td></td><td></td><td><code><a href='civis_ml_extra_trees_classifier.html'>civis_ml_extra_trees_classifier</a></code></td><td></td></tr>
-<tr><td>classification</td><td></td><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html'>ExtraTreesClassifier</a></td><td></td><td></td></tr>
-<tr><td><code>n_estimators=500</code></td><td></td><td></td><td></td><td><code>multilayer_perceptron_classifier</code></td></tr>
-<tr><td></td><td></td><td>classification</td><td></td><td><a href='https://github.com/civisanalytics/muffnn'>muffnn.MLPClassifier</a></td></tr>
-<tr><td></td><td></td><td></td><td></td><td><code>stacking_classifier</code></td></tr>
-<tr><td></td><td></td><td>classification</td><td></td><td><a href='https://github.com/civisanalytics/civisml-extensions'>StackedClassifier</a></td></tr>
-<tr><td></td><td></td><td></td><td></td><td><code>sparse_linear_regressor</code></td></tr>
-<tr><td></td><td></td><td><code><a href='civis_ml_sparse_linear_regressor.html'>civis_ml_sparse_linear_regressor</a></code></td><td></td><td>regression</td></tr>
-<tr><td></td><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html'>LinearRegression</a></td><td></td><td></td><td></td></tr>
-<tr><td></td><td><code>sparse_ridge_regressor</code></td><td></td><td></td><td><code><a href='civis_ml_sparse_ridge_regressor.html'>civis_ml_sparse_ridge_regressor</a></code></td></tr>
-<tr><td></td><td>regression</td><td></td><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html'>Ridge</a></td><td></td></tr>
-<tr><td></td><td></td><td></td><td><code>gradient_boosting_regressor</code></td><td></td></tr>
-<tr><td></td><td><code><a href='civis_ml_gradient_boosting_regressor.html'>civis_ml_gradient_boosting_regressor</a></code></td><td></td><td>regression</td><td></td></tr>
-<tr><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html'>GradientBoostingRegressor</a></td><td></td><td></td><td><code>n_estimators=500, max_depth=2</code></td><td></td></tr>
-<tr><td></td><td></td><td><code>random_forest_regressor</code></td><td></td><td></td></tr>
-<tr><td><code><a href='civis_ml_random_forest_regressor.html'>civis_ml_random_forest_regressor</a></code></td><td></td><td>regression</td><td></td><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html'>RandomForestRegressor</a></td></tr>
-<tr><td></td><td></td><td><code>n_estimators=500</code></td><td></td><td></td></tr>
-<tr><td></td><td><code>extra_trees_regressor</code></td><td></td><td></td><td><code><a href='civis_ml_extra_trees_regressor.html'>civis_ml_extra_trees_regressor</a></code></td></tr>
-<tr><td></td><td>regression</td><td></td><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html'>ExtraTreesRegressor</a></td><td></td></tr>
-<tr><td></td><td><code>n_estimators=500</code></td><td></td><td></td><td></td></tr>
-<tr><td><code>multilayer_perceptron_regressor</code></td><td></td><td></td><td>regression</td><td></td></tr>
-<tr><td><a href='https://github.com/civisanalytics/muffnn'>muffnn.MLPRegressor</a></td><td></td><td></td><td></td><td></td></tr>
-<tr><td><code>stacking_regressor</code></td><td></td><td></td><td>regression</td><td></td></tr>
-<tr><td><a href='https://github.com/civisanalytics/civisml-extensions'>StackedRegressor</a></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Name</td><td>R Workflow</td><td>Model Type</td><td>Algorithm</td><td>Altered Defaults</td></tr>
+<tr><td><code>sparse_logistic</code></td><td><code><a href='civis_ml_sparse_logistic.html'>civis_ml_sparse_logistic</a></code></td><td>classification</td><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html'>LogisticRegression</a></td><td><code>C=499999950, tol=1e-08</code></td></tr>
+<tr><td><code>gradient_boosting_classifier</code></td><td><code><a href='civis_ml_gradient_boosting_classifier.html'>civis_ml_gradient_boosting_classifier</a></code></td><td>classification</td><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html'>GradientBoostingClassifier</a></td><td><code>n_estimators=500, max_depth=2</code></td></tr>
+<tr><td><code>random_forest_classifier</code></td><td><code><a href='civis_ml_random_forest_classifier.html'>civis_ml_random_forest_classifier</a></code></td><td>classification</td><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html'>RandomForestClassifier</a></td><td><code>n_estimators=500</code></td></tr>
+<tr><td><code>extra_trees_classifier</code></td><td><code><a href='civis_ml_extra_trees_classifier.html'>civis_ml_extra_trees_classifier</a></code></td><td>classification</td><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html'>ExtraTreesClassifier</a></td><td><code>n_estimators=500</code></td></tr>
+<tr><td><code>multilayer_perceptron_classifier</code></td><td></td><td>classification</td><td><a href='https://github.com/civisanalytics/muffnn'>muffnn.MLPClassifier</a></td><td></td></tr>
+<tr><td><code>stacking_classifier</code></td><td></td><td>classification</td><td><a href='https://github.com/civisanalytics/civisml-extensions'>StackedClassifier</a></td><td></td></tr>
+<tr><td><code>sparse_linear_regressor</code></td><td><code><a href='civis_ml_sparse_linear_regressor.html'>civis_ml_sparse_linear_regressor</a></code></td><td>regression</td><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html'>LinearRegression</a></td><td></td></tr>
+<tr><td><code>sparse_ridge_regressor</code></td><td><code><a href='civis_ml_sparse_ridge_regressor.html'>civis_ml_sparse_ridge_regressor</a></code></td><td>regression</td><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html'>Ridge</a></td><td></td></tr>
+<tr><td><code>gradient_boosting_regressor</code></td><td><code><a href='civis_ml_gradient_boosting_regressor.html'>civis_ml_gradient_boosting_regressor</a></code></td><td>regression</td><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html'>GradientBoostingRegressor</a></td><td><code>n_estimators=500, max_depth=2</code></td></tr>
+<tr><td><code>random_forest_regressor</code></td><td><code><a href='civis_ml_random_forest_regressor.html'>civis_ml_random_forest_regressor</a></code></td><td>regression</td><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html'>RandomForestRegressor</a></td><td><code>n_estimators=500</code></td></tr>
+<tr><td><code>extra_trees_regressor</code></td><td><code><a href='civis_ml_extra_trees_regressor.html'>civis_ml_extra_trees_regressor</a></code></td><td>regression</td><td><a href='http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html'>ExtraTreesRegressor</a></td><td><code>n_estimators=500</code></td></tr>
+<tr><td><code>multilayer_perceptron_regressor</code></td><td></td><td>regression</td><td><a href='https://github.com/civisanalytics/muffnn'>muffnn.MLPRegressor</a></td><td></td></tr>
+<tr><td><code>stacking_regressor</code></td><td></td><td>regression</td><td><a href='https://github.com/civisanalytics/civisml-extensions'>StackedRegressor</a></td><td></td></tr>
 </table>
 <p>Model names can be easily accessed using the global variables <code>CIVIS_ML_REGRESSORS</code> and <code>CIVIS_ML_CLASSIFIERS</code>.</p>
-    
     <h2 class="hasAnchor" id="stacking"><a class="anchor" href="#stacking"></a>Stacking</h2>
 
     
-    <p>The <code>"stacking_classifier"</code> model stacks together the <code>"gradient_boosting_classifier"</code> and
+
+
+<p>The <code>"stacking_classifier"</code> model stacks together the <code>"gradient_boosting_classifier"</code> and
 <code>"random_forest_classifier"</code> predefined models together with a
 <code>glmnet.LogitNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5, scoring='log_loss')</code>.
 Defaults for the predefined models are documented in <code>?civis_ml</code>. Each column is first
@@ -451,11 +440,11 @@ associated pre-defined models, and the meta-estimator steps are named
 "meta-estimator". Note that although default parameters are provided
 for multilayer perceptron models, it is highly recommended that
 multilayer perceptrons be run using hyperband.</p>
-    
     <h2 class="hasAnchor" id="hyperparameter-tuning"><a class="anchor" href="#hyperparameter-tuning"></a>Hyperparameter Tuning</h2>
 
     
-    <p>You can tune hyperparameters using one of two methods: grid search or
+
+<p>You can tune hyperparameters using one of two methods: grid search or
 hyperband. CivisML will perform grid search if you pass a list
 of hyperparameters to the <code>cross_validation_parameters</code> parameter, where list elements are
 hyperparameter names, and the values are vectors of hyperparameter
@@ -483,34 +472,38 @@ not have a hyperband option. Similarly, when
 random forest steps of the stacker are tuned using hyperband. For the specific
 distributions used in the predefined hyperband models, see
 <a href='https://civis-python.readthedocs.io/en/stable/ml.html#hyperparameter-tuning'>the detailed table in the Python client documentation</a>.</p>
-    
     <h2 class="hasAnchor" id="data-sources"><a class="anchor" href="#data-sources"></a>Data Sources</h2>
 
     
-    <p>For building models with <code>civis_ml</code>, the training data can reside in
+
+
+<p>For building models with <code>civis_ml</code>, the training data can reside in
 four different places, a file in the Civis Platform, a CSV or feather-format file
 on the local disk, a <code>data.frame</code> resident in local the R environment, and finally,
 a table in the Civis Platform. Use the following helpers to specify the
 data source when calling <code>civis_ml</code>:</p>
-<dl class='dl-horizontal'>
+<dl'>
   <dt><code>data.frame</code></dt><dd><p><code>civis_ml(x = df, ...)</code></p></dd>
   <dt>local csv file</dt><dd><p><code>civis_ml(x = "path/to/data.csv", ...)</code></p></dd>
   <dt>file in Civis Platform</dt><dd><p><code>civis_ml(x = civis_file(1234))</code></p></dd>
   <dt>table in Civis Platform</dt><dd><p><code>civis_ml(x = civis_table(table_name = "schema.table", database_name = "database"))</code></p></dd>
+
 </dl>
-    
+
     <h2 class="hasAnchor" id="out-of-sample-scores"><a class="anchor" href="#out-of-sample-scores"></a>Out of sample scores</h2>
 
     
-    <p>Model outputs will always contain out-of-sample (or out of fold) scores,
+
+<p>Model outputs will always contain out-of-sample (or out of fold) scores,
 which are accessible through <code><a href='fetch_oos_scores.html'>fetch_oos_scores</a></code>.
 These may be stored in a Civis table on Redshift using the
 <code>oos_scores</code>, <code>oos_scores_db</code>, and <code>oos_scores_if_exists</code> parameters.</p>
-    
     <h2 class="hasAnchor" id="predictions"><a class="anchor" href="#predictions"></a>Predictions</h2>
 
     
-    <p>A fitted model can be used to make predictions for data residing in any of
+
+
+<p>A fitted model can be used to make predictions for data residing in any of
 the sources above and a <code><a href='civis_file_manifest.html'>civis_file_manifest</a></code>. Similar to
 <code>civis_ml</code>, use the data source helpers as the <code>newdata</code> argument
 to <code>predict.civis_ml</code>.</p>
@@ -522,7 +515,6 @@ will automatically be exported to manifest files.</p>
 Provide an <code>output_table</code> (and optionally an <code>output_db</code>,
 if it's different from <code>database_name</code>) to copy these predictions into a
 table on Redshift.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='civis_file.html'>civis_file</a></code>, <code><a href='civis_table.html'>civis_table</a></code>, and
@@ -531,10 +523,9 @@ table on Redshift.</p>
 <p><code><a href='fetch_logs.html'>fetch_logs</a></code> for retrieving logs for a (failed) model build,
   <code><a href='fetch_oos_scores.html'>fetch_oos_scores</a></code> for retrieving the out of sample (fold) scores for each training observation, and
   <code><a href='fetch_predictions.html'>fetch_predictions</a></code> for retrieving the predictions from a prediction job.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># From a data frame:</span>
 <span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'>civis_ml</span>(<span class='no'>df</span>, <span class='kw'>model_type</span> <span class='kw'>=</span> <span class='st'>"sparse_logistic"</span>,
               <span class='kw'>dependent_variable</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
@@ -554,44 +545,25 @@ table on Redshift.</p>
 <span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'>civis_ml</span>(<span class='fu'><a href='civis_file.html'>civis_file</a></span>(<span class='no'>file_id</span>), <span class='kw'>model_type</span> <span class='kw'>=</span> <span class='st'>"sparse_logistic"</span>,
               <span class='kw'>dependent_variable</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 
-<span class='no'>pred_job</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>m</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>df</span>)
-<span class='no'>pred_job</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>m</span>, <span class='fu'><a href='civis_table.html'>civis_table</a></span>(<span class='st'>"schema.table"</span>, <span class='st'>"database_name"</span>),
+<span class='no'>pred_job</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>m</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>df</span>)
+<span class='no'>pred_job</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>m</span>, <span class='fu'><a href='civis_table.html'>civis_table</a></span>(<span class='st'>"schema.table"</span>, <span class='st'>"database_name"</span>),
                     <span class='kw'>output_table</span> <span class='kw'>=</span> <span class='st'>"schema.scores_table"</span>)
-<span class='no'>pred_job</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>m</span>, <span class='fu'><a href='civis_file.html'>civis_file</a></span>(<span class='no'>file_id</span>),
+<span class='no'>pred_job</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>m</span>, <span class='fu'><a href='civis_file.html'>civis_file</a></span>(<span class='no'>file_id</span>),
                     <span class='kw'>output_table</span> <span class='kw'>=</span> <span class='st'>"schema.scores_table"</span>)
 
 <span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'>civis_ml_fetch_existing</span>(<span class='kw'>model_id</span> <span class='kw'>=</span> <span class='no'>m</span>$<span class='no'>job</span>$<span class='no'>id</span>, <span class='no'>m</span>$<span class='no'>run</span>$<span class='no'>id</span>)
 <span class='no'>logs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='fetch_logs.html'>fetch_logs</a></span>(<span class='no'>m</span>)
 <span class='no'>yhat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='fetch_oos_scores.html'>fetch_oos_scores</a></span>(<span class='no'>m</span>)
 <span class='no'>yhat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='fetch_predictions.html'>fetch_predictions</a></span>(<span class='no'>pred_job</span>)
-<span class='co'># }</span></pre>
+}</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#civisml-workflows">CivisML Workflows</a></li>
-
-      <li><a href="#stacking">Stacking</a></li>
-
-      <li><a href="#hyperparameter-tuning">Hyperparameter Tuning</a></li>
-
-      <li><a href="#data-sources">Data Sources</a></li>
-
-      <li><a href="#out-of-sample-scores">Out of sample scores</a></li>
-
-      <li><a href="#predictions">Predictions</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -599,13 +571,16 @@ table on Redshift.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
