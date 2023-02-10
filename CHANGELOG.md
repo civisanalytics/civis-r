@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Changed
+- Deprecated the `local` argument of `CivisFuture`
+
 ## [3.0.0] - 2020-06-22
 
 ### Changed
