@@ -73,7 +73,7 @@ CivisFuture <- function(expr = NULL,
                          ...) {
 
   if (lifecycle::is_present(local)) {
-    lifecycle::deprecate_warn(when = "3.0.1",
+    lifecycle::deprecate_soft(when = "3.0.1",
                               what = "civis::CivisFuture(local)")
   }
   
