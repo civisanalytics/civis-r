@@ -63,7 +63,7 @@ CivisFuture <- function(expr = NULL,
                         globals = TRUE,
                         packages = NULL,
                         lazy = FALSE,
-                        local = TRUE,
+                        local = lifecycle::deprecated(),
                         gc = FALSE,
                         earlySignal = FALSE,
                         label = NULL,
@@ -72,6 +72,11 @@ CivisFuture <- function(expr = NULL,
                         docker_image_tag = "latest",
                          ...) {
 
+  if (lifecycle::is_present(local)) {
+    lifecycle::deprecate_warn(when = "3.0.1",
+                              what = "civis::CivisFuture(local)")
+  }
+  
   gp <- future::getGlobalsAndPackages(expr, envir = envir, globals = globals)
 
   ## if there are globals, assign them in envir
@@ -87,7 +92,6 @@ CivisFuture <- function(expr = NULL,
                            globals = gp$globals,
                            packages = unique(c(packages, gp$packages)),
                            lazy = lazy,
-                           local = local,
                            gc = gc,
                            earlySignal = earlySignal,
                            label = label,
