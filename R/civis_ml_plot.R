@@ -95,7 +95,7 @@ plot.civis_ml_classifier <- function(x, name =  NULL, ...) {
 
   ggplot2::ggplot(decile_df, ggplot2::aes(x = decile, y = values)) +
     ggplot2::geom_bar(stat = 'identity', fill = "gray") +
-    ggplot2::geom_hline(yintercept = incidence, color = civisyellow, size = 2, linetype = 8) +
+    ggplot2::geom_hline(yintercept = incidence, color = civisyellow, linewidth = 2, linetype = 8) +
     ggplot2::annotate("text", x = 4, y = incidence + 0.03,
                       label = paste0("Incidence rate: ", percent(incidence))) +
     ggplot2::facet_grid(~names) +
