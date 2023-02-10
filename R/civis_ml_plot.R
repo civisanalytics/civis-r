@@ -27,7 +27,7 @@ hist.civis_ml <- function(x, name = NULL, ...) {
   if (!is.null(name)) df <- subset(df, names == name)
 
   ggplot2::ggplot(df) +
-    ggplot2::geom_bar(ggplot2::aes_string(x = "mp", y = "freq"), stat = "identity") +
+    ggplot2::geom_bar(ggplot2::aes(x = mp, y = freq), stat = "identity") +
     ggplot2::xlab("OUT OF SAMPLE SCORES") +
     ggplot2::ylab("DENSITY") +
     ggplot2::scale_y_continuous(labels = percent) +
@@ -58,7 +58,7 @@ plot.civis_ml_regressor <- function(x, ...) {
 
   df$x <- y_vals[df$row_id]
   df$y <- yhat_vals[df$col_id]
-  ggplot2::ggplot(df, ggplot2::aes_string(x = "x", y = "y", fill = "values")) +
+  ggplot2::ggplot(df, ggplot2::aes(x = x, y = y, fill = values)) +
     ggplot2::geom_tile() +
     ggplot2::scale_fill_gradient("Bin Size", low = "white", high = civisblue) +
     ggplot2::geom_abline(intercept = 0, slope = 1, color = civisyellow) +
@@ -93,7 +93,7 @@ plot.civis_ml_classifier <- function(x, name =  NULL, ...) {
 
   if (!is.null(name)) decile_df <- subset(decile_df, names == name)
 
-  ggplot2::ggplot(decile_df, ggplot2::aes_string(x = "decile", y = "values")) +
+  ggplot2::ggplot(decile_df, ggplot2::aes(x = decile, y = values)) +
     ggplot2::geom_bar(stat = 'identity', fill = "gray") +
     ggplot2::geom_hline(yintercept = incidence, color = civisyellow, size = 2, linetype = 8) +
     ggplot2::annotate("text", x = 4, y = incidence + 0.03,
