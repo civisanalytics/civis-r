@@ -1,8 +1,9 @@
 Package: civis
 Title: R Client for the 'Civis Platform API'
-Version: 3.0.0
+Version: 3.0.1
 Authors@R: c(
-  person("Patrick", "Miller", email = "pmiller@civisanalytics.com", role = c("cre", "aut")),
+  person("Peter", "Cooman", email = "pcooman@civisanalytics.com", role = c("cre", "ctb")),
+  person("Patrick", "Miller", email = "pmiller@civisanalytics.com", role = "aut"),
   person("Keith", "Ingersoll", email = "kingersoll@civisanalytics.com", role = "aut"),
   person("Bill", "Lattner", email = "wlattner@civisanalytics.com", role = "ctb"),
   person("Anh", "Le", email = "ale@civisanalytics.com", role = "ctb"),
@@ -27,6 +28,7 @@ Imports:
     future (>= 1.8.0),
     httr,
     jsonlite,
+    lifecycle,
     methods,
     memoise,
     stats,
@@ -42,7 +44,7 @@ Suggests:
     rstudioapi,
     testthat,
     yaml
-RoxygenNote: 7.1.0
+RoxygenNote: 7.2.2
 VignetteBuilder: knitr
 Collate:
     'await.R'
