@@ -40,8 +40,6 @@ civis_ml_gradient_boosting_regressor(
 )
 }
 \arguments{
-\item{x}{See the Data Sources section below.}
-
 \item{dependent_variable}{The dependent variable of the training dataset.
 For a multi-target problem, this should be a vector of column names of
 dependent variables. Nulls in a single dependent variable will

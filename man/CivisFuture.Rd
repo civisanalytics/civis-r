@@ -16,7 +16,7 @@ CivisFuture(
   globals = TRUE,
   packages = NULL,
   lazy = FALSE,
-  local = TRUE,
+  local = lifecycle::deprecated(),
   gc = FALSE,
   earlySignal = FALSE,
   label = NULL,
@@ -56,11 +56,6 @@ to be attached in the \R environment evaluating the future.}
 \item{lazy}{If FALSE (default), the future is resolved
 eagerly (starting immediately), otherwise not.}
 
-\item{local}{If TRUE, the expression is evaluated such that
-all assignments are done to local temporary environment, otherwise
-the assignments are done to the global environment of the \R process
-evaluating the future.}
-
 \item{gc}{If TRUE, the garbage collector run (in the process that
 evaluated the future) only after the value of the future is collected.
 Exactly when the values are collected may depend on various factors such
@@ -93,14 +88,14 @@ Evaluate an expression in Civis Platform
 }
 \section{Methods (by generic)}{
 \itemize{
-\item \code{run}: Run a CivisFuture
+\item \code{run(CivisFuture)}: Run a CivisFuture
 
-\item \code{result}: Return the value of a CivisFuture
+\item \code{result(CivisFuture)}: Return the value of a CivisFuture
 
-\item \code{cancel}: Cancel a CivisFuture
+\item \code{cancel(CivisFuture)}: Cancel a CivisFuture
 
-\item \code{resolved}: Check if a CivisFutre has resolved
+\item \code{resolved(CivisFuture)}: Check if a CivisFutre has resolved
 
-\item \code{fetch_logs}: Fetch logs from a CivisFuture
+\item \code{fetch_logs(CivisFuture)}: Fetch logs from a CivisFuture
+
 }}
-
