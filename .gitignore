@@ -9,3 +9,4 @@ inst/web
 .*.swp
 .*.swo
 .DS_Store
+civis.Rcheck/
