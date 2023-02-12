@@ -8,9 +8,6 @@ credentials_list(
   type = NULL,
   remote_host_id = NULL,
   default = NULL,
-  system_credentials = NULL,
-  users = NULL,
-  name = NULL,
   limit = NULL,
   page_num = NULL,
   order = NULL,
@@ -23,12 +20,6 @@ credentials_list(
 \item{remote_host_id}{integer optional. The ID of the remote host associated with the credentials to return.}
 
 \item{default}{boolean optional. If true, will return a list with a single credential which is the current user's default credential.}
-
-\item{system_credentials}{boolean optional. If true, will only return system credentials. System credentials can only be created and viewed by Civis Admins.}
-
-\item{users}{string optional. A comma-separated list of user ids. If specified, returns set of credentials owned by the users that requesting user has at least read access on.}
-
-\item{name}{string optional. If specified, will be used to filter the credentials returned. Will search across name and will return any full name containing the search string.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to its maximum of 1000.}
 
@@ -45,21 +36,12 @@ An array containing the following fields:
 \item{type}{string, The credential's type.}
 \item{username}{string, The username for the credential.}
 \item{description}{string, A long description of the credential.}
-\item{owner}{string, The username of the user who this credential belongs to. Using user.username is preferred.}
-\item{user}{list, A list containing the following elements: 
-\itemize{
-\item id integer, The ID of this user.
-\item name string, This user's name.
-\item username string, This user's username.
-\item initials string, This user's initials.
-\item online boolean, Whether this user is online.
-}}
+\item{owner}{string, The name of the user who this credential belongs to.}
 \item{remoteHostId}{integer, The ID of the remote host associated with this credential.}
 \item{remoteHostName}{string, The name of the remote host associated with this credential.}
 \item{state}{string, The U.S. state for the credential. Only for VAN credentials.}
 \item{createdAt}{string, The creation time for this credential.}
 \item{updatedAt}{string, The last modification time for this credential.}
-\item{default}{boolean, Whether or not the credential is a default. Only for Database credentials.}
 }
 \description{
 List credentials

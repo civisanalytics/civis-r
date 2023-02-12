@@ -2,36 +2,24 @@
 % Please edit documentation in R/generated_client.R
 \name{remote_hosts_post}
 \alias{remote_hosts_post}
-\title{Create a Remote Host}
+\title{Create a new remote host}
 \usage{
 remote_hosts_post(name, url, type)
 }
 \arguments{
 \item{name}{string required. The human readable name for the remote host.}
 
-\item{url}{string required. The URL for the remote host.}
+\item{url}{string required. The URL to your host.}
 
-\item{type}{string required. The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
+\item{type}{string required. The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
 }
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID of the remote host.}
-\item{name}{string, The human readable name for the remote host.}
-\item{type}{string, The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
-\item{url}{string, The URL for the remote host.}
-\item{description}{string, The description of the remote host.}
-\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-\item{user}{list, A list containing the following elements: 
-\itemize{
-\item id integer, The ID of this user.
-\item name string, This user's name.
-\item username string, This user's username.
-\item initials string, This user's initials.
-\item online boolean, Whether this user is online.
-}}
-\item{createdAt}{string, }
-\item{updatedAt}{string, }
+\item{name}{string, The name of the remote host.}
+\item{type}{string, The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
+\item{url}{string, The URL for remote host.}
 }
 \description{
-Create a Remote Host
+Create a new remote host
 }

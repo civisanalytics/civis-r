@@ -15,8 +15,8 @@ A list containing the following elements:
 \itemize{
 \item vendor boolean, This attribute is deprecated
 \item media boolean, True if user has access to the Media Optimizer job type.
-\item mainApp string, This attribute is deprecated
-\item appCount integer, This attribute is deprecated
+\item mainApp string, The slug for the main app for an app-only user account.
+\item appCount integer, Number of apps this user has access to.
 \item reportsOnly boolean, True if user is a reports-only user.
 \item reportsCreator boolean, True if this user is allowed to create HTML reports.
 }}

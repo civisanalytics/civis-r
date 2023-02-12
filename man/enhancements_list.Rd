@@ -18,7 +18,7 @@ enhancements_list(
 \arguments{
 \item{type}{string optional. If specified, return items of these types.}
 
-\item{author}{string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.}
+\item{author}{string optional. If specified, return items from this author. Must use user IDs. A comma separated list of IDs is also accepted to return items from multiple authors.}
 
 \item{status}{string optional. If specified, returns items with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.}
 

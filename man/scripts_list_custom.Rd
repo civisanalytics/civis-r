@@ -19,7 +19,7 @@ scripts_list_custom(
 \arguments{
 \item{from_template_id}{string optional. If specified, return scripts based on the template with this ID. Specify multiple IDs as a comma-separated list.}
 
-\item{author}{string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.}
+\item{author}{string optional. If specified, return items from this author. Must use user IDs. A comma separated list of IDs is also accepted to return items from multiple authors.}
 
 \item{status}{string optional. If specified, returns items with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.}
 

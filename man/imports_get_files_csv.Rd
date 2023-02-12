@@ -52,7 +52,6 @@ A list containing the following elements:
 \item sortkeys array, Sortkeys for this table in Redshift. Please provide a maximum of two.
 }}
 \item{hidden}{boolean, The hidden status of the item.}
-\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 }
 \description{
 Get a CSV Import

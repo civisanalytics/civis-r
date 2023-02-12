@@ -80,7 +80,6 @@ A list containing the following elements:
 \item{hidden}{boolean, A boolean value indicating whether or not this request should be hidden. Defaults to false.}
 \item{forceMultifile}{boolean, Whether or not the csv should be split into multiple files. Default: false}
 \item{maxFileSize}{integer, The max file size, in MB, created files will be. Only available when force_multifile is true. }
-\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 }
 \description{
 Update some attributes of this CSV Export

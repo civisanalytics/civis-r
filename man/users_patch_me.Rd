@@ -9,13 +9,13 @@ users_patch_me(preferences = NULL, last_checked_announcements = NULL)
 \arguments{
 \item{preferences}{list optional. A list containing the following elements: 
 \itemize{
-\item appIndexOrderField string, This attribute is deprecated
-\item appIndexOrderDir string, This attribute is deprecated
-\item resultIndexOrderField string, Order field for the reports index page.
-\item resultIndexOrderDir string, Order direction for the reports index page.
-\item resultIndexTypeFilter string, Type filter for the reports index page.
-\item resultIndexAuthorFilter string, Author filter for the reports index page.
-\item resultIndexArchivedFilter string, Archived filter for the reports index page.
+\item appIndexOrderField string, Order field for the apps index pages.
+\item appIndexOrderDir string, Order direction for the apps index pages.
+\item resultIndexOrderField string, Order field for the results index page.
+\item resultIndexOrderDir string, Order direction for the results index page.
+\item resultIndexTypeFilter string, Type filter for the results index page.
+\item resultIndexAuthorFilter string, Author filter for the results index page.
+\item resultIndexArchivedFilter string, Archived filter for the results index page.
 \item importIndexOrderField string, Order field for the imports index page.
 \item importIndexOrderDir string, Order direction for the imports index page.
 \item importIndexTypeFilter string, Type filter for the imports index page.
@@ -80,9 +80,6 @@ users_patch_me(preferences = NULL, last_checked_announcements = NULL)
 \item serviceOrderDir string, Order direction for the services page.
 \item serviceAuthorFilter string, Author filter for the services page.
 \item serviceArchivedFilter string, Archived filter for the services page.
-\item assumeRoleHistory string, JSON string of previously assumed roles.
-\item defaultSuccessNotificationsOn boolean, Whether email notifications for the success of all applicable jobs are on by default.
-\item defaultFailureNotificationsOn boolean, Whether email notifications for the failure of all applicable jobs are on by default.
 }}
 
 \item{last_checked_announcements}{string optional. The date and time at which the user last checked their announcements.}
@@ -104,9 +101,7 @@ A list containing the following elements:
 \itemize{
 \item id integer, The ID of this group.
 \item name string, The name of this group.
-\item slug string, The slug of this group.
-\item organizationId integer, The ID of the organization associated with this group.
-\item organizationName string, The name of the organization associated with this group.
+\item organizationId integer, The organization associated with this group.
 }}
 \item{organizationName}{string, The name of the organization the user belongs to.}
 \item{organizationSlug}{string, The slug of the organization the user belongs to.}
@@ -116,10 +111,6 @@ A list containing the following elements:
 \item{assumingRole}{boolean, Whether the user is assuming a role or not.}
 \item{assumingAdmin}{boolean, Whether the user is assuming admin.}
 \item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
-\item{superadminModeExpiration}{string, The user is in superadmin mode when set to a DateTime. The user is not in superadmin mode when set to null.}
-\item{disableNonCompliantFedrampFeatures}{boolean, Whether to disable non-compliant fedramp features.}
-\item{createdById}{integer, The ID of the user who created this user.}
-\item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
 }
 \description{
 Update info about the logged-in user

@@ -37,7 +37,6 @@ A list containing the following elements:
 \item compression string, The type of compression of the file. One of "gzip", or "none".
 \item tableColumns array, An array of hashes corresponding to the columns in the file. Each hash should have keys for column "name" and "sql_type"
 }}
-\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 }
 \description{
 Update details about a file

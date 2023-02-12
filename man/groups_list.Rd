@@ -8,8 +8,6 @@ groups_list(
   query = NULL,
   permission = NULL,
   include_members = NULL,
-  organization_id = NULL,
-  user_ids = NULL,
   limit = NULL,
   page_num = NULL,
   order = NULL,
@@ -17,15 +15,11 @@ groups_list(
 )
 }
 \arguments{
-\item{query}{string optional. If specified, it will filter the groups returned.}
+\item{query}{string optional. If specified, it will filter the groups returned. Infix matching is supported (e.g., "query=group" will return "group" and "group of people" and "my group" and "my group of people").}
 
 \item{permission}{string optional. A permissions string, one of "read", "write", or "manage". Lists only groups for which the current user has that permission.}
 
 \item{include_members}{boolean optional. Show members of the group.}
-
-\item{organization_id}{integer optional. The organization by which to filter groups.}
-
-\item{user_ids}{array optional. A list of user IDs to filter groups by.Groups will be returned if any of the users is a member}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.}
 
@@ -40,15 +34,10 @@ An array containing the following fields:
 \item{id}{integer, The ID of this group.}
 \item{name}{string, This group's name.}
 \item{createdAt}{string, The date and time when this group was created.}
-\item{updatedAt}{string, The date and time when this group was last updated.}
-\item{description}{string, The description of the group.}
 \item{slug}{string, The slug for this group.}
 \item{organizationId}{integer, The ID of the organization this group belongs to.}
 \item{organizationName}{string, The name of the organization this group belongs to.}
-\item{memberCount}{integer, The number of active members in this group.}
-\item{totalMemberCount}{integer, The total number of members in this group.}
-\item{lastUpdatedById}{integer, The ID of the user who last updated this group.}
-\item{createdById}{integer, The ID of the user who created this group.}
+\item{memberCount}{integer, The total number of members in this group.}
 \item{members}{array, An array containing the following fields: 
 \itemize{
 \item id integer, The ID of this user.

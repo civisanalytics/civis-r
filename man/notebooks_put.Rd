@@ -20,7 +20,6 @@ notebooks_put(
   credentials = NULL,
   environment_variables = NULL,
   idle_timeout = NULL,
-  partition_label = NULL,
   git_repo_url = NULL,
   git_ref = NULL,
   git_path = NULL
@@ -56,8 +55,6 @@ notebooks_put(
 \item{environment_variables}{list optional. Environment variables to be passed into the Notebook.}
 
 \item{idle_timeout}{integer optional. How long the notebook will stay alive without any kernel activity.}
-
-\item{partition_label}{string optional. The partition label used to run this object.}
 
 \item{git_repo_url}{string optional. The url of the git repository}
 
@@ -101,25 +98,22 @@ A list containing the following elements:
 \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 \item displayUrl string, A signed URL for viewing the deployed item.
 \item instanceType string, The EC2 instance type requested for the deployment.
-\item memory integer, The memory allocated to the deployment, in MB.
-\item cpu integer, The cpu allocated to the deployment, in millicores.
+\item memory integer, The memory allocated to the deployment.
+\item cpu integer, The cpu allocated to the deployment.
 \item state string, The state of the deployment.
 \item stateMessage string, A detailed description of the state.
-\item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
-\item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 \item createdAt string, 
 \item updatedAt string, 
+\item published boolean, 
 \item notebookId integer, The ID of owning Notebook
 }}
 \item{credentials}{array, A list of credential IDs to pass to the notebook.}
 \item{environmentVariables}{list, Environment variables to be passed into the Notebook.}
 \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
-\item{partitionLabel}{string, The partition label used to run this object.}
 \item{gitRepoId}{integer, The ID of the git repository.}
 \item{gitRepoUrl}{string, The url of the git repository}
 \item{gitRef}{string, The git reference if git repo is specified}
 \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
-\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 \item{archived}{string, The archival status of the requested item(s).}
 \item{hidden}{boolean, The hidden status of the item.}
 }

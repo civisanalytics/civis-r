@@ -4,7 +4,7 @@
 \alias{services_post_tokens}
 \title{Create a new long-lived service token}
 \usage{
-services_post_tokens(id, name, machine_token = NULL, expires_in = NULL)
+services_post_tokens(id, name, machine_token = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the service.}
@@ -12,8 +12,6 @@ services_post_tokens(id, name, machine_token = NULL, expires_in = NULL)
 \item{name}{string required. The name of the token.}
 
 \item{machine_token}{boolean optional. If true, create a compact token with no user information.}
-
-\item{expires_in}{integer optional. The number of seconds until the token should expire}
 }
 \value{
 A list containing the following elements:
@@ -28,7 +26,6 @@ A list containing the following elements:
 \item online boolean, Whether this user is online.
 }}
 \item{machineToken}{boolean, If true, this token is not tied to a particular user.}
-\item{expiresAt}{string, The date and time when the token expires.}
 \item{createdAt}{string, The date and time when the token was created.}
 \item{token}{string, The value of the token. Only returned when the token is first created.}
 }

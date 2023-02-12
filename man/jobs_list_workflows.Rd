@@ -30,11 +30,10 @@ An array containing the following fields:
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the item is scheduled.
-\item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 \item scheduledHours array, Hours of the day it is scheduled on.
 \item scheduledMinutes array, Minutes of the day it is scheduled on.
-\item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-\item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 \item{timeZone}{string, The time zone of this workflow.}

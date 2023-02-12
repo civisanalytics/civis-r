@@ -15,15 +15,13 @@ A list containing the following elements:
 \item{user}{string, The username of this user.}
 \item{name}{string, The name of this user.}
 \item{email}{string, The email of this user.}
-\item{active}{boolean, Whether this user account is active or deactivated.}
+\item{active}{boolean, The account status of this user.}
 \item{primaryGroupId}{integer, The ID of the primary group of this user.}
 \item{groups}{array, An array containing the following fields: 
 \itemize{
 \item id integer, The ID of this group.
 \item name string, The name of this group.
-\item slug string, The slug of this group.
-\item organizationId integer, The ID of the organization associated with this group.
-\item organizationName string, The name of the organization associated with this group.
+\item organizationId integer, The organization associated with this group.
 }}
 \item{city}{string, The city of this user.}
 \item{state}{string, The state of this user.}
@@ -44,15 +42,6 @@ A list containing the following elements:
 \item{organizationSSODisableCapable}{boolean, The user's organization's ability to disable sso for their users.}
 \item{organizationLoginType}{string, The user's organization's login type.}
 \item{organizationSmsOtpDisabled}{boolean, Whether the user's organization has SMS OTP disabled.}
-\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-\item{createdAt}{string, The date and time when the user was created.}
-\item{updatedAt}{string, The date and time when the user was last updated.}
-\item{lastSeenAt}{string, The date and time when the user last visited Platform.}
-\item{suspended}{boolean, Whether the user is suspended due to inactivity.}
-\item{createdById}{integer, The ID of the user who created this user.}
-\item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
-\item{unconfirmedEmail}{string, The new email address awaiting confirmation from the user.}
-\item{accountStatus}{string, Account status of this user. One of: "Active", "Deactivated", "Suspended", "Unsuspended"}
 }
 \description{
 Show info about a user

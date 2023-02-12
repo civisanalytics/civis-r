@@ -2,21 +2,14 @@
 % Please edit documentation in R/generated_client.R
 \name{queries_list}
 \alias{queries_list}
-\title{List queries}
+\title{List}
 \usage{
 queries_list(
-  query = NULL,
   database_id = NULL,
-  credential_id = NULL,
   author_id = NULL,
   created_before = NULL,
-  created_after = NULL,
-  started_before = NULL,
-  started_after = NULL,
-  state = NULL,
   exclude_results = NULL,
   hidden = NULL,
-  archived = NULL,
   limit = NULL,
   page_num = NULL,
   order = NULL,
@@ -24,35 +17,21 @@ queries_list(
 )
 }
 \arguments{
-\item{query}{string optional. Space delimited query for searching queries by their SQL. Supports wild card characters "?" for any single character, and "*" for zero or more characters.}
-
 \item{database_id}{integer optional. The database ID.}
-
-\item{credential_id}{integer optional. The credential ID.}
 
 \item{author_id}{integer optional. The author of the query.}
 
 \item{created_before}{string optional. An upper bound for the creation date of the query.}
 
-\item{created_after}{string optional. A lower bound for the creation date of the query.}
-
-\item{started_before}{string optional. An upper bound for the start date of the last run.}
-
-\item{started_after}{string optional. A lower bound for the start date of the last run.}
-
-\item{state}{array optional. The state of the last run. One or more of queued, running, succeeded, failed, and cancelled. Specify multiple values as a comma-separated list (e.g., "A,B").}
-
 \item{exclude_results}{boolean optional. If true, does not return cached query results.}
 
 \item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
-
-\item{archived}{string optional. The archival status of the requested item(s).}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.}
 
 \item{page_num}{integer optional. Page number of the results to return. Defaults to the first page, 1.}
 
-\item{order}{string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at, started_at.}
+\item{order}{string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at.}
 
 \item{order_dir}{string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.}
 }
@@ -69,14 +48,13 @@ An array containing the following fields:
 \item{error}{string, The error message for this run, if present.}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
-\item{startedAt}{string, The start time of the last run.}
 \item{finishedAt}{string, The end time of the last run.}
-\item{state}{string, The state of the last run. One of queued, running, succeeded, failed, and cancelled.}
+\item{state}{string, The state of the last run.}
 \item{lastRunId}{integer, The ID of the last run.}
-\item{archived}{string, The archival status of the requested item(s).}
 \item{previewRows}{integer, The number of rows to save from the query's result (maximum: 100).}
+\item{startedAt}{string, The start time of the last run.}
 \item{reportId}{integer, The ID of the report associated with this query.}
 }
 \description{
-List queries
+List
 }
