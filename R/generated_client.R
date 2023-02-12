@@ -35743,6 +35743,64 @@ users_list_me_ui <- function() {
  }
 
 
+#' List themes
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID of this theme.}
+#' \item{name}{string, The name of this theme.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' @export
+users_list_me_themes <- function() {
+
+  args <- as.list(match.call())[-1]
+  path <- "/users/me/themes"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Show a theme
+#' @param id integer required. The ID of this theme.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this theme.}
+#' \item{name}{string, The name of this theme.}
+#' \item{organizationIds}{array, List of organization ID's allowed to use this theme.}
+#' \item{settings}{string, The theme configuration object.}
+#' \item{logoFile}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of the logo image file.
+#' \item downloadUrl string, The URL of the logo image file.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' @export
+users_get_me_themes <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/users/me/themes/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Enables Superadmin Mode for the current user
 #' 
 #' @return  A list containing the following elements:
