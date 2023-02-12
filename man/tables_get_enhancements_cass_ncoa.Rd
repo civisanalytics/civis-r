@@ -21,6 +21,7 @@ A list containing the following elements:
 \item{performNcoa}{boolean, Whether to update addresses for records matching the National Change of Address (NCOA) database.}
 \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
+\item{chunkSize}{integer, The maximum number of records processed at a time. Note that this parameter is not available to all users.}
 }
 \description{
 View the status of a CASS / NCOA table enhancement

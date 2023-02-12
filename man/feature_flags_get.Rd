@@ -7,11 +7,12 @@
 feature_flags_get(name)
 }
 \arguments{
-\item{name}{string required. The name of the feature flag.}
+\item{name}{string required. The name of the feature.}
 }
 \value{
 A list containing the following elements:
-\item{name}{string, The name of the feature flag}
+\item{name}{string, The name of the feature.}
+\item{description}{string, }
 \item{organizations}{array, An array containing the following fields: 
 \itemize{
 \item id integer, Organization ID

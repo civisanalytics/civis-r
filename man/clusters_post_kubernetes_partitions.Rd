@@ -11,7 +11,7 @@ clusters_post_kubernetes_partitions(id, instance_configs, name, labels)
 
 \item{instance_configs}{array required. An array containing the following fields: 
 \itemize{
-\item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.
+\item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and c5.18xlarge.
 \item minInstances integer, The minimum number of instances of that type in this cluster.
 \item maxInstances integer, The maximum number of instances of that type in this cluster.
 }}
@@ -28,7 +28,7 @@ A list containing the following elements:
 \item{instanceConfigs}{array, An array containing the following fields: 
 \itemize{
 \item instanceConfigId integer, The ID of this InstanceConfig.
-\item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.
+\item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and c5.18xlarge.
 \item minInstances integer, The minimum number of instances of that type in this cluster.
 \item maxInstances integer, The maximum number of instances of that type in this cluster.
 \item instanceMaxMemory integer, The amount of memory (RAM) available to a single instance of that type in megabytes.
