@@ -49,6 +49,7 @@ class(civis_platform) <- c("CivisFuture", "future", "function")
 
 #' Evaluate an expression in Civis Platform
 #' @inheritParams future::Future
+#' @param local deprecated as of \code{civis} v3.0.1
 #' @param required_resources resources, see \code{\link{scripts_post_containers}}
 #' @param docker_image_name the image for the container script.
 #' @param docker_image_tag the tag for the Docker image.
