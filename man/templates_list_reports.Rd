@@ -6,6 +6,7 @@
 \usage{
 templates_list_reports(
   hidden = NULL,
+  author = NULL,
   category = NULL,
   limit = NULL,
   page_num = NULL,
@@ -15,6 +16,8 @@ templates_list_reports(
 }
 \arguments{
 \item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
+
+\item{author}{string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.}
 
 \item{category}{string optional. A category to filter results by, one of: dataset-viz}
 
@@ -35,6 +38,7 @@ An array containing the following fields:
 \item{updatedAt}{string, }
 \item{useCount}{integer, The number of uses of this template.}
 \item{archived}{boolean, Whether the template has been archived.}
+\item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 \item{author}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.
@@ -43,7 +47,6 @@ An array containing the following fields:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
-\item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 }
 \description{
 List Report Templates
