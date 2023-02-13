@@ -48,6 +48,8 @@ An array containing the following fields:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
+\item{maxMemoryUsage}{number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.}
+\item{maxCpuUsage}{number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
 }

@@ -10,3 +10,5 @@
 ^_pkgdown\.yaml$
 ^CHANGELOG\.md$
 ^cran-comments\.md$
+^doc$
+^Meta$

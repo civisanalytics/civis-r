@@ -4,10 +4,14 @@
 \alias{databases_list_schemas}
 \title{List schemas in this database}
 \usage{
-databases_list_schemas(id)
+databases_list_schemas(id, name = NULL, credential_id = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the database.}
+
+\item{name}{string optional. If specified, will be used to filter the schemas returned. Substring matching is supported (e.g., "name=schema" will return both "schema1" and "schema2").}
+
+\item{credential_id}{integer optional. If provided, schemas will be filtered based on the given credential.}
 }
 \value{
 An array containing the following fields:

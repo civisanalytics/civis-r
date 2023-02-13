@@ -23,12 +23,14 @@ A list containing the following elements:
 }}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
+\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 \item{host}{string, The host for the service report}
 \item{displayUrl}{string, The URL to display the service report.}
 \item{serviceId}{integer, The id of the backing service}
 \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
 \item{apiKey}{string, A Civis API key that can be used by this report.}
 \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
+\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
 Show a single service report
