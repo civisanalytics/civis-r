@@ -10,3 +10,5 @@ inst/web
 .*.swo
 .DS_Store
 civis.Rcheck/
+/doc/
+/Meta/

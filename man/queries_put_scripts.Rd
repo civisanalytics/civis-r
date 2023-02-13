@@ -24,10 +24,12 @@ A list containing the following elements:
 \item{error}{string, The error message for this run, if present.}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
+\item{startedAt}{string, The start time of the last run.}
 \item{finishedAt}{string, The end time of the last run.}
-\item{state}{string, The state of the last run.}
+\item{state}{string, The state of the last run. One of queued, running, succeeded, failed, and cancelled.}
 \item{lastRunId}{integer, The ID of the last run.}
 \item{hidden}{boolean, The hidden status of the item.}
+\item{archived}{string, The archival status of the requested item(s).}
 \item{name}{string, The name of the query.}
 \item{author}{list, A list containing the following elements: 
 \itemize{
@@ -37,7 +39,6 @@ A list containing the following elements:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
-\item{startedAt}{string, The start time of the last run.}
 \item{reportId}{integer, The ID of the report associated with this query.}
 }
 \description{
