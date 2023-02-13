@@ -20,7 +20,7 @@ notebooks_list(
 
 \item{archived}{string optional. The archival status of the requested item(s).}
 
-\item{author}{string optional. If specified, return imports from this author. It accepts a comma-separated list of author IDs.}
+\item{author}{string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.}
 
 \item{status}{string optional. If specified, returns notebooks with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'pending', 'idle'.}
 
@@ -57,13 +57,14 @@ An array containing the following fields:
 \item dockerImageName string, The name of the docker image to pull from DockerHub.
 \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 \item instanceType string, The EC2 instance type requested for the deployment.
-\item memory integer, The memory allocated to the deployment.
-\item cpu integer, The cpu allocated to the deployment.
+\item memory integer, The memory allocated to the deployment, in MB.
+\item cpu integer, The cpu allocated to the deployment, in millicores.
 \item state string, The state of the deployment.
 \item stateMessage string, A detailed description of the state.
+\item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
+\item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 \item createdAt string, 
 \item updatedAt string, 
-\item published boolean, 
 \item notebookId integer, The ID of owning Notebook
 }}
 \item{archived}{string, The archival status of the requested item(s).}

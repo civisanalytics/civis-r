@@ -24,7 +24,9 @@ scripts_patch_containers(
   instance_type = NULL,
   cancel_timeout = NULL,
   time_zone = NULL,
-  target_project_id = NULL
+  partition_label = NULL,
+  target_project_id = NULL,
+  running_as_id = NULL
 )
 }
 \arguments{
@@ -53,10 +55,11 @@ scripts_patch_containers(
 \item{schedule}{list optional. A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the item is scheduled.
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
 \item scheduledHours array, Hours of the day it is scheduled on.
 \item scheduledMinutes array, Minutes of the day it is scheduled on.
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+\item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
+\item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
 }}
 
 \item{notifications}{list optional. A list containing the following elements: 
@@ -75,10 +78,9 @@ scripts_patch_containers(
 
 \item{required_resources}{list optional. A list containing the following elements: 
 \itemize{
-\item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
-\item memory integer, The amount of RAM to allocate for the container (in MB).
+\item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares. Must be at least 2 shares.
+\item memory integer, The amount of RAM to allocate for the container (in MB). Must be at least 4 MB.
 \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
-\item wholeInstance boolean, Whether or not to use the entire instance. If true, cpu, memory, and disk space are not required and will be set to an instance's max.
 }}
 
 \item{repo_http_uri}{string optional. The location of a github repo to clone into the container, e.g. github.com/my-user/my-repo.git.}
@@ -101,11 +103,21 @@ scripts_patch_containers(
 
 \item{time_zone}{string optional. The time zone of this script.}
 
+\item{partition_label}{string optional. The partition label used to run this object.}
+
 \item{target_project_id}{integer optional. Target project to which script outputs will be added.}
+
+\item{running_as_id}{integer optional. The ID of the runner of this script.}
 }
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID for the script.}
+\item{fromTemplateAliases}{array, An array containing the following fields: 
+\itemize{
+\item id integer, The id of the Alias object.
+\item objectId integer, The id of the object
+\item alias string, The alias of the object
+}}
 \item{name}{string, The name of the container.}
 \item{type}{string, The type of the script (e.g Container)}
 \item{createdAt}{string, The time this script was created.}
@@ -153,10 +165,11 @@ A list containing the following elements:
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the item is scheduled.
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
 \item scheduledHours array, Hours of the day it is scheduled on.
 \item scheduledMinutes array, Minutes of the day it is scheduled on.
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+\item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
+\item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
 }}
 \item{notifications}{list, A list containing the following elements: 
 \itemize{
@@ -181,8 +194,8 @@ A list containing the following elements:
 }}
 \item{requiredResources}{list, A list containing the following elements: 
 \itemize{
-\item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
-\item memory integer, The amount of RAM to allocate for the container (in MB).
+\item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares. Must be at least 2 shares.
+\item memory integer, The amount of RAM to allocate for the container (in MB). Must be at least 4 MB.
 \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
 }}
 \item{repoHttpUri}{string, The location of a github repo to clone into the container, e.g. github.com/my-user/my-repo.git.}
@@ -204,9 +217,12 @@ A list containing the following elements:
 \item error string, The error message for this run, if present.
 }}
 \item{timeZone}{string, The time zone of this script.}
+\item{partitionLabel}{string, The partition label used to run this object. }
+\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 \item{hidden}{boolean, The hidden status of the item.}
 \item{archived}{string, The archival status of the requested item(s).}
 \item{targetProjectId}{integer, Target project to which script outputs will be added.}
+\item{runningAsId}{integer, The ID of the runner of this script.}
 }
 \description{
 Update a container
