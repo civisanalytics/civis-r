@@ -6,10 +6,10 @@
 \usage{
 imports_list(
   type = NULL,
+  author = NULL,
   destination = NULL,
   source = NULL,
   status = NULL,
-  author = NULL,
   hidden = NULL,
   archived = NULL,
   limit = NULL,
@@ -21,13 +21,13 @@ imports_list(
 \arguments{
 \item{type}{string optional. If specified, return imports of these types. It accepts a comma-separated list, possible values are 'AutoImport', 'DbSync', 'Salesforce', 'GdocImport'.}
 
+\item{author}{string optional. If specified, return imports from this author. It accepts a comma-separated list of author ids.}
+
 \item{destination}{string optional. If specified, returns imports with one of these destinations. It accepts a comma-separated list of remote host ids.}
 
 \item{source}{string optional. If specified, returns imports with one of these sources. It accepts a comma-separated list of remote host ids. 'DbSync' must be specified for 'type'.}
 
 \item{status}{string optional. If specified, returns imports with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.}
-
-\item{author}{string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.}
 
 \item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
 
@@ -62,11 +62,10 @@ An array containing the following fields:
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the item is scheduled.
-\item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 \item scheduledHours array, Hours of the day it is scheduled on.
 \item scheduledMinutes array, Minutes of the day it is scheduled on.
-\item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-\item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 \item{id}{integer, The ID for the import.}
 \item{isOutbound}{boolean, }

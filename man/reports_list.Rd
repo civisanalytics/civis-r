@@ -6,8 +6,8 @@
 \usage{
 reports_list(
   type = NULL,
-  template_id = NULL,
   author = NULL,
+  template_id = NULL,
   hidden = NULL,
   archived = NULL,
   limit = NULL,
@@ -19,9 +19,9 @@ reports_list(
 \arguments{
 \item{type}{string optional. If specified, return report of these types. It accepts a comma-separated list, possible values are 'tableau' or 'other'.}
 
-\item{template_id}{integer optional. If specified, return reports using the provided Template.}
+\item{author}{string optional. If specified, return reports from this author. It accepts a comma-separated list of author ids.}
 
-\item{author}{string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.}
+\item{template_id}{integer optional. If specified, return reports using the provided Template.}
 
 \item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
 

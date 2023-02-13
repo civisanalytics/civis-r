@@ -54,13 +54,10 @@ A list containing the following elements:
 \item{error}{string, The error message for this run, if present.}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
-\item{startedAt}{string, The start time of the last run.}
 \item{finishedAt}{string, The end time of the last run.}
-\item{state}{string, The state of the last run. One of queued, running, succeeded, failed, and cancelled.}
+\item{state}{string, The state of the last run.}
 \item{lastRunId}{integer, The ID of the last run.}
 \item{hidden}{boolean, The hidden status of the item.}
-\item{archived}{string, The archival status of the requested item(s).}
-\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 \item{interactive}{boolean, Deprecated and not used.}
 \item{previewRows}{integer, The number of rows to save from the query's result (maximum: 100).}
 \item{includeHeader}{boolean, Whether the CSV output should include a header row [default: true].}
@@ -68,6 +65,7 @@ A list containing the following elements:
 \item{columnDelimiter}{string, The delimiter to use. One of comma or tab, or pipe [default: comma].}
 \item{unquoted}{boolean, If true, will not quote fields.}
 \item{filenamePrefix}{string, The output filename prefix.}
+\item{startedAt}{string, The start time of the last run.}
 \item{reportId}{integer, The ID of the report associated with this query.}
 }
 \description{

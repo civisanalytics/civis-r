@@ -233,10 +233,6 @@ admin_patch_themes <- function(id, name = NULL, organization_ids = NULL, setting
 #' \item{csMetadata}{string, Additional metadata about the organization in JSON format.}
 #' \item{removeFooterInEmails}{boolean, If true, emails sent by platform will not include Civis text.}
 #' \item{salesforceAccountId}{string, The SalesForce Account ID for this organization.}
-#' \item{tableauSiteId}{string, The Tableau Site ID for this organization.}
-#' \item{fedrampEnabled}{boolean, Flag denoting whether this organization is FedRAMP compliant.}
-#' \item{createdById}{integer, The ID of the user who created this organization}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this organization}
 #' \item{advancedSettings}{list, A list containing the following elements: 
 #' \itemize{
 #' \item dedicatedDjPoolEnabled boolean, If true, the Organization has a dedicated delayed jobs pool. Defaults to false.
@@ -431,72 +427,8 @@ aliases_delete_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-aliases_list_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/aliases/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-aliases_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/aliases/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List Aliases
-#' @param object_type string optional. Filter results by object type. Pass multiple object types with a comma-separatedlist. Valid types include: cass_ncoa, container_script, geocode, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
+#' @param object_type string optional. Filter results by object type. Pass multiple object types with a comma-separatedlist. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
 #' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
 #' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id, object_type.
@@ -505,7 +437,7 @@ aliases_put_transfer <- function(id, user_id, include_dependencies, email_body =
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The id of the Alias object.}
 #' \item{objectId}{integer, The id of the object}
-#' \item{objectType}{string, The type of the object. Valid types include: cass_ncoa, container_script, geocode, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{objectType}{string, The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
 #' \item{alias}{string, The alias of the object}
 #' \item{userId}{integer, The id of the user who created the alias}
 #' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
@@ -529,14 +461,14 @@ aliases_list <- function(object_type = NULL, limit = NULL, page_num = NULL, orde
 
 #' Create an Alias
 #' @param object_id integer required. The id of the object
-#' @param object_type string required. The type of the object. Valid types include: cass_ncoa, container_script, geocode, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
+#' @param object_type string required. The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
 #' @param alias string required. The alias of the object
 #' @param display_name string optional. The display name of the Alias object. Defaults to object name if not provided.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The id of the Alias object.}
 #' \item{objectId}{integer, The id of the object}
-#' \item{objectType}{string, The type of the object. Valid types include: cass_ncoa, container_script, geocode, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{objectType}{string, The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
 #' \item{alias}{string, The alias of the object}
 #' \item{userId}{integer, The id of the user who created the alias}
 #' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
@@ -564,7 +496,7 @@ aliases_post <- function(object_id, object_type, alias, display_name = NULL) {
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The id of the Alias object.}
 #' \item{objectId}{integer, The id of the object}
-#' \item{objectType}{string, The type of the object. Valid types include: cass_ncoa, container_script, geocode, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{objectType}{string, The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
 #' \item{alias}{string, The alias of the object}
 #' \item{userId}{integer, The id of the user who created the alias}
 #' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
@@ -589,14 +521,14 @@ aliases_get <- function(id) {
 #' Replace all attributes of this Alias
 #' @param id integer required. The id of the Alias object.
 #' @param object_id integer required. The id of the object
-#' @param object_type string required. The type of the object. Valid types include: cass_ncoa, container_script, geocode, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
+#' @param object_type string required. The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
 #' @param alias string required. The alias of the object
 #' @param display_name string optional. The display name of the Alias object. Defaults to object name if not provided.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The id of the Alias object.}
 #' \item{objectId}{integer, The id of the object}
-#' \item{objectType}{string, The type of the object. Valid types include: cass_ncoa, container_script, geocode, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{objectType}{string, The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
 #' \item{alias}{string, The alias of the object}
 #' \item{userId}{integer, The id of the user who created the alias}
 #' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
@@ -621,14 +553,14 @@ aliases_put <- function(id, object_id, object_type, alias, display_name = NULL) 
 #' Update some attributes of this Alias
 #' @param id integer required. The id of the Alias object.
 #' @param object_id integer optional. The id of the object
-#' @param object_type string optional. The type of the object. Valid types include: cass_ncoa, container_script, geocode, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
+#' @param object_type string optional. The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
 #' @param alias string optional. The alias of the object
 #' @param display_name string optional. The display name of the Alias object. Defaults to object name if not provided.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The id of the Alias object.}
 #' \item{objectId}{integer, The id of the object}
-#' \item{objectType}{string, The type of the object. Valid types include: cass_ncoa, container_script, geocode, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{objectType}{string, The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
 #' \item{alias}{string, The alias of the object}
 #' \item{userId}{integer, The id of the user who created the alias}
 #' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
@@ -673,13 +605,13 @@ aliases_delete <- function(id) {
 
 
 #' Get details about an alias within an FCO type
-#' @param object_type string required. The type of the object. Valid types include: cass_ncoa, container_script, geocode, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
+#' @param object_type string required. The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
 #' @param alias string required. The alias of the object
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The id of the Alias object.}
 #' \item{objectId}{integer, The id of the object}
-#' \item{objectType}{string, The type of the object. Valid types include: cass_ncoa, container_script, geocode, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
+#' \item{objectType}{string, The type of the object. Valid types include: model, cass_ncoa, container_script, gdoc_export, geocode, media_optimizer, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.}
 #' \item{alias}{string, The alias of the object}
 #' \item{userId}{integer, The id of the user who created the alias}
 #' \item{displayName}{string, The display name of the Alias object. Defaults to object name if not provided.}
@@ -732,11 +664,905 @@ announcements_list <- function(limit = NULL, page_num = NULL, order = NULL, orde
  }
 
 
+#' List apps
+#' 
+#' @return  An array containing the following fields:
+#' \item{slug}{string, The slug for the application.}
+#' \item{id}{integer, The unique id of the application.}
+#' \item{instanceName}{string, A word that describes an instance of this app.}
+#' \item{name}{string, The name of the application.}
+#' @export
+apps_list <- function() {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List details of a Decision Application
+#' @param slug string required. The slug for the application.
+#' 
+#' @return  A list containing the following elements:
+#' \item{slug}{string, The slug for the application.}
+#' \item{id}{integer, The unique id of the application.}
+#' \item{instanceName}{string, A word that describes an instance of this app.}
+#' \item{name}{string, The name of the application.}
+#' \item{currentRelease}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The unique id of the release.
+#' \item appId integer, The id of the app the release belongs to.
+#' \item reportTemplateId integer, ID of the report template for this release.
+#' \item resources object, A hash of resources associated with this release.
+#' \item archived string, The archival status of the requested item(s).
+#' }}
+#' \item{features}{list, App features.}
+#' @export
+apps_get <- function(slug) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}"
+  path_params  <- list(slug = slug)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update the Decision Application features for a given organization
+#' @param slug string required. The slug for the application.
+#' @param org string required. Organization.
+#' @param features list required. App features.
+#' 
+#' @return  A list containing the following elements:
+#' \item{slug}{string, The slug for the application.}
+#' \item{id}{integer, The unique id of the application.}
+#' \item{instanceName}{string, A word that describes an instance of this app.}
+#' \item{name}{string, The name of the application.}
+#' \item{currentRelease}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The unique id of the release.
+#' \item appId integer, The id of the app the release belongs to.
+#' \item reportTemplateId integer, ID of the report template for this release.
+#' \item resources object, A hash of resources associated with this release.
+#' \item archived string, The archival status of the requested item(s).
+#' }}
+#' \item{features}{list, App features.}
+#' @export
+apps_put_features <- function(slug, org, features) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/features/{org}"
+  path_params  <- list(slug = slug, org = org)
+  query_params <- list()
+  body_params  <- list(features = features)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the instances of a Decision Application
+#' @param slug string required. The slug for the application.
+#' @param archived string optional. The archival status of the requested item(s).
+#' @param app_release_id integer optional. If supplied, return only instances matching this release.
+#' @param limit integer optional. Number of results to return. Defaults to its maximum of 50.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id, created_at.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to asc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The unique id of the instance.}
+#' \item{name}{string, The name of the instance.}
+#' \item{appReleaseId}{integer, The id of the app release the instance belongs to.}
+#' \item{reportId}{integer, The id of the report the instance belongs to.}
+#' \item{createdAt}{string, The time the instance was created at.}
+#' \item{user}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{projectId}{integer, The id of the project collecting all the items that belong to this app instance.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+apps_list_instances <- function(slug, archived = NULL, app_release_id = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/instances"
+  path_params  <- list(slug = slug)
+  query_params <- list(archived = archived, app_release_id = app_release_id, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a new instance of an application of the given slug
+#' @param slug string required. The slug for the application.
+#' @param name string optional. The name of the instance.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The unique id of the instance.}
+#' \item{name}{string, The name of the instance.}
+#' \item{appReleaseId}{integer, The id of the app release the instance belongs to.}
+#' \item{reportId}{integer, The id of the report the instance belongs to.}
+#' \item{createdAt}{string, The time the instance was created at.}
+#' \item{user}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{projectId}{integer, The id of the project collecting all the items that belong to this app instance.}
+#' \item{authCodeUrl}{string, }
+#' \item{apiKey}{string, A Civis API key that can be used by this app instance.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+apps_post_instances <- function(slug, name = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/instances"
+  path_params  <- list(slug = slug)
+  query_params <- list()
+  body_params  <- list(name = name)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the releases of a particular Decision Application
+#' @param slug string required. The slug for the application.
+#' @param archived string optional. The archival status of the requested item(s).
+#' @param limit integer optional. Number of results to return. Defaults to its maximum of 50.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to asc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The unique id of the release.}
+#' \item{appId}{integer, The id of the app the release belongs to.}
+#' \item{reportTemplateId}{integer, ID of the report template for this release.}
+#' \item{resources}{list, A hash of resources associated with this release.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+apps_list_releases <- function(slug, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/releases"
+  path_params  <- list(slug = slug)
+  query_params <- list(archived = archived, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a new Decision Application release
+#' @param slug string required. The slug for the application.
+#' @param report_template_id integer required. ID of the report template for this release.
+#' @param resources list required. A hash of resources associated with this release.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The unique id of the release.}
+#' \item{appId}{integer, The id of the app the release belongs to.}
+#' \item{reportTemplateId}{integer, ID of the report template for this release.}
+#' \item{resources}{list, A hash of resources associated with this release.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+apps_post_releases <- function(slug, report_template_id, resources) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/releases"
+  path_params  <- list(slug = slug)
+  query_params <- list()
+  body_params  <- list(reportTemplateId = report_template_id, resources = resources)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Return a given app release
+#' @param id integer required. The unique id of the release.
+#' @param slug string required. The slug for the application.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The unique id of the release.}
+#' \item{appId}{integer, The id of the app the release belongs to.}
+#' \item{reportTemplateId}{integer, ID of the report template for this release.}
+#' \item{resources}{list, A hash of resources associated with this release.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+apps_get_releases <- function(id, slug) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/releases/{id}"
+  path_params  <- list(id = id, slug = slug)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update an existing Decision Application release
+#' @param slug string required. The slug for the application.
+#' @param id integer required. The unique id of the release.
+#' @param report_template_id integer optional. ID of the report template for this release.
+#' @param resources list optional. A hash of resources associated with this release.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The unique id of the release.}
+#' \item{appId}{integer, The id of the app the release belongs to.}
+#' \item{reportTemplateId}{integer, ID of the report template for this release.}
+#' \item{resources}{list, A hash of resources associated with this release.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+apps_patch_releases <- function(slug, id, report_template_id = NULL, resources = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/releases/{id}"
+  path_params  <- list(slug = slug, id = id)
+  query_params <- list()
+  body_params  <- list(reportTemplateId = report_template_id, resources = resources)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Return a given app instance
+#' @param id integer required. The unique id of the instance.
+#' @param slug string required. The slug for the application.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The unique id of the instance.}
+#' \item{name}{string, The name of the instance.}
+#' \item{appReleaseId}{integer, The id of the app release the instance belongs to.}
+#' \item{reportId}{integer, The id of the report the instance belongs to.}
+#' \item{createdAt}{string, The time the instance was created at.}
+#' \item{user}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{projectId}{integer, The id of the project collecting all the items that belong to this app instance.}
+#' \item{authCodeUrl}{string, }
+#' \item{apiKey}{string, A Civis API key that can be used by this app instance.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+apps_get_instances <- function(id, slug) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/instances/{id}"
+  path_params  <- list(id = id, slug = slug)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update a given app instance
+#' @param id integer required. The unique id of the instance.
+#' @param slug string required. The slug for the application.
+#' @param name string optional. The name of the instance.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The unique id of the instance.}
+#' \item{name}{string, The name of the instance.}
+#' \item{appReleaseId}{integer, The id of the app release the instance belongs to.}
+#' \item{reportId}{integer, The id of the report the instance belongs to.}
+#' \item{createdAt}{string, The time the instance was created at.}
+#' \item{user}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{projectId}{integer, The id of the project collecting all the items that belong to this app instance.}
+#' \item{authCodeUrl}{string, }
+#' \item{apiKey}{string, A Civis API key that can be used by this app instance.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+apps_patch_instances <- function(id, slug, name = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/instances/{id}"
+  path_params  <- list(id = id, slug = slug)
+  query_params <- list()
+  body_params  <- list(name = name)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List users and groups permissioned on this object
+#' @param slug string required. The slug for the application.
+#' @param id integer required. The ID of the resource that is shared.
+#' 
+#' @return  An array containing the following fields:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+apps_list_releases_shares <- function(slug, id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/releases/{id}/shares"
+  path_params  <- list(slug = slug, id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions users have on this object
+#' @param slug string required. The slug for the application.
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+apps_put_releases_shares_users <- function(slug, id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/releases/{id}/shares/users"
+  path_params  <- list(slug = slug, id = id)
+  query_params <- list()
+  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a user has on this object
+#' @param slug string required. The slug for the application.
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
+#' 
+#' @return  An empty HTTP response
+#' @export
+apps_delete_releases_shares_users <- function(slug, id, user_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/releases/{id}/shares/users/{user_id}"
+  path_params  <- list(slug = slug, id = id, user_id = user_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions groups has on this object
+#' @param slug string required. The slug for the application.
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+apps_put_releases_shares_groups <- function(slug, id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/releases/{id}/shares/groups"
+  path_params  <- list(slug = slug, id = id)
+  query_params <- list()
+  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a group has on this object
+#' @param slug string required. The slug for the application.
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
+#' 
+#' @return  An empty HTTP response
+#' @export
+apps_delete_releases_shares_groups <- function(slug, id, group_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/releases/{id}/shares/groups/{group_id}"
+  path_params  <- list(slug = slug, id = id, group_id = group_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update the archive status of this object
+#' @param id integer required. The ID of the object.
+#' @param slug string required. The slug for the application.
+#' @param status boolean required. The desired archived status of the object.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The unique id of the release.}
+#' \item{appId}{integer, The id of the app the release belongs to.}
+#' \item{reportTemplateId}{integer, ID of the report template for this release.}
+#' \item{resources}{list, A hash of resources associated with this release.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+apps_put_releases_archive <- function(id, slug, status) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/releases/{id}/archive"
+  path_params  <- list(id = id, slug = slug)
+  query_params <- list()
+  body_params  <- list(status = status)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List users and groups permissioned on this object
+#' @param slug string required. The slug for the application.
+#' @param id integer required. The ID of the resource that is shared.
+#' 
+#' @return  An array containing the following fields:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+apps_list_instances_shares <- function(slug, id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/instances/{id}/shares"
+  path_params  <- list(slug = slug, id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions users have on this object
+#' @param slug string required. The slug for the application.
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+apps_put_instances_shares_users <- function(slug, id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/instances/{id}/shares/users"
+  path_params  <- list(slug = slug, id = id)
+  query_params <- list()
+  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a user has on this object
+#' @param slug string required. The slug for the application.
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
+#' 
+#' @return  An empty HTTP response
+#' @export
+apps_delete_instances_shares_users <- function(slug, id, user_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/instances/{id}/shares/users/{user_id}"
+  path_params  <- list(slug = slug, id = id, user_id = user_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions groups has on this object
+#' @param slug string required. The slug for the application.
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+apps_put_instances_shares_groups <- function(slug, id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/instances/{id}/shares/groups"
+  path_params  <- list(slug = slug, id = id)
+  query_params <- list()
+  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a group has on this object
+#' @param slug string required. The slug for the application.
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
+#' 
+#' @return  An empty HTTP response
+#' @export
+apps_delete_instances_shares_groups <- function(slug, id, group_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/instances/{id}/shares/groups/{group_id}"
+  path_params  <- list(slug = slug, id = id, group_id = group_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update the archive status of this object
+#' @param id integer required. The ID of the object.
+#' @param slug string required. The slug for the application.
+#' @param status boolean required. The desired archived status of the object.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The unique id of the instance.}
+#' \item{name}{string, The name of the instance.}
+#' \item{appReleaseId}{integer, The id of the app release the instance belongs to.}
+#' \item{reportId}{integer, The id of the report the instance belongs to.}
+#' \item{createdAt}{string, The time the instance was created at.}
+#' \item{user}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{projectId}{integer, The id of the project collecting all the items that belong to this app instance.}
+#' \item{authCodeUrl}{string, }
+#' \item{apiKey}{string, A Civis API key that can be used by this app instance.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+apps_put_instances_archive <- function(id, slug, status) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/instances/{id}/archive"
+  path_params  <- list(id = id, slug = slug)
+  query_params <- list()
+  body_params  <- list(status = status)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the projects an App Instance belongs to
+#' @param id integer required. The ID of the App Instance.
+#' @param slug string required. The slug for the application.
+#' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID for this project.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{name}{string, The name of this project.}
+#' \item{description}{string, A description of the project.}
+#' \item{users}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{autoShare}{boolean, }
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+apps_list_instances_projects <- function(id, slug, hidden = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/instances/{id}/projects"
+  path_params  <- list(id = id, slug = slug)
+  query_params <- list(hidden = hidden)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Add an App Instance to a project
+#' @param id integer required. The ID of the App Instance.
+#' @param project_id integer required. The ID of the project.
+#' @param slug string required. The slug for the application.
+#' 
+#' @return  An empty HTTP response
+#' @export
+apps_put_instances_projects <- function(id, project_id, slug) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/instances/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id, slug = slug)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Remove an App Instance from a project
+#' @param id integer required. The ID of the App Instance.
+#' @param project_id integer required. The ID of the project.
+#' @param slug string required. The slug for the application.
+#' 
+#' @return  An empty HTTP response
+#' @export
+apps_delete_instances_projects <- function(id, project_id, slug) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/apps/{slug}/instances/{id}/projects/{project_id}"
+  path_params  <- list(id = id, project_id = project_id, slug = slug)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List Kubernetes Clusters
-#' @param organization_id integer optional. The ID of this cluster's organization. Cannot be used along with the organization slug.
-#' @param organization_slug string optional. The slug of this cluster's organization. Cannot be used along with the organization ID.
-#' @param raw_cluster_slug string optional. The slug of this cluster's raw configuration.
-#' @param exclude_inactive_orgs boolean optional. When true, excludes KubeClusters associated with inactive orgs. Defaults to false.
+#' @param organization_slug string optional. The slug of this cluster's organization.
 #' @param limit integer optional. Number of results to return. Defaults to its maximum of 50.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
 #' @param order string optional. The field on which to order the result set. Defaults to organization_id. Must be one of: organization_id, created_at.
@@ -747,8 +1573,6 @@ announcements_list <- function(limit = NULL, page_num = NULL, order = NULL, orde
 #' \item{organizationId}{string, The id of this cluster's organization.}
 #' \item{organizationName}{string, The name of this cluster's organization.}
 #' \item{organizationSlug}{string, The slug of this cluster's organization.}
-#' \item{rawClusterSlug}{string, The slug of this cluster's raw configuration.}
-#' \item{customPartitions}{boolean, Whether this cluster has a custom partition configuration.}
 #' \item{clusterPartitions}{array, An array containing the following fields: 
 #' \itemize{
 #' \item clusterPartitionId integer, The ID of this cluster partition.
@@ -759,12 +1583,12 @@ announcements_list <- function(limit = NULL, page_num = NULL, order = NULL, orde
 #' }}
 #' \item{isNatEnabled}{boolean, Whether this cluster needs a NAT gateway or not.}
 #' @export
-clusters_list_kubernetes <- function(organization_id = NULL, organization_slug = NULL, raw_cluster_slug = NULL, exclude_inactive_orgs = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+clusters_list_kubernetes <- function(organization_slug = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/clusters/kubernetes"
   path_params  <- list()
-  query_params <- list(organization_id = organization_id, organization_slug = organization_slug, raw_cluster_slug = raw_cluster_slug, exclude_inactive_orgs = exclude_inactive_orgs, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(organization_slug = organization_slug, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -779,7 +1603,6 @@ clusters_list_kubernetes <- function(organization_id = NULL, organization_slug =
 #' Create a Kubernetes Cluster
 #' @param organization_id string optional. The id of this cluster's organization.
 #' @param organization_slug string optional. The slug of this cluster's organization.
-#' @param raw_cluster_slug string optional. The slug of this cluster's raw configuration.
 #' @param is_nat_enabled boolean optional. Whether this cluster needs a NAT gateway or not.
 #' 
 #' @return  A list containing the following elements:
@@ -787,8 +1610,6 @@ clusters_list_kubernetes <- function(organization_id = NULL, organization_slug =
 #' \item{organizationId}{string, The id of this cluster's organization.}
 #' \item{organizationName}{string, The name of this cluster's organization.}
 #' \item{organizationSlug}{string, The slug of this cluster's organization.}
-#' \item{rawClusterSlug}{string, The slug of this cluster's raw configuration.}
-#' \item{customPartitions}{boolean, Whether this cluster has a custom partition configuration.}
 #' \item{clusterPartitions}{array, An array containing the following fields: 
 #' \itemize{
 #' \item clusterPartitionId integer, The ID of this cluster partition.
@@ -798,15 +1619,15 @@ clusters_list_kubernetes <- function(organization_id = NULL, organization_slug =
 #' \item defaultInstanceConfigId integer, The id of the InstanceConfig that is the default for this partition.
 #' }}
 #' \item{isNatEnabled}{boolean, Whether this cluster needs a NAT gateway or not.}
-#' \item{hours}{number, The number of hours used this month for this cluster.}
+#' \item{hours}{number, The number of hours used this month for this cluster }
 #' @export
-clusters_post_kubernetes <- function(organization_id = NULL, organization_slug = NULL, raw_cluster_slug = NULL, is_nat_enabled = NULL) {
+clusters_post_kubernetes <- function(organization_id = NULL, organization_slug = NULL, is_nat_enabled = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/clusters/kubernetes"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(organizationId = organization_id, organizationSlug = organization_slug, rawClusterSlug = raw_cluster_slug, isNatEnabled = is_nat_enabled)
+  body_params  <- list(organizationId = organization_id, organizationSlug = organization_slug, isNatEnabled = is_nat_enabled)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -826,8 +1647,6 @@ clusters_post_kubernetes <- function(organization_id = NULL, organization_slug =
 #' \item{organizationId}{string, The id of this cluster's organization.}
 #' \item{organizationName}{string, The name of this cluster's organization.}
 #' \item{organizationSlug}{string, The slug of this cluster's organization.}
-#' \item{rawClusterSlug}{string, The slug of this cluster's raw configuration.}
-#' \item{customPartitions}{boolean, Whether this cluster has a custom partition configuration.}
 #' \item{clusterPartitions}{array, An array containing the following fields: 
 #' \itemize{
 #' \item clusterPartitionId integer, The ID of this cluster partition.
@@ -837,7 +1656,7 @@ clusters_post_kubernetes <- function(organization_id = NULL, organization_slug =
 #' \item defaultInstanceConfigId integer, The id of the InstanceConfig that is the default for this partition.
 #' }}
 #' \item{isNatEnabled}{boolean, Whether this cluster needs a NAT gateway or not.}
-#' \item{hours}{number, The number of hours used this month for this cluster.}
+#' \item{hours}{number, The number of hours used this month for this cluster }
 #' @export
 clusters_get_kubernetes <- function(id, include_usage_stats = NULL) {
 
@@ -858,7 +1677,6 @@ clusters_get_kubernetes <- function(id, include_usage_stats = NULL) {
 
 #' Update a Kubernetes Cluster
 #' @param id integer required. The ID of this cluster.
-#' @param raw_cluster_slug string optional. The slug of this cluster's raw configuration.
 #' @param is_nat_enabled boolean optional. Whether this cluster needs a NAT gateway or not.
 #' 
 #' @return  A list containing the following elements:
@@ -866,8 +1684,6 @@ clusters_get_kubernetes <- function(id, include_usage_stats = NULL) {
 #' \item{organizationId}{string, The id of this cluster's organization.}
 #' \item{organizationName}{string, The name of this cluster's organization.}
 #' \item{organizationSlug}{string, The slug of this cluster's organization.}
-#' \item{rawClusterSlug}{string, The slug of this cluster's raw configuration.}
-#' \item{customPartitions}{boolean, Whether this cluster has a custom partition configuration.}
 #' \item{clusterPartitions}{array, An array containing the following fields: 
 #' \itemize{
 #' \item clusterPartitionId integer, The ID of this cluster partition.
@@ -877,15 +1693,15 @@ clusters_get_kubernetes <- function(id, include_usage_stats = NULL) {
 #' \item defaultInstanceConfigId integer, The id of the InstanceConfig that is the default for this partition.
 #' }}
 #' \item{isNatEnabled}{boolean, Whether this cluster needs a NAT gateway or not.}
-#' \item{hours}{number, The number of hours used this month for this cluster.}
+#' \item{hours}{number, The number of hours used this month for this cluster }
 #' @export
-clusters_patch_kubernetes <- function(id, raw_cluster_slug = NULL, is_nat_enabled = NULL) {
+clusters_patch_kubernetes <- function(id, is_nat_enabled = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/clusters/kubernetes/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(rawClusterSlug = raw_cluster_slug, isNatEnabled = is_nat_enabled)
+  body_params  <- list(isNatEnabled = is_nat_enabled)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -923,8 +1739,6 @@ clusters_patch_kubernetes <- function(id, raw_cluster_slug = NULL, is_nat_enable
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{maxMemoryUsage}{number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.}
-#' \item{maxCpuUsage}{number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' @export
@@ -983,7 +1797,7 @@ clusters_list_kubernetes_deployment_stats <- function(id) {
 #' \item{instanceConfigs}{array, An array containing the following fields: 
 #' \itemize{
 #' \item instanceConfigId integer, The ID of this InstanceConfig.
-#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and c5.18xlarge.
+#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.
 #' \item minInstances integer, The minimum number of instances of that type in this cluster.
 #' \item maxInstances integer, The maximum number of instances of that type in this cluster.
 #' \item instanceMaxMemory integer, The amount of memory (RAM) available to a single instance of that type in megabytes.
@@ -1014,7 +1828,7 @@ clusters_list_kubernetes_partitions <- function(id, include_usage_stats = NULL) 
 #' @param id integer required. The ID of the cluster which this partition belongs to.
 #' @param instance_configs array required. An array containing the following fields: 
 #' \itemize{
-#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and c5.18xlarge.
+#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.
 #' \item minInstances integer, The minimum number of instances of that type in this cluster.
 #' \item maxInstances integer, The maximum number of instances of that type in this cluster.
 #' }
@@ -1028,7 +1842,7 @@ clusters_list_kubernetes_partitions <- function(id, include_usage_stats = NULL) 
 #' \item{instanceConfigs}{array, An array containing the following fields: 
 #' \itemize{
 #' \item instanceConfigId integer, The ID of this InstanceConfig.
-#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and c5.18xlarge.
+#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.
 #' \item minInstances integer, The minimum number of instances of that type in this cluster.
 #' \item maxInstances integer, The maximum number of instances of that type in this cluster.
 #' \item instanceMaxMemory integer, The amount of memory (RAM) available to a single instance of that type in megabytes.
@@ -1060,7 +1874,7 @@ clusters_post_kubernetes_partitions <- function(id, instance_configs, name, labe
 #' @param cluster_partition_id integer required. The ID of this cluster partition.
 #' @param instance_configs array optional. An array containing the following fields: 
 #' \itemize{
-#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and c5.18xlarge.
+#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.
 #' \item minInstances integer, The minimum number of instances of that type in this cluster.
 #' \item maxInstances integer, The maximum number of instances of that type in this cluster.
 #' }
@@ -1074,7 +1888,7 @@ clusters_post_kubernetes_partitions <- function(id, instance_configs, name, labe
 #' \item{instanceConfigs}{array, An array containing the following fields: 
 #' \itemize{
 #' \item instanceConfigId integer, The ID of this InstanceConfig.
-#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and c5.18xlarge.
+#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.
 #' \item minInstances integer, The minimum number of instances of that type in this cluster.
 #' \item maxInstances integer, The maximum number of instances of that type in this cluster.
 #' \item instanceMaxMemory integer, The amount of memory (RAM) available to a single instance of that type in megabytes.
@@ -1136,7 +1950,7 @@ clusters_delete_kubernetes_partitions <- function(id, cluster_partition_id) {
 #' \item{instanceConfigs}{array, An array containing the following fields: 
 #' \itemize{
 #' \item instanceConfigId integer, The ID of this InstanceConfig.
-#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and c5.18xlarge.
+#' \item instanceType string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.
 #' \item minInstances integer, The minimum number of instances of that type in this cluster.
 #' \item maxInstances integer, The maximum number of instances of that type in this cluster.
 #' \item instanceMaxMemory integer, The amount of memory (RAM) available to a single instance of that type in megabytes.
@@ -1169,7 +1983,7 @@ clusters_get_kubernetes_partitions <- function(id, cluster_partition_id, include
 #' 
 #' @return  A list containing the following elements:
 #' \item{instanceConfigId}{integer, The ID of this InstanceConfig.}
-#' \item{instanceType}{string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and c5.18xlarge.}
+#' \item{instanceType}{string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.}
 #' \item{minInstances}{integer, The minimum number of instances of that type in this cluster.}
 #' \item{maxInstances}{integer, The maximum number of instances of that type in this cluster.}
 #' \item{instanceMaxMemory}{integer, The amount of memory (RAM) available to a single instance of that type in megabytes.}
@@ -1184,8 +1998,6 @@ clusters_get_kubernetes_partitions <- function(id, cluster_partition_id, include
 #' \item pendingDeployments integer, The number of pending deployments in this instance config.
 #' \item runningDeployments integer, The number of running deployments in this instance config.
 #' }}
-#' \item{clusterPartitionId}{integer, The ID of this InstanceConfig's cluster partition}
-#' \item{clusterPartitionName}{string, The name of this InstanceConfig's cluster partition}
 #' @export
 clusters_get_kubernetes_instance_configs <- function(instance_config_id, include_usage_stats = NULL) {
 
@@ -1193,50 +2005,6 @@ clusters_get_kubernetes_instance_configs <- function(instance_config_id, include
   path <- "/clusters/kubernetes/instance_configs/{instance_config_id}"
   path_params  <- list(instance_config_id = instance_config_id)
   query_params <- list(include_usage_stats = include_usage_stats)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List active workloads in an Instance Config
-#' @param id integer required. The id of the instance config.
-#' @param state string optional. If specified, return workloads in these states. It accepts a comma-separated list, possible values are pending, running
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The id of this deployment.}
-#' \item{baseType}{string, The base type of this deployment.}
-#' \item{baseId}{integer, The id of the base object associated with this deployment.}
-#' \item{baseObjectName}{string, The name of the base object associated with this deployment. Null if you do not have permission to read the object.}
-#' \item{jobType}{string, If the base object is a job run you have permission to read, the type of the job. One of "python_script", "r_script", "container_script", or "custom_script".}
-#' \item{jobId}{integer, If the base object is a job run you have permission to read, the id of the job.}
-#' \item{jobCancelRequestedAt}{string, If the base object is a job run you have permission to read, and it was requested to be cancelled, the timestamp of that request.}
-#' \item{state}{string, The state of this deployment.}
-#' \item{cpu}{integer, The CPU in millicores requested by this deployment.}
-#' \item{memory}{integer, The memory in MB requested by this deployment.}
-#' \item{diskSpace}{integer, The disk space in GB requested by this deployment.}
-#' \item{user}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{createdAt}{string, The timestamp of when the deployment began.}
-#' \item{cancellable}{boolean, True if you have permission to cancel this deployment.}
-#' @export
-clusters_list_kubernetes_instance_configs_active_workloads <- function(id, state = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/clusters/kubernetes/instance_configs/{id}/active_workloads"
-  path_params  <- list(id = id)
-  query_params <- list(state = state)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -1305,35 +2073,10 @@ clusters_list_kubernetes_instance_configs_historical_graphs <- function(instance
  }
 
 
-#' Get list of Credential Types
-#' 
-#' @return  A list containing the following elements:
-#' \item{types}{array, list of acceptable credential types}
-#' @export
-credentials_list_types <- function() {
-
-  args <- as.list(match.call())[-1]
-  path <- "/credentials/types"
-  path_params  <- list()
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List credentials
 #' @param type string optional. The type (or types) of credentials to return. One or more of: Amazon Web Services S3, Bitbucket, CASS/NCOA PAF, Certificate, Civis Platform, Custom, Database, Google, Github, Salesforce User, Salesforce Client, and TableauUser. Specify multiple values as a comma-separated list (e.g., "A,B").
 #' @param remote_host_id integer optional. The ID of the remote host associated with the credentials to return.
 #' @param default boolean optional. If true, will return a list with a single credential which is the current user's default credential.
-#' @param system_credentials boolean optional. If true, will only return system credentials. System credentials can only be created and viewed by Civis Admins.
-#' @param users string optional. A comma-separated list of user ids. If specified, returns set of credentials owned by the users that requesting user has at least read access on.
-#' @param name string optional. If specified, will be used to filter the credentials returned. Will search across name and will return any full name containing the search string.
 #' @param limit integer optional. Number of results to return. Defaults to its maximum of 1000.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
 #' @param order string optional. The field on which to order the result set. Defaults to updated_at. Must be one of: updated_at, created_at, name.
@@ -1345,28 +2088,19 @@ credentials_list_types <- function() {
 #' \item{type}{string, The credential's type.}
 #' \item{username}{string, The username for the credential.}
 #' \item{description}{string, A long description of the credential.}
-#' \item{owner}{string, The username of the user who this credential belongs to. Using user.username is preferred.}
-#' \item{user}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
+#' \item{owner}{string, The name of the user who this credential belongs to.}
 #' \item{remoteHostId}{integer, The ID of the remote host associated with this credential.}
 #' \item{remoteHostName}{string, The name of the remote host associated with this credential.}
 #' \item{state}{string, The U.S. state for the credential. Only for VAN credentials.}
 #' \item{createdAt}{string, The creation time for this credential.}
 #' \item{updatedAt}{string, The last modification time for this credential.}
-#' \item{default}{boolean, Whether or not the credential is a default. Only for Database credentials.}
 #' @export
-credentials_list <- function(type = NULL, remote_host_id = NULL, default = NULL, system_credentials = NULL, users = NULL, name = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+credentials_list <- function(type = NULL, remote_host_id = NULL, default = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/credentials/"
   path_params  <- list()
-  query_params <- list(type = type, remote_host_id = remote_host_id, default = default, system_credentials = system_credentials, users = users, name = name, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(type = type, remote_host_id = remote_host_id, default = default, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -1379,16 +2113,14 @@ credentials_list <- function(type = NULL, remote_host_id = NULL, default = NULL,
 
 
 #' Create a credential
-#' @param type string required. The type of credential. Note: only these credentials can be created or edited via this API ["Amazon Web Services S3", "CASS/NCOA PAF", "Certificate", "Civis Platform", "Custom", "Database", "Google", "Salesforce User", "Salesforce Client", "TableauUser"]
+#' @param type string required. 
 #' @param username string required. The username for the credential.
 #' @param password string required. The password for the credential.
 #' @param name string optional. The name identifying the credential.
 #' @param description string optional. A long description of the credential.
 #' @param remote_host_id integer optional. The ID of the remote host associated with the credential.
-#' @param user_id integer optional. The ID of the user the credential is created for. Note: This attribute is only accepted if you are a Civis Admin User.
 #' @param state string optional. The U.S. state for the credential. Only for VAN credentials.
-#' @param system_credential boolean optional. Boolean flag that sets a credential to be a system credential. System credentials can only be created by Civis Admins and will create a credential owned by the Civis Robot user.
-#' @param default boolean optional. Whether or not the credential is a default. Only for Database credentials.
+#' @param system_credential boolean optional. 
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of the credential.}
@@ -1396,29 +2128,20 @@ credentials_list <- function(type = NULL, remote_host_id = NULL, default = NULL,
 #' \item{type}{string, The credential's type.}
 #' \item{username}{string, The username for the credential.}
 #' \item{description}{string, A long description of the credential.}
-#' \item{owner}{string, The username of the user who this credential belongs to. Using user.username is preferred.}
-#' \item{user}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
+#' \item{owner}{string, The name of the user who this credential belongs to.}
 #' \item{remoteHostId}{integer, The ID of the remote host associated with this credential.}
 #' \item{remoteHostName}{string, The name of the remote host associated with this credential.}
 #' \item{state}{string, The U.S. state for the credential. Only for VAN credentials.}
 #' \item{createdAt}{string, The creation time for this credential.}
 #' \item{updatedAt}{string, The last modification time for this credential.}
-#' \item{default}{boolean, Whether or not the credential is a default. Only for Database credentials.}
 #' @export
-credentials_post <- function(type, username, password, name = NULL, description = NULL, remote_host_id = NULL, user_id = NULL, state = NULL, system_credential = NULL, default = NULL) {
+credentials_post <- function(type, username, password, name = NULL, description = NULL, remote_host_id = NULL, state = NULL, system_credential = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/credentials/"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(type = type, username = username, password = password, name = name, description = description, remoteHostId = remote_host_id, userId = user_id, state = state, systemCredential = system_credential, default = default)
+  body_params  <- list(type = type, username = username, password = password, name = name, description = description, remoteHostId = remote_host_id, state = state, systemCredential = system_credential)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -1431,16 +2154,14 @@ credentials_post <- function(type, username, password, name = NULL, description 
 
 #' Update an existing credential
 #' @param id integer required. The ID of the credential.
-#' @param type string required. The type of credential. Note: only these credentials can be created or edited via this API ["Amazon Web Services S3", "CASS/NCOA PAF", "Certificate", "Civis Platform", "Custom", "Database", "Google", "Salesforce User", "Salesforce Client", "TableauUser"]
+#' @param type string required. 
 #' @param username string required. The username for the credential.
 #' @param password string required. The password for the credential.
 #' @param name string optional. The name identifying the credential.
 #' @param description string optional. A long description of the credential.
 #' @param remote_host_id integer optional. The ID of the remote host associated with the credential.
-#' @param user_id integer optional. The ID of the user the credential is created for. Note: This attribute is only accepted if you are a Civis Admin User.
 #' @param state string optional. The U.S. state for the credential. Only for VAN credentials.
-#' @param system_credential boolean optional. Boolean flag that sets a credential to be a system credential. System credentials can only be created by Civis Admins and will create a credential owned by the Civis Robot user.
-#' @param default boolean optional. Whether or not the credential is a default. Only for Database credentials.
+#' @param system_credential boolean optional. 
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of the credential.}
@@ -1448,85 +2169,24 @@ credentials_post <- function(type, username, password, name = NULL, description 
 #' \item{type}{string, The credential's type.}
 #' \item{username}{string, The username for the credential.}
 #' \item{description}{string, A long description of the credential.}
-#' \item{owner}{string, The username of the user who this credential belongs to. Using user.username is preferred.}
-#' \item{user}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
+#' \item{owner}{string, The name of the user who this credential belongs to.}
 #' \item{remoteHostId}{integer, The ID of the remote host associated with this credential.}
 #' \item{remoteHostName}{string, The name of the remote host associated with this credential.}
 #' \item{state}{string, The U.S. state for the credential. Only for VAN credentials.}
 #' \item{createdAt}{string, The creation time for this credential.}
 #' \item{updatedAt}{string, The last modification time for this credential.}
-#' \item{default}{boolean, Whether or not the credential is a default. Only for Database credentials.}
 #' @export
-credentials_put <- function(id, type, username, password, name = NULL, description = NULL, remote_host_id = NULL, user_id = NULL, state = NULL, system_credential = NULL, default = NULL) {
+credentials_put <- function(id, type, username, password, name = NULL, description = NULL, remote_host_id = NULL, state = NULL, system_credential = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/credentials/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(type = type, username = username, password = password, name = name, description = description, remoteHostId = remote_host_id, userId = user_id, state = state, systemCredential = system_credential, default = default)
+  body_params  <- list(type = type, username = username, password = password, name = name, description = description, remoteHostId = remote_host_id, state = state, systemCredential = system_credential)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Update some attributes of a credential
-#' @param id integer required. The ID of the credential.
-#' @param name string optional. The name identifying the credential.
-#' @param type string optional. The type of credential. Note: only these credentials can be created or edited via this API ["Amazon Web Services S3", "CASS/NCOA PAF", "Certificate", "Civis Platform", "Custom", "Database", "Google", "Salesforce User", "Salesforce Client", "TableauUser"]
-#' @param description string optional. A long description of the credential.
-#' @param username string optional. The username for the credential.
-#' @param password string optional. The password for the credential.
-#' @param remote_host_id integer optional. The ID of the remote host associated with the credential.
-#' @param user_id integer optional. The ID of the user the credential is created for. Note: This attribute is only accepted if you are a Civis Admin User.
-#' @param state string optional. The U.S. state for the credential. Only for VAN credentials.
-#' @param system_credential boolean optional. Boolean flag that sets a credential to be a system credential. System credentials can only be created by Civis Admins and will create a credential owned by the Civis Robot user.
-#' @param default boolean optional. Whether or not the credential is a default. Only for Database credentials.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the credential.}
-#' \item{name}{string, The name identifying the credential}
-#' \item{type}{string, The credential's type.}
-#' \item{username}{string, The username for the credential.}
-#' \item{description}{string, A long description of the credential.}
-#' \item{owner}{string, The username of the user who this credential belongs to. Using user.username is preferred.}
-#' \item{user}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{remoteHostId}{integer, The ID of the remote host associated with this credential.}
-#' \item{remoteHostName}{string, The name of the remote host associated with this credential.}
-#' \item{state}{string, The U.S. state for the credential. Only for VAN credentials.}
-#' \item{createdAt}{string, The creation time for this credential.}
-#' \item{updatedAt}{string, The last modification time for this credential.}
-#' \item{default}{boolean, Whether or not the credential is a default. Only for Database credentials.}
-#' @export
-credentials_patch <- function(id, name = NULL, type = NULL, description = NULL, username = NULL, password = NULL, remote_host_id = NULL, user_id = NULL, state = NULL, system_credential = NULL, default = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/credentials/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(name = name, type = type, description = description, username = username, password = password, remoteHostId = remote_host_id, userId = user_id, state = state, systemCredential = system_credential, default = default)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1542,21 +2202,12 @@ credentials_patch <- function(id, name = NULL, type = NULL, description = NULL, 
 #' \item{type}{string, The credential's type.}
 #' \item{username}{string, The username for the credential.}
 #' \item{description}{string, A long description of the credential.}
-#' \item{owner}{string, The username of the user who this credential belongs to. Using user.username is preferred.}
-#' \item{user}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
+#' \item{owner}{string, The name of the user who this credential belongs to.}
 #' \item{remoteHostId}{integer, The ID of the remote host associated with this credential.}
 #' \item{remoteHostName}{string, The name of the remote host associated with this credential.}
 #' \item{state}{string, The U.S. state for the credential. Only for VAN credentials.}
 #' \item{createdAt}{string, The creation time for this credential.}
 #' \item{updatedAt}{string, The last modification time for this credential.}
-#' \item{default}{boolean, Whether or not the credential is a default. Only for Database credentials.}
 #' @export
 credentials_get <- function(id) {
 
@@ -1575,31 +2226,9 @@ credentials_get <- function(id) {
  }
 
 
-#' Delete a credential
-#' @param id integer required. The ID of the credential.
-#' 
-#' @return  An empty HTTP response
-#' @export
-credentials_delete <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/credentials/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Authenticate against a remote host
 #' @param url string required. The URL to your host.
-#' @param remote_host_type string required. The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce
+#' @param remote_host_type string required. The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce
 #' @param username string required. The username for the credential.
 #' @param password string required. The password for the credential.
 #' 
@@ -1609,21 +2238,12 @@ credentials_delete <- function(id) {
 #' \item{type}{string, The credential's type.}
 #' \item{username}{string, The username for the credential.}
 #' \item{description}{string, A long description of the credential.}
-#' \item{owner}{string, The username of the user who this credential belongs to. Using user.username is preferred.}
-#' \item{user}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
+#' \item{owner}{string, The name of the user who this credential belongs to.}
 #' \item{remoteHostId}{integer, The ID of the remote host associated with this credential.}
 #' \item{remoteHostName}{string, The name of the remote host associated with this credential.}
 #' \item{state}{string, The U.S. state for the credential. Only for VAN credentials.}
 #' \item{createdAt}{string, The creation time for this credential.}
 #' \item{updatedAt}{string, The last modification time for this credential.}
-#' \item{default}{boolean, Whether or not the credential is a default. Only for Database credentials.}
 #' @export
 credentials_post_authenticate <- function(url, remote_host_type, username, password) {
 
@@ -1839,70 +2459,6 @@ credentials_delete_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-credentials_list_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/credentials/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-credentials_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/credentials/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List databases
 #' 
 #' @return  An array containing the following fields:
@@ -1954,18 +2510,16 @@ databases_get <- function(id) {
 
 #' List schemas in this database
 #' @param id integer required. The ID of the database.
-#' @param name string optional. If specified, will be used to filter the schemas returned. Substring matching is supported (e.g., "name=schema" will return both "schema1" and "schema2").
-#' @param credential_id integer optional. If provided, schemas will be filtered based on the given credential.
 #' 
 #' @return  An array containing the following fields:
 #' \item{schema}{string, The name of a schema.}
 #' @export
-databases_list_schemas <- function(id, name = NULL, credential_id = NULL) {
+databases_list_schemas <- function(id) {
 
   args <- as.list(match.call())[-1]
   path <- "/databases/{id}/schemas"
   path_params  <- list(id = id)
-  query_params <- list(name = name, credential_id = credential_id)
+  query_params <- list()
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -2036,11 +2590,6 @@ databases_post_schemas_scan <- function(id, schema, stats_priority = NULL) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{tableTags}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, Table Tag ID
-#' \item name string, Table Tag Name
-#' }}
 #' @export
 databases_list_tables <- function(id, name = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
@@ -2089,11 +2638,6 @@ databases_list_tables <- function(id, name = NULL, limit = NULL, page_num = NULL
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{tableTags}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, Table Tag ID
-#' \item name string, Table Tag Name
-#' }}
 #' \item{columnNames}{array, The names of each column in the table.}
 #' @export
 databases_list_tables_search <- function(id, name = NULL, column_name = NULL) {
@@ -2102,61 +2646,6 @@ databases_list_tables_search <- function(id, name = NULL, column_name = NULL) {
   path <- "/databases/{id}/tables-search"
   path_params  <- list(id = id)
   query_params <- list(name = name, column_name = column_name)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Show table privileges
-#' @param id integer required. The ID of the database
-#' @param schema_name string required. The name of the schema
-#' @param table_name string required. The name of the table
-#' 
-#' @return  A list containing the following elements:
-#' \item{grantee}{string, Name of the granted user or group}
-#' \item{granteeType}{string, User or group}
-#' \item{privileges}{array, Privileges that the grantee has on this resource}
-#' \item{grantablePrivileges}{array, Privileges that the grantee can grant to others for this resource}
-#' @export
-databases_get_table_privilegesschema_name <- function(id, schema_name, table_name) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/databases/{id}/table_privileges/{schema_name}/{table_name}"
-  path_params  <- list(id = id, schema_name = schema_name, table_name = table_name)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Show schema privileges
-#' @param id integer required. The ID of the database
-#' @param schema_name string required. The name of the schema
-#' 
-#' @return  A list containing the following elements:
-#' \item{grantee}{string, Name of the granted user or group}
-#' \item{granteeType}{string, User or group}
-#' \item{privileges}{array, Privileges that the grantee has on this resource}
-#' \item{grantablePrivileges}{array, Privileges that the grantee can grant to others for this resource}
-#' @export
-databases_get_schema_privileges <- function(id, schema_name) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/databases/{id}/schema_privileges/{schema_name}"
-  path_params  <- list(id = id, schema_name = schema_name)
-  query_params <- list()
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -2196,6 +2685,37 @@ databases_list_whitelist_ips <- function(id) {
  }
 
 
+#' Whitelist an IP address
+#' @param id integer required. The ID of the database this rule is applied to.
+#' @param subnet_mask string required. The subnet mask that is allowed by this rule.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this whitelisted IP address.}
+#' \item{remoteHostId}{integer, The ID of the database this rule is applied to.}
+#' \item{securityGroupId}{string, The ID of the security group this rule is applied to.}
+#' \item{subnetMask}{string, The subnet mask that is allowed by this rule.}
+#' \item{authorizedBy}{string, The user who authorized this rule.}
+#' \item{isActive}{boolean, True if the rule is applied, false if it has been revoked.}
+#' \item{createdAt}{string, The time this rule was created.}
+#' \item{updatedAt}{string, The time this rule was last updated.}
+#' @export
+databases_post_whitelist_ips <- function(id, subnet_mask) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/databases/{id}/whitelist-ips"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(subnetMask = subnet_mask)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' View details about a whitelisted IP
 #' @param id integer required. The ID of the database this rule is applied to.
 #' @param whitelisted_ip_id integer required. The ID of this whitelisted IP address.
@@ -2221,6 +2741,29 @@ databases_get_whitelist_ips <- function(id, whitelisted_ip_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Remove a whitelisted IP address
+#' @param id integer required. The ID of the database this rule is applied to.
+#' @param whitelisted_ip_id integer required. The ID of this whitelisted IP address.
+#' 
+#' @return  An empty HTTP response
+#' @export
+databases_delete_whitelist_ips <- function(id, whitelisted_ip_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/databases/{id}/whitelist-ips/{whitelisted_ip_id}"
+  path_params  <- list(id = id, whitelisted_ip_id = whitelisted_ip_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -2321,7 +2864,7 @@ endpoints_list <- function() {
 
 #' Create a Civis Data Match Enhancement
 #' @param name string required. The name of the enhancement job.
-#' @param input_field_mapping list required. The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).
+#' @param input_field_mapping list required. The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.
 #' @param input_table list required. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -2338,11 +2881,10 @@ endpoints_list <- function() {
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param parent_id integer optional. Parent ID that triggers this enhancement.
 #' @param notifications list optional. A list containing the following elements: 
@@ -2359,7 +2901,7 @@ endpoints_list <- function() {
 #' \item failureOn boolean, If failure email notifications are on.
 #' }
 #' @param max_matches integer optional. The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.
-#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned. The default value is 0.5.
+#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
 #' @param archived boolean optional. Whether the Civis Data Match Job has been archived.
 #' 
 #' @return  A list containing the following elements:
@@ -2380,11 +2922,10 @@ endpoints_list <- function() {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -2408,8 +2949,7 @@ endpoints_list <- function() {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
+#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
 #' \item{inputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -2424,7 +2964,7 @@ endpoints_list <- function() {
 #' \item table string, The table name.
 #' }}
 #' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned. The default value is 0.5.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' \item{archived}{boolean, Whether the Civis Data Match Job has been archived.}
 #' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
@@ -2474,11 +3014,10 @@ enhancements_post_civis_data_match <- function(name, input_field_mapping, input_
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -2502,8 +3041,7 @@ enhancements_post_civis_data_match <- function(name, input_field_mapping, input_
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
+#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
 #' \item{inputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -2518,7 +3056,7 @@ enhancements_post_civis_data_match <- function(name, input_field_mapping, input_
 #' \item table string, The table name.
 #' }}
 #' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned. The default value is 0.5.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' \item{archived}{boolean, Whether the Civis Data Match Job has been archived.}
 #' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
@@ -2550,7 +3088,7 @@ enhancements_get_civis_data_match <- function(id) {
 #' Replace all attributes of this Civis Data Match Enhancement
 #' @param id integer required. The ID for the enhancement.
 #' @param name string required. The name of the enhancement job.
-#' @param input_field_mapping list required. The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).
+#' @param input_field_mapping list required. The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.
 #' @param input_table list required. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -2567,11 +3105,10 @@ enhancements_get_civis_data_match <- function(id) {
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param parent_id integer optional. Parent ID that triggers this enhancement.
 #' @param notifications list optional. A list containing the following elements: 
@@ -2588,7 +3125,7 @@ enhancements_get_civis_data_match <- function(id) {
 #' \item failureOn boolean, If failure email notifications are on.
 #' }
 #' @param max_matches integer optional. The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.
-#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned. The default value is 0.5.
+#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
 #' @param archived boolean optional. Whether the Civis Data Match Job has been archived.
 #' 
 #' @return  A list containing the following elements:
@@ -2609,11 +3146,10 @@ enhancements_get_civis_data_match <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -2637,8 +3173,7 @@ enhancements_get_civis_data_match <- function(id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
+#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
 #' \item{inputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -2653,7 +3188,7 @@ enhancements_get_civis_data_match <- function(id) {
 #' \item table string, The table name.
 #' }}
 #' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned. The default value is 0.5.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' \item{archived}{boolean, Whether the Civis Data Match Job has been archived.}
 #' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
@@ -2688,11 +3223,10 @@ enhancements_put_civis_data_match <- function(id, name, input_field_mapping, inp
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param parent_id integer optional. Parent ID that triggers this enhancement.
 #' @param notifications list optional. A list containing the following elements: 
@@ -2708,7 +3242,7 @@ enhancements_put_civis_data_match <- function(id, name, input_field_mapping, inp
 #' \item successOn boolean, If success email notifications are on.
 #' \item failureOn boolean, If failure email notifications are on.
 #' }
-#' @param input_field_mapping list optional. The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).
+#' @param input_field_mapping list optional. The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.
 #' @param input_table list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -2723,7 +3257,7 @@ enhancements_put_civis_data_match <- function(id, name, input_field_mapping, inp
 #' \item table string, The table name.
 #' }
 #' @param max_matches integer optional. The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.
-#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned. The default value is 0.5.
+#' @param threshold number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned.
 #' @param archived boolean optional. Whether the Civis Data Match Job has been archived.
 #' 
 #' @return  A list containing the following elements:
@@ -2744,11 +3278,10 @@ enhancements_put_civis_data_match <- function(id, name, input_field_mapping, inp
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -2772,8 +3305,7 @@ enhancements_put_civis_data_match <- function(id, name, input_field_mapping, inp
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
+#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
 #' \item{inputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -2788,7 +3320,7 @@ enhancements_put_civis_data_match <- function(id, name, input_field_mapping, inp
 #' \item table string, The table name.
 #' }}
 #' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned. The default value is 0.5.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' \item{archived}{boolean, Whether the Civis Data Match Job has been archived.}
 #' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
@@ -2841,11 +3373,10 @@ enhancements_patch_civis_data_match <- function(id, name = NULL, schedule = NULL
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -2869,8 +3400,7 @@ enhancements_patch_civis_data_match <- function(id, name = NULL, schedule = NULL
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
+#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
 #' \item{inputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -2885,7 +3415,7 @@ enhancements_patch_civis_data_match <- function(id, name = NULL, schedule = NULL
 #' \item table string, The table name.
 #' }}
 #' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned. The default value is 0.5.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' \item{archived}{boolean, Whether the Civis Data Match Job has been archived.}
 #' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
@@ -2922,9 +3452,8 @@ enhancements_post_civis_data_match_clone <- function(id, clone_schedule = NULL, 
 #' \item{civisDataMatchId}{integer, The ID of the civis_data_match.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 enhancements_post_civis_data_match_runs <- function(id) {
@@ -2956,9 +3485,8 @@ enhancements_post_civis_data_match_runs <- function(id) {
 #' \item{civisDataMatchId}{integer, The ID of the civis_data_match.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 enhancements_list_civis_data_match_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
@@ -2987,9 +3515,8 @@ enhancements_list_civis_data_match_runs <- function(id, limit = NULL, page_num =
 #' \item{civisDataMatchId}{integer, The ID of the civis_data_match.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 enhancements_get_civis_data_match_runs <- function(id, run_id) {
@@ -3289,70 +3816,6 @@ enhancements_delete_civis_data_match_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-enhancements_list_civis_data_match_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/civis-data-match/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-enhancements_put_civis_data_match_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/civis-data-match/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Update the archive status of this object
 #' @param id integer required. The ID of the object.
 #' @param status boolean required. The desired archived status of the object.
@@ -3375,11 +3838,10 @@ enhancements_put_civis_data_match_transfer <- function(id, user_id, include_depe
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -3403,8 +3865,7 @@ enhancements_put_civis_data_match_transfer <- function(id, user_id, include_depe
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
+#' \item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
 #' \item{inputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -3419,7 +3880,7 @@ enhancements_put_civis_data_match_transfer <- function(id, user_id, include_depe
 #' \item table string, The table name.
 #' }}
 #' \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
-#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned. The default value is 0.5.}
+#' \item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
 #' \item{archived}{boolean, Whether the Civis Data Match Job has been archived.}
 #' \item{lastRun}{list, A list containing the following elements: 
 #' \itemize{
@@ -3587,7 +4048,7 @@ enhancements_list_field_mapping <- function() {
 
 #' List Enhancements
 #' @param type string optional. If specified, return items of these types.
-#' @param author string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.
+#' @param author string optional. If specified, return items from this author. Must use user IDs. A comma separated list of IDs is also accepted to return items from multiple authors.
 #' @param status string optional. If specified, returns items with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.
 #' @param archived string optional. The archival status of the requested item(s).
 #' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.
@@ -3645,11 +4106,10 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param parent_id integer optional. Parent ID that triggers this enhancement.
 #' @param notifications list optional. A list containing the following elements: 
@@ -3688,7 +4148,6 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' @param ncoa_credential_id integer optional. Credential to use when performing NCOA updates. Required if 'performNcoa' is true.
 #' @param output_level string optional. The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.
 #' @param limiting_sql string optional. The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').
-#' @param chunk_size integer optional. The maximum number of records processed at a time. Note that this parameter is not available to all users.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the enhancement.}
@@ -3708,11 +4167,10 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -3736,7 +4194,6 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable list . A list containing the following elements: 
@@ -3771,16 +4228,15 @@ enhancements_list <- function(type = NULL, author = NULL, status = NULL, archive
 #' \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 #' \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
 #' \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
-#' \item{chunkSize}{integer, The maximum number of records processed at a time. Note that this parameter is not available to all users.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
-enhancements_post_cass_ncoa <- function(name, source, schedule = NULL, parent_id = NULL, notifications = NULL, destination = NULL, column_mapping = NULL, use_default_column_mapping = NULL, perform_ncoa = NULL, ncoa_credential_id = NULL, output_level = NULL, limiting_sql = NULL, chunk_size = NULL) {
+enhancements_post_cass_ncoa <- function(name, source, schedule = NULL, parent_id = NULL, notifications = NULL, destination = NULL, column_mapping = NULL, use_default_column_mapping = NULL, perform_ncoa = NULL, ncoa_credential_id = NULL, output_level = NULL, limiting_sql = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/enhancements/cass-ncoa"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, source = source, schedule = schedule, parentId = parent_id, notifications = notifications, destination = destination, columnMapping = column_mapping, useDefaultColumnMapping = use_default_column_mapping, performNcoa = perform_ncoa, ncoaCredentialId = ncoa_credential_id, outputLevel = output_level, limitingSQL = limiting_sql, chunkSize = chunk_size)
+  body_params  <- list(name = name, source = source, schedule = schedule, parentId = parent_id, notifications = notifications, destination = destination, columnMapping = column_mapping, useDefaultColumnMapping = use_default_column_mapping, performNcoa = perform_ncoa, ncoaCredentialId = ncoa_credential_id, outputLevel = output_level, limitingSQL = limiting_sql)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -3812,11 +4268,10 @@ enhancements_post_cass_ncoa <- function(name, source, schedule = NULL, parent_id
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -3840,7 +4295,6 @@ enhancements_post_cass_ncoa <- function(name, source, schedule = NULL, parent_id
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable list . A list containing the following elements: 
@@ -3875,7 +4329,6 @@ enhancements_post_cass_ncoa <- function(name, source, schedule = NULL, parent_id
 #' \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 #' \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
 #' \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
-#' \item{chunkSize}{integer, The maximum number of records processed at a time. Note that this parameter is not available to all users.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 enhancements_get_cass_ncoa <- function(id) {
@@ -3912,11 +4365,10 @@ enhancements_get_cass_ncoa <- function(id) {
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param parent_id integer optional. Parent ID that triggers this enhancement.
 #' @param notifications list optional. A list containing the following elements: 
@@ -3955,7 +4407,6 @@ enhancements_get_cass_ncoa <- function(id) {
 #' @param ncoa_credential_id integer optional. Credential to use when performing NCOA updates. Required if 'performNcoa' is true.
 #' @param output_level string optional. The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.
 #' @param limiting_sql string optional. The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').
-#' @param chunk_size integer optional. The maximum number of records processed at a time. Note that this parameter is not available to all users.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the enhancement.}
@@ -3975,11 +4426,10 @@ enhancements_get_cass_ncoa <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -4003,7 +4453,6 @@ enhancements_get_cass_ncoa <- function(id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable list . A list containing the following elements: 
@@ -4038,16 +4487,15 @@ enhancements_get_cass_ncoa <- function(id) {
 #' \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 #' \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
 #' \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
-#' \item{chunkSize}{integer, The maximum number of records processed at a time. Note that this parameter is not available to all users.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
-enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent_id = NULL, notifications = NULL, destination = NULL, column_mapping = NULL, use_default_column_mapping = NULL, perform_ncoa = NULL, ncoa_credential_id = NULL, output_level = NULL, limiting_sql = NULL, chunk_size = NULL) {
+enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent_id = NULL, notifications = NULL, destination = NULL, column_mapping = NULL, use_default_column_mapping = NULL, perform_ncoa = NULL, ncoa_credential_id = NULL, output_level = NULL, limiting_sql = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/enhancements/cass-ncoa/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, source = source, schedule = schedule, parentId = parent_id, notifications = notifications, destination = destination, columnMapping = column_mapping, useDefaultColumnMapping = use_default_column_mapping, performNcoa = perform_ncoa, ncoaCredentialId = ncoa_credential_id, outputLevel = output_level, limitingSQL = limiting_sql, chunkSize = chunk_size)
+  body_params  <- list(name = name, source = source, schedule = schedule, parentId = parent_id, notifications = notifications, destination = destination, columnMapping = column_mapping, useDefaultColumnMapping = use_default_column_mapping, performNcoa = perform_ncoa, ncoaCredentialId = ncoa_credential_id, outputLevel = output_level, limitingSQL = limiting_sql)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -4064,11 +4512,10 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param parent_id integer optional. Parent ID that triggers this enhancement.
 #' @param notifications list optional. A list containing the following elements: 
@@ -4118,7 +4565,6 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' @param ncoa_credential_id integer optional. Credential to use when performing NCOA updates. Required if 'performNcoa' is true.
 #' @param output_level string optional. The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.
 #' @param limiting_sql string optional. The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').
-#' @param chunk_size integer optional. The maximum number of records processed at a time. Note that this parameter is not available to all users.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the enhancement.}
@@ -4138,11 +4584,10 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -4166,7 +4611,6 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable list . A list containing the following elements: 
@@ -4201,16 +4645,15 @@ enhancements_put_cass_ncoa <- function(id, name, source, schedule = NULL, parent
 #' \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 #' \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
 #' \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
-#' \item{chunkSize}{integer, The maximum number of records processed at a time. Note that this parameter is not available to all users.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
-enhancements_patch_cass_ncoa <- function(id, name = NULL, schedule = NULL, parent_id = NULL, notifications = NULL, source = NULL, destination = NULL, column_mapping = NULL, use_default_column_mapping = NULL, perform_ncoa = NULL, ncoa_credential_id = NULL, output_level = NULL, limiting_sql = NULL, chunk_size = NULL) {
+enhancements_patch_cass_ncoa <- function(id, name = NULL, schedule = NULL, parent_id = NULL, notifications = NULL, source = NULL, destination = NULL, column_mapping = NULL, use_default_column_mapping = NULL, perform_ncoa = NULL, ncoa_credential_id = NULL, output_level = NULL, limiting_sql = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/enhancements/cass-ncoa/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, schedule = schedule, parentId = parent_id, notifications = notifications, source = source, destination = destination, columnMapping = column_mapping, useDefaultColumnMapping = use_default_column_mapping, performNcoa = perform_ncoa, ncoaCredentialId = ncoa_credential_id, outputLevel = output_level, limitingSQL = limiting_sql, chunkSize = chunk_size)
+  body_params  <- list(name = name, schedule = schedule, parentId = parent_id, notifications = notifications, source = source, destination = destination, columnMapping = column_mapping, useDefaultColumnMapping = use_default_column_mapping, performNcoa = perform_ncoa, ncoaCredentialId = ncoa_credential_id, outputLevel = output_level, limitingSQL = limiting_sql)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -4229,9 +4672,8 @@ enhancements_patch_cass_ncoa <- function(id, name = NULL, schedule = NULL, paren
 #' \item{cassNcoaId}{integer, The ID of the cass_ncoa.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 enhancements_post_cass_ncoa_runs <- function(id) {
@@ -4263,9 +4705,8 @@ enhancements_post_cass_ncoa_runs <- function(id) {
 #' \item{cassNcoaId}{integer, The ID of the cass_ncoa.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 enhancements_list_cass_ncoa_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
@@ -4294,9 +4735,8 @@ enhancements_list_cass_ncoa_runs <- function(id, limit = NULL, page_num = NULL, 
 #' \item{cassNcoaId}{integer, The ID of the cass_ncoa.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 enhancements_get_cass_ncoa_runs <- function(id, run_id) {
@@ -4433,11 +4873,10 @@ enhancements_list_cass_ncoa_runs_outputs <- function(id, run_id, limit = NULL, p
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param parent_id integer optional. Parent ID that triggers this enhancement.
 #' @param notifications list optional. A list containing the following elements: 
@@ -4479,11 +4918,10 @@ enhancements_list_cass_ncoa_runs_outputs <- function(id, run_id, limit = NULL, p
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -4507,7 +4945,6 @@ enhancements_list_cass_ncoa_runs_outputs <- function(id, run_id, limit = NULL, p
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{remoteHostId}{integer, The ID of the remote host.}
 #' \item{credentialId}{integer, The ID of the remote host credential.}
 #' \item{sourceSchemaAndTable}{string, The source database schema and table.}
@@ -4558,11 +4995,10 @@ enhancements_post_geocode <- function(name, remote_host_id, credential_id, sourc
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -4586,7 +5022,6 @@ enhancements_post_geocode <- function(name, remote_host_id, credential_id, sourc
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{remoteHostId}{integer, The ID of the remote host.}
 #' \item{credentialId}{integer, The ID of the remote host credential.}
 #' \item{sourceSchemaAndTable}{string, The source database schema and table.}
@@ -4625,11 +5060,10 @@ enhancements_get_geocode <- function(id) {
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param parent_id integer optional. Parent ID that triggers this enhancement.
 #' @param notifications list optional. A list containing the following elements: 
@@ -4671,11 +5105,10 @@ enhancements_get_geocode <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -4699,7 +5132,6 @@ enhancements_get_geocode <- function(id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{remoteHostId}{integer, The ID of the remote host.}
 #' \item{credentialId}{integer, The ID of the remote host credential.}
 #' \item{sourceSchemaAndTable}{string, The source database schema and table.}
@@ -4735,11 +5167,10 @@ enhancements_put_geocode <- function(id, name, remote_host_id, credential_id, so
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param parent_id integer optional. Parent ID that triggers this enhancement.
 #' @param notifications list optional. A list containing the following elements: 
@@ -4784,11 +5215,10 @@ enhancements_put_geocode <- function(id, name, remote_host_id, credential_id, so
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -4812,7 +5242,6 @@ enhancements_put_geocode <- function(id, name, remote_host_id, credential_id, so
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{remoteHostId}{integer, The ID of the remote host.}
 #' \item{credentialId}{integer, The ID of the remote host credential.}
 #' \item{sourceSchemaAndTable}{string, The source database schema and table.}
@@ -4850,9 +5279,8 @@ enhancements_patch_geocode <- function(id, name = NULL, schedule = NULL, parent_
 #' \item{geocodeId}{integer, The ID of the geocode.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 enhancements_post_geocode_runs <- function(id) {
@@ -4884,9 +5312,8 @@ enhancements_post_geocode_runs <- function(id) {
 #' \item{geocodeId}{integer, The ID of the geocode.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 enhancements_list_geocode_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
@@ -4915,9 +5342,8 @@ enhancements_list_geocode_runs <- function(id, limit = NULL, page_num = NULL, or
 #' \item{geocodeId}{integer, The ID of the geocode.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 enhancements_get_geocode_runs <- function(id, run_id) {
@@ -5217,70 +5643,6 @@ enhancements_delete_cass_ncoa_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-enhancements_list_cass_ncoa_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/cass-ncoa/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-enhancements_put_cass_ncoa_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/cass-ncoa/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List the projects a CASS/NCOA Enhancement belongs to
 #' @param id integer required. The ID of the CASS/NCOA Enhancement.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -5395,11 +5757,10 @@ enhancements_delete_cass_ncoa_projects <- function(id, project_id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -5423,7 +5784,6 @@ enhancements_delete_cass_ncoa_projects <- function(id, project_id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{source}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseTable list . A list containing the following elements: 
@@ -5458,7 +5818,6 @@ enhancements_delete_cass_ncoa_projects <- function(id, project_id) {
 #' \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 #' \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
 #' \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
-#' \item{chunkSize}{integer, The maximum number of records processed at a time. Note that this parameter is not available to all users.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 enhancements_put_cass_ncoa_archive <- function(id, status) {
@@ -5649,70 +6008,6 @@ enhancements_delete_geocode_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-enhancements_list_geocode_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/geocode/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-enhancements_put_geocode_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/enhancements/geocode/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List the projects a Geocode Enhancement belongs to
 #' @param id integer required. The ID of the Geocode Enhancement.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -5827,11 +6122,10 @@ enhancements_delete_geocode_projects <- function(id, project_id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, Parent ID that triggers this enhancement.}
 #' \item{notifications}{list, A list containing the following elements: 
@@ -5855,7 +6149,6 @@ enhancements_delete_geocode_projects <- function(id, project_id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{remoteHostId}{integer, The ID of the remote host.}
 #' \item{credentialId}{integer, The ID of the remote host credential.}
 #' \item{sourceSchemaAndTable}{string, The source database schema and table.}
@@ -5887,8 +6180,8 @@ enhancements_put_geocode_archive <- function(id, status) {
 
 #' List 
 #' @param type string optional. If specified, return exports of these types. It accepts a comma-separated list, possible values are 'database' and 'gdoc'.
+#' @param author string optional. If specified, return exports from this author. It accepts a comma-separated list of author ids.
 #' @param status string optional. If specified, returns export with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.
-#' @param author string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' @param archived string optional. The archival status of the requested item(s).
 #' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.
@@ -5921,187 +6214,12 @@ enhancements_put_geocode_archive <- function(id, status) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' @export
-exports_list <- function(type = NULL, status = NULL, author = NULL, hidden = NULL, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+exports_list <- function(type = NULL, author = NULL, status = NULL, hidden = NULL, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/exports/"
   path_params  <- list()
-  query_params <- list(type = type, status = status, author = author, hidden = hidden, archived = archived, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Start a run
-#' @param id integer required. The ID of the csv_export.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, }
-#' \item{state}{string, }
-#' \item{createdAt}{string, The time that the run was queued.}
-#' \item{startedAt}{string, The time that the run started.}
-#' \item{finishedAt}{string, The time that the run completed.}
-#' \item{error}{string, The error message for this run, if present.}
-#' \item{outputCachedOn}{string, The time that the output was originally exported, if a cache entry was used by the run.}
-#' @export
-exports_post_files_csv_runs <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/exports/files/csv/{id}/runs"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List runs for the given csv_export
-#' @param id integer required. The ID of the csv_export.
-#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, }
-#' \item{state}{string, }
-#' \item{createdAt}{string, The time that the run was queued.}
-#' \item{startedAt}{string, The time that the run started.}
-#' \item{finishedAt}{string, The time that the run completed.}
-#' \item{error}{string, The error message for this run, if present.}
-#' @export
-exports_list_files_csv_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/exports/files/csv/{id}/runs"
-  path_params  <- list(id = id)
-  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Check status of a run
-#' @param id integer required. The ID of the csv_export.
-#' @param run_id integer required. The ID of the run.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, }
-#' \item{state}{string, }
-#' \item{createdAt}{string, The time that the run was queued.}
-#' \item{startedAt}{string, The time that the run started.}
-#' \item{finishedAt}{string, The time that the run completed.}
-#' \item{error}{string, The error message for this run, if present.}
-#' \item{outputCachedOn}{string, The time that the output was originally exported, if a cache entry was used by the run.}
-#' @export
-exports_get_files_csv_runs <- function(id, run_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/exports/files/csv/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Cancel a run
-#' @param id integer required. The ID of the csv_export.
-#' @param run_id integer required. The ID of the run.
-#' 
-#' @return  An empty HTTP response
-#' @export
-exports_delete_files_csv_runs <- function(id, run_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/exports/files/csv/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get the logs for a run
-#' @param id integer required. The ID of the csv_export.
-#' @param run_id integer required. The ID of the run.
-#' @param last_id integer optional. The ID of the last log message received. Log entries with this ID value or lower will be omitted.Logs are sorted by ID if this value is provided, and are otherwise sorted by createdAt.
-#' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID of the log.}
-#' \item{createdAt}{string, The time the log was created.}
-#' \item{message}{string, The log message.}
-#' \item{level}{string, The level of the log. One of unknown,fatal,error,warn,info,debug.}
-#' @export
-exports_list_files_csv_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/exports/files/csv/{id}/runs/{run_id}/logs"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list(last_id = last_id, limit = limit)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List the outputs for a run
-#' @param id integer required. The ID of the csv_export.
-#' @param run_id integer required. The ID of the run.
-#' @param limit integer optional. Number of results to return. Defaults to its maximum of 50.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at, id.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, The type of the output. Valid values are File, Table, Report, Project, Credential, or JSONValue}
-#' \item{objectId}{integer, The ID of the output.}
-#' \item{name}{string, The name of the output.}
-#' \item{link}{string, The hypermedia link to the output.}
-#' \item{value}{string, }
-#' @export
-exports_list_files_csv_runs_outputs <- function(id, run_id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/exports/files/csv/{id}/runs/{run_id}/outputs"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(type = type, author = author, status = status, hidden = hidden, archived = archived, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -6165,7 +6283,6 @@ exports_list_files_csv_runs_outputs <- function(id, run_id, limit = NULL, page_n
 #' \item{hidden}{boolean, A boolean value indicating whether or not this request should be hidden. Defaults to false.}
 #' \item{forceMultifile}{boolean, Whether or not the csv should be split into multiple files. Default: false}
 #' \item{maxFileSize}{integer, The max file size, in MB, created files will be. Only available when force_multifile is true. }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 exports_post_files_csv <- function(source, destination, name = NULL, include_header = NULL, compression = NULL, column_delimiter = NULL, hidden = NULL, force_multifile = NULL, max_file_size = NULL) {
 
@@ -6213,7 +6330,6 @@ exports_post_files_csv <- function(source, destination, name = NULL, include_hea
 #' \item{hidden}{boolean, A boolean value indicating whether or not this request should be hidden. Defaults to false.}
 #' \item{forceMultifile}{boolean, Whether or not the csv should be split into multiple files. Default: false}
 #' \item{maxFileSize}{integer, The max file size, in MB, created files will be. Only available when force_multifile is true. }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 exports_get_files_csv <- function(id) {
 
@@ -6285,7 +6401,6 @@ exports_get_files_csv <- function(id) {
 #' \item{hidden}{boolean, A boolean value indicating whether or not this request should be hidden. Defaults to false.}
 #' \item{forceMultifile}{boolean, Whether or not the csv should be split into multiple files. Default: false}
 #' \item{maxFileSize}{integer, The max file size, in MB, created files will be. Only available when force_multifile is true. }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 exports_put_files_csv <- function(id, source, destination, name = NULL, include_header = NULL, compression = NULL, column_delimiter = NULL, hidden = NULL, force_multifile = NULL, max_file_size = NULL) {
 
@@ -6357,7 +6472,6 @@ exports_put_files_csv <- function(id, source, destination, name = NULL, include_
 #' \item{hidden}{boolean, A boolean value indicating whether or not this request should be hidden. Defaults to false.}
 #' \item{forceMultifile}{boolean, Whether or not the csv should be split into multiple files. Default: false}
 #' \item{maxFileSize}{integer, The max file size, in MB, created files will be. Only available when force_multifile is true. }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 exports_patch_files_csv <- function(id, name = NULL, source = NULL, destination = NULL, include_header = NULL, compression = NULL, column_delimiter = NULL, hidden = NULL, force_multifile = NULL, max_file_size = NULL) {
 
@@ -6406,7 +6520,6 @@ exports_patch_files_csv <- function(id, name = NULL, source = NULL, destination 
 #' \item{hidden}{boolean, A boolean value indicating whether or not this request should be hidden. Defaults to false.}
 #' \item{forceMultifile}{boolean, Whether or not the csv should be split into multiple files. Default: false}
 #' \item{maxFileSize}{integer, The max file size, in MB, created files will be. Only available when force_multifile is true. }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 exports_put_files_csv_archive <- function(id, status) {
 
@@ -6428,16 +6541,16 @@ exports_put_files_csv_archive <- function(id, status) {
 #' List feature flags
 #' 
 #' @return  An array containing the following fields:
-#' \item{name}{string, The name of the feature.}
-#' \item{description}{string, }
-#' \item{activeForMe}{boolean, Whether the feature is active for the current user.}
+#' \item{name}{string, The name of the feature flag.}
 #' \item{userCount}{integer, The number of users with this feature flag enabled.}
+#' \item{description}{string, }
 #' \item{team}{string, }
 #' \item{jira}{string, }
 #' \item{added}{string, }
 #' \item{groupCount}{integer, }
 #' \item{organizationCount}{integer, }
 #' \item{percentage}{integer, The target percentage of users who should have this feature flag enabled.}
+#' \item{activeForMe}{boolean, Whether the feature flag is active for the current user.}
 #' @export
 feature_flags_list <- function() {
 
@@ -6457,11 +6570,10 @@ feature_flags_list <- function() {
 
 
 #' Show a feature flag
-#' @param name string required. The name of the feature.
+#' @param name string required. The name of the feature flag.
 #' 
 #' @return  A list containing the following elements:
-#' \item{name}{string, The name of the feature.}
-#' \item{description}{string, }
+#' \item{name}{string, The name of the feature flag}
 #' \item{organizations}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, Organization ID
@@ -6500,20 +6612,20 @@ feature_flags_get <- function(name) {
 
 
 #' Activate a feature for a user
-#' @param flag_name string required. The feature name.
+#' @param flag_name string required. The feature flag name.
 #' @param user_id integer required. The user ID.
 #' 
 #' @return  A list containing the following elements:
-#' \item{name}{string, The name of the feature.}
-#' \item{description}{string, }
-#' \item{activeForMe}{boolean, Whether the feature is active for the current user.}
+#' \item{name}{string, The name of the feature flag.}
 #' \item{userCount}{integer, The number of users with this feature flag enabled.}
+#' \item{description}{string, }
 #' \item{team}{string, }
 #' \item{jira}{string, }
 #' \item{added}{string, }
 #' \item{groupCount}{integer, }
 #' \item{organizationCount}{integer, }
 #' \item{percentage}{integer, The target percentage of users who should have this feature flag enabled.}
+#' \item{activeForMe}{boolean, Whether the feature flag is active for the current user.}
 #' @export
 feature_flags_put_users <- function(flag_name, user_id) {
 
@@ -6533,7 +6645,7 @@ feature_flags_put_users <- function(flag_name, user_id) {
 
 
 #' Deactivate a feature for a user
-#' @param flag_name string required. The feature name.
+#' @param flag_name string required. The feature flag name.
 #' @param user_id integer required. The user ID.
 #' 
 #' @return  An empty HTTP response
@@ -6560,16 +6672,16 @@ feature_flags_delete_users <- function(flag_name, user_id) {
 #' @param group_id integer required. Group ID.
 #' 
 #' @return  A list containing the following elements:
-#' \item{name}{string, The name of the feature.}
-#' \item{description}{string, }
-#' \item{activeForMe}{boolean, Whether the feature is active for the current user.}
+#' \item{name}{string, The name of the feature flag.}
 #' \item{userCount}{integer, The number of users with this feature flag enabled.}
+#' \item{description}{string, }
 #' \item{team}{string, }
 #' \item{jira}{string, }
 #' \item{added}{string, }
 #' \item{groupCount}{integer, }
 #' \item{organizationCount}{integer, }
 #' \item{percentage}{integer, The target percentage of users who should have this feature flag enabled.}
+#' \item{activeForMe}{boolean, Whether the feature flag is active for the current user.}
 #' @export
 feature_flags_put_groups <- function(flag_name, group_id) {
 
@@ -6599,62 +6711,6 @@ feature_flags_delete_groups <- function(flag_name, group_id) {
   args <- as.list(match.call())[-1]
   path <- "/feature_flags/{flag_name}/groups/{group_id}"
   path_params  <- list(flag_name = flag_name, group_id = group_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Activate a feature for a organization
-#' @param flag_name string required. The feature flag name.
-#' @param organization_id integer required. Organization ID.
-#' 
-#' @return  A list containing the following elements:
-#' \item{name}{string, The name of the feature.}
-#' \item{description}{string, }
-#' \item{activeForMe}{boolean, Whether the feature is active for the current user.}
-#' \item{userCount}{integer, The number of users with this feature flag enabled.}
-#' \item{team}{string, }
-#' \item{jira}{string, }
-#' \item{added}{string, }
-#' \item{groupCount}{integer, }
-#' \item{organizationCount}{integer, }
-#' \item{percentage}{integer, The target percentage of users who should have this feature flag enabled.}
-#' @export
-feature_flags_put_organizations <- function(flag_name, organization_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/feature_flags/{flag_name}/organizations/{organization_id}"
-  path_params  <- list(flag_name = flag_name, organization_id = organization_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Deactivate a feature for a organization
-#' @param flag_name string required. The feature flag name.
-#' @param organization_id integer required. Organization ID.
-#' 
-#' @return  An empty HTTP response
-#' @export
-feature_flags_delete_organizations <- function(flag_name, organization_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/feature_flags/{flag_name}/organizations/{organization_id}"
-  path_params  <- list(flag_name = flag_name, organization_id = organization_id)
   query_params <- list()
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
@@ -6930,70 +6986,6 @@ files_delete_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-files_list_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/files/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-files_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/files/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Initiate an upload of a file into the platform
 #' @param name string required. The file name.
 #' @param expires_at string optional. The date and time the file will expire. If not specified, the file will expire in 30 days. To keep a file indefinitely, specify null.
@@ -7006,7 +6998,6 @@ files_put_transfer <- function(id, user_id, include_dependencies, email_body = N
 #' \item{expiresAt}{string, The date and time the file will expire. If not specified, the file will expire in 30 days. To keep a file indefinitely, specify null.}
 #' \item{uploadUrl}{string, The URL that may be used to upload a file. To use the upload URL, initiate a POST request to the given URL with the file you wish to import as the "file" form field.}
 #' \item{uploadFields}{list, A hash containing the form fields to be included with the POST request.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 files_post <- function(name, expires_at = NULL) {
 
@@ -7105,7 +7096,6 @@ files_post_multipart_complete <- function(id) {
 #' \item compression string, The type of compression of the file. One of "gzip", or "none".
 #' \item tableColumns array, An array of hashes corresponding to the columns in the file. Each hash should have keys for column "name" and "sql_type"
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 files_get <- function(id, link_expires_at = NULL, inline = NULL) {
 
@@ -7152,7 +7142,6 @@ files_get <- function(id, link_expires_at = NULL, inline = NULL) {
 #' \item compression string, The type of compression of the file. One of "gzip", or "none".
 #' \item tableColumns array, An array of hashes corresponding to the columns in the file. Each hash should have keys for column "name" and "sql_type"
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 files_put <- function(id, name, expires_at) {
 
@@ -7199,7 +7188,6 @@ files_put <- function(id, name, expires_at) {
 #' \item compression string, The type of compression of the file. One of "gzip", or "none".
 #' \item tableColumns array, An array of hashes corresponding to the columns in the file. Each hash should have keys for column "name" and "sql_type"
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 files_patch <- function(id, name = NULL, expires_at = NULL) {
 
@@ -7512,36 +7500,10 @@ git_repos_delete <- function(id) {
  }
 
 
-#' Get all branches and tags of a bookmarked git repository
-#' @param id integer required. The ID for this git repository.
-#' 
-#' @return  A list containing the following elements:
-#' \item{branches}{array, List of branch names of this git repository.}
-#' \item{tags}{array, List of tag names of this git repository.}
-#' @export
-git_repos_list_refs <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/git_repos/{id}/refs"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List Groups
-#' @param query string optional. If specified, it will filter the groups returned.
+#' @param query string optional. If specified, it will filter the groups returned. Infix matching is supported (e.g., "query=group" will return "group" and "group of people" and "my group" and "my group of people").
 #' @param permission string optional. A permissions string, one of "read", "write", or "manage". Lists only groups for which the current user has that permission.
 #' @param include_members boolean optional. Show members of the group.
-#' @param organization_id integer optional. The organization by which to filter groups.
-#' @param user_ids array optional. A list of user IDs to filter groups by.Groups will be returned if any of the users is a member
 #' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
 #' @param order string optional. The field on which to order the result set. Defaults to name. Must be one of: name, created_at.
@@ -7551,15 +7513,10 @@ git_repos_list_refs <- function(id) {
 #' \item{id}{integer, The ID of this group.}
 #' \item{name}{string, This group's name.}
 #' \item{createdAt}{string, The date and time when this group was created.}
-#' \item{updatedAt}{string, The date and time when this group was last updated.}
-#' \item{description}{string, The description of the group.}
 #' \item{slug}{string, The slug for this group.}
 #' \item{organizationId}{integer, The ID of the organization this group belongs to.}
 #' \item{organizationName}{string, The name of the organization this group belongs to.}
-#' \item{memberCount}{integer, The number of active members in this group.}
-#' \item{totalMemberCount}{integer, The total number of members in this group.}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this group.}
-#' \item{createdById}{integer, The ID of the user who created this group.}
+#' \item{memberCount}{integer, The total number of members in this group.}
 #' \item{members}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -7569,12 +7526,12 @@ git_repos_list_refs <- function(id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' @export
-groups_list <- function(query = NULL, permission = NULL, include_members = NULL, organization_id = NULL, user_ids = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+groups_list <- function(query = NULL, permission = NULL, include_members = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/groups/"
   path_params  <- list()
-  query_params <- list(query = query, permission = permission, include_members = include_members, organization_id = organization_id, user_ids = user_ids, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(query = query, permission = permission, include_members = include_members, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -7591,32 +7548,30 @@ groups_list <- function(query = NULL, permission = NULL, include_members = NULL,
 #' @param description string optional. The description of the group.
 #' @param slug string optional. The slug for this group.
 #' @param organization_id integer optional. The ID of the organization this group belongs to.
+#' @param must_agree_to_eula boolean optional. Whether or not members of this group must sign the EULA.
 #' @param default_otp_required_for_login boolean optional. The two factor authentication requirement for this group.
 #' @param role_ids array optional. An array of ids of all the roles this group has.
 #' @param default_time_zone string optional. The default time zone of this group.
-#' @param default_jobs_label string optional. The default partition label for jobs of this group.
-#' @param default_notebooks_label string optional. The default partition label for notebooks of this group.
-#' @param default_services_label string optional. The default partition label for services of this group.
+#' @param default_jobs_label string optional. The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
+#' @param default_notebooks_label string optional. The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
+#' @param default_services_label string optional. The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this group.}
 #' \item{name}{string, This group's name.}
 #' \item{createdAt}{string, The date and time when this group was created.}
-#' \item{updatedAt}{string, The date and time when this group was last updated.}
 #' \item{description}{string, The description of the group.}
 #' \item{slug}{string, The slug for this group.}
 #' \item{organizationId}{integer, The ID of the organization this group belongs to.}
 #' \item{organizationName}{string, The name of the organization this group belongs to.}
-#' \item{memberCount}{integer, The number of active members in this group.}
-#' \item{totalMemberCount}{integer, The total number of members in this group.}
+#' \item{memberCount}{integer, The total number of members in this group.}
+#' \item{mustAgreeToEula}{boolean, Whether or not members of this group must sign the EULA.}
 #' \item{defaultOtpRequiredForLogin}{boolean, The two factor authentication requirement for this group.}
 #' \item{roleIds}{array, An array of ids of all the roles this group has.}
 #' \item{defaultTimeZone}{string, The default time zone of this group.}
-#' \item{defaultJobsLabel}{string, The default partition label for jobs of this group.}
-#' \item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group.}
-#' \item{defaultServicesLabel}{string, The default partition label for services of this group.}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this group.}
-#' \item{createdById}{integer, The ID of the user who created this group.}
+#' \item{defaultJobsLabel}{string, The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultServicesLabel}{string, The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
 #' \item{members}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -7624,18 +7579,15 @@ groups_list <- function(query = NULL, permission = NULL, include_members = NULL,
 #' \item username string, This user's username.
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
-#' \item email string, This user's email address.
-#' \item primaryGroupId integer, The ID of the primary group of this user.
-#' \item active boolean, Whether this user account is active or deactivated.
 #' }}
 #' @export
-groups_post <- function(name, description = NULL, slug = NULL, organization_id = NULL, default_otp_required_for_login = NULL, role_ids = NULL, default_time_zone = NULL, default_jobs_label = NULL, default_notebooks_label = NULL, default_services_label = NULL) {
+groups_post <- function(name, description = NULL, slug = NULL, organization_id = NULL, must_agree_to_eula = NULL, default_otp_required_for_login = NULL, role_ids = NULL, default_time_zone = NULL, default_jobs_label = NULL, default_notebooks_label = NULL, default_services_label = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/groups/"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, description = description, slug = slug, organizationId = organization_id, defaultOtpRequiredForLogin = default_otp_required_for_login, roleIds = role_ids, defaultTimeZone = default_time_zone, defaultJobsLabel = default_jobs_label, defaultNotebooksLabel = default_notebooks_label, defaultServicesLabel = default_services_label)
+  body_params  <- list(name = name, description = description, slug = slug, organizationId = organization_id, mustAgreeToEula = must_agree_to_eula, defaultOtpRequiredForLogin = default_otp_required_for_login, roleIds = role_ids, defaultTimeZone = default_time_zone, defaultJobsLabel = default_jobs_label, defaultNotebooksLabel = default_notebooks_label, defaultServicesLabel = default_services_label)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -7653,21 +7605,18 @@ groups_post <- function(name, description = NULL, slug = NULL, organization_id =
 #' \item{id}{integer, The ID of this group.}
 #' \item{name}{string, This group's name.}
 #' \item{createdAt}{string, The date and time when this group was created.}
-#' \item{updatedAt}{string, The date and time when this group was last updated.}
 #' \item{description}{string, The description of the group.}
 #' \item{slug}{string, The slug for this group.}
 #' \item{organizationId}{integer, The ID of the organization this group belongs to.}
 #' \item{organizationName}{string, The name of the organization this group belongs to.}
-#' \item{memberCount}{integer, The number of active members in this group.}
-#' \item{totalMemberCount}{integer, The total number of members in this group.}
+#' \item{memberCount}{integer, The total number of members in this group.}
+#' \item{mustAgreeToEula}{boolean, Whether or not members of this group must sign the EULA.}
 #' \item{defaultOtpRequiredForLogin}{boolean, The two factor authentication requirement for this group.}
 #' \item{roleIds}{array, An array of ids of all the roles this group has.}
 #' \item{defaultTimeZone}{string, The default time zone of this group.}
-#' \item{defaultJobsLabel}{string, The default partition label for jobs of this group.}
-#' \item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group.}
-#' \item{defaultServicesLabel}{string, The default partition label for services of this group.}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this group.}
-#' \item{createdById}{integer, The ID of the user who created this group.}
+#' \item{defaultJobsLabel}{string, The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultServicesLabel}{string, The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
 #' \item{members}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -7675,9 +7624,6 @@ groups_post <- function(name, description = NULL, slug = NULL, organization_id =
 #' \item username string, This user's username.
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
-#' \item email string, This user's email address.
-#' \item primaryGroupId integer, The ID of the primary group of this user.
-#' \item active boolean, Whether this user account is active or deactivated.
 #' }}
 #' @export
 groups_get <- function(id) {
@@ -7703,32 +7649,30 @@ groups_get <- function(id) {
 #' @param description string optional. The description of the group.
 #' @param slug string optional. The slug for this group.
 #' @param organization_id integer optional. The ID of the organization this group belongs to.
+#' @param must_agree_to_eula boolean optional. Whether or not members of this group must sign the EULA.
 #' @param default_otp_required_for_login boolean optional. The two factor authentication requirement for this group.
 #' @param role_ids array optional. An array of ids of all the roles this group has.
 #' @param default_time_zone string optional. The default time zone of this group.
-#' @param default_jobs_label string optional. The default partition label for jobs of this group.
-#' @param default_notebooks_label string optional. The default partition label for notebooks of this group.
-#' @param default_services_label string optional. The default partition label for services of this group.
+#' @param default_jobs_label string optional. The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
+#' @param default_notebooks_label string optional. The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
+#' @param default_services_label string optional. The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this group.}
 #' \item{name}{string, This group's name.}
 #' \item{createdAt}{string, The date and time when this group was created.}
-#' \item{updatedAt}{string, The date and time when this group was last updated.}
 #' \item{description}{string, The description of the group.}
 #' \item{slug}{string, The slug for this group.}
 #' \item{organizationId}{integer, The ID of the organization this group belongs to.}
 #' \item{organizationName}{string, The name of the organization this group belongs to.}
-#' \item{memberCount}{integer, The number of active members in this group.}
-#' \item{totalMemberCount}{integer, The total number of members in this group.}
+#' \item{memberCount}{integer, The total number of members in this group.}
+#' \item{mustAgreeToEula}{boolean, Whether or not members of this group must sign the EULA.}
 #' \item{defaultOtpRequiredForLogin}{boolean, The two factor authentication requirement for this group.}
 #' \item{roleIds}{array, An array of ids of all the roles this group has.}
 #' \item{defaultTimeZone}{string, The default time zone of this group.}
-#' \item{defaultJobsLabel}{string, The default partition label for jobs of this group.}
-#' \item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group.}
-#' \item{defaultServicesLabel}{string, The default partition label for services of this group.}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this group.}
-#' \item{createdById}{integer, The ID of the user who created this group.}
+#' \item{defaultJobsLabel}{string, The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultServicesLabel}{string, The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
 #' \item{members}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -7736,18 +7680,15 @@ groups_get <- function(id) {
 #' \item username string, This user's username.
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
-#' \item email string, This user's email address.
-#' \item primaryGroupId integer, The ID of the primary group of this user.
-#' \item active boolean, Whether this user account is active or deactivated.
 #' }}
 #' @export
-groups_put <- function(id, name, description = NULL, slug = NULL, organization_id = NULL, default_otp_required_for_login = NULL, role_ids = NULL, default_time_zone = NULL, default_jobs_label = NULL, default_notebooks_label = NULL, default_services_label = NULL) {
+groups_put <- function(id, name, description = NULL, slug = NULL, organization_id = NULL, must_agree_to_eula = NULL, default_otp_required_for_login = NULL, role_ids = NULL, default_time_zone = NULL, default_jobs_label = NULL, default_notebooks_label = NULL, default_services_label = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/groups/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, description = description, slug = slug, organizationId = organization_id, defaultOtpRequiredForLogin = default_otp_required_for_login, roleIds = role_ids, defaultTimeZone = default_time_zone, defaultJobsLabel = default_jobs_label, defaultNotebooksLabel = default_notebooks_label, defaultServicesLabel = default_services_label)
+  body_params  <- list(name = name, description = description, slug = slug, organizationId = organization_id, mustAgreeToEula = must_agree_to_eula, defaultOtpRequiredForLogin = default_otp_required_for_login, roleIds = role_ids, defaultTimeZone = default_time_zone, defaultJobsLabel = default_jobs_label, defaultNotebooksLabel = default_notebooks_label, defaultServicesLabel = default_services_label)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -7764,32 +7705,30 @@ groups_put <- function(id, name, description = NULL, slug = NULL, organization_i
 #' @param description string optional. The description of the group.
 #' @param slug string optional. The slug for this group.
 #' @param organization_id integer optional. The ID of the organization this group belongs to.
+#' @param must_agree_to_eula boolean optional. Whether or not members of this group must sign the EULA.
 #' @param default_otp_required_for_login boolean optional. The two factor authentication requirement for this group.
 #' @param role_ids array optional. An array of ids of all the roles this group has.
 #' @param default_time_zone string optional. The default time zone of this group.
-#' @param default_jobs_label string optional. The default partition label for jobs of this group.
-#' @param default_notebooks_label string optional. The default partition label for notebooks of this group.
-#' @param default_services_label string optional. The default partition label for services of this group.
+#' @param default_jobs_label string optional. The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
+#' @param default_notebooks_label string optional. The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
+#' @param default_services_label string optional. The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this group.}
 #' \item{name}{string, This group's name.}
 #' \item{createdAt}{string, The date and time when this group was created.}
-#' \item{updatedAt}{string, The date and time when this group was last updated.}
 #' \item{description}{string, The description of the group.}
 #' \item{slug}{string, The slug for this group.}
 #' \item{organizationId}{integer, The ID of the organization this group belongs to.}
 #' \item{organizationName}{string, The name of the organization this group belongs to.}
-#' \item{memberCount}{integer, The number of active members in this group.}
-#' \item{totalMemberCount}{integer, The total number of members in this group.}
+#' \item{memberCount}{integer, The total number of members in this group.}
+#' \item{mustAgreeToEula}{boolean, Whether or not members of this group must sign the EULA.}
 #' \item{defaultOtpRequiredForLogin}{boolean, The two factor authentication requirement for this group.}
 #' \item{roleIds}{array, An array of ids of all the roles this group has.}
 #' \item{defaultTimeZone}{string, The default time zone of this group.}
-#' \item{defaultJobsLabel}{string, The default partition label for jobs of this group.}
-#' \item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group.}
-#' \item{defaultServicesLabel}{string, The default partition label for services of this group.}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this group.}
-#' \item{createdById}{integer, The ID of the user who created this group.}
+#' \item{defaultJobsLabel}{string, The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultServicesLabel}{string, The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
 #' \item{members}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -7797,18 +7736,15 @@ groups_put <- function(id, name, description = NULL, slug = NULL, organization_i
 #' \item username string, This user's username.
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
-#' \item email string, This user's email address.
-#' \item primaryGroupId integer, The ID of the primary group of this user.
-#' \item active boolean, Whether this user account is active or deactivated.
 #' }}
 #' @export
-groups_patch <- function(id, name = NULL, description = NULL, slug = NULL, organization_id = NULL, default_otp_required_for_login = NULL, role_ids = NULL, default_time_zone = NULL, default_jobs_label = NULL, default_notebooks_label = NULL, default_services_label = NULL) {
+groups_patch <- function(id, name = NULL, description = NULL, slug = NULL, organization_id = NULL, must_agree_to_eula = NULL, default_otp_required_for_login = NULL, role_ids = NULL, default_time_zone = NULL, default_jobs_label = NULL, default_notebooks_label = NULL, default_services_label = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/groups/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, description = description, slug = slug, organizationId = organization_id, defaultOtpRequiredForLogin = default_otp_required_for_login, roleIds = role_ids, defaultTimeZone = default_time_zone, defaultJobsLabel = default_jobs_label, defaultNotebooksLabel = default_notebooks_label, defaultServicesLabel = default_services_label)
+  body_params  <- list(name = name, description = description, slug = slug, organizationId = organization_id, mustAgreeToEula = must_agree_to_eula, defaultOtpRequiredForLogin = default_otp_required_for_login, roleIds = role_ids, defaultTimeZone = default_time_zone, defaultJobsLabel = default_jobs_label, defaultNotebooksLabel = default_notebooks_label, defaultServicesLabel = default_services_label)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -8020,21 +7956,18 @@ groups_delete_shares_groups <- function(id, group_id) {
 #' \item{id}{integer, The ID of this group.}
 #' \item{name}{string, This group's name.}
 #' \item{createdAt}{string, The date and time when this group was created.}
-#' \item{updatedAt}{string, The date and time when this group was last updated.}
 #' \item{description}{string, The description of the group.}
 #' \item{slug}{string, The slug for this group.}
 #' \item{organizationId}{integer, The ID of the organization this group belongs to.}
 #' \item{organizationName}{string, The name of the organization this group belongs to.}
-#' \item{memberCount}{integer, The number of active members in this group.}
-#' \item{totalMemberCount}{integer, The total number of members in this group.}
+#' \item{memberCount}{integer, The total number of members in this group.}
+#' \item{mustAgreeToEula}{boolean, Whether or not members of this group must sign the EULA.}
 #' \item{defaultOtpRequiredForLogin}{boolean, The two factor authentication requirement for this group.}
 #' \item{roleIds}{array, An array of ids of all the roles this group has.}
 #' \item{defaultTimeZone}{string, The default time zone of this group.}
-#' \item{defaultJobsLabel}{string, The default partition label for jobs of this group.}
-#' \item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group.}
-#' \item{defaultServicesLabel}{string, The default partition label for services of this group.}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this group.}
-#' \item{createdById}{integer, The ID of the user who created this group.}
+#' \item{defaultJobsLabel}{string, The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+#' \item{defaultServicesLabel}{string, The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
 #' \item{members}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -8042,9 +7975,6 @@ groups_delete_shares_groups <- function(id, group_id) {
 #' \item username string, This user's username.
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
-#' \item email string, This user's email address.
-#' \item primaryGroupId integer, The ID of the primary group of this user.
-#' \item active boolean, Whether this user account is active or deactivated.
 #' }}
 #' @export
 groups_put_members <- function(id, user_id) {
@@ -8081,43 +8011,6 @@ groups_delete_members <- function(id, user_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get child groups of this group
-#' @param id integer required. The ID of this group.
-#' 
-#' @return  A list containing the following elements:
-#' \item{manageable}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, 
-#' \item name string, 
-#' }}
-#' \item{writeable}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, 
-#' \item name string, 
-#' }}
-#' \item{readable}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, 
-#' \item name string, 
-#' }}
-#' @export
-groups_list_child_groups <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/groups/{id}/child_groups"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8295,70 +8188,6 @@ imports_delete_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-imports_list_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/imports/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-imports_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/imports/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List the projects an Import belongs to
 #' @param id integer required. The ID of the Import.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -8475,11 +8304,10 @@ imports_delete_projects <- function(id, project_id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -8537,7 +8365,6 @@ imports_delete_projects <- function(id, project_id) {
 #' \item{timeZone}{string, The time zone of this import.}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 imports_put_archive <- function(id, status) {
 
@@ -8558,10 +8385,10 @@ imports_put_archive <- function(id, status) {
 
 #' List Imports
 #' @param type string optional. If specified, return imports of these types. It accepts a comma-separated list, possible values are 'AutoImport', 'DbSync', 'Salesforce', 'GdocImport'.
+#' @param author string optional. If specified, return imports from this author. It accepts a comma-separated list of author ids.
 #' @param destination string optional. If specified, returns imports with one of these destinations. It accepts a comma-separated list of remote host ids.
 #' @param source string optional. If specified, returns imports with one of these sources. It accepts a comma-separated list of remote host ids. 'DbSync' must be specified for 'type'.
 #' @param status string optional. If specified, returns imports with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.
-#' @param author string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' @param archived string optional. The archival status of the requested item(s).
 #' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.
@@ -8589,11 +8416,10 @@ imports_put_archive <- function(id, status) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{id}{integer, The ID for the import.}
 #' \item{isOutbound}{boolean, }
@@ -8621,12 +8447,12 @@ imports_put_archive <- function(id, status) {
 #' \item{timeZone}{string, The time zone of this import.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
-imports_list <- function(type = NULL, destination = NULL, source = NULL, status = NULL, author = NULL, hidden = NULL, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+imports_list <- function(type = NULL, author = NULL, destination = NULL, source = NULL, status = NULL, hidden = NULL, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/imports/"
   path_params  <- list()
-  query_params <- list(type = type, destination = destination, source = source, status = status, author = author, hidden = hidden, archived = archived, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(type = type, author = author, destination = destination, source = source, status = status, hidden = hidden, archived = archived, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -8657,11 +8483,10 @@ imports_list <- function(type = NULL, destination = NULL, source = NULL, status 
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -8701,11 +8526,10 @@ imports_list <- function(type = NULL, destination = NULL, source = NULL, status 
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -8763,7 +8587,6 @@ imports_list <- function(type = NULL, destination = NULL, source = NULL, status 
 #' \item{timeZone}{string, The time zone of this import.}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 imports_post <- function(name, sync_type, is_outbound, source = NULL, destination = NULL, schedule = NULL, notifications = NULL, parent_id = NULL, next_run_at = NULL, time_zone = NULL, hidden = NULL) {
 
@@ -8830,9 +8653,8 @@ imports_post_files <- function(schema, name, remote_host_id, credential_id, max_
 #' \item{importId}{integer, The ID of the import.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 imports_post_files_runs <- function(id) {
@@ -8864,9 +8686,8 @@ imports_post_files_runs <- function(id) {
 #' \item{importId}{integer, The ID of the import.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 imports_list_files_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
@@ -8895,9 +8716,8 @@ imports_list_files_runs <- function(id, limit = NULL, page_num = NULL, order = N
 #' \item{importId}{integer, The ID of the import.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 imports_get_files_runs <- function(id, run_id) {
@@ -9082,7 +8902,6 @@ imports_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' \item sortkeys array, Sortkeys for this table in Redshift. Please provide a maximum of two.
 #' }}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 imports_post_files_csv <- function(source, destination, first_row_is_header, name = NULL, column_delimiter = NULL, escaped = NULL, compression = NULL, existing_table_rows = NULL, max_errors = NULL, table_columns = NULL, loosen_types = NULL, execution = NULL, redshift_destination_options = NULL, hidden = NULL) {
 
@@ -9146,7 +8965,6 @@ imports_post_files_csv <- function(source, destination, first_row_is_header, nam
 #' \item sortkeys array, Sortkeys for this table in Redshift. Please provide a maximum of two.
 #' }}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 imports_get_files_csv <- function(id) {
 
@@ -9249,7 +9067,6 @@ imports_get_files_csv <- function(id) {
 #' \item sortkeys array, Sortkeys for this table in Redshift. Please provide a maximum of two.
 #' }}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 imports_put_files_csv <- function(id, source, destination, first_row_is_header, name = NULL, column_delimiter = NULL, escaped = NULL, compression = NULL, existing_table_rows = NULL, max_errors = NULL, table_columns = NULL, loosen_types = NULL, execution = NULL, redshift_destination_options = NULL) {
 
@@ -9352,7 +9169,6 @@ imports_put_files_csv <- function(id, source, destination, first_row_is_header, 
 #' \item sortkeys array, Sortkeys for this table in Redshift. Please provide a maximum of two.
 #' }}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 imports_patch_files_csv <- function(id, name = NULL, source = NULL, destination = NULL, first_row_is_header = NULL, column_delimiter = NULL, escaped = NULL, compression = NULL, existing_table_rows = NULL, max_errors = NULL, table_columns = NULL, loosen_types = NULL, execution = NULL, redshift_destination_options = NULL) {
 
@@ -9439,7 +9255,6 @@ imports_delete_files_csv <- function(id) {
 #' \item sortkeys array, Sortkeys for this table in Redshift. Please provide a maximum of two.
 #' }}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 imports_put_files_csv_archive <- function(id, status) {
 
@@ -9452,153 +9267,6 @@ imports_put_files_csv_archive <- function(id, status) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Start a run
-#' @param id integer required. The ID of the csv_import.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the run.}
-#' \item{csvImportId}{integer, The ID of the csv_import.}
-#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
-#' \item{error}{string, The error, if any, returned by the run.}
-#' @export
-imports_post_files_csv_runs <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/imports/files/csv/{id}/runs"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List runs for the given csv_import
-#' @param id integer required. The ID of the csv_import.
-#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID of the run.}
-#' \item{csvImportId}{integer, The ID of the csv_import.}
-#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
-#' \item{error}{string, The error, if any, returned by the run.}
-#' @export
-imports_list_files_csv_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/imports/files/csv/{id}/runs"
-  path_params  <- list(id = id)
-  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Check status of a run
-#' @param id integer required. The ID of the csv_import.
-#' @param run_id integer required. The ID of the run.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the run.}
-#' \item{csvImportId}{integer, The ID of the csv_import.}
-#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
-#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
-#' \item{error}{string, The error, if any, returned by the run.}
-#' @export
-imports_get_files_csv_runs <- function(id, run_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/imports/files/csv/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Cancel a run
-#' @param id integer required. The ID of the csv_import.
-#' @param run_id integer required. The ID of the run.
-#' 
-#' @return  An empty HTTP response
-#' @export
-imports_delete_files_csv_runs <- function(id, run_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/imports/files/csv/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get the logs for a run
-#' @param id integer required. The ID of the csv_import.
-#' @param run_id integer required. The ID of the run.
-#' @param last_id integer optional. The ID of the last log message received. Log entries with this ID value or lower will be omitted.Logs are sorted by ID if this value is provided, and are otherwise sorted by createdAt.
-#' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID of the log.}
-#' \item{createdAt}{string, The time the log was created.}
-#' \item{message}{string, The log message.}
-#' \item{level}{string, The level of the log. One of unknown,fatal,error,warn,info,debug.}
-#' @export
-imports_list_files_csv_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/imports/files/csv/{id}/runs/{run_id}/logs"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list(last_id = last_id, limit = limit)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -9732,11 +9400,10 @@ imports_get_batches <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -9794,7 +9461,6 @@ imports_get_batches <- function(id) {
 #' \item{timeZone}{string, The time zone of this import.}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 imports_get <- function(id) {
 
@@ -9833,11 +9499,10 @@ imports_get <- function(id) {
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -9876,11 +9541,10 @@ imports_get <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -9938,7 +9602,6 @@ imports_get <- function(id) {
 #' \item{timeZone}{string, The time zone of this import.}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 imports_put <- function(id, name, sync_type, is_outbound, source = NULL, destination = NULL, schedule = NULL, notifications = NULL, parent_id = NULL, next_run_at = NULL, time_zone = NULL) {
 
@@ -10098,7 +9761,7 @@ imports_post_cancel <- function(id) {
 #' \item partitionTablePartitionColumnMaxName string, This parameter is deprecated
 #' \item lastModifiedColumn string, 
 #' \item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
-#' \item chunkingMethod string, This parameter is deprecated
+#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be chosen automatically.
 #' \item firstRowIsHeader boolean, 
 #' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
 #' \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
@@ -10176,7 +9839,7 @@ imports_post_cancel <- function(id) {
 #' \item partitionTablePartitionColumnMaxName string, This parameter is deprecated
 #' \item lastModifiedColumn string, 
 #' \item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
-#' \item chunkingMethod string, This parameter is deprecated
+#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be chosen automatically.
 #' \item firstRowIsHeader boolean, 
 #' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
 #' \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
@@ -10268,7 +9931,7 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' \item partitionTablePartitionColumnMaxName string, This parameter is deprecated
 #' \item lastModifiedColumn string, 
 #' \item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
-#' \item chunkingMethod string, This parameter is deprecated
+#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be chosen automatically.
 #' \item firstRowIsHeader boolean, 
 #' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
 #' \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
@@ -10346,7 +10009,7 @@ imports_post_syncs <- function(id, source, destination, advanced_options = NULL)
 #' \item partitionTablePartitionColumnMaxName string, This parameter is deprecated
 #' \item lastModifiedColumn string, 
 #' \item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
-#' \item chunkingMethod string, This parameter is deprecated
+#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be chosen automatically.
 #' \item firstRowIsHeader boolean, 
 #' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
 #' \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
@@ -10469,7 +10132,7 @@ imports_delete_syncs <- function(id, sync_id) {
 #' \item partitionTablePartitionColumnMaxName string, This parameter is deprecated
 #' \item lastModifiedColumn string, 
 #' \item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
-#' \item chunkingMethod string, This parameter is deprecated
+#' \item chunkingMethod string, The method used to break the data into smaller chunks for transfer.  The value can be set to sorted_by_identity_columns or if not set the chunking method will be chosen automatically.
 #' \item firstRowIsHeader boolean, 
 #' \item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
 #' \item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
@@ -10503,7 +10166,6 @@ imports_put_syncs_archive <- function(id, sync_id, status = NULL) {
 #' @param scheduled boolean optional. If the item is scheduled.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' @param archived string optional. The archival status of the requested item(s).
-#' @param author string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.
 #' @param limit integer optional. Number of results to return. Defaults to its maximum of 50.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
 #' @param order string optional. The field on which to order the result set. Defaults to updated_at. Must be one of: updated_at.
@@ -10527,30 +10189,21 @@ imports_put_syncs_archive <- function(id, sync_id, status = NULL) {
 #' \item error string, The error message for this run, if present.
 #' }}
 #' \item{archived}{string, The archival status of the requested item(s).}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' @export
-jobs_list <- function(state = NULL, type = NULL, q = NULL, permission = NULL, scheduled = NULL, hidden = NULL, archived = NULL, author = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+jobs_list <- function(state = NULL, type = NULL, q = NULL, permission = NULL, scheduled = NULL, hidden = NULL, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/jobs/"
   path_params  <- list()
-  query_params <- list(state = state, type = type, q = q, permission = permission, scheduled = scheduled, hidden = hidden, archived = archived, author = author, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(state = state, type = type, q = q, permission = permission, scheduled = scheduled, hidden = hidden, archived = archived, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -10593,15 +10246,6 @@ jobs_list <- function(state = NULL, type = NULL, q = NULL, permission = NULL, sc
 #' }}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{successEmailSubject}{string, }
 #' \item{successEmailBody}{string, }
 #' \item{runningAsUser}{string, }
@@ -10609,11 +10253,10 @@ jobs_list <- function(state = NULL, type = NULL, q = NULL, permission = NULL, sc
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' @export
 jobs_get <- function(id) {
@@ -10687,15 +10330,6 @@ jobs_post_trigger_email <- function(id) {
 #' }}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{successEmailSubject}{string, }
 #' \item{successEmailBody}{string, }
 #' \item{runningAsUser}{string, }
@@ -10703,11 +10337,10 @@ jobs_post_trigger_email <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' @export
 jobs_list_parents <- function(id) {
@@ -10970,11 +10603,10 @@ jobs_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 #' \item{timeZone}{string, The time zone of this workflow.}
@@ -11171,70 +10803,6 @@ jobs_delete_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-jobs_list_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/jobs/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-jobs_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/jobs/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List the projects a Job belongs to
 #' @param id integer required. The ID of the Job.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -11359,15 +10927,6 @@ jobs_delete_projects <- function(id, project_id) {
 #' }}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{successEmailSubject}{string, }
 #' \item{successEmailBody}{string, }
 #' \item{runningAsUser}{string, }
@@ -11375,11 +10934,10 @@ jobs_delete_projects <- function(id, project_id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' @export
 jobs_put_archive <- function(id, status) {
@@ -11642,70 +11200,6 @@ json_values_delete_shares_groups <- function(id, group_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-json_values_list_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/json_values/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-json_values_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/json_values/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12974,9 +12468,8 @@ media_post_optimizations_clone <- function(id) {
 #' \item{optimizationId}{integer, The ID of the optimization.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 media_post_optimizations_runs <- function(id) {
@@ -13008,9 +12501,8 @@ media_post_optimizations_runs <- function(id) {
 #' \item{optimizationId}{integer, The ID of the optimization.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 media_list_optimizations_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
@@ -13039,9 +12531,8 @@ media_list_optimizations_runs <- function(id, limit = NULL, page_num = NULL, ord
 #' \item{optimizationId}{integer, The ID of the optimization.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 media_get_optimizations_runs <- function(id, run_id) {
@@ -13457,8 +12948,8 @@ models_list_types <- function() {
 #' @param model_name string optional. If specified, will be used to filter the models returned. Substring matching is supported. (e.g., "modelName=model" will return both "model1" and "my model").
 #' @param training_table_name string optional. If specified, will be used to filter the models returned by the training dataset table name. Substring matching is supported. (e.g., "trainingTableName=table" will return both "table1" and "my_table").
 #' @param dependent_variable string optional. If specified, will be used to filter the models returned by the dependent variable column name. Substring matching is supported. (e.g., "dependentVariable=predictor" will return both "predictor" and "my predictor").
+#' @param author string optional. If specified, return models from this author. It accepts a comma-separated list of author ids.
 #' @param status string optional. If specified, returns models with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.
-#' @param author string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' @param archived string optional. The archival status of the requested item(s).
 #' @param limit integer optional. Number of results to return. Defaults to its maximum of 50.
@@ -13486,11 +12977,10 @@ models_list_types <- function() {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, The ID of the parent job that will trigger this model.}
 #' \item{timeZone}{string, The time zone of this model.}
@@ -13537,12 +13027,12 @@ models_list_types <- function() {
 #' \item{lastOutputLocation}{string, The output JSON for the last build.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
-models_list <- function(model_name = NULL, training_table_name = NULL, dependent_variable = NULL, status = NULL, author = NULL, hidden = NULL, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+models_list <- function(model_name = NULL, training_table_name = NULL, dependent_variable = NULL, author = NULL, status = NULL, hidden = NULL, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/models/"
   path_params  <- list()
-  query_params <- list(model_name = model_name, training_table_name = training_table_name, dependent_variable = dependent_variable, status = status, author = author, hidden = hidden, archived = archived, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(model_name = model_name, training_table_name = training_table_name, dependent_variable = dependent_variable, author = author, status = status, hidden = hidden, archived = archived, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -13591,11 +13081,10 @@ models_list <- function(model_name = NULL, training_table_name = NULL, dependent
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, The ID of the parent job that will trigger this model.}
 #' \item{runningAs}{list, A list containing the following elements: 
@@ -13965,70 +13454,6 @@ models_delete_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-models_list_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/models/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-models_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/models/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List the projects a Model belongs to
 #' @param id integer required. The ID of the Model.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -14159,11 +13584,10 @@ models_delete_projects <- function(id, project_id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{parentId}{integer, The ID of the parent job that will trigger this model.}
 #' \item{runningAs}{list, A list containing the following elements: 
@@ -14245,11 +13669,10 @@ models_put_archive <- function(id, status) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' @export
 models_list_schedules <- function(id) {
@@ -14272,7 +13695,7 @@ models_list_schedules <- function(id) {
 #' List Notebooks
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' @param archived string optional. The archival status of the requested item(s).
-#' @param author string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.
+#' @param author string optional. If specified, return imports from this author. It accepts a comma-separated list of author IDs.
 #' @param status string optional. If specified, returns notebooks with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'pending', 'idle'.
 #' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
@@ -14303,14 +13726,13 @@ models_list_schedules <- function(id) {
 #' \item dockerImageName string, The name of the docker image to pull from DockerHub.
 #' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 #' \item instanceType string, The EC2 instance type requested for the deployment.
-#' \item memory integer, The memory allocated to the deployment, in MB.
-#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
 #' \item state string, The state of the deployment.
 #' \item stateMessage string, A detailed description of the state.
-#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
-#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 #' \item createdAt string, 
 #' \item updatedAt string, 
+#' \item published boolean, 
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -14347,7 +13769,6 @@ notebooks_list <- function(hidden = NULL, archived = NULL, author = NULL, status
 #' @param credentials array optional. A list of credential IDs to pass to the notebook.
 #' @param environment_variables list optional. Environment variables to be passed into the Notebook.
 #' @param idle_timeout integer optional. How long the notebook will stay alive without any kernel activity.
-#' @param partition_label string optional. The partition label used to run this object.
 #' @param git_repo_url string optional. The url of the git repository
 #' @param git_ref string optional. The git reference if git repo is specified
 #' @param git_path string optional. The path to the .ipynb file in the git repo that will be started up on notebook launch
@@ -14388,35 +13809,32 @@ notebooks_list <- function(hidden = NULL, archived = NULL, author = NULL, status
 #' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 #' \item displayUrl string, A signed URL for viewing the deployed item.
 #' \item instanceType string, The EC2 instance type requested for the deployment.
-#' \item memory integer, The memory allocated to the deployment, in MB.
-#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
 #' \item state string, The state of the deployment.
 #' \item stateMessage string, A detailed description of the state.
-#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
-#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 #' \item createdAt string, 
 #' \item updatedAt string, 
+#' \item published boolean, 
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
 #' \item{environmentVariables}{list, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
-#' \item{partitionLabel}{string, The partition label used to run this object.}
 #' \item{gitRepoId}{integer, The ID of the git repository.}
 #' \item{gitRepoUrl}{string, The url of the git repository}
 #' \item{gitRef}{string, The git reference if git repo is specified}
 #' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' @export
-notebooks_post <- function(name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, environment_variables = NULL, idle_timeout = NULL, partition_label = NULL, git_repo_url = NULL, git_ref = NULL, git_path = NULL, hidden = NULL) {
+notebooks_post <- function(name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, environment_variables = NULL, idle_timeout = NULL, git_repo_url = NULL, git_ref = NULL, git_path = NULL, hidden = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/notebooks/"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, environmentVariables = environment_variables, idleTimeout = idle_timeout, partitionLabel = partition_label, gitRepoUrl = git_repo_url, gitRef = git_ref, gitPath = git_path, hidden = hidden)
+  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, environmentVariables = environment_variables, idleTimeout = idle_timeout, gitRepoUrl = git_repo_url, gitRef = git_ref, gitPath = git_path, hidden = hidden)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -14465,25 +13883,22 @@ notebooks_post <- function(name = NULL, language = NULL, description = NULL, fil
 #' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 #' \item displayUrl string, A signed URL for viewing the deployed item.
 #' \item instanceType string, The EC2 instance type requested for the deployment.
-#' \item memory integer, The memory allocated to the deployment, in MB.
-#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
 #' \item state string, The state of the deployment.
 #' \item stateMessage string, A detailed description of the state.
-#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
-#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 #' \item createdAt string, 
 #' \item updatedAt string, 
+#' \item published boolean, 
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
 #' \item{environmentVariables}{list, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
-#' \item{partitionLabel}{string, The partition label used to run this object.}
 #' \item{gitRepoId}{integer, The ID of the git repository.}
 #' \item{gitRepoUrl}{string, The url of the git repository}
 #' \item{gitRef}{string, The git reference if git repo is specified}
 #' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' @export
@@ -14520,7 +13935,6 @@ notebooks_get <- function(id) {
 #' @param credentials array optional. A list of credential IDs to pass to the notebook.
 #' @param environment_variables list optional. Environment variables to be passed into the Notebook.
 #' @param idle_timeout integer optional. How long the notebook will stay alive without any kernel activity.
-#' @param partition_label string optional. The partition label used to run this object.
 #' @param git_repo_url string optional. The url of the git repository
 #' @param git_ref string optional. The git reference if git repo is specified
 #' @param git_path string optional. The path to the .ipynb file in the git repo that will be started up on notebook launch
@@ -14560,35 +13974,32 @@ notebooks_get <- function(id) {
 #' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 #' \item displayUrl string, A signed URL for viewing the deployed item.
 #' \item instanceType string, The EC2 instance type requested for the deployment.
-#' \item memory integer, The memory allocated to the deployment, in MB.
-#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
 #' \item state string, The state of the deployment.
 #' \item stateMessage string, A detailed description of the state.
-#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
-#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 #' \item createdAt string, 
 #' \item updatedAt string, 
+#' \item published boolean, 
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
 #' \item{environmentVariables}{list, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
-#' \item{partitionLabel}{string, The partition label used to run this object.}
 #' \item{gitRepoId}{integer, The ID of the git repository.}
 #' \item{gitRepoUrl}{string, The url of the git repository}
 #' \item{gitRef}{string, The git reference if git repo is specified}
 #' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' @export
-notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, environment_variables = NULL, idle_timeout = NULL, partition_label = NULL, git_repo_url = NULL, git_ref = NULL, git_path = NULL) {
+notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, environment_variables = NULL, idle_timeout = NULL, git_repo_url = NULL, git_ref = NULL, git_path = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/notebooks/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, environmentVariables = environment_variables, idleTimeout = idle_timeout, partitionLabel = partition_label, gitRepoUrl = git_repo_url, gitRef = git_ref, gitPath = git_path)
+  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, environmentVariables = environment_variables, idleTimeout = idle_timeout, gitRepoUrl = git_repo_url, gitRef = git_ref, gitPath = git_path)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -14615,7 +14026,6 @@ notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, 
 #' @param credentials array optional. A list of credential IDs to pass to the notebook.
 #' @param environment_variables list optional. Environment variables to be passed into the Notebook.
 #' @param idle_timeout integer optional. How long the notebook will stay alive without any kernel activity.
-#' @param partition_label string optional. The partition label used to run this object.
 #' @param git_repo_url string optional. The url of the git repository
 #' @param git_ref string optional. The git reference if git repo is specified
 #' @param git_path string optional. The path to the .ipynb file in the git repo that will be started up on notebook launch
@@ -14655,35 +14065,32 @@ notebooks_put <- function(id, name = NULL, language = NULL, description = NULL, 
 #' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 #' \item displayUrl string, A signed URL for viewing the deployed item.
 #' \item instanceType string, The EC2 instance type requested for the deployment.
-#' \item memory integer, The memory allocated to the deployment, in MB.
-#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
 #' \item state string, The state of the deployment.
 #' \item stateMessage string, A detailed description of the state.
-#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
-#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 #' \item createdAt string, 
 #' \item updatedAt string, 
+#' \item published boolean, 
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
 #' \item{environmentVariables}{list, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
-#' \item{partitionLabel}{string, The partition label used to run this object.}
 #' \item{gitRepoId}{integer, The ID of the git repository.}
 #' \item{gitRepoUrl}{string, The url of the git repository}
 #' \item{gitRef}{string, The git reference if git repo is specified}
 #' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' @export
-notebooks_patch <- function(id, name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, environment_variables = NULL, idle_timeout = NULL, partition_label = NULL, git_repo_url = NULL, git_ref = NULL, git_path = NULL) {
+notebooks_patch <- function(id, name = NULL, language = NULL, description = NULL, file_id = NULL, requirements_file_id = NULL, requirements = NULL, docker_image_name = NULL, docker_image_tag = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, environment_variables = NULL, idle_timeout = NULL, git_repo_url = NULL, git_ref = NULL, git_path = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/notebooks/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, environmentVariables = environment_variables, idleTimeout = idle_timeout, partitionLabel = partition_label, gitRepoUrl = git_repo_url, gitRef = git_ref, gitPath = git_path)
+  body_params  <- list(name = name, language = language, description = description, fileId = file_id, requirementsFileId = requirements_file_id, requirements = requirements, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, environmentVariables = environment_variables, idleTimeout = idle_timeout, gitRepoUrl = git_repo_url, gitRef = git_ref, gitPath = git_path)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -14778,25 +14185,22 @@ notebooks_list_update_links <- function(id) {
 #' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 #' \item displayUrl string, A signed URL for viewing the deployed item.
 #' \item instanceType string, The EC2 instance type requested for the deployment.
-#' \item memory integer, The memory allocated to the deployment, in MB.
-#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
 #' \item state string, The state of the deployment.
 #' \item stateMessage string, A detailed description of the state.
-#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
-#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 #' \item createdAt string, 
 #' \item updatedAt string, 
+#' \item published boolean, 
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
 #' \item{environmentVariables}{list, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
-#' \item{partitionLabel}{string, The partition label used to run this object.}
 #' \item{gitRepoId}{integer, The ID of the git repository.}
 #' \item{gitRepoUrl}{string, The url of the git repository}
 #' \item{gitRef}{string, The git reference if git repo is specified}
 #' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' @export
@@ -14988,70 +14392,6 @@ notebooks_delete_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-notebooks_list_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/notebooks/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-notebooks_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/notebooks/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Update the archive status of this object
 #' @param id integer required. The ID of the object.
 #' @param status boolean required. The desired archived status of the object.
@@ -15091,25 +14431,22 @@ notebooks_put_transfer <- function(id, user_id, include_dependencies, email_body
 #' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 #' \item displayUrl string, A signed URL for viewing the deployed item.
 #' \item instanceType string, The EC2 instance type requested for the deployment.
-#' \item memory integer, The memory allocated to the deployment, in MB.
-#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
 #' \item state string, The state of the deployment.
 #' \item stateMessage string, A detailed description of the state.
-#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
-#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 #' \item createdAt string, 
 #' \item updatedAt string, 
+#' \item published boolean, 
 #' \item notebookId integer, The ID of owning Notebook
 #' }}
 #' \item{credentials}{array, A list of credential IDs to pass to the notebook.}
 #' \item{environmentVariables}{list, Environment variables to be passed into the Notebook.}
 #' \item{idleTimeout}{integer, How long the notebook will stay alive without any kernel activity.}
-#' \item{partitionLabel}{string, The partition label used to run this object.}
 #' \item{gitRepoId}{integer, The ID of the git repository.}
 #' \item{gitRepoUrl}{string, The url of the git repository}
 #' \item{gitRef}{string, The git reference if git repo is specified}
 #' \item{gitPath}{string, The path to the .ipynb file in the git repo that will be started up on notebook launch}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' @export
@@ -15238,14 +14575,13 @@ notebooks_delete_projects <- function(id, project_id) {
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{instanceType}{string, The EC2 instance type requested for the deployment.}
-#' \item{memory}{integer, The memory allocated to the deployment, in MB.}
-#' \item{cpu}{integer, The cpu allocated to the deployment, in millicores.}
+#' \item{memory}{integer, The memory allocated to the deployment.}
+#' \item{cpu}{integer, The cpu allocated to the deployment.}
 #' \item{state}{string, The state of the deployment.}
 #' \item{stateMessage}{string, A detailed description of the state.}
-#' \item{maxMemoryUsage}{number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.}
-#' \item{maxCpuUsage}{number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
+#' \item{published}{boolean, }
 #' \item{notebookId}{integer, The ID of owning Notebook}
 #' @export
 notebooks_list_deployments <- function(notebook_id, deployment_id = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
@@ -15268,6 +14604,7 @@ notebooks_list_deployments <- function(notebook_id, deployment_id = NULL, limit 
 #' Deploy a Notebook
 #' @param notebook_id integer required. The ID of the owning Notebook
 #' @param deployment_id integer optional. The ID for this deployment
+#' @param published boolean optional. 
 #' 
 #' @return  A list containing the following elements:
 #' \item{deploymentId}{integer, The ID for this deployment.}
@@ -15278,23 +14615,22 @@ notebooks_list_deployments <- function(notebook_id, deployment_id = NULL, limit 
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{displayUrl}{string, A signed URL for viewing the deployed item.}
 #' \item{instanceType}{string, The EC2 instance type requested for the deployment.}
-#' \item{memory}{integer, The memory allocated to the deployment, in MB.}
-#' \item{cpu}{integer, The cpu allocated to the deployment, in millicores.}
+#' \item{memory}{integer, The memory allocated to the deployment.}
+#' \item{cpu}{integer, The cpu allocated to the deployment.}
 #' \item{state}{string, The state of the deployment.}
 #' \item{stateMessage}{string, A detailed description of the state.}
-#' \item{maxMemoryUsage}{number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.}
-#' \item{maxCpuUsage}{number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
+#' \item{published}{boolean, }
 #' \item{notebookId}{integer, The ID of owning Notebook}
 #' @export
-notebooks_post_deployments <- function(notebook_id, deployment_id = NULL) {
+notebooks_post_deployments <- function(notebook_id, deployment_id = NULL, published = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/notebooks/{notebook_id}/deployments"
   path_params  <- list(notebook_id = notebook_id)
   query_params <- list()
-  body_params  <- list(deploymentId = deployment_id)
+  body_params  <- list(deploymentId = deployment_id, published = published)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -15318,14 +14654,13 @@ notebooks_post_deployments <- function(notebook_id, deployment_id = NULL) {
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{displayUrl}{string, A signed URL for viewing the deployed item.}
 #' \item{instanceType}{string, The EC2 instance type requested for the deployment.}
-#' \item{memory}{integer, The memory allocated to the deployment, in MB.}
-#' \item{cpu}{integer, The cpu allocated to the deployment, in millicores.}
+#' \item{memory}{integer, The memory allocated to the deployment.}
+#' \item{cpu}{integer, The cpu allocated to the deployment.}
 #' \item{state}{string, The state of the deployment.}
 #' \item{stateMessage}{string, A detailed description of the state.}
-#' \item{maxMemoryUsage}{number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.}
-#' \item{maxCpuUsage}{number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
+#' \item{published}{boolean, }
 #' \item{notebookId}{integer, The ID of owning Notebook}
 #' @export
 notebooks_get_deployments <- function(notebook_id, deployment_id) {
@@ -15402,7 +14737,7 @@ notebooks_list_deployments_logs <- function(id, deployment_id, start_at = NULL, 
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
 #' \item{gitRepo}{list, A list containing the following elements: 
@@ -15412,8 +14747,7 @@ notebooks_list_deployments_logs <- function(id, deployment_id, start_at = NULL, 
 #' \item createdAt string, 
 #' \item updatedAt string, 
 #' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 #' @export
 notebooks_list_git <- function(id) {
 
@@ -15438,11 +14772,10 @@ notebooks_list_git <- function(id) {
 #' @param git_branch string optional. The git branch that the file is on.
 #' @param git_path string optional. The path of the file in the repository.
 #' @param git_repo_url string optional. The URL of the git repository.
-#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
 #' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
 #' 
 #' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
 #' \item{gitRepo}{list, A list containing the following elements: 
@@ -15452,16 +14785,15 @@ notebooks_list_git <- function(id) {
 #' \item createdAt string, 
 #' \item updatedAt string, 
 #' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 #' @export
-notebooks_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
+notebooks_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, pull_from_git = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/notebooks/{id}/git"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
+  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, pullFromGit = pull_from_git)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -15472,47 +14804,7 @@ notebooks_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = 
  }
 
 
-#' Update an attached git file
-#' @param id integer required. The ID of the file.
-#' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
-#' @param git_branch string optional. The git branch that the file is on.
-#' @param git_path string optional. The path of the file in the repository.
-#' @param git_repo_url string optional. The URL of the git repository.
-#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
-#' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
-#' 
-#' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
-#' \item{gitBranch}{string, The git branch that the file is on.}
-#' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID for this git repository.
-#' \item repoUrl string, The URL for this git repository.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
-#' @export
-notebooks_patch_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/notebooks/{id}/git"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get the git commits for an item on the current branch
+#' Get the git commits for an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -15567,7 +14859,7 @@ notebooks_post_git_commits <- function(id, content, message, file_hash) {
  }
 
 
-#' Get file contents at git ref
+#' Get file contents at commit_hash
 #' @param id integer required. The ID of the file.
 #' @param commit_hash string required. The SHA (full or shortened) of the desired git commit.
 #' 
@@ -15588,58 +14880,6 @@ notebooks_get_git_commits <- function(id, commit_hash) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Checkout latest commit on the current branch of a script or workflow
-#' @param id integer required. The ID of the file.
-#' 
-#' @return  A list containing the following elements:
-#' \item{content}{string, The file's contents.}
-#' \item{type}{string, The file's type.}
-#' \item{size}{integer, The file's size.}
-#' \item{fileHash}{string, The SHA of the file.}
-#' @export
-notebooks_post_git_checkout_latest <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/notebooks/{id}/git/checkout-latest"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Checkout content that the existing git_ref points to and save to the object
-#' @param id integer required. The ID of the file.
-#' 
-#' @return  A list containing the following elements:
-#' \item{content}{string, The file's contents.}
-#' \item{type}{string, The file's type.}
-#' \item{size}{integer, The file's size.}
-#' \item{fileHash}{string, The SHA of the file.}
-#' @export
-notebooks_post_git_checkout <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/notebooks/{id}/git/checkout"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15690,811 +14930,6 @@ ontology_list <- function(subset = NULL) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List Permission Sets
-#' @param archived string optional. The archival status of the requested item(s).
-#' @param author string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.
-#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to updated_at. Must be one of: updated_at, name, created_at.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The ID for this permission set.}
-#' \item{name}{string, The name of this permission set.}
-#' \item{description}{string, A description of this permission set.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' \item{archived}{string, The archival status of the requested item(s).}
-#' @export
-permission_sets_list <- function(archived = NULL, author = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/"
-  path_params  <- list()
-  query_params <- list(archived = archived, author = author, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Create a Permission Set
-#' @param name string required. The name of this permission set.
-#' @param description string optional. A description of this permission set.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for this permission set.}
-#' \item{name}{string, The name of this permission set.}
-#' \item{description}{string, A description of this permission set.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' \item{archived}{string, The archival status of the requested item(s).}
-#' @export
-permission_sets_post <- function(name, description = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/"
-  path_params  <- list()
-  query_params <- list()
-  body_params  <- list(name = name, description = description)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get a Permission Set
-#' @param id integer required. 
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for this permission set.}
-#' \item{name}{string, The name of this permission set.}
-#' \item{description}{string, A description of this permission set.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' \item{archived}{string, The archival status of the requested item(s).}
-#' @export
-permission_sets_get <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Replace all attributes of this Permission Set
-#' @param id integer required. The ID for this permission set.
-#' @param name string required. The name of this permission set.
-#' @param description string optional. A description of this permission set.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for this permission set.}
-#' \item{name}{string, The name of this permission set.}
-#' \item{description}{string, A description of this permission set.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' \item{archived}{string, The archival status of the requested item(s).}
-#' @export
-permission_sets_put <- function(id, name, description = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(name = name, description = description)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Update some attributes of this Permission Set
-#' @param id integer required. The ID for this permission set.
-#' @param name string optional. The name of this permission set.
-#' @param description string optional. A description of this permission set.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for this permission set.}
-#' \item{name}{string, The name of this permission set.}
-#' \item{description}{string, A description of this permission set.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' \item{archived}{string, The archival status of the requested item(s).}
-#' @export
-permission_sets_patch <- function(id, name = NULL, description = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(name = name, description = description)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List users and groups permissioned on this object
-#' @param id integer required. The ID of the resource that is shared.
-#' 
-#' @return  An array containing the following fields:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-permission_sets_list_shares <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/shares"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Set the permissions users have on this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_ids array required. An array of one or more user IDs.
-#' @param permission_level string required. Options are: "read", "write", or "manage".
-#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
-#' @param send_shared_email boolean optional. Send email to the recipients of a share.
-#' 
-#' @return  A list containing the following elements:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-permission_sets_put_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/shares/users"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Revoke the permissions a user has on this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. The ID of the user.
-#' 
-#' @return  An empty HTTP response
-#' @export
-permission_sets_delete_shares_users <- function(id, user_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/shares/users/{user_id}"
-  path_params  <- list(id = id, user_id = user_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Set the permissions groups has on this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param group_ids array required. An array of one or more group IDs.
-#' @param permission_level string required. Options are: "read", "write", or "manage".
-#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
-#' @param send_shared_email boolean optional. Send email to the recipients of a share.
-#' 
-#' @return  A list containing the following elements:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-permission_sets_put_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/shares/groups"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Revoke the permissions a group has on this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param group_id integer required. The ID of the group.
-#' 
-#' @return  An empty HTTP response
-#' @export
-permission_sets_delete_shares_groups <- function(id, group_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/shares/groups/{group_id}"
-  path_params  <- list(id = id, group_id = group_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-permission_sets_list_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-permission_sets_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Update the archive status of this object
-#' @param id integer required. The ID of the object.
-#' @param status boolean required. The desired archived status of the object.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for this permission set.}
-#' \item{name}{string, The name of this permission set.}
-#' \item{description}{string, A description of this permission set.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' \item{archived}{string, The archival status of the requested item(s).}
-#' @export
-permission_sets_put_archive <- function(id, status) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/archive"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(status = status)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get all permissions for a user, in this permission set
-#' @param id integer required. The ID for this permission set.
-#' @param user_id integer required. The ID for the user.
-#' 
-#' @return  An array containing the following fields:
-#' \item{resourceName}{string, The name of the resource.}
-#' \item{read}{boolean, If true, the user has read permission on this resource.}
-#' \item{write}{boolean, If true, the user has write permission on this resource.}
-#' \item{manage}{boolean, If true, the user has manage permission on this resource.}
-#' @export
-permission_sets_list_users_permissions <- function(id, user_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/users/{user_id}/permissions"
-  path_params  <- list(id = id, user_id = user_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List resources in a permission set
-#' @param id integer required. The ID for this permission set.
-#' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to name. Must be one of: name, id, updated_at, created_at.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to asc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{permissionSetId}{integer, The ID for the permission set this resource belongs to.}
-#' \item{name}{string, The name of this resource.}
-#' \item{description}{string, A description of this resource.}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' @export
-permission_sets_list_resources <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/resources"
-  path_params  <- list(id = id)
-  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Create a resource in a permission set
-#' @param id integer required. The ID for this permission set.
-#' @param name string required. The name of this resource.
-#' @param description string optional. A description of this resource.
-#' 
-#' @return  A list containing the following elements:
-#' \item{permissionSetId}{integer, The ID for the permission set this resource belongs to.}
-#' \item{name}{string, The name of this resource.}
-#' \item{description}{string, A description of this resource.}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' @export
-permission_sets_post_resources <- function(id, name, description = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/resources"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(name = name, description = description)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get a resource in a permission set
-#' @param id integer required. The ID for this permission set.
-#' @param name string required. The name of this resource.
-#' 
-#' @return  A list containing the following elements:
-#' \item{permissionSetId}{integer, The ID for the permission set this resource belongs to.}
-#' \item{name}{string, The name of this resource.}
-#' \item{description}{string, A description of this resource.}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' @export
-permission_sets_get_resources <- function(id, name) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/resources/{name}"
-  path_params  <- list(id = id, name = name)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Update a resource in a permission set
-#' @param id integer required. The ID for this permission set.
-#' @param name string required. The name of this resource.
-#' @param description string optional. A description of this resource.
-#' 
-#' @return  A list containing the following elements:
-#' \item{permissionSetId}{integer, The ID for the permission set this resource belongs to.}
-#' \item{name}{string, The name of this resource.}
-#' \item{description}{string, A description of this resource.}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' @export
-permission_sets_patch_resources <- function(id, name, description = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/resources/{name}"
-  path_params  <- list(id = id, name = name)
-  query_params <- list()
-  body_params  <- list(description = description)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Delete a resource in a permission set
-#' @param id integer required. The ID for this permission set.
-#' @param name string required. The name of this resource.
-#' 
-#' @return  An empty HTTP response
-#' @export
-permission_sets_delete_resources <- function(id, name) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/resources/{name}"
-  path_params  <- list(id = id, name = name)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List users and groups permissioned on this object
-#' @param id integer required. The ID for this permission set.
-#' @param name string required. The name of this resource.
-#' 
-#' @return  An array containing the following fields:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-permission_sets_list_resources_shares <- function(id, name) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/resources/{name}/shares"
-  path_params  <- list(id = id, name = name)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Set the permissions users have on this object
-#' @param id integer required. The ID for this permission set.
-#' @param name string required. The name of this resource.
-#' @param user_ids array required. An array of one or more user IDs.
-#' @param permission_level string required. Options are: "read", "write", or "manage".
-#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
-#' @param send_shared_email boolean optional. Send email to the recipients of a share.
-#' 
-#' @return  A list containing the following elements:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-permission_sets_put_resources_shares_users <- function(id, name, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/resources/{name}/shares/users"
-  path_params  <- list(id = id, name = name)
-  query_params <- list()
-  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Revoke the permissions a user has on this object
-#' @param id integer required. The ID for this permission set.
-#' @param name string required. The name of this resource.
-#' @param user_id integer required. The ID of the user.
-#' 
-#' @return  An empty HTTP response
-#' @export
-permission_sets_delete_resources_shares_users <- function(id, name, user_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/resources/{name}/shares/users/{user_id}"
-  path_params  <- list(id = id, name = name, user_id = user_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Set the permissions groups has on this object
-#' @param id integer required. The ID for this permission set.
-#' @param name string required. The name of this resource.
-#' @param group_ids array required. An array of one or more group IDs.
-#' @param permission_level string required. Options are: "read", "write", or "manage".
-#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
-#' @param send_shared_email boolean optional. Send email to the recipients of a share.
-#' 
-#' @return  A list containing the following elements:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-permission_sets_put_resources_shares_groups <- function(id, name, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/resources/{name}/shares/groups"
-  path_params  <- list(id = id, name = name)
-  query_params <- list()
-  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Revoke the permissions a group has on this object
-#' @param id integer required. The ID for this permission set.
-#' @param name string required. The name of this resource.
-#' @param group_id integer required. The ID of the group.
-#' 
-#' @return  An empty HTTP response
-#' @export
-permission_sets_delete_resources_shares_groups <- function(id, name, group_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/permission_sets/{id}/resources/{name}/shares/groups/{group_id}"
-  path_params  <- list(id = id, name = name, group_id = group_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16574,11 +15009,10 @@ predictions_list <- function(model_id = NULL) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{limitingSQL}{string, A SQL WHERE clause used to scope the rows to be predicted.}
 #' \item{primaryKey}{array, The primary key or composite keys of the table being predicted.}
@@ -16608,11 +15042,10 @@ predictions_get <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{scoreOnModelBuild}{boolean, Whether the prediction will run after a rebuild of the associated model.}
 #' @export
@@ -16634,9 +15067,8 @@ predictions_list_schedules <- function(id) {
 
 
 #' List projects
+#' @param author string optional. If specified, return projects owned by this author. It accepts a comma-separated list of author ids.
 #' @param permission string optional. A permissions string, one of "read", "write", or "manage". Lists only projects for which the current user has that permission.
-#' @param auto_share boolean optional. Used to filter projects based on whether the project is autoshare enabled or not.
-#' @param author string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' @param archived string optional. The archival status of the requested item(s).
 #' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 1000.
@@ -16669,12 +15101,12 @@ predictions_list_schedules <- function(id) {
 #' \item{updatedAt}{string, }
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
-projects_list <- function(permission = NULL, auto_share = NULL, author = NULL, hidden = NULL, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+projects_list <- function(author = NULL, permission = NULL, hidden = NULL, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/projects/"
   path_params  <- list()
-  query_params <- list(permission = permission, auto_share = auto_share, author = author, hidden = hidden, archived = archived, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(author = author, permission = permission, hidden = hidden, archived = archived, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -16690,7 +15122,6 @@ projects_list <- function(permission = NULL, auto_share = NULL, author = NULL, h
 #' @param name string required. The name of this project.
 #' @param description string required. A description of the project.
 #' @param note string optional. Notes for the project.
-#' @param auto_share boolean optional. If true, objects within the project will be automatically shared when the project is shared or objects are added.
 #' @param hidden boolean optional. The hidden status of the item.
 #' 
 #' @return  A list containing the following elements:
@@ -16831,6 +15262,14 @@ projects_list <- function(permission = NULL, auto_share = NULL, author = NULL, h
 #' \item name string, 
 #' \item lastRun object, 
 #' }}
+#' \item{appInstances}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item slug string, 
+#' }}
 #' \item{projects}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The item's ID.
@@ -16850,13 +15289,10 @@ projects_list <- function(permission = NULL, auto_share = NULL, author = NULL, h
 #' \item icon string, 
 #' \item author string, 
 #' \item updatedAt string, 
-#' \item autoShare boolean, 
 #' \item archived string, The archival status of the requested item(s).
 #' \item hidden boolean, The hidden status of the item.
-#' \item myPermissionLevel string, Your permission level on the object. One of "read", "write", or "manage".
 #' }}
 #' \item{note}{string, }
-#' \item{canCurrentUserEnableAutoShare}{boolean, A flag for if the current user can enable auto-sharing mode for this project.}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{parentProject}{list, A list containing the following elements: 
@@ -16864,210 +15300,14 @@ projects_list <- function(permission = NULL, auto_share = NULL, author = NULL, h
 #' \item id integer, The parent project's ID.
 #' \item name integer, The parent project's name.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
-projects_post <- function(name, description, note = NULL, auto_share = NULL, hidden = NULL) {
+projects_post <- function(name, description, note = NULL, hidden = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/projects/"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, description = description, note = note, autoShare = auto_share, hidden = hidden)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Clone this 
-#' @param id integer required. The ID for this project.
-#' @param clone_schedule boolean optional. If true, also copy the schedule for all applicable project objects.
-#' @param clone_notifications boolean optional. If true, also copy the notifications for all applicable project objects.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for this project.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{name}{string, The name of this project.}
-#' \item{description}{string, A description of the project.}
-#' \item{users}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{autoShare}{boolean, }
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' \item{tables}{array, An array containing the following fields: 
-#' \itemize{
-#' \item schema string, 
-#' \item name string, 
-#' \item rowCount integer, 
-#' \item columnCount integer, 
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' }}
-#' \item{surveys}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' }}
-#' \item{scripts}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item type string, 
-#' \item finishedAt string, 
-#' \item state string, 
-#' \item lastRun object, 
-#' }}
-#' \item{imports}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item type string, 
-#' \item finishedAt string, 
-#' \item state string, 
-#' \item lastRun object, 
-#' }}
-#' \item{exports}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item type string, 
-#' \item finishedAt string, 
-#' \item state string, 
-#' \item lastRun object, 
-#' }}
-#' \item{models}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item state string, 
-#' }}
-#' \item{notebooks}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item currentDeploymentId integer, 
-#' \item lastDeploy object, 
-#' }}
-#' \item{services}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item currentDeploymentId integer, 
-#' \item lastDeploy object, 
-#' }}
-#' \item{workflows}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item state string, 
-#' \item lastExecution object, 
-#' }}
-#' \item{reports}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item state string, 
-#' }}
-#' \item{scriptTemplates}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' }}
-#' \item{files}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item fileName string, 
-#' \item fileSize integer, 
-#' \item expired boolean, 
-#' }}
-#' \item{enhancements}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item lastRun object, 
-#' }}
-#' \item{projects}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item description string, 
-#' }}
-#' \item{allObjects}{array, An array containing the following fields: 
-#' \itemize{
-#' \item projectId integer, 
-#' \item objectId integer, 
-#' \item objectType string, 
-#' \item fcoType string, 
-#' \item subType string, 
-#' \item name string, 
-#' \item icon string, 
-#' \item author string, 
-#' \item updatedAt string, 
-#' \item autoShare boolean, 
-#' \item archived string, The archival status of the requested item(s).
-#' \item hidden boolean, The hidden status of the item.
-#' \item myPermissionLevel string, Your permission level on the object. One of "read", "write", or "manage".
-#' }}
-#' \item{note}{string, }
-#' \item{canCurrentUserEnableAutoShare}{boolean, A flag for if the current user can enable auto-sharing mode for this project.}
-#' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{archived}{string, The archival status of the requested item(s).}
-#' \item{parentProject}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The parent project's ID.
-#' \item name integer, The parent project's name.
-#' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' @export
-projects_post_clone <- function(id, clone_schedule = NULL, clone_notifications = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/projects/{id}/clone"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(cloneSchedule = clone_schedule, cloneNotifications = clone_notifications)
+  body_params  <- list(name = name, description = description, note = note, hidden = hidden)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -17219,6 +15459,14 @@ projects_post_clone <- function(id, clone_schedule = NULL, clone_notifications =
 #' \item name string, 
 #' \item lastRun object, 
 #' }}
+#' \item{appInstances}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item slug string, 
+#' }}
 #' \item{projects}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The item's ID.
@@ -17238,13 +15486,10 @@ projects_post_clone <- function(id, clone_schedule = NULL, clone_notifications =
 #' \item icon string, 
 #' \item author string, 
 #' \item updatedAt string, 
-#' \item autoShare boolean, 
 #' \item archived string, The archival status of the requested item(s).
 #' \item hidden boolean, The hidden status of the item.
-#' \item myPermissionLevel string, Your permission level on the object. One of "read", "write", or "manage".
 #' }}
 #' \item{note}{string, }
-#' \item{canCurrentUserEnableAutoShare}{boolean, A flag for if the current user can enable auto-sharing mode for this project.}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{parentProject}{list, A list containing the following elements: 
@@ -17252,7 +15497,6 @@ projects_post_clone <- function(id, clone_schedule = NULL, clone_notifications =
 #' \item id integer, The parent project's ID.
 #' \item name integer, The parent project's name.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 projects_get <- function(project_id) {
 
@@ -17276,6 +15520,7 @@ projects_get <- function(project_id) {
 #' @param name string optional. The name of this project.
 #' @param description string optional. A description of the project.
 #' @param note string optional. Notes for the project.
+#' @param auto_share boolean optional. A toggle for sharing the objects within the project when the project is shared.This does not automatically share new objects to the project.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this project.}
@@ -17415,6 +15660,14 @@ projects_get <- function(project_id) {
 #' \item name string, 
 #' \item lastRun object, 
 #' }}
+#' \item{appInstances}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item slug string, 
+#' }}
 #' \item{projects}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The item's ID.
@@ -17434,13 +15687,10 @@ projects_get <- function(project_id) {
 #' \item icon string, 
 #' \item author string, 
 #' \item updatedAt string, 
-#' \item autoShare boolean, 
 #' \item archived string, The archival status of the requested item(s).
 #' \item hidden boolean, The hidden status of the item.
-#' \item myPermissionLevel string, Your permission level on the object. One of "read", "write", or "manage".
 #' }}
 #' \item{note}{string, }
-#' \item{canCurrentUserEnableAutoShare}{boolean, A flag for if the current user can enable auto-sharing mode for this project.}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{parentProject}{list, A list containing the following elements: 
@@ -17448,15 +15698,14 @@ projects_get <- function(project_id) {
 #' \item id integer, The parent project's ID.
 #' \item name integer, The parent project's name.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
-projects_put <- function(project_id, name = NULL, description = NULL, note = NULL) {
+projects_put <- function(project_id, name = NULL, description = NULL, note = NULL, auto_share = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/projects/{project_id}"
   path_params  <- list(project_id = project_id)
   query_params <- list()
-  body_params  <- list(name = name, description = description, note = note)
+  body_params  <- list(name = name, description = description, note = note, autoShare = auto_share)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -17483,200 +15732,6 @@ projects_delete <- function(project_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Enable or disable Auto-Share on a project
-#' @param project_id integer required. 
-#' @param auto_share boolean required. A toggle for sharing the objects within the project when the project is shared or objects are added.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID for this project.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{name}{string, The name of this project.}
-#' \item{description}{string, A description of the project.}
-#' \item{users}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{autoShare}{boolean, }
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' \item{tables}{array, An array containing the following fields: 
-#' \itemize{
-#' \item schema string, 
-#' \item name string, 
-#' \item rowCount integer, 
-#' \item columnCount integer, 
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' }}
-#' \item{surveys}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' }}
-#' \item{scripts}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item type string, 
-#' \item finishedAt string, 
-#' \item state string, 
-#' \item lastRun object, 
-#' }}
-#' \item{imports}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item type string, 
-#' \item finishedAt string, 
-#' \item state string, 
-#' \item lastRun object, 
-#' }}
-#' \item{exports}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item type string, 
-#' \item finishedAt string, 
-#' \item state string, 
-#' \item lastRun object, 
-#' }}
-#' \item{models}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item state string, 
-#' }}
-#' \item{notebooks}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item currentDeploymentId integer, 
-#' \item lastDeploy object, 
-#' }}
-#' \item{services}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item currentDeploymentId integer, 
-#' \item lastDeploy object, 
-#' }}
-#' \item{workflows}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item state string, 
-#' \item lastExecution object, 
-#' }}
-#' \item{reports}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item state string, 
-#' }}
-#' \item{scriptTemplates}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' }}
-#' \item{files}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item fileName string, 
-#' \item fileSize integer, 
-#' \item expired boolean, 
-#' }}
-#' \item{enhancements}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item lastRun object, 
-#' }}
-#' \item{projects}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The item's ID.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' \item name string, 
-#' \item description string, 
-#' }}
-#' \item{allObjects}{array, An array containing the following fields: 
-#' \itemize{
-#' \item projectId integer, 
-#' \item objectId integer, 
-#' \item objectType string, 
-#' \item fcoType string, 
-#' \item subType string, 
-#' \item name string, 
-#' \item icon string, 
-#' \item author string, 
-#' \item updatedAt string, 
-#' \item autoShare boolean, 
-#' \item archived string, The archival status of the requested item(s).
-#' \item hidden boolean, The hidden status of the item.
-#' \item myPermissionLevel string, Your permission level on the object. One of "read", "write", or "manage".
-#' }}
-#' \item{note}{string, }
-#' \item{canCurrentUserEnableAutoShare}{boolean, A flag for if the current user can enable auto-sharing mode for this project.}
-#' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{archived}{string, The archival status of the requested item(s).}
-#' \item{parentProject}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The parent project's ID.
-#' \item name integer, The parent project's name.
-#' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' @export
-projects_put_auto_share <- function(project_id, auto_share) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/projects/{project_id}/auto_share"
-  path_params  <- list(project_id = project_id)
-  query_params <- list()
-  body_params  <- list(autoShare = auto_share)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17854,70 +15909,6 @@ projects_delete_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-projects_list_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/projects/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-projects_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/projects/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Update the archive status of this object
 #' @param id integer required. The ID of the object.
 #' @param status boolean required. The desired archived status of the object.
@@ -18060,6 +16051,14 @@ projects_put_transfer <- function(id, user_id, include_dependencies, email_body 
 #' \item name string, 
 #' \item lastRun object, 
 #' }}
+#' \item{appInstances}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item slug string, 
+#' }}
 #' \item{projects}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The item's ID.
@@ -18079,13 +16078,10 @@ projects_put_transfer <- function(id, user_id, include_dependencies, email_body 
 #' \item icon string, 
 #' \item author string, 
 #' \item updatedAt string, 
-#' \item autoShare boolean, 
 #' \item archived string, The archival status of the requested item(s).
 #' \item hidden boolean, The hidden status of the item.
-#' \item myPermissionLevel string, Your permission level on the object. One of "read", "write", or "manage".
 #' }}
 #' \item{note}{string, }
-#' \item{canCurrentUserEnableAutoShare}{boolean, A flag for if the current user can enable auto-sharing mode for this project.}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{parentProject}{list, A list containing the following elements: 
@@ -18093,7 +16089,6 @@ projects_put_transfer <- function(id, user_id, include_dependencies, email_body 
 #' \item id integer, The parent project's ID.
 #' \item name integer, The parent project's name.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 projects_put_archive <- function(id, status) {
 
@@ -18204,22 +16199,15 @@ projects_delete_parent_projects <- function(id, parent_project_id) {
  }
 
 
-#' List queries
-#' @param query string optional. Space delimited query for searching queries by their SQL. Supports wild card characters "?" for any single character, and "*" for zero or more characters.
+#' List 
 #' @param database_id integer optional. The database ID.
-#' @param credential_id integer optional. The credential ID.
 #' @param author_id integer optional. The author of the query.
 #' @param created_before string optional. An upper bound for the creation date of the query.
-#' @param created_after string optional. A lower bound for the creation date of the query.
-#' @param started_before string optional. An upper bound for the start date of the last run.
-#' @param started_after string optional. A lower bound for the start date of the last run.
-#' @param state array optional. The state of the last run. One or more of queued, running, succeeded, failed, and cancelled. Specify multiple values as a comma-separated list (e.g., "A,B").
 #' @param exclude_results boolean optional. If true, does not return cached query results.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
-#' @param archived string optional. The archival status of the requested item(s).
 #' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at, started_at.
+#' @param order string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at.
 #' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
 #' 
 #' @return  An array containing the following fields:
@@ -18234,20 +16222,19 @@ projects_delete_parent_projects <- function(id, parent_project_id) {
 #' \item{error}{string, The error message for this run, if present.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{startedAt}{string, The start time of the last run.}
 #' \item{finishedAt}{string, The end time of the last run.}
-#' \item{state}{string, The state of the last run. One of queued, running, succeeded, failed, and cancelled.}
+#' \item{state}{string, The state of the last run.}
 #' \item{lastRunId}{integer, The ID of the last run.}
-#' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{previewRows}{integer, The number of rows to save from the query's result (maximum: 100).}
+#' \item{startedAt}{string, The start time of the last run.}
 #' \item{reportId}{integer, The ID of the report associated with this query.}
 #' @export
-queries_list <- function(query = NULL, database_id = NULL, credential_id = NULL, author_id = NULL, created_before = NULL, created_after = NULL, started_before = NULL, started_after = NULL, state = NULL, exclude_results = NULL, hidden = NULL, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+queries_list <- function(database_id = NULL, author_id = NULL, created_before = NULL, exclude_results = NULL, hidden = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/queries/"
   path_params  <- list()
-  query_params <- list(query = query, database_id = database_id, credential_id = credential_id, author_id = author_id, created_before = created_before, created_after = created_after, started_before = started_before, started_after = started_after, state = state, exclude_results = exclude_results, hidden = hidden, archived = archived, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(database_id = database_id, author_id = author_id, created_before = created_before, exclude_results = exclude_results, hidden = hidden, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -18284,13 +16271,10 @@ queries_list <- function(query = NULL, database_id = NULL, credential_id = NULL,
 #' \item{error}{string, The error message for this run, if present.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{startedAt}{string, The start time of the last run.}
 #' \item{finishedAt}{string, The end time of the last run.}
-#' \item{state}{string, The state of the last run. One of queued, running, succeeded, failed, and cancelled.}
+#' \item{state}{string, The state of the last run.}
 #' \item{lastRunId}{integer, The ID of the last run.}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{archived}{string, The archival status of the requested item(s).}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{interactive}{boolean, Deprecated and not used.}
 #' \item{previewRows}{integer, The number of rows to save from the query's result (maximum: 100).}
 #' \item{includeHeader}{boolean, Whether the CSV output should include a header row [default: true].}
@@ -18298,6 +16282,7 @@ queries_list <- function(query = NULL, database_id = NULL, credential_id = NULL,
 #' \item{columnDelimiter}{string, The delimiter to use. One of comma or tab, or pipe [default: comma].}
 #' \item{unquoted}{boolean, If true, will not quote fields.}
 #' \item{filenamePrefix}{string, The output filename prefix.}
+#' \item{startedAt}{string, The start time of the last run.}
 #' \item{reportId}{integer, The ID of the report associated with this query.}
 #' @export
 queries_post <- function(database, sql, preview_rows, credential = NULL, hidden = NULL, interactive = NULL, include_header = NULL, compression = NULL, column_delimiter = NULL, unquoted = NULL, filename_prefix = NULL) {
@@ -18325,9 +16310,8 @@ queries_post <- function(database, sql, preview_rows, credential = NULL, hidden 
 #' \item{queryId}{integer, The ID of the query.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 queries_post_runs <- function(id) {
@@ -18359,9 +16343,8 @@ queries_post_runs <- function(id) {
 #' \item{queryId}{integer, The ID of the query.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 queries_list_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
@@ -18390,9 +16373,8 @@ queries_list_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, o
 #' \item{queryId}{integer, The ID of the query.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 queries_get_runs <- function(id, run_id) {
@@ -18480,12 +16462,10 @@ queries_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' \item{error}{string, The error message for this run, if present.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{startedAt}{string, The start time of the last run.}
 #' \item{finishedAt}{string, The end time of the last run.}
-#' \item{state}{string, The state of the last run. One of queued, running, succeeded, failed, and cancelled.}
+#' \item{state}{string, The state of the last run.}
 #' \item{lastRunId}{integer, The ID of the last run.}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{name}{string, The name of the query.}
 #' \item{author}{list, A list containing the following elements: 
 #' \itemize{
@@ -18495,6 +16475,7 @@ queries_list_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
+#' \item{startedAt}{string, The start time of the last run.}
 #' \item{reportId}{integer, The ID of the report associated with this query.}
 #' @export
 queries_put_scripts <- function(id, script_id) {
@@ -18529,12 +16510,10 @@ queries_put_scripts <- function(id, script_id) {
 #' \item{error}{string, The error message for this run, if present.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{startedAt}{string, The start time of the last run.}
 #' \item{finishedAt}{string, The end time of the last run.}
-#' \item{state}{string, The state of the last run. One of queued, running, succeeded, failed, and cancelled.}
+#' \item{state}{string, The state of the last run.}
 #' \item{lastRunId}{integer, The ID of the last run.}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{name}{string, The name of the query.}
 #' \item{author}{list, A list containing the following elements: 
 #' \itemize{
@@ -18544,6 +16523,7 @@ queries_put_scripts <- function(id, script_id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
+#' \item{startedAt}{string, The start time of the last run.}
 #' \item{reportId}{integer, The ID of the report associated with this query.}
 #' @export
 queries_get <- function(id) {
@@ -18563,63 +16543,14 @@ queries_get <- function(id) {
  }
 
 
-#' Sets Query Hidden to true
-#' @param id integer required. The query ID.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The query ID.}
-#' \item{database}{integer, The database ID.}
-#' \item{sql}{string, The SQL to execute.}
-#' \item{credential}{integer, The credential ID.}
-#' \item{resultRows}{array, A preview of rows returned by the query.}
-#' \item{resultColumns}{array, A preview of columns returned by the query.}
-#' \item{scriptId}{integer, The ID of the script associated with this query.}
-#' \item{exception}{string, Deprecated and not used.}
-#' \item{error}{string, The error message for this run, if present.}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' \item{startedAt}{string, The start time of the last run.}
-#' \item{finishedAt}{string, The end time of the last run.}
-#' \item{state}{string, The state of the last run. One of queued, running, succeeded, failed, and cancelled.}
-#' \item{lastRunId}{integer, The ID of the last run.}
-#' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{archived}{string, The archival status of the requested item(s).}
-#' \item{name}{string, The name of the query.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{reportId}{integer, The ID of the report associated with this query.}
-#' @export
-queries_delete <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/queries/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List Remote Hosts
-#' @param type string optional. The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce
+#' List the remote hosts
+#' @param type string optional. The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce
 #' 
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The ID of the remote host.}
-#' \item{name}{string, The human readable name for the remote host.}
-#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
-#' \item{url}{string, The URL for the remote host.}
+#' \item{name}{string, The name of the remote host.}
+#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
+#' \item{url}{string, The URL for remote host.}
 #' @export
 remote_hosts_list <- function(type = NULL) {
 
@@ -18638,28 +16569,16 @@ remote_hosts_list <- function(type = NULL) {
  }
 
 
-#' Create a Remote Host
+#' Create a new remote host
 #' @param name string required. The human readable name for the remote host.
-#' @param url string required. The URL for the remote host.
-#' @param type string required. The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce
+#' @param url string required. The URL to your host.
+#' @param type string required. The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of the remote host.}
-#' \item{name}{string, The human readable name for the remote host.}
-#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
-#' \item{url}{string, The URL for the remote host.}
-#' \item{description}{string, The description of the remote host.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{user}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
+#' \item{name}{string, The name of the remote host.}
+#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
+#' \item{url}{string, The URL for remote host.}
 #' @export
 remote_hosts_post <- function(name, url, type) {
 
@@ -18672,299 +16591,6 @@ remote_hosts_post <- function(name, url, type) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get a Remote Host
-#' @param id integer required. 
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the remote host.}
-#' \item{name}{string, The human readable name for the remote host.}
-#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
-#' \item{url}{string, The URL for the remote host.}
-#' \item{description}{string, The description of the remote host.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{user}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' @export
-remote_hosts_get <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/remote_hosts/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Replace all attributes of this Remote Host
-#' @param id integer required. The ID of the remote host.
-#' @param name string required. The human readable name for the remote host.
-#' @param type string required. The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce
-#' @param url string required. The URL for the remote host.
-#' @param description string required. The description of the remote host.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the remote host.}
-#' \item{name}{string, The human readable name for the remote host.}
-#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
-#' \item{url}{string, The URL for the remote host.}
-#' \item{description}{string, The description of the remote host.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{user}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' @export
-remote_hosts_put <- function(id, name, type, url, description) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/remote_hosts/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(name = name, type = type, url = url, description = description)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Update some attributes of this Remote Host
-#' @param id integer required. The ID of the remote host.
-#' @param name string optional. The human readable name for the remote host.
-#' @param type string optional. The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce
-#' @param url string optional. The URL for the remote host.
-#' @param description string optional. The description of the remote host.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the remote host.}
-#' \item{name}{string, The human readable name for the remote host.}
-#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
-#' \item{url}{string, The URL for the remote host.}
-#' \item{description}{string, The description of the remote host.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{user}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' @export
-remote_hosts_patch <- function(id, name = NULL, type = NULL, url = NULL, description = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/remote_hosts/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(name = name, type = type, url = url, description = description)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List users and groups permissioned on this object
-#' @param id integer required. The ID of the resource that is shared.
-#' 
-#' @return  An array containing the following fields:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-remote_hosts_list_shares <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/remote_hosts/{id}/shares"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Set the permissions users have on this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_ids array required. An array of one or more user IDs.
-#' @param permission_level string required. Options are: "read", "write", or "manage".
-#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
-#' @param send_shared_email boolean optional. Send email to the recipients of a share.
-#' 
-#' @return  A list containing the following elements:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-remote_hosts_put_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/remote_hosts/{id}/shares/users"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Revoke the permissions a user has on this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. The ID of the user.
-#' 
-#' @return  An empty HTTP response
-#' @export
-remote_hosts_delete_shares_users <- function(id, user_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/remote_hosts/{id}/shares/users/{user_id}"
-  path_params  <- list(id = id, user_id = user_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Set the permissions groups has on this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param group_ids array required. An array of one or more group IDs.
-#' @param permission_level string required. Options are: "read", "write", or "manage".
-#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
-#' @param send_shared_email boolean optional. Send email to the recipients of a share.
-#' 
-#' @return  A list containing the following elements:
-#' \item{readers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{writers}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{owners}{list, A list containing the following elements: 
-#' \itemize{
-#' \item users array, 
-#' \item groups array, 
-#' }}
-#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
-#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
-#' @export
-remote_hosts_put_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/remote_hosts/{id}/shares/groups"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Revoke the permissions a group has on this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param group_id integer required. The ID of the group.
-#' 
-#' @return  An empty HTTP response
-#' @export
-remote_hosts_delete_shares_groups <- function(id, group_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/remote_hosts/{id}/shares/groups/{group_id}"
-  path_params  <- list(id = id, group_id = group_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -19027,8 +16653,8 @@ remote_hosts_list_data_sets <- function(id, credential_id = NULL, username = NUL
 
 #' List Reports
 #' @param type string optional. If specified, return report of these types. It accepts a comma-separated list, possible values are 'tableau' or 'other'.
+#' @param author string optional. If specified, return reports from this author. It accepts a comma-separated list of author ids.
 #' @param template_id integer optional. If specified, return reports using the provided Template.
-#' @param author string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' @param archived string optional. The archival status of the requested item(s).
 #' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.
@@ -19079,12 +16705,12 @@ remote_hosts_list_data_sets <- function(id, credential_id = NULL, username = NUL
 #' }}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
-reports_list <- function(type = NULL, template_id = NULL, author = NULL, hidden = NULL, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+reports_list <- function(type = NULL, author = NULL, template_id = NULL, hidden = NULL, archived = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/reports/"
   path_params  <- list()
-  query_params <- list(type = type, template_id = template_id, author = author, hidden = hidden, archived = archived, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(type = type, author = author, template_id = template_id, hidden = hidden, archived = archived, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -19118,7 +16744,6 @@ reports_list <- function(type = NULL, template_id = NULL, author = NULL, hidden 
 #' }}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{projects}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID for the project.
@@ -19180,7 +16805,7 @@ reports_post <- function(script_id = NULL, name = NULL, code_body = NULL, app_st
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
 #' \item{gitRepo}{list, A list containing the following elements: 
@@ -19190,8 +16815,7 @@ reports_post <- function(script_id = NULL, name = NULL, code_body = NULL, app_st
 #' \item createdAt string, 
 #' \item updatedAt string, 
 #' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 #' @export
 reports_list_git <- function(id) {
 
@@ -19216,11 +16840,10 @@ reports_list_git <- function(id) {
 #' @param git_branch string optional. The git branch that the file is on.
 #' @param git_path string optional. The path of the file in the repository.
 #' @param git_repo_url string optional. The URL of the git repository.
-#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
 #' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
 #' 
 #' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
 #' \item{gitRepo}{list, A list containing the following elements: 
@@ -19230,16 +16853,15 @@ reports_list_git <- function(id) {
 #' \item createdAt string, 
 #' \item updatedAt string, 
 #' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 #' @export
-reports_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
+reports_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, pull_from_git = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/reports/{id}/git"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
+  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, pullFromGit = pull_from_git)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -19250,47 +16872,7 @@ reports_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NU
  }
 
 
-#' Update an attached git file
-#' @param id integer required. The ID of the file.
-#' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
-#' @param git_branch string optional. The git branch that the file is on.
-#' @param git_path string optional. The path of the file in the repository.
-#' @param git_repo_url string optional. The URL of the git repository.
-#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
-#' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
-#' 
-#' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
-#' \item{gitBranch}{string, The git branch that the file is on.}
-#' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID for this git repository.
-#' \item repoUrl string, The URL for this git repository.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
-#' @export
-reports_patch_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/reports/{id}/git"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get the git commits for an item on the current branch
+#' Get the git commits for an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -19345,7 +16927,7 @@ reports_post_git_commits <- function(id, content, message, file_hash) {
  }
 
 
-#' Get file contents at git ref
+#' Get file contents at commit_hash
 #' @param id integer required. The ID of the file.
 #' @param commit_hash string required. The SHA (full or shortened) of the desired git commit.
 #' 
@@ -19372,58 +16954,6 @@ reports_get_git_commits <- function(id, commit_hash) {
  }
 
 
-#' Checkout latest commit on the current branch of a script or workflow
-#' @param id integer required. The ID of the file.
-#' 
-#' @return  A list containing the following elements:
-#' \item{content}{string, The file's contents.}
-#' \item{type}{string, The file's type.}
-#' \item{size}{integer, The file's size.}
-#' \item{fileHash}{string, The SHA of the file.}
-#' @export
-reports_post_git_checkout_latest <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/reports/{id}/git/checkout-latest"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Checkout content that the existing git_ref points to and save to the object
-#' @param id integer required. The ID of the file.
-#' 
-#' @return  A list containing the following elements:
-#' \item{content}{string, The file's contents.}
-#' \item{type}{string, The file's type.}
-#' \item{size}{integer, The file's size.}
-#' \item{fileHash}{string, The SHA of the file.}
-#' @export
-reports_post_git_checkout <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/reports/{id}/git/checkout"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Show a single report
 #' @param id integer required. The ID of this report.
 #' 
@@ -19440,7 +16970,6 @@ reports_post_git_checkout <- function(id) {
 #' }}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{projects}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID for the project.
@@ -19522,7 +17051,6 @@ reports_get <- function(id) {
 #' }}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{projects}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID for the project.
@@ -19596,7 +17124,6 @@ reports_patch <- function(id, name = NULL, script_id = NULL, code_body = NULL, c
 #' }}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{projects}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID for the project.
@@ -19847,70 +17374,6 @@ reports_delete_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-reports_list_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/reports/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-reports_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/reports/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List the projects a Report belongs to
 #' @param id integer required. The ID of the Report.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -20020,7 +17483,6 @@ reports_delete_projects <- function(id, project_id) {
 #' }}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{projects}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID for the project.
@@ -20094,14 +17556,12 @@ reports_put_archive <- function(id, status) {
 #' }}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{host}{string, The host for the service report}
 #' \item{displayUrl}{string, The URL to display the service report.}
 #' \item{serviceId}{integer, The id of the backing service}
 #' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
 #' \item{apiKey}{string, A Civis API key that can be used by this report.}
 #' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
-#' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 reports_get_services <- function(id) {
 
@@ -20138,14 +17598,12 @@ reports_get_services <- function(id) {
 #' }}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{host}{string, The host for the service report}
 #' \item{displayUrl}{string, The URL to display the service report.}
 #' \item{serviceId}{integer, The id of the backing service}
 #' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
 #' \item{apiKey}{string, A Civis API key that can be used by this report.}
 #' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
-#' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 reports_patch_services <- function(id, name = NULL, provide_api_key = NULL) {
 
@@ -20181,14 +17639,12 @@ reports_patch_services <- function(id, name = NULL, provide_api_key = NULL) {
 #' }}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{host}{string, The host for the service report}
 #' \item{displayUrl}{string, The URL to display the service report.}
 #' \item{serviceId}{integer, The id of the backing service}
 #' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
 #' \item{apiKey}{string, A Civis API key that can be used by this report.}
 #' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
-#' \item{archived}{string, The archival status of the requested item(s).}
 #' @export
 reports_post_services <- function(service_id, provide_api_key = NULL) {
 
@@ -20378,70 +17834,6 @@ reports_delete_services_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-reports_list_services_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/reports/services/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-reports_put_services_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/reports/services/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List the projects a Service Report belongs to
 #' @param id integer required. The ID of the Service Report.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -20534,49 +17926,6 @@ reports_delete_services_projects <- function(id, project_id) {
  }
 
 
-#' Update the archive status of this object
-#' @param id integer required. The ID of the object.
-#' @param status boolean required. The desired archived status of the object.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of this report.}
-#' \item{name}{string, The name of the report.}
-#' \item{user}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{host}{string, The host for the service report}
-#' \item{displayUrl}{string, The URL to display the service report.}
-#' \item{serviceId}{integer, The id of the backing service}
-#' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
-#' \item{apiKey}{string, A Civis API key that can be used by this report.}
-#' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
-#' \item{archived}{string, The archival status of the requested item(s).}
-#' @export
-reports_put_services_archive <- function(id, status) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/reports/services/{id}/archive"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(status = status)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Refresh the data in this Tableau report
 #' @param id integer required. The ID of this report.
 #' 
@@ -20601,35 +17950,6 @@ reports_post_refresh <- function(id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List Roles
-#' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to asc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, ID of the Role.}
-#' \item{name}{string, The name of the Role.}
-#' \item{slug}{string, The slug.}
-#' \item{description}{string, The description of the Role.}
-#' @export
-roles_list <- function(limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/roles/"
-  path_params  <- list()
-  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -20945,11 +18265,10 @@ scripts_list_history <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -20983,7 +18302,6 @@ scripts_list_history <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -21009,7 +18327,7 @@ scripts_post <- function(name, remote_host_id, credential_id, sql, params = NULL
 #' List Scripts
 #' @param type string optional. If specified, return items of these types. The valid types are sql, python3, javascript, r, and containers.
 #' @param category string optional. A job category for filtering scripts. Must be one of script, import, export, and enhancement.
-#' @param author string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.
+#' @param author string optional. If specified, return items from this author. Must use user IDs. A comma separated list of IDs is also accepted to return items from multiple authors.
 #' @param status string optional. If specified, returns items with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' @param archived string optional. The archival status of the requested item(s).
@@ -21097,11 +18415,10 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -21117,7 +18434,6 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item failureOn boolean, If failure email notifications are on.
 #' }
 #' @param parent_id integer optional. The ID of the parent job that will trigger this script
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -21168,11 +18484,10 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -21206,7 +18521,6 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -21214,13 +18528,13 @@ scripts_list <- function(type = NULL, category = NULL, author = NULL, status = N
 #' \item{expandedArguments}{list, Expanded arguments for use in injecting into different environments.}
 #' \item{templateScriptId}{integer, The ID of the template script, if any.}
 #' @export
-scripts_patch <- function(id, name = NULL, sql = NULL, params = NULL, arguments = NULL, template_script_id = NULL, schedule = NULL, notifications = NULL, parent_id = NULL, running_as_id = NULL) {
+scripts_patch <- function(id, name = NULL, sql = NULL, params = NULL, arguments = NULL, template_script_id = NULL, schedule = NULL, notifications = NULL, parent_id = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, sql = sql, params = params, arguments = arguments, templateScriptId = template_script_id, schedule = schedule, notifications = notifications, parentId = parent_id, runningAsId = running_as_id)
+  body_params  <- list(name = name, sql = sql, params = params, arguments = arguments, templateScriptId = template_script_id, schedule = schedule, notifications = notifications, parentId = parent_id)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -21305,11 +18619,10 @@ scripts_delete <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -21343,7 +18656,6 @@ scripts_delete <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -21418,9 +18730,10 @@ scripts_post_cancel <- function(id) {
 #' Create a container
 #' @param required_resources list required. A list containing the following elements: 
 #' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares. Must be at least 2 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB). Must be at least 4 MB.
+#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
+#' \item memory integer, The amount of RAM to allocate for the container (in MB).
 #' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
+#' \item wholeInstance boolean, Whether or not to use the entire instance. If true, cpu, memory, and disk space are not required and will be set to an instance's max.
 #' }
 #' @param docker_image_name string required. The name of the docker image to pull from DockerHub.
 #' @param name string optional. The name of the container.
@@ -21441,11 +18754,10 @@ scripts_post_cancel <- function(id) {
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -21469,19 +18781,11 @@ scripts_post_cancel <- function(id) {
 #' @param instance_type string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
 #' @param time_zone string optional. The time zone of this script.
-#' @param partition_label string optional. The partition label used to run this object. 
 #' @param hidden boolean optional. The hidden status of the item.
 #' @param target_project_id integer optional. Target project to which script outputs will be added.
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
-#' \item{fromTemplateAliases}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The id of the Alias object.
-#' \item objectId integer, The id of the object
-#' \item alias string, The alias of the object
-#' }}
 #' \item{name}{string, The name of the container.}
 #' \item{type}{string, The type of the script (e.g Container)}
 #' \item{createdAt}{string, The time this script was created.}
@@ -21529,11 +18833,10 @@ scripts_post_cancel <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -21558,8 +18861,8 @@ scripts_post_cancel <- function(id) {
 #' }}
 #' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares. Must be at least 2 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB). Must be at least 4 MB.
+#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
+#' \item memory integer, The amount of RAM to allocate for the container (in MB).
 #' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
 #' }}
 #' \item{repoHttpUri}{string, The location of a github repo to clone into the container, e.g. github.com/my-user/my-repo.git.}
@@ -21581,20 +18884,17 @@ scripts_post_cancel <- function(id) {
 #' \item error string, The error message for this run, if present.
 #' }}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_post_containers <- function(required_resources, docker_image_name, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, repo_http_uri = NULL, repo_ref = NULL, remote_host_credential_id = NULL, git_credential_id = NULL, docker_command = NULL, docker_image_tag = NULL, instance_type = NULL, cancel_timeout = NULL, time_zone = NULL, partition_label = NULL, hidden = NULL, target_project_id = NULL, running_as_id = NULL) {
+scripts_post_containers <- function(required_resources, docker_image_name, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, repo_http_uri = NULL, repo_ref = NULL, remote_host_credential_id = NULL, git_credential_id = NULL, docker_command = NULL, docker_image_tag = NULL, instance_type = NULL, cancel_timeout = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/containers"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(requiredResources = required_resources, dockerImageName = docker_image_name, name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, repoHttpUri = repo_http_uri, repoRef = repo_ref, remoteHostCredentialId = remote_host_credential_id, gitCredentialId = git_credential_id, dockerCommand = docker_command, dockerImageTag = docker_image_tag, instanceType = instance_type, cancelTimeout = cancel_timeout, timeZone = time_zone, partitionLabel = partition_label, hidden = hidden, targetProjectId = target_project_id, runningAsId = running_as_id)
+  body_params  <- list(requiredResources = required_resources, dockerImageName = docker_image_name, name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, repoHttpUri = repo_http_uri, repoRef = repo_ref, remoteHostCredentialId = remote_host_credential_id, gitCredentialId = git_credential_id, dockerCommand = docker_command, dockerImageTag = docker_image_tag, instanceType = instance_type, cancelTimeout = cancel_timeout, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -21610,12 +18910,6 @@ scripts_post_containers <- function(required_resources, docker_image_name, name 
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
-#' \item{fromTemplateAliases}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The id of the Alias object.
-#' \item objectId integer, The id of the object
-#' \item alias string, The alias of the object
-#' }}
 #' \item{name}{string, The name of the container.}
 #' \item{type}{string, The type of the script (e.g Container)}
 #' \item{createdAt}{string, The time this script was created.}
@@ -21663,11 +18957,10 @@ scripts_post_containers <- function(required_resources, docker_image_name, name 
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -21692,8 +18985,8 @@ scripts_post_containers <- function(required_resources, docker_image_name, name 
 #' }}
 #' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares. Must be at least 2 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB). Must be at least 4 MB.
+#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
+#' \item memory integer, The amount of RAM to allocate for the container (in MB).
 #' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
 #' }}
 #' \item{repoHttpUri}{string, The location of a github repo to clone into the container, e.g. github.com/my-user/my-repo.git.}
@@ -21715,12 +19008,9 @@ scripts_post_containers <- function(required_resources, docker_image_name, name 
 #' \item error string, The error message for this run, if present.
 #' }}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_get_containers <- function(id) {
 
@@ -21743,9 +19033,10 @@ scripts_get_containers <- function(id) {
 #' @param id integer required. The ID for the script.
 #' @param required_resources list required. A list containing the following elements: 
 #' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares. Must be at least 2 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB). Must be at least 4 MB.
+#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
+#' \item memory integer, The amount of RAM to allocate for the container (in MB).
 #' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
+#' \item wholeInstance boolean, Whether or not to use the entire instance. If true, cpu, memory, and disk space are not required and will be set to an instance's max.
 #' }
 #' @param docker_image_name string required. The name of the docker image to pull from DockerHub.
 #' @param name string optional. The name of the container.
@@ -21766,11 +19057,10 @@ scripts_get_containers <- function(id) {
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -21794,18 +19084,10 @@ scripts_get_containers <- function(id) {
 #' @param instance_type string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
 #' @param time_zone string optional. The time zone of this script.
-#' @param partition_label string optional. The partition label used to run this object. 
 #' @param target_project_id integer optional. Target project to which script outputs will be added.
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
-#' \item{fromTemplateAliases}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The id of the Alias object.
-#' \item objectId integer, The id of the object
-#' \item alias string, The alias of the object
-#' }}
 #' \item{name}{string, The name of the container.}
 #' \item{type}{string, The type of the script (e.g Container)}
 #' \item{createdAt}{string, The time this script was created.}
@@ -21853,11 +19135,10 @@ scripts_get_containers <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -21882,8 +19163,8 @@ scripts_get_containers <- function(id) {
 #' }}
 #' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares. Must be at least 2 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB). Must be at least 4 MB.
+#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
+#' \item memory integer, The amount of RAM to allocate for the container (in MB).
 #' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
 #' }}
 #' \item{repoHttpUri}{string, The location of a github repo to clone into the container, e.g. github.com/my-user/my-repo.git.}
@@ -21905,20 +19186,17 @@ scripts_get_containers <- function(id) {
 #' \item error string, The error message for this run, if present.
 #' }}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_put_containers <- function(id, required_resources, docker_image_name, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, repo_http_uri = NULL, repo_ref = NULL, remote_host_credential_id = NULL, git_credential_id = NULL, docker_command = NULL, docker_image_tag = NULL, instance_type = NULL, cancel_timeout = NULL, time_zone = NULL, partition_label = NULL, target_project_id = NULL, running_as_id = NULL) {
+scripts_put_containers <- function(id, required_resources, docker_image_name, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, repo_http_uri = NULL, repo_ref = NULL, remote_host_credential_id = NULL, git_credential_id = NULL, docker_command = NULL, docker_image_tag = NULL, instance_type = NULL, cancel_timeout = NULL, time_zone = NULL, target_project_id = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/containers/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(requiredResources = required_resources, dockerImageName = docker_image_name, name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, repoHttpUri = repo_http_uri, repoRef = repo_ref, remoteHostCredentialId = remote_host_credential_id, gitCredentialId = git_credential_id, dockerCommand = docker_command, dockerImageTag = docker_image_tag, instanceType = instance_type, cancelTimeout = cancel_timeout, timeZone = time_zone, partitionLabel = partition_label, targetProjectId = target_project_id, runningAsId = running_as_id)
+  body_params  <- list(requiredResources = required_resources, dockerImageName = docker_image_name, name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, repoHttpUri = repo_http_uri, repoRef = repo_ref, remoteHostCredentialId = remote_host_credential_id, gitCredentialId = git_credential_id, dockerCommand = docker_command, dockerImageTag = docker_image_tag, instanceType = instance_type, cancelTimeout = cancel_timeout, timeZone = time_zone, targetProjectId = target_project_id)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -21949,11 +19227,10 @@ scripts_put_containers <- function(id, required_resources, docker_image_name, na
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -21970,9 +19247,10 @@ scripts_put_containers <- function(id, required_resources, docker_image_name, na
 #' }
 #' @param required_resources list optional. A list containing the following elements: 
 #' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares. Must be at least 2 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB). Must be at least 4 MB.
+#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
+#' \item memory integer, The amount of RAM to allocate for the container (in MB).
 #' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
+#' \item wholeInstance boolean, Whether or not to use the entire instance. If true, cpu, memory, and disk space are not required and will be set to an instance's max.
 #' }
 #' @param repo_http_uri string optional. The location of a github repo to clone into the container, e.g. github.com/my-user/my-repo.git.
 #' @param repo_ref string optional. The tag or branch of the github repo to clone into the container.
@@ -21984,18 +19262,10 @@ scripts_put_containers <- function(id, required_resources, docker_image_name, na
 #' @param instance_type string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
 #' @param time_zone string optional. The time zone of this script.
-#' @param partition_label string optional. The partition label used to run this object. 
 #' @param target_project_id integer optional. Target project to which script outputs will be added.
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
-#' \item{fromTemplateAliases}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The id of the Alias object.
-#' \item objectId integer, The id of the object
-#' \item alias string, The alias of the object
-#' }}
 #' \item{name}{string, The name of the container.}
 #' \item{type}{string, The type of the script (e.g Container)}
 #' \item{createdAt}{string, The time this script was created.}
@@ -22043,11 +19313,10 @@ scripts_put_containers <- function(id, required_resources, docker_image_name, na
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -22072,8 +19341,8 @@ scripts_put_containers <- function(id, required_resources, docker_image_name, na
 #' }}
 #' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares. Must be at least 2 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB). Must be at least 4 MB.
+#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
+#' \item memory integer, The amount of RAM to allocate for the container (in MB).
 #' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
 #' }}
 #' \item{repoHttpUri}{string, The location of a github repo to clone into the container, e.g. github.com/my-user/my-repo.git.}
@@ -22095,20 +19364,17 @@ scripts_put_containers <- function(id, required_resources, docker_image_name, na
 #' \item error string, The error message for this run, if present.
 #' }}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_patch_containers <- function(id, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, required_resources = NULL, repo_http_uri = NULL, repo_ref = NULL, remote_host_credential_id = NULL, git_credential_id = NULL, docker_command = NULL, docker_image_name = NULL, docker_image_tag = NULL, instance_type = NULL, cancel_timeout = NULL, time_zone = NULL, partition_label = NULL, target_project_id = NULL, running_as_id = NULL) {
+scripts_patch_containers <- function(id, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, required_resources = NULL, repo_http_uri = NULL, repo_ref = NULL, remote_host_credential_id = NULL, git_credential_id = NULL, docker_command = NULL, docker_image_name = NULL, docker_image_tag = NULL, instance_type = NULL, cancel_timeout = NULL, time_zone = NULL, target_project_id = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/containers/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, requiredResources = required_resources, repoHttpUri = repo_http_uri, repoRef = repo_ref, remoteHostCredentialId = remote_host_credential_id, gitCredentialId = git_credential_id, dockerCommand = docker_command, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, instanceType = instance_type, cancelTimeout = cancel_timeout, timeZone = time_zone, partitionLabel = partition_label, targetProjectId = target_project_id, runningAsId = running_as_id)
+  body_params  <- list(name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, requiredResources = required_resources, repoHttpUri = repo_http_uri, repoRef = repo_ref, remoteHostCredentialId = remote_host_credential_id, gitCredentialId = git_credential_id, dockerCommand = docker_command, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, instanceType = instance_type, cancelTimeout = cancel_timeout, timeZone = time_zone, targetProjectId = target_project_id)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -22224,11 +19490,10 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -22257,7 +19522,6 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item filenamePrefix string, A user specified filename prefix for the output file to have. Default: null
 #' \item maxFileSize integer, The max file size, in MB, created files will be. Only available when force_multifile is true. 
 #' }
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -22308,11 +19572,10 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -22346,7 +19609,6 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -22365,15 +19627,14 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item filenamePrefix string, A user specified filename prefix for the output file to have. Default: null
 #' \item maxFileSize integer, The max file size, in MB, created files will be. Only available when force_multifile is true. 
 #' }}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_post_sql <- function(name, sql, remote_host_id, credential_id, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL, csv_settings = NULL, running_as_id = NULL) {
+scripts_post_sql <- function(name, sql, remote_host_id, credential_id, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL, csv_settings = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/sql"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, sql = sql, remoteHostId = remote_host_id, credentialId = credential_id, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id, csvSettings = csv_settings, runningAsId = running_as_id)
+  body_params  <- list(name = name, sql = sql, remoteHostId = remote_host_id, credentialId = credential_id, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id, csvSettings = csv_settings)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -22436,11 +19697,10 @@ scripts_post_sql <- function(name, sql, remote_host_id, credential_id, parent_id
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -22474,7 +19734,6 @@ scripts_post_sql <- function(name, sql, remote_host_id, credential_id, parent_id
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -22493,7 +19752,6 @@ scripts_post_sql <- function(name, sql, remote_host_id, credential_id, parent_id
 #' \item filenamePrefix string, A user specified filename prefix for the output file to have. Default: null
 #' \item maxFileSize integer, The max file size, in MB, created files will be. Only available when force_multifile is true. 
 #' }}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_get_sql <- function(id) {
 
@@ -22535,11 +19793,10 @@ scripts_get_sql <- function(id) {
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -22567,7 +19824,6 @@ scripts_get_sql <- function(id) {
 #' \item filenamePrefix string, A user specified filename prefix for the output file to have. Default: null
 #' \item maxFileSize integer, The max file size, in MB, created files will be. Only available when force_multifile is true. 
 #' }
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -22618,11 +19874,10 @@ scripts_get_sql <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -22656,7 +19911,6 @@ scripts_get_sql <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -22675,15 +19929,14 @@ scripts_get_sql <- function(id) {
 #' \item filenamePrefix string, A user specified filename prefix for the output file to have. Default: null
 #' \item maxFileSize integer, The max file size, in MB, created files will be. Only available when force_multifile is true. 
 #' }}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, csv_settings = NULL, running_as_id = NULL) {
+scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, csv_settings = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/sql/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, sql = sql, remoteHostId = remote_host_id, credentialId = credential_id, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, csvSettings = csv_settings, runningAsId = running_as_id)
+  body_params  <- list(name = name, sql = sql, remoteHostId = remote_host_id, credentialId = credential_id, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, csvSettings = csv_settings)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -22714,11 +19967,10 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -22749,7 +20001,6 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item filenamePrefix string, A user specified filename prefix for the output file to have. Default: null
 #' \item maxFileSize integer, The max file size, in MB, created files will be. Only available when force_multifile is true. 
 #' }
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -22800,11 +20051,10 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -22838,7 +20088,6 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -22857,15 +20106,14 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item filenamePrefix string, A user specified filename prefix for the output file to have. Default: null
 #' \item maxFileSize integer, The max file size, in MB, created files will be. Only available when force_multifile is true. 
 #' }}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_patch_sql <- function(id, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, sql = NULL, remote_host_id = NULL, credential_id = NULL, csv_settings = NULL, running_as_id = NULL) {
+scripts_patch_sql <- function(id, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, sql = NULL, remote_host_id = NULL, credential_id = NULL, csv_settings = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/sql/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, sql = sql, remoteHostId = remote_host_id, credentialId = credential_id, csvSettings = csv_settings, runningAsId = running_as_id)
+  body_params  <- list(name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, sql = sql, remoteHostId = remote_host_id, credentialId = credential_id, csvSettings = csv_settings)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -22918,11 +20166,10 @@ scripts_delete_sql <- function(id) {
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -22950,8 +20197,6 @@ scripts_delete_sql <- function(id) {
 #' @param instance_type string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
 #' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub.
-#' @param partition_label string optional. The partition label used to run this object. 
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -23002,11 +20247,10 @@ scripts_delete_sql <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -23040,7 +20284,6 @@ scripts_delete_sql <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -23054,16 +20297,14 @@ scripts_delete_sql <- function(id) {
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, cancel_timeout = NULL, docker_image_tag = NULL, partition_label = NULL, running_as_id = NULL) {
+scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, cancel_timeout = NULL, docker_image_tag = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/python3"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, source = source, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag, partitionLabel = partition_label, runningAsId = running_as_id)
+  body_params  <- list(name = name, source = source, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -23126,11 +20367,10 @@ scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = 
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -23164,7 +20404,6 @@ scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = 
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -23178,8 +20417,6 @@ scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = 
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_get_python3 <- function(id) {
 
@@ -23219,11 +20456,10 @@ scripts_get_python3 <- function(id) {
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -23250,8 +20486,6 @@ scripts_get_python3 <- function(id) {
 #' @param instance_type string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
 #' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub.
-#' @param partition_label string optional. The partition label used to run this object. 
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -23302,11 +20536,10 @@ scripts_get_python3 <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -23340,7 +20573,6 @@ scripts_get_python3 <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -23354,16 +20586,14 @@ scripts_get_python3 <- function(id) {
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, cancel_timeout = NULL, docker_image_tag = NULL, partition_label = NULL, running_as_id = NULL) {
+scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, cancel_timeout = NULL, docker_image_tag = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/python3/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, source = source, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag, partitionLabel = partition_label, runningAsId = running_as_id)
+  body_params  <- list(name = name, source = source, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -23394,11 +20624,10 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -23426,8 +20655,6 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' @param source string optional. The body/text of the script.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
 #' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub.
-#' @param partition_label string optional. The partition label used to run this object. 
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -23478,11 +20705,10 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -23516,7 +20742,6 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -23530,16 +20755,14 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_patch_python3 <- function(id, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, source = NULL, cancel_timeout = NULL, docker_image_tag = NULL, partition_label = NULL, running_as_id = NULL) {
+scripts_patch_python3 <- function(id, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, source = NULL, cancel_timeout = NULL, docker_image_tag = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/python3/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, source = source, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag, partitionLabel = partition_label, runningAsId = running_as_id)
+  body_params  <- list(name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, source = source, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -23592,11 +20815,10 @@ scripts_delete_python3 <- function(id) {
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -23624,8 +20846,6 @@ scripts_delete_python3 <- function(id) {
 #' @param instance_type string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
 #' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub.
-#' @param partition_label string optional. The partition label used to run this object. 
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -23676,11 +20896,10 @@ scripts_delete_python3 <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -23714,7 +20933,6 @@ scripts_delete_python3 <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -23728,16 +20946,14 @@ scripts_delete_python3 <- function(id) {
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, cancel_timeout = NULL, docker_image_tag = NULL, partition_label = NULL, running_as_id = NULL) {
+scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, cancel_timeout = NULL, docker_image_tag = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/r"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, source = source, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag, partitionLabel = partition_label, runningAsId = running_as_id)
+  body_params  <- list(name = name, source = source, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -23800,11 +21016,10 @@ scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, 
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -23838,7 +21053,6 @@ scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, 
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -23852,8 +21066,6 @@ scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, 
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_get_r <- function(id) {
 
@@ -23893,11 +21105,10 @@ scripts_get_r <- function(id) {
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -23924,8 +21135,6 @@ scripts_get_r <- function(id) {
 #' @param instance_type string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
 #' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub.
-#' @param partition_label string optional. The partition label used to run this object. 
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -23976,11 +21185,10 @@ scripts_get_r <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -24014,7 +21222,6 @@ scripts_get_r <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -24028,16 +21235,14 @@ scripts_get_r <- function(id) {
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, cancel_timeout = NULL, docker_image_tag = NULL, partition_label = NULL, running_as_id = NULL) {
+scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, cancel_timeout = NULL, docker_image_tag = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/r/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, source = source, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag, partitionLabel = partition_label, runningAsId = running_as_id)
+  body_params  <- list(name = name, source = source, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -24068,11 +21273,10 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -24100,8 +21304,6 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' @param source string optional. The body/text of the script.
 #' @param cancel_timeout integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.
 #' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub.
-#' @param partition_label string optional. The partition label used to run this object. 
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -24152,11 +21354,10 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -24190,7 +21391,6 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -24204,16 +21404,14 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_patch_r <- function(id, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, source = NULL, cancel_timeout = NULL, docker_image_tag = NULL, partition_label = NULL, running_as_id = NULL) {
+scripts_patch_r <- function(id, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, instance_type = NULL, source = NULL, cancel_timeout = NULL, docker_image_tag = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/r/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, source = source, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag, partitionLabel = partition_label, runningAsId = running_as_id)
+  body_params  <- list(name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, instanceType = instance_type, source = source, cancelTimeout = cancel_timeout, dockerImageTag = docker_image_tag)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -24268,11 +21466,10 @@ scripts_delete_r <- function(id) {
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -24291,7 +21488,6 @@ scripts_delete_r <- function(id) {
 #' @param time_zone string optional. The time zone of this script.
 #' @param hidden boolean optional. The hidden status of the item.
 #' @param target_project_id integer optional. Target project to which script outputs will be added.
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -24342,11 +21538,10 @@ scripts_delete_r <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -24380,22 +21575,20 @@ scripts_delete_r <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{source}{string, The body/text of the script.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_post_javascript <- function(name, source, remote_host_id, credential_id, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL, running_as_id = NULL) {
+scripts_post_javascript <- function(name, source, remote_host_id, credential_id, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/javascript"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, source = source, remoteHostId = remote_host_id, credentialId = credential_id, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id, runningAsId = running_as_id)
+  body_params  <- list(name = name, source = source, remoteHostId = remote_host_id, credentialId = credential_id, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -24458,11 +21651,10 @@ scripts_post_javascript <- function(name, source, remote_host_id, credential_id,
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -24496,14 +21688,12 @@ scripts_post_javascript <- function(name, source, remote_host_id, credential_id,
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{source}{string, The body/text of the script.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_get_javascript <- function(id) {
 
@@ -24545,11 +21735,10 @@ scripts_get_javascript <- function(id) {
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -24567,7 +21756,6 @@ scripts_get_javascript <- function(id) {
 #' @param next_run_at string optional. The time of the next scheduled run.
 #' @param time_zone string optional. The time zone of this script.
 #' @param target_project_id integer optional. Target project to which script outputs will be added.
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -24618,11 +21806,10 @@ scripts_get_javascript <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -24656,22 +21843,20 @@ scripts_get_javascript <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{source}{string, The body/text of the script.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_put_javascript <- function(id, name, source, remote_host_id, credential_id, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, running_as_id = NULL) {
+scripts_put_javascript <- function(id, name, source, remote_host_id, credential_id, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/javascript/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, source = source, remoteHostId = remote_host_id, credentialId = credential_id, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, runningAsId = running_as_id)
+  body_params  <- list(name = name, source = source, remoteHostId = remote_host_id, credentialId = credential_id, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -24702,11 +21887,10 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -24727,7 +21911,6 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' @param source string optional. The body/text of the script.
 #' @param remote_host_id integer optional. The remote host ID that this script will connect to.
 #' @param credential_id integer optional. The credential that this script will use.
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
@@ -24778,11 +21961,10 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -24816,22 +21998,20 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{source}{string, The body/text of the script.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_patch_javascript <- function(id, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, source = NULL, remote_host_id = NULL, credential_id = NULL, running_as_id = NULL) {
+scripts_patch_javascript <- function(id, name = NULL, parent_id = NULL, user_context = NULL, params = NULL, arguments = NULL, schedule = NULL, notifications = NULL, next_run_at = NULL, time_zone = NULL, target_project_id = NULL, source = NULL, remote_host_id = NULL, credential_id = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/javascript/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, source = source, remoteHostId = remote_host_id, credentialId = credential_id, runningAsId = running_as_id)
+  body_params  <- list(name = name, parentId = parent_id, userContext = user_context, params = params, arguments = arguments, schedule = schedule, notifications = notifications, nextRunAt = next_run_at, timeZone = time_zone, targetProjectId = target_project_id, source = source, remoteHostId = remote_host_id, credentialId = credential_id)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -24866,7 +22046,7 @@ scripts_delete_javascript <- function(id) {
 
 #' List Custom Scripts
 #' @param from_template_id string optional. If specified, return scripts based on the template with this ID. Specify multiple IDs as a comma-separated list.
-#' @param author string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.
+#' @param author string optional. If specified, return items from this author. Must use user IDs. A comma separated list of IDs is also accepted to return items from multiple authors.
 #' @param status string optional. If specified, returns items with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' @param archived string optional. The archival status of the requested item(s).
@@ -24946,11 +22126,10 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -24968,23 +22147,9 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' @param time_zone string optional. The time zone of this script.
 #' @param hidden boolean optional. The hidden status of the item.
 #' @param target_project_id integer optional. Target project to which script outputs will be added.
-#' @param required_resources list optional. A list containing the following elements: 
-#' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB).
-#' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
-#' }
-#' @param partition_label string optional. The partition label used to run this object. Only applicable for jobs using Docker.
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
-#' \item{fromTemplateAliases}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The id of the Alias object.
-#' \item objectId integer, The id of the object
-#' \item alias string, The alias of the object
-#' }}
 #' \item{name}{string, The name of the script.}
 #' \item{type}{string, The type of the script (e.g Custom)}
 #' \item{createdAt}{string, The time this script was created.}
@@ -25032,11 +22197,10 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -25069,7 +22233,6 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
@@ -25082,22 +22245,14 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{requiredResources}{list, A list containing the following elements: 
-#' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB).
-#' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
-#' }}
-#' \item{partitionLabel}{string, The partition label used to run this object. Only applicable for jobs using Docker.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL, arguments = NULL, remote_host_id = NULL, credential_id = NULL, schedule = NULL, notifications = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL, required_resources = NULL, partition_label = NULL, running_as_id = NULL) {
+scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL, arguments = NULL, remote_host_id = NULL, credential_id = NULL, schedule = NULL, notifications = NULL, time_zone = NULL, hidden = NULL, target_project_id = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/custom"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(fromTemplateId = from_template_id, name = name, parentId = parent_id, arguments = arguments, remoteHostId = remote_host_id, credentialId = credential_id, schedule = schedule, notifications = notifications, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id, requiredResources = required_resources, partitionLabel = partition_label, runningAsId = running_as_id)
+  body_params  <- list(fromTemplateId = from_template_id, name = name, parentId = parent_id, arguments = arguments, remoteHostId = remote_host_id, credentialId = credential_id, schedule = schedule, notifications = notifications, timeZone = time_zone, hidden = hidden, targetProjectId = target_project_id)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -25113,12 +22268,6 @@ scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL,
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
-#' \item{fromTemplateAliases}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The id of the Alias object.
-#' \item objectId integer, The id of the object
-#' \item alias string, The alias of the object
-#' }}
 #' \item{name}{string, The name of the script.}
 #' \item{type}{string, The type of the script (e.g Custom)}
 #' \item{createdAt}{string, The time this script was created.}
@@ -25166,11 +22315,10 @@ scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL,
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -25203,7 +22351,6 @@ scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL,
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
@@ -25216,14 +22363,6 @@ scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL,
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{requiredResources}{list, A list containing the following elements: 
-#' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB).
-#' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
-#' }}
-#' \item{partitionLabel}{string, The partition label used to run this object. Only applicable for jobs using Docker.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_get_custom <- function(id) {
 
@@ -25252,11 +22391,10 @@ scripts_get_custom <- function(id) {
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -25273,23 +22411,9 @@ scripts_get_custom <- function(id) {
 #' }
 #' @param time_zone string optional. The time zone of this script.
 #' @param target_project_id integer optional. Target project to which script outputs will be added.
-#' @param required_resources list optional. A list containing the following elements: 
-#' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB).
-#' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
-#' }
-#' @param partition_label string optional. The partition label used to run this object. Only applicable for jobs using Docker.
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
-#' \item{fromTemplateAliases}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The id of the Alias object.
-#' \item objectId integer, The id of the object
-#' \item alias string, The alias of the object
-#' }}
 #' \item{name}{string, The name of the script.}
 #' \item{type}{string, The type of the script (e.g Custom)}
 #' \item{createdAt}{string, The time this script was created.}
@@ -25337,11 +22461,10 @@ scripts_get_custom <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -25374,7 +22497,6 @@ scripts_get_custom <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
@@ -25387,22 +22509,14 @@ scripts_get_custom <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{requiredResources}{list, A list containing the following elements: 
-#' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB).
-#' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
-#' }}
-#' \item{partitionLabel}{string, The partition label used to run this object. Only applicable for jobs using Docker.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NULL, remote_host_id = NULL, credential_id = NULL, schedule = NULL, notifications = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, partition_label = NULL, running_as_id = NULL) {
+scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NULL, remote_host_id = NULL, credential_id = NULL, schedule = NULL, notifications = NULL, time_zone = NULL, target_project_id = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/custom/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, parentId = parent_id, arguments = arguments, remoteHostId = remote_host_id, credentialId = credential_id, schedule = schedule, notifications = notifications, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, partitionLabel = partition_label, runningAsId = running_as_id)
+  body_params  <- list(name = name, parentId = parent_id, arguments = arguments, remoteHostId = remote_host_id, credentialId = credential_id, schedule = schedule, notifications = notifications, timeZone = time_zone, targetProjectId = target_project_id)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -25423,11 +22537,10 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param notifications list optional. A list containing the following elements: 
 #' \itemize{
@@ -25444,23 +22557,9 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' }
 #' @param time_zone string optional. The time zone of this script.
 #' @param target_project_id integer optional. Target project to which script outputs will be added.
-#' @param required_resources list optional. A list containing the following elements: 
-#' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB).
-#' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
-#' }
-#' @param partition_label string optional. The partition label used to run this object. Only applicable for jobs using Docker.
-#' @param running_as_id integer optional. The ID of the runner of this script.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
-#' \item{fromTemplateAliases}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The id of the Alias object.
-#' \item objectId integer, The id of the object
-#' \item alias string, The alias of the object
-#' }}
 #' \item{name}{string, The name of the script.}
 #' \item{type}{string, The type of the script (e.g Custom)}
 #' \item{createdAt}{string, The time this script was created.}
@@ -25508,11 +22607,10 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -25545,7 +22643,6 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
@@ -25558,22 +22655,14 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{requiredResources}{list, A list containing the following elements: 
-#' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB).
-#' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
-#' }}
-#' \item{partitionLabel}{string, The partition label used to run this object. Only applicable for jobs using Docker.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
-scripts_patch_custom <- function(id, name = NULL, parent_id = NULL, arguments = NULL, remote_host_id = NULL, credential_id = NULL, schedule = NULL, notifications = NULL, time_zone = NULL, target_project_id = NULL, required_resources = NULL, partition_label = NULL, running_as_id = NULL) {
+scripts_patch_custom <- function(id, name = NULL, parent_id = NULL, arguments = NULL, remote_host_id = NULL, credential_id = NULL, schedule = NULL, notifications = NULL, time_zone = NULL, target_project_id = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/custom/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, parentId = parent_id, arguments = arguments, remoteHostId = remote_host_id, credentialId = credential_id, schedule = schedule, notifications = notifications, timeZone = time_zone, targetProjectId = target_project_id, requiredResources = required_resources, partitionLabel = partition_label, runningAsId = running_as_id)
+  body_params  <- list(name = name, parentId = parent_id, arguments = arguments, remoteHostId = remote_host_id, credentialId = credential_id, schedule = schedule, notifications = notifications, timeZone = time_zone, targetProjectId = target_project_id)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -25610,21 +22699,19 @@ scripts_delete_custom <- function(id) {
 #' @param id integer required. The ID of the sql.
 #' 
 #' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the run.}
-#' \item{sqlId}{integer, The ID of the sql.}
-#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{id}{integer, The ID of this run.}
+#' \item{sqlId}{integer, The ID of this sql.}
+#' \item{state}{string, The state of this run.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
-#' \item{error}{string, The error, if any, returned by the run.}
+#' \item{startedAt}{string, The time the last run started.}
+#' \item{finishedAt}{string, The time that this run finished.}
+#' \item{error}{string, The error message for this run, if present.}
 #' \item{output}{array, An array containing the following fields: 
 #' \itemize{
 #' \item outputName string, The name of the output file.
 #' \item fileId integer, The unique ID of the output file.
 #' \item path string, The temporary link to download this output file, valid for 36 hours.
 #' }}
-#' \item{outputCachedOn}{string, The time that the output was originally exported, if a cache entry was used by the run.}
 #' @export
 scripts_post_sql_runs <- function(id) {
 
@@ -25651,21 +22738,19 @@ scripts_post_sql_runs <- function(id) {
 #' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
 #' 
 #' @return  An array containing the following fields:
-#' \item{id}{integer, The ID of the run.}
-#' \item{sqlId}{integer, The ID of the sql.}
-#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{id}{integer, The ID of this run.}
+#' \item{sqlId}{integer, The ID of this sql.}
+#' \item{state}{string, The state of this run.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
-#' \item{error}{string, The error, if any, returned by the run.}
+#' \item{startedAt}{string, The time the last run started.}
+#' \item{finishedAt}{string, The time that this run finished.}
+#' \item{error}{string, The error message for this run, if present.}
 #' \item{output}{array, An array containing the following fields: 
 #' \itemize{
 #' \item outputName string, The name of the output file.
 #' \item fileId integer, The unique ID of the output file.
 #' \item path string, The temporary link to download this output file, valid for 36 hours.
 #' }}
-#' \item{outputCachedOn}{string, The time that the output was originally exported, if a cache entry was used by the run.}
 #' @export
 scripts_list_sql_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
@@ -25689,21 +22774,19 @@ scripts_list_sql_runs <- function(id, limit = NULL, page_num = NULL, order = NUL
 #' @param run_id integer required. The ID of the run.
 #' 
 #' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the run.}
-#' \item{sqlId}{integer, The ID of the sql.}
-#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{id}{integer, The ID of this run.}
+#' \item{sqlId}{integer, The ID of this sql.}
+#' \item{state}{string, The state of this run.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
-#' \item{error}{string, The error, if any, returned by the run.}
+#' \item{startedAt}{string, The time the last run started.}
+#' \item{finishedAt}{string, The time that this run finished.}
+#' \item{error}{string, The error message for this run, if present.}
 #' \item{output}{array, An array containing the following fields: 
 #' \itemize{
 #' \item outputName string, The name of the output file.
 #' \item fileId integer, The unique ID of the output file.
 #' \item path string, The temporary link to download this output file, valid for 36 hours.
 #' }}
-#' \item{outputCachedOn}{string, The time that the output was originally exported, if a cache entry was used by the run.}
 #' @export
 scripts_get_sql_runs <- function(id, run_id) {
 
@@ -25739,30 +22822,6 @@ scripts_delete_sql_runs <- function(id, run_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Update the given run
-#' @param id integer required. ID of the Job
-#' @param run_id integer required. ID of the Run
-#' @param error string optional. The error message to update
-#' 
-#' @return  An empty HTTP response
-#' @export
-scripts_patch_sql_runs <- function(id, run_id, error = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/sql/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list(error = error)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25806,12 +22865,9 @@ scripts_list_sql_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL)
 #' \item{containerId}{integer, The ID of the container.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
-#' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
-#' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
 scripts_post_containers_runs <- function(id) {
 
@@ -25842,12 +22898,9 @@ scripts_post_containers_runs <- function(id) {
 #' \item{containerId}{integer, The ID of the container.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
-#' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
-#' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
 scripts_list_containers_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
@@ -25875,12 +22928,9 @@ scripts_list_containers_runs <- function(id, limit = NULL, page_num = NULL, orde
 #' \item{containerId}{integer, The ID of the container.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
-#' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
-#' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
 scripts_get_containers_runs <- function(id, run_id) {
 
@@ -25930,12 +22980,9 @@ scripts_delete_containers_runs <- function(id, run_id) {
 #' \item{pythonId}{integer, The ID of the python.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
-#' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
-#' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
 scripts_post_python3_runs <- function(id) {
 
@@ -25966,12 +23013,9 @@ scripts_post_python3_runs <- function(id) {
 #' \item{pythonId}{integer, The ID of the python.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
-#' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
-#' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
 scripts_list_python3_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
@@ -25999,12 +23043,9 @@ scripts_list_python3_runs <- function(id, limit = NULL, page_num = NULL, order =
 #' \item{pythonId}{integer, The ID of the python.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
-#' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
-#' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
 scripts_get_python3_runs <- function(id, run_id) {
 
@@ -26040,30 +23081,6 @@ scripts_delete_python3_runs <- function(id, run_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Update the given run
-#' @param id integer required. ID of the Job
-#' @param run_id integer required. ID of the Run
-#' @param error string optional. The error message to update
-#' 
-#' @return  An empty HTTP response
-#' @export
-scripts_patch_python3_runs <- function(id, run_id, error = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/python3/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list(error = error)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -26107,12 +23124,9 @@ scripts_list_python3_runs_logs <- function(id, run_id, last_id = NULL, limit = N
 #' \item{rId}{integer, The ID of the r.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
-#' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
-#' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
 scripts_post_r_runs <- function(id) {
 
@@ -26143,12 +23157,9 @@ scripts_post_r_runs <- function(id) {
 #' \item{rId}{integer, The ID of the r.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
-#' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
-#' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
 scripts_list_r_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
@@ -26176,12 +23187,9 @@ scripts_list_r_runs <- function(id, limit = NULL, page_num = NULL, order = NULL,
 #' \item{rId}{integer, The ID of the r.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
-#' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
-#' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
 scripts_get_r_runs <- function(id, run_id) {
 
@@ -26217,30 +23225,6 @@ scripts_delete_r_runs <- function(id, run_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Update the given run
-#' @param id integer required. ID of the Job
-#' @param run_id integer required. ID of the Run
-#' @param error string optional. The error message to update
-#' 
-#' @return  An empty HTTP response
-#' @export
-scripts_patch_r_runs <- function(id, run_id, error = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/r/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list(error = error)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -26284,9 +23268,8 @@ scripts_list_r_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' \item{javascriptId}{integer, The ID of the javascript.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 scripts_post_javascript_runs <- function(id) {
@@ -26318,9 +23301,8 @@ scripts_post_javascript_runs <- function(id) {
 #' \item{javascriptId}{integer, The ID of the javascript.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 scripts_list_javascript_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
@@ -26349,9 +23331,8 @@ scripts_list_javascript_runs <- function(id, limit = NULL, page_num = NULL, orde
 #' \item{javascriptId}{integer, The ID of the javascript.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
 #' @export
 scripts_get_javascript_runs <- function(id, run_id) {
@@ -26388,30 +23369,6 @@ scripts_delete_javascript_runs <- function(id, run_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Update the given run
-#' @param id integer required. ID of the Job
-#' @param run_id integer required. ID of the Run
-#' @param error string optional. The error message to update
-#' 
-#' @return  An empty HTTP response
-#' @export
-scripts_patch_javascript_runs <- function(id, run_id, error = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/javascript/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list(error = error)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -26455,12 +23412,9 @@ scripts_list_javascript_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item{customId}{integer, The ID of the custom.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
-#' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB. Only available if the backing script is a Python, R, or container script.}
-#' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores. Only available if the backing script is a Python, R, or container script.}
 #' @export
 scripts_post_custom_runs <- function(id) {
 
@@ -26491,12 +23445,9 @@ scripts_post_custom_runs <- function(id) {
 #' \item{customId}{integer, The ID of the custom.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
-#' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB. Only available if the backing script is a Python, R, or container script.}
-#' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores. Only available if the backing script is a Python, R, or container script.}
 #' @export
 scripts_list_custom_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
@@ -26524,12 +23475,9 @@ scripts_list_custom_runs <- function(id, limit = NULL, page_num = NULL, order = 
 #' \item{customId}{integer, The ID of the custom.}
 #' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 #' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-#' \item{createdAt}{string, The time the run was created.}
-#' \item{startedAt}{string, The time the run started at.}
-#' \item{finishedAt}{string, The time the run completed.}
+#' \item{startedAt}{string, The time the last run started at.}
+#' \item{finishedAt}{string, The time the last run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
-#' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB. Only available if the backing script is a Python, R, or container script.}
-#' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores. Only available if the backing script is a Python, R, or container script.}
 #' @export
 scripts_get_custom_runs <- function(id, run_id) {
 
@@ -26942,35 +23890,11 @@ scripts_post_custom_runs_outputs <- function(id, run_id, object_type, object_id)
  }
 
 
-#' Update the given run
-#' @param id integer required. ID of the Job
-#' @param run_id integer required. ID of the Run
-#' @param error string optional. The error message to update
-#' 
-#' @return  An empty HTTP response
-#' @export
-scripts_patch_container_runs <- function(id, run_id, error = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/container/{id}/runs/{run_id}"
-  path_params  <- list(id = id, run_id = run_id)
-  query_params <- list()
-  body_params  <- list(error = error)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Get the git metadata attached to an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
 #' \item{gitRepo}{list, A list containing the following elements: 
@@ -26980,8 +23904,7 @@ scripts_patch_container_runs <- function(id, run_id, error = NULL) {
 #' \item createdAt string, 
 #' \item updatedAt string, 
 #' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 #' @export
 scripts_list_sql_git <- function(id) {
 
@@ -27006,11 +23929,10 @@ scripts_list_sql_git <- function(id) {
 #' @param git_branch string optional. The git branch that the file is on.
 #' @param git_path string optional. The path of the file in the repository.
 #' @param git_repo_url string optional. The URL of the git repository.
-#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
 #' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
 #' 
 #' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
 #' \item{gitRepo}{list, A list containing the following elements: 
@@ -27020,16 +23942,15 @@ scripts_list_sql_git <- function(id) {
 #' \item createdAt string, 
 #' \item updatedAt string, 
 #' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 #' @export
-scripts_put_sql_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
+scripts_put_sql_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, pull_from_git = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/sql/{id}/git"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
+  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, pullFromGit = pull_from_git)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -27040,47 +23961,7 @@ scripts_put_sql_git <- function(id, git_ref = NULL, git_branch = NULL, git_path 
  }
 
 
-#' Update an attached git file
-#' @param id integer required. The ID of the file.
-#' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
-#' @param git_branch string optional. The git branch that the file is on.
-#' @param git_path string optional. The path of the file in the repository.
-#' @param git_repo_url string optional. The URL of the git repository.
-#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
-#' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
-#' 
-#' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
-#' \item{gitBranch}{string, The git branch that the file is on.}
-#' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID for this git repository.
-#' \item repoUrl string, The URL for this git repository.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
-#' @export
-scripts_patch_sql_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/sql/{id}/git"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get the git commits for an item on the current branch
+#' Get the git commits for an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -27135,7 +24016,7 @@ scripts_post_sql_git_commits <- function(id, content, message, file_hash) {
  }
 
 
-#' Get file contents at git ref
+#' Get file contents at commit_hash
 #' @param id integer required. The ID of the file.
 #' @param commit_hash string required. The SHA (full or shortened) of the desired git commit.
 #' 
@@ -27162,63 +24043,11 @@ scripts_get_sql_git_commits <- function(id, commit_hash) {
  }
 
 
-#' Checkout latest commit on the current branch of a script or workflow
-#' @param id integer required. The ID of the file.
-#' 
-#' @return  A list containing the following elements:
-#' \item{content}{string, The file's contents.}
-#' \item{type}{string, The file's type.}
-#' \item{size}{integer, The file's size.}
-#' \item{fileHash}{string, The SHA of the file.}
-#' @export
-scripts_post_sql_git_checkout_latest <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/sql/{id}/git/checkout-latest"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Checkout content that the existing git_ref points to and save to the object
-#' @param id integer required. The ID of the file.
-#' 
-#' @return  A list containing the following elements:
-#' \item{content}{string, The file's contents.}
-#' \item{type}{string, The file's type.}
-#' \item{size}{integer, The file's size.}
-#' \item{fileHash}{string, The SHA of the file.}
-#' @export
-scripts_post_sql_git_checkout <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/sql/{id}/git/checkout"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Get the git metadata attached to an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
 #' \item{gitRepo}{list, A list containing the following elements: 
@@ -27228,8 +24057,7 @@ scripts_post_sql_git_checkout <- function(id) {
 #' \item createdAt string, 
 #' \item updatedAt string, 
 #' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 #' @export
 scripts_list_javascript_git <- function(id) {
 
@@ -27254,11 +24082,10 @@ scripts_list_javascript_git <- function(id) {
 #' @param git_branch string optional. The git branch that the file is on.
 #' @param git_path string optional. The path of the file in the repository.
 #' @param git_repo_url string optional. The URL of the git repository.
-#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
 #' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
 #' 
 #' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
 #' \item{gitRepo}{list, A list containing the following elements: 
@@ -27268,16 +24095,15 @@ scripts_list_javascript_git <- function(id) {
 #' \item createdAt string, 
 #' \item updatedAt string, 
 #' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 #' @export
-scripts_put_javascript_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
+scripts_put_javascript_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, pull_from_git = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/javascript/{id}/git"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
+  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, pullFromGit = pull_from_git)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -27288,47 +24114,7 @@ scripts_put_javascript_git <- function(id, git_ref = NULL, git_branch = NULL, gi
  }
 
 
-#' Update an attached git file
-#' @param id integer required. The ID of the file.
-#' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
-#' @param git_branch string optional. The git branch that the file is on.
-#' @param git_path string optional. The path of the file in the repository.
-#' @param git_repo_url string optional. The URL of the git repository.
-#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
-#' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
-#' 
-#' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
-#' \item{gitBranch}{string, The git branch that the file is on.}
-#' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID for this git repository.
-#' \item repoUrl string, The URL for this git repository.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
-#' @export
-scripts_patch_javascript_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/javascript/{id}/git"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get the git commits for an item on the current branch
+#' Get the git commits for an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -27383,7 +24169,7 @@ scripts_post_javascript_git_commits <- function(id, content, message, file_hash)
  }
 
 
-#' Get file contents at git ref
+#' Get file contents at commit_hash
 #' @param id integer required. The ID of the file.
 #' @param commit_hash string required. The SHA (full or shortened) of the desired git commit.
 #' 
@@ -27410,63 +24196,11 @@ scripts_get_javascript_git_commits <- function(id, commit_hash) {
  }
 
 
-#' Checkout latest commit on the current branch of a script or workflow
-#' @param id integer required. The ID of the file.
-#' 
-#' @return  A list containing the following elements:
-#' \item{content}{string, The file's contents.}
-#' \item{type}{string, The file's type.}
-#' \item{size}{integer, The file's size.}
-#' \item{fileHash}{string, The SHA of the file.}
-#' @export
-scripts_post_javascript_git_checkout_latest <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/javascript/{id}/git/checkout-latest"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Checkout content that the existing git_ref points to and save to the object
-#' @param id integer required. The ID of the file.
-#' 
-#' @return  A list containing the following elements:
-#' \item{content}{string, The file's contents.}
-#' \item{type}{string, The file's type.}
-#' \item{size}{integer, The file's size.}
-#' \item{fileHash}{string, The SHA of the file.}
-#' @export
-scripts_post_javascript_git_checkout <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/javascript/{id}/git/checkout"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Get the git metadata attached to an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
 #' \item{gitRepo}{list, A list containing the following elements: 
@@ -27476,8 +24210,7 @@ scripts_post_javascript_git_checkout <- function(id) {
 #' \item createdAt string, 
 #' \item updatedAt string, 
 #' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 #' @export
 scripts_list_python3_git <- function(id) {
 
@@ -27502,11 +24235,10 @@ scripts_list_python3_git <- function(id) {
 #' @param git_branch string optional. The git branch that the file is on.
 #' @param git_path string optional. The path of the file in the repository.
 #' @param git_repo_url string optional. The URL of the git repository.
-#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
 #' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
 #' 
 #' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
 #' \item{gitRepo}{list, A list containing the following elements: 
@@ -27516,16 +24248,15 @@ scripts_list_python3_git <- function(id) {
 #' \item createdAt string, 
 #' \item updatedAt string, 
 #' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 #' @export
-scripts_put_python3_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
+scripts_put_python3_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, pull_from_git = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/python3/{id}/git"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
+  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, pullFromGit = pull_from_git)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -27536,47 +24267,7 @@ scripts_put_python3_git <- function(id, git_ref = NULL, git_branch = NULL, git_p
  }
 
 
-#' Update an attached git file
-#' @param id integer required. The ID of the file.
-#' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
-#' @param git_branch string optional. The git branch that the file is on.
-#' @param git_path string optional. The path of the file in the repository.
-#' @param git_repo_url string optional. The URL of the git repository.
-#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
-#' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
-#' 
-#' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
-#' \item{gitBranch}{string, The git branch that the file is on.}
-#' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID for this git repository.
-#' \item repoUrl string, The URL for this git repository.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
-#' @export
-scripts_patch_python3_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/python3/{id}/git"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get the git commits for an item on the current branch
+#' Get the git commits for an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -27631,7 +24322,7 @@ scripts_post_python3_git_commits <- function(id, content, message, file_hash) {
  }
 
 
-#' Get file contents at git ref
+#' Get file contents at commit_hash
 #' @param id integer required. The ID of the file.
 #' @param commit_hash string required. The SHA (full or shortened) of the desired git commit.
 #' 
@@ -27658,63 +24349,11 @@ scripts_get_python3_git_commits <- function(id, commit_hash) {
  }
 
 
-#' Checkout latest commit on the current branch of a script or workflow
-#' @param id integer required. The ID of the file.
-#' 
-#' @return  A list containing the following elements:
-#' \item{content}{string, The file's contents.}
-#' \item{type}{string, The file's type.}
-#' \item{size}{integer, The file's size.}
-#' \item{fileHash}{string, The SHA of the file.}
-#' @export
-scripts_post_python3_git_checkout_latest <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/python3/{id}/git/checkout-latest"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Checkout content that the existing git_ref points to and save to the object
-#' @param id integer required. The ID of the file.
-#' 
-#' @return  A list containing the following elements:
-#' \item{content}{string, The file's contents.}
-#' \item{type}{string, The file's type.}
-#' \item{size}{integer, The file's size.}
-#' \item{fileHash}{string, The SHA of the file.}
-#' @export
-scripts_post_python3_git_checkout <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/python3/{id}/git/checkout"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Get the git metadata attached to an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
 #' \item{gitRepo}{list, A list containing the following elements: 
@@ -27724,8 +24363,7 @@ scripts_post_python3_git_checkout <- function(id) {
 #' \item createdAt string, 
 #' \item updatedAt string, 
 #' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 #' @export
 scripts_list_r_git <- function(id) {
 
@@ -27750,11 +24388,10 @@ scripts_list_r_git <- function(id) {
 #' @param git_branch string optional. The git branch that the file is on.
 #' @param git_path string optional. The path of the file in the repository.
 #' @param git_repo_url string optional. The URL of the git repository.
-#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
 #' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
 #' 
 #' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
 #' \item{gitRepo}{list, A list containing the following elements: 
@@ -27764,16 +24401,15 @@ scripts_list_r_git <- function(id) {
 #' \item createdAt string, 
 #' \item updatedAt string, 
 #' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 #' @export
-scripts_put_r_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
+scripts_put_r_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, pull_from_git = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/scripts/r/{id}/git"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
+  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, pullFromGit = pull_from_git)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -27784,47 +24420,7 @@ scripts_put_r_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = 
  }
 
 
-#' Update an attached git file
-#' @param id integer required. The ID of the file.
-#' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
-#' @param git_branch string optional. The git branch that the file is on.
-#' @param git_path string optional. The path of the file in the repository.
-#' @param git_repo_url string optional. The URL of the git repository.
-#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
-#' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
-#' 
-#' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
-#' \item{gitBranch}{string, The git branch that the file is on.}
-#' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID for this git repository.
-#' \item repoUrl string, The URL for this git repository.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
-#' @export
-scripts_patch_r_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/r/{id}/git"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get the git commits for an item on the current branch
+#' Get the git commits for an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -27879,7 +24475,7 @@ scripts_post_r_git_commits <- function(id, content, message, file_hash) {
  }
 
 
-#' Get file contents at git ref
+#' Get file contents at commit_hash
 #' @param id integer required. The ID of the file.
 #' @param commit_hash string required. The SHA (full or shortened) of the desired git commit.
 #' 
@@ -27900,58 +24496,6 @@ scripts_get_r_git_commits <- function(id, commit_hash) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Checkout latest commit on the current branch of a script or workflow
-#' @param id integer required. The ID of the file.
-#' 
-#' @return  A list containing the following elements:
-#' \item{content}{string, The file's contents.}
-#' \item{type}{string, The file's type.}
-#' \item{size}{integer, The file's size.}
-#' \item{fileHash}{string, The SHA of the file.}
-#' @export
-scripts_post_r_git_checkout_latest <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/r/{id}/git/checkout-latest"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Checkout content that the existing git_ref points to and save to the object
-#' @param id integer required. The ID of the file.
-#' 
-#' @return  A list containing the following elements:
-#' \item{content}{string, The file's contents.}
-#' \item{type}{string, The file's type.}
-#' \item{size}{integer, The file's size.}
-#' \item{fileHash}{string, The SHA of the file.}
-#' @export
-scripts_post_r_git_checkout <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/r/{id}/git/checkout"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -28129,70 +24673,6 @@ scripts_delete_sql_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-scripts_list_sql_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/sql/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-scripts_put_sql_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/sql/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List the projects a SQL script belongs to
 #' @param id integer required. The ID of the SQL script.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -28338,11 +24818,10 @@ scripts_delete_sql_projects <- function(id, project_id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -28376,7 +24855,6 @@ scripts_delete_sql_projects <- function(id, project_id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -28395,7 +24873,6 @@ scripts_delete_sql_projects <- function(id, project_id) {
 #' \item filenamePrefix string, A user specified filename prefix for the output file to have. Default: null
 #' \item maxFileSize integer, The max file size, in MB, created files will be. Only available when force_multifile is true. 
 #' }}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_put_sql_archive <- function(id, status) {
 
@@ -28585,70 +25062,6 @@ scripts_delete_containers_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-scripts_list_containers_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/containers/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-scripts_put_containers_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/containers/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List the projects a Container Script belongs to
 #' @param id integer required. The ID of the Container Script.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -28747,12 +25160,6 @@ scripts_delete_containers_projects <- function(id, project_id) {
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
-#' \item{fromTemplateAliases}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The id of the Alias object.
-#' \item objectId integer, The id of the object
-#' \item alias string, The alias of the object
-#' }}
 #' \item{name}{string, The name of the container.}
 #' \item{type}{string, The type of the script (e.g Container)}
 #' \item{createdAt}{string, The time this script was created.}
@@ -28800,11 +25207,10 @@ scripts_delete_containers_projects <- function(id, project_id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -28829,8 +25235,8 @@ scripts_delete_containers_projects <- function(id, project_id) {
 #' }}
 #' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares. Must be at least 2 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB). Must be at least 4 MB.
+#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
+#' \item memory integer, The amount of RAM to allocate for the container (in MB).
 #' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
 #' }}
 #' \item{repoHttpUri}{string, The location of a github repo to clone into the container, e.g. github.com/my-user/my-repo.git.}
@@ -28852,12 +25258,9 @@ scripts_delete_containers_projects <- function(id, project_id) {
 #' \item error string, The error message for this run, if present.
 #' }}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_put_containers_archive <- function(id, status) {
 
@@ -29047,70 +25450,6 @@ scripts_delete_python3_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-scripts_list_python3_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/python3/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-scripts_put_python3_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/python3/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List the projects a Python Script belongs to
 #' @param id integer required. The ID of the Python Script.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -29256,11 +25595,10 @@ scripts_delete_python3_projects <- function(id, project_id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -29294,7 +25632,6 @@ scripts_delete_python3_projects <- function(id, project_id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -29308,8 +25645,6 @@ scripts_delete_python3_projects <- function(id, project_id) {
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_put_python3_archive <- function(id, status) {
 
@@ -29499,70 +25834,6 @@ scripts_delete_r_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-scripts_list_r_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/r/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-scripts_put_r_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/r/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List the projects an R Script belongs to
 #' @param id integer required. The ID of the R Script.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -29708,11 +25979,10 @@ scripts_delete_r_projects <- function(id, project_id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -29746,7 +26016,6 @@ scripts_delete_r_projects <- function(id, project_id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -29760,8 +26029,6 @@ scripts_delete_r_projects <- function(id, project_id) {
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_put_r_archive <- function(id, status) {
 
@@ -29951,70 +26218,6 @@ scripts_delete_javascript_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-scripts_list_javascript_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/javascript/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-scripts_put_javascript_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/javascript/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List the projects a JavaScript Script belongs to
 #' @param id integer required. The ID of the JavaScript Script.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -30160,11 +26363,10 @@ scripts_delete_javascript_projects <- function(id, project_id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -30198,14 +26400,12 @@ scripts_delete_javascript_projects <- function(id, project_id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{source}{string, The body/text of the script.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_put_javascript_archive <- function(id, status) {
 
@@ -30395,70 +26595,6 @@ scripts_delete_custom_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-scripts_list_custom_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/custom/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-scripts_put_custom_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/scripts/custom/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List the projects a Custom Script belongs to
 #' @param id integer required. The ID of the Custom Script.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -30557,12 +26693,6 @@ scripts_delete_custom_projects <- function(id, project_id) {
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
-#' \item{fromTemplateAliases}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The id of the Alias object.
-#' \item objectId integer, The id of the object
-#' \item alias string, The alias of the object
-#' }}
 #' \item{name}{string, The name of the script.}
 #' \item{type}{string, The type of the script (e.g Custom)}
 #' \item{createdAt}{string, The time this script was created.}
@@ -30610,11 +26740,10 @@ scripts_delete_custom_projects <- function(id, project_id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -30647,7 +26776,6 @@ scripts_delete_custom_projects <- function(id, project_id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
@@ -30660,14 +26788,6 @@ scripts_delete_custom_projects <- function(id, project_id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{requiredResources}{list, A list containing the following elements: 
-#' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB).
-#' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
-#' }}
-#' \item{partitionLabel}{string, The partition label used to run this object. Only applicable for jobs using Docker.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_put_custom_archive <- function(id, status) {
 
@@ -30741,11 +26861,10 @@ scripts_put_custom_archive <- function(id, status) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -30779,7 +26898,6 @@ scripts_put_custom_archive <- function(id, status) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -30798,7 +26916,6 @@ scripts_put_custom_archive <- function(id, status) {
 #' \item filenamePrefix string, A user specified filename prefix for the output file to have. Default: null
 #' \item maxFileSize integer, The max file size, in MB, created files will be. Only available when force_multifile is true. 
 #' }}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_post_sql_clone <- function(id, clone_schedule = NULL, clone_triggers = NULL, clone_notifications = NULL) {
 
@@ -30872,11 +26989,10 @@ scripts_post_sql_clone <- function(id, clone_schedule = NULL, clone_triggers = N
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -30910,14 +27026,12 @@ scripts_post_sql_clone <- function(id, clone_schedule = NULL, clone_triggers = N
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{source}{string, The body/text of the script.}
 #' \item{remoteHostId}{integer, The remote host ID that this script will connect to.}
 #' \item{credentialId}{integer, The credential that this script will use.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_post_javascript_clone <- function(id, clone_schedule = NULL, clone_triggers = NULL, clone_notifications = NULL) {
 
@@ -30991,11 +27105,10 @@ scripts_post_javascript_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -31029,7 +27142,6 @@ scripts_post_javascript_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -31043,8 +27155,6 @@ scripts_post_javascript_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_post_python3_clone <- function(id, clone_schedule = NULL, clone_triggers = NULL, clone_notifications = NULL) {
 
@@ -31118,11 +27228,10 @@ scripts_post_python3_clone <- function(id, clone_schedule = NULL, clone_triggers
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -31156,7 +27265,6 @@ scripts_post_python3_clone <- function(id, clone_schedule = NULL, clone_triggers
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -31170,8 +27278,6 @@ scripts_post_python3_clone <- function(id, clone_schedule = NULL, clone_triggers
 #' \item{source}{string, The body/text of the script.}
 #' \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_post_r_clone <- function(id, clone_schedule = NULL, clone_triggers = NULL, clone_notifications = NULL) {
 
@@ -31198,12 +27304,6 @@ scripts_post_r_clone <- function(id, clone_schedule = NULL, clone_triggers = NUL
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
-#' \item{fromTemplateAliases}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The id of the Alias object.
-#' \item objectId integer, The id of the object
-#' \item alias string, The alias of the object
-#' }}
 #' \item{name}{string, The name of the script.}
 #' \item{type}{string, The type of the script (e.g Custom)}
 #' \item{createdAt}{string, The time this script was created.}
@@ -31251,11 +27351,10 @@ scripts_post_r_clone <- function(id, clone_schedule = NULL, clone_triggers = NUL
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -31288,7 +27387,6 @@ scripts_post_r_clone <- function(id, clone_schedule = NULL, clone_triggers = NUL
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
@@ -31301,14 +27399,6 @@ scripts_post_r_clone <- function(id, clone_schedule = NULL, clone_triggers = NUL
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{requiredResources}{list, A list containing the following elements: 
-#' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB).
-#' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
-#' }}
-#' \item{partitionLabel}{string, The partition label used to run this object. Only applicable for jobs using Docker.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_post_custom_clone <- function(id, clone_schedule = NULL, clone_triggers = NULL, clone_notifications = NULL) {
 
@@ -31335,12 +27425,6 @@ scripts_post_custom_clone <- function(id, clone_schedule = NULL, clone_triggers 
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for the script.}
-#' \item{fromTemplateAliases}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The id of the Alias object.
-#' \item objectId integer, The id of the object
-#' \item alias string, The alias of the object
-#' }}
 #' \item{name}{string, The name of the container.}
 #' \item{type}{string, The type of the script (e.g Container)}
 #' \item{createdAt}{string, The time this script was created.}
@@ -31388,11 +27472,10 @@ scripts_post_custom_clone <- function(id, clone_schedule = NULL, clone_triggers 
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -31417,8 +27500,8 @@ scripts_post_custom_clone <- function(id, clone_schedule = NULL, clone_triggers 
 #' }}
 #' \item{requiredResources}{list, A list containing the following elements: 
 #' \itemize{
-#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares. Must be at least 2 shares.
-#' \item memory integer, The amount of RAM to allocate for the container (in MB). Must be at least 4 MB.
+#' \item cpu integer, The number of CPU shares to allocate for the container. Each core has 1000 shares.
+#' \item memory integer, The amount of RAM to allocate for the container (in MB).
 #' \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
 #' }}
 #' \item{repoHttpUri}{string, The location of a github repo to clone into the container, e.g. github.com/my-user/my-repo.git.}
@@ -31440,12 +27523,9 @@ scripts_post_custom_clone <- function(id, clone_schedule = NULL, clone_triggers 
 #' \item error string, The error message for this run, if present.
 #' }}
 #' \item{timeZone}{string, The time zone of this script.}
-#' \item{partitionLabel}{string, The partition label used to run this object. }
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{targetProjectId}{integer, Target project to which script outputs will be added.}
-#' \item{runningAsId}{integer, The ID of the runner of this script.}
 #' @export
 scripts_post_containers_clone <- function(id, clone_schedule = NULL, clone_triggers = NULL, clone_notifications = NULL) {
 
@@ -31493,7 +27573,6 @@ scripts_post_containers_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' \item lastRunFinish string, The last run finish time of the item, if the item is a job.
 #' \item public boolean, The flag that indicates a template is available to all users.
 #' \item lastRunException string, The exception of the item after the last run, if the item is a job.
-#' \item autoShare boolean, The flag that indicates if a project has Auto-Share enabled.
 #' }}
 #' @export
 search_list <- function(query = NULL, type = NULL, offset = NULL, order = NULL, owner = NULL, limit = NULL, archived = NULL, last_run_state = NULL) {
@@ -31535,59 +27614,10 @@ search_list_types <- function() {
  }
 
 
-#' Search queries that are not hidden
-#' @param search_string string optional. Space delimited search terms for searching queries by their SQL. Supports wild card characters "?" for any single character, and "*" for zero or more characters.
-#' @param database_id integer optional. The database ID.
-#' @param credential_id integer optional. The credential ID.
-#' @param author_id integer optional. The author of the query.
-#' @param archived boolean optional. The archival status of the requested item(s). Defaults to false.
-#' @param state array optional. The state of the last run. One or more of queued, running, succeeded, failed, and cancelled.
-#' @param started_before string optional. An upper bound for the start date of the last run.
-#' @param started_after string optional. A lower bound for the start date of the last run.
-#' @param limit integer optional. Number of results to return. Defaults to 10. Maximum allowed is 50.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to last_run_started_at. Must be one of: last_run_started_at.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, The query ID.}
-#' \item{database}{integer, The database ID.}
-#' \item{credential}{integer, The credential ID.}
-#' \item{sql}{string, The SQL executed by the query.}
-#' \item{authorId}{integer, The author of the query.}
-#' \item{archived}{boolean, The archival status of the requested item(s).}
-#' \item{createdAt}{string, }
-#' \item{updatedAt}{string, }
-#' \item{lastRun}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, 
-#' \item state string, The state of the run. One of queued, running, succeeded, failed, and cancelled.
-#' \item startedAt string, The time that the run started.
-#' \item finishedAt string, The time that the run completed.
-#' \item error string, The error message for this run, if present.
-#' }}
-#' @export
-search_list_queries <- function(search_string = NULL, database_id = NULL, credential_id = NULL, author_id = NULL, archived = NULL, state = NULL, started_before = NULL, started_after = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/search/queries"
-  path_params  <- list()
-  query_params <- list(search_string = search_string, database_id = database_id, credential_id = credential_id, author_id = author_id, archived = archived, state = state, started_before = started_before, started_after = started_after, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List Services
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' @param archived string optional. The archival status of the requested item(s).
-#' @param author string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.
+#' @param author string optional. If specified, return imports from this author. It accepts a comma-separated list of author IDs.
 #' @param status string optional. If specified, returns Services with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'idle'.
 #' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
@@ -31621,14 +27651,31 @@ search_list_queries <- function(search_string = NULL, database_id = NULL, creden
 #' \item dockerImageName string, The name of the docker image to pull from DockerHub.
 #' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 #' \item instanceType string, The EC2 instance type requested for the deployment.
-#' \item memory integer, The memory allocated to the deployment, in MB.
-#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
 #' \item state string, The state of the deployment.
 #' \item stateMessage string, A detailed description of the state.
-#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
-#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 #' \item createdAt string, 
 #' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{previewDeployment}{list, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
 #' \item serviceId integer, The ID of owning Service
 #' }}
 #' \item{archived}{string, The archival status of the requested item(s).}
@@ -31667,6 +27714,7 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' @param memory integer optional. The amount of memory allocated to each replica of the Service.
 #' @param cpu integer optional. The amount of cpu allocated to each replica of the the Service.
 #' @param credentials array optional. A list of credential IDs to pass to the Service.
+#' @param api_key_id integer optional. API key id of user
 #' @param permission_set_id integer optional. The ID of the associated permission set, if any.
 #' @param git_repo_url string optional. The url for the git repo where the Service code lives.
 #' @param git_repo_ref string optional. The git reference to use when pulling code from the repo.
@@ -31677,7 +27725,6 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
 #' }
-#' @param partition_label string optional. The partition label used to run this object.
 #' @param hidden boolean optional. The hidden status of the item.
 #' 
 #' @return  A list containing the following elements:
@@ -31709,6 +27756,7 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{apiKeyId}{integer, API key id of user}
 #' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
@@ -31724,35 +27772,52 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 #' \item displayUrl string, A signed URL for viewing the deployed item.
 #' \item instanceType string, The EC2 instance type requested for the deployment.
-#' \item memory integer, The memory allocated to the deployment, in MB.
-#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
 #' \item state string, The state of the deployment.
 #' \item stateMessage string, A detailed description of the state.
-#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
-#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 #' \item createdAt string, 
 #' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{previewDeployment}{list, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, A signed URL for viewing the deployed item.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
 #' \item serviceId integer, The ID of owning Service
 #' }}
 #' \item{currentUrl}{string, The URL that the service is hosted at.}
+#' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
 #' \item{environmentVariables}{list, Environment Variables to be passed into the Service.}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
 #' }}
-#' \item{partitionLabel}{string, The partition label used to run this object.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' @export
-services_post <- function(name = NULL, description = NULL, type = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, permission_set_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL, partition_label = NULL, hidden = NULL) {
+services_post <- function(name = NULL, description = NULL, type = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL, permission_set_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL, hidden = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/services/"
   path_params  <- list()
   query_params <- list()
-  body_params  <- list(name = name, description = description, type = type, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, permissionSetId = permission_set_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications, partitionLabel = partition_label, hidden = hidden)
+  body_params  <- list(name = name, description = description, type = type, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, apiKeyId = api_key_id, permissionSetId = permission_set_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications, hidden = hidden)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -31795,6 +27860,7 @@ services_post <- function(name = NULL, description = NULL, type = NULL, docker_i
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{apiKeyId}{integer, API key id of user}
 #' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
@@ -31810,25 +27876,42 @@ services_post <- function(name = NULL, description = NULL, type = NULL, docker_i
 #' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 #' \item displayUrl string, A signed URL for viewing the deployed item.
 #' \item instanceType string, The EC2 instance type requested for the deployment.
-#' \item memory integer, The memory allocated to the deployment, in MB.
-#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
 #' \item state string, The state of the deployment.
 #' \item stateMessage string, A detailed description of the state.
-#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
-#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 #' \item createdAt string, 
 #' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{previewDeployment}{list, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, A signed URL for viewing the deployed item.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
 #' \item serviceId integer, The ID of owning Service
 #' }}
 #' \item{currentUrl}{string, The URL that the service is hosted at.}
+#' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
 #' \item{environmentVariables}{list, Environment Variables to be passed into the Service.}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
 #' }}
-#' \item{partitionLabel}{string, The partition label used to run this object.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' @export
@@ -31866,6 +27949,7 @@ services_get <- function(id) {
 #' @param memory integer optional. The amount of memory allocated to each replica of the Service.
 #' @param cpu integer optional. The amount of cpu allocated to each replica of the the Service.
 #' @param credentials array optional. A list of credential IDs to pass to the Service.
+#' @param api_key_id integer optional. API key id of user
 #' @param permission_set_id integer optional. The ID of the associated permission set, if any.
 #' @param git_repo_url string optional. The url for the git repo where the Service code lives.
 #' @param git_repo_ref string optional. The git reference to use when pulling code from the repo.
@@ -31876,7 +27960,6 @@ services_get <- function(id) {
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
 #' }
-#' @param partition_label string optional. The partition label used to run this object.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this Service.}
@@ -31907,6 +27990,7 @@ services_get <- function(id) {
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{apiKeyId}{integer, API key id of user}
 #' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
@@ -31922,35 +28006,52 @@ services_get <- function(id) {
 #' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 #' \item displayUrl string, A signed URL for viewing the deployed item.
 #' \item instanceType string, The EC2 instance type requested for the deployment.
-#' \item memory integer, The memory allocated to the deployment, in MB.
-#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
 #' \item state string, The state of the deployment.
 #' \item stateMessage string, A detailed description of the state.
-#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
-#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 #' \item createdAt string, 
 #' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{previewDeployment}{list, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, A signed URL for viewing the deployed item.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
 #' \item serviceId integer, The ID of owning Service
 #' }}
 #' \item{currentUrl}{string, The URL that the service is hosted at.}
+#' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
 #' \item{environmentVariables}{list, Environment Variables to be passed into the Service.}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
 #' }}
-#' \item{partitionLabel}{string, The partition label used to run this object.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' @export
-services_put <- function(id, name = NULL, description = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, permission_set_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL, partition_label = NULL) {
+services_put <- function(id, name = NULL, description = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL, permission_set_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/services/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, description = description, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, permissionSetId = permission_set_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications, partitionLabel = partition_label)
+  body_params  <- list(name = name, description = description, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, apiKeyId = api_key_id, permissionSetId = permission_set_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -31978,6 +28079,7 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' @param memory integer optional. The amount of memory allocated to each replica of the Service.
 #' @param cpu integer optional. The amount of cpu allocated to each replica of the the Service.
 #' @param credentials array optional. A list of credential IDs to pass to the Service.
+#' @param api_key_id integer optional. API key id of user
 #' @param permission_set_id integer optional. The ID of the associated permission set, if any.
 #' @param git_repo_url string optional. The url for the git repo where the Service code lives.
 #' @param git_repo_ref string optional. The git reference to use when pulling code from the repo.
@@ -31988,7 +28090,6 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
 #' }
-#' @param partition_label string optional. The partition label used to run this object.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this Service.}
@@ -32019,6 +28120,7 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{apiKeyId}{integer, API key id of user}
 #' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
@@ -32034,35 +28136,52 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 #' \item displayUrl string, A signed URL for viewing the deployed item.
 #' \item instanceType string, The EC2 instance type requested for the deployment.
-#' \item memory integer, The memory allocated to the deployment, in MB.
-#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
 #' \item state string, The state of the deployment.
 #' \item stateMessage string, A detailed description of the state.
-#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
-#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 #' \item createdAt string, 
 #' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{previewDeployment}{list, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, A signed URL for viewing the deployed item.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
 #' \item serviceId integer, The ID of owning Service
 #' }}
 #' \item{currentUrl}{string, The URL that the service is hosted at.}
+#' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
 #' \item{environmentVariables}{list, Environment Variables to be passed into the Service.}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
 #' }}
-#' \item{partitionLabel}{string, The partition label used to run this object.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' @export
-services_patch <- function(id, name = NULL, description = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, permission_set_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL, partition_label = NULL) {
+services_patch <- function(id, name = NULL, description = NULL, docker_image_name = NULL, docker_image_tag = NULL, schedule = NULL, replicas = NULL, max_replicas = NULL, instance_type = NULL, memory = NULL, cpu = NULL, credentials = NULL, api_key_id = NULL, permission_set_id = NULL, git_repo_url = NULL, git_repo_ref = NULL, git_path_dir = NULL, environment_variables = NULL, notifications = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/services/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, description = description, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, permissionSetId = permission_set_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications, partitionLabel = partition_label)
+  body_params  <- list(name = name, description = description, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, schedule = schedule, replicas = replicas, maxReplicas = max_replicas, instanceType = instance_type, memory = memory, cpu = cpu, credentials = credentials, apiKeyId = api_key_id, permissionSetId = permission_set_id, gitRepoUrl = git_repo_url, gitRepoRef = git_repo_ref, gitPathDir = git_path_dir, environmentVariables = environment_variables, notifications = notifications)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -32266,70 +28385,6 @@ services_delete_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-services_list_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/services/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-services_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/services/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Update the archive status of this object
 #' @param id integer required. The ID of the object.
 #' @param status boolean required. The desired archived status of the object.
@@ -32363,6 +28418,7 @@ services_put_transfer <- function(id, user_id, include_dependencies, email_body 
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{apiKeyId}{integer, API key id of user}
 #' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
@@ -32378,25 +28434,42 @@ services_put_transfer <- function(id, user_id, include_dependencies, email_body 
 #' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 #' \item displayUrl string, A signed URL for viewing the deployed item.
 #' \item instanceType string, The EC2 instance type requested for the deployment.
-#' \item memory integer, The memory allocated to the deployment, in MB.
-#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
 #' \item state string, The state of the deployment.
 #' \item stateMessage string, A detailed description of the state.
-#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
-#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 #' \item createdAt string, 
 #' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{previewDeployment}{list, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, A signed URL for viewing the deployed item.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
 #' \item serviceId integer, The ID of owning Service
 #' }}
 #' \item{currentUrl}{string, The URL that the service is hosted at.}
+#' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
 #' \item{environmentVariables}{list, Environment Variables to be passed into the Service.}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
 #' }}
-#' \item{partitionLabel}{string, The partition label used to run this object.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' @export
@@ -32525,14 +28598,13 @@ services_delete_projects <- function(id, project_id) {
 #' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{instanceType}{string, The EC2 instance type requested for the deployment.}
-#' \item{memory}{integer, The memory allocated to the deployment, in MB.}
-#' \item{cpu}{integer, The cpu allocated to the deployment, in millicores.}
+#' \item{memory}{integer, The memory allocated to the deployment.}
+#' \item{cpu}{integer, The cpu allocated to the deployment.}
 #' \item{state}{string, The state of the deployment.}
 #' \item{stateMessage}{string, A detailed description of the state.}
-#' \item{maxMemoryUsage}{number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.}
-#' \item{maxCpuUsage}{number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
+#' \item{published}{boolean, }
 #' \item{serviceId}{integer, The ID of owning Service}
 #' @export
 services_list_deployments <- function(service_id, deployment_id = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
@@ -32555,6 +28627,7 @@ services_list_deployments <- function(service_id, deployment_id = NULL, limit = 
 #' Deploy a Service
 #' @param service_id integer required. The ID of the owning Service
 #' @param deployment_id integer optional. The ID for this deployment
+#' @param published boolean optional. 
 #' 
 #' @return  A list containing the following elements:
 #' \item{deploymentId}{integer, The ID for this deployment.}
@@ -32565,23 +28638,22 @@ services_list_deployments <- function(service_id, deployment_id = NULL, limit = 
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{displayUrl}{string, A signed URL for viewing the deployed item.}
 #' \item{instanceType}{string, The EC2 instance type requested for the deployment.}
-#' \item{memory}{integer, The memory allocated to the deployment, in MB.}
-#' \item{cpu}{integer, The cpu allocated to the deployment, in millicores.}
+#' \item{memory}{integer, The memory allocated to the deployment.}
+#' \item{cpu}{integer, The cpu allocated to the deployment.}
 #' \item{state}{string, The state of the deployment.}
 #' \item{stateMessage}{string, A detailed description of the state.}
-#' \item{maxMemoryUsage}{number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.}
-#' \item{maxCpuUsage}{number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
+#' \item{published}{boolean, }
 #' \item{serviceId}{integer, The ID of owning Service}
 #' @export
-services_post_deployments <- function(service_id, deployment_id = NULL) {
+services_post_deployments <- function(service_id, deployment_id = NULL, published = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/services/{service_id}/deployments"
   path_params  <- list(service_id = service_id)
   query_params <- list()
-  body_params  <- list(deploymentId = deployment_id)
+  body_params  <- list(deploymentId = deployment_id, published = published)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -32605,14 +28677,13 @@ services_post_deployments <- function(service_id, deployment_id = NULL) {
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{displayUrl}{string, A signed URL for viewing the deployed item.}
 #' \item{instanceType}{string, The EC2 instance type requested for the deployment.}
-#' \item{memory}{integer, The memory allocated to the deployment, in MB.}
-#' \item{cpu}{integer, The cpu allocated to the deployment, in millicores.}
+#' \item{memory}{integer, The memory allocated to the deployment.}
+#' \item{cpu}{integer, The cpu allocated to the deployment.}
 #' \item{state}{string, The state of the deployment.}
 #' \item{stateMessage}{string, A detailed description of the state.}
-#' \item{maxMemoryUsage}{number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.}
-#' \item{maxCpuUsage}{number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
+#' \item{published}{boolean, }
 #' \item{serviceId}{integer, The ID of owning Service}
 #' @export
 services_get_deployments <- function(service_id, deployment_id) {
@@ -32658,6 +28729,7 @@ services_delete_deployments <- function(service_id, deployment_id) {
 #' Redeploy a Service
 #' @param service_id integer required. The ID of the owning Service
 #' @param deployment_id integer optional. The ID for this deployment
+#' @param published boolean optional. 
 #' 
 #' @return  A list containing the following elements:
 #' \item{deploymentId}{integer, The ID for this deployment.}
@@ -32668,23 +28740,22 @@ services_delete_deployments <- function(service_id, deployment_id) {
 #' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 #' \item{displayUrl}{string, A signed URL for viewing the deployed item.}
 #' \item{instanceType}{string, The EC2 instance type requested for the deployment.}
-#' \item{memory}{integer, The memory allocated to the deployment, in MB.}
-#' \item{cpu}{integer, The cpu allocated to the deployment, in millicores.}
+#' \item{memory}{integer, The memory allocated to the deployment.}
+#' \item{cpu}{integer, The cpu allocated to the deployment.}
 #' \item{state}{string, The state of the deployment.}
 #' \item{stateMessage}{string, A detailed description of the state.}
-#' \item{maxMemoryUsage}{number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.}
-#' \item{maxCpuUsage}{number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
+#' \item{published}{boolean, }
 #' \item{serviceId}{integer, The ID of owning Service}
 #' @export
-services_post_redeploy <- function(service_id, deployment_id = NULL) {
+services_post_redeploy <- function(service_id, deployment_id = NULL, published = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/services/{service_id}/redeploy"
   path_params  <- list(service_id = service_id)
   query_params <- list()
-  body_params  <- list(deploymentId = deployment_id)
+  body_params  <- list(deploymentId = deployment_id, published = published)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -32757,6 +28828,7 @@ services_list_deployments_logs <- function(id, deployment_id, start_at = NULL, e
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{apiKeyId}{integer, API key id of user}
 #' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
@@ -32772,25 +28844,42 @@ services_list_deployments_logs <- function(id, deployment_id, start_at = NULL, e
 #' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 #' \item displayUrl string, A signed URL for viewing the deployed item.
 #' \item instanceType string, The EC2 instance type requested for the deployment.
-#' \item memory integer, The memory allocated to the deployment, in MB.
-#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
 #' \item state string, The state of the deployment.
 #' \item stateMessage string, A detailed description of the state.
-#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
-#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 #' \item createdAt string, 
 #' \item updatedAt string, 
+#' \item published boolean, 
+#' \item serviceId integer, The ID of owning Service
+#' }}
+#' \item{previewDeployment}{list, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, A signed URL for viewing the deployed item.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment.
+#' \item cpu integer, The cpu allocated to the deployment.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item published boolean, 
 #' \item serviceId integer, The ID of owning Service
 #' }}
 #' \item{currentUrl}{string, The URL that the service is hosted at.}
+#' \item{previewUrl}{string, The URL that previews of the service are hosted at.}
 #' \item{environmentVariables}{list, Environment Variables to be passed into the Service.}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
 #' \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 #' \item failureOn boolean, If failure email notifications are on
 #' }}
-#' \item{partitionLabel}{string, The partition label used to run this object.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
 #' @export
@@ -32815,7 +28904,6 @@ services_post_clone <- function(id) {
 #' @param id integer required. The ID of the service.
 #' @param name string required. The name of the token.
 #' @param machine_token boolean optional. If true, create a compact token with no user information.
-#' @param expires_in integer optional. The number of seconds until the token should expire
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of the token.}
@@ -32829,17 +28917,16 @@ services_post_clone <- function(id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{machineToken}{boolean, If true, this token is not tied to a particular user.}
-#' \item{expiresAt}{string, The date and time when the token expires.}
 #' \item{createdAt}{string, The date and time when the token was created.}
 #' \item{token}{string, The value of the token. Only returned when the token is first created.}
 #' @export
-services_post_tokens <- function(id, name, machine_token = NULL, expires_in = NULL) {
+services_post_tokens <- function(id, name, machine_token = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/services/{id}/tokens"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, machineToken = machine_token, expiresIn = expires_in)
+  body_params  <- list(name = name, machineToken = machine_token)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -32865,7 +28952,6 @@ services_post_tokens <- function(id, name, machine_token = NULL, expires_in = NU
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{machineToken}{boolean, If true, this token is not tied to a particular user.}
-#' \item{expiresAt}{string, The date and time when the token expires.}
 #' \item{createdAt}{string, The date and time when the token was created.}
 #' @export
 services_list_tokens <- function(id) {
@@ -33310,199 +29396,6 @@ storage_hosts_delete_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-storage_hosts_list_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/storage_hosts/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-storage_hosts_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/storage_hosts/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' List Table Tags
-#' @param name string optional. Name of the tag. If it is provided, the results will be filtered by name
-#' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
-#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to name. Must be one of: name, user, table_count.
-#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to asc.
-#' 
-#' @return  An array containing the following fields:
-#' \item{id}{integer, Table Tag ID}
-#' \item{name}{string, Table Tag Name}
-#' \item{tableCount}{integer, The total number of tables associated with the tag.}
-#' \item{user}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' @export
-table_tags_list <- function(name = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/table_tags/"
-  path_params  <- list()
-  query_params <- list(name = name, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Create a Table Tag
-#' @param name string required. Table Tag Name
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, Table Tag ID}
-#' \item{name}{string, Table Tag Name}
-#' \item{createdAt}{string, The date the tag was created.}
-#' \item{updatedAt}{string, The date the tag was recently updated on.}
-#' \item{tableCount}{integer, The total number of tables associated with the tag.}
-#' \item{user}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' @export
-table_tags_post <- function(name) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/table_tags/"
-  path_params  <- list()
-  query_params <- list()
-  body_params  <- list(name = name)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get a Table Tag
-#' @param id integer required. 
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, Table Tag ID}
-#' \item{name}{string, Table Tag Name}
-#' \item{createdAt}{string, The date the tag was created.}
-#' \item{updatedAt}{string, The date the tag was recently updated on.}
-#' \item{tableCount}{integer, The total number of tables associated with the tag.}
-#' \item{user}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' @export
-table_tags_get <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/table_tags/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Delete a Table Tag
-#' @param id integer required. 
-#' 
-#' @return  An empty HTTP response
-#' @export
-table_tags_delete <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/table_tags/{id}"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Geocode a table
 #' @param source_table_id integer required. The ID of the table to be enhanced.
 #' 
@@ -33535,7 +29428,6 @@ tables_post_enhancements_geocodings <- function(source_table_id) {
 #' @param perform_ncoa boolean optional. Whether to update addresses for records matching the National Change of Address (NCOA) database.
 #' @param ncoa_credential_id integer optional. Credential to use when performing NCOA updates. Required if 'performNcoa' is true.
 #' @param output_level string optional. The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.
-#' @param chunk_size integer optional. The maximum number of records processed at a time. Note that this parameter is not available to all users.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of the enhancement.}
@@ -33546,15 +29438,14 @@ tables_post_enhancements_geocodings <- function(source_table_id) {
 #' \item{performNcoa}{boolean, Whether to update addresses for records matching the National Change of Address (NCOA) database.}
 #' \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 #' \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
-#' \item{chunkSize}{integer, The maximum number of records processed at a time. Note that this parameter is not available to all users.}
 #' @export
-tables_post_enhancements_cass_ncoa <- function(source_table_id, perform_ncoa = NULL, ncoa_credential_id = NULL, output_level = NULL, chunk_size = NULL) {
+tables_post_enhancements_cass_ncoa <- function(source_table_id, perform_ncoa = NULL, ncoa_credential_id = NULL, output_level = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/tables/{source_table_id}/enhancements/cass-ncoa"
   path_params  <- list(source_table_id = source_table_id)
   query_params <- list()
-  body_params  <- list(performNcoa = perform_ncoa, ncoaCredentialId = ncoa_credential_id, outputLevel = output_level, chunkSize = chunk_size)
+  body_params  <- list(performNcoa = perform_ncoa, ncoaCredentialId = ncoa_credential_id, outputLevel = output_level)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -33606,7 +29497,6 @@ tables_get_enhancements_geocodings <- function(id, source_table_id) {
 #' \item{performNcoa}{boolean, Whether to update addresses for records matching the National Change of Address (NCOA) database.}
 #' \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 #' \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
-#' \item{chunkSize}{integer, The maximum number of records processed at a time. Note that this parameter is not available to all users.}
 #' @export
 tables_get_enhancements_cass_ncoa <- function(id, source_table_id) {
 
@@ -33684,11 +29574,6 @@ tables_post_scan <- function(database_id, schema, table_name, stats_priority = N
 #' }}
 #' \item{primaryKeys}{array, The primary keys for this table.}
 #' \item{lastModifiedKeys}{array, The columns indicating an entry's modification status for this table.}
-#' \item{tableTags}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, Table Tag ID
-#' \item name string, Table Tag Name
-#' }}
 #' \item{ontologyMapping}{list, The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
 #' \item{columns}{array, An array containing the following fields: 
 #' \itemize{
@@ -33701,8 +29586,8 @@ tables_post_scan <- function(database_id, schema, table_name, stats_priority = N
 #' \item order integer, Relative position of the column in the table.
 #' \item minValue string, Smallest value in the column.
 #' \item maxValue string, Largest value in the column.
-#' \item avgValue number, This parameter is deprecated.
-#' \item stddev number, This parameter is deprecated.
+#' \item avgValue number, Average value of the column, where applicable.
+#' \item stddev number, Stddev of the column, where applicable.
 #' \item valueDistributionPercent object, A mapping between each value in the column and the percentage of rows with that value.Only present for tables with fewer than approximately 25,000,000 rows and for columns with fewer than twenty distinct values.
 #' \item coverageCount integer, Number of non-null values in the column.
 #' \item nullCount integer, Number of null values in the column.
@@ -33710,7 +29595,7 @@ tables_post_scan <- function(database_id, schema, table_name, stats_priority = N
 #' \item useableAsIndependentVariable boolean, Whether the column may be used as an independent variable to train a model.
 #' \item useableAsPrimaryKey boolean, Whether the column may be used as an primary key to identify table rows.
 #' \item valueDistribution object, An object mapping distinct values in the column to the number of times they appear in the column
-#' \item distinctCount integer, Number of distinct values in the column. NULL values are counted and treated as a single distinct value.
+#' \item distinctCount integer, Number of distinct values in the column.
 #' }}
 #' \item{joins}{array, An array containing the following fields: 
 #' \itemize{
@@ -33765,11 +29650,9 @@ tables_post_refresh <- function(id) {
 #' @param schema string optional. If specified, will be used to filter the tables returned. Substring matching is supported with "\%" and "*" wildcards (e.g., "schema=\%census\%" will return both "client_census.table" and "census_2010.table").
 #' @param name string optional. If specified, will be used to filter the tables returned. Substring matching is supported with "\%" and "*" wildcards (e.g., "name=\%table\%" will return both "table1" and "my table").
 #' @param search string optional. If specified, will be used to filter the tables returned. Will search across schema and name (in the full form schema.name) and will return any full name containing the search string.
-#' @param table_tag_ids array optional. If specified, will be used to filter the tables returned. Will search across Table Tags and will return any tables that have one of the matching Table Tags.
-#' @param credential_id integer optional. If specified, will be used instead of the default credential to filter the tables returned.
 #' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
-#' @param order string optional. The field on which to order the result set. Defaults to schema. Must be one of: schema, name, search, table_tag_ids, credential_id.
+#' @param order string optional. The field on which to order the result set. Defaults to schema. Must be one of: schema, name, search.
 #' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to asc.
 #' 
 #' @return  An array containing the following fields:
@@ -33797,18 +29680,13 @@ tables_post_refresh <- function(id) {
 #' \item finishedAt string, The time that the run completed.
 #' \item error string, The error message for this run, if present.
 #' }}
-#' \item{tableTags}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, Table Tag ID
-#' \item name string, Table Tag Name
-#' }}
 #' @export
-tables_list <- function(database_id = NULL, schema = NULL, name = NULL, search = NULL, table_tag_ids = NULL, credential_id = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+tables_list <- function(database_id = NULL, schema = NULL, name = NULL, search = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/tables/"
   path_params  <- list()
-  query_params <- list(database_id = database_id, schema = schema, name = name, search = search, table_tag_ids = table_tag_ids, credential_id = credential_id, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(database_id = database_id, schema = schema, name = name, search = search, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -33852,11 +29730,6 @@ tables_list <- function(database_id = NULL, schema = NULL, name = NULL, search =
 #' }}
 #' \item{primaryKeys}{array, The primary keys for this table.}
 #' \item{lastModifiedKeys}{array, The columns indicating an entry's modification status for this table.}
-#' \item{tableTags}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, Table Tag ID
-#' \item name string, Table Tag Name
-#' }}
 #' \item{ontologyMapping}{list, The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
 #' \item{columns}{array, An array containing the following fields: 
 #' \itemize{
@@ -33869,8 +29742,8 @@ tables_list <- function(database_id = NULL, schema = NULL, name = NULL, search =
 #' \item order integer, Relative position of the column in the table.
 #' \item minValue string, Smallest value in the column.
 #' \item maxValue string, Largest value in the column.
-#' \item avgValue number, This parameter is deprecated.
-#' \item stddev number, This parameter is deprecated.
+#' \item avgValue number, Average value of the column, where applicable.
+#' \item stddev number, Stddev of the column, where applicable.
 #' \item valueDistributionPercent object, A mapping between each value in the column and the percentage of rows with that value.Only present for tables with fewer than approximately 25,000,000 rows and for columns with fewer than twenty distinct values.
 #' \item coverageCount integer, Number of non-null values in the column.
 #' \item nullCount integer, Number of null values in the column.
@@ -33878,7 +29751,7 @@ tables_list <- function(database_id = NULL, schema = NULL, name = NULL, search =
 #' \item useableAsIndependentVariable boolean, Whether the column may be used as an independent variable to train a model.
 #' \item useableAsPrimaryKey boolean, Whether the column may be used as an primary key to identify table rows.
 #' \item valueDistribution object, An object mapping distinct values in the column to the number of times they appear in the column
-#' \item distinctCount integer, Number of distinct values in the column. NULL values are counted and treated as a single distinct value.
+#' \item distinctCount integer, Number of distinct values in the column.
 #' }}
 #' \item{joins}{array, An array containing the following fields: 
 #' \itemize{
@@ -33964,11 +29837,6 @@ tables_get <- function(id) {
 #' }}
 #' \item{primaryKeys}{array, The primary keys for this table.}
 #' \item{lastModifiedKeys}{array, The columns indicating an entry's modification status for this table.}
-#' \item{tableTags}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, Table Tag ID
-#' \item name string, Table Tag Name
-#' }}
 #' \item{ontologyMapping}{list, The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
 #' @export
 tables_patch <- function(id, ontology_mapping = NULL, description = NULL, primary_keys = NULL, last_modified_keys = NULL) {
@@ -34006,8 +29874,8 @@ tables_patch <- function(id, ontology_mapping = NULL, description = NULL, primar
 #' \item{order}{integer, Relative position of the column in the table.}
 #' \item{minValue}{string, Smallest value in the column.}
 #' \item{maxValue}{string, Largest value in the column.}
-#' \item{avgValue}{number, This parameter is deprecated.}
-#' \item{stddev}{number, This parameter is deprecated.}
+#' \item{avgValue}{number, Average value of the column, where applicable.}
+#' \item{stddev}{number, Stddev of the column, where applicable.}
 #' \item{valueDistributionPercent}{list, A mapping between each value in the column and the percentage of rows with that value.Only present for tables with fewer than approximately 25,000,000 rows and for columns with fewer than twenty distinct values.}
 #' \item{coverageCount}{integer, Number of non-null values in the column.}
 #' \item{nullCount}{integer, Number of null values in the column.}
@@ -34015,7 +29883,7 @@ tables_patch <- function(id, ontology_mapping = NULL, description = NULL, primar
 #' \item{useableAsIndependentVariable}{boolean, Whether the column may be used as an independent variable to train a model.}
 #' \item{useableAsPrimaryKey}{boolean, Whether the column may be used as an primary key to identify table rows.}
 #' \item{valueDistribution}{list, An object mapping distinct values in the column to the number of times they appear in the column}
-#' \item{distinctCount}{integer, Number of distinct values in the column. NULL values are counted and treated as a single distinct value.}
+#' \item{distinctCount}{integer, Number of distinct values in the column.}
 #' @export
 tables_list_columns <- function(id, name = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
@@ -34028,54 +29896,6 @@ tables_list_columns <- function(id, name = NULL, limit = NULL, page_num = NULL, 
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Add a tag to a table
-#' @param id integer required. The ID of the table.
-#' @param table_tag_id integer required. The ID of the tag.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of the table.}
-#' \item{tableTagId}{integer, The ID of the tag.}
-#' @export
-tables_put_tags <- function(id, table_tag_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/tables/{id}/tags/{table_tag_id}"
-  path_params  <- list(id = id, table_tag_id = table_tag_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Add a tag to a table
-#' @param id integer required. The ID of the table.
-#' @param table_tag_id integer required. The ID of the tag.
-#' 
-#' @return  An empty HTTP response
-#' @export
-tables_delete_tags <- function(id, table_tag_id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/tables/{id}/tags/{table_tag_id}"
-  path_params  <- list(id = id, table_tag_id = table_tag_id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -34345,73 +30165,8 @@ templates_delete_reports_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-templates_list_reports_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/templates/reports/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-templates_put_reports_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/templates/reports/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List Report Templates
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
-#' @param author string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.
 #' @param category string optional. A category to filter results by, one of: dataset-viz
 #' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
@@ -34426,7 +30181,6 @@ templates_put_reports_transfer <- function(id, user_id, include_dependencies, em
 #' \item{updatedAt}{string, }
 #' \item{useCount}{integer, The number of uses of this template.}
 #' \item{archived}{boolean, Whether the template has been archived.}
-#' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -34435,13 +30189,14 @@ templates_put_reports_transfer <- function(id, user_id, include_dependencies, em
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
+#' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' @export
-templates_list_reports <- function(hidden = NULL, author = NULL, category = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+templates_list_reports <- function(hidden = NULL, category = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/templates/reports/"
   path_params  <- list()
-  query_params <- list(hidden = hidden, author = author, category = category, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(hidden = hidden, category = category, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -34469,7 +30224,6 @@ templates_list_reports <- function(hidden = NULL, author = NULL, category = NULL
 #' \item{updatedAt}{string, }
 #' \item{useCount}{integer, The number of uses of this template.}
 #' \item{archived}{boolean, Whether the template has been archived.}
-#' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -34478,6 +30232,7 @@ templates_list_reports <- function(hidden = NULL, author = NULL, category = NULL
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
+#' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{authCodeUrl}{string, A URL to the template's stored code body.}
 #' \item{provideAPIKey}{boolean, Whether reports based on this template request an API Key from the report viewer.}
 #' \item{hidden}{boolean, The hidden status of the item.}
@@ -34510,7 +30265,6 @@ templates_post_reports <- function(name, code_body, category = NULL, archived = 
 #' \item{updatedAt}{string, }
 #' \item{useCount}{integer, The number of uses of this template.}
 #' \item{archived}{boolean, Whether the template has been archived.}
-#' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -34519,6 +30273,7 @@ templates_post_reports <- function(name, code_body, category = NULL, archived = 
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
+#' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{authCodeUrl}{string, A URL to the template's stored code body.}
 #' \item{provideAPIKey}{boolean, Whether reports based on this template request an API Key from the report viewer.}
 #' \item{hidden}{boolean, The hidden status of the item.}
@@ -34556,7 +30311,6 @@ templates_get_reports <- function(id) {
 #' \item{updatedAt}{string, }
 #' \item{useCount}{integer, The number of uses of this template.}
 #' \item{archived}{boolean, Whether the template has been archived.}
-#' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -34565,6 +30319,7 @@ templates_get_reports <- function(id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
+#' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{authCodeUrl}{string, A URL to the template's stored code body.}
 #' \item{provideAPIKey}{boolean, Whether reports based on this template request an API Key from the report viewer.}
 #' \item{hidden}{boolean, The hidden status of the item.}
@@ -34602,7 +30357,6 @@ templates_put_reports <- function(id, name, code_body, category = NULL, archived
 #' \item{updatedAt}{string, }
 #' \item{useCount}{integer, The number of uses of this template.}
 #' \item{archived}{boolean, Whether the template has been archived.}
-#' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -34611,6 +30365,7 @@ templates_put_reports <- function(id, name, code_body, category = NULL, archived
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
+#' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{authCodeUrl}{string, A URL to the template's stored code body.}
 #' \item{provideAPIKey}{boolean, Whether reports based on this template request an API Key from the report viewer.}
 #' \item{hidden}{boolean, The hidden status of the item.}
@@ -34666,7 +30421,6 @@ templates_delete_reports <- function(id) {
 #' \item{updatedAt}{string, }
 #' \item{useCount}{integer, The number of uses of this template.}
 #' \item{archived}{boolean, Whether the template has been archived.}
-#' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{author}{list, A list containing the following elements: 
 #' \itemize{
 #' \item id integer, The ID of this user.
@@ -34675,6 +30429,7 @@ templates_delete_reports <- function(id) {
 #' \item initials string, This user's initials.
 #' \item online boolean, Whether this user is online.
 #' }}
+#' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{authCodeUrl}{string, A URL to the template's stored code body.}
 #' \item{provideAPIKey}{boolean, Whether reports based on this template request an API Key from the report viewer.}
 #' \item{hidden}{boolean, The hidden status of the item.}
@@ -34867,70 +30622,6 @@ templates_delete_scripts_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-templates_list_scripts_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/templates/scripts/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-templates_put_scripts_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/templates/scripts/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List the projects a Script Template belongs to
 #' @param id integer required. The ID of the Script Template.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -35025,7 +30716,6 @@ templates_delete_scripts_projects <- function(id, project_id) {
 
 #' List Script Templates
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
-#' @param author string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.
 #' @param category string optional. A category to filter results by, one of: import, export, enhancement, model, and script
 #' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
@@ -35045,21 +30735,13 @@ templates_delete_scripts_projects <- function(id, project_id) {
 #' \item{uiReportId}{integer, The id of the report that this template uses.}
 #' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{archived}{boolean, Whether the template has been archived.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
 #' @export
-templates_list_scripts <- function(hidden = NULL, author = NULL, category = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+templates_list_scripts <- function(hidden = NULL, category = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/templates/scripts/"
   path_params  <- list()
-  query_params <- list(hidden = hidden, author = author, category = category, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(hidden = hidden, category = category, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -35085,17 +30767,6 @@ templates_list_scripts <- function(hidden = NULL, author = NULL, category = NULL
 #' \item{scriptId}{integer, The id of the script that this template uses.}
 #' \item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{userContext}{string, The user context of the script that this template uses.}
-#' \item{params}{array, An array containing the following fields: 
-#' \itemize{
-#' \item name string, The variable's name as used within your code.
-#' \item label string, The label to present to users when asking them for the value.
-#' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
-#' \item required boolean, Whether this param is required.
-#' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
-#' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
-#' }}
 #' \item{name}{string, The name of the template.}
 #' \item{category}{string, The category of this template.}
 #' \item{note}{string, A note describing what this template is used for; custom scripts created off this template will display this description.}
@@ -35106,15 +30777,6 @@ templates_list_scripts <- function(hidden = NULL, author = NULL, category = NULL
 #' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{archived}{boolean, Whether the template has been archived.}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 templates_post_scripts <- function(script_id, name, note = NULL, ui_report_id = NULL, archived = NULL, hidden = NULL) {
 
@@ -35142,17 +30804,6 @@ templates_post_scripts <- function(script_id, name, note = NULL, ui_report_id = 
 #' \item{scriptId}{integer, The id of the script that this template uses.}
 #' \item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{userContext}{string, The user context of the script that this template uses.}
-#' \item{params}{array, An array containing the following fields: 
-#' \itemize{
-#' \item name string, The variable's name as used within your code.
-#' \item label string, The label to present to users when asking them for the value.
-#' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
-#' \item required boolean, Whether this param is required.
-#' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
-#' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
-#' }}
 #' \item{name}{string, The name of the template.}
 #' \item{category}{string, The category of this template.}
 #' \item{note}{string, A note describing what this template is used for; custom scripts created off this template will display this description.}
@@ -35163,15 +30814,6 @@ templates_post_scripts <- function(script_id, name, note = NULL, ui_report_id = 
 #' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{archived}{boolean, Whether the template has been archived.}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 templates_get_scripts <- function(id) {
 
@@ -35203,17 +30845,6 @@ templates_get_scripts <- function(id) {
 #' \item{scriptId}{integer, The id of the script that this template uses.}
 #' \item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{userContext}{string, The user context of the script that this template uses.}
-#' \item{params}{array, An array containing the following fields: 
-#' \itemize{
-#' \item name string, The variable's name as used within your code.
-#' \item label string, The label to present to users when asking them for the value.
-#' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
-#' \item required boolean, Whether this param is required.
-#' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
-#' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
-#' }}
 #' \item{name}{string, The name of the template.}
 #' \item{category}{string, The category of this template.}
 #' \item{note}{string, A note describing what this template is used for; custom scripts created off this template will display this description.}
@@ -35224,15 +30855,6 @@ templates_get_scripts <- function(id) {
 #' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{archived}{boolean, Whether the template has been archived.}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 templates_put_scripts <- function(id, name, note = NULL, ui_report_id = NULL, archived = NULL) {
 
@@ -35264,17 +30886,6 @@ templates_put_scripts <- function(id, name, note = NULL, ui_report_id = NULL, ar
 #' \item{scriptId}{integer, The id of the script that this template uses.}
 #' \item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{userContext}{string, The user context of the script that this template uses.}
-#' \item{params}{array, An array containing the following fields: 
-#' \itemize{
-#' \item name string, The variable's name as used within your code.
-#' \item label string, The label to present to users when asking them for the value.
-#' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
-#' \item required boolean, Whether this param is required.
-#' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
-#' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
-#' }}
 #' \item{name}{string, The name of the template.}
 #' \item{category}{string, The category of this template.}
 #' \item{note}{string, A note describing what this template is used for; custom scripts created off this template will display this description.}
@@ -35285,15 +30896,6 @@ templates_put_scripts <- function(id, name, note = NULL, ui_report_id = NULL, ar
 #' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{archived}{boolean, Whether the template has been archived.}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 templates_patch_scripts <- function(id, name = NULL, note = NULL, ui_report_id = NULL, archived = NULL) {
 
@@ -35344,17 +30946,6 @@ templates_delete_scripts <- function(id) {
 #' \item{scriptId}{integer, The id of the script that this template uses.}
 #' \item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 #' \item{userContext}{string, The user context of the script that this template uses.}
-#' \item{params}{array, An array containing the following fields: 
-#' \itemize{
-#' \item name string, The variable's name as used within your code.
-#' \item label string, The label to present to users when asking them for the value.
-#' \item description string, A short sentence or fragment describing this parameter to the end user.
-#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
-#' \item required boolean, Whether this param is required.
-#' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
-#' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
-#' }}
 #' \item{name}{string, The name of the template.}
 #' \item{category}{string, The category of this template.}
 #' \item{note}{string, A note describing what this template is used for; custom scripts created off this template will display this description.}
@@ -35365,15 +30956,6 @@ templates_delete_scripts <- function(id) {
 #' \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 #' \item{archived}{boolean, Whether the template has been archived.}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{author}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID of this user.
-#' \item name string, This user's name.
-#' \item username string, This user's username.
-#' \item initials string, This user's initials.
-#' \item online boolean, Whether this user is online.
-#' }}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' @export
 templates_post_scripts_review <- function(id, status) {
 
@@ -35394,11 +30976,10 @@ templates_post_scripts_review <- function(id, status) {
 
 #' List users
 #' @param feature_flag string optional. Return users that have a feature flag enabled.
-#' @param account_status string optional. The account status by which to filter users. May be one of "active", "inactive", or "all". Defaults to active.
-#' @param query string optional. Return users who match the given query, based on name, user, email, and id.
-#' @param group_id integer optional. The ID of the group by which to filter users. Cannot be present if group_ids is.
-#' @param group_ids array optional. The IDs of the groups by which to filter users. Cannot be present if group_id is.
-#' @param organization_id integer optional. The ID of the organization by which to filter users.
+#' @param account_status string optional. The account status by which to filter users. May be one of "active", "inactive", or "all".
+#' @param query string optional. Return users who match the given query, based on name, user, and email.
+#' @param group_id integer optional. The ID of the group by which to filter users. Cannot be present if organization_id is.
+#' @param organization_id integer optional. The ID of the organization by which to filter users. Cannot be present if group_id is.
 #' @param exclude_groups boolean optional. Whether or to exclude users' groups. Default: false.
 #' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 10000.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
@@ -35410,30 +30991,23 @@ templates_post_scripts_review <- function(id, status) {
 #' \item{user}{string, The username of this user.}
 #' \item{name}{string, The name of this user.}
 #' \item{email}{string, The email of this user.}
-#' \item{active}{boolean, Whether this user account is active or deactivated.}
+#' \item{active}{boolean, The account status of this user.}
 #' \item{primaryGroupId}{integer, The ID of the primary group of this user.}
 #' \item{groups}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this group.
 #' \item name string, The name of this group.
-#' \item slug string, The slug of this group.
-#' \item organizationId integer, The ID of the organization associated with this group.
-#' \item organizationName string, The name of the organization associated with this group.
+#' \item organizationId integer, The organization associated with this group.
 #' }}
 #' \item{createdAt}{string, The date and time when the user was created.}
 #' \item{currentSignInAt}{string, The date and time when the user's current session began.}
-#' \item{updatedAt}{string, The date and time when the user was last updated.}
-#' \item{lastSeenAt}{string, The date and time when the user last visited Platform.}
-#' \item{suspended}{boolean, Whether the user is suspended due to inactivity.}
-#' \item{createdById}{integer, The ID of the user who created this user.}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
 #' @export
-users_list <- function(feature_flag = NULL, account_status = NULL, query = NULL, group_id = NULL, group_ids = NULL, organization_id = NULL, exclude_groups = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+users_list <- function(feature_flag = NULL, account_status = NULL, query = NULL, group_id = NULL, organization_id = NULL, exclude_groups = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/users/"
   path_params  <- list()
-  query_params <- list(feature_flag = feature_flag, account_status = account_status, query = query, group_id = group_id, group_ids = group_ids, organization_id = organization_id, exclude_groups = exclude_groups, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  query_params <- list(feature_flag = feature_flag, account_status = account_status, query = query, group_id = group_id, organization_id = organization_id, exclude_groups = exclude_groups, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -35445,12 +31019,12 @@ users_list <- function(feature_flag = NULL, account_status = NULL, query = NULL,
  }
 
 
-#' Create a new user (must be a team or org admin)
+#' Create a new user (must be an admin or client user admin)
 #' @param name string required. The name of this user.
 #' @param email string required. The email of this user.
 #' @param primary_group_id integer required. The ID of the primary group of this user.
 #' @param user string required. The username of this user.
-#' @param active boolean optional. Whether this user account is active or deactivated.
+#' @param active boolean optional. The account status of this user.
 #' @param city string optional. The city of this user.
 #' @param state string optional. The state of this user.
 #' @param time_zone string optional. The time zone of this user.
@@ -35471,15 +31045,13 @@ users_list <- function(feature_flag = NULL, account_status = NULL, query = NULL,
 #' \item{user}{string, The username of this user.}
 #' \item{name}{string, The name of this user.}
 #' \item{email}{string, The email of this user.}
-#' \item{active}{boolean, Whether this user account is active or deactivated.}
+#' \item{active}{boolean, The account status of this user.}
 #' \item{primaryGroupId}{integer, The ID of the primary group of this user.}
 #' \item{groups}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this group.
 #' \item name string, The name of this group.
-#' \item slug string, The slug of this group.
-#' \item organizationId integer, The ID of the organization associated with this group.
-#' \item organizationName string, The name of the organization associated with this group.
+#' \item organizationId integer, The organization associated with this group.
 #' }}
 #' \item{city}{string, The city of this user.}
 #' \item{state}{string, The state of this user.}
@@ -35500,15 +31072,6 @@ users_list <- function(feature_flag = NULL, account_status = NULL, query = NULL,
 #' \item{organizationSSODisableCapable}{boolean, The user's organization's ability to disable sso for their users.}
 #' \item{organizationLoginType}{string, The user's organization's login type.}
 #' \item{organizationSmsOtpDisabled}{boolean, Whether the user's organization has SMS OTP disabled.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{createdAt}{string, The date and time when the user was created.}
-#' \item{updatedAt}{string, The date and time when the user was last updated.}
-#' \item{lastSeenAt}{string, The date and time when the user last visited Platform.}
-#' \item{suspended}{boolean, Whether the user is suspended due to inactivity.}
-#' \item{createdById}{integer, The ID of the user who created this user.}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
-#' \item{unconfirmedEmail}{string, The new email address awaiting confirmation from the user.}
-#' \item{accountStatus}{string, Account status of this user. One of: "Active", "Deactivated", "Suspended", "Unsuspended"}
 #' @export
 users_post <- function(name, email, primary_group_id, user, active = NULL, city = NULL, state = NULL, time_zone = NULL, initials = NULL, department = NULL, title = NULL, prefers_sms_otp = NULL, group_ids = NULL, vpn_enabled = NULL, sso_disabled = NULL, otp_required_for_login = NULL, exempt_from_org_sms_otp_disabled = NULL, robot = NULL, send_email = NULL) {
 
@@ -35545,9 +31108,7 @@ users_post <- function(name, email, primary_group_id, user, active = NULL, city 
 #' \itemize{
 #' \item id integer, The ID of this group.
 #' \item name string, The name of this group.
-#' \item slug string, The slug of this group.
-#' \item organizationId integer, The ID of the organization associated with this group.
-#' \item organizationName string, The name of the organization associated with this group.
+#' \item organizationId integer, The organization associated with this group.
 #' }}
 #' \item{organizationName}{string, The name of the organization the user belongs to.}
 #' \item{organizationSlug}{string, The slug of the organization the user belongs to.}
@@ -35557,10 +31118,6 @@ users_post <- function(name, email, primary_group_id, user, active = NULL, city 
 #' \item{assumingRole}{boolean, Whether the user is assuming a role or not.}
 #' \item{assumingAdmin}{boolean, Whether the user is assuming admin.}
 #' \item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
-#' \item{superadminModeExpiration}{string, The user is in superadmin mode when set to a DateTime. The user is not in superadmin mode when set to null.}
-#' \item{disableNonCompliantFedrampFeatures}{boolean, Whether to disable non-compliant fedramp features.}
-#' \item{createdById}{integer, The ID of the user who created this user.}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
 #' @export
 users_list_me <- function() {
 
@@ -35582,13 +31139,13 @@ users_list_me <- function() {
 #' Update info about the logged-in user
 #' @param preferences list optional. A list containing the following elements: 
 #' \itemize{
-#' \item appIndexOrderField string, This attribute is deprecated
-#' \item appIndexOrderDir string, This attribute is deprecated
-#' \item resultIndexOrderField string, Order field for the reports index page.
-#' \item resultIndexOrderDir string, Order direction for the reports index page.
-#' \item resultIndexTypeFilter string, Type filter for the reports index page.
-#' \item resultIndexAuthorFilter string, Author filter for the reports index page.
-#' \item resultIndexArchivedFilter string, Archived filter for the reports index page.
+#' \item appIndexOrderField string, Order field for the apps index pages.
+#' \item appIndexOrderDir string, Order direction for the apps index pages.
+#' \item resultIndexOrderField string, Order field for the results index page.
+#' \item resultIndexOrderDir string, Order direction for the results index page.
+#' \item resultIndexTypeFilter string, Type filter for the results index page.
+#' \item resultIndexAuthorFilter string, Author filter for the results index page.
+#' \item resultIndexArchivedFilter string, Archived filter for the results index page.
 #' \item importIndexOrderField string, Order field for the imports index page.
 #' \item importIndexOrderDir string, Order direction for the imports index page.
 #' \item importIndexTypeFilter string, Type filter for the imports index page.
@@ -35653,9 +31210,6 @@ users_list_me <- function() {
 #' \item serviceOrderDir string, Order direction for the services page.
 #' \item serviceAuthorFilter string, Author filter for the services page.
 #' \item serviceArchivedFilter string, Archived filter for the services page.
-#' \item assumeRoleHistory string, JSON string of previously assumed roles.
-#' \item defaultSuccessNotificationsOn boolean, Whether email notifications for the success of all applicable jobs are on by default.
-#' \item defaultFailureNotificationsOn boolean, Whether email notifications for the failure of all applicable jobs are on by default.
 #' }
 #' @param last_checked_announcements string optional. The date and time at which the user last checked their announcements.
 #' 
@@ -35675,9 +31229,7 @@ users_list_me <- function() {
 #' \itemize{
 #' \item id integer, The ID of this group.
 #' \item name string, The name of this group.
-#' \item slug string, The slug of this group.
-#' \item organizationId integer, The ID of the organization associated with this group.
-#' \item organizationName string, The name of the organization associated with this group.
+#' \item organizationId integer, The organization associated with this group.
 #' }}
 #' \item{organizationName}{string, The name of the organization the user belongs to.}
 #' \item{organizationSlug}{string, The slug of the organization the user belongs to.}
@@ -35687,10 +31239,6 @@ users_list_me <- function() {
 #' \item{assumingRole}{boolean, Whether the user is assuming a role or not.}
 #' \item{assumingAdmin}{boolean, Whether the user is assuming admin.}
 #' \item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
-#' \item{superadminModeExpiration}{string, The user is in superadmin mode when set to a DateTime. The user is not in superadmin mode when set to null.}
-#' \item{disableNonCompliantFedrampFeatures}{boolean, Whether to disable non-compliant fedramp features.}
-#' \item{createdById}{integer, The ID of the user who created this user.}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
 #' @export
 users_patch_me <- function(preferences = NULL, last_checked_announcements = NULL) {
 
@@ -35719,8 +31267,8 @@ users_patch_me <- function(preferences = NULL, last_checked_announcements = NULL
 #' \itemize{
 #' \item vendor boolean, This attribute is deprecated
 #' \item media boolean, True if user has access to the Media Optimizer job type.
-#' \item mainApp string, This attribute is deprecated
-#' \item appCount integer, This attribute is deprecated
+#' \item mainApp string, The slug for the main app for an app-only user account.
+#' \item appCount integer, Number of apps this user has access to.
 #' \item reportsOnly boolean, True if user is a reports-only user.
 #' \item reportsCreator boolean, True if this user is allowed to create HTML reports.
 #' }}
@@ -35743,110 +31291,6 @@ users_list_me_ui <- function() {
  }
 
 
-#' Enables Superadmin Mode for the current user
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of this user.}
-#' \item{name}{string, This user's name.}
-#' \item{email}{string, This user's email address.}
-#' \item{username}{string, This user's username.}
-#' \item{initials}{string, This user's initials.}
-#' \item{lastCheckedAnnouncements}{string, The date and time at which the user last checked their announcements.}
-#' \item{featureFlags}{list, The feature flag settings for this user.}
-#' \item{roles}{array, The roles this user has, listed by slug.}
-#' \item{preferences}{list, This user's preferences.}
-#' \item{customBranding}{string, The branding of Platform for this user.}
-#' \item{primaryGroupId}{integer, The ID of the primary group of this user.}
-#' \item{groups}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The ID of this group.
-#' \item name string, The name of this group.
-#' \item slug string, The slug of this group.
-#' \item organizationId integer, The ID of the organization associated with this group.
-#' \item organizationName string, The name of the organization associated with this group.
-#' }}
-#' \item{organizationName}{string, The name of the organization the user belongs to.}
-#' \item{organizationSlug}{string, The slug of the organization the user belongs to.}
-#' \item{organizationDefaultThemeId}{integer, The ID of the organizations's default theme.}
-#' \item{createdAt}{string, The date and time when the user was created.}
-#' \item{signInCount}{integer, The number of times the user has signed in.}
-#' \item{assumingRole}{boolean, Whether the user is assuming a role or not.}
-#' \item{assumingAdmin}{boolean, Whether the user is assuming admin.}
-#' \item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
-#' \item{superadminModeExpiration}{string, The user is in superadmin mode when set to a DateTime. The user is not in superadmin mode when set to null.}
-#' \item{disableNonCompliantFedrampFeatures}{boolean, Whether to disable non-compliant fedramp features.}
-#' \item{createdById}{integer, The ID of the user who created this user.}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
-#' @export
-users_post_me_superadmin <- function() {
-
-  args <- as.list(match.call())[-1]
-  path <- "/users/me/superadmin"
-  path_params  <- list()
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Disables Superadmin Mode for the current user
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of this user.}
-#' \item{name}{string, This user's name.}
-#' \item{email}{string, This user's email address.}
-#' \item{username}{string, This user's username.}
-#' \item{initials}{string, This user's initials.}
-#' \item{lastCheckedAnnouncements}{string, The date and time at which the user last checked their announcements.}
-#' \item{featureFlags}{list, The feature flag settings for this user.}
-#' \item{roles}{array, The roles this user has, listed by slug.}
-#' \item{preferences}{list, This user's preferences.}
-#' \item{customBranding}{string, The branding of Platform for this user.}
-#' \item{primaryGroupId}{integer, The ID of the primary group of this user.}
-#' \item{groups}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The ID of this group.
-#' \item name string, The name of this group.
-#' \item slug string, The slug of this group.
-#' \item organizationId integer, The ID of the organization associated with this group.
-#' \item organizationName string, The name of the organization associated with this group.
-#' }}
-#' \item{organizationName}{string, The name of the organization the user belongs to.}
-#' \item{organizationSlug}{string, The slug of the organization the user belongs to.}
-#' \item{organizationDefaultThemeId}{integer, The ID of the organizations's default theme.}
-#' \item{createdAt}{string, The date and time when the user was created.}
-#' \item{signInCount}{integer, The number of times the user has signed in.}
-#' \item{assumingRole}{boolean, Whether the user is assuming a role or not.}
-#' \item{assumingAdmin}{boolean, Whether the user is assuming admin.}
-#' \item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
-#' \item{superadminModeExpiration}{string, The user is in superadmin mode when set to a DateTime. The user is not in superadmin mode when set to null.}
-#' \item{disableNonCompliantFedrampFeatures}{boolean, Whether to disable non-compliant fedramp features.}
-#' \item{createdById}{integer, The ID of the user who created this user.}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
-#' @export
-users_delete_me_superadmin <- function() {
-
-  args <- as.list(match.call())[-1]
-  path <- "/users/me/superadmin"
-  path_params  <- list()
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Show info about a user
 #' @param id integer required. The ID of this user.
 #' 
@@ -35855,15 +31299,13 @@ users_delete_me_superadmin <- function() {
 #' \item{user}{string, The username of this user.}
 #' \item{name}{string, The name of this user.}
 #' \item{email}{string, The email of this user.}
-#' \item{active}{boolean, Whether this user account is active or deactivated.}
+#' \item{active}{boolean, The account status of this user.}
 #' \item{primaryGroupId}{integer, The ID of the primary group of this user.}
 #' \item{groups}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this group.
 #' \item name string, The name of this group.
-#' \item slug string, The slug of this group.
-#' \item organizationId integer, The ID of the organization associated with this group.
-#' \item organizationName string, The name of the organization associated with this group.
+#' \item organizationId integer, The organization associated with this group.
 #' }}
 #' \item{city}{string, The city of this user.}
 #' \item{state}{string, The state of this user.}
@@ -35884,15 +31326,6 @@ users_delete_me_superadmin <- function() {
 #' \item{organizationSSODisableCapable}{boolean, The user's organization's ability to disable sso for their users.}
 #' \item{organizationLoginType}{string, The user's organization's login type.}
 #' \item{organizationSmsOtpDisabled}{boolean, Whether the user's organization has SMS OTP disabled.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{createdAt}{string, The date and time when the user was created.}
-#' \item{updatedAt}{string, The date and time when the user was last updated.}
-#' \item{lastSeenAt}{string, The date and time when the user last visited Platform.}
-#' \item{suspended}{boolean, Whether the user is suspended due to inactivity.}
-#' \item{createdById}{integer, The ID of the user who created this user.}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
-#' \item{unconfirmedEmail}{string, The new email address awaiting confirmation from the user.}
-#' \item{accountStatus}{string, Account status of this user. One of: "Active", "Deactivated", "Suspended", "Unsuspended"}
 #' @export
 users_get <- function(id) {
 
@@ -35911,11 +31344,11 @@ users_get <- function(id) {
  }
 
 
-#' Update info about a user (must be a team or org admin)
+#' Update info about a user (must be an admin or client user admin)
 #' @param id integer required. The ID of this user.
 #' @param name string optional. The name of this user.
 #' @param email string optional. The email of this user.
-#' @param active boolean optional. Whether this user account is active or deactivated.
+#' @param active boolean optional. The account status of this user.
 #' @param primary_group_id integer optional. The ID of the primary group of this user.
 #' @param city string optional. The city of this user.
 #' @param state string optional. The state of this user.
@@ -35932,22 +31365,19 @@ users_get <- function(id) {
 #' @param robot boolean optional. Whether the user is a robot.
 #' @param phone string optional. The phone number of this user.
 #' @param password string optional. The password of this user.
-#' @param account_status string optional. Account status of this user. One of: "Active", "Deactivated", "Suspended", "Unsuspended"
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID of this user.}
 #' \item{user}{string, The username of this user.}
 #' \item{name}{string, The name of this user.}
 #' \item{email}{string, The email of this user.}
-#' \item{active}{boolean, Whether this user account is active or deactivated.}
+#' \item{active}{boolean, The account status of this user.}
 #' \item{primaryGroupId}{integer, The ID of the primary group of this user.}
 #' \item{groups}{array, An array containing the following fields: 
 #' \itemize{
 #' \item id integer, The ID of this group.
 #' \item name string, The name of this group.
-#' \item slug string, The slug of this group.
-#' \item organizationId integer, The ID of the organization associated with this group.
-#' \item organizationName string, The name of the organization associated with this group.
+#' \item organizationId integer, The organization associated with this group.
 #' }}
 #' \item{city}{string, The city of this user.}
 #' \item{state}{string, The state of this user.}
@@ -35968,23 +31398,14 @@ users_get <- function(id) {
 #' \item{organizationSSODisableCapable}{boolean, The user's organization's ability to disable sso for their users.}
 #' \item{organizationLoginType}{string, The user's organization's login type.}
 #' \item{organizationSmsOtpDisabled}{boolean, Whether the user's organization has SMS OTP disabled.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{createdAt}{string, The date and time when the user was created.}
-#' \item{updatedAt}{string, The date and time when the user was last updated.}
-#' \item{lastSeenAt}{string, The date and time when the user last visited Platform.}
-#' \item{suspended}{boolean, Whether the user is suspended due to inactivity.}
-#' \item{createdById}{integer, The ID of the user who created this user.}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
-#' \item{unconfirmedEmail}{string, The new email address awaiting confirmation from the user.}
-#' \item{accountStatus}{string, Account status of this user. One of: "Active", "Deactivated", "Suspended", "Unsuspended"}
 #' @export
-users_patch <- function(id, name = NULL, email = NULL, active = NULL, primary_group_id = NULL, city = NULL, state = NULL, time_zone = NULL, initials = NULL, department = NULL, title = NULL, prefers_sms_otp = NULL, group_ids = NULL, vpn_enabled = NULL, sso_disabled = NULL, otp_required_for_login = NULL, exempt_from_org_sms_otp_disabled = NULL, robot = NULL, phone = NULL, password = NULL, account_status = NULL) {
+users_patch <- function(id, name = NULL, email = NULL, active = NULL, primary_group_id = NULL, city = NULL, state = NULL, time_zone = NULL, initials = NULL, department = NULL, title = NULL, prefers_sms_otp = NULL, group_ids = NULL, vpn_enabled = NULL, sso_disabled = NULL, otp_required_for_login = NULL, exempt_from_org_sms_otp_disabled = NULL, robot = NULL, phone = NULL, password = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/users/{id}"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(name = name, email = email, active = active, primaryGroupId = primary_group_id, city = city, state = state, timeZone = time_zone, initials = initials, department = department, title = title, prefersSmsOtp = prefers_sms_otp, groupIds = group_ids, vpnEnabled = vpn_enabled, ssoDisabled = sso_disabled, otpRequiredForLogin = otp_required_for_login, exemptFromOrgSmsOtpDisabled = exempt_from_org_sms_otp_disabled, robot = robot, phone = phone, password = password, accountStatus = account_status)
+  body_params  <- list(name = name, email = email, active = active, primaryGroupId = primary_group_id, city = city, state = state, timeZone = time_zone, initials = initials, department = department, title = title, prefersSmsOtp = prefers_sms_otp, groupIds = group_ids, vpnEnabled = vpn_enabled, ssoDisabled = sso_disabled, otpRequiredForLogin = otp_required_for_login, exemptFromOrgSmsOtpDisabled = exempt_from_org_sms_otp_disabled, robot = robot, phone = phone, password = password)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -36177,70 +31598,6 @@ users_delete_api_keys <- function(id, key_id) {
  }
 
 
-#' Terminate all of the user's active sessions (must be a team or org admin)
-#' @param id integer required. The ID of this user.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of this user.}
-#' \item{user}{string, The username of this user.}
-#' \item{name}{string, The name of this user.}
-#' \item{email}{string, The email of this user.}
-#' \item{active}{boolean, Whether this user account is active or deactivated.}
-#' \item{primaryGroupId}{integer, The ID of the primary group of this user.}
-#' \item{groups}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The ID of this group.
-#' \item name string, The name of this group.
-#' \item slug string, The slug of this group.
-#' \item organizationId integer, The ID of the organization associated with this group.
-#' \item organizationName string, The name of the organization associated with this group.
-#' }}
-#' \item{city}{string, The city of this user.}
-#' \item{state}{string, The state of this user.}
-#' \item{timeZone}{string, The time zone of this user.}
-#' \item{initials}{string, The initials of this user.}
-#' \item{department}{string, The department of this user.}
-#' \item{title}{string, The title of this user.}
-#' \item{githubUsername}{string, The GitHub username of this user.}
-#' \item{prefersSmsOtp}{boolean, The preference for phone authorization of this user}
-#' \item{vpnEnabled}{boolean, The availability of vpn for this user.}
-#' \item{ssoDisabled}{boolean, The availability of SSO for this user.}
-#' \item{otpRequiredForLogin}{boolean, The two factor authentication requirement for this user.}
-#' \item{exemptFromOrgSmsOtpDisabled}{boolean, Whether the user has SMS OTP enabled on an individual level. This field does not matter if the org does not have SMS OTP disabled.}
-#' \item{smsOtpAllowed}{boolean, Whether the user is allowed to receive two factor authentication codes via SMS.}
-#' \item{robot}{boolean, Whether the user is a robot.}
-#' \item{phone}{string, The phone number of this user.}
-#' \item{organizationSlug}{string, The slug of the organization the user belongs to.}
-#' \item{organizationSSODisableCapable}{boolean, The user's organization's ability to disable sso for their users.}
-#' \item{organizationLoginType}{string, The user's organization's login type.}
-#' \item{organizationSmsOtpDisabled}{boolean, Whether the user's organization has SMS OTP disabled.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{createdAt}{string, The date and time when the user was created.}
-#' \item{updatedAt}{string, The date and time when the user was last updated.}
-#' \item{lastSeenAt}{string, The date and time when the user last visited Platform.}
-#' \item{suspended}{boolean, Whether the user is suspended due to inactivity.}
-#' \item{createdById}{integer, The ID of the user who created this user.}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
-#' \item{unconfirmedEmail}{string, The new email address awaiting confirmation from the user.}
-#' \item{accountStatus}{string, Account status of this user. One of: "Active", "Deactivated", "Suspended", "Unsuspended"}
-#' @export
-users_delete_sessions <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/users/{id}/sessions"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List Favorites
 #' @param object_id integer optional. The id of the object. If specified as a query parameter, must also specify object_type parameter.
 #' @param object_type string optional. The type of the object that is favorited. Valid options: Project
@@ -36323,99 +31680,10 @@ users_delete_me_favorites <- function(id) {
  }
 
 
-#' Unsuspends user
-#' @param id integer required. The ID of this user.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of this user.}
-#' \item{user}{string, The username of this user.}
-#' \item{unlockedAt}{string, The time the user's account was unsuspended}
-#' @export
-users_post_unsuspend <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/users/{id}/unsuspend"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Wipes the user's current 2FA settings so that they must reset them upon next login
-#' @param id integer required. The ID of this user.
-#' 
-#' @return  A list containing the following elements:
-#' \item{id}{integer, The ID of this user.}
-#' \item{user}{string, The username of this user.}
-#' \item{name}{string, The name of this user.}
-#' \item{email}{string, The email of this user.}
-#' \item{active}{boolean, Whether this user account is active or deactivated.}
-#' \item{primaryGroupId}{integer, The ID of the primary group of this user.}
-#' \item{groups}{array, An array containing the following fields: 
-#' \itemize{
-#' \item id integer, The ID of this group.
-#' \item name string, The name of this group.
-#' \item slug string, The slug of this group.
-#' \item organizationId integer, The ID of the organization associated with this group.
-#' \item organizationName string, The name of the organization associated with this group.
-#' }}
-#' \item{city}{string, The city of this user.}
-#' \item{state}{string, The state of this user.}
-#' \item{timeZone}{string, The time zone of this user.}
-#' \item{initials}{string, The initials of this user.}
-#' \item{department}{string, The department of this user.}
-#' \item{title}{string, The title of this user.}
-#' \item{githubUsername}{string, The GitHub username of this user.}
-#' \item{prefersSmsOtp}{boolean, The preference for phone authorization of this user}
-#' \item{vpnEnabled}{boolean, The availability of vpn for this user.}
-#' \item{ssoDisabled}{boolean, The availability of SSO for this user.}
-#' \item{otpRequiredForLogin}{boolean, The two factor authentication requirement for this user.}
-#' \item{exemptFromOrgSmsOtpDisabled}{boolean, Whether the user has SMS OTP enabled on an individual level. This field does not matter if the org does not have SMS OTP disabled.}
-#' \item{smsOtpAllowed}{boolean, Whether the user is allowed to receive two factor authentication codes via SMS.}
-#' \item{robot}{boolean, Whether the user is a robot.}
-#' \item{phone}{string, The phone number of this user.}
-#' \item{organizationSlug}{string, The slug of the organization the user belongs to.}
-#' \item{organizationSSODisableCapable}{boolean, The user's organization's ability to disable sso for their users.}
-#' \item{organizationLoginType}{string, The user's organization's login type.}
-#' \item{organizationSmsOtpDisabled}{boolean, Whether the user's organization has SMS OTP disabled.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{createdAt}{string, The date and time when the user was created.}
-#' \item{updatedAt}{string, The date and time when the user was last updated.}
-#' \item{lastSeenAt}{string, The date and time when the user last visited Platform.}
-#' \item{suspended}{boolean, Whether the user is suspended due to inactivity.}
-#' \item{createdById}{integer, The ID of the user who created this user.}
-#' \item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
-#' \item{unconfirmedEmail}{string, The new email address awaiting confirmation from the user.}
-#' \item{accountStatus}{string, Account status of this user. One of: "Active", "Deactivated", "Suspended", "Unsuspended"}
-#' @export
-users_delete_2fa <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/users/{id}/2fa"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("DELETE", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' List Workflows
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' @param archived string optional. The archival status of the requested item(s).
-#' @param author string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.
+#' @param author string optional. Author of the workflow. It accepts a comma-separated list of author ids.
 #' @param state array optional. State of the most recent execution.One or more of queued, running, succeeded, failed, cancelled, idle, and scheduled.
 #' @param scheduled boolean optional. If the workflow is scheduled.
 #' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.
@@ -36441,11 +31709,10 @@ users_delete_2fa <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 #' \item{timeZone}{string, The time zone of this workflow.}
@@ -36479,11 +31746,10 @@ workflows_list <- function(hidden = NULL, archived = NULL, author = NULL, state 
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param allow_concurrent_executions boolean optional. Whether the workflow can execute when already running.
 #' @param time_zone string optional. The time zone of this workflow.
@@ -36520,11 +31786,10 @@ workflows_list <- function(hidden = NULL, archived = NULL, author = NULL, state 
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 #' \item{timeZone}{string, The time zone of this workflow.}
@@ -36542,7 +31807,6 @@ workflows_list <- function(hidden = NULL, archived = NULL, author = NULL, state 
 #' }}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' @export
@@ -36586,11 +31850,10 @@ workflows_post <- function(name, description = NULL, from_job_chain = NULL, defi
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 #' \item{timeZone}{string, The time zone of this workflow.}
@@ -36608,7 +31871,6 @@ workflows_post <- function(name, description = NULL, from_job_chain = NULL, defi
 #' }}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' @export
@@ -36637,11 +31899,10 @@ workflows_get <- function(id) {
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param allow_concurrent_executions boolean optional. Whether the workflow can execute when already running.
 #' @param time_zone string optional. The time zone of this workflow.
@@ -36677,11 +31938,10 @@ workflows_get <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 #' \item{timeZone}{string, The time zone of this workflow.}
@@ -36699,7 +31959,6 @@ workflows_get <- function(id) {
 #' }}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' @export
@@ -36728,11 +31987,10 @@ workflows_put <- function(id, name, description = NULL, definition = NULL, sched
 #' @param schedule list optional. A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }
 #' @param allow_concurrent_executions boolean optional. Whether the workflow can execute when already running.
 #' @param time_zone string optional. The time zone of this workflow.
@@ -36768,11 +32026,10 @@ workflows_put <- function(id, name, description = NULL, definition = NULL, sched
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 #' \item{timeZone}{string, The time zone of this workflow.}
@@ -36790,7 +32047,6 @@ workflows_put <- function(id, name, description = NULL, definition = NULL, sched
 #' }}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' @export
@@ -36982,70 +32238,6 @@ workflows_delete_shares_groups <- function(id, group_id) {
  }
 
 
-#' List dependent objects for this object
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer optional. ID of target user
-#' 
-#' @return  An array containing the following fields:
-#' \item{objectType}{string, Dependent object type}
-#' \item{fcoType}{string, Human readable dependent object type}
-#' \item{id}{integer, Dependent object ID}
-#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
-#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
-#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
-#' @export
-workflows_list_dependencies <- function(id, user_id = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/workflows/{id}/dependencies"
-  path_params  <- list(id = id)
-  query_params <- list(user_id = user_id)
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Transfer ownership of this object to another user
-#' @param id integer required. The ID of the resource that is shared.
-#' @param user_id integer required. ID of target user
-#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
-#' @param email_body string optional. Custom body text for e-mail sent on transfer.
-#' @param send_email boolean optional. Send email to the target user of the transfer?
-#' 
-#' @return  A list containing the following elements:
-#' \item{dependencies}{array, An array containing the following fields: 
-#' \itemize{
-#' \item objectType string, Dependent object type
-#' \item fcoType string, Human readable dependent object type
-#' \item id integer, Dependent object ID
-#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
-#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
-#' \item shared boolean, Whether dependent object was successfully shared with target user
-#' }}
-#' @export
-workflows_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/workflows/{id}/transfer"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PUT", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
 #' Update the archive status of this object
 #' @param id integer required. The ID of the object.
 #' @param status boolean required. The desired archived status of the object.
@@ -37070,11 +32262,10 @@ workflows_put_transfer <- function(id, user_id, include_dependencies, email_body
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 #' \item{timeZone}{string, The time zone of this workflow.}
@@ -37092,7 +32283,6 @@ workflows_put_transfer <- function(id, user_id, include_dependencies, email_body
 #' }}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' @export
@@ -37209,7 +32399,7 @@ workflows_delete_projects <- function(id, project_id) {
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
 #' \item{gitRepo}{list, A list containing the following elements: 
@@ -37219,8 +32409,7 @@ workflows_delete_projects <- function(id, project_id) {
 #' \item createdAt string, 
 #' \item updatedAt string, 
 #' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 #' @export
 workflows_list_git <- function(id) {
 
@@ -37245,11 +32434,10 @@ workflows_list_git <- function(id) {
 #' @param git_branch string optional. The git branch that the file is on.
 #' @param git_path string optional. The path of the file in the repository.
 #' @param git_repo_url string optional. The URL of the git repository.
-#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
 #' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
 #' 
 #' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 #' \item{gitBranch}{string, The git branch that the file is on.}
 #' \item{gitPath}{string, The path of the file in the repository.}
 #' \item{gitRepo}{list, A list containing the following elements: 
@@ -37259,16 +32447,15 @@ workflows_list_git <- function(id) {
 #' \item createdAt string, 
 #' \item updatedAt string, 
 #' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 #' @export
-workflows_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
+workflows_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, pull_from_git = NULL) {
 
   args <- as.list(match.call())[-1]
   path <- "/workflows/{id}/git"
   path_params  <- list(id = id)
   query_params <- list()
-  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
+  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, pullFromGit = pull_from_git)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -37279,47 +32466,7 @@ workflows_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = 
  }
 
 
-#' Update an attached git file
-#' @param id integer required. The ID of the file.
-#' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
-#' @param git_branch string optional. The git branch that the file is on.
-#' @param git_path string optional. The path of the file in the repository.
-#' @param git_repo_url string optional. The URL of the git repository.
-#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
-#' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
-#' 
-#' @return  A list containing the following elements:
-#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
-#' \item{gitBranch}{string, The git branch that the file is on.}
-#' \item{gitPath}{string, The path of the file in the repository.}
-#' \item{gitRepo}{list, A list containing the following elements: 
-#' \itemize{
-#' \item id integer, The ID for this git repository.
-#' \item repoUrl string, The URL for this git repository.
-#' \item createdAt string, 
-#' \item updatedAt string, 
-#' }}
-#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
-#' @export
-workflows_patch_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/workflows/{id}/git"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("PATCH", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Get the git commits for an item on the current branch
+#' Get the git commits for an item
 #' @param id integer required. The ID of the file.
 #' 
 #' @return  A list containing the following elements:
@@ -37374,7 +32521,7 @@ workflows_post_git_commits <- function(id, content, message, file_hash) {
  }
 
 
-#' Get file contents at git ref
+#' Get file contents at commit_hash
 #' @param id integer required. The ID of the file.
 #' @param commit_hash string required. The SHA (full or shortened) of the desired git commit.
 #' 
@@ -37395,58 +32542,6 @@ workflows_get_git_commits <- function(id, commit_hash) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("GET", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Checkout latest commit on the current branch of a script or workflow
-#' @param id integer required. The ID of the file.
-#' 
-#' @return  A list containing the following elements:
-#' \item{content}{string, The file's contents.}
-#' \item{type}{string, The file's type.}
-#' \item{size}{integer, The file's size.}
-#' \item{fileHash}{string, The SHA of the file.}
-#' @export
-workflows_post_git_checkout_latest <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/workflows/{id}/git/checkout-latest"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
-
-  return(resp)
-
- }
-
-
-#' Checkout content that the existing git_ref points to and save to the object
-#' @param id integer required. The ID of the file.
-#' 
-#' @return  A list containing the following elements:
-#' \item{content}{string, The file's contents.}
-#' \item{type}{string, The file's type.}
-#' \item{size}{integer, The file's size.}
-#' \item{fileHash}{string, The SHA of the file.}
-#' @export
-workflows_post_git_checkout <- function(id) {
-
-  args <- as.list(match.call())[-1]
-  path <- "/workflows/{id}/git/checkout"
-  path_params  <- list(id = id)
-  query_params <- list()
-  body_params  <- list()
-  path_params  <- path_params[match_params(path_params, args)]
-  query_params <- query_params[match_params(query_params, args)]
-  body_params  <- body_params[match_params(body_params, args)]
-  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -37478,11 +32573,10 @@ workflows_post_git_checkout <- function(id) {
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
-#' \item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+#' \item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 #' \item scheduledHours array, Hours of the day it is scheduled on.
 #' \item scheduledMinutes array, Minutes of the day it is scheduled on.
-#' \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-#' \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+#' \item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 #' }}
 #' \item{allowConcurrentExecutions}{boolean, Whether the workflow can execute when already running.}
 #' \item{timeZone}{string, The time zone of this workflow.}
@@ -37500,7 +32594,6 @@ workflows_post_git_checkout <- function(id) {
 #' }}
 #' \item{archived}{string, The archival status of the requested item(s).}
 #' \item{hidden}{boolean, The hidden status of the item.}
-#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
 #' @export
@@ -37567,7 +32660,7 @@ workflows_list_executions <- function(id, limit = NULL, page_num = NULL, order =
 #' @param id integer required. The ID for the workflow.
 #' @param target_task string optional. For a reverse workflow, the name of the task to target.
 #' @param input list optional. Key-value pairs to send to this execution as inputs.
-#' @param included_tasks array optional. If specified, executes only the subset of workflow tasks included as specified by task name.
+#' @param included_tasks array optional. If specified, executes only the subset of workflow tasks included.
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The ID for this workflow execution.}
@@ -37829,7 +32922,6 @@ workflows_post_executions_retry <- function(id, execution_id, task_name = NULL) 
 #' \itemize{
 #' \item id integer, The ID of the run.
 #' \item jobId integer, The ID of the job associated with the run.
-#' \item myPermissionLevel string, Your permission level on the job. One of "read", "write", "manage", or "nil".
 #' \item state string, The state of the run.
 #' \item createdAt string, The time that the run was queued.
 #' \item startedAt string, The time that the run started.
@@ -37839,7 +32931,6 @@ workflows_post_executions_retry <- function(id, execution_id, task_name = NULL) 
 #' \itemize{
 #' \item id integer, The ID of the execution.
 #' \item workflowId integer, The ID of the workflow associated with the execution.
-#' \item myPermissionLevel string, Your permission level on the workflow. One of "read", "write", "manage", or "nil".
 #' \item state string, The state of this workflow execution.
 #' \item createdAt string, The time this execution was created.
 #' \item startedAt string, The time this execution started.

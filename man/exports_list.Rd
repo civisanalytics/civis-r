@@ -6,8 +6,8 @@
 \usage{
 exports_list(
   type = NULL,
-  status = NULL,
   author = NULL,
+  status = NULL,
   hidden = NULL,
   archived = NULL,
   limit = NULL,
@@ -19,9 +19,9 @@ exports_list(
 \arguments{
 \item{type}{string optional. If specified, return exports of these types. It accepts a comma-separated list, possible values are 'database' and 'gdoc'.}
 
-\item{status}{string optional. If specified, returns export with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.}
+\item{author}{string optional. If specified, return exports from this author. It accepts a comma-separated list of author ids.}
 
-\item{author}{string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.}
+\item{status}{string optional. If specified, returns export with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.}
 
 \item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
 

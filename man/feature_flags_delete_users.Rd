@@ -7,7 +7,7 @@
 feature_flags_delete_users(flag_name, user_id)
 }
 \arguments{
-\item{flag_name}{string required. The feature name.}
+\item{flag_name}{string required. The feature flag name.}
 
 \item{user_id}{integer required. The user ID.}
 }

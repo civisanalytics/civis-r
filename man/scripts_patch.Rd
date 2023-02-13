@@ -13,8 +13,7 @@ scripts_patch(
   template_script_id = NULL,
   schedule = NULL,
   notifications = NULL,
-  parent_id = NULL,
-  running_as_id = NULL
+  parent_id = NULL
 )
 }
 \arguments{
@@ -43,11 +42,10 @@ scripts_patch(
 \item{schedule}{list optional. A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the item is scheduled.
-\item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 \item scheduledHours array, Hours of the day it is scheduled on.
 \item scheduledMinutes array, Minutes of the day it is scheduled on.
-\item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-\item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 
 \item{notifications}{list optional. A list containing the following elements: 
@@ -65,8 +63,6 @@ scripts_patch(
 }}
 
 \item{parent_id}{integer optional. The ID of the parent job that will trigger this script}
-
-\item{running_as_id}{integer optional. The ID of the runner of this script.}
 }
 \value{
 A list containing the following elements:
@@ -118,11 +114,10 @@ A list containing the following elements:
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the item is scheduled.
-\item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 \item scheduledHours array, Hours of the day it is scheduled on.
 \item scheduledMinutes array, Minutes of the day it is scheduled on.
-\item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-\item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 \item{notifications}{list, A list containing the following elements: 
 \itemize{
@@ -156,7 +151,6 @@ A list containing the following elements:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
-\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 \item{hidden}{boolean, The hidden status of the item.}
 \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 \item{archived}{string, The archival status of the requested item(s).}

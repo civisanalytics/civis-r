@@ -16,8 +16,7 @@ enhancements_post_cass_ncoa(
   perform_ncoa = NULL,
   ncoa_credential_id = NULL,
   output_level = NULL,
-  limiting_sql = NULL,
-  chunk_size = NULL
+  limiting_sql = NULL
 )
 }
 \arguments{
@@ -38,11 +37,10 @@ enhancements_post_cass_ncoa(
 \item{schedule}{list optional. A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the item is scheduled.
-\item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 \item scheduledHours array, Hours of the day it is scheduled on.
 \item scheduledMinutes array, Minutes of the day it is scheduled on.
-\item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-\item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 
 \item{parent_id}{integer optional. Parent ID that triggers this enhancement.}
@@ -90,8 +88,6 @@ enhancements_post_cass_ncoa(
 \item{output_level}{string optional. The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
 
 \item{limiting_sql}{string optional. The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
-
-\item{chunk_size}{integer optional. The maximum number of records processed at a time. Note that this parameter is not available to all users.}
 }
 \value{
 A list containing the following elements:
@@ -112,11 +108,10 @@ A list containing the following elements:
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the item is scheduled.
-\item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 \item scheduledHours array, Hours of the day it is scheduled on.
 \item scheduledMinutes array, Minutes of the day it is scheduled on.
-\item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-\item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 \item{parentId}{integer, Parent ID that triggers this enhancement.}
 \item{notifications}{list, A list containing the following elements: 
@@ -140,7 +135,6 @@ A list containing the following elements:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
-\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 \item{source}{list, A list containing the following elements: 
 \itemize{
 \item databaseTable list . A list containing the following elements: 
@@ -175,7 +169,6 @@ A list containing the following elements:
 \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
 \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
-\item{chunkSize}{integer, The maximum number of records processed at a time. Note that this parameter is not available to all users.}
 \item{archived}{string, The archival status of the requested item(s).}
 }
 \description{

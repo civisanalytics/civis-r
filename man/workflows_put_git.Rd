@@ -10,7 +10,6 @@ workflows_put_git(
   git_branch = NULL,
   git_path = NULL,
   git_repo_url = NULL,
-  git_ref_type = NULL,
   pull_from_git = NULL
 )
 }
@@ -25,13 +24,11 @@ workflows_put_git(
 
 \item{git_repo_url}{string optional. The URL of the git repository.}
 
-\item{git_ref_type}{string optional. Specifies if the file is versioned by branch or tag.}
-
 \item{pull_from_git}{boolean optional. Automatically pull latest commit from git. Only works for scripts.}
 }
 \value{
 A list containing the following elements:
-\item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+\item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 \item{gitBranch}{string, The git branch that the file is on.}
 \item{gitPath}{string, The path of the file in the repository.}
 \item{gitRepo}{list, A list containing the following elements: 
@@ -41,8 +38,7 @@ A list containing the following elements:
 \item createdAt string, 
 \item updatedAt string, 
 }}
-\item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
-\item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+\item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
 }
 \description{
 Attach an item to a file in a git repo

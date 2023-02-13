@@ -23,7 +23,6 @@ A list containing the following elements:
 }}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
-\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 \item{projects}{array, An array containing the following fields: 
 \itemize{
 \item id integer, The ID for the project.
