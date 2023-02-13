@@ -21,14 +21,13 @@ A list containing the following elements:
 \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
 \item{displayUrl}{string, A signed URL for viewing the deployed item.}
 \item{instanceType}{string, The EC2 instance type requested for the deployment.}
-\item{memory}{integer, The memory allocated to the deployment, in MB.}
-\item{cpu}{integer, The cpu allocated to the deployment, in millicores.}
+\item{memory}{integer, The memory allocated to the deployment.}
+\item{cpu}{integer, The cpu allocated to the deployment.}
 \item{state}{string, The state of the deployment.}
 \item{stateMessage}{string, A detailed description of the state.}
-\item{maxMemoryUsage}{number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.}
-\item{maxCpuUsage}{number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
+\item{published}{boolean, }
 \item{serviceId}{integer, The ID of owning Service}
 }
 \description{

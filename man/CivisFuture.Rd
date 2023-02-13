@@ -56,8 +56,6 @@ to be attached in the \R environment evaluating the future.}
 \item{lazy}{If FALSE (default), the future is resolved
 eagerly (starting immediately), otherwise not.}
 
-\item{local}{deprecated as of \code{civis} v3.0.1}
-
 \item{gc}{If TRUE, the garbage collector run (in the process that
 evaluated the future) only after the value of the future is collected.
 Exactly when the values are collected may depend on various factors such

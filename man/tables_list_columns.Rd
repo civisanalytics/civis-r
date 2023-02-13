@@ -37,8 +37,8 @@ An array containing the following fields:
 \item{order}{integer, Relative position of the column in the table.}
 \item{minValue}{string, Smallest value in the column.}
 \item{maxValue}{string, Largest value in the column.}
-\item{avgValue}{number, This parameter is deprecated.}
-\item{stddev}{number, This parameter is deprecated.}
+\item{avgValue}{number, Average value of the column, where applicable.}
+\item{stddev}{number, Stddev of the column, where applicable.}
 \item{valueDistributionPercent}{list, A mapping between each value in the column and the percentage of rows with that value.Only present for tables with fewer than approximately 25,000,000 rows and for columns with fewer than twenty distinct values.}
 \item{coverageCount}{integer, Number of non-null values in the column.}
 \item{nullCount}{integer, Number of null values in the column.}
@@ -46,7 +46,7 @@ An array containing the following fields:
 \item{useableAsIndependentVariable}{boolean, Whether the column may be used as an independent variable to train a model.}
 \item{useableAsPrimaryKey}{boolean, Whether the column may be used as an primary key to identify table rows.}
 \item{valueDistribution}{list, An object mapping distinct values in the column to the number of times they appear in the column}
-\item{distinctCount}{integer, Number of distinct values in the column. NULL values are counted and treated as a single distinct value.}
+\item{distinctCount}{integer, Number of distinct values in the column.}
 }
 \description{
 List columns in the specified table

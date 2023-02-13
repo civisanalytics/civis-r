@@ -13,21 +13,19 @@ scripts_get_sql_runs(id, run_id)
 }
 \value{
 A list containing the following elements:
-\item{id}{integer, The ID of the run.}
-\item{sqlId}{integer, The ID of the sql.}
-\item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+\item{id}{integer, The ID of this run.}
+\item{sqlId}{integer, The ID of this sql.}
+\item{state}{string, The state of this run.}
 \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-\item{createdAt}{string, The time the run was created.}
-\item{startedAt}{string, The time the run started at.}
-\item{finishedAt}{string, The time the run completed.}
-\item{error}{string, The error, if any, returned by the run.}
+\item{startedAt}{string, The time the last run started.}
+\item{finishedAt}{string, The time that this run finished.}
+\item{error}{string, The error message for this run, if present.}
 \item{output}{array, An array containing the following fields: 
 \itemize{
 \item outputName string, The name of the output file.
 \item fileId integer, The unique ID of the output file.
 \item path string, The temporary link to download this output file, valid for 36 hours.
 }}
-\item{outputCachedOn}{string, The time that the output was originally exported, if a cache entry was used by the run.}
 }
 \description{
 Check status of a run

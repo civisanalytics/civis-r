@@ -148,6 +148,14 @@ A list containing the following elements:
 \item name string, 
 \item lastRun object, 
 }}
+\item{appInstances}{array, An array containing the following fields: 
+\itemize{
+\item id integer, The item's ID.
+\item createdAt string, 
+\item updatedAt string, 
+\item name string, 
+\item slug string, 
+}}
 \item{projects}{array, An array containing the following fields: 
 \itemize{
 \item id integer, The item's ID.
@@ -167,13 +175,10 @@ A list containing the following elements:
 \item icon string, 
 \item author string, 
 \item updatedAt string, 
-\item autoShare boolean, 
 \item archived string, The archival status of the requested item(s).
 \item hidden boolean, The hidden status of the item.
-\item myPermissionLevel string, Your permission level on the object. One of "read", "write", or "manage".
 }}
 \item{note}{string, }
-\item{canCurrentUserEnableAutoShare}{boolean, A flag for if the current user can enable auto-sharing mode for this project.}
 \item{hidden}{boolean, The hidden status of the item.}
 \item{archived}{string, The archival status of the requested item(s).}
 \item{parentProject}{list, A list containing the following elements: 
@@ -181,7 +186,6 @@ A list containing the following elements:
 \item id integer, The parent project's ID.
 \item name integer, The parent project's name.
 }}
-\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 }
 \description{
 Get a detailed view of a project and the objects in it

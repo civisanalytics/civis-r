@@ -18,7 +18,7 @@ workflows_post_executions(
 
 \item{input}{list optional. Key-value pairs to send to this execution as inputs.}
 
-\item{included_tasks}{array optional. If specified, executes only the subset of workflow tasks included as specified by task name.}
+\item{included_tasks}{array optional. If specified, executes only the subset of workflow tasks included.}
 }
 \value{
 A list containing the following elements:

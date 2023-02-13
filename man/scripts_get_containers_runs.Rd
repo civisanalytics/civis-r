@@ -17,12 +17,9 @@ A list containing the following elements:
 \item{containerId}{integer, The ID of the container.}
 \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-\item{createdAt}{string, The time the run was created.}
-\item{startedAt}{string, The time the run started at.}
-\item{finishedAt}{string, The time the run completed.}
+\item{startedAt}{string, The time the last run started at.}
+\item{finishedAt}{string, The time the last run completed.}
 \item{error}{string, The error, if any, returned by the run.}
-\item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
-\item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 }
 \description{
 Check status of a run

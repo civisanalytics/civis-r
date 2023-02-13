@@ -12,16 +12,14 @@ credentials_put(
   name = NULL,
   description = NULL,
   remote_host_id = NULL,
-  user_id = NULL,
   state = NULL,
-  system_credential = NULL,
-  default = NULL
+  system_credential = NULL
 )
 }
 \arguments{
 \item{id}{integer required. The ID of the credential.}
 
-\item{type}{string required. The type of credential. Note: only these credentials can be created or edited via this API ["Amazon Web Services S3", "CASS/NCOA PAF", "Certificate", "Civis Platform", "Custom", "Database", "Google", "Salesforce User", "Salesforce Client", "TableauUser"]}
+\item{type}{string required.}
 
 \item{username}{string required. The username for the credential.}
 
@@ -33,13 +31,9 @@ credentials_put(
 
 \item{remote_host_id}{integer optional. The ID of the remote host associated with the credential.}
 
-\item{user_id}{integer optional. The ID of the user the credential is created for. Note: This attribute is only accepted if you are a Civis Admin User.}
-
 \item{state}{string optional. The U.S. state for the credential. Only for VAN credentials.}
 
-\item{system_credential}{boolean optional. Boolean flag that sets a credential to be a system credential. System credentials can only be created by Civis Admins and will create a credential owned by the Civis Robot user.}
-
-\item{default}{boolean optional. Whether or not the credential is a default. Only for Database credentials.}
+\item{system_credential}{boolean optional.}
 }
 \value{
 A list containing the following elements:
@@ -48,21 +42,12 @@ A list containing the following elements:
 \item{type}{string, The credential's type.}
 \item{username}{string, The username for the credential.}
 \item{description}{string, A long description of the credential.}
-\item{owner}{string, The username of the user who this credential belongs to. Using user.username is preferred.}
-\item{user}{list, A list containing the following elements: 
-\itemize{
-\item id integer, The ID of this user.
-\item name string, This user's name.
-\item username string, This user's username.
-\item initials string, This user's initials.
-\item online boolean, Whether this user is online.
-}}
+\item{owner}{string, The name of the user who this credential belongs to.}
 \item{remoteHostId}{integer, The ID of the remote host associated with this credential.}
 \item{remoteHostName}{string, The name of the remote host associated with this credential.}
 \item{state}{string, The U.S. state for the credential. Only for VAN credentials.}
 \item{createdAt}{string, The creation time for this credential.}
 \item{updatedAt}{string, The last modification time for this credential.}
-\item{default}{boolean, Whether or not the credential is a default. Only for Database credentials.}
 }
 \description{
 Update an existing credential

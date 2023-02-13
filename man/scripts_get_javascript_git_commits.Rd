@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{scripts_get_javascript_git_commits}
 \alias{scripts_get_javascript_git_commits}
-\title{Get file contents at git ref}
+\title{Get file contents at commit_hash}
 \usage{
 scripts_get_javascript_git_commits(id, commit_hash)
 }
@@ -19,5 +19,5 @@ A list containing the following elements:
 \item{fileHash}{string, The SHA of the file.}
 }
 \description{
-Get file contents at git ref
+Get file contents at commit_hash
 }

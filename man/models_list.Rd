@@ -8,8 +8,8 @@ models_list(
   model_name = NULL,
   training_table_name = NULL,
   dependent_variable = NULL,
-  status = NULL,
   author = NULL,
+  status = NULL,
   hidden = NULL,
   archived = NULL,
   limit = NULL,
@@ -25,9 +25,9 @@ models_list(
 
 \item{dependent_variable}{string optional. If specified, will be used to filter the models returned by the dependent variable column name. Substring matching is supported. (e.g., "dependentVariable=predictor" will return both "predictor" and "my predictor").}
 
-\item{status}{string optional. If specified, returns models with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.}
+\item{author}{string optional. If specified, return models from this author. It accepts a comma-separated list of author ids.}
 
-\item{author}{string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.}
+\item{status}{string optional. If specified, returns models with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.}
 
 \item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
 
@@ -62,11 +62,10 @@ An array containing the following fields:
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the item is scheduled.
-\item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
+\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
 \item scheduledHours array, Hours of the day it is scheduled on.
 \item scheduledMinutes array, Minutes of the day it is scheduled on.
-\item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
-\item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
+\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
 }}
 \item{parentId}{integer, The ID of the parent job that will trigger this model.}
 \item{timeZone}{string, The time zone of this model.}
