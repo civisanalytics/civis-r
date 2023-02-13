@@ -431,6 +431,70 @@ aliases_delete_shares_groups <- function(id, group_id) {
  }
 
 
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+aliases_list_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/aliases/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+aliases_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/aliases/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List Aliases
 #' @param object_type string optional. Filter results by object type. Pass multiple object types with a comma-separatedlist. Valid types include: cass_ncoa, container_script, geocode, python_script, r_script, salesforce_export, javascript_script, sql_script, project, notebook, workflow, template_script, template_report, service, report, tableau and service_report.
 #' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
@@ -1140,6 +1204,50 @@ clusters_get_kubernetes_instance_configs <- function(instance_config_id, include
  }
 
 
+#' List active workloads in an Instance Config
+#' @param id integer required. The id of the instance config.
+#' @param state string optional. If specified, return workloads in these states. It accepts a comma-separated list, possible values are pending, running
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The id of this deployment.}
+#' \item{baseType}{string, The base type of this deployment.}
+#' \item{baseId}{integer, The id of the base object associated with this deployment.}
+#' \item{baseObjectName}{string, The name of the base object associated with this deployment. Null if you do not have permission to read the object.}
+#' \item{jobType}{string, If the base object is a job run you have permission to read, the type of the job. One of "python_script", "r_script", "container_script", or "custom_script".}
+#' \item{jobId}{integer, If the base object is a job run you have permission to read, the id of the job.}
+#' \item{jobCancelRequestedAt}{string, If the base object is a job run you have permission to read, and it was requested to be cancelled, the timestamp of that request.}
+#' \item{state}{string, The state of this deployment.}
+#' \item{cpu}{integer, The CPU in millicores requested by this deployment.}
+#' \item{memory}{integer, The memory in MB requested by this deployment.}
+#' \item{diskSpace}{integer, The disk space in GB requested by this deployment.}
+#' \item{user}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, The timestamp of when the deployment began.}
+#' \item{cancellable}{boolean, True if you have permission to cancel this deployment.}
+#' @export
+clusters_list_kubernetes_instance_configs_active_workloads <- function(id, state = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/clusters/kubernetes/instance_configs/{id}/active_workloads"
+  path_params  <- list(id = id)
+  query_params <- list(state = state)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Get statistics about the current users of an Instance Config
 #' @param instance_config_id integer required. The ID of this instance config.
 #' @param order string optional. The field on which to order the result set. Defaults to running_deployments. Must be one of pending_memory_requested, pending_cpu_requested, running_memory_requested, running_cpu_requested, pending_deployments, running_deployments.
@@ -1186,6 +1294,28 @@ clusters_list_kubernetes_instance_configs_historical_graphs <- function(instance
   path <- "/clusters/kubernetes/instance_configs/{instance_config_id}/historical_graphs"
   path_params  <- list(instance_config_id = instance_config_id)
   query_params <- list(timeframe = timeframe)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get list of Credential Types
+#' 
+#' @return  A list containing the following elements:
+#' \item{types}{array, list of acceptable credential types}
+#' @export
+credentials_list_types <- function() {
+
+  args <- as.list(match.call())[-1]
+  path <- "/credentials/types"
+  path_params  <- list()
+  query_params <- list()
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -1351,6 +1481,58 @@ credentials_put <- function(id, type, username, password, name = NULL, descripti
  }
 
 
+#' Update some attributes of a credential
+#' @param id integer required. The ID of the credential.
+#' @param name string optional. The name identifying the credential.
+#' @param type string optional. The type of credential. Note: only these credentials can be created or edited via this API ["Amazon Web Services S3", "CASS/NCOA PAF", "Certificate", "Civis Platform", "Custom", "Database", "Google", "Salesforce User", "Salesforce Client", "TableauUser"]
+#' @param description string optional. A long description of the credential.
+#' @param username string optional. The username for the credential.
+#' @param password string optional. The password for the credential.
+#' @param remote_host_id integer optional. The ID of the remote host associated with the credential.
+#' @param user_id integer optional. The ID of the user the credential is created for. Note: This attribute is only accepted if you are a Civis Admin User.
+#' @param state string optional. The U.S. state for the credential. Only for VAN credentials.
+#' @param system_credential boolean optional. Boolean flag that sets a credential to be a system credential. System credentials can only be created by Civis Admins and will create a credential owned by the Civis Robot user.
+#' @param default boolean optional. Whether or not the credential is a default. Only for Database credentials.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the credential.}
+#' \item{name}{string, The name identifying the credential}
+#' \item{type}{string, The credential's type.}
+#' \item{username}{string, The username for the credential.}
+#' \item{description}{string, A long description of the credential.}
+#' \item{owner}{string, The username of the user who this credential belongs to. Using user.username is preferred.}
+#' \item{user}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{remoteHostId}{integer, The ID of the remote host associated with this credential.}
+#' \item{remoteHostName}{string, The name of the remote host associated with this credential.}
+#' \item{state}{string, The U.S. state for the credential. Only for VAN credentials.}
+#' \item{createdAt}{string, The creation time for this credential.}
+#' \item{updatedAt}{string, The last modification time for this credential.}
+#' \item{default}{boolean, Whether or not the credential is a default. Only for Database credentials.}
+#' @export
+credentials_patch <- function(id, name = NULL, type = NULL, description = NULL, username = NULL, password = NULL, remote_host_id = NULL, user_id = NULL, state = NULL, system_credential = NULL, default = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/credentials/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, type = type, description = description, username = username, password = password, remoteHostId = remote_host_id, userId = user_id, state = state, systemCredential = system_credential, default = default)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Get a credential
 #' @param id integer required. The ID of the credential.
 #' 
@@ -1387,6 +1569,28 @@ credentials_get <- function(id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Delete a credential
+#' @param id integer required. The ID of the credential.
+#' 
+#' @return  An empty HTTP response
+#' @export
+credentials_delete <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/credentials/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -1635,6 +1839,70 @@ credentials_delete_shares_groups <- function(id, group_id) {
  }
 
 
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+credentials_list_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/credentials/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+credentials_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/credentials/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List databases
 #' 
 #' @return  An array containing the following fields:
@@ -1834,6 +2102,61 @@ databases_list_tables_search <- function(id, name = NULL, column_name = NULL) {
   path <- "/databases/{id}/tables-search"
   path_params  <- list(id = id)
   query_params <- list(name = name, column_name = column_name)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Show table privileges
+#' @param id integer required. The ID of the database
+#' @param schema_name string required. The name of the schema
+#' @param table_name string required. The name of the table
+#' 
+#' @return  A list containing the following elements:
+#' \item{grantee}{string, Name of the granted user or group}
+#' \item{granteeType}{string, User or group}
+#' \item{privileges}{array, Privileges that the grantee has on this resource}
+#' \item{grantablePrivileges}{array, Privileges that the grantee can grant to others for this resource}
+#' @export
+databases_get_table_privilegesschema_name <- function(id, schema_name, table_name) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/databases/{id}/table_privileges/{schema_name}/{table_name}"
+  path_params  <- list(id = id, schema_name = schema_name, table_name = table_name)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Show schema privileges
+#' @param id integer required. The ID of the database
+#' @param schema_name string required. The name of the schema
+#' 
+#' @return  A list containing the following elements:
+#' \item{grantee}{string, Name of the granted user or group}
+#' \item{granteeType}{string, User or group}
+#' \item{privileges}{array, Privileges that the grantee has on this resource}
+#' \item{grantablePrivileges}{array, Privileges that the grantee can grant to others for this resource}
+#' @export
+databases_get_schema_privileges <- function(id, schema_name) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/databases/{id}/schema_privileges/{schema_name}"
+  path_params  <- list(id = id, schema_name = schema_name)
+  query_params <- list()
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
@@ -2960,6 +3283,70 @@ enhancements_delete_civis_data_match_shares_groups <- function(id, group_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+enhancements_list_civis_data_match_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+enhancements_put_civis_data_match_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/civis-data-match/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -4830,6 +5217,70 @@ enhancements_delete_cass_ncoa_shares_groups <- function(id, group_id) {
  }
 
 
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+enhancements_list_cass_ncoa_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/cass-ncoa/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+enhancements_put_cass_ncoa_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/cass-ncoa/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List the projects a CASS/NCOA Enhancement belongs to
 #' @param id integer required. The ID of the CASS/NCOA Enhancement.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -5198,6 +5649,70 @@ enhancements_delete_geocode_shares_groups <- function(id, group_id) {
  }
 
 
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+enhancements_list_geocode_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/geocode/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+enhancements_put_geocode_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/enhancements/geocode/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List the projects a Geocode Enhancement belongs to
 #' @param id integer required. The ID of the Geocode Enhancement.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -5423,6 +5938,35 @@ exports_list <- function(type = NULL, status = NULL, author = NULL, hidden = NUL
  }
 
 
+#' Start a run
+#' @param id integer required. The ID of the csv_export.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, }
+#' \item{state}{string, }
+#' \item{createdAt}{string, The time that the run was queued.}
+#' \item{startedAt}{string, The time that the run started.}
+#' \item{finishedAt}{string, The time that the run completed.}
+#' \item{error}{string, The error message for this run, if present.}
+#' \item{outputCachedOn}{string, The time that the output was originally exported, if a cache entry was used by the run.}
+#' @export
+exports_post_files_csv_runs <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/exports/files/csv/{id}/runs"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List runs for the given csv_export
 #' @param id integer required. The ID of the csv_export.
 #' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.
@@ -5443,6 +5987,120 @@ exports_list_files_csv_runs <- function(id, limit = NULL, page_num = NULL, order
   args <- as.list(match.call())[-1]
   path <- "/exports/files/csv/{id}/runs"
   path_params  <- list(id = id)
+  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Check status of a run
+#' @param id integer required. The ID of the csv_export.
+#' @param run_id integer required. The ID of the run.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, }
+#' \item{state}{string, }
+#' \item{createdAt}{string, The time that the run was queued.}
+#' \item{startedAt}{string, The time that the run started.}
+#' \item{finishedAt}{string, The time that the run completed.}
+#' \item{error}{string, The error message for this run, if present.}
+#' \item{outputCachedOn}{string, The time that the output was originally exported, if a cache entry was used by the run.}
+#' @export
+exports_get_files_csv_runs <- function(id, run_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/exports/files/csv/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Cancel a run
+#' @param id integer required. The ID of the csv_export.
+#' @param run_id integer required. The ID of the run.
+#' 
+#' @return  An empty HTTP response
+#' @export
+exports_delete_files_csv_runs <- function(id, run_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/exports/files/csv/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get the logs for a run
+#' @param id integer required. The ID of the csv_export.
+#' @param run_id integer required. The ID of the run.
+#' @param last_id integer optional. The ID of the last log message received. Log entries with this ID value or lower will be omitted.Logs are sorted by ID if this value is provided, and are otherwise sorted by createdAt.
+#' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID of the log.}
+#' \item{createdAt}{string, The time the log was created.}
+#' \item{message}{string, The log message.}
+#' \item{level}{string, The level of the log. One of unknown,fatal,error,warn,info,debug.}
+#' @export
+exports_list_files_csv_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/exports/files/csv/{id}/runs/{run_id}/logs"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list(last_id = last_id, limit = limit)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List the outputs for a run
+#' @param id integer required. The ID of the csv_export.
+#' @param run_id integer required. The ID of the run.
+#' @param limit integer optional. Number of results to return. Defaults to its maximum of 50.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at, id.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, The type of the output. Valid values are File, Table, Report, Project, Credential, or JSONValue}
+#' \item{objectId}{integer, The ID of the output.}
+#' \item{name}{string, The name of the output.}
+#' \item{link}{string, The hypermedia link to the output.}
+#' \item{value}{string, }
+#' @export
+exports_list_files_csv_runs_outputs <- function(id, run_id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/exports/files/csv/{id}/runs/{run_id}/outputs"
+  path_params  <- list(id = id, run_id = run_id)
   query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
   body_params  <- list()
   path_params  <- path_params[match_params(path_params, args)]
@@ -5953,6 +6611,62 @@ feature_flags_delete_groups <- function(flag_name, group_id) {
  }
 
 
+#' Activate a feature for a organization
+#' @param flag_name string required. The feature flag name.
+#' @param organization_id integer required. Organization ID.
+#' 
+#' @return  A list containing the following elements:
+#' \item{name}{string, The name of the feature.}
+#' \item{description}{string, }
+#' \item{activeForMe}{boolean, Whether the feature is active for the current user.}
+#' \item{userCount}{integer, The number of users with this feature flag enabled.}
+#' \item{team}{string, }
+#' \item{jira}{string, }
+#' \item{added}{string, }
+#' \item{groupCount}{integer, }
+#' \item{organizationCount}{integer, }
+#' \item{percentage}{integer, The target percentage of users who should have this feature flag enabled.}
+#' @export
+feature_flags_put_organizations <- function(flag_name, organization_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/feature_flags/{flag_name}/organizations/{organization_id}"
+  path_params  <- list(flag_name = flag_name, organization_id = organization_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Deactivate a feature for a organization
+#' @param flag_name string required. The feature flag name.
+#' @param organization_id integer required. Organization ID.
+#' 
+#' @return  An empty HTTP response
+#' @export
+feature_flags_delete_organizations <- function(flag_name, organization_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/feature_flags/{flag_name}/organizations/{organization_id}"
+  path_params  <- list(flag_name = flag_name, organization_id = organization_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List the projects a File belongs to
 #' @param id integer required. The ID of the File.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -6210,6 +6924,70 @@ files_delete_shares_groups <- function(id, group_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+files_list_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/files/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+files_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/files/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -6728,6 +7506,30 @@ git_repos_delete <- function(id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get all branches and tags of a bookmarked git repository
+#' @param id integer required. The ID for this git repository.
+#' 
+#' @return  A list containing the following elements:
+#' \item{branches}{array, List of branch names of this git repository.}
+#' \item{tags}{array, List of tag names of this git repository.}
+#' @export
+git_repos_list_refs <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/git_repos/{id}/refs"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -7285,6 +8087,43 @@ groups_delete_members <- function(id, user_id) {
  }
 
 
+#' Get child groups of this group
+#' @param id integer required. The ID of this group.
+#' 
+#' @return  A list containing the following elements:
+#' \item{manageable}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, 
+#' \item name string, 
+#' }}
+#' \item{writeable}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, 
+#' \item name string, 
+#' }}
+#' \item{readable}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, 
+#' \item name string, 
+#' }}
+#' @export
+groups_list_child_groups <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/groups/{id}/child_groups"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List users and groups permissioned on this object
 #' @param id integer required. The ID of the resource that is shared.
 #' 
@@ -7450,6 +8289,70 @@ imports_delete_shares_groups <- function(id, group_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+imports_list_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/imports/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+imports_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/imports/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -8549,6 +9452,153 @@ imports_put_files_csv_archive <- function(id, status) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Start a run
+#' @param id integer required. The ID of the csv_import.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the run.}
+#' \item{csvImportId}{integer, The ID of the csv_import.}
+#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' \item{createdAt}{string, The time the run was created.}
+#' \item{startedAt}{string, The time the run started at.}
+#' \item{finishedAt}{string, The time the run completed.}
+#' \item{error}{string, The error, if any, returned by the run.}
+#' @export
+imports_post_files_csv_runs <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/imports/files/csv/{id}/runs"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List runs for the given csv_import
+#' @param id integer required. The ID of the csv_import.
+#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID of the run.}
+#' \item{csvImportId}{integer, The ID of the csv_import.}
+#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' \item{createdAt}{string, The time the run was created.}
+#' \item{startedAt}{string, The time the run started at.}
+#' \item{finishedAt}{string, The time the run completed.}
+#' \item{error}{string, The error, if any, returned by the run.}
+#' @export
+imports_list_files_csv_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/imports/files/csv/{id}/runs"
+  path_params  <- list(id = id)
+  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Check status of a run
+#' @param id integer required. The ID of the csv_import.
+#' @param run_id integer required. The ID of the run.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the run.}
+#' \item{csvImportId}{integer, The ID of the csv_import.}
+#' \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
+#' \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
+#' \item{createdAt}{string, The time the run was created.}
+#' \item{startedAt}{string, The time the run started at.}
+#' \item{finishedAt}{string, The time the run completed.}
+#' \item{error}{string, The error, if any, returned by the run.}
+#' @export
+imports_get_files_csv_runs <- function(id, run_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/imports/files/csv/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Cancel a run
+#' @param id integer required. The ID of the csv_import.
+#' @param run_id integer required. The ID of the run.
+#' 
+#' @return  An empty HTTP response
+#' @export
+imports_delete_files_csv_runs <- function(id, run_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/imports/files/csv/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get the logs for a run
+#' @param id integer required. The ID of the csv_import.
+#' @param run_id integer required. The ID of the run.
+#' @param last_id integer optional. The ID of the last log message received. Log entries with this ID value or lower will be omitted.Logs are sorted by ID if this value is provided, and are otherwise sorted by createdAt.
+#' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID of the log.}
+#' \item{createdAt}{string, The time the log was created.}
+#' \item{message}{string, The log message.}
+#' \item{level}{string, The level of the log. One of unknown,fatal,error,warn,info,debug.}
+#' @export
+imports_list_files_csv_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/imports/files/csv/{id}/runs/{run_id}/logs"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list(last_id = last_id, limit = limit)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -10121,6 +11171,70 @@ jobs_delete_shares_groups <- function(id, group_id) {
  }
 
 
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+jobs_list_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/jobs/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+jobs_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/jobs/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List the projects a Job belongs to
 #' @param id integer required. The ID of the Job.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -10528,6 +11642,70 @@ json_values_delete_shares_groups <- function(id, group_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+json_values_list_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/json_values/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+json_values_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/json_values/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -12787,6 +13965,70 @@ models_delete_shares_groups <- function(id, group_id) {
  }
 
 
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+models_list_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/models/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+models_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/models/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List the projects a Model belongs to
 #' @param id integer required. The ID of the Model.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -13746,6 +14988,70 @@ notebooks_delete_shares_groups <- function(id, group_id) {
  }
 
 
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+notebooks_list_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/notebooks/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+notebooks_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/notebooks/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Update the archive status of this object
 #' @param id integer required. The ID of the object.
 #' @param status boolean required. The desired archived status of the object.
@@ -14166,6 +15472,46 @@ notebooks_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = 
  }
 
 
+#' Update an attached git file
+#' @param id integer required. The ID of the file.
+#' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
+#' @param git_branch string optional. The git branch that the file is on.
+#' @param git_path string optional. The path of the file in the repository.
+#' @param git_repo_url string optional. The URL of the git repository.
+#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
+#' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
+#' 
+#' @return  A list containing the following elements:
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitBranch}{string, The git branch that the file is on.}
+#' \item{gitPath}{string, The path of the file in the repository.}
+#' \item{gitRepo}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID for this git repository.
+#' \item repoUrl string, The URL for this git repository.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' }}
+#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' @export
+notebooks_patch_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/notebooks/{id}/git"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Get the git commits for an item on the current branch
 #' @param id integer required. The ID of the file.
 #' 
@@ -14248,6 +15594,58 @@ notebooks_get_git_commits <- function(id, commit_hash) {
  }
 
 
+#' Checkout latest commit on the current branch of a script or workflow
+#' @param id integer required. The ID of the file.
+#' 
+#' @return  A list containing the following elements:
+#' \item{content}{string, The file's contents.}
+#' \item{type}{string, The file's type.}
+#' \item{size}{integer, The file's size.}
+#' \item{fileHash}{string, The SHA of the file.}
+#' @export
+notebooks_post_git_checkout_latest <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/notebooks/{id}/git/checkout-latest"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Checkout content that the existing git_ref points to and save to the object
+#' @param id integer required. The ID of the file.
+#' 
+#' @return  A list containing the following elements:
+#' \item{content}{string, The file's contents.}
+#' \item{type}{string, The file's type.}
+#' \item{size}{integer, The file's size.}
+#' \item{fileHash}{string, The SHA of the file.}
+#' @export
+notebooks_post_git_checkout <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/notebooks/{id}/git/checkout"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Receive a stream of notifications as they come in
 #' @param last_event_id string optional. allows browser to keep track of last event fired
 #' @param r string optional. specifies retry/reconnect timeout
@@ -14292,6 +15690,811 @@ ontology_list <- function(subset = NULL) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List Permission Sets
+#' @param archived string optional. The archival status of the requested item(s).
+#' @param author string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.
+#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to updated_at. Must be one of: updated_at, name, created_at.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The ID for this permission set.}
+#' \item{name}{string, The name of this permission set.}
+#' \item{description}{string, A description of this permission set.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+permission_sets_list <- function(archived = NULL, author = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/"
+  path_params  <- list()
+  query_params <- list(archived = archived, author = author, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a Permission Set
+#' @param name string required. The name of this permission set.
+#' @param description string optional. A description of this permission set.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for this permission set.}
+#' \item{name}{string, The name of this permission set.}
+#' \item{description}{string, A description of this permission set.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+permission_sets_post <- function(name, description = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(name = name, description = description)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get a Permission Set
+#' @param id integer required. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for this permission set.}
+#' \item{name}{string, The name of this permission set.}
+#' \item{description}{string, A description of this permission set.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+permission_sets_get <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Replace all attributes of this Permission Set
+#' @param id integer required. The ID for this permission set.
+#' @param name string required. The name of this permission set.
+#' @param description string optional. A description of this permission set.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for this permission set.}
+#' \item{name}{string, The name of this permission set.}
+#' \item{description}{string, A description of this permission set.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+permission_sets_put <- function(id, name, description = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, description = description)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update some attributes of this Permission Set
+#' @param id integer required. The ID for this permission set.
+#' @param name string optional. The name of this permission set.
+#' @param description string optional. A description of this permission set.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for this permission set.}
+#' \item{name}{string, The name of this permission set.}
+#' \item{description}{string, A description of this permission set.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+permission_sets_patch <- function(id, name = NULL, description = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, description = description)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List users and groups permissioned on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' 
+#' @return  An array containing the following fields:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+permission_sets_list_shares <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/shares"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions users have on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+permission_sets_put_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/shares/users"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a user has on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
+#' 
+#' @return  An empty HTTP response
+#' @export
+permission_sets_delete_shares_users <- function(id, user_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/shares/users/{user_id}"
+  path_params  <- list(id = id, user_id = user_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions groups has on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+permission_sets_put_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/shares/groups"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a group has on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
+#' 
+#' @return  An empty HTTP response
+#' @export
+permission_sets_delete_shares_groups <- function(id, group_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/shares/groups/{group_id}"
+  path_params  <- list(id = id, group_id = group_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+permission_sets_list_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+permission_sets_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update the archive status of this object
+#' @param id integer required. The ID of the object.
+#' @param status boolean required. The desired archived status of the object.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for this permission set.}
+#' \item{name}{string, The name of this permission set.}
+#' \item{description}{string, A description of this permission set.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+permission_sets_put_archive <- function(id, status) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/archive"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(status = status)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get all permissions for a user, in this permission set
+#' @param id integer required. The ID for this permission set.
+#' @param user_id integer required. The ID for the user.
+#' 
+#' @return  An array containing the following fields:
+#' \item{resourceName}{string, The name of the resource.}
+#' \item{read}{boolean, If true, the user has read permission on this resource.}
+#' \item{write}{boolean, If true, the user has write permission on this resource.}
+#' \item{manage}{boolean, If true, the user has manage permission on this resource.}
+#' @export
+permission_sets_list_users_permissions <- function(id, user_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/users/{user_id}/permissions"
+  path_params  <- list(id = id, user_id = user_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List resources in a permission set
+#' @param id integer required. The ID for this permission set.
+#' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to name. Must be one of: name, id, updated_at, created_at.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to asc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{permissionSetId}{integer, The ID for the permission set this resource belongs to.}
+#' \item{name}{string, The name of this resource.}
+#' \item{description}{string, A description of this resource.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' @export
+permission_sets_list_resources <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/resources"
+  path_params  <- list(id = id)
+  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a resource in a permission set
+#' @param id integer required. The ID for this permission set.
+#' @param name string required. The name of this resource.
+#' @param description string optional. A description of this resource.
+#' 
+#' @return  A list containing the following elements:
+#' \item{permissionSetId}{integer, The ID for the permission set this resource belongs to.}
+#' \item{name}{string, The name of this resource.}
+#' \item{description}{string, A description of this resource.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' @export
+permission_sets_post_resources <- function(id, name, description = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/resources"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, description = description)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get a resource in a permission set
+#' @param id integer required. The ID for this permission set.
+#' @param name string required. The name of this resource.
+#' 
+#' @return  A list containing the following elements:
+#' \item{permissionSetId}{integer, The ID for the permission set this resource belongs to.}
+#' \item{name}{string, The name of this resource.}
+#' \item{description}{string, A description of this resource.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' @export
+permission_sets_get_resources <- function(id, name) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/resources/{name}"
+  path_params  <- list(id = id, name = name)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update a resource in a permission set
+#' @param id integer required. The ID for this permission set.
+#' @param name string required. The name of this resource.
+#' @param description string optional. A description of this resource.
+#' 
+#' @return  A list containing the following elements:
+#' \item{permissionSetId}{integer, The ID for the permission set this resource belongs to.}
+#' \item{name}{string, The name of this resource.}
+#' \item{description}{string, A description of this resource.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' @export
+permission_sets_patch_resources <- function(id, name, description = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/resources/{name}"
+  path_params  <- list(id = id, name = name)
+  query_params <- list()
+  body_params  <- list(description = description)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Delete a resource in a permission set
+#' @param id integer required. The ID for this permission set.
+#' @param name string required. The name of this resource.
+#' 
+#' @return  An empty HTTP response
+#' @export
+permission_sets_delete_resources <- function(id, name) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/resources/{name}"
+  path_params  <- list(id = id, name = name)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List users and groups permissioned on this object
+#' @param id integer required. The ID for this permission set.
+#' @param name string required. The name of this resource.
+#' 
+#' @return  An array containing the following fields:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+permission_sets_list_resources_shares <- function(id, name) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/resources/{name}/shares"
+  path_params  <- list(id = id, name = name)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions users have on this object
+#' @param id integer required. The ID for this permission set.
+#' @param name string required. The name of this resource.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+permission_sets_put_resources_shares_users <- function(id, name, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/resources/{name}/shares/users"
+  path_params  <- list(id = id, name = name)
+  query_params <- list()
+  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a user has on this object
+#' @param id integer required. The ID for this permission set.
+#' @param name string required. The name of this resource.
+#' @param user_id integer required. The ID of the user.
+#' 
+#' @return  An empty HTTP response
+#' @export
+permission_sets_delete_resources_shares_users <- function(id, name, user_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/resources/{name}/shares/users/{user_id}"
+  path_params  <- list(id = id, name = name, user_id = user_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions groups has on this object
+#' @param id integer required. The ID for this permission set.
+#' @param name string required. The name of this resource.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+permission_sets_put_resources_shares_groups <- function(id, name, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/resources/{name}/shares/groups"
+  path_params  <- list(id = id, name = name)
+  query_params <- list()
+  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a group has on this object
+#' @param id integer required. The ID for this permission set.
+#' @param name string required. The name of this resource.
+#' @param group_id integer required. The ID of the group.
+#' 
+#' @return  An empty HTTP response
+#' @export
+permission_sets_delete_resources_shares_groups <- function(id, name, group_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/permission_sets/{id}/resources/{name}/shares/groups/{group_id}"
+  path_params  <- list(id = id, name = name, group_id = group_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -14670,6 +16873,201 @@ projects_post <- function(name, description, note = NULL, auto_share = NULL, hid
   path_params  <- list()
   query_params <- list()
   body_params  <- list(name = name, description = description, note = note, autoShare = auto_share, hidden = hidden)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Clone this 
+#' @param id integer required. The ID for this project.
+#' @param clone_schedule boolean optional. If true, also copy the schedule for all applicable project objects.
+#' @param clone_notifications boolean optional. If true, also copy the notifications for all applicable project objects.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for this project.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{name}{string, The name of this project.}
+#' \item{description}{string, A description of the project.}
+#' \item{users}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{autoShare}{boolean, }
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{tables}{array, An array containing the following fields: 
+#' \itemize{
+#' \item schema string, 
+#' \item name string, 
+#' \item rowCount integer, 
+#' \item columnCount integer, 
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' }}
+#' \item{surveys}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' }}
+#' \item{scripts}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item type string, 
+#' \item finishedAt string, 
+#' \item state string, 
+#' \item lastRun object, 
+#' }}
+#' \item{imports}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item type string, 
+#' \item finishedAt string, 
+#' \item state string, 
+#' \item lastRun object, 
+#' }}
+#' \item{exports}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item type string, 
+#' \item finishedAt string, 
+#' \item state string, 
+#' \item lastRun object, 
+#' }}
+#' \item{models}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item state string, 
+#' }}
+#' \item{notebooks}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item currentDeploymentId integer, 
+#' \item lastDeploy object, 
+#' }}
+#' \item{services}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item currentDeploymentId integer, 
+#' \item lastDeploy object, 
+#' }}
+#' \item{workflows}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item state string, 
+#' \item lastExecution object, 
+#' }}
+#' \item{reports}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item state string, 
+#' }}
+#' \item{scriptTemplates}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' }}
+#' \item{files}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item fileName string, 
+#' \item fileSize integer, 
+#' \item expired boolean, 
+#' }}
+#' \item{enhancements}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item lastRun object, 
+#' }}
+#' \item{projects}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item description string, 
+#' }}
+#' \item{allObjects}{array, An array containing the following fields: 
+#' \itemize{
+#' \item projectId integer, 
+#' \item objectId integer, 
+#' \item objectType string, 
+#' \item fcoType string, 
+#' \item subType string, 
+#' \item name string, 
+#' \item icon string, 
+#' \item author string, 
+#' \item updatedAt string, 
+#' \item autoShare boolean, 
+#' \item archived string, The archival status of the requested item(s).
+#' \item hidden boolean, The hidden status of the item.
+#' \item myPermissionLevel string, Your permission level on the object. One of "read", "write", or "manage".
+#' }}
+#' \item{note}{string, }
+#' \item{canCurrentUserEnableAutoShare}{boolean, A flag for if the current user can enable auto-sharing mode for this project.}
+#' \item{hidden}{boolean, The hidden status of the item.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' \item{parentProject}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The parent project's ID.
+#' \item name integer, The parent project's name.
+#' }}
+#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
+#' @export
+projects_post_clone <- function(id, clone_schedule = NULL, clone_notifications = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/projects/{id}/clone"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(cloneSchedule = clone_schedule, cloneNotifications = clone_notifications)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -15091,6 +17489,200 @@ projects_delete <- function(project_id) {
  }
 
 
+#' Enable or disable Auto-Share on a project
+#' @param project_id integer required. 
+#' @param auto_share boolean required. A toggle for sharing the objects within the project when the project is shared or objects are added.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID for this project.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{name}{string, The name of this project.}
+#' \item{description}{string, A description of the project.}
+#' \item{users}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{autoShare}{boolean, }
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{tables}{array, An array containing the following fields: 
+#' \itemize{
+#' \item schema string, 
+#' \item name string, 
+#' \item rowCount integer, 
+#' \item columnCount integer, 
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' }}
+#' \item{surveys}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' }}
+#' \item{scripts}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item type string, 
+#' \item finishedAt string, 
+#' \item state string, 
+#' \item lastRun object, 
+#' }}
+#' \item{imports}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item type string, 
+#' \item finishedAt string, 
+#' \item state string, 
+#' \item lastRun object, 
+#' }}
+#' \item{exports}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item type string, 
+#' \item finishedAt string, 
+#' \item state string, 
+#' \item lastRun object, 
+#' }}
+#' \item{models}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item state string, 
+#' }}
+#' \item{notebooks}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item currentDeploymentId integer, 
+#' \item lastDeploy object, 
+#' }}
+#' \item{services}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item currentDeploymentId integer, 
+#' \item lastDeploy object, 
+#' }}
+#' \item{workflows}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item state string, 
+#' \item lastExecution object, 
+#' }}
+#' \item{reports}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item state string, 
+#' }}
+#' \item{scriptTemplates}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' }}
+#' \item{files}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item fileName string, 
+#' \item fileSize integer, 
+#' \item expired boolean, 
+#' }}
+#' \item{enhancements}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item lastRun object, 
+#' }}
+#' \item{projects}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The item's ID.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item name string, 
+#' \item description string, 
+#' }}
+#' \item{allObjects}{array, An array containing the following fields: 
+#' \itemize{
+#' \item projectId integer, 
+#' \item objectId integer, 
+#' \item objectType string, 
+#' \item fcoType string, 
+#' \item subType string, 
+#' \item name string, 
+#' \item icon string, 
+#' \item author string, 
+#' \item updatedAt string, 
+#' \item autoShare boolean, 
+#' \item archived string, The archival status of the requested item(s).
+#' \item hidden boolean, The hidden status of the item.
+#' \item myPermissionLevel string, Your permission level on the object. One of "read", "write", or "manage".
+#' }}
+#' \item{note}{string, }
+#' \item{canCurrentUserEnableAutoShare}{boolean, A flag for if the current user can enable auto-sharing mode for this project.}
+#' \item{hidden}{boolean, The hidden status of the item.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' \item{parentProject}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The parent project's ID.
+#' \item name integer, The parent project's name.
+#' }}
+#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
+#' @export
+projects_put_auto_share <- function(project_id, auto_share) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/projects/{project_id}/auto_share"
+  path_params  <- list(project_id = project_id)
+  query_params <- list()
+  body_params  <- list(autoShare = auto_share)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List users and groups permissioned on this object
 #' @param id integer required. The ID of the resource that is shared.
 #' 
@@ -15256,6 +17848,70 @@ projects_delete_shares_groups <- function(id, group_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+projects_list_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/projects/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+projects_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/projects/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -15756,6 +18412,29 @@ queries_get_runs <- function(id, run_id) {
  }
 
 
+#' Cancel a run
+#' @param id integer required. The ID of the query.
+#' @param run_id integer required. The ID of the run.
+#' 
+#' @return  An empty HTTP response
+#' @export
+queries_delete_runs <- function(id, run_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/queries/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Get the logs for a run
 #' @param id integer required. The ID of the query.
 #' @param run_id integer required. The ID of the run.
@@ -15884,6 +18563,55 @@ queries_get <- function(id) {
  }
 
 
+#' Sets Query Hidden to true
+#' @param id integer required. The query ID.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The query ID.}
+#' \item{database}{integer, The database ID.}
+#' \item{sql}{string, The SQL to execute.}
+#' \item{credential}{integer, The credential ID.}
+#' \item{resultRows}{array, A preview of rows returned by the query.}
+#' \item{resultColumns}{array, A preview of columns returned by the query.}
+#' \item{scriptId}{integer, The ID of the script associated with this query.}
+#' \item{exception}{string, Deprecated and not used.}
+#' \item{error}{string, The error message for this run, if present.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{startedAt}{string, The start time of the last run.}
+#' \item{finishedAt}{string, The end time of the last run.}
+#' \item{state}{string, The state of the last run. One of queued, running, succeeded, failed, and cancelled.}
+#' \item{lastRunId}{integer, The ID of the last run.}
+#' \item{hidden}{boolean, The hidden status of the item.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' \item{name}{string, The name of the query.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{reportId}{integer, The ID of the report associated with this query.}
+#' @export
+queries_delete <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/queries/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List Remote Hosts
 #' @param type string optional. The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce
 #' 
@@ -15944,6 +18672,276 @@ remote_hosts_post <- function(name, url, type) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get a Remote Host
+#' @param id integer required. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the remote host.}
+#' \item{name}{string, The human readable name for the remote host.}
+#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
+#' \item{url}{string, The URL for the remote host.}
+#' \item{description}{string, The description of the remote host.}
+#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
+#' \item{user}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' @export
+remote_hosts_get <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/remote_hosts/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Replace all attributes of this Remote Host
+#' @param id integer required. The ID of the remote host.
+#' @param name string required. The human readable name for the remote host.
+#' @param type string required. The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce
+#' @param url string required. The URL for the remote host.
+#' @param description string required. The description of the remote host.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the remote host.}
+#' \item{name}{string, The human readable name for the remote host.}
+#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
+#' \item{url}{string, The URL for the remote host.}
+#' \item{description}{string, The description of the remote host.}
+#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
+#' \item{user}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' @export
+remote_hosts_put <- function(id, name, type, url, description) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/remote_hosts/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, type = type, url = url, description = description)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update some attributes of this Remote Host
+#' @param id integer required. The ID of the remote host.
+#' @param name string optional. The human readable name for the remote host.
+#' @param type string optional. The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce
+#' @param url string optional. The URL for the remote host.
+#' @param description string optional. The description of the remote host.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the remote host.}
+#' \item{name}{string, The human readable name for the remote host.}
+#' \item{type}{string, The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
+#' \item{url}{string, The URL for the remote host.}
+#' \item{description}{string, The description of the remote host.}
+#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
+#' \item{user}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' @export
+remote_hosts_patch <- function(id, name = NULL, type = NULL, url = NULL, description = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/remote_hosts/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, type = type, url = url, description = description)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List users and groups permissioned on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' 
+#' @return  An array containing the following fields:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+remote_hosts_list_shares <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/remote_hosts/{id}/shares"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions users have on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_ids array required. An array of one or more user IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+remote_hosts_put_shares_users <- function(id, user_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/remote_hosts/{id}/shares/users"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userIds = user_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Revoke the permissions a user has on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. The ID of the user.
+#' 
+#' @return  An empty HTTP response
+#' @export
+remote_hosts_delete_shares_users <- function(id, user_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/remote_hosts/{id}/shares/users/{user_id}"
+  path_params  <- list(id = id, user_id = user_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Set the permissions groups has on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_ids array required. An array of one or more group IDs.
+#' @param permission_level string required. Options are: "read", "write", or "manage".
+#' @param share_email_body string optional. Custom body text for e-mail sent on a share.
+#' @param send_shared_email boolean optional. Send email to the recipients of a share.
+#' 
+#' @return  A list containing the following elements:
+#' \item{readers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{writers}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{owners}{list, A list containing the following elements: 
+#' \itemize{
+#' \item users array, 
+#' \item groups array, 
+#' }}
+#' \item{totalUserShares}{integer, For owners, the number of total users shared. For writers and readers, the number of visible users shared.}
+#' \item{totalGroupShares}{integer, For owners, the number of total groups shared. For writers and readers, the number of visible groups shared.}
+#' @export
+remote_hosts_put_shares_groups <- function(id, group_ids, permission_level, share_email_body = NULL, send_shared_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/remote_hosts/{id}/shares/groups"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(groupIds = group_ids, permissionLevel = permission_level, shareEmailBody = share_email_body, sendSharedEmail = send_shared_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16252,6 +19250,46 @@ reports_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NU
  }
 
 
+#' Update an attached git file
+#' @param id integer required. The ID of the file.
+#' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
+#' @param git_branch string optional. The git branch that the file is on.
+#' @param git_path string optional. The path of the file in the repository.
+#' @param git_repo_url string optional. The URL of the git repository.
+#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
+#' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
+#' 
+#' @return  A list containing the following elements:
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitBranch}{string, The git branch that the file is on.}
+#' \item{gitPath}{string, The path of the file in the repository.}
+#' \item{gitRepo}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID for this git repository.
+#' \item repoUrl string, The URL for this git repository.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' }}
+#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' @export
+reports_patch_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/{id}/git"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Get the git commits for an item on the current branch
 #' @param id integer required. The ID of the file.
 #' 
@@ -16328,6 +19366,58 @@ reports_get_git_commits <- function(id, commit_hash) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Checkout latest commit on the current branch of a script or workflow
+#' @param id integer required. The ID of the file.
+#' 
+#' @return  A list containing the following elements:
+#' \item{content}{string, The file's contents.}
+#' \item{type}{string, The file's type.}
+#' \item{size}{integer, The file's size.}
+#' \item{fileHash}{string, The SHA of the file.}
+#' @export
+reports_post_git_checkout_latest <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/{id}/git/checkout-latest"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Checkout content that the existing git_ref points to and save to the object
+#' @param id integer required. The ID of the file.
+#' 
+#' @return  A list containing the following elements:
+#' \item{content}{string, The file's contents.}
+#' \item{type}{string, The file's type.}
+#' \item{size}{integer, The file's size.}
+#' \item{fileHash}{string, The SHA of the file.}
+#' @export
+reports_post_git_checkout <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/{id}/git/checkout"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -16780,6 +19870,41 @@ reports_list_dependencies <- function(id, user_id = NULL) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+reports_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -17253,6 +20378,70 @@ reports_delete_services_shares_groups <- function(id, group_id) {
  }
 
 
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+reports_list_services_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/services/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+reports_put_services_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/services/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List the projects a Service Report belongs to
 #' @param id integer required. The ID of the Service Report.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -17345,6 +20534,49 @@ reports_delete_services_projects <- function(id, project_id) {
  }
 
 
+#' Update the archive status of this object
+#' @param id integer required. The ID of the object.
+#' @param status boolean required. The desired archived status of the object.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this report.}
+#' \item{name}{string, The name of the report.}
+#' \item{user}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
+#' \item{host}{string, The host for the service report}
+#' \item{displayUrl}{string, The URL to display the service report.}
+#' \item{serviceId}{integer, The id of the backing service}
+#' \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
+#' \item{apiKey}{string, A Civis API key that can be used by this report.}
+#' \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+reports_put_services_archive <- function(id, status) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/services/{id}/archive"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(status = status)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Refresh the data in this Tableau report
 #' @param id integer required. The ID of this report.
 #' 
@@ -17372,7 +20604,36 @@ reports_post_refresh <- function(id) {
 
   return(resp)
 
-}
+ }
+
+
+#' List Roles
+#' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to asc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, ID of the Role.}
+#' \item{name}{string, The name of the Role.}
+#' \item{slug}{string, The slug.}
+#' \item{description}{string, The description of the Role.}
+#' @export
+roles_list <- function(limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/roles/"
+  path_params  <- list()
+  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
 
 
 #' List users and groups permissioned on this object
@@ -22484,6 +25745,30 @@ scripts_delete_sql_runs <- function(id, run_id) {
  }
 
 
+#' Update the given run
+#' @param id integer required. ID of the Job
+#' @param run_id integer required. ID of the Run
+#' @param error string optional. The error message to update
+#' 
+#' @return  An empty HTTP response
+#' @export
+scripts_patch_sql_runs <- function(id, run_id, error = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/sql/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list(error = error)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Get the logs for a run
 #' @param id integer required. The ID of the sql.
 #' @param run_id integer required. The ID of the run.
@@ -22761,6 +26046,30 @@ scripts_delete_python3_runs <- function(id, run_id) {
  }
 
 
+#' Update the given run
+#' @param id integer required. ID of the Job
+#' @param run_id integer required. ID of the Run
+#' @param error string optional. The error message to update
+#' 
+#' @return  An empty HTTP response
+#' @export
+scripts_patch_python3_runs <- function(id, run_id, error = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/python3/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list(error = error)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Get the logs for a run
 #' @param id integer required. The ID of the python.
 #' @param run_id integer required. The ID of the run.
@@ -22914,6 +26223,30 @@ scripts_delete_r_runs <- function(id, run_id) {
  }
 
 
+#' Update the given run
+#' @param id integer required. ID of the Job
+#' @param run_id integer required. ID of the Run
+#' @param error string optional. The error message to update
+#' 
+#' @return  An empty HTTP response
+#' @export
+scripts_patch_r_runs <- function(id, run_id, error = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/r/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list(error = error)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Get the logs for a run
 #' @param id integer required. The ID of the r.
 #' @param run_id integer required. The ID of the run.
@@ -23055,6 +26388,30 @@ scripts_delete_javascript_runs <- function(id, run_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update the given run
+#' @param id integer required. ID of the Job
+#' @param run_id integer required. ID of the Run
+#' @param error string optional. The error message to update
+#' 
+#' @return  An empty HTTP response
+#' @export
+scripts_patch_javascript_runs <- function(id, run_id, error = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/javascript/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list(error = error)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23585,6 +26942,30 @@ scripts_post_custom_runs_outputs <- function(id, run_id, object_type, object_id)
  }
 
 
+#' Update the given run
+#' @param id integer required. ID of the Job
+#' @param run_id integer required. ID of the Run
+#' @param error string optional. The error message to update
+#' 
+#' @return  An empty HTTP response
+#' @export
+scripts_patch_container_runs <- function(id, run_id, error = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/container/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list(error = error)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Get the git metadata attached to an item
 #' @param id integer required. The ID of the file.
 #' 
@@ -23653,6 +27034,46 @@ scripts_put_sql_git <- function(id, git_ref = NULL, git_branch = NULL, git_path 
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update an attached git file
+#' @param id integer required. The ID of the file.
+#' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
+#' @param git_branch string optional. The git branch that the file is on.
+#' @param git_path string optional. The path of the file in the repository.
+#' @param git_repo_url string optional. The URL of the git repository.
+#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
+#' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
+#' 
+#' @return  A list containing the following elements:
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitBranch}{string, The git branch that the file is on.}
+#' \item{gitPath}{string, The path of the file in the repository.}
+#' \item{gitRepo}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID for this git repository.
+#' \item repoUrl string, The URL for this git repository.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' }}
+#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' @export
+scripts_patch_sql_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/sql/{id}/git"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23741,6 +27162,58 @@ scripts_get_sql_git_commits <- function(id, commit_hash) {
  }
 
 
+#' Checkout latest commit on the current branch of a script or workflow
+#' @param id integer required. The ID of the file.
+#' 
+#' @return  A list containing the following elements:
+#' \item{content}{string, The file's contents.}
+#' \item{type}{string, The file's type.}
+#' \item{size}{integer, The file's size.}
+#' \item{fileHash}{string, The SHA of the file.}
+#' @export
+scripts_post_sql_git_checkout_latest <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/sql/{id}/git/checkout-latest"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Checkout content that the existing git_ref points to and save to the object
+#' @param id integer required. The ID of the file.
+#' 
+#' @return  A list containing the following elements:
+#' \item{content}{string, The file's contents.}
+#' \item{type}{string, The file's type.}
+#' \item{size}{integer, The file's size.}
+#' \item{fileHash}{string, The SHA of the file.}
+#' @export
+scripts_post_sql_git_checkout <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/sql/{id}/git/checkout"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Get the git metadata attached to an item
 #' @param id integer required. The ID of the file.
 #' 
@@ -23809,6 +27282,46 @@ scripts_put_javascript_git <- function(id, git_ref = NULL, git_branch = NULL, gi
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update an attached git file
+#' @param id integer required. The ID of the file.
+#' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
+#' @param git_branch string optional. The git branch that the file is on.
+#' @param git_path string optional. The path of the file in the repository.
+#' @param git_repo_url string optional. The URL of the git repository.
+#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
+#' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
+#' 
+#' @return  A list containing the following elements:
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitBranch}{string, The git branch that the file is on.}
+#' \item{gitPath}{string, The path of the file in the repository.}
+#' \item{gitRepo}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID for this git repository.
+#' \item repoUrl string, The URL for this git repository.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' }}
+#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' @export
+scripts_patch_javascript_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/javascript/{id}/git"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -23897,6 +27410,58 @@ scripts_get_javascript_git_commits <- function(id, commit_hash) {
  }
 
 
+#' Checkout latest commit on the current branch of a script or workflow
+#' @param id integer required. The ID of the file.
+#' 
+#' @return  A list containing the following elements:
+#' \item{content}{string, The file's contents.}
+#' \item{type}{string, The file's type.}
+#' \item{size}{integer, The file's size.}
+#' \item{fileHash}{string, The SHA of the file.}
+#' @export
+scripts_post_javascript_git_checkout_latest <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/javascript/{id}/git/checkout-latest"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Checkout content that the existing git_ref points to and save to the object
+#' @param id integer required. The ID of the file.
+#' 
+#' @return  A list containing the following elements:
+#' \item{content}{string, The file's contents.}
+#' \item{type}{string, The file's type.}
+#' \item{size}{integer, The file's size.}
+#' \item{fileHash}{string, The SHA of the file.}
+#' @export
+scripts_post_javascript_git_checkout <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/javascript/{id}/git/checkout"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Get the git metadata attached to an item
 #' @param id integer required. The ID of the file.
 #' 
@@ -23965,6 +27530,46 @@ scripts_put_python3_git <- function(id, git_ref = NULL, git_branch = NULL, git_p
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update an attached git file
+#' @param id integer required. The ID of the file.
+#' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
+#' @param git_branch string optional. The git branch that the file is on.
+#' @param git_path string optional. The path of the file in the repository.
+#' @param git_repo_url string optional. The URL of the git repository.
+#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
+#' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
+#' 
+#' @return  A list containing the following elements:
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitBranch}{string, The git branch that the file is on.}
+#' \item{gitPath}{string, The path of the file in the repository.}
+#' \item{gitRepo}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID for this git repository.
+#' \item repoUrl string, The URL for this git repository.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' }}
+#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' @export
+scripts_patch_python3_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/python3/{id}/git"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24053,6 +27658,58 @@ scripts_get_python3_git_commits <- function(id, commit_hash) {
  }
 
 
+#' Checkout latest commit on the current branch of a script or workflow
+#' @param id integer required. The ID of the file.
+#' 
+#' @return  A list containing the following elements:
+#' \item{content}{string, The file's contents.}
+#' \item{type}{string, The file's type.}
+#' \item{size}{integer, The file's size.}
+#' \item{fileHash}{string, The SHA of the file.}
+#' @export
+scripts_post_python3_git_checkout_latest <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/python3/{id}/git/checkout-latest"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Checkout content that the existing git_ref points to and save to the object
+#' @param id integer required. The ID of the file.
+#' 
+#' @return  A list containing the following elements:
+#' \item{content}{string, The file's contents.}
+#' \item{type}{string, The file's type.}
+#' \item{size}{integer, The file's size.}
+#' \item{fileHash}{string, The SHA of the file.}
+#' @export
+scripts_post_python3_git_checkout <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/python3/{id}/git/checkout"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Get the git metadata attached to an item
 #' @param id integer required. The ID of the file.
 #' 
@@ -24121,6 +27778,46 @@ scripts_put_r_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = 
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update an attached git file
+#' @param id integer required. The ID of the file.
+#' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
+#' @param git_branch string optional. The git branch that the file is on.
+#' @param git_path string optional. The path of the file in the repository.
+#' @param git_repo_url string optional. The URL of the git repository.
+#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
+#' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
+#' 
+#' @return  A list containing the following elements:
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitBranch}{string, The git branch that the file is on.}
+#' \item{gitPath}{string, The path of the file in the repository.}
+#' \item{gitRepo}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID for this git repository.
+#' \item repoUrl string, The URL for this git repository.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' }}
+#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' @export
+scripts_patch_r_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/r/{id}/git"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24203,6 +27900,58 @@ scripts_get_r_git_commits <- function(id, commit_hash) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Checkout latest commit on the current branch of a script or workflow
+#' @param id integer required. The ID of the file.
+#' 
+#' @return  A list containing the following elements:
+#' \item{content}{string, The file's contents.}
+#' \item{type}{string, The file's type.}
+#' \item{size}{integer, The file's size.}
+#' \item{fileHash}{string, The SHA of the file.}
+#' @export
+scripts_post_r_git_checkout_latest <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/r/{id}/git/checkout-latest"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Checkout content that the existing git_ref points to and save to the object
+#' @param id integer required. The ID of the file.
+#' 
+#' @return  A list containing the following elements:
+#' \item{content}{string, The file's contents.}
+#' \item{type}{string, The file's type.}
+#' \item{size}{integer, The file's size.}
+#' \item{fileHash}{string, The SHA of the file.}
+#' @export
+scripts_post_r_git_checkout <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/r/{id}/git/checkout"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24374,6 +28123,70 @@ scripts_delete_sql_shares_groups <- function(id, group_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+scripts_list_sql_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/sql/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+scripts_put_sql_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/sql/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -24766,6 +28579,70 @@ scripts_delete_containers_shares_groups <- function(id, group_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+scripts_list_containers_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/containers/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+scripts_put_containers_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/containers/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25170,6 +29047,70 @@ scripts_delete_python3_shares_groups <- function(id, group_id) {
  }
 
 
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+scripts_list_python3_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/python3/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+scripts_put_python3_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/python3/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List the projects a Python Script belongs to
 #' @param id integer required. The ID of the Python Script.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -25552,6 +29493,70 @@ scripts_delete_r_shares_groups <- function(id, group_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+scripts_list_r_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/r/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+scripts_put_r_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/r/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -25946,6 +29951,70 @@ scripts_delete_javascript_shares_groups <- function(id, group_id) {
  }
 
 
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+scripts_list_javascript_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/javascript/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+scripts_put_javascript_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/javascript/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List the projects a JavaScript Script belongs to
 #' @param id integer required. The ID of the JavaScript Script.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -26320,6 +30389,70 @@ scripts_delete_custom_shares_groups <- function(id, group_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+scripts_list_custom_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/custom/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+scripts_put_custom_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/scripts/custom/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -27402,6 +31535,55 @@ search_list_types <- function() {
  }
 
 
+#' Search queries that are not hidden
+#' @param search_string string optional. Space delimited search terms for searching queries by their SQL. Supports wild card characters "?" for any single character, and "*" for zero or more characters.
+#' @param database_id integer optional. The database ID.
+#' @param credential_id integer optional. The credential ID.
+#' @param author_id integer optional. The author of the query.
+#' @param archived boolean optional. The archival status of the requested item(s). Defaults to false.
+#' @param state array optional. The state of the last run. One or more of queued, running, succeeded, failed, and cancelled.
+#' @param started_before string optional. An upper bound for the start date of the last run.
+#' @param started_after string optional. A lower bound for the start date of the last run.
+#' @param limit integer optional. Number of results to return. Defaults to 10. Maximum allowed is 50.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to last_run_started_at. Must be one of: last_run_started_at.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, The query ID.}
+#' \item{database}{integer, The database ID.}
+#' \item{credential}{integer, The credential ID.}
+#' \item{sql}{string, The SQL executed by the query.}
+#' \item{authorId}{integer, The author of the query.}
+#' \item{archived}{boolean, The archival status of the requested item(s).}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{lastRun}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, 
+#' \item state string, The state of the run. One of queued, running, succeeded, failed, and cancelled.
+#' \item startedAt string, The time that the run started.
+#' \item finishedAt string, The time that the run completed.
+#' \item error string, The error message for this run, if present.
+#' }}
+#' @export
+search_list_queries <- function(search_string = NULL, database_id = NULL, credential_id = NULL, author_id = NULL, archived = NULL, state = NULL, started_before = NULL, started_after = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/search/queries"
+  path_params  <- list()
+  query_params <- list(search_string = search_string, database_id = database_id, credential_id = credential_id, author_id = author_id, archived = archived, state = state, started_before = started_before, started_after = started_after, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List Services
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
 #' @param archived string optional. The archival status of the requested item(s).
@@ -28078,6 +32260,70 @@ services_delete_shares_groups <- function(id, group_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+services_list_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+services_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/services/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -29064,6 +33310,199 @@ storage_hosts_delete_shares_groups <- function(id, group_id) {
  }
 
 
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+storage_hosts_list_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/storage_hosts/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+storage_hosts_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/storage_hosts/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List Table Tags
+#' @param name string optional. Name of the tag. If it is provided, the results will be filtered by name
+#' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to name. Must be one of: name, user, table_count.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to asc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, Table Tag ID}
+#' \item{name}{string, Table Tag Name}
+#' \item{tableCount}{integer, The total number of tables associated with the tag.}
+#' \item{user}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' @export
+table_tags_list <- function(name = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/table_tags/"
+  path_params  <- list()
+  query_params <- list(name = name, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a Table Tag
+#' @param name string required. Table Tag Name
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, Table Tag ID}
+#' \item{name}{string, Table Tag Name}
+#' \item{createdAt}{string, The date the tag was created.}
+#' \item{updatedAt}{string, The date the tag was recently updated on.}
+#' \item{tableCount}{integer, The total number of tables associated with the tag.}
+#' \item{user}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' @export
+table_tags_post <- function(name) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/table_tags/"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(name = name)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get a Table Tag
+#' @param id integer required. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, Table Tag ID}
+#' \item{name}{string, Table Tag Name}
+#' \item{createdAt}{string, The date the tag was created.}
+#' \item{updatedAt}{string, The date the tag was recently updated on.}
+#' \item{tableCount}{integer, The total number of tables associated with the tag.}
+#' \item{user}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' @export
+table_tags_get <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/table_tags/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Delete a Table Tag
+#' @param id integer required. 
+#' 
+#' @return  An empty HTTP response
+#' @export
+table_tags_delete <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/table_tags/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Geocode a table
 #' @param source_table_id integer required. The ID of the table to be enhanced.
 #' 
@@ -29595,6 +34034,54 @@ tables_list_columns <- function(id, name = NULL, limit = NULL, page_num = NULL, 
  }
 
 
+#' Add a tag to a table
+#' @param id integer required. The ID of the table.
+#' @param table_tag_id integer required. The ID of the tag.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the table.}
+#' \item{tableTagId}{integer, The ID of the tag.}
+#' @export
+tables_put_tags <- function(id, table_tag_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/tables/{id}/tags/{table_tag_id}"
+  path_params  <- list(id = id, table_tag_id = table_tag_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Add a tag to a table
+#' @param id integer required. The ID of the table.
+#' @param table_tag_id integer required. The ID of the tag.
+#' 
+#' @return  An empty HTTP response
+#' @export
+tables_delete_tags <- function(id, table_tag_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/tables/{id}/tags/{table_tag_id}"
+  path_params  <- list(id = id, table_tag_id = table_tag_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List the projects a Table belongs to
 #' @param id integer required. The ID of the Table.
 #' @param hidden boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.
@@ -29852,6 +34339,70 @@ templates_delete_reports_shares_groups <- function(id, group_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+templates_list_reports_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/templates/reports/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+templates_put_reports_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/templates/reports/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -30310,6 +34861,70 @@ templates_delete_scripts_shares_groups <- function(id, group_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+templates_list_scripts_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/templates/scripts/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+templates_put_scripts_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/templates/scripts/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
 
   return(resp)
 
@@ -31128,6 +35743,110 @@ users_list_me_ui <- function() {
  }
 
 
+#' Enables Superadmin Mode for the current user
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this user.}
+#' \item{name}{string, This user's name.}
+#' \item{email}{string, This user's email address.}
+#' \item{username}{string, This user's username.}
+#' \item{initials}{string, This user's initials.}
+#' \item{lastCheckedAnnouncements}{string, The date and time at which the user last checked their announcements.}
+#' \item{featureFlags}{list, The feature flag settings for this user.}
+#' \item{roles}{array, The roles this user has, listed by slug.}
+#' \item{preferences}{list, This user's preferences.}
+#' \item{customBranding}{string, The branding of Platform for this user.}
+#' \item{primaryGroupId}{integer, The ID of the primary group of this user.}
+#' \item{groups}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The ID of this group.
+#' \item name string, The name of this group.
+#' \item slug string, The slug of this group.
+#' \item organizationId integer, The ID of the organization associated with this group.
+#' \item organizationName string, The name of the organization associated with this group.
+#' }}
+#' \item{organizationName}{string, The name of the organization the user belongs to.}
+#' \item{organizationSlug}{string, The slug of the organization the user belongs to.}
+#' \item{organizationDefaultThemeId}{integer, The ID of the organizations's default theme.}
+#' \item{createdAt}{string, The date and time when the user was created.}
+#' \item{signInCount}{integer, The number of times the user has signed in.}
+#' \item{assumingRole}{boolean, Whether the user is assuming a role or not.}
+#' \item{assumingAdmin}{boolean, Whether the user is assuming admin.}
+#' \item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
+#' \item{superadminModeExpiration}{string, The user is in superadmin mode when set to a DateTime. The user is not in superadmin mode when set to null.}
+#' \item{disableNonCompliantFedrampFeatures}{boolean, Whether to disable non-compliant fedramp features.}
+#' \item{createdById}{integer, The ID of the user who created this user.}
+#' \item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
+#' @export
+users_post_me_superadmin <- function() {
+
+  args <- as.list(match.call())[-1]
+  path <- "/users/me/superadmin"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Disables Superadmin Mode for the current user
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this user.}
+#' \item{name}{string, This user's name.}
+#' \item{email}{string, This user's email address.}
+#' \item{username}{string, This user's username.}
+#' \item{initials}{string, This user's initials.}
+#' \item{lastCheckedAnnouncements}{string, The date and time at which the user last checked their announcements.}
+#' \item{featureFlags}{list, The feature flag settings for this user.}
+#' \item{roles}{array, The roles this user has, listed by slug.}
+#' \item{preferences}{list, This user's preferences.}
+#' \item{customBranding}{string, The branding of Platform for this user.}
+#' \item{primaryGroupId}{integer, The ID of the primary group of this user.}
+#' \item{groups}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The ID of this group.
+#' \item name string, The name of this group.
+#' \item slug string, The slug of this group.
+#' \item organizationId integer, The ID of the organization associated with this group.
+#' \item organizationName string, The name of the organization associated with this group.
+#' }}
+#' \item{organizationName}{string, The name of the organization the user belongs to.}
+#' \item{organizationSlug}{string, The slug of the organization the user belongs to.}
+#' \item{organizationDefaultThemeId}{integer, The ID of the organizations's default theme.}
+#' \item{createdAt}{string, The date and time when the user was created.}
+#' \item{signInCount}{integer, The number of times the user has signed in.}
+#' \item{assumingRole}{boolean, Whether the user is assuming a role or not.}
+#' \item{assumingAdmin}{boolean, Whether the user is assuming admin.}
+#' \item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
+#' \item{superadminModeExpiration}{string, The user is in superadmin mode when set to a DateTime. The user is not in superadmin mode when set to null.}
+#' \item{disableNonCompliantFedrampFeatures}{boolean, Whether to disable non-compliant fedramp features.}
+#' \item{createdById}{integer, The ID of the user who created this user.}
+#' \item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
+#' @export
+users_delete_me_superadmin <- function() {
+
+  args <- as.list(match.call())[-1]
+  path <- "/users/me/superadmin"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Show info about a user
 #' @param id integer required. The ID of this user.
 #' 
@@ -31458,6 +36177,70 @@ users_delete_api_keys <- function(id, key_id) {
  }
 
 
+#' Terminate all of the user's active sessions (must be a team or org admin)
+#' @param id integer required. The ID of this user.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this user.}
+#' \item{user}{string, The username of this user.}
+#' \item{name}{string, The name of this user.}
+#' \item{email}{string, The email of this user.}
+#' \item{active}{boolean, Whether this user account is active or deactivated.}
+#' \item{primaryGroupId}{integer, The ID of the primary group of this user.}
+#' \item{groups}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The ID of this group.
+#' \item name string, The name of this group.
+#' \item slug string, The slug of this group.
+#' \item organizationId integer, The ID of the organization associated with this group.
+#' \item organizationName string, The name of the organization associated with this group.
+#' }}
+#' \item{city}{string, The city of this user.}
+#' \item{state}{string, The state of this user.}
+#' \item{timeZone}{string, The time zone of this user.}
+#' \item{initials}{string, The initials of this user.}
+#' \item{department}{string, The department of this user.}
+#' \item{title}{string, The title of this user.}
+#' \item{githubUsername}{string, The GitHub username of this user.}
+#' \item{prefersSmsOtp}{boolean, The preference for phone authorization of this user}
+#' \item{vpnEnabled}{boolean, The availability of vpn for this user.}
+#' \item{ssoDisabled}{boolean, The availability of SSO for this user.}
+#' \item{otpRequiredForLogin}{boolean, The two factor authentication requirement for this user.}
+#' \item{exemptFromOrgSmsOtpDisabled}{boolean, Whether the user has SMS OTP enabled on an individual level. This field does not matter if the org does not have SMS OTP disabled.}
+#' \item{smsOtpAllowed}{boolean, Whether the user is allowed to receive two factor authentication codes via SMS.}
+#' \item{robot}{boolean, Whether the user is a robot.}
+#' \item{phone}{string, The phone number of this user.}
+#' \item{organizationSlug}{string, The slug of the organization the user belongs to.}
+#' \item{organizationSSODisableCapable}{boolean, The user's organization's ability to disable sso for their users.}
+#' \item{organizationLoginType}{string, The user's organization's login type.}
+#' \item{organizationSmsOtpDisabled}{boolean, Whether the user's organization has SMS OTP disabled.}
+#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
+#' \item{createdAt}{string, The date and time when the user was created.}
+#' \item{updatedAt}{string, The date and time when the user was last updated.}
+#' \item{lastSeenAt}{string, The date and time when the user last visited Platform.}
+#' \item{suspended}{boolean, Whether the user is suspended due to inactivity.}
+#' \item{createdById}{integer, The ID of the user who created this user.}
+#' \item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
+#' \item{unconfirmedEmail}{string, The new email address awaiting confirmation from the user.}
+#' \item{accountStatus}{string, Account status of this user. One of: "Active", "Deactivated", "Suspended", "Unsuspended"}
+#' @export
+users_delete_sessions <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/users/{id}/sessions"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' List Favorites
 #' @param object_id integer optional. The id of the object. If specified as a query parameter, must also specify object_type parameter.
 #' @param object_type string optional. The type of the object that is favorited. Valid options: Project
@@ -31527,6 +36310,95 @@ users_delete_me_favorites <- function(id) {
 
   args <- as.list(match.call())[-1]
   path <- "/users/me/favorites/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Unsuspends user
+#' @param id integer required. The ID of this user.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this user.}
+#' \item{user}{string, The username of this user.}
+#' \item{unlockedAt}{string, The time the user's account was unsuspended}
+#' @export
+users_post_unsuspend <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/users/{id}/unsuspend"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Wipes the user's current 2FA settings so that they must reset them upon next login
+#' @param id integer required. The ID of this user.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of this user.}
+#' \item{user}{string, The username of this user.}
+#' \item{name}{string, The name of this user.}
+#' \item{email}{string, The email of this user.}
+#' \item{active}{boolean, Whether this user account is active or deactivated.}
+#' \item{primaryGroupId}{integer, The ID of the primary group of this user.}
+#' \item{groups}{array, An array containing the following fields: 
+#' \itemize{
+#' \item id integer, The ID of this group.
+#' \item name string, The name of this group.
+#' \item slug string, The slug of this group.
+#' \item organizationId integer, The ID of the organization associated with this group.
+#' \item organizationName string, The name of the organization associated with this group.
+#' }}
+#' \item{city}{string, The city of this user.}
+#' \item{state}{string, The state of this user.}
+#' \item{timeZone}{string, The time zone of this user.}
+#' \item{initials}{string, The initials of this user.}
+#' \item{department}{string, The department of this user.}
+#' \item{title}{string, The title of this user.}
+#' \item{githubUsername}{string, The GitHub username of this user.}
+#' \item{prefersSmsOtp}{boolean, The preference for phone authorization of this user}
+#' \item{vpnEnabled}{boolean, The availability of vpn for this user.}
+#' \item{ssoDisabled}{boolean, The availability of SSO for this user.}
+#' \item{otpRequiredForLogin}{boolean, The two factor authentication requirement for this user.}
+#' \item{exemptFromOrgSmsOtpDisabled}{boolean, Whether the user has SMS OTP enabled on an individual level. This field does not matter if the org does not have SMS OTP disabled.}
+#' \item{smsOtpAllowed}{boolean, Whether the user is allowed to receive two factor authentication codes via SMS.}
+#' \item{robot}{boolean, Whether the user is a robot.}
+#' \item{phone}{string, The phone number of this user.}
+#' \item{organizationSlug}{string, The slug of the organization the user belongs to.}
+#' \item{organizationSSODisableCapable}{boolean, The user's organization's ability to disable sso for their users.}
+#' \item{organizationLoginType}{string, The user's organization's login type.}
+#' \item{organizationSmsOtpDisabled}{boolean, Whether the user's organization has SMS OTP disabled.}
+#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
+#' \item{createdAt}{string, The date and time when the user was created.}
+#' \item{updatedAt}{string, The date and time when the user was last updated.}
+#' \item{lastSeenAt}{string, The date and time when the user last visited Platform.}
+#' \item{suspended}{boolean, Whether the user is suspended due to inactivity.}
+#' \item{createdById}{integer, The ID of the user who created this user.}
+#' \item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
+#' \item{unconfirmedEmail}{string, The new email address awaiting confirmation from the user.}
+#' \item{accountStatus}{string, Account status of this user. One of: "Active", "Deactivated", "Suspended", "Unsuspended"}
+#' @export
+users_delete_2fa <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/users/{id}/2fa"
   path_params  <- list(id = id)
   query_params <- list()
   body_params  <- list()
@@ -32110,6 +36982,70 @@ workflows_delete_shares_groups <- function(id, group_id) {
  }
 
 
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+workflows_list_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/workflows/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Transfer ownership of this object to another user
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer required. ID of target user
+#' @param include_dependencies boolean required. Whether or not to give manage permissions on all dependencies
+#' @param email_body string optional. Custom body text for e-mail sent on transfer.
+#' @param send_email boolean optional. Send email to the target user of the transfer?
+#' 
+#' @return  A list containing the following elements:
+#' \item{dependencies}{array, An array containing the following fields: 
+#' \itemize{
+#' \item objectType string, Dependent object type
+#' \item fcoType string, Human readable dependent object type
+#' \item id integer, Dependent object ID
+#' \item name string, Dependent object name, or nil if the requesting user cannot read this object
+#' \item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+#' \item shared boolean, Whether dependent object was successfully shared with target user
+#' }}
+#' @export
+workflows_put_transfer <- function(id, user_id, include_dependencies, email_body = NULL, send_email = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/workflows/{id}/transfer"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Update the archive status of this object
 #' @param id integer required. The ID of the object.
 #' @param status boolean required. The desired archived status of the object.
@@ -32343,6 +37279,46 @@ workflows_put_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = 
  }
 
 
+#' Update an attached git file
+#' @param id integer required. The ID of the file.
+#' @param git_ref string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.
+#' @param git_branch string optional. The git branch that the file is on.
+#' @param git_path string optional. The path of the file in the repository.
+#' @param git_repo_url string optional. The URL of the git repository.
+#' @param git_ref_type string optional. Specifies if the file is versioned by branch or tag.
+#' @param pull_from_git boolean optional. Automatically pull latest commit from git. Only works for scripts.
+#' 
+#' @return  A list containing the following elements:
+#' \item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
+#' \item{gitBranch}{string, The git branch that the file is on.}
+#' \item{gitPath}{string, The path of the file in the repository.}
+#' \item{gitRepo}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID for this git repository.
+#' \item repoUrl string, The URL for this git repository.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' }}
+#' \item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
+#' \item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
+#' @export
+workflows_patch_git <- function(id, git_ref = NULL, git_branch = NULL, git_path = NULL, git_repo_url = NULL, git_ref_type = NULL, pull_from_git = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/workflows/{id}/git"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(gitRef = git_ref, gitBranch = git_branch, gitPath = git_path, gitRepoUrl = git_repo_url, gitRefType = git_ref_type, pullFromGit = pull_from_git)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Get the git commits for an item on the current branch
 #' @param id integer required. The ID of the file.
 #' 
@@ -32419,6 +37395,58 @@ workflows_get_git_commits <- function(id, commit_hash) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Checkout latest commit on the current branch of a script or workflow
+#' @param id integer required. The ID of the file.
+#' 
+#' @return  A list containing the following elements:
+#' \item{content}{string, The file's contents.}
+#' \item{type}{string, The file's type.}
+#' \item{size}{integer, The file's size.}
+#' \item{fileHash}{string, The SHA of the file.}
+#' @export
+workflows_post_git_checkout_latest <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/workflows/{id}/git/checkout-latest"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Checkout content that the existing git_ref points to and save to the object
+#' @param id integer required. The ID of the file.
+#' 
+#' @return  A list containing the following elements:
+#' \item{content}{string, The file's contents.}
+#' \item{type}{string, The file's type.}
+#' \item{size}{integer, The file's size.}
+#' \item{fileHash}{string, The SHA of the file.}
+#' @export
+workflows_post_git_checkout <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/workflows/{id}/git/checkout"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
 
   return(resp)
 
