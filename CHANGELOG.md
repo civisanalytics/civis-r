@@ -6,6 +6,7 @@
 
 ### Changed
 - Deprecated the `local` argument to the `CivisFuture()` function. The `local` argument is defunct  for `future` versions > 1.31.0.
+- Regenerated the default Client (`R/generated_client.R`)
 
 ## [3.0.0] - 2020-06-22
 
