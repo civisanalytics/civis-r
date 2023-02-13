@@ -5423,6 +5423,38 @@ exports_list <- function(type = NULL, status = NULL, author = NULL, hidden = NUL
  }
 
 
+#' List runs for the given csv_export
+#' @param id integer required. The ID of the csv_export.
+#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to id. Must be one of: id.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{id}{integer, }
+#' \item{state}{string, }
+#' \item{createdAt}{string, The time that the run was queued.}
+#' \item{startedAt}{string, The time that the run started.}
+#' \item{finishedAt}{string, The time that the run completed.}
+#' \item{error}{string, The error message for this run, if present.}
+#' @export
+exports_list_files_csv_runs <- function(id, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/exports/files/csv/{id}/runs"
+  path_params  <- list(id = id)
+  query_params <- list(limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Create a CSV Export
 #' @param source list required. A list containing the following elements: 
 #' \itemize{
@@ -15918,6 +15950,29 @@ remote_hosts_post <- function(name, url, type) {
  }
 
 
+#' Revoke the permissions a group has on this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param group_id integer required. The ID of the group.
+#' 
+#' @return  An empty HTTP response
+#' @export
+remote_hosts_delete_shares_groups <- function(id, group_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/remote_hosts/{id}/shares/groups/{group_id}"
+  path_params  <- list(id = id, group_id = group_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Authenticate against a remote host using either a credential or a user name and password
 #' @param id integer required. The ID of the remote host.
 #' @param credential_id integer optional. The credential ID.
@@ -16696,6 +16751,35 @@ reports_delete_shares_groups <- function(id, group_id) {
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
   resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List dependent objects for this object
+#' @param id integer required. The ID of the resource that is shared.
+#' @param user_id integer optional. ID of target user
+#' 
+#' @return  An array containing the following fields:
+#' \item{objectType}{string, Dependent object type}
+#' \item{fcoType}{string, Human readable dependent object type}
+#' \item{id}{integer, Dependent object ID}
+#' \item{name}{string, Dependent object name, or nil if the requesting user cannot read this object}
+#' \item{permissionLevel}{string, Permission level of target user (not user's groups) for dependent object, or null if no target user}
+#' \item{shareable}{boolean, Whether or not the requesting user can share this object.}
+#' @export
+reports_list_dependencies <- function(id, user_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/reports/{id}/dependencies"
+  path_params  <- list(id = id)
+  query_params <- list(user_id = user_id)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
 
   return(resp)
 
