@@ -2,8 +2,10 @@
 
 ## Unreleased
 
+## [3.0.1]
+
 ### Changed
-- Deprecated the `local` argument of `CivisFuture`
+- Deprecated the `local` argument to the `CivisFuture()` function. The `local` argument is defunct  for `future` versions > 1.31.0.
 
 ## [3.0.0] - 2020-06-22
 
