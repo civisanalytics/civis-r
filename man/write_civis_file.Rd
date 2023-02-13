@@ -58,13 +58,13 @@ to the files endpoint. If given a filepath, the file is uploaded as-is.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: Serialize R object
+\item \code{write_civis_file(default)}: Serialize R object
 
-\item \code{data.frame}: Upload a data frame as a csv
+\item \code{write_civis_file(data.frame)}: Upload a data frame as a csv
 
-\item \code{character}: Upload any file
+\item \code{write_civis_file(character)}: Upload any file
+
 }}
-
 \examples{
 \dontrun{
 data(iris)

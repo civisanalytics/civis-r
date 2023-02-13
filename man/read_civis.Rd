@@ -69,15 +69,15 @@ If the script has no outputs, an empty list will be returned.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{numeric}: Return a file as a data frame
+\item \code{read_civis(numeric)}: Return a file as a data frame
 
-\item \code{character}: Return all columns from a table as a data frame.
+\item \code{read_civis(character)}: Return all columns from a table as a data frame.
 
-\item \code{sql}: Return a SQL query as a data frame.
+\item \code{read_civis(sql)}: Return a SQL query as a data frame.
 
-\item \code{civis_script}: Return run outputs of a \code{civis_script} as a named list.
+\item \code{read_civis(civis_script)}: Return run outputs of a \code{civis_script} as a named list.
+
 }}
-
 \examples{
 \dontrun{
 # Read all columns in a single table

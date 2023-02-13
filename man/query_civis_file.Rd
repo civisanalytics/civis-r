@@ -57,13 +57,13 @@ which is a gzipped csv.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{character}: Export a \code{"schema.table"} to a file id.
+\item \code{query_civis_file(character)}: Export a \code{"schema.table"} to a file id.
 
-\item \code{sql}: Export results of a query to a file id.
+\item \code{query_civis_file(sql)}: Export results of a query to a file id.
 
-\item \code{numeric}: Run an existing sql script and return the file id of the results on S3.
+\item \code{query_civis_file(numeric)}: Run an existing sql script and return the file id of the results on S3.
+
 }}
-
 \examples{
 \dontrun{
 id <- query_civis_file("schema.tablename", database = "my_database")

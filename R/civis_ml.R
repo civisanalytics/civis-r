@@ -7,7 +7,8 @@
 #' @param model_id The \code{id} of CivisML model built previously.
 #' @param run_id Optional, the \code{id} of a CivisML model run. If \code{NULL},
 #'   defaults to fetching the latest run.
-#' @param x,newdata See the Data Sources section below.
+#' @param x See the Data Sources section below.
+#' @param newdata See the Data Sources section below.
 #' @param model_type The name of the CivisML workflow. See the Workflows section
 #'   below.
 #' @param dependent_variable The dependent variable of the training dataset.

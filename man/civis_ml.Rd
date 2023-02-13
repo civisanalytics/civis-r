@@ -51,7 +51,7 @@ civis_ml_fetch_existing(model_id, run_id = NULL)
 )
 }
 \arguments{
-\item{x, newdata}{See the Data Sources section below.}
+\item{x}{See the Data Sources section below.}
 
 \item{dependent_variable}{The dependent variable of the training dataset.
 For a multi-target problem, this should be a vector of column names of
@@ -139,6 +139,8 @@ CivisML version. The default is "prod", the latest version in production}
 defaults to fetching the latest run.}
 
 \item{object}{A \code{civis_ml} object.}
+
+\item{newdata}{See the Data Sources section below.}
 
 \item{output_table}{The table in which to put predictions.}
 
