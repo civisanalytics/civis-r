@@ -15721,7 +15721,30 @@ queries_get_runs <- function(id, run_id) {
 
   return(resp)
 
- }
+}
+
+
+#' Cancel a run
+#' @param id integer required. The ID of the query.
+#' @param run_id integer required. The ID of the run.
+#' 
+#' @return  An empty HTTP response
+#' @export
+queries_delete_runs <- function(id, run_id) {
+  
+  args <- as.list(match.call())[-1]
+  path <- "/queries/{id}/runs/{run_id}"
+  path_params  <- list(id = id, run_id = run_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+  
+  return(resp)
+  
+}
 
 
 #' Get the logs for a run
