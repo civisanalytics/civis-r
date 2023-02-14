@@ -22,7 +22,6 @@ Description: A convenient interface for making
 Depends:
     R (>= 3.2.0)
 License: BSD_3_clause + file LICENSE
-LazyData: true
 URL: https://github.com/civisanalytics/civis-r
 BugReports: https://github.com/civisanalytics/civis-r/issues
 Imports:
