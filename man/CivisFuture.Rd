@@ -96,7 +96,7 @@ Evaluate an expression in Civis Platform
 
 \item \code{cancel(CivisFuture)}: Cancel a CivisFuture
 
-\item \code{resolved(CivisFuture)}: Check if a CivisFutre has resolved
+\item \code{resolved(CivisFuture)}: Check if a CivisFuture has resolved
 
 \item \code{fetch_logs(CivisFuture)}: Fetch logs from a CivisFuture
 

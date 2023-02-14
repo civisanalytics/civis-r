@@ -168,7 +168,7 @@ cancel.CivisFuture <- function(future, ...) {
 }
 
 #' @export
-#' @describeIn CivisFuture Check if a CivisFutre has resolved
+#' @describeIn CivisFuture Check if a CivisFuture has resolved
 resolved.CivisFuture <- function(future, ...){
   if (!is.null(future$job$containerId)) {
     future$state <- scripts_get_containers_runs(id = future$job$containerId,
