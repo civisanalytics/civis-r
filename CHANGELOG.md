@@ -2,11 +2,17 @@
 
 ## Unreleased
 
-## [3.0.1]
+## [3.1.0]
 
 ### Changed
-- Deprecated the `local` argument to the `CivisFuture()` function. The `local` argument is defunct  for `future` versions > 1.31.0.
+- Deprecated the `local` argument to the `CivisFuture()` function. The `local` argument 
+is defunct  for `future` versions > 1.31.0.
 - Regenerated the default Client (`R/generated_client.R`)
+
+### Fixed
+- `fetch_until` will now fetch results from the API until the result is empty (i.e. returns 
+NULL) instead of FALSE. This change prevents a coercion error of trying to boolean compare 
+a NULL value in R. (#243)
 
 ## [3.0.0] - 2020-06-22
 
