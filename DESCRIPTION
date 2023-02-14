@@ -14,7 +14,8 @@ Authors@R: c(
   person("Elizabeth", "Sander", email = "lsander@civisanalytics.com", role = "ctb"),
   person("Madison", "Hobbs", email = "mhobbs@g.hmc.edu", role = "ctb"),
   person("Anna", "Bladey", email = "abladey@civisanalytics.com", role = "ctb"),
-  person("Sahil", "Shah", email = "sshah2@civisanalytics.com", role = "ctb"))
+  person("Sahil", "Shah", email = "sshah2@civisanalytics.com", role = "ctb"),
+  person("Bryan", "Baird", email = "bbaird@civisanalytics.com", role = "ctb"))
 Description: A convenient interface for making
   requests directly to the 'Civis Platform API' <https://www.civisanalytics.com/platform/>.
   Full documentation available 'here' <https://civisanalytics.github.io/civis-r/>.
