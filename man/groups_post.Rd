@@ -9,7 +9,6 @@ groups_post(
   description = NULL,
   slug = NULL,
   organization_id = NULL,
-  must_agree_to_eula = NULL,
   default_otp_required_for_login = NULL,
   role_ids = NULL,
   default_time_zone = NULL,
@@ -27,37 +26,38 @@ groups_post(
 
 \item{organization_id}{integer optional. The ID of the organization this group belongs to.}
 
-\item{must_agree_to_eula}{boolean optional. Whether or not members of this group must sign the EULA.}
-
 \item{default_otp_required_for_login}{boolean optional. The two factor authentication requirement for this group.}
 
 \item{role_ids}{array optional. An array of ids of all the roles this group has.}
 
 \item{default_time_zone}{string optional. The default time zone of this group.}
 
-\item{default_jobs_label}{string optional. The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+\item{default_jobs_label}{string optional. The default partition label for jobs of this group.}
 
-\item{default_notebooks_label}{string optional. The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+\item{default_notebooks_label}{string optional. The default partition label for notebooks of this group.}
 
-\item{default_services_label}{string optional. The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+\item{default_services_label}{string optional. The default partition label for services of this group.}
 }
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID of this group.}
 \item{name}{string, This group's name.}
 \item{createdAt}{string, The date and time when this group was created.}
+\item{updatedAt}{string, The date and time when this group was last updated.}
 \item{description}{string, The description of the group.}
 \item{slug}{string, The slug for this group.}
 \item{organizationId}{integer, The ID of the organization this group belongs to.}
 \item{organizationName}{string, The name of the organization this group belongs to.}
-\item{memberCount}{integer, The total number of members in this group.}
-\item{mustAgreeToEula}{boolean, Whether or not members of this group must sign the EULA.}
+\item{memberCount}{integer, The number of active members in this group.}
+\item{totalMemberCount}{integer, The total number of members in this group.}
 \item{defaultOtpRequiredForLogin}{boolean, The two factor authentication requirement for this group.}
 \item{roleIds}{array, An array of ids of all the roles this group has.}
 \item{defaultTimeZone}{string, The default time zone of this group.}
-\item{defaultJobsLabel}{string, The default partition label for jobs of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
-\item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
-\item{defaultServicesLabel}{string, The default partition label for services of this group. Only available if custom_partitions feature flag is set. Do not use this attribute as it may break in the future.}
+\item{defaultJobsLabel}{string, The default partition label for jobs of this group.}
+\item{defaultNotebooksLabel}{string, The default partition label for notebooks of this group.}
+\item{defaultServicesLabel}{string, The default partition label for services of this group.}
+\item{lastUpdatedById}{integer, The ID of the user who last updated this group.}
+\item{createdById}{integer, The ID of the user who created this group.}
 \item{members}{array, An array containing the following fields: 
 \itemize{
 \item id integer, The ID of this user.
@@ -65,6 +65,9 @@ A list containing the following elements:
 \item username string, This user's username.
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
+\item email string, This user's email address.
+\item primaryGroupId integer, The ID of the primary group of this user.
+\item active boolean, Whether this user account is active or deactivated.
 }}
 }
 \description{

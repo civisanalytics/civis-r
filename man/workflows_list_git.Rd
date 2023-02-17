@@ -11,7 +11,7 @@ workflows_list_git(id)
 }
 \value{
 A list containing the following elements:
-\item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
+\item{gitRef}{string, A git reference specifying an unambiguous version of the file. Can be a branch name, tag or the full or shortened SHA of a commit.}
 \item{gitBranch}{string, The git branch that the file is on.}
 \item{gitPath}{string, The path of the file in the repository.}
 \item{gitRepo}{list, A list containing the following elements: 
@@ -21,7 +21,8 @@ A list containing the following elements:
 \item createdAt string, 
 \item updatedAt string, 
 }}
-\item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts.}
+\item{gitRefType}{string, Specifies if the file is versioned by branch or tag.}
+\item{pullFromGit}{boolean, Automatically pull latest commit from git. Only works for scripts and workflows (assuming you have the feature enabled)}
 }
 \description{
 Get the git metadata attached to an item

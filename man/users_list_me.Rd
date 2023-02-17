@@ -23,7 +23,9 @@ A list containing the following elements:
 \itemize{
 \item id integer, The ID of this group.
 \item name string, The name of this group.
-\item organizationId integer, The organization associated with this group.
+\item slug string, The slug of this group.
+\item organizationId integer, The ID of the organization associated with this group.
+\item organizationName string, The name of the organization associated with this group.
 }}
 \item{organizationName}{string, The name of the organization the user belongs to.}
 \item{organizationSlug}{string, The slug of the organization the user belongs to.}
@@ -33,6 +35,10 @@ A list containing the following elements:
 \item{assumingRole}{boolean, Whether the user is assuming a role or not.}
 \item{assumingAdmin}{boolean, Whether the user is assuming admin.}
 \item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
+\item{superadminModeExpiration}{string, The user is in superadmin mode when set to a DateTime. The user is not in superadmin mode when set to null.}
+\item{disableNonCompliantFedrampFeatures}{boolean, Whether to disable non-compliant fedramp features.}
+\item{createdById}{integer, The ID of the user who created this user.}
+\item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
 }
 \description{
 Show info about the logged-in user

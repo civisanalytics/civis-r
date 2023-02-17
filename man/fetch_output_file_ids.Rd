@@ -25,9 +25,9 @@ If the script has no outputs, the results are a list of length is 0.
 }
 \section{Functions}{
 \itemize{
-\item \code{fetch_output}: Return output of \code{scripts_list_*_runs_outputs} matching \code{regex}.
-}}
+\item \code{fetch_output()}: Return output of \code{scripts_list_*_runs_outputs} matching \code{regex}.
 
+}}
 \examples{
 \dontrun{
 out <- fetch_output(civis_script(1234))

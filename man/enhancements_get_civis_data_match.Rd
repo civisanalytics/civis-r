@@ -28,10 +28,11 @@ A list containing the following elements:
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the item is scheduled.
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
 \item scheduledHours array, Hours of the day it is scheduled on.
 \item scheduledMinutes array, Minutes of the day it is scheduled on.
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+\item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
+\item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
 }}
 \item{parentId}{integer, Parent ID that triggers this enhancement.}
 \item{notifications}{list, A list containing the following elements: 
@@ -55,7 +56,8 @@ A list containing the following elements:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
-\item{inputFieldMapping}{list, The column mapping for the input table. See /enhancements/field_mapping for list of valid fields.}
+\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
+\item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
 \item{inputTable}{list, A list containing the following elements: 
 \itemize{
 \item databaseName string, The Redshift database name for the table.
@@ -70,7 +72,7 @@ A list containing the following elements:
 \item table string, The table name.
 }}
 \item{maxMatches}{integer, The maximum number of matches per record in the input table to return. Must be between 0 and 10. 0 returns all matches.}
-\item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned.}
+\item{threshold}{number, The score threshold (between 0 and 1). Matches below this threshold will not be returned. The default value is 0.5.}
 \item{archived}{boolean, Whether the Civis Data Match Job has been archived.}
 \item{lastRun}{list, A list containing the following elements: 
 \itemize{

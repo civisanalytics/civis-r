@@ -9,7 +9,7 @@ credentials_post_authenticate(url, remote_host_type, username, password)
 \arguments{
 \item{url}{string required. The URL to your host.}
 
-\item{remote_host_type}{string required. The type of remote host. One of: RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
+\item{remote_host_type}{string required. The type of remote host. One of: RemoteHostTypes::Bigquery, RemoteHostTypes::Bitbucket, RemoteHostTypes::GitSSH, RemoteHostTypes::Github, RemoteHostTypes::GoogleDoc, RemoteHostTypes::JDBC, RemoteHostTypes::Postgres, RemoteHostTypes::Redshift, RemoteHostTypes::S3Storage, and RemoteHostTypes::Salesforce}
 
 \item{username}{string required. The username for the credential.}
 
@@ -22,12 +22,21 @@ A list containing the following elements:
 \item{type}{string, The credential's type.}
 \item{username}{string, The username for the credential.}
 \item{description}{string, A long description of the credential.}
-\item{owner}{string, The name of the user who this credential belongs to.}
+\item{owner}{string, The username of the user who this credential belongs to. Using user.username is preferred.}
+\item{user}{list, A list containing the following elements: 
+\itemize{
+\item id integer, The ID of this user.
+\item name string, This user's name.
+\item username string, This user's username.
+\item initials string, This user's initials.
+\item online boolean, Whether this user is online.
+}}
 \item{remoteHostId}{integer, The ID of the remote host associated with this credential.}
 \item{remoteHostName}{string, The name of the remote host associated with this credential.}
 \item{state}{string, The U.S. state for the credential. Only for VAN credentials.}
 \item{createdAt}{string, The creation time for this credential.}
 \item{updatedAt}{string, The last modification time for this credential.}
+\item{default}{boolean, Whether or not the credential is a default. Only for Database credentials.}
 }
 \description{
 Authenticate against a remote host

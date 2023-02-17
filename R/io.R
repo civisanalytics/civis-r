@@ -806,7 +806,7 @@ start_scripted_sql_job <- function(database, sql, job_name, hidden = TRUE,
 #'
 #' If a future::plan has been set, will be carried out in parallel.
 #' @param file the file
-#' @param name name of the upload, defualts to
+#' @param name name of the upload, defaults to
 #' @param chunk_size size of the chunks in bytes
 #' @param expires_at when the file expires (default never).
 #'

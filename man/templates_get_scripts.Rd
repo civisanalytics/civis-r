@@ -16,6 +16,17 @@ A list containing the following elements:
 \item{scriptId}{integer, The id of the script that this template uses.}
 \item{scriptType}{string, The type of the template's backing script (e.g SQL, Container, Python, R, JavaScript)}
 \item{userContext}{string, The user context of the script that this template uses.}
+\item{params}{array, An array containing the following fields: 
+\itemize{
+\item name string, The variable's name as used within your code.
+\item label string, The label to present to users when asking them for the value.
+\item description string, A short sentence or fragment describing this parameter to the end user.
+\item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
+\item required boolean, Whether this param is required.
+\item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
+\item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
+\item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+}}
 \item{name}{string, The name of the template.}
 \item{category}{string, The category of this template.}
 \item{note}{string, A note describing what this template is used for; custom scripts created off this template will display this description.}
@@ -26,6 +37,15 @@ A list containing the following elements:
 \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 \item{archived}{boolean, Whether the template has been archived.}
 \item{hidden}{boolean, The hidden status of the item.}
+\item{author}{list, A list containing the following elements: 
+\itemize{
+\item id integer, The ID of this user.
+\item name string, This user's name.
+\item username string, This user's username.
+\item initials string, This user's initials.
+\item online boolean, Whether this user is online.
+}}
+\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 }
 \description{
 Get a Script Template

@@ -20,6 +20,7 @@ A list containing the following elements:
 \item{expiresAt}{string, The date and time the file will expire. If not specified, the file will expire in 30 days. To keep a file indefinitely, specify null.}
 \item{uploadUrl}{string, The URL that may be used to upload a file. To use the upload URL, initiate a POST request to the given URL with the file you wish to import as the "file" form field.}
 \item{uploadFields}{list, A hash containing the form fields to be included with the POST request.}
+\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 }
 \description{
 Initiate an upload of a file into the platform

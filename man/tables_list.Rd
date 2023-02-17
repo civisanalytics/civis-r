@@ -9,6 +9,8 @@ tables_list(
   schema = NULL,
   name = NULL,
   search = NULL,
+  table_tag_ids = NULL,
+  credential_id = NULL,
   limit = NULL,
   page_num = NULL,
   order = NULL,
@@ -24,11 +26,15 @@ tables_list(
 
 \item{search}{string optional. If specified, will be used to filter the tables returned. Will search across schema and name (in the full form schema.name) and will return any full name containing the search string.}
 
+\item{table_tag_ids}{array optional. If specified, will be used to filter the tables returned. Will search across Table Tags and will return any tables that have one of the matching Table Tags.}
+
+\item{credential_id}{integer optional. If specified, will be used instead of the default credential to filter the tables returned.}
+
 \item{limit}{integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.}
 
 \item{page_num}{integer optional. Page number of the results to return. Defaults to the first page, 1.}
 
-\item{order}{string optional. The field on which to order the result set. Defaults to schema. Must be one of: schema, name, search.}
+\item{order}{string optional. The field on which to order the result set. Defaults to schema. Must be one of: schema, name, search, table_tag_ids, credential_id.}
 
 \item{order_dir}{string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to asc.}
 }
@@ -57,6 +63,11 @@ An array containing the following fields:
 \item startedAt string, The time that the run started.
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
+}}
+\item{tableTags}{array, An array containing the following fields: 
+\itemize{
+\item id integer, Table Tag ID
+\item name string, Table Tag Name
 }}
 }
 \description{

@@ -52,6 +52,7 @@ An array containing the following fields:
 \item lastRunFinish string, The last run finish time of the item, if the item is a job.
 \item public boolean, The flag that indicates a template is available to all users.
 \item lastRunException string, The exception of the item after the last run, if the item is a job.
+\item autoShare boolean, The flag that indicates if a project has Auto-Share enabled.
 }}
 }
 \description{

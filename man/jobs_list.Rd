@@ -12,6 +12,7 @@ jobs_list(
   scheduled = NULL,
   hidden = NULL,
   archived = NULL,
+  author = NULL,
   limit = NULL,
   page_num = NULL,
   order = NULL,
@@ -32,6 +33,8 @@ jobs_list(
 \item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
 
 \item{archived}{string optional. The archival status of the requested item(s).}
+
+\item{author}{string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to its maximum of 50.}
 
@@ -60,13 +63,22 @@ An array containing the following fields:
 \item error string, The error message for this run, if present.
 }}
 \item{archived}{string, The archival status of the requested item(s).}
+\item{author}{list, A list containing the following elements: 
+\itemize{
+\item id integer, The ID of this user.
+\item name string, This user's name.
+\item username string, This user's username.
+\item initials string, This user's initials.
+\item online boolean, Whether this user is online.
+}}
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the item is scheduled.
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
 \item scheduledHours array, Hours of the day it is scheduled on.
 \item scheduledMinutes array, Minutes of the day it is scheduled on.
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+\item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
+\item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
 }}
 }
 \description{
