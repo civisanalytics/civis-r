@@ -172,4 +172,4 @@ person("FirstName", "LastName", email = "email@email.com", role = "ctb")
 ```
 
 This project is intended to be a safe, welcoming space for collaboration, and
-contributors are expected to adhere to the [Contributor Covenant](http://www.contributor-covenant.org/) code of conduct.
+contributors are expected to adhere to the [Contributor Covenant](https://www.contributor-covenant.org/) code of conduct.

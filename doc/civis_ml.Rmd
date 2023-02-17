@@ -132,7 +132,7 @@ between .01 and 1, and with a mean close to .1.
 
 The `"stacking_classifier"` model stacks together the `"gradient_boosting_classifier"` and `"random_forest_classifier"` predefined models together with a
 `glmnet.LogitNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5,
-scoring='log_loss')`. Defaults for the predefined models are documented in `?civis_ml`. Each column is first [standardized](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html), and then the model predictions are combined using [LogisticRegressionCV](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html) with `penalty='l2'` and `tol=1e-08`. The `"stacking_regressor"` works similarly, stacking together the `"gradient_boosting_regressor"` and `"random_forest_regressor"` models and a `glmnet.ElasticNet(alpha=0, n_splits=4, max_iter=10000,
+scoring='log_loss')`. Defaults for the predefined models are documented in `?civis_ml`. Each column is first [standardized](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html), and then the model predictions are combined using [LogisticRegressionCV](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html) with `penalty='l2'` and `tol=1e-08`. The `"stacking_regressor"` works similarly, stacking together the `"gradient_boosting_regressor"` and `"random_forest_regressor"` models and a `glmnet.ElasticNet(alpha=0, n_splits=4, max_iter=10000,
 tol=1e-5, scoring='r2')`, combining them using [NonNegativeLinearRegression](https://github.com/civisanalytics/civisml-extensions).
 
 ```{r, eval = FALSE}

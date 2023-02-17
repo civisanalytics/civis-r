@@ -646,7 +646,7 @@ a
 <code>glmnet.LogitNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5, scoring=&#39;log_loss&#39;)</code>.
 Defaults for the predefined models are documented in
 <code>?civis_ml</code>. Each column is first <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">standardized</a>,
-and then the model predictions are combined using <a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html">LogisticRegressionCV</a>
+and then the model predictions are combined using <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html">LogisticRegressionCV</a>
 with <code>penalty=&#39;l2&#39;</code> and <code>tol=1e-08</code>. The
 <code>&quot;stacking_regressor&quot;</code> works similarly, stacking together the
 <code>&quot;gradient_boosting_regressor&quot;</code> and
