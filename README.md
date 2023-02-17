@@ -13,7 +13,7 @@ the Civis Platform API.
 
 ## Documentation
 
-The full documentation is hosted [here](https://civisanalytics.github.io/civis-r). The fastest way to get started is with the [getting started guide](https://civisanalytics.github.io/civis-r/articles/quick_start.html).
+The full documentation is hosted [here](https://civisanalytics.github.io/civis-r/). The fastest way to get started is with the [getting started guide](https://civisanalytics.github.io/civis-r/articles/quick_start.html).
 
 ## API Keys
 
@@ -172,4 +172,4 @@ person("FirstName", "LastName", email = "email@email.com", role = "ctb")
 ```
 
 This project is intended to be a safe, welcoming space for collaboration, and
-contributors are expected to adhere to the [Contributor Covenant](http://www.contributor-covenant.org) code of conduct.
+contributors are expected to adhere to the [Contributor Covenant](http://www.contributor-covenant.org/) code of conduct.

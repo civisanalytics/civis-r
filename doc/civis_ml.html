@@ -354,7 +354,7 @@ stored in remote databases. Once these models are built, they live in
 Civis Platform permanently and can be included into production
 pipelines. Results can be easily incorporated into reports and
 dashboards.</p>
-<p>CivisML is built in Python using <a href="http://scikit-learn.org/stable/">scikit-learn</a>, and leverages
+<p>CivisML is built in Python using <a href="https://scikit-learn.org/stable/">scikit-learn</a>, and leverages
 AWS behind the scenes for efficient distributed computing. However, most
 of its features can be used through R without knowledge of Python or AWS
 with the <code>civis_ml</code> function in <code>civis</code>.</p>
@@ -418,7 +418,7 @@ scikit-learn. It can be given in the <code>model_type</code> argument of
 <td><code>sparse_logistic</code></td>
 <td align="left"><code>civis_ml_sparse_logistic</code></td>
 <td>classification</td>
-<td><a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html">Logistic
+<td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html">Logistic
 Regression</a></td>
 <td></td>
 </tr>
@@ -426,21 +426,21 @@ Regression</a></td>
 <td><code>gradient_boosting_classifier</code></td>
 <td align="left"><code>civis_ml_gradient_boosting_classifier</code></td>
 <td>classification</td>
-<td><a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html">GradientBoostingClassifier</a></td>
+<td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html">GradientBoostingClassifier</a></td>
 <td></td>
 </tr>
 <tr class="odd">
 <td><code>random_forest_classifier</code></td>
 <td align="left"><code>civis_ml_random_forest_classifier</code></td>
 <td>classification</td>
-<td><a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html">RandomForestClassifier</a></td>
+<td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html">RandomForestClassifier</a></td>
 <td></td>
 </tr>
 <tr class="even">
 <td><code>extra_trees_classifier</code></td>
 <td align="left"><code>civis_ml_extra_trees_classifier</code></td>
 <td>classification</td>
-<td><a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html">ExtraTreesClassifier</a></td>
+<td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html">ExtraTreesClassifier</a></td>
 <td></td>
 </tr>
 <tr class="odd">
@@ -461,35 +461,35 @@ Regression</a></td>
 <td><code>sparse_linear_regressor</code></td>
 <td align="left"><code>civis_ml_sparse_linear_regressor</code></td>
 <td>regression</td>
-<td><a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">LinearRegression</a></td>
+<td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">LinearRegression</a></td>
 <td></td>
 </tr>
 <tr class="even">
 <td><code>sparse_ridge_regressor</code></td>
 <td align="left"><code>civis_ml_sparse_ridge_regressor</code></td>
 <td>regression</td>
-<td><a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html">Ridge</a></td>
+<td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html">Ridge</a></td>
 <td></td>
 </tr>
 <tr class="odd">
 <td><code>gradient_boosting_regressor</code></td>
 <td align="left"><code>civis_ml_gradient_boosting_regressor</code></td>
 <td>regression</td>
-<td><a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html">GradientBoostingRegressor</a></td>
+<td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html">GradientBoostingRegressor</a></td>
 <td></td>
 </tr>
 <tr class="even">
 <td><code>random_forest_regressor</code></td>
 <td align="left"><code>civis_ml_random_forest_regressor</code></td>
 <td>regression</td>
-<td><a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html">RandomForestRegressor</a></td>
+<td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html">RandomForestRegressor</a></td>
 <td></td>
 </tr>
 <tr class="odd">
 <td><code>extra_trees_regressor</code></td>
 <td align="left"><code>civis_ml_extra_trees_regressor</code></td>
 <td>regression</td>
-<td><a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html">ExtraTreesRegressor</a></td>
+<td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html">ExtraTreesRegressor</a></td>
 <td></td>
 </tr>
 <tr class="even">
@@ -645,7 +645,7 @@ and 1, and with a mean close to .1.</p>
 a
 <code>glmnet.LogitNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5, scoring=&#39;log_loss&#39;)</code>.
 Defaults for the predefined models are documented in
-<code>?civis_ml</code>. Each column is first <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">standardized</a>,
+<code>?civis_ml</code>. Each column is first <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">standardized</a>,
 and then the model predictions are combined using <a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html">LogisticRegressionCV</a>
 with <code>penalty=&#39;l2&#39;</code> and <code>tol=1e-08</code>. The
 <code>&quot;stacking_regressor&quot;</code> works similarly, stacking together the
