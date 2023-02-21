@@ -138,7 +138,16 @@ result.CivisFuture <- function(future, ...) {
     tryCatch({
       future$run <- await(scripts_get_containers_runs, id = future$job$containerId,
                           run_id = future$job$id)
-      future$state <- future$run$state
+      civis_state <- future$run$state
+      
+      # `future` > v1.31.0 no longer recognizes "success"/"succeeded" as a resolved state
+      # See Issue #245
+      if (civis_state %in% c("success", "succeeded")) {
+        future$state <- "finished"
+      } else {
+        future$state <- civis_state
+      }
+      
       value <- read_civis(civis_script(future$job$containerId),
                           using = readRDS)[[1]]
       future$result <- future::FutureResult(value=value)
@@ -171,10 +180,18 @@ cancel.CivisFuture <- function(future, ...) {
 #' @describeIn CivisFuture Check if a CivisFuture has resolved
 resolved.CivisFuture <- function(future, ...){
   if (!is.null(future$job$containerId)) {
-    future$state <- scripts_get_containers_runs(id = future$job$containerId,
-                                              run_id = future$job$id)$state
+    civis_state <- scripts_get_containers_runs(id = future$job$containerId,
+                                               run_id = future$job$id)$state
+    
+    # `future` > v1.31.0 no longer recognizes "success"/"succeeded" as a resolved state
+    # See Issue #245
+    if (civis_state %in% c("success", "succeeded")) {
+      future$state <- "finished"
+    } else {
+      future$state <- civis_state
+    }
   }
-  future$state %in% c("succeeded", "failed", "cancelled")
+  future$state %in% c("finished", "failed", "cancelled")
 }
 
 #' @export
