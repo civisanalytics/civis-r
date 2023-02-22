@@ -1,6 +1,6 @@
 Package: civis
 Title: R Client for the 'Civis Platform API'
-Version: 3.1.0
+Version: 3.1.1
 Authors@R: c(
   person("Peter", "Cooman", email = "pcooman@civisanalytics.com", role = c("cre", "ctb")),
   person("Patrick", "Miller", email = "pmiller@civisanalytics.com", role = "aut"),
@@ -25,7 +25,7 @@ License: BSD_3_clause + file LICENSE
 URL: https://github.com/civisanalytics/civis-r
 BugReports: https://github.com/civisanalytics/civis-r/issues
 Imports:
-    future (<= 1.31.0),
+    future (>= 1.8.0),
     httr,
     jsonlite,
     methods,

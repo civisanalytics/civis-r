@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## [3.1.1]
+
+### Changed
+- As of `future` > 1.31.0, "succeeded" is no longer recognized as a valid state for a
+future. When the Civis API returns a "success" or "succeeded" status, we now map this
+to a "finished" state for `future` objects.
+
 ## [3.1.0]
 
 ### Changed
