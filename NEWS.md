@@ -9,7 +9,7 @@
 future. When the Civis API returns a "success" or "succeeded" status, we now map this
 to a "finished" state for `future` objects.
 
-## [3.1.0]
+## [3.1.0] - 2022-02-22
 
 ### Changed
 - Deprecated the `local` argument to the `CivisFuture()` function. The `local` argument 
