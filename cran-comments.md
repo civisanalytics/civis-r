@@ -1,16 +1,8 @@
 ## R CMD check results
 
-0 errors | 2 warnings | 1 note
+0 errors | 2 warnings | 0 notes
 
 * This is a new release.
-
-* checking CRAN incoming feasibility ... NOTE
-  * Maintainer: Peter Cooman <pcooman@civisanalytics.com>
-  Days since last update: 5
-
-  --> This patch update provides a more permanent fix to planned changes in an upcoming 
-  version of the `future` package that would otherwise break our package. We do not 
-  anticipate needing to make any other changes in the near future.
   
 * checking whether package ‘civis’ can be installed ... WARNING
   * `default_credential` masks `civis::default_credential()`.

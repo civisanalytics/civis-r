@@ -1,4 +1,4 @@
-#' @importFrom future run resolved result
+#' @importFrom future run result
 NULL
 
 #' Evaluate an expression in Civis Platform
@@ -127,6 +127,7 @@ run.CivisFuture <- function(future, ...) {
 }
 
 #' @export
+#' @param future CivisFuture object.
 #' @describeIn CivisFuture Return the value of a CivisFuture
 result.CivisFuture <- function(future, ...) {
   if (future$state == "created") {
@@ -176,7 +177,16 @@ cancel.CivisFuture <- function(future, ...) {
   future$state <- "cancelled"
 }
 
+#' Check whether a CivisFuture has resolved.
+#' @param future CivisFuture object.
+#' @param ... unused for CivisFuture.
 #' @export
+resolved <- function(future, ...) {
+  UseMethod("resolved")
+}
+
+#' @export
+#' @param future CivisFuture object.
 #' @describeIn CivisFuture Check if a CivisFuture has resolved
 resolved.CivisFuture <- function(future, ...){
   if (!is.null(future$job$containerId)) {

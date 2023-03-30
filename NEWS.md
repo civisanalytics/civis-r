@@ -2,7 +2,14 @@
 
 ## Unreleased
 
-## [3.1.1]
+## [3.1.2] - 2022-03-30
+
+### Changed
+- Added a generic `resolved()` function (previously imported from the `future` package) and 
+changed its input argument from `x` to `future`, to stay consistent with the `resolved.CivisFuture()` 
+function 
+
+## [3.1.1] - 2022-02-28
 
 ### Changed
 - As of `future` > 1.31.0, "succeeded" is no longer recognized as a valid state for a
