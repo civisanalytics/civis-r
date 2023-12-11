@@ -70,10 +70,11 @@ A list containing the following elements:
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the item is scheduled.
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
 \item scheduledHours array, Hours of the day it is scheduled on.
 \item scheduledMinutes array, Minutes of the day it is scheduled on.
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+\item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
+\item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
 }}
 \item{notifications}{list, A list containing the following elements: 
 \itemize{
@@ -107,6 +108,7 @@ A list containing the following elements:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
+\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 \item{hidden}{boolean, The hidden status of the item.}
 \item{targetProjectId}{integer, Target project to which script outputs will be added.}
 \item{archived}{string, The archival status of the requested item(s).}
@@ -120,6 +122,8 @@ A list containing the following elements:
 \item{source}{string, The body/text of the script.}
 \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
+\item{partitionLabel}{string, The partition label used to run this object. }
+\item{runningAsId}{integer, The ID of the runner of this script.}
 }
 \description{
 Clone this Python Script

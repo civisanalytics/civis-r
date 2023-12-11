@@ -17,7 +17,7 @@ clusters_get_kubernetes_instance_configs(
 \value{
 A list containing the following elements:
 \item{instanceConfigId}{integer, The ID of this InstanceConfig.}
-\item{instanceType}{string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and p2.xlarge.}
+\item{instanceType}{string, An EC2 instance type. Possible values include t2.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m5.12xlarge, and c5.18xlarge.}
 \item{minInstances}{integer, The minimum number of instances of that type in this cluster.}
 \item{maxInstances}{integer, The maximum number of instances of that type in this cluster.}
 \item{instanceMaxMemory}{integer, The amount of memory (RAM) available to a single instance of that type in megabytes.}
@@ -32,6 +32,8 @@ A list containing the following elements:
 \item pendingDeployments integer, The number of pending deployments in this instance config.
 \item runningDeployments integer, The number of running deployments in this instance config.
 }}
+\item{clusterPartitionId}{integer, The ID of this InstanceConfig's cluster partition}
+\item{clusterPartitionName}{string, The name of this InstanceConfig's cluster partition}
 }
 \description{
 Describe an Instance Config

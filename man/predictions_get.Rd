@@ -40,10 +40,11 @@ A list containing the following elements:
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the item is scheduled.
-\item scheduledDays array, Day based on numeric value starting at 0 for Sunday.
+\item scheduledDays array, Days of the week, based on numeric value starting at 0 for Sunday. Mutually exclusive with scheduledDaysOfMonth
 \item scheduledHours array, Hours of the day it is scheduled on.
 \item scheduledMinutes array, Minutes of the day it is scheduled on.
-\item scheduledRunsPerHour integer, Alternative to scheduled minutes, number of times to run per hour.
+\item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
+\item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
 }}
 \item{limitingSQL}{string, A SQL WHERE clause used to scope the rows to be predicted.}
 \item{primaryKey}{array, The primary key or composite keys of the table being predicted.}

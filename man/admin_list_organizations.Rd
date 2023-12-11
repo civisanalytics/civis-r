@@ -28,6 +28,10 @@ An array containing the following fields:
 \item{csMetadata}{string, Additional metadata about the organization in JSON format.}
 \item{removeFooterInEmails}{boolean, If true, emails sent by platform will not include Civis text.}
 \item{salesforceAccountId}{string, The SalesForce Account ID for this organization.}
+\item{tableauSiteId}{string, The Tableau Site ID for this organization.}
+\item{fedrampEnabled}{boolean, Flag denoting whether this organization is FedRAMP compliant.}
+\item{createdById}{integer, The ID of the user who created this organization}
+\item{lastUpdatedById}{integer, The ID of the user who last updated this organization}
 \item{advancedSettings}{list, A list containing the following elements: 
 \itemize{
 \item dedicatedDjPoolEnabled boolean, If true, the Organization has a dedicated delayed jobs pool. Defaults to false.

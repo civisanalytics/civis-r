@@ -1,4 +1,4 @@
-#' @importFrom future run resolved result
+#' @importFrom future run result
 NULL
 
 #' Evaluate an expression in Civis Platform
@@ -49,6 +49,7 @@ class(civis_platform) <- c("CivisFuture", "future", "function")
 
 #' Evaluate an expression in Civis Platform
 #' @inheritParams future::Future
+#' @param local deprecated as of \code{civis} v3.0.1
 #' @param required_resources resources, see \code{\link{scripts_post_containers}}
 #' @param docker_image_name the image for the container script.
 #' @param docker_image_tag the tag for the Docker image.
@@ -63,7 +64,7 @@ CivisFuture <- function(expr = NULL,
                         globals = TRUE,
                         packages = NULL,
                         lazy = FALSE,
-                        local = TRUE,
+                        local = lifecycle::deprecated(),
                         gc = FALSE,
                         earlySignal = FALSE,
                         label = NULL,
@@ -72,6 +73,11 @@ CivisFuture <- function(expr = NULL,
                         docker_image_tag = "latest",
                          ...) {
 
+  if (lifecycle::is_present(local)) {
+    lifecycle::deprecate_soft(when = "3.0.1",
+                              what = "civis::CivisFuture(local)")
+  }
+  
   gp <- future::getGlobalsAndPackages(expr, envir = envir, globals = globals)
 
   ## if there are globals, assign them in envir
@@ -87,7 +93,6 @@ CivisFuture <- function(expr = NULL,
                            globals = gp$globals,
                            packages = unique(c(packages, gp$packages)),
                            lazy = lazy,
-                           local = local,
                            gc = gc,
                            earlySignal = earlySignal,
                            label = label,
@@ -122,6 +127,7 @@ run.CivisFuture <- function(future, ...) {
 }
 
 #' @export
+#' @param future CivisFuture object.
 #' @describeIn CivisFuture Return the value of a CivisFuture
 result.CivisFuture <- function(future, ...) {
   if (future$state == "created") {
@@ -133,7 +139,16 @@ result.CivisFuture <- function(future, ...) {
     tryCatch({
       future$run <- await(scripts_get_containers_runs, id = future$job$containerId,
                           run_id = future$job$id)
-      future$state <- future$run$state
+      civis_state <- future$run$state
+      
+      # `future` > v1.31.0 no longer recognizes "success"/"succeeded" as a resolved state
+      # See Issue #245
+      if (civis_state %in% c("success", "succeeded")) {
+        future$state <- "finished"
+      } else {
+        future$state <- civis_state
+      }
+      
       value <- read_civis(civis_script(future$job$containerId),
                           using = readRDS)[[1]]
       future$result <- future::FutureResult(value=value)
@@ -162,14 +177,31 @@ cancel.CivisFuture <- function(future, ...) {
   future$state <- "cancelled"
 }
 
+#' Check whether a CivisFuture has resolved.
+#' @param future CivisFuture object.
+#' @param ... unused for CivisFuture.
 #' @export
-#' @describeIn CivisFuture Check if a CivisFutre has resolved
+resolved <- function(future, ...) {
+  UseMethod("resolved")
+}
+
+#' @export
+#' @param future CivisFuture object.
+#' @describeIn CivisFuture Check if a CivisFuture has resolved
 resolved.CivisFuture <- function(future, ...){
   if (!is.null(future$job$containerId)) {
-    future$state <- scripts_get_containers_runs(id = future$job$containerId,
-                                              run_id = future$job$id)$state
+    civis_state <- scripts_get_containers_runs(id = future$job$containerId,
+                                               run_id = future$job$id)$state
+    
+    # `future` > v1.31.0 no longer recognizes "success"/"succeeded" as a resolved state
+    # See Issue #245
+    if (civis_state %in% c("success", "succeeded")) {
+      future$state <- "finished"
+    } else {
+      future$state <- civis_state
+    }
   }
-  future$state %in% c("succeeded", "failed", "cancelled")
+  future$state %in% c("finished", "failed", "cancelled")
 }
 
 #' @export

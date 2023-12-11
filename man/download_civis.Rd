@@ -77,13 +77,13 @@ this database will automatically be used as the default.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{character}: Download a table from Redshift to disk as CSV.
+\item \code{download_civis(character)}: Download a table from Redshift to disk as CSV.
 
-\item \code{sql}: Download the result of a SQL query from Redshift to disk as CSV.
+\item \code{download_civis(sql)}: Download the result of a SQL query from Redshift to disk as CSV.
 
-\item \code{numeric}: Download a file from Platform files endpoint to disk.
+\item \code{download_civis(numeric)}: Download a file from Platform files endpoint to disk.
+
 }}
-
 \examples{
 \dontrun{
 # Download all columns in a single table into a CSV

@@ -114,13 +114,13 @@ this database will automatically be used as the default.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{data.frame}: Upload a data frame to Civis Platform (Redshift).
+\item \code{write_civis(data.frame)}: Upload a data frame to Civis Platform (Redshift).
 
-\item \code{character}: Upload a csv to Civis Platform (Redshift).
+\item \code{write_civis(character)}: Upload a csv to Civis Platform (Redshift).
 
-\item \code{numeric}: Upload a csv file from the files endpoint to Civis Platform (Redshift)
+\item \code{write_civis(numeric)}: Upload a csv file from the files endpoint to Civis Platform (Redshift)
+
 }}
-
 \examples{
 \dontrun{
 df <- read.csv(local_file)

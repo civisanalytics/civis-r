@@ -17,13 +17,13 @@ services_patch(
   memory = NULL,
   cpu = NULL,
   credentials = NULL,
-  api_key_id = NULL,
   permission_set_id = NULL,
   git_repo_url = NULL,
   git_repo_ref = NULL,
   git_path_dir = NULL,
   environment_variables = NULL,
-  notifications = NULL
+  notifications = NULL,
+  partition_label = NULL
 )
 }
 \arguments{
@@ -55,8 +55,6 @@ services_patch(
 
 \item{credentials}{array optional. A list of credential IDs to pass to the Service.}
 
-\item{api_key_id}{integer optional. API key id of user}
-
 \item{permission_set_id}{integer optional. The ID of the associated permission set, if any.}
 
 \item{git_repo_url}{string optional. The url for the git repo where the Service code lives.}
@@ -72,6 +70,8 @@ services_patch(
 \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 \item failureOn boolean, If failure email notifications are on
 }}
+
+\item{partition_label}{string optional. The partition label used to run this object.}
 }
 \value{
 A list containing the following elements:
@@ -103,7 +103,6 @@ A list containing the following elements:
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
 \item{credentials}{array, A list of credential IDs to pass to the Service.}
-\item{apiKeyId}{integer, API key id of user}
 \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
@@ -119,42 +118,25 @@ A list containing the following elements:
 \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
 \item displayUrl string, A signed URL for viewing the deployed item.
 \item instanceType string, The EC2 instance type requested for the deployment.
-\item memory integer, The memory allocated to the deployment.
-\item cpu integer, The cpu allocated to the deployment.
+\item memory integer, The memory allocated to the deployment, in MB.
+\item cpu integer, The cpu allocated to the deployment, in millicores.
 \item state string, The state of the deployment.
 \item stateMessage string, A detailed description of the state.
+\item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
+\item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 \item createdAt string, 
 \item updatedAt string, 
-\item published boolean, 
-\item serviceId integer, The ID of owning Service
-}}
-\item{previewDeployment}{list, A list containing the following elements: 
-\itemize{
-\item deploymentId integer, The ID for this deployment.
-\item userId integer, The ID of the owner.
-\item host string, Domain of the deployment.
-\item name string, Name of the deployment.
-\item dockerImageName string, The name of the docker image to pull from DockerHub.
-\item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
-\item displayUrl string, A signed URL for viewing the deployed item.
-\item instanceType string, The EC2 instance type requested for the deployment.
-\item memory integer, The memory allocated to the deployment.
-\item cpu integer, The cpu allocated to the deployment.
-\item state string, The state of the deployment.
-\item stateMessage string, A detailed description of the state.
-\item createdAt string, 
-\item updatedAt string, 
-\item published boolean, 
 \item serviceId integer, The ID of owning Service
 }}
 \item{currentUrl}{string, The URL that the service is hosted at.}
-\item{previewUrl}{string, The URL that previews of the service are hosted at.}
 \item{environmentVariables}{list, Environment Variables to be passed into the Service.}
 \item{notifications}{list, A list containing the following elements: 
 \itemize{
 \item failureEmailAddresses array, Addresses to notify by e-mail when the service fails.
 \item failureOn boolean, If failure email notifications are on
 }}
+\item{partitionLabel}{string, The partition label used to run this object.}
+\item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 \item{archived}{string, The archival status of the requested item(s).}
 \item{hidden}{boolean, The hidden status of the item.}
 }

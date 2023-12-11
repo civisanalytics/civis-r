@@ -6,6 +6,7 @@
 \usage{
 templates_list_scripts(
   hidden = NULL,
+  author = NULL,
   category = NULL,
   limit = NULL,
   page_num = NULL,
@@ -15,6 +16,8 @@ templates_list_scripts(
 }
 \arguments{
 \item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
+
+\item{author}{string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.}
 
 \item{category}{string optional. A category to filter results by, one of: import, export, enhancement, model, and script}
 
@@ -40,6 +43,14 @@ An array containing the following fields:
 \item{uiReportId}{integer, The id of the report that this template uses.}
 \item{techReviewed}{boolean, Whether this template has been audited by Civis for security vulnerability and correctness.}
 \item{archived}{boolean, Whether the template has been archived.}
+\item{author}{list, A list containing the following elements: 
+\itemize{
+\item id integer, The ID of this user.
+\item name string, This user's name.
+\item username string, This user's username.
+\item initials string, This user's initials.
+\item online boolean, Whether this user is online.
+}}
 }
 \description{
 List Script Templates

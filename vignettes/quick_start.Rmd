@@ -98,6 +98,6 @@ macroavgs
 
 For a comprehensive list of functions in `civis`, see
 [Reference](https://civisanalytics.github.io/civis-r/reference/index.html) in the [full
-documentation](https://civisanalytics.github.io/civis-r).  The full documentation also
+documentation](https://civisanalytics.github.io/civis-r/).  The full documentation also
 includes a set of `Articles` for detailed documentation on common workflows, including
 [data manipulation](https://civisanalytics.github.io/civis-r/articles/data_import_and_export.html) and [building models in parallel](https://civisanalytics.github.io/civis-r/articles/concurrency.html).

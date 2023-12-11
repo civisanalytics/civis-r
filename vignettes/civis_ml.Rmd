@@ -13,7 +13,7 @@ There are so many models to build! When this becomes challenging on a local mach
 
 [CivisML](https://medium.com/civis-analytics/civisml-scikit-learn-at-scale-b01b496916ea) is a machine learning service on Civis Platform that makes this as painless as possible. You can fit many different models, do extensive hyperparameter tuning, and score data sets with millions of observations stored in remote databases. Once these models are built, they live in Civis Platform permanently and can be included into production pipelines. Results can be easily incorporated into reports and dashboards.
 
-CivisML is built in Python using [scikit-learn](http://scikit-learn.org/stable/), and leverages AWS behind the scenes for efficient distributed computing. However, most of its features can be used through R without knowledge of Python or AWS with the `civis_ml` function in `civis`.
+CivisML is built in Python using [scikit-learn](https://scikit-learn.org/stable/), and leverages AWS behind the scenes for efficient distributed computing. However, most of its features can be used through R without knowledge of Python or AWS with the `civis_ml` function in `civis`.
 
 While `civis_ml` is a complex function with many arguments, basic machine learning modeling and scoring can be easily carried out. We illustrate several features of `civis_ml` with data from a fictitious company called Brandable, who is looking to predict which customers are likely to upgrade from the free to the premium service.
 
@@ -46,17 +46,17 @@ After the data source is specified, we next choose the model type. There are 13 
 
 | Name | R Workflow | Model Type | scikit-learn Documentation |
 |------|:-----------|------------|-----------|------------------|
-  `sparse_logistic`	| `civis_ml_sparse_logistic` | classification	| [Logistic Regression](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)	|
-  `gradient_boosting_classifier` |	`civis_ml_gradient_boosting_classifier` | classification |	[GradientBoostingClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html) |
-  `random_forest_classifier` |	`civis_ml_random_forest_classifier` | classification |	[RandomForestClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html) |
-  `extra_trees_classifier` |	`civis_ml_extra_trees_classifier` | classification |	[ExtraTreesClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html)|
+  `sparse_logistic`	| `civis_ml_sparse_logistic` | classification	| [Logistic Regression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)	|
+  `gradient_boosting_classifier` |	`civis_ml_gradient_boosting_classifier` | classification |	[GradientBoostingClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html) |
+  `random_forest_classifier` |	`civis_ml_random_forest_classifier` | classification |	[RandomForestClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html) |
+  `extra_trees_classifier` |	`civis_ml_extra_trees_classifier` | classification |	[ExtraTreesClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html)|
   `multilayer_perceptron_classifier` | | classification | [muffnn.MLPClassifier](https://github.com/civisanalytics/muffnn) |
   `stacking_classifier` | | classification | [StackedClassifier](https://github.com/civisanalytics/civisml-extensions)
-  `sparse_linear_regressor` | `civis_ml_sparse_linear_regressor` |	regression |	[LinearRegression](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html) |
-  `sparse_ridge_regressor` |	`civis_ml_sparse_ridge_regressor` | regression |	[Ridge](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html) |
-  `gradient_boosting_regressor`	| `civis_ml_gradient_boosting_regressor` | regression | [GradientBoostingRegressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html) |
-  `random_forest_regressor`	| `civis_ml_random_forest_regressor` | regression | [RandomForestRegressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)|
-  `extra_trees_regressor` | `civis_ml_extra_trees_regressor` | regression	| [ExtraTreesRegressor](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html)|
+  `sparse_linear_regressor` | `civis_ml_sparse_linear_regressor` |	regression |	[LinearRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html) |
+  `sparse_ridge_regressor` |	`civis_ml_sparse_ridge_regressor` | regression |	[Ridge](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html) |
+  `gradient_boosting_regressor`	| `civis_ml_gradient_boosting_regressor` | regression | [GradientBoostingRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html) |
+  `random_forest_regressor`	| `civis_ml_random_forest_regressor` | regression | [RandomForestRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)|
+  `extra_trees_regressor` | `civis_ml_extra_trees_regressor` | regression	| [ExtraTreesRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesRegressor.html)|
 `multilayer_perceptron_regressor` | | regression | [muffnn.MLPRegressor](https://github.com/civisanalytics/muffnn) |
 `stacking_regressor` | | regression | [StackedRegressor](https://github.com/civisanalytics/civisml-extensions)
 
@@ -132,7 +132,7 @@ between .01 and 1, and with a mean close to .1.
 
 The `"stacking_classifier"` model stacks together the `"gradient_boosting_classifier"` and `"random_forest_classifier"` predefined models together with a
 `glmnet.LogitNet(alpha=0, n_splits=4, max_iter=10000, tol=1e-5,
-scoring='log_loss')`. Defaults for the predefined models are documented in `?civis_ml`. Each column is first [standardized](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html), and then the model predictions are combined using [LogisticRegressionCV](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html) with `penalty='l2'` and `tol=1e-08`. The `"stacking_regressor"` works similarly, stacking together the `"gradient_boosting_regressor"` and `"random_forest_regressor"` models and a `glmnet.ElasticNet(alpha=0, n_splits=4, max_iter=10000,
+scoring='log_loss')`. Defaults for the predefined models are documented in `?civis_ml`. Each column is first [standardized](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html), and then the model predictions are combined using [LogisticRegressionCV](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html) with `penalty='l2'` and `tol=1e-08`. The `"stacking_regressor"` works similarly, stacking together the `"gradient_boosting_regressor"` and `"random_forest_regressor"` models and a `glmnet.ElasticNet(alpha=0, n_splits=4, max_iter=10000,
 tol=1e-5, scoring='r2')`, combining them using [NonNegativeLinearRegression](https://github.com/civisanalytics/civisml-extensions).
 
 ```{r, eval = FALSE}

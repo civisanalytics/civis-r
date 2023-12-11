@@ -13,16 +13,16 @@ feature_flags_put_groups(flag_name, group_id)
 }
 \value{
 A list containing the following elements:
-\item{name}{string, The name of the feature flag.}
-\item{userCount}{integer, The number of users with this feature flag enabled.}
+\item{name}{string, The name of the feature.}
 \item{description}{string, }
+\item{activeForMe}{boolean, Whether the feature is active for the current user.}
+\item{userCount}{integer, The number of users with this feature flag enabled.}
 \item{team}{string, }
 \item{jira}{string, }
 \item{added}{string, }
 \item{groupCount}{integer, }
 \item{organizationCount}{integer, }
 \item{percentage}{integer, The target percentage of users who should have this feature flag enabled.}
-\item{activeForMe}{boolean, Whether the feature flag is active for the current user.}
 }
 \description{
 Activate a feature for a group

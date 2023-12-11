@@ -9,7 +9,7 @@ multipart_upload(file, name = "", chunk_size = 32 * 1024, expires_at = NULL)
 \arguments{
 \item{file}{the file}
 
-\item{name}{name of the upload, defualts to}
+\item{name}{name of the upload, defaults to}
 
 \item{chunk_size}{size of the chunks in bytes}
 

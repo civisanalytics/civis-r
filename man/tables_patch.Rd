@@ -53,6 +53,11 @@ A list containing the following elements:
 }}
 \item{primaryKeys}{array, The primary keys for this table.}
 \item{lastModifiedKeys}{array, The columns indicating an entry's modification status for this table.}
+\item{tableTags}{array, An array containing the following fields: 
+\itemize{
+\item id integer, Table Tag ID
+\item name string, Table Tag Name
+}}
 \item{ontologyMapping}{list, The ontology-key to column-name mapping.  See /ontology for the list of valid ontology keys.}
 }
 \description{

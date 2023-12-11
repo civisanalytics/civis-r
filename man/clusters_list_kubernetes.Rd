@@ -5,7 +5,10 @@
 \title{List Kubernetes Clusters}
 \usage{
 clusters_list_kubernetes(
+  organization_id = NULL,
   organization_slug = NULL,
+  raw_cluster_slug = NULL,
+  exclude_inactive_orgs = NULL,
   limit = NULL,
   page_num = NULL,
   order = NULL,
@@ -13,7 +16,13 @@ clusters_list_kubernetes(
 )
 }
 \arguments{
-\item{organization_slug}{string optional. The slug of this cluster's organization.}
+\item{organization_id}{integer optional. The ID of this cluster's organization. Cannot be used along with the organization slug.}
+
+\item{organization_slug}{string optional. The slug of this cluster's organization. Cannot be used along with the organization ID.}
+
+\item{raw_cluster_slug}{string optional. The slug of this cluster's raw configuration.}
+
+\item{exclude_inactive_orgs}{boolean optional. When true, excludes KubeClusters associated with inactive orgs. Defaults to false.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to its maximum of 50.}
 
@@ -29,6 +38,8 @@ An array containing the following fields:
 \item{organizationId}{string, The id of this cluster's organization.}
 \item{organizationName}{string, The name of this cluster's organization.}
 \item{organizationSlug}{string, The slug of this cluster's organization.}
+\item{rawClusterSlug}{string, The slug of this cluster's raw configuration.}
+\item{customPartitions}{boolean, Whether this cluster has a custom partition configuration.}
 \item{clusterPartitions}{array, An array containing the following fields: 
 \itemize{
 \item clusterPartitionId integer, The ID of this cluster partition.

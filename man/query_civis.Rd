@@ -33,13 +33,13 @@ this database will automatically be used as the default.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{sql}: Run a SQL query.
+\item \code{query_civis(sql)}: Run a SQL query.
 
-\item \code{numeric}: Run a SQL query from a previous SQL query id.
+\item \code{query_civis(numeric)}: Run a SQL query from a previous SQL query id.
 
-\item \code{character}: Run a SQL query.
+\item \code{query_civis(character)}: Run a SQL query.
+
 }}
-
 \examples{
 \dontrun{
 query_civis("GRANT ALL ON schema.my_table TO GROUP admin", "database", credential=0000)

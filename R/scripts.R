@@ -40,7 +40,6 @@ fetch_output_file_ids <- function(x, regex = NULL) {
 
 #' Return output from a civis_script.
 #' @describeIn fetch_output_file_ids Return output of \code{scripts_list_*_runs_outputs} matching \code{regex}.
-#' @inheritParams fetch_output_file_ids
 #' @family script_utils
 #' @export
 fetch_output <- function(x, regex = NULL) {

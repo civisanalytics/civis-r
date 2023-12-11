@@ -22,6 +22,7 @@ An array containing the following fields:
 \item online boolean, Whether this user is online.
 }}
 \item{machineToken}{boolean, If true, this token is not tied to a particular user.}
+\item{expiresAt}{string, The date and time when the token expires.}
 \item{createdAt}{string, The date and time when the token was created.}
 }
 \description{

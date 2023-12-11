@@ -39,6 +39,11 @@ An array containing the following fields:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
+\item{tableTags}{array, An array containing the following fields: 
+\itemize{
+\item id integer, Table Tag ID
+\item name string, Table Tag Name
+}}
 \item{columnNames}{array, The names of each column in the table.}
 }
 \description{
