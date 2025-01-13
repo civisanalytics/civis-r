@@ -41,7 +41,7 @@ next_page <- function(response) {
 #' column_names <- columns %>% purrr::map_chr("name")
 #' }
 fetch_all <- function(fn, ...) {
-  fetch_until(fn, function(x) x == FALSE, ...)
+  fetch_until(fn, function(x) is.null(x), ...)
 }
 
 #' Retrieve some results from a paginated endpoint

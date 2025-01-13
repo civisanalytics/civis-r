@@ -17,8 +17,9 @@ A list containing the following elements:
 \item{optimizationId}{integer, The ID of the optimization.}
 \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
-\item{startedAt}{string, The time the last run started at.}
-\item{finishedAt}{string, The time the last run completed.}
+\item{createdAt}{string, The time the run was created.}
+\item{startedAt}{string, The time the run started at.}
+\item{finishedAt}{string, The time the run completed.}
 \item{error}{string, The error, if any, returned by the run.}
 }
 \description{

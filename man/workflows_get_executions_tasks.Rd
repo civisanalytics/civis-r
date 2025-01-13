@@ -22,6 +22,7 @@ A list containing the following elements:
 \itemize{
 \item id integer, The ID of the run.
 \item jobId integer, The ID of the job associated with the run.
+\item myPermissionLevel string, Your permission level on the job. One of "read", "write", "manage", or "nil".
 \item state string, The state of the run.
 \item createdAt string, The time that the run was queued.
 \item startedAt string, The time that the run started.
@@ -31,6 +32,7 @@ A list containing the following elements:
 \itemize{
 \item id integer, The ID of the execution.
 \item workflowId integer, The ID of the workflow associated with the execution.
+\item myPermissionLevel string, Your permission level on the workflow. One of "read", "write", "manage", or "nil".
 \item state string, The state of this workflow execution.
 \item createdAt string, The time this execution was created.
 \item startedAt string, The time this execution started.

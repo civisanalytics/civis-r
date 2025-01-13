@@ -102,9 +102,9 @@ The polling interval can be set to a fixed value globally with
 }
 \section{Functions}{
 \itemize{
-\item \code{await_all}: Call a function repeatedly for all values of a vector until all have reached a completed status
-}}
+\item \code{await_all()}: Call a function repeatedly for all values of a vector until all have reached a completed status
 
+}}
 \examples{
 \dontrun{
 

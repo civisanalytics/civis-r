@@ -61,7 +61,7 @@ test_that("run and value work", {
   out <- capture.output(res <- mock_run(quote(2 + 3)))
   expect_equal(res$value, 5)
   expect_equal(res$fut$logs, list("a log"))
-  expect_equal(res$fut$state, "succeeded")
+  expect_equal(res$fut$state, "finished")
   # shouldn't need to be mocked
   expect_equal(value(res$fut), res$val)
 })

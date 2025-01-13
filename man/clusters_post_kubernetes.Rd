@@ -7,6 +7,7 @@
 clusters_post_kubernetes(
   organization_id = NULL,
   organization_slug = NULL,
+  raw_cluster_slug = NULL,
   is_nat_enabled = NULL
 )
 }
@@ -14,6 +15,8 @@ clusters_post_kubernetes(
 \item{organization_id}{string optional. The id of this cluster's organization.}
 
 \item{organization_slug}{string optional. The slug of this cluster's organization.}
+
+\item{raw_cluster_slug}{string optional. The slug of this cluster's raw configuration.}
 
 \item{is_nat_enabled}{boolean optional. Whether this cluster needs a NAT gateway or not.}
 }
@@ -23,6 +26,8 @@ A list containing the following elements:
 \item{organizationId}{string, The id of this cluster's organization.}
 \item{organizationName}{string, The name of this cluster's organization.}
 \item{organizationSlug}{string, The slug of this cluster's organization.}
+\item{rawClusterSlug}{string, The slug of this cluster's raw configuration.}
+\item{customPartitions}{boolean, Whether this cluster has a custom partition configuration.}
 \item{clusterPartitions}{array, An array containing the following fields: 
 \itemize{
 \item clusterPartitionId integer, The ID of this cluster partition.
@@ -32,7 +37,7 @@ A list containing the following elements:
 \item defaultInstanceConfigId integer, The id of the InstanceConfig that is the default for this partition.
 }}
 \item{isNatEnabled}{boolean, Whether this cluster needs a NAT gateway or not.}
-\item{hours}{number, The number of hours used this month for this cluster }
+\item{hours}{number, The number of hours used this month for this cluster.}
 }
 \description{
 Create a Kubernetes Cluster

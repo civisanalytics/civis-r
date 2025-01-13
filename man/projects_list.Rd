@@ -5,8 +5,9 @@
 \title{List projects}
 \usage{
 projects_list(
-  author = NULL,
   permission = NULL,
+  auto_share = NULL,
+  author = NULL,
   hidden = NULL,
   archived = NULL,
   limit = NULL,
@@ -16,9 +17,11 @@ projects_list(
 )
 }
 \arguments{
-\item{author}{string optional. If specified, return projects owned by this author. It accepts a comma-separated list of author ids.}
-
 \item{permission}{string optional. A permissions string, one of "read", "write", or "manage". Lists only projects for which the current user has that permission.}
+
+\item{auto_share}{boolean optional. Used to filter projects based on whether the project is autoshare enabled or not.}
+
+\item{author}{string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.}
 
 \item{hidden}{boolean optional. If specified to be true, returns hidden items. Defaults to false, returning non-hidden items.}
 
