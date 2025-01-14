@@ -24,7 +24,7 @@ check_civis_ml_call <- function(workflow_fn, can_calibrate = TRUE) {
     args[["calibration"]] <- "sigmoid"
   }
 
-  with_mock(
+  with_mocked_bindings(
     `civis::civis_ml` = fake_civis_ml,
      do.call(workflow_fn, args)
   )
@@ -55,7 +55,7 @@ check_civis_ml_call <- function(workflow_fn, can_calibrate = TRUE) {
 check_civis_ml_model_type <- function(workflow_fn, workflow_name) {
   fake_civis_ml <- mock(NULL)
 
-  with_mock(
+  with_mocked_bindings(
     `civis::civis_ml` = fake_civis_ml,
 
     workflow_fn(iris, dependent_variable = "Specis")

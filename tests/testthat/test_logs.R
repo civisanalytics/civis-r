@@ -35,7 +35,7 @@ fake_model <- structure(
 test_that("fetch_logs.civis_ml calls scripts_list_custom_runs_logs", {
   fake_scripts_list_custom_runs_logs <- mock(log_response)
 
-  with_mock(
+  with_mocked_bindings(
     `civis::scripts_list_custom_runs_logs` = fake_scripts_list_custom_runs_logs,
 
     fetch_logs(fake_model)
@@ -68,7 +68,7 @@ test_that("fetch_logs.civis_api calls the right logging function with right args
   fake_scripts_list_sql_runs_logs <- mock(log_response)
   log_args <- attr(fake_api, "args")
 
-  with_mock(
+  with_mocked_bindings(
     `civis::scripts_list_sql_runs_logs` = fake_scripts_list_sql_runs_logs,
     expect_equal(fetch_logs(fake_api), format_scripts_logs(log_response))
   )
@@ -88,7 +88,7 @@ test_that("fetch_logs.civis_error calls the right logging function with right ar
   fake_scripts_list_sql_runs_logs <- mock(log_response)
   log_args <- attr(fake_api_err, "args")
 
-  with_mock(
+  with_mocked_bindings(
     `civis::scripts_list_sql_runs_logs` = fake_scripts_list_sql_runs_logs,
     expect_equal(fetch_logs(fake_api_err), format_scripts_logs(log_response))
   )
@@ -100,7 +100,7 @@ test_that("formats the log messages", {
   # note: do *NOT* test time formatting in messages.
   fake_scripts_list_custom_runs_logs <- mock(log_response)
 
-  msgs <- with_mock(
+  msgs <- with_mocked_bindings(
     `civis::scripts_list_custom_runs_logs` = fake_scripts_list_custom_runs_logs,
 
     fetch_logs(fake_model)

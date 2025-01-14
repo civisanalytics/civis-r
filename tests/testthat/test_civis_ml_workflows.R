@@ -14,7 +14,7 @@ test_that("calls civis_ml with model_type", {
 test_that("calls civis_ml with params", {
   fake_civis_ml <- mock(NULL)
 
-  with_mock(
+  with_mocked_bindings(
     `civis::civis_ml` = fake_civis_ml,
     civis_ml_sparse_logistic(iris,
                              dependent_variable = "Species",
@@ -88,7 +88,7 @@ test_that("calls civis_ml with model_type", {
 test_that("calls civis_ml with params", {
   fake_civis_ml <- mock(NULL)
 
-  with_mock(
+  with_mocked_bindings(
     `civis::civis_ml` = fake_civis_ml,
     civis_ml_sparse_linear_regressor(x = iris,
                                      dependent_variable = "Sepal.Length",
@@ -105,7 +105,7 @@ test_that("calls civis_ml with params", {
 test_that("warns when fit_intercept = FALSE and normalize = TRUE", {
   fake_civis_ml <- mock(NULL)
 
-  with_mock(
+  with_mocked_bindings(
     `civis::civis_ml` = fake_civis_ml,
 
     expect_warning(
@@ -135,7 +135,7 @@ test_that("passes other args to civis_ml", {
 test_that("calls civis_ml with params", {
   fake_civis_ml <- mock(NULL)
 
-  with_mock(
+  with_mocked_bindings(
     `civis::civis_ml` = fake_civis_ml,
     civis_ml_sparse_ridge_regressor(x = iris,
                                     dependent_variable = "Sepal.Length",
@@ -174,7 +174,7 @@ test_that("passes other args to civis_ml", {
 test_that("calls civis_ml with params", {
   fake_civis_ml <- mock(NULL)
 
-  with_mock(
+  with_mocked_bindings(
     `civis::civis_ml` = fake_civis_ml,
     civis_ml_gradient_boosting_classifier(x = iris,
                                           dependent_variable = "Species",
@@ -217,7 +217,7 @@ test_that("passes other args to civis_ml", {
 test_that("calls civis_ml with params", {
   fake_civis_ml <- mock(NULL)
 
-  with_mock(
+  with_mocked_bindings(
     `civis::civis_ml` = fake_civis_ml,
 
     civis_ml_sparse_ridge_regressor(x = iris,
@@ -264,7 +264,7 @@ test_that("checks class_weight param", {
 test_that("calls civis_ml with params", {
   fake_civis_ml <- mock(NULL)
 
-  with_mock(
+  with_mocked_bindings(
     `civis::civis_ml` = fake_civis_ml,
     civis_ml_random_forest_classifier(x = iris,
                                       dependent_variable = "Species",
@@ -301,7 +301,7 @@ test_that("passes other args to civis_ml", {
 test_that("calls civis_ml with params", {
   fake_civis_ml <- mock(NULL)
 
-  with_mock(
+  with_mocked_bindings(
     `civis::civis_ml` = fake_civis_ml,
     civis_ml_random_forest_regressor(x = iris,
                                      dependent_variable = "Species",
@@ -345,7 +345,7 @@ test_that("checks class_weight param", {
 test_that("calls civis_ml with params", {
   fake_civis_ml <- mock(NULL)
 
-  with_mock(
+  with_mocked_bindings(
     `civis::civis_ml` = fake_civis_ml,
     civis_ml_extra_trees_classifier(x = iris,
                                     dependent_variable = "Species",
@@ -382,7 +382,7 @@ test_that("passes other args to civis_ml", {
 test_that("calls civis_ml with params", {
   fake_civis_ml <- mock(NULL)
 
-  with_mock(
+  with_mocked_bindings(
     `civis::civis_ml` = fake_civis_ml,
     civis_ml_extra_trees_regressor(x = iris,
                                    dependent_variable = "Species",

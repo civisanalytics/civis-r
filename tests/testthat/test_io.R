@@ -15,7 +15,7 @@ test_that("read_civis.sql reads csvs", {
     write.csv(mock_df, file = filename, row.names = FALSE)
     return(filename)
   }
-  with_mock(
+  with_mocked_bindings(
     `civis::start_scripted_sql_job` = mock_sql_job,
     `civis::scripts_post_sql_runs` = function(...) list(id = 1001),
     `civis::scripts_get_sql_runs` = mock_get_sql_runs,
@@ -32,7 +32,7 @@ test_that("read_civis.sql produces catchable error when query returns no rows", 
   no_results_resp <- list(state = "succeeded", output = list())
 
   mock_sql_job <- function(...) list(script_id = 561, run_id = 43)
-  with_mock(
+  with_mocked_bindings(
     `civis::start_scripted_sql_job` = mock_sql_job,
     `civis::scripts_get_sql_runs` = function(...) no_results_resp,
     try_err <- try(read_civis(sql("SELECT 0"), database = "arrgh"), silent = TRUE),
@@ -46,7 +46,7 @@ test_that("read_civis.numeric reads a csv", {
     structure(list(url = "http://www.fakeurl.com", status_code = 200),
               class = "response")
   }
-  with_mock(
+  with_mocked_bindings(
     `civis::files_get` =  function(...) list(fileUrl = "fakeurl.com"),
     `httr::RETRY` = mock_response,
     `civis::download_civis` = function(id, fn) write.csv(d, file = fn),
@@ -63,7 +63,7 @@ test_that("read_civis.civis_script using = NULL", {
   mock_output <- list(list(name = 'asdf', objectId = 1, objectType = 'JSONValue', value = 'a'),
                       list(name = 'fake', objectId = 2, objectType = 'JSONValue', value = 'b'),
                       list(name = 'file_fake', objectId = 3, objectType = 'File'))
-  vals <- with_mock(
+  vals <- with_mocked_bindings(
     `civis::jobs_get` = function(...) list(type = 'JobTypes::ContainerDocker'),
     `civis::scripts_list_containers_runs_outputs` = function(...) mock_output,
     expect_equal(read_civis(civis_script(1,1), using = NULL),
@@ -77,7 +77,7 @@ test_that("read_civis.civis_script with using", {
   mock_output <- list(list(name = 'asdf', objectId = 1, objectType = 'JSONValue', value = 'a'),
                       list(name = 'lol', objectId = 2, objectType = 'File'),
                       list(name = 'fake', objectId = 3, objectType = 'File'))
-  with_mock(
+  with_mocked_bindings(
     `civis::jobs_get` = function(...) list(type = 'JobTypes::ContainerDocker'),
     `civis::scripts_list_containers_runs_outputs` = function(...) mock_output,
     # returns first arg of read_civis.numeric, which is the objectId
@@ -95,7 +95,7 @@ test_that("read_civis.civis_script with using", {
 test_that("write_civis.character returns meta data if successful", {
   mock_df <- cbind.data.frame(a = c(1,2), b = c("cape-cod", "clams"))
   write("", file = "mockfile")
-  res <- with_mock(
+  res <- with_mocked_bindings(
     `civis::start_import_job` = function(...) {
       list(uploadUri = "fake", id = 1)
     },
@@ -112,7 +112,7 @@ test_that("write_civis.character returns meta data if successful", {
 
 test_that("write_civis.character fails if file doesn't exist", {
   mock_df <- cbind.data.frame(a = c(1,2), b = c("cape-cod", "clams"))
-  err_msg <- with_mock(
+  err_msg <- with_mocked_bindings(
     `civis::start_import_job` = function(...) {
       list(uploadUri = "fake")
     },
@@ -127,7 +127,7 @@ test_that("write_civis.character fails if file doesn't exist", {
 
 test_that("write_civis.data.frame returns meta data if successful", {
   mock_df <- cbind.data.frame(a = c(1,2), b = c("cape-cod", "clams"))
-  res <- with_mock(
+  res <- with_mocked_bindings(
     `civis::start_import_job` = function(...) {
       list(uploadUri = "fake", id = 1)
     },
@@ -144,7 +144,7 @@ test_that("write_civis.data.frame returns meta data if successful", {
 
 test_that("write_civis.character warns under failure", {
   mock_df <- cbind.data.frame(a = c(1,2), b = c("cape-cod", "clams"))
-  with_mock(
+  with_mocked_bindings(
     `civis::start_import_job` = function(...) {
       list(uploadUri = "fake", id = -999)
     },
@@ -161,7 +161,7 @@ test_that("write_civis.character calls imports endpoints correctly", {
   ipf <- mock(list(id = 4))
   fn <- tempfile(fileext = ".csv")
   file.create(fn)
-  with_mock(
+  with_mocked_bindings(
     `civis:::get_database_id` = function(...) 32,
     `civis:::default_credential` = function(...) 999,
     `civis::imports_post_files` = ipf,
@@ -190,7 +190,7 @@ test_that("write_civis.character calls imports endpoints correctly", {
 
 test_that("write_civis.numeric calls imports endpoints correctly", {
   ip <- mock(list(id = 4))
-  with_mock(
+  with_mocked_bindings(
     `civis:::get_database_id` = function(...) 32,
     `civis:::default_credential` = function(...) 999,
     `civis::imports_post` =  ip,
@@ -226,7 +226,7 @@ test_that("write_civis.numeric calls imports endpoints correctly", {
 })
 
 test_that("write_civis fails if no db given and default not provided", {
-  with_mock(
+  with_mocked_bindings(
     `civis::get_default_database` = function(...) NULL,
     err_msg <- tryCatch(write_civis(iris), error = function(e) e$message),
     db_err <- tryCatch(get_db(NULL), error = function(e) e$message),
@@ -251,7 +251,7 @@ test_that("write_civis_file fails if character vector length 2 is passed", {
 
 test_that("write_civis_file.character returns a file id", {
   write("", "mockfile.txt")
-  with_mock(
+  with_mocked_bindings(
     `civis::files_post` = function(...) list(uploadFields = list("fakeurl.com"), id = 5),
     `httr::upload_file` = function(...) "the file",
     `httr::RETRY` = function(...) structure(list(status_code = 200), class = "response"),
@@ -262,7 +262,7 @@ test_that("write_civis_file.character returns a file id", {
 
 test_that("write_civis_file returns a file id", {
   mock_df <- data.frame(a = c(1,2), b = c("cape-cod", "clams"))
-  with_mock(
+  with_mocked_bindings(
     `civis::files_post` = function(...) list(uploadFields = list("fakeurl.com"), id = 5),
     `httr::upload_file` = function(...) "the file",
     `httr::RETRY` = function(...) structure(list(status_code = 200), class = "response"),
@@ -277,7 +277,7 @@ test_that("write_civis_file calls multipart_unload for big files", {
   mockery::stub(write_civis_file.character, "file.size", MIN_MULTIPART_SIZE + 1)
   fn <- tempfile()
   file.create(fn)
-  with_mock(
+  with_mocked_bindings(
     `civis::multipart_upload` = function(...) 1,
     expect_equal(write_civis_file(fn, name = "asdf"), 1)
   )
@@ -286,7 +286,7 @@ test_that("write_civis_file calls multipart_unload for big files", {
 
 test_that("write_civis_file.data.frame uploads a csv", {
   m <- mock()
-  with_mock(
+  with_mocked_bindings(
     `civis::with_tempfile` = m,
     `civis:::write_civis_file.character` = function(...) 1,
     write_civis_file(iris),
@@ -322,7 +322,7 @@ test_that("download_civis.numeric fails for NA", {
 
 test_that("query_civis returns object from await", {
   qp <- mockery::mock()
-  with_mock(
+  with_mocked_bindings(
     `civis::get_database_id` = function(...) TRUE,
     `civis::default_credential` = function(...) 1,
     `civis::queries_post` = qp,
@@ -339,7 +339,7 @@ test_that("query_civis.numeric fails for NA", {
 
 test_that("query_civis_file.sql works", {
   qp <- mockery::mock()
-  with_mock(
+  with_mocked_bindings(
     `civis::get_database_id` = function(...) TRUE,
     `civis::get_db` = function(...) "asdf",
     `civis::default_credential` = function(...) 1,
@@ -357,7 +357,7 @@ test_that("query_civis_file.character errors if not schema.tablename", {
 })
 
 test_that("query_civis_file.numeric works", {
-  with_mock(
+  with_mocked_bindings(
     `civis::scripts_post_sql_runs` = function(...) list(id = 333),
     `civis::scripts_get_sql_runs` = function(...) list(state = "succeeded",
                                                        output = list(list(fileId = 1))),
@@ -371,7 +371,7 @@ test_that("query_civis_file.numeric fails for NA", {
 })
 
 test_that("transfer_table succeeds", {
-  res <- with_mock(
+  res <- with_mocked_bindings(
     `civis::default_credential` = function(...) 1,
     `civis::get_database_id` = function(...) 32,
     `civis::imports_post` = function(...) list(id = 999),
@@ -389,7 +389,7 @@ test_that("multipart_upload returns file_id", {
   fn <- tempfile()
   d <- data.frame(a = 1:5, b = 5:1)
   write.csv(d, fn, row.names = FALSE)
-  id <- with_mock(
+  id <- with_mocked_bindings(
     `civis::upload_one` = function(...) NULL,
     `civis::files_post_multipart` = function(...) list(id = 1, uploadUrls = "url"),
     `future::value` = function(...) NULL,
@@ -431,7 +431,7 @@ test_that("get_db returns default database or an error", {
   expect_equal(get_db("sea_creatures"), "sea_creatures")
 
   msg <- c("Argument database is NULL and options(\"civis.default_db\") not set. Set this option using options(civis.default_db = \"my_database\")")
-  test_msg <- with_mock(
+  test_msg <- with_mocked_bindings(
     `civis::get_default_database` = function(...) NULL,
     tryCatch(get_db(NULL), error = function(e) e$message)
   )
@@ -454,7 +454,7 @@ test_that("delimiter_name_from_string catches bad input", {
 
 
 test_that("start_import_job parses table correctly", {
-  with_mock(
+  with_mocked_bindings(
     `civis::get_database_id` = function(...) -999,
     `civis::default_credential` = function(...) "fake",
     `civis::imports_post_files` = function(...) {
@@ -471,7 +471,7 @@ test_that("start_import_job parses table correctly", {
 
 test_that("start_import_job checks if_exists value", {
   error_msg <- 'if_exists must be set to "fail", "truncate", "append", or "drop"'
-  with_mock(
+  with_mocked_bindings(
     `civis::get_database_id` = function(...) -999,
     `civis::default_credential` = function(...) "fake",
     `civis::imports_post_files` = function(...) {
@@ -489,7 +489,7 @@ test_that("start_import_job checks if_exists value", {
 test_that("download_script_results returns sensible errors", {
   error <- "Query produced no output. \\(script_id = 561, run_id = 43\\)"
   mock_get_run <- function(script_id, run_id) list(script_id = script_id, run_id = run_id)
-  with_mock(
+  with_mocked_bindings(
     `civis::scripts_get_sql_runs` = mock_get_run,
     expect_error(download_script_results(561, 43, "some_file"), error)
   )

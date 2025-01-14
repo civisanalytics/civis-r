@@ -4,7 +4,7 @@ context("reports")
 
 test_that("rmd_file overwritting warning is called", {
   warn_msg <- "parameter 'input' is ignored. Using 'rmd_file' instead."
-  with_mock(
+  with_mocked_bindings(
     `rmarkdown::render` = function(...) TRUE,
     `civis::publish_html` = function(...) -999,
     `civis::parse_front_matter` = function(...) list(),
@@ -15,7 +15,7 @@ test_that("rmd_file overwritting warning is called", {
 test_that("output_file overrides temp file when passed.", {
   output_file <- "keep_me.html"
   mock_publish_html <- mockery::mock(NULL)
-  with_mock(
+  with_mocked_bindings(
     `civis::publish_html` = mock_publish_html,
     `rmarkdown::render` = function(...) TRUE,
     `civis::parse_front_matter` = function(...) list(),
@@ -27,7 +27,7 @@ test_that("output_file overrides temp file when passed.", {
 
 test_that("publish_html calls reports_put_project", {
   mock_reports_put_projects <- mockery::mock(reports_put_projects)
-  with_mock(
+  with_mocked_bindings(
     `readChar` = function(...) TRUE,
     `civis::reports_post` = function(...) list(id = "fake_report"),
     `civis::reports_put_projects` = mock_reports_put_projects,
@@ -37,7 +37,7 @@ test_that("publish_html calls reports_put_project", {
 })
 
 test_that("publish_html does not call reports_put_projects", {
-  with_mock(
+  with_mocked_bindings(
     `readChar` = function(...) TRUE,
     `civis::reports_post` = function(...) list(id = "fake_report"),
     `civis::reports_put_projects` = function(id, project_id) stop("should not be called"),
@@ -46,7 +46,7 @@ test_that("publish_html does not call reports_put_projects", {
 })
 
 test_that("publish_html can put an existing report", {
-  with_mock(
+  with_mocked_bindings(
     `readChar` = function(...) TRUE,
     `civis::reports_patch` = function(report_id, ...) list(id = report_id),
     `civis::reports_post` = function(...) stop("should not be called"),
@@ -56,7 +56,7 @@ test_that("publish_html can put an existing report", {
 
 test_that("publish_rmd passes project_id", {
   mock_publish_html <- mockery::mock(NULL, cycle=TRUE)
-  with_mock(
+  with_mocked_bindings(
     `civis::publish_html` = mock_publish_html,
     `rmarkdown::render` = function(...) TRUE,
     `civis::parse_front_matter` = function(...) list(),
@@ -70,7 +70,7 @@ test_that("publish_rmd passes project_id", {
 
 test_that("publish_rmd passes report_id", {
   mock_publish_html <- mockery::mock(NULL, cycle=TRUE)
-  with_mock(
+  with_mocked_bindings(
     `civis::publish_html` = mock_publish_html,
     `rmarkdown::render` = function(...) TRUE,
     `civis::parse_front_matter` = function(...) list(),

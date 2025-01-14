@@ -3,7 +3,7 @@ context("scripts")
 test_that('fetch_output_file_ids returns named list of file_ids', {
   mock_output <- list(list(name = 'fake_name', objectId = 1),
                       list(name = 'asdf', objectId = 2))
-  with_mock(
+  with_mocked_bindings(
     `civis::jobs_get` = function(...)  list(type = 'JobTypes::ContainerDocker'),
     `civis::scripts_list_containers_runs_outputs` = function(...) mock_output,
     expect_equal(fetch_output_file_ids(civis_script(1,1), NULL),
@@ -15,7 +15,7 @@ test_that('fetch_output_file_ids returns named list of file_ids', {
 
 test_that("fetch_output dispatches correct function", {
   mock_output <- list(list(name = 'fake_name'), list(name = 'asdf'))
-  with_mock(
+  with_mocked_bindings(
     `civis::jobs_get` = function(...)  list(type = 'JobTypes::ContainerDocker'),
     `civis::scripts_list_containers_runs_outputs` = function(...) mock_output,
     expect_equal(fetch_output(civis_script(1,1)),
@@ -37,7 +37,7 @@ test_that("write_job_output posts", {
   Sys.setenv('CIVIS_RUN_ID' = 2)
   mock_post <- mockery::mock(1)
   mock_job <- list(type = 'JobTypes::ContainerDocker', fromTemplateId = 1)
-  val <- with_mock(
+  val <- with_mocked_bindings(
     `civis::jobs_get` = function(...) mock_job,
     `write_civis_file` = function(...) 3,
     `civis::scripts_post_custom_runs_outputs` = mock_post,
@@ -52,7 +52,7 @@ test_that("write_job_output posts", {
 test_that("run_template", {
   mock_output <- list(list(name = 'a', objectId = 1))
   mock_post <- mockery::mock(list(id = 1))
-  vals <- with_mock(
+  vals <- with_mocked_bindings(
     `civis::scripts_post_custom` =  mock_post,
     `civis::scripts_post_custom_runs` = function(...) list(id = 1),
     `civis::scripts_get_custom_runs` = function(...) list(state = 'succeeded'),
@@ -69,7 +69,7 @@ test_that("run_template", {
 test_that("run_template_with_json", {
   mock_output <- list(list(name = 'a', objectId = 1, objectType = 'JSONValue', value = "{'a':1}"))
   mock_post <- mockery::mock(list(id = 1))
-  vals <- with_mock(
+  vals <- with_mocked_bindings(
     `civis::scripts_post_custom` =  mock_post,
     `civis::scripts_post_custom_runs` = function(...) list(id = 1),
     `civis::scripts_get_custom_runs` = function(...) list(state = 'succeeded'),
@@ -87,7 +87,7 @@ test_that("run_template_with_no_json_output", {
   mock_output <- list(list(name = 'a', objectId = 1, objectType = 'JSONValue', value = "{'a':1}"),
   	      	      list(name = 'b', objectId = 2, objectType = 'JSONValue', value = "{'b':2}"))
   mock_post <- mockery::mock(list(id = 1))
-  vals <- with_mock(
+  vals <- with_mocked_bindings(
     `civis::scripts_post_custom` =  mock_post,
     `civis::scripts_post_custom_runs` = function(...) list(id = 1),
     `civis::scripts_get_custom_runs` = function(...) list(state = 'succeeded'),
@@ -104,7 +104,7 @@ test_that("run_template_with_no_json_output", {
 test_that("run_template_with_multiple_json_output", {
   mock_output <- list(list(name = 'a', objectId = 1, objectType = 'int'))
   mock_post <- mockery::mock(list(id = 1))
-  vals <- with_mock(
+  vals <- with_mocked_bindings(
     `civis::scripts_post_custom` =  mock_post,
     `civis::scripts_post_custom_runs` = function(...) list(id = 1),
     `civis::scripts_get_custom_runs` = function(...) list(state = 'succeeded'),
@@ -120,7 +120,7 @@ test_that("run_template_with_multiple_json_output", {
 
 test_that("run_civis", {
   # CivisFuture is tested extensively elsewhere.
-  with_mock(
+  with_mocked_bindings(
     `civis::civis_platform` = future::sequential,
     expect_equal(run_civis(2 + 2), 4)
   )

@@ -10,7 +10,7 @@ mock_r_eval <- function(fut) {
   # this deletes the commandArgs lines, which can no longer be mocked.
   r_remote_eval[2:3] <- NULL
 
-  with_mock(
+  with_mocked_bindings(
     `civis::read_civis` = function(...) fut,
     `civis::scripts_post_containers_runs_outputs` = function(...) NULL,
     `civis::write_civis_file` = function(...) NULL,
@@ -44,7 +44,7 @@ test_that("r eval works", {
 
 mock_run <- function(expr) {
   fut <- CivisFuture(expr)
-  with_mock(
+  with_mocked_bindings(
     `civis::write_civis_file` = function(...) 123,
     `civis::upload_runner_script` = function(...) 1,
     `civis::scripts_post_containers` = function(...) NULL,
@@ -68,7 +68,7 @@ test_that("run and value work", {
 
 mock_err <- function(expr) {
   fut <- CivisFuture(expr)
-  with_mock(
+  with_mocked_bindings(
     `civis::write_civis_file` = function(...) 123,
     `civis::upload_runner_script` = function(...) 1,
     `civis::scripts_post_containers` = function(...) NULL,
@@ -107,7 +107,7 @@ test_that("CivisFuture has the right stuff", {
 })
 
 test_that("resolved", {
-  with_mock(
+  with_mocked_bindings(
     `civis::scripts_get_containers_runs` = function(...) list(state = "running"),
     fut <- CivisFuture(quote(2 + 2)),
     expect_false(resolved(fut))
@@ -116,7 +116,7 @@ test_that("resolved", {
 
 test_that("cancel", {
   fut <- CivisFuture(quote(2 + 2))
-  with_mock(
+  with_mocked_bindings(
     `scripts_delete_containers_runs` = function(...) NULL,
     cancel(fut)
   )

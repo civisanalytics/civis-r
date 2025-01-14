@@ -4,7 +4,7 @@ library(civis)
 options(civis.default_db = "sample_db")
 
 test_that("transfer_table succeeds", {
-  res <- with_mock(
+  res <- with_mocked_bindings(
     `civis::default_credential` = function(...) 1,
     `civis::get_database_id` = function(...) 32,
     `civis::imports_post` = function(...) list(id = 999),
@@ -17,7 +17,7 @@ test_that("transfer_table succeeds", {
 })
 
 test_that("refresh_table succeeds", {
-  with_mock(
+  with_mocked_bindings(
     `civis::get_database_id` = function(...) 32,
     `civis::get_table_id` = function(...) 5,
     `civis::tables_post_refresh` = function(...) "",
@@ -27,7 +27,7 @@ test_that("refresh_table succeeds", {
 })
 
 test_that("get_table_id returns table id", {
-   with_mock(
+   with_mocked_bindings(
     `civis::get_database_id` = function(...) 32,
     `civis::tables_list` = function(...) list(list(name = "whales", id = 5)),
     expect_equal(get_table_id("sea_creatures.whales"), 5)
@@ -36,7 +36,7 @@ test_that("get_table_id returns table id", {
 
 test_that("get_table_id returns error if not found", {
   msg <- paste0("Table sea_creatures.squid not found.")
-  with_mock(
+  with_mocked_bindings(
     `civis::get_database_id` = function(...) 32,
     `civis::tables_list` = function(...) list(list(name = "whales", id = 5)),
     expect_error(get_table_id("sea_creatures.squid"), msg)
