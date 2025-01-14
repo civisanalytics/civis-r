@@ -26,7 +26,7 @@ A list containing the following elements:
 \item{excludedColumns}{array, A list of columns which will be considered ineligible to be independent variables.}
 \item{limitingSQL}{string, A custom SQL WHERE clause used to filter the rows used to build the model. (e.g., "id > 105").}
 \item{activeBuildId}{integer, The ID of the current active build, the build used to score predictions.}
-\item{crossValidationParameters}{list, Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.}
+\item{crossValidationParameters}{list, Cross validation parameter grid for tree methods, e.g. \{"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]\}.}
 \item{numberOfFolds}{integer, Number of folds for cross validation. Default value is 5.}
 \item{notifications}{list, A list containing the following elements: 
 \itemize{
@@ -38,8 +38,8 @@ A list containing the following elements:
 \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on.
-\item failureOn boolean, If failure email notifications are on.
+\item successOn boolean, If success email notifications are on. Defaults to user's preferences.
+\item failureOn boolean, If failure email notifications are on. Defaults to user's preferences.
 }}
 \item{schedule}{list, A list containing the following elements: 
 \itemize{

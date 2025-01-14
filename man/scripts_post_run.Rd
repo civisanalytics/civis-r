@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{scripts_post_run}
 \alias{scripts_post_run}
-\title{Run a script}
+\title{Run a SQL script (legacy)}
 \usage{
 scripts_post_run(id)
 }
@@ -13,5 +13,5 @@ scripts_post_run(id)
 An empty HTTP response
 }
 \description{
-Run a script
+Run a SQL script (legacy)
 }

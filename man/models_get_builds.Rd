@@ -7,7 +7,7 @@
 models_get_builds(id, build_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the model.}
+\item{id}{integer required. The ID of the Model job.}
 
 \item{build_id}{integer required. The ID of the build.}
 }

@@ -7,12 +7,12 @@
 enhancements_post_geocode_runs(id)
 }
 \arguments{
-\item{id}{integer required. The ID of the geocode.}
+\item{id}{integer required. The ID of the Geocode job.}
 }
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID of the run.}
-\item{geocodeId}{integer, The ID of the geocode.}
+\item{geocodeId}{integer, The ID of the Geocode job.}
 \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
 \item{createdAt}{string, The time the run was created.}

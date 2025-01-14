@@ -7,7 +7,7 @@
 scripts_post_javascript_git_checkout_latest(id)
 }
 \arguments{
-\item{id}{integer required. The ID of the file.}
+\item{id}{integer required. The ID of the item.}
 }
 \value{
 A list containing the following elements:

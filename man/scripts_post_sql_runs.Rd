@@ -7,12 +7,12 @@
 scripts_post_sql_runs(id)
 }
 \arguments{
-\item{id}{integer required. The ID of the sql.}
+\item{id}{integer required. The ID of the SQL job.}
 }
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID of the run.}
-\item{sqlId}{integer, The ID of the sql.}
+\item{sqlId}{integer, The ID of the SQL job.}
 \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
 \item{createdAt}{string, The time the run was created.}

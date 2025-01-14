@@ -14,7 +14,8 @@ credentials_post(
   user_id = NULL,
   state = NULL,
   system_credential = NULL,
-  default = NULL
+  default = NULL,
+  oauth = NULL
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ credentials_post(
 \item{system_credential}{boolean optional. Boolean flag that sets a credential to be a system credential. System credentials can only be created by Civis Admins and will create a credential owned by the Civis Robot user.}
 
 \item{default}{boolean optional. Whether or not the credential is a default. Only for Database credentials.}
+
+\item{oauth}{boolean optional. Whether or not the credential is an OAuth credential.}
 }
 \value{
 A list containing the following elements:
@@ -60,6 +63,7 @@ A list containing the following elements:
 \item{createdAt}{string, The creation time for this credential.}
 \item{updatedAt}{string, The last modification time for this credential.}
 \item{default}{boolean, Whether or not the credential is a default. Only for Database credentials.}
+\item{oauth}{boolean, Whether or not the credential is an OAuth credential.}
 }
 \description{
 Create a credential

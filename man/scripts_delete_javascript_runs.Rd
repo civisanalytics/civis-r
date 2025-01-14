@@ -7,7 +7,7 @@
 scripts_delete_javascript_runs(id, run_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the javascript.}
+\item{id}{integer required. The ID of the Javascript job.}
 
 \item{run_id}{integer required. The ID of the run.}
 }

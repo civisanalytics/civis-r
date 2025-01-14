@@ -7,12 +7,12 @@
 imports_post_files_runs(id)
 }
 \arguments{
-\item{id}{integer required. The ID of the import.}
+\item{id}{integer required. The ID of the Import job.}
 }
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID of the run.}
-\item{importId}{integer, The ID of the import.}
+\item{importId}{integer, The ID of the Import job.}
 \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
 \item{createdAt}{string, The time the run was created.}

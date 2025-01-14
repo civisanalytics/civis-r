@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{enhancements_list_civis_data_match_runs}
 \alias{enhancements_list_civis_data_match_runs}
-\title{List runs for the given civis_data_match}
+\title{List runs for the given Civis Data Match job}
 \usage{
 enhancements_list_civis_data_match_runs(
   id,
@@ -13,7 +13,7 @@ enhancements_list_civis_data_match_runs(
 )
 }
 \arguments{
-\item{id}{integer required. The ID of the civis_data_match.}
+\item{id}{integer required. The ID of the Civis Data Match job.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.}
 
@@ -26,7 +26,7 @@ enhancements_list_civis_data_match_runs(
 \value{
 An array containing the following fields:
 \item{id}{integer, The ID of the run.}
-\item{civisDataMatchId}{integer, The ID of the civis_data_match.}
+\item{civisDataMatchId}{integer, The ID of the Civis Data Match job.}
 \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
 \item{createdAt}{string, The time the run was created.}
@@ -35,5 +35,5 @@ An array containing the following fields:
 \item{error}{string, The error, if any, returned by the run.}
 }
 \description{
-List runs for the given civis_data_match
+List runs for the given Civis Data Match job
 }

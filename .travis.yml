@@ -1,8 +1,9 @@
-language: r
-cache: packages
-sudo: false
-
-r:
-    - oldrel
-    - release
-    - devel
+os: linux
+dist: jammy
+language: generic
+services:
+  - docker
+before_install:
+- docker pull rocker/verse:4.4
+script:
+- docker run -v $PWD/:/civis-r rocker/verse:4.4 /bin/bash -c "cd /civis-r && Rscript tools/install-and-run-tests.R"

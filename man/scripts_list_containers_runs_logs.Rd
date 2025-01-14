@@ -7,7 +7,7 @@
 scripts_list_containers_runs_logs(id, run_id, last_id = NULL, limit = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of the container.}
+\item{id}{integer required. The ID of the Container job.}
 
 \item{run_id}{integer required. The ID of the run.}
 

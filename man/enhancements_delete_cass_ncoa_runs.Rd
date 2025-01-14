@@ -7,7 +7,7 @@
 enhancements_delete_cass_ncoa_runs(id, run_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the cass_ncoa.}
+\item{id}{integer required. The ID of the CASS NCOA job.}
 
 \item{run_id}{integer required. The ID of the run.}
 }

@@ -34,7 +34,6 @@ A list containing the following elements:
 \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
 \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
 }}
-\item{parentId}{integer, Parent ID that triggers this enhancement.}
 \item{notifications}{list, A list containing the following elements: 
 \itemize{
 \item urls array, URLs to receive a POST request at job completion
@@ -45,8 +44,8 @@ A list containing the following elements:
 \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on.
-\item failureOn boolean, If failure email notifications are on.
+\item successOn boolean, If success email notifications are on. Defaults to user's preferences.
+\item failureOn boolean, If failure email notifications are on. Defaults to user's preferences.
 }}
 \item{runningAs}{list, A list containing the following elements: 
 \itemize{
@@ -57,7 +56,7 @@ A list containing the following elements:
 \item online boolean, Whether this user is online.
 }}
 \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-\item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
+\item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., \{"phone": ["home_phone", "mobile_phone"], ...\}).}
 \item{inputTable}{list, A list containing the following elements: 
 \itemize{
 \item databaseName string, The Redshift database name for the table.
@@ -83,6 +82,7 @@ A list containing the following elements:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
+\item{parentId}{integer, Parent ID that triggers this enhancement.}
 }
 \description{
 Get a Civis Data Match Enhancement

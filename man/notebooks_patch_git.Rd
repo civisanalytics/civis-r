@@ -15,7 +15,7 @@ notebooks_patch_git(
 )
 }
 \arguments{
-\item{id}{integer required. The ID of the file.}
+\item{id}{integer required. The ID of the item.}
 
 \item{git_ref}{string optional. A git reference specifying an unambiguous version of the file. Can be a branch name, or the full or shortened SHA of a commit.}
 
@@ -23,7 +23,7 @@ notebooks_patch_git(
 
 \item{git_path}{string optional. The path of the file in the repository.}
 
-\item{git_repo_url}{string optional. The URL of the git repository.}
+\item{git_repo_url}{string optional. The URL of the git repository (e.g., https://github.com/organization/repo_name.git).}
 
 \item{git_ref_type}{string optional. Specifies if the file is versioned by branch or tag.}
 

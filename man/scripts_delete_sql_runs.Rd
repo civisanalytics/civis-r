@@ -7,7 +7,7 @@
 scripts_delete_sql_runs(id, run_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the sql.}
+\item{id}{integer required. The ID of the SQL job.}
 
 \item{run_id}{integer required. The ID of the run.}
 }

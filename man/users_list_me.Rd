@@ -37,6 +37,7 @@ A list containing the following elements:
 \item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
 \item{superadminModeExpiration}{string, The user is in superadmin mode when set to a DateTime. The user is not in superadmin mode when set to null.}
 \item{disableNonCompliantFedrampFeatures}{boolean, Whether to disable non-compliant fedramp features.}
+\item{personaRole}{string, The high-level role representing the current user's main permissions.}
 \item{createdById}{integer, The ID of the user who created this user.}
 \item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
 }

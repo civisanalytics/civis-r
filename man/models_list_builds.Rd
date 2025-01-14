@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{models_list_builds}
 \alias{models_list_builds}
-\title{List builds for the given model}
+\title{List builds for the given Model job}
 \usage{
 models_list_builds(
   id,
@@ -13,7 +13,7 @@ models_list_builds(
 )
 }
 \arguments{
-\item{id}{integer required. The ID of the model.}
+\item{id}{integer required. The ID of the Model job.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.}
 
@@ -39,5 +39,5 @@ An array containing the following fields:
 \item{outputLocation}{string, A URL representing the location of the full JSON output for the specified build.The URL link will be valid for 5 minutes.}
 }
 \description{
-List builds for the given model
+List builds for the given Model job
 }

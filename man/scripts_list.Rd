@@ -18,7 +18,7 @@ scripts_list(
 )
 }
 \arguments{
-\item{type}{string optional. If specified, return items of these types. The valid types are sql, python3, javascript, r, and containers.}
+\item{type}{string optional. If specified, return items of these types. The valid types are sql, python3, javascript, r, containers, and dbt.}
 
 \item{category}{string optional. A job category for filtering scripts. Must be one of script, import, export, and enhancement.}
 
@@ -42,7 +42,7 @@ scripts_list(
 An array containing the following fields:
 \item{id}{integer, The ID for the script.}
 \item{name}{string, The name of the script.}
-\item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
+\item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript, dbt)}
 \item{createdAt}{string, The time this script was created.}
 \item{updatedAt}{string, The time the script was last updated.}
 \item{author}{list, A list containing the following elements: 

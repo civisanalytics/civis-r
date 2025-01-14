@@ -12,8 +12,13 @@ databases_get(id)
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID for the database.}
-\item{name}{string, The name of the database.}
+\item{name}{string, The name of the database in Platform.}
 \item{adapter}{string, The type of the database.}
+\item{clusterIdentifier}{string, The cluster identifier of the database.}
+\item{host}{string, The host of the database server.}
+\item{port}{integer, The port of the database.}
+\item{databaseName}{string, The internal name of the database.}
+\item{managed}{boolean, True if the database is Civis-managed. False otherwise.}
 }
 \description{
 Show database information

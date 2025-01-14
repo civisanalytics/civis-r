@@ -47,8 +47,10 @@ An array containing the following fields:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
-\item{createdAt}{string, }
-\item{updatedAt}{string, }
+\item{createdAt}{string, The creation time for this report.}
+\item{updatedAt}{string, The last updated at time for this report.}
+\item{type}{string, The type of the report. One of: ReportTypes::HTML, ReportTypes::Tableau, ReportTypes::ShinyApp, ReportTypes::SQL}
+\item{archived}{string, The archival status of the requested item(s).}
 \item{projects}{array, An array containing the following fields: 
 \itemize{
 \item id integer, The ID for the project.
@@ -61,11 +63,10 @@ An array containing the following fields:
 \itemize{
 \item id integer, The ID for the script.
 \item name string, The name of the script.
-\item sql string, The raw SQL query for the script.
+\item sql string, The raw SQL query for the script, if applicable.
 }}
 \item{jobPath}{string, The link to details of the job that backs this report.}
 \item{tableauId}{integer, }
-\item{type}{string, }
 \item{templateId}{integer, The ID of the template used for this report.}
 \item{authThumbnailUrl}{string, URL for a thumbnail of the report.}
 \item{lastRun}{list, A list containing the following elements: 
@@ -77,7 +78,6 @@ An array containing the following fields:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
-\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
 List Reports

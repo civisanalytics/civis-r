@@ -7,7 +7,7 @@
 scripts_list_custom_runs_logs(id, run_id, last_id = NULL, limit = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of the custom.}
+\item{id}{integer required. The ID of the Custom job.}
 
 \item{run_id}{integer required. The ID of the run.}
 

@@ -7,12 +7,12 @@
 scripts_post_custom_runs(id)
 }
 \arguments{
-\item{id}{integer required. The ID of the custom.}
+\item{id}{integer required. The ID of the Custom job.}
 }
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID of the run.}
-\item{customId}{integer, The ID of the custom.}
+\item{customId}{integer, The ID of the Custom job.}
 \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
 \item{createdAt}{string, The time the run was created.}

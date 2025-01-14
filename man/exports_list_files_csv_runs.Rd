@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{exports_list_files_csv_runs}
 \alias{exports_list_files_csv_runs}
-\title{List runs for the given csv_export}
+\title{List runs for the given CSV Export job}
 \usage{
 exports_list_files_csv_runs(
   id,
@@ -13,7 +13,7 @@ exports_list_files_csv_runs(
 )
 }
 \arguments{
-\item{id}{integer required. The ID of the csv_export.}
+\item{id}{integer required. The ID of the CSV Export job.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.}
 
@@ -33,5 +33,5 @@ An array containing the following fields:
 \item{error}{string, The error message for this run, if present.}
 }
 \description{
-List runs for the given csv_export
+List runs for the given CSV Export job
 }

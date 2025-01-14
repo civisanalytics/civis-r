@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{media_list_optimizations_runs}
 \alias{media_list_optimizations_runs}
-\title{List runs for the given optimization}
+\title{List runs for the given Optimization job}
 \usage{
 media_list_optimizations_runs(
   id,
@@ -13,7 +13,7 @@ media_list_optimizations_runs(
 )
 }
 \arguments{
-\item{id}{integer required. The ID of the optimization.}
+\item{id}{integer required. The ID of the Optimization job.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.}
 
@@ -26,7 +26,7 @@ media_list_optimizations_runs(
 \value{
 An array containing the following fields:
 \item{id}{integer, The ID of the run.}
-\item{optimizationId}{integer, The ID of the optimization.}
+\item{optimizationId}{integer, The ID of the Optimization job.}
 \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
 \item{createdAt}{string, The time the run was created.}
@@ -35,5 +35,5 @@ An array containing the following fields:
 \item{error}{string, The error, if any, returned by the run.}
 }
 \description{
-List runs for the given optimization
+List runs for the given Optimization job
 }

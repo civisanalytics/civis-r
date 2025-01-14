@@ -13,7 +13,8 @@ reports_patch(
   app_state = NULL,
   provide_api_key = NULL,
   template_id = NULL,
-  use_viewers_tableau_username = NULL
+  use_viewers_tableau_username = NULL,
+  description = NULL
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ reports_patch(
 \item{template_id}{integer optional. The ID of the template used for this report. If null is passed, no template will back this report. Changes to the backing template will reset the report appState.}
 
 \item{use_viewers_tableau_username}{boolean optional. Apply user level filtering on Tableau reports.}
+
+\item{description}{string optional. The user-defined description of the report.}
 }
 \value{
 A list containing the following elements:
@@ -47,9 +50,12 @@ A list containing the following elements:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
-\item{createdAt}{string, }
-\item{updatedAt}{string, }
+\item{createdAt}{string, The creation time for this report.}
+\item{updatedAt}{string, The last updated at time for this report.}
+\item{type}{string, The type of the report. One of: ReportTypes::HTML, ReportTypes::Tableau, ReportTypes::ShinyApp, ReportTypes::SQL}
+\item{description}{string, The user-defined description of the report.}
 \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
+\item{archived}{string, The archival status of the requested item(s).}
 \item{projects}{array, An array containing the following fields: 
 \itemize{
 \item id integer, The ID for the project.
@@ -62,11 +68,10 @@ A list containing the following elements:
 \itemize{
 \item id integer, The ID for the script.
 \item name string, The name of the script.
-\item sql string, The raw SQL query for the script.
+\item sql string, The raw SQL query for the script, if applicable.
 }}
 \item{jobPath}{string, The link to details of the job that backs this report.}
 \item{tableauId}{integer, }
-\item{type}{string, }
 \item{templateId}{integer, The ID of the template used for this report.}
 \item{authThumbnailUrl}{string, URL for a thumbnail of the report.}
 \item{lastRun}{list, A list containing the following elements: 
@@ -78,10 +83,9 @@ A list containing the following elements:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
-\item{archived}{string, The archival status of the requested item(s).}
 \item{hidden}{boolean, The hidden status of the item.}
-\item{authDataUrl}{string, }
-\item{authCodeUrl}{string, }
+\item{authDataUrl}{string, DEPRECATED: For legacy reports}
+\item{authCodeUrl}{string, Link to code to render in the report.}
 \item{config}{string, Any configuration metadata for this report.}
 \item{validOutputFile}{boolean, Whether the job (a script or a query) that backs the report currently has a valid output file.}
 \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}

@@ -4,12 +4,14 @@
 \alias{databases_get_schema_privileges}
 \title{Show schema privileges}
 \usage{
-databases_get_schema_privileges(id, schema_name)
+databases_get_schema_privileges(id, schema_name, credential_id = NULL)
 }
 \arguments{
 \item{id}{integer required. The ID of the database}
 
 \item{schema_name}{string required. The name of the schema}
+
+\item{credential_id}{integer optional. If provided, schemas will be filtered based on the given credential.}
 }
 \value{
 A list containing the following elements:

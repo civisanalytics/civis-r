@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{reports_get_services}
 \alias{reports_get_services}
-\title{Show a single service report}
+\title{Get a single service report}
 \usage{
 reports_get_services(id)
 }
@@ -21,17 +21,19 @@ A list containing the following elements:
 \item initials string, This user's initials.
 \item online boolean, Whether this user is online.
 }}
-\item{createdAt}{string, }
-\item{updatedAt}{string, }
+\item{createdAt}{string, The creation time for this report.}
+\item{updatedAt}{string, The last updated at time for this report.}
+\item{type}{string, The type of the report. One of: ReportTypes::HTML, ReportTypes::Tableau, ReportTypes::ShinyApp, ReportTypes::SQL}
+\item{description}{string, The user-defined description of the report.}
 \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
+\item{archived}{string, The archival status of the requested item(s).}
 \item{host}{string, The host for the service report}
 \item{displayUrl}{string, The URL to display the service report.}
 \item{serviceId}{integer, The id of the backing service}
 \item{provideAPIKey}{boolean, Whether the report requests an API Key from the report viewer.}
 \item{apiKey}{string, A Civis API key that can be used by this report.}
 \item{apiKeyId}{integer, The ID of the API key. Can be used for auditing API use by this report.}
-\item{archived}{string, The archival status of the requested item(s).}
 }
 \description{
-Show a single service report
+Get a single service report
 }

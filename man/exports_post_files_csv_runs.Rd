@@ -7,7 +7,7 @@
 exports_post_files_csv_runs(id)
 }
 \arguments{
-\item{id}{integer required. The ID of the csv_export.}
+\item{id}{integer required. The ID of the CSV Export job.}
 }
 \value{
 A list containing the following elements:

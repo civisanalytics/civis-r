@@ -19,11 +19,11 @@ imports_list(
 )
 }
 \arguments{
-\item{type}{string optional. If specified, return imports of these types. It accepts a comma-separated list, possible values are 'AutoImport', 'DbSync', 'Salesforce', 'GdocImport'.}
+\item{type}{string optional. If specified, return imports of these types. It accepts a comma-separated list, possible values are Dbsync, AutoImport, GdocImport, and GdocExport.}
 
 \item{destination}{string optional. If specified, returns imports with one of these destinations. It accepts a comma-separated list of remote host ids.}
 
-\item{source}{string optional. If specified, returns imports with one of these sources. It accepts a comma-separated list of remote host ids. 'DbSync' must be specified for 'type'.}
+\item{source}{string optional. If specified, returns imports with one of these sources. It accepts a comma-separated list of remote host ids. 'Dbsync' must be specified for 'type'.}
 
 \item{status}{string optional. If specified, returns imports with one of these statuses. It accepts a comma-separated list, possible values are 'running', 'failed', 'succeeded', 'idle', 'scheduled'.}
 
@@ -44,19 +44,19 @@ imports_list(
 \value{
 An array containing the following fields:
 \item{name}{string, The name of the import.}
-\item{syncType}{string, The type of sync to perform; one of Dbsync, AutoImport, GdocImport, GdocExport, and Salesforce.}
+\item{syncType}{string, The type of sync to perform; one of Dbsync, AutoImport, GdocImport, and GdocExport.}
 \item{source}{list, A list containing the following elements: 
 \itemize{
 \item remoteHostId integer, 
 \item credentialId integer, 
-\item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.
+\item additionalCredentials array, Array that holds additional credentials used for specific imports. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.
 \item name string, 
 }}
 \item{destination}{list, A list containing the following elements: 
 \itemize{
 \item remoteHostId integer, 
 \item credentialId integer, 
-\item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.
+\item additionalCredentials array, Array that holds additional credentials used for specific imports. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.
 \item name string, 
 }}
 \item{schedule}{list, A list containing the following elements: 

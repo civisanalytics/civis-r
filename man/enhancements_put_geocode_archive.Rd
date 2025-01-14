@@ -36,7 +36,6 @@ A list containing the following elements:
 \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
 \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
 }}
-\item{parentId}{integer, Parent ID that triggers this enhancement.}
 \item{notifications}{list, A list containing the following elements: 
 \itemize{
 \item urls array, URLs to receive a POST request at job completion
@@ -47,8 +46,8 @@ A list containing the following elements:
 \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on.
-\item failureOn boolean, If failure email notifications are on.
+\item successOn boolean, If success email notifications are on. Defaults to user's preferences.
+\item failureOn boolean, If failure email notifications are on. Defaults to user's preferences.
 }}
 \item{runningAs}{list, A list containing the following elements: 
 \itemize{
@@ -67,9 +66,10 @@ A list containing the following elements:
 \item{targetSchema}{string, The output table schema.}
 \item{targetTable}{string, The output table name.}
 \item{country}{string, The country of the addresses to be geocoded; either 'us' or 'ca'.}
-\item{provider}{string, The geocoding provider; one of postgis, nominatim, and geocoder_ca.}
+\item{provider}{string, The geocoding provider; one of postgis and geocoder_ca.}
 \item{outputAddress}{boolean, Whether to output the parsed address. Only guaranteed for the 'postgis' provider.}
 \item{archived}{string, The archival status of the requested item(s).}
+\item{parentId}{integer, Parent ID that triggers this enhancement.}
 }
 \description{
 Update the archive status of this object

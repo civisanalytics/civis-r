@@ -7,7 +7,7 @@
 scripts_delete_custom_runs(id, run_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the custom.}
+\item{id}{integer required. The ID of the Custom job.}
 
 \item{run_id}{integer required. The ID of the run.}
 }

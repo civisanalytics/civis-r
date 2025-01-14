@@ -7,7 +7,7 @@
 scripts_delete_containers_runs(id, run_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the container.}
+\item{id}{integer required. The ID of the Container job.}
 
 \item{run_id}{integer required. The ID of the run.}
 }
