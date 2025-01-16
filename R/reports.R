@@ -1,3 +1,7 @@
+# Wrap a function for testing purposes.
+# See https://testthat.r-lib.org/reference/local_mocked_bindings.html#namespaced-calls
+rmarkdown_render <- function(...) rmarkdown::render(...)
+
 #' Publish an R Markdown file to Platform Reports
 #'
 #' @param rmd_file string, R Markdown file (.Rmd)
@@ -76,7 +80,7 @@ publish_rmd <- function(rmd_file, report_id=NULL, report_name=NULL,
       render_args[["output_file"]] <- temp_output
     }
     html_args[["html_file"]] <- render_args[["output_file"]]
-    do.call(rmarkdown::render, render_args)
+    do.call(rmarkdown_render, render_args)
     do.call(publish_html, html_args)
   }, finally = {
     unlink(temp_output)
@@ -156,3 +160,7 @@ parse_front_matter <- function(rmd_file) {
   })
   metadata
 }
+
+# Wrap this function for testing purposes.
+# See https://testthat.r-lib.org/reference/local_mocked_bindings.html#namespaced-calls
+readChar <- function(...) base::readChar(...)

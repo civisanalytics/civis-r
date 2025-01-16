@@ -1,4 +1,5 @@
 library(civis)
+library(testthat)
 context("civis_ml_utils")
 
 model_list <- readRDS("data/civis_ml_models.rds")
@@ -29,16 +30,14 @@ test_that("get_train_template_id works", {
                                            name=c("training","prediction","training","registration","training","training"),
                                            stringsAsFactors=FALSE)
 
-  with_mock(
-    `civis::get_template_ids_all_versions` = function(...) fake_civis_ml_template_ids,
-
-    expect_equal(get_train_template_id("prod"), 11219),
-    expect_equal(get_train_template_id("dev"), 10615),
-    expect_equal(get_train_template_id("v2.2"), 11219),
-    expect_equal(get_train_template_id("v0.5"), 7020),
-    expect_error(get_train_template_id("foo"))
-
-    )
+  local_mocked_bindings(
+    get_template_ids_all_versions = function(...) fake_civis_ml_template_ids
+  )
+  expect_equal(get_train_template_id("prod"), 11219)
+  expect_equal(get_train_template_id("dev"), 10615)
+  expect_equal(get_train_template_id("v2.2"), 11219)
+  expect_equal(get_train_template_id("v0.5"), 7020)
+  expect_error(get_train_template_id("foo"))
 })
 
 
@@ -69,17 +68,16 @@ test_that("get_template_ids_all_versions works", {
                                            userId = 1750,
                                            displayName = "Trained Model Registration, v2.2"))
 
-  with_mock(
-     `civis::fetch_until` = function(...) fake_template_alias_objects,
-
-      expect_equal(get_template_ids_all_versions(),
-                   data.frame(id=c(11219,10615,11221),
-                              version=c("prod","dev","v2.2"),
-                              name=c("training","training","registration"),
-                              stringsAsFactors=FALSE)
-                   )
-      )
-
+  local_mocked_bindings(
+     fetch_until = function(...) fake_template_alias_objects
+  )
+  expect_equal(
+    get_template_ids_all_versions(),
+    data.frame(id = c(11219, 10615, 11221),
+      version = c("prod", "dev", "v2.2"),
+      name = c("training", "training", "registration"),
+      stringsAsFactors = FALSE)
+  )
 })
 
 
@@ -181,23 +179,16 @@ test_that("get_predict_template_id returns correct template for train/predict ve
 
   m <- model_list[[1]]
 
-  with_mock(
-    `civis::get_template_ids_all_versions` = function(...) fake_civis_ml_template_ids,
-
-    expect_equal(get_predict_template_id(m), 9969)
-
-    )
-
+  local_mocked_bindings(
+    get_template_ids_all_versions = function(...) fake_civis_ml_template_ids
+  )
+  expect_equal(get_predict_template_id(m), 9969)
 
   fake_model <- list(job = list(fromTemplateId = 10582))
-
-  with_mock(
-    `civis::get_template_ids_all_versions` = function(...) fake_civis_ml_template_ids,
-
-     expect_equal(get_predict_template_id(fake_model), 10583)
-
-    )
-
+  local_mocked_bindings(
+    get_template_ids_all_versions = function(...) fake_civis_ml_template_ids
+  )
+  expect_equal(get_predict_template_id(fake_model), 10583)
 })
 
 
