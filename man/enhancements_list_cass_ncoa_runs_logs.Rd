@@ -7,7 +7,7 @@
 enhancements_list_cass_ncoa_runs_logs(id, run_id, last_id = NULL, limit = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of the cass_ncoa.}
+\item{id}{integer required. The ID of the CASS NCOA job.}
 
 \item{run_id}{integer required. The ID of the run.}
 

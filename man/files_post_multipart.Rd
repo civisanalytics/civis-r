@@ -4,7 +4,7 @@
 \alias{files_post_multipart}
 \title{Initiate a multipart upload}
 \usage{
-files_post_multipart(name, num_parts, expires_at = NULL)
+files_post_multipart(name, num_parts, expires_at = NULL, description = NULL)
 }
 \arguments{
 \item{name}{string required. The file name.}
@@ -12,6 +12,8 @@ files_post_multipart(name, num_parts, expires_at = NULL)
 \item{num_parts}{integer required. The number of parts in which the file will be uploaded. This parameter determines the number of presigned URLs that are returned.}
 
 \item{expires_at}{string optional. The date and time the file will expire. If not specified, the file will expire in 30 days. To keep a file indefinitely, specify null.}
+
+\item{description}{string optional. The user-defined description of the file.}
 }
 \value{
 A list containing the following elements:
@@ -20,6 +22,7 @@ A list containing the following elements:
 \item{createdAt}{string, The date and time the file was created.}
 \item{fileSize}{integer, The file size.}
 \item{expiresAt}{string, The date and time the file will expire. If not specified, the file will expire in 30 days. To keep a file indefinitely, specify null.}
+\item{description}{string, The user-defined description of the file.}
 \item{uploadUrls}{array, An array of URLs that may be used to upload file parts. Use separate PUT requests to complete the part uploads. Links expire after 12 hours.}
 }
 \description{

@@ -8,7 +8,6 @@ enhancements_patch_civis_data_match(
   id,
   name = NULL,
   schedule = NULL,
-  parent_id = NULL,
   notifications = NULL,
   input_field_mapping = NULL,
   input_table = NULL,
@@ -16,7 +15,8 @@ enhancements_patch_civis_data_match(
   output_table = NULL,
   max_matches = NULL,
   threshold = NULL,
-  archived = NULL
+  archived = NULL,
+  parent_id = NULL
 )
 }
 \arguments{
@@ -34,8 +34,6 @@ enhancements_patch_civis_data_match(
 \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
 }}
 
-\item{parent_id}{integer optional. Parent ID that triggers this enhancement.}
-
 \item{notifications}{list optional. A list containing the following elements: 
 \itemize{
 \item urls array, URLs to receive a POST request at job completion
@@ -46,11 +44,11 @@ enhancements_patch_civis_data_match(
 \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on.
-\item failureOn boolean, If failure email notifications are on.
+\item successOn boolean, If success email notifications are on. Defaults to user's preferences.
+\item failureOn boolean, If failure email notifications are on. Defaults to user's preferences.
 }}
 
-\item{input_field_mapping}{list optional. The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
+\item{input_field_mapping}{list optional. The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., \{"phone": ["home_phone", "mobile_phone"], ...\}).}
 
 \item{input_table}{list optional. A list containing the following elements: 
 \itemize{
@@ -73,6 +71,8 @@ enhancements_patch_civis_data_match(
 \item{threshold}{number optional. The score threshold (between 0 and 1). Matches below this threshold will not be returned. The default value is 0.5.}
 
 \item{archived}{boolean optional. Whether the Civis Data Match Job has been archived.}
+
+\item{parent_id}{integer optional. Parent ID that triggers this enhancement.}
 }
 \value{
 A list containing the following elements:
@@ -99,7 +99,6 @@ A list containing the following elements:
 \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
 \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
 }}
-\item{parentId}{integer, Parent ID that triggers this enhancement.}
 \item{notifications}{list, A list containing the following elements: 
 \itemize{
 \item urls array, URLs to receive a POST request at job completion
@@ -110,8 +109,8 @@ A list containing the following elements:
 \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on.
-\item failureOn boolean, If failure email notifications are on.
+\item successOn boolean, If success email notifications are on. Defaults to user's preferences.
+\item failureOn boolean, If failure email notifications are on. Defaults to user's preferences.
 }}
 \item{runningAs}{list, A list containing the following elements: 
 \itemize{
@@ -122,7 +121,7 @@ A list containing the following elements:
 \item online boolean, Whether this user is online.
 }}
 \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-\item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
+\item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., \{"phone": ["home_phone", "mobile_phone"], ...\}).}
 \item{inputTable}{list, A list containing the following elements: 
 \itemize{
 \item databaseName string, The Redshift database name for the table.
@@ -148,6 +147,7 @@ A list containing the following elements:
 \item finishedAt string, The time that the run completed.
 \item error string, The error message for this run, if present.
 }}
+\item{parentId}{integer, Parent ID that triggers this enhancement.}
 }
 \description{
 Update some attributes of this Civis Data Match Enhancement

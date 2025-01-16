@@ -7,7 +7,7 @@
 enhancements_delete_geocode_runs(id, run_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the geocode.}
+\item{id}{integer required. The ID of the Geocode job.}
 
 \item{run_id}{integer required. The ID of the run.}
 }

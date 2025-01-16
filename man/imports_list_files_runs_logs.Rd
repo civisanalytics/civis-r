@@ -7,7 +7,7 @@
 imports_list_files_runs_logs(id, run_id, last_id = NULL, limit = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of the import.}
+\item{id}{integer required. The ID of the Import job.}
 
 \item{run_id}{integer required. The ID of the run.}
 

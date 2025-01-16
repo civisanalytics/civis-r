@@ -7,7 +7,7 @@
 scripts_post_javascript_git_commits(id, content, message, file_hash)
 }
 \arguments{
-\item{id}{integer required. The ID of the file.}
+\item{id}{integer required. The ID of the item.}
 
 \item{content}{string required. The contents to commit to the file.}
 

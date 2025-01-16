@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{scripts_list_python3_runs}
 \alias{scripts_list_python3_runs}
-\title{List runs for the given python}
+\title{List runs for the given Python job}
 \usage{
 scripts_list_python3_runs(
   id,
@@ -13,7 +13,7 @@ scripts_list_python3_runs(
 )
 }
 \arguments{
-\item{id}{integer required. The ID of the python.}
+\item{id}{integer required. The ID of the Python job.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.}
 
@@ -26,7 +26,7 @@ scripts_list_python3_runs(
 \value{
 An array containing the following fields:
 \item{id}{integer, The ID of the run.}
-\item{pythonId}{integer, The ID of the python.}
+\item{pythonId}{integer, The ID of the Python job.}
 \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
 \item{createdAt}{string, The time the run was created.}
@@ -37,5 +37,5 @@ An array containing the following fields:
 \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 }
 \description{
-List runs for the given python
+List runs for the given Python job
 }

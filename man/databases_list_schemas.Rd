@@ -9,7 +9,7 @@ databases_list_schemas(id, name = NULL, credential_id = NULL)
 \arguments{
 \item{id}{integer required. The ID of the database.}
 
-\item{name}{string optional. If specified, will be used to filter the schemas returned. Substring matching is supported (e.g., "name=schema" will return both "schema1" and "schema2").}
+\item{name}{string optional. If specified, will be used to filter the schemas returned.Substring matching is supported (e.g., "name=schema" will return both "schema1" and "schema2"). Does not apply to BigQuery databases.}
 
 \item{credential_id}{integer optional. If provided, schemas will be filtered based on the given credential.}
 }

@@ -7,7 +7,7 @@
 exports_get_files_csv_runs(id, run_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the csv_export.}
+\item{id}{integer required. The ID of the CSV Export job.}
 
 \item{run_id}{integer required. The ID of the run.}
 }

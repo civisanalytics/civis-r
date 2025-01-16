@@ -34,7 +34,6 @@ A list containing the following elements:
 \item scheduledRunsPerHour integer, Deprecated in favor of scheduled minutes.
 \item scheduledDaysOfMonth array, Days of the month it is scheduled on, mutually exclusive with scheduledDays.
 }}
-\item{parentId}{integer, Parent ID that triggers this enhancement.}
 \item{notifications}{list, A list containing the following elements: 
 \itemize{
 \item urls array, URLs to receive a POST request at job completion
@@ -45,8 +44,8 @@ A list containing the following elements:
 \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on.
-\item failureOn boolean, If failure email notifications are on.
+\item successOn boolean, If success email notifications are on. Defaults to user's preferences.
+\item failureOn boolean, If failure email notifications are on. Defaults to user's preferences.
 }}
 \item{runningAs}{list, A list containing the following elements: 
 \itemize{
@@ -91,8 +90,9 @@ A list containing the following elements:
 \item{ncoaCredentialId}{integer, Credential to use when performing NCOA updates. Required if 'performNcoa' is true.}
 \item{outputLevel}{string, The set of fields persisted by a CASS or NCOA enhancement.For CASS enhancements, one of 'cass' or 'all.'For NCOA enhancements, one of 'cass', 'ncoa' , 'coalesced' or 'all'.By default, all fields will be returned.}
 \item{limitingSQL}{string, The limiting SQL for the source table. "WHERE" should be omitted (e.g. state='IL').}
-\item{chunkSize}{integer, The maximum number of records processed at a time. Note that this parameter is not available to all users.}
+\item{batchSize}{integer, The maximum number of records processed at a time. Note that this parameter is not available to all users.}
 \item{archived}{string, The archival status of the requested item(s).}
+\item{parentId}{integer, Parent ID that triggers this enhancement.}
 }
 \description{
 Get a CASS/NCOA Enhancement

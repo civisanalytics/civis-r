@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{scripts_list_sql_runs}
 \alias{scripts_list_sql_runs}
-\title{List runs for the given sql}
+\title{List runs for the given SQL job}
 \usage{
 scripts_list_sql_runs(
   id,
@@ -13,7 +13,7 @@ scripts_list_sql_runs(
 )
 }
 \arguments{
-\item{id}{integer required. The ID of the sql.}
+\item{id}{integer required. The ID of the SQL job.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to 20. Maximum allowed is 100.}
 
@@ -26,7 +26,7 @@ scripts_list_sql_runs(
 \value{
 An array containing the following fields:
 \item{id}{integer, The ID of the run.}
-\item{sqlId}{integer, The ID of the sql.}
+\item{sqlId}{integer, The ID of the SQL job.}
 \item{state}{string, The state of the run, one of 'queued' 'running' 'succeeded' 'failed' or 'cancelled'.}
 \item{isCancelRequested}{boolean, True if run cancel requested, else false.}
 \item{createdAt}{string, The time the run was created.}
@@ -42,5 +42,5 @@ An array containing the following fields:
 \item{outputCachedOn}{string, The time that the output was originally exported, if a cache entry was used by the run.}
 }
 \description{
-List runs for the given sql
+List runs for the given SQL job
 }

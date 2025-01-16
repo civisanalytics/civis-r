@@ -7,7 +7,7 @@
 imports_delete_files_csv_runs(id, run_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the csv_import.}
+\item{id}{integer required. The ID of the CSV Import job.}
 
 \item{run_id}{integer required. The ID of the run.}
 }

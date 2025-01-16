@@ -7,7 +7,7 @@
 scripts_list_javascript_runs_logs(id, run_id, last_id = NULL, limit = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of the javascript.}
+\item{id}{integer required. The ID of the Javascript job.}
 
 \item{run_id}{integer required. The ID of the run.}
 

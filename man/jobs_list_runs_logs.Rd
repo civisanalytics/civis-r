@@ -7,7 +7,7 @@
 jobs_list_runs_logs(id, run_id, last_id = NULL, limit = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of the job.}
+\item{id}{integer required. The ID of the job job.}
 
 \item{run_id}{integer required. The ID of the run.}
 

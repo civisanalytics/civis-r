@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{scripts_put_sql}
 \alias{scripts_put_sql}
-\title{Replace all attributes of this SQL script}
+\title{Replace all attributes of this SQL Script}
 \usage{
 scripts_put_sql(
   id,
@@ -47,7 +47,7 @@ scripts_put_sql(
 \item required boolean, Whether this param is required.
 \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-\item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+\item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 }}
 
 \item{arguments}{list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
@@ -72,8 +72,8 @@ scripts_put_sql(
 \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on.
-\item failureOn boolean, If failure email notifications are on.
+\item successOn boolean, If success email notifications are on. Defaults to user's preferences.
+\item failureOn boolean, If failure email notifications are on. Defaults to user's preferences.
 }}
 
 \item{next_run_at}{string optional. The time of the next scheduled run.}
@@ -99,7 +99,7 @@ scripts_put_sql(
 A list containing the following elements:
 \item{id}{integer, The ID for the script.}
 \item{name}{string, The name of the script.}
-\item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
+\item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript, dbt)}
 \item{createdAt}{string, The time this script was created.}
 \item{updatedAt}{string, The time the script was last updated.}
 \item{author}{list, A list containing the following elements: 
@@ -129,7 +129,7 @@ A list containing the following elements:
 \item required boolean, Whether this param is required.
 \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-\item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+\item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 }}
 \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -161,8 +161,8 @@ A list containing the following elements:
 \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on.
-\item failureOn boolean, If failure email notifications are on.
+\item successOn boolean, If success email notifications are on. Defaults to user's preferences.
+\item failureOn boolean, If failure email notifications are on. Defaults to user's preferences.
 }}
 \item{runningAs}{list, A list containing the following elements: 
 \itemize{
@@ -205,5 +205,5 @@ A list containing the following elements:
 \item{runningAsId}{integer, The ID of the runner of this script.}
 }
 \description{
-Replace all attributes of this SQL script
+Replace all attributes of this SQL Script
 }

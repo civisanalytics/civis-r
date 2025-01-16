@@ -23,7 +23,7 @@ queries_post(
 
 \item{sql}{string required. The SQL to execute.}
 
-\item{preview_rows}{integer required. The number of rows to save from the query's result (maximum: 100).}
+\item{preview_rows}{integer required. The number of rows to save from the query's result (maximum: 1000).}
 
 \item{credential}{integer optional. The credential ID.}
 
@@ -49,20 +49,20 @@ A list containing the following elements:
 \item{credential}{integer, The credential ID.}
 \item{resultRows}{array, A preview of rows returned by the query.}
 \item{resultColumns}{array, A preview of columns returned by the query.}
-\item{scriptId}{integer, The ID of the script associated with this query.}
-\item{exception}{string, Deprecated and not used.}
 \item{error}{string, The error message for this run, if present.}
-\item{createdAt}{string, }
-\item{updatedAt}{string, }
 \item{startedAt}{string, The start time of the last run.}
 \item{finishedAt}{string, The end time of the last run.}
 \item{state}{string, The state of the last run. One of queued, running, succeeded, failed, and cancelled.}
+\item{scriptId}{integer, The ID of the script associated with this query.}
+\item{exception}{string, Deprecated and not used.}
+\item{createdAt}{string, }
+\item{updatedAt}{string, }
 \item{lastRunId}{integer, The ID of the last run.}
 \item{hidden}{boolean, The hidden status of the item.}
 \item{archived}{string, The archival status of the requested item(s).}
 \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
 \item{interactive}{boolean, Deprecated and not used.}
-\item{previewRows}{integer, The number of rows to save from the query's result (maximum: 100).}
+\item{previewRows}{integer, The number of rows to save from the query's result (maximum: 1000).}
 \item{includeHeader}{boolean, Whether the CSV output should include a header row [default: true].}
 \item{compression}{string, The type of compression. One of gzip or zip, or none [default: gzip].}
 \item{columnDelimiter}{string, The delimiter to use. One of comma or tab, or pipe [default: comma].}

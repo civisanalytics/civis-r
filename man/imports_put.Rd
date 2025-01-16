@@ -23,7 +23,7 @@ imports_put(
 
 \item{name}{string required. The name of the import.}
 
-\item{sync_type}{string required. The type of sync to perform; one of Dbsync, AutoImport, GdocImport, GdocExport, and Salesforce.}
+\item{sync_type}{string required. The type of sync to perform; one of Dbsync, AutoImport, GdocImport, and GdocExport.}
 
 \item{is_outbound}{boolean required.}
 
@@ -31,14 +31,14 @@ imports_put(
 \itemize{
 \item remoteHostId integer, 
 \item credentialId integer, 
-\item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.
+\item additionalCredentials array, Array that holds additional credentials used for specific imports. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.
 }}
 
 \item{destination}{list optional. A list containing the following elements: 
 \itemize{
 \item remoteHostId integer, 
 \item credentialId integer, 
-\item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.
+\item additionalCredentials array, Array that holds additional credentials used for specific imports. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.
 }}
 
 \item{schedule}{list optional. A list containing the following elements: 
@@ -61,8 +61,8 @@ imports_put(
 \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on.
-\item failureOn boolean, If failure email notifications are on.
+\item successOn boolean, If success email notifications are on. Defaults to user's preferences.
+\item failureOn boolean, If failure email notifications are on. Defaults to user's preferences.
 }}
 
 \item{parent_id}{integer optional. Parent id to trigger this import from}
@@ -74,19 +74,19 @@ imports_put(
 \value{
 A list containing the following elements:
 \item{name}{string, The name of the import.}
-\item{syncType}{string, The type of sync to perform; one of Dbsync, AutoImport, GdocImport, GdocExport, and Salesforce.}
+\item{syncType}{string, The type of sync to perform; one of Dbsync, AutoImport, GdocImport, and GdocExport.}
 \item{source}{list, A list containing the following elements: 
 \itemize{
 \item remoteHostId integer, 
 \item credentialId integer, 
-\item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.
+\item additionalCredentials array, Array that holds additional credentials used for specific imports. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.
 \item name string, 
 }}
 \item{destination}{list, A list containing the following elements: 
 \itemize{
 \item remoteHostId integer, 
 \item credentialId integer, 
-\item additionalCredentials array, Array that holds additional credentials used for specific imports. For salesforce imports, the first and only element is the client credential id. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.
+\item additionalCredentials array, Array that holds additional credentials used for specific imports. For DB Syncs, the first element is an SSL private key credential id, and the second element is the corresponding public key credential id.
 \item name string, 
 }}
 \item{schedule}{list, A list containing the following elements: 
@@ -108,8 +108,8 @@ A list containing the following elements:
 \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on.
-\item failureOn boolean, If failure email notifications are on.
+\item successOn boolean, If success email notifications are on. Defaults to user's preferences.
+\item failureOn boolean, If failure email notifications are on. Defaults to user's preferences.
 }}
 \item{parentId}{integer, Parent id to trigger this import from}
 \item{id}{integer, The ID for the import.}

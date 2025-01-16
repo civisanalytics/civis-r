@@ -31,6 +31,7 @@ A list containing the following elements:
 \item{createdAt}{string, The creation time for this credential.}
 \item{updatedAt}{string, The last modification time for this credential.}
 \item{default}{boolean, Whether or not the credential is a default. Only for Database credentials.}
+\item{oauth}{boolean, Whether or not the credential is an OAuth credential.}
 }
 \description{
 Get a credential

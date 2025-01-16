@@ -7,7 +7,7 @@
 reports_get_git_commits(id, commit_hash)
 }
 \arguments{
-\item{id}{integer required. The ID of the file.}
+\item{id}{integer required. The ID of the item.}
 
 \item{commit_hash}{string required. The SHA (full or shortened) of the desired git commit.}
 }

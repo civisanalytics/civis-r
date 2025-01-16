@@ -7,7 +7,7 @@
 queries_delete_runs(id, run_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the query.}
+\item{id}{integer required. The ID of the Query job.}
 
 \item{run_id}{integer required. The ID of the run.}
 }

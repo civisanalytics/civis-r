@@ -19,7 +19,7 @@ A list containing the following elements:
 \item{source}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of the table or file, if available.
-\item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet, salesforce
+\item path string, The path of the dataset to sync from; for a database source, schema.tablename. If you are doing a Google Sheet export, this can be blank. This is a legacy parameter, it is recommended you use one of the following: databaseTable, file, googleWorksheet
 \item databaseTable list . A list containing the following elements: 
 \itemize{
 \item schema string, The database schema name.
@@ -39,7 +39,7 @@ A list containing the following elements:
 }
 \item salesforce list . A list containing the following elements: 
 \itemize{
-\item objectName string, The Salesforce object name.
+\item objectName string, This parameter is deprecated
 }
 }}
 \item{destination}{list, A list containing the following elements: 
@@ -61,35 +61,35 @@ A list containing the following elements:
 }}
 \item{advancedOptions}{list, A list containing the following elements: 
 \itemize{
-\item maxErrors integer, 
-\item existingTableRows string, 
-\item diststyle string, 
-\item distkey string, 
-\item sortkey1 string, 
-\item sortkey2 string, 
-\item columnDelimiter string, 
-\item columnOverrides object, Hash used for overriding auto-detected names and types, with keys being the index of the column being overridden.
-\item escaped boolean, If true, escape quotes with a backslash; otherwise, escape quotes by double-quoting. Defaults to false.
-\item identityColumn string, 
-\item rowChunkSize integer, 
-\item wipeDestinationTable boolean, 
-\item truncateLongLines boolean, 
-\item invalidCharReplacement string, 
-\item verifyTableRowCounts boolean, 
+\item maxErrors integer, For Google Doc and Auto Imports. The maximum number of errors that can occur without the job failing.
+\item existingTableRows string, For Google Doc and Auto Imports. The behavior if a table with the requested name already exists.  One of "fail", "truncate", "append", or "drop". Defaults to "fail".
+\item firstRowIsHeader boolean, For Google Doc and Auto Imports. A boolean value indicating whether or not the first row is a header row.
+\item diststyle string, For Auto Imports. The diststyle to use for a Redshift table.
+\item distkey string, For Auto Imports. The distkey to use for a Redshift table.
+\item sortkey1 string, For Auto Imports. The first sortkey to use for a Redshift table.
+\item sortkey2 string, For Auto Imports. The second sortkey to use for a Redshift table.
+\item columnDelimiter string, For Auto Imports. The column delimiter for the file. Valid arguments are "comma", "tab", and "pipe". If column_delimiter is null or omitted, it will be auto-detected.
+\item columnOverrides object, For Auto Imports. Hash used for overriding auto-detected names and types, with keys being the index of the column being overridden.
+\item escaped boolean, For Auto Imports. If true, escape quotes with a backslash; otherwise, escape quotes by double-quoting. Defaults to false.
+\item identityColumn string, For DB Syncs. The column or columns to use as primary key for incremental syncs. Should be a unique identifier. If blank, primary key columns will be auto-detected. If more than one identity column is specified, an identity column must be specified for each table. We recommend the primary key be a sequential data type such as an integer, double, timestamp, date, or float. If using a primary key that is a string data type, we recommend having a last_modified_column to ensure all data is synced to the destination table.
+\item lastModifiedColumn string, For DB Syncs. The column to use to detect recently modified data for incremental syncs. Defaults to "Auto-Detect", which will use the first column it finds containing either "modif" or "update" in the name. When specified, only rows where last_modified_column in the source >= last_modified_column in the destination will be synced.
+\item rowChunkSize integer, For DB Syncs. If specified, will split the sync into chunks of this size.
+\item wipeDestinationTable boolean, For DB Syncs. If true, will perform a full table refresh.
+\item truncateLongLines boolean, For DB Syncs to Redshift. When true, truncates column data to fit the column specification.
+\item invalidCharReplacement string, For DB Syncs to Redshift. If specified, will replace each invalid UTF-8 character with this character. Must be a single ASCII character.
+\item verifyTableRowCounts boolean, For DB Syncs. When true, an error will be raised if the destination table does not have the same number of rows as the source table after the sync.
 \item partitionColumnName string, This parameter is deprecated
 \item partitionSchemaName string, This parameter is deprecated
 \item partitionTableName string, This parameter is deprecated
 \item partitionTablePartitionColumnMinName string, This parameter is deprecated
 \item partitionTablePartitionColumnMaxName string, This parameter is deprecated
-\item lastModifiedColumn string, 
 \item mysqlCatalogMatchesSchema boolean, This attribute is no longer available; defaults to true but cannot be used.
 \item chunkingMethod string, This parameter is deprecated
-\item firstRowIsHeader boolean, 
-\item exportAction string, The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
-\item sqlQuery string, If you are doing a Google Sheet export, this is your SQL query.
-\item contactLists string, 
-\item soqlQuery string, 
-\item includeDeletedRecords boolean, 
+\item exportAction string, For Google Doc Exports. The kind of export action you want to have the export execute. Set to "newsprsht" if you want a new worksheet inside a new spreadsheet. Set to "newwksht" if you want a new worksheet inside an existing spreadsheet. Set to "updatewksht" if you want to overwrite an existing worksheet inside an existing spreadsheet. Set to "appendwksht" if you want to append to the end of an existing worksheet inside an existing spreadsheet. Default is set to "newsprsht"
+\item sqlQuery string, For Google Doc Exports. The SQL query for the export.
+\item contactLists string, This parameter is deprecated
+\item soqlQuery string, This parameter is deprecated
+\item includeDeletedRecords boolean, This parameter is deprecated
 }}
 }
 \description{

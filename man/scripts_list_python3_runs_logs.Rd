@@ -7,7 +7,7 @@
 scripts_list_python3_runs_logs(id, run_id, last_id = NULL, limit = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of the python.}
+\item{id}{integer required. The ID of the Python job.}
 
 \item{run_id}{integer required. The ID of the run.}
 

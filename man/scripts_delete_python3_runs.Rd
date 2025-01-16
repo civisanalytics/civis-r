@@ -7,7 +7,7 @@
 scripts_delete_python3_runs(id, run_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the python.}
+\item{id}{integer required. The ID of the Python job.}
 
 \item{run_id}{integer required. The ID of the run.}
 }

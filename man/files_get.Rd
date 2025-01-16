@@ -20,6 +20,7 @@ A list containing the following elements:
 \item{createdAt}{string, The date and time the file was created.}
 \item{fileSize}{integer, The file size.}
 \item{expiresAt}{string, The date and time the file will expire. If not specified, the file will expire in 30 days. To keep a file indefinitely, specify null.}
+\item{description}{string, The user-defined description of the file.}
 \item{author}{list, A list containing the following elements: 
 \itemize{
 \item id integer, The ID of this user.

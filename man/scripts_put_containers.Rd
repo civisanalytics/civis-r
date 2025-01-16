@@ -7,7 +7,6 @@
 scripts_put_containers(
   id,
   required_resources,
-  docker_image_name,
   name = NULL,
   parent_id = NULL,
   user_context = NULL,
@@ -20,6 +19,7 @@ scripts_put_containers(
   remote_host_credential_id = NULL,
   git_credential_id = NULL,
   docker_command = NULL,
+  docker_image_name = NULL,
   docker_image_tag = NULL,
   instance_type = NULL,
   cancel_timeout = NULL,
@@ -39,8 +39,6 @@ scripts_put_containers(
 \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
 }}
 
-\item{docker_image_name}{string required. The name of the docker image to pull from DockerHub.}
-
 \item{name}{string optional. The name of the container.}
 
 \item{parent_id}{integer optional. The ID of the parent job that will trigger this script}
@@ -56,7 +54,7 @@ scripts_put_containers(
 \item required boolean, Whether this param is required.
 \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-\item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+\item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 }}
 
 \item{arguments}{list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
@@ -81,8 +79,8 @@ scripts_put_containers(
 \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on.
-\item failureOn boolean, If failure email notifications are on.
+\item successOn boolean, If success email notifications are on. Defaults to user's preferences.
+\item failureOn boolean, If failure email notifications are on. Defaults to user's preferences.
 }}
 
 \item{repo_http_uri}{string optional. The location of a github repo to clone into the container, e.g. github.com/my-user/my-repo.git.}
@@ -94,6 +92,8 @@ scripts_put_containers(
 \item{git_credential_id}{integer optional. The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. Unnecessary if no git repo is specified or the git repo is public.}
 
 \item{docker_command}{string optional. The command to run on the container. Will be run via sh as: ["sh", "-c", dockerCommand]. Defaults to the Docker image's ENTRYPOINT/CMD.}
+
+\item{docker_image_name}{string optional. The name of the docker image to pull from DockerHub.}
 
 \item{docker_image_tag}{string optional. The tag of the docker image to pull from DockerHub.}
 
@@ -149,7 +149,7 @@ A list containing the following elements:
 \item required boolean, Whether this param is required.
 \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-\item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+\item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 }}
 \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -181,8 +181,8 @@ A list containing the following elements:
 \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on.
-\item failureOn boolean, If failure email notifications are on.
+\item successOn boolean, If success email notifications are on. Defaults to user's preferences.
+\item failureOn boolean, If failure email notifications are on. Defaults to user's preferences.
 }}
 \item{runningAs}{list, A list containing the following elements: 
 \itemize{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated_client.R
 \name{scripts_delete_sql}
 \alias{scripts_delete_sql}
-\title{Archive a SQL script (deprecated, use archiving endpoints instead)}
+\title{Archive a SQL Script (deprecated, use archiving endpoints instead)}
 \usage{
 scripts_delete_sql(id)
 }
@@ -13,5 +13,5 @@ scripts_delete_sql(id)
 An empty HTTP response
 }
 \description{
-Archive a SQL script (deprecated, use archiving endpoints instead)
+Archive a SQL Script (deprecated, use archiving endpoints instead)
 }

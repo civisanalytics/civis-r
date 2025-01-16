@@ -7,7 +7,7 @@
 scripts_list_sql_runs_logs(id, run_id, last_id = NULL, limit = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of the sql.}
+\item{id}{integer required. The ID of the SQL job.}
 
 \item{run_id}{integer required. The ID of the run.}
 

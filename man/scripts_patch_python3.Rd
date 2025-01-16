@@ -18,11 +18,11 @@ scripts_patch_python3(
   target_project_id = NULL,
   required_resources = NULL,
   instance_type = NULL,
-  source = NULL,
   cancel_timeout = NULL,
   docker_image_tag = NULL,
   partition_label = NULL,
-  running_as_id = NULL
+  running_as_id = NULL,
+  source = NULL
 )
 }
 \arguments{
@@ -43,7 +43,7 @@ scripts_patch_python3(
 \item required boolean, Whether this param is required.
 \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-\item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+\item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 }}
 
 \item{arguments}{list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
@@ -68,8 +68,8 @@ scripts_patch_python3(
 \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on.
-\item failureOn boolean, If failure email notifications are on.
+\item successOn boolean, If success email notifications are on. Defaults to user's preferences.
+\item failureOn boolean, If failure email notifications are on. Defaults to user's preferences.
 }}
 
 \item{next_run_at}{string optional. The time of the next scheduled run.}
@@ -87,8 +87,6 @@ scripts_patch_python3(
 
 \item{instance_type}{string optional. The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
 
-\item{source}{string optional. The body/text of the script.}
-
 \item{cancel_timeout}{integer optional. The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 
 \item{docker_image_tag}{string optional. The tag of the docker image to pull from DockerHub.}
@@ -96,12 +94,14 @@ scripts_patch_python3(
 \item{partition_label}{string optional. The partition label used to run this object.}
 
 \item{running_as_id}{integer optional. The ID of the runner of this script.}
+
+\item{source}{string optional. The body/text of the script.}
 }
 \value{
 A list containing the following elements:
 \item{id}{integer, The ID for the script.}
 \item{name}{string, The name of the script.}
-\item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript)}
+\item{type}{string, The type of the script (e.g SQL, Container, Python, R, JavaScript, dbt)}
 \item{createdAt}{string, The time this script was created.}
 \item{updatedAt}{string, The time the script was last updated.}
 \item{author}{list, A list containing the following elements: 
@@ -131,7 +131,7 @@ A list containing the following elements:
 \item required boolean, Whether this param is required.
 \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-\item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+\item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 }}
 \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -163,8 +163,8 @@ A list containing the following elements:
 \item successEmailReplyTo string, Address for replies to success emails; defaults to the author of the job.
 \item failureEmailAddresses array, Addresses to notify by e-mail when the job fails.
 \item stallWarningMinutes integer, Stall warning emails will be sent after this amount of minutes.
-\item successOn boolean, If success email notifications are on.
-\item failureOn boolean, If failure email notifications are on.
+\item successOn boolean, If success email notifications are on. Defaults to user's preferences.
+\item failureOn boolean, If failure email notifications are on. Defaults to user's preferences.
 }}
 \item{runningAs}{list, A list containing the following elements: 
 \itemize{
@@ -196,11 +196,11 @@ A list containing the following elements:
 \item diskSpace number, The amount of disk space, in GB, to allocate for the container. This space will be used to hold the git repo configured for the container and anything your container writes to /tmp or /data. Fractional values (e.g. 0.25) are supported.
 }}
 \item{instanceType}{string, The EC2 instance type to deploy to. Only available for jobs running on kubernetes.}
-\item{source}{string, The body/text of the script.}
 \item{cancelTimeout}{integer, The amount of time (in seconds) to wait before forcibly terminating the script. When the script is cancelled, it is first sent a TERM signal. If the script is still running after the timeout, it is sent a KILL signal. Defaults to 0.}
 \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub.}
 \item{partitionLabel}{string, The partition label used to run this object. }
 \item{runningAsId}{integer, The ID of the runner of this script.}
+\item{source}{string, The body/text of the script.}
 }
 \description{
 Update some attributes of this Python Script

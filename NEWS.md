@@ -2,12 +2,16 @@
 
 ## Unreleased
 
+### Changed
+
+- Regenerated the default Client (`R/generated_client.R`)
+
 ## [3.1.2] - 2022-03-30
 
 ### Changed
-- Added a generic `resolved()` function (previously imported from the `future` package) and 
-changed its input argument from `x` to `future`, to stay consistent with the `resolved.CivisFuture()` 
-function 
+- Added a generic `resolved()` function (previously imported from the `future` package) and
+changed its input argument from `x` to `future`, to stay consistent with the `resolved.CivisFuture()`
+function
 
 ## [3.1.1] - 2022-02-28
 
@@ -19,13 +23,13 @@ to a "finished" state for `future` objects.
 ## [3.1.0] - 2022-02-22
 
 ### Changed
-- Deprecated the `local` argument to the `CivisFuture()` function. The `local` argument 
+- Deprecated the `local` argument to the `CivisFuture()` function. The `local` argument
 is defunct  for `future` versions > 1.31.0.
 - Regenerated the default Client (`R/generated_client.R`)
 
 ### Fixed
-- `fetch_until` will now fetch results from the API until the result is empty (i.e. returns 
-NULL) instead of FALSE. This change prevents a coercion error of trying to boolean compare 
+- `fetch_until` will now fetch results from the API until the result is empty (i.e. returns
+NULL) instead of FALSE. This change prevents a coercion error of trying to boolean compare
 a NULL value in R. (#243)
 
 ## [3.0.0] - 2020-06-22
@@ -33,7 +37,7 @@ a NULL value in R. (#243)
 ### Changed
 - Failed HTTP requests are now retried before raising errors (#235)
 - Default docker image for Civis Futures is now `latest` rather than `3` (#238).
-This could require users to update code as it will automatically be updated to the latest version of 
+This could require users to update code as it will automatically be updated to the latest version of
 R deployed on Civis Platform moving forward (including R 4.0.0) (#238)
 
 ### Fixed
@@ -382,6 +386,3 @@ arguments in `predict.civis_ml`.
 - IO vignette.
 - Concurrent polling using futures and foreach vignette.
 - Package website.
-
-
-

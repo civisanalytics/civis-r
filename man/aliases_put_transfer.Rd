@@ -31,7 +31,8 @@ A list containing the following elements:
 \item fcoType string, Human readable dependent object type
 \item id integer, Dependent object ID
 \item name string, Dependent object name, or nil if the requesting user cannot read this object
-\item permissionLevel string, Permission level of target user (not user's groups) for dependent object, or null if no target user
+\item permissionLevel string, Permission level of target user (not user's groups) for dependent object. Null if no target user or not shareable (e.g. a database table).
+\item description string, Additional information about the dependency, if relevant
 \item shared boolean, Whether dependent object was successfully shared with target user
 }}
 }

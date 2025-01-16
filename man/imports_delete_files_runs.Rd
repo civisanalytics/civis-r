@@ -7,7 +7,7 @@
 imports_delete_files_runs(id, run_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the import.}
+\item{id}{integer required. The ID of the Import job.}
 
 \item{run_id}{integer required. The ID of the run.}
 }

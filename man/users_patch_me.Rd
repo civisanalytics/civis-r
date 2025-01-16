@@ -83,6 +83,8 @@ users_patch_me(preferences = NULL, last_checked_announcements = NULL)
 \item assumeRoleHistory string, JSON string of previously assumed roles.
 \item defaultSuccessNotificationsOn boolean, Whether email notifications for the success of all applicable jobs are on by default.
 \item defaultFailureNotificationsOn boolean, Whether email notifications for the failure of all applicable jobs are on by default.
+\item myActivityMetrics boolean, Whether the activity metrics are filtered to the current user.
+\item aiSQLAssistDisabled boolean, Whether the query page includes AI-powered SQL assistance.
 }}
 
 \item{last_checked_announcements}{string optional. The date and time at which the user last checked their announcements.}
@@ -118,6 +120,7 @@ A list containing the following elements:
 \item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
 \item{superadminModeExpiration}{string, The user is in superadmin mode when set to a DateTime. The user is not in superadmin mode when set to null.}
 \item{disableNonCompliantFedrampFeatures}{boolean, Whether to disable non-compliant fedramp features.}
+\item{personaRole}{string, The high-level role representing the current user's main permissions.}
 \item{createdById}{integer, The ID of the user who created this user.}
 \item{lastUpdatedById}{integer, The ID of the user who last updated this user.}
 }

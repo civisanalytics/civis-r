@@ -7,7 +7,7 @@
 media_delete_optimizations_runs(id, run_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the optimization.}
+\item{id}{integer required. The ID of the Optimization job.}
 
 \item{run_id}{integer required. The ID of the run.}
 }

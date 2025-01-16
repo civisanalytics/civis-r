@@ -351,7 +351,10 @@ is_obj <- function(x) {
 
 get_descr_str <- function(x) {
   desc <- if (!is.null(x$description)) x$description else ""
-  gsub("\n[[:space:]]*", " ", desc)
+  desc <- gsub("\n[[:space:]]*", " ", desc)
+  # Escape braces to avoid issues with devtools::check()
+  # cf. https://stackoverflow.com/questions/37360571/how-do-you-escape-using-roxygen2
+  gsub("([{}])", "\\\\\\1", desc)
 }
 
 get_req_str <- function(x) {
@@ -376,4 +379,3 @@ returns_array <- function(verb, verb_name, path_name) {
   if (!is.null(rtype) && (rtype == "array")) return(TRUE)
   return(FALSE)
 }
-

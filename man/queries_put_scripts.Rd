@@ -19,14 +19,14 @@ A list containing the following elements:
 \item{credential}{integer, The credential ID.}
 \item{resultRows}{array, A preview of rows returned by the query.}
 \item{resultColumns}{array, A preview of columns returned by the query.}
-\item{scriptId}{integer, The ID of the script associated with this query.}
-\item{exception}{string, Deprecated and not used.}
 \item{error}{string, The error message for this run, if present.}
-\item{createdAt}{string, }
-\item{updatedAt}{string, }
 \item{startedAt}{string, The start time of the last run.}
 \item{finishedAt}{string, The end time of the last run.}
 \item{state}{string, The state of the last run. One of queued, running, succeeded, failed, and cancelled.}
+\item{scriptId}{integer, The ID of the script associated with this query.}
+\item{exception}{string, Deprecated and not used.}
+\item{createdAt}{string, }
+\item{updatedAt}{string, }
 \item{lastRunId}{integer, The ID of the last run.}
 \item{hidden}{boolean, The hidden status of the item.}
 \item{archived}{string, The archival status of the requested item(s).}

@@ -12,7 +12,7 @@ enhancements_list_civis_data_match_runs_logs(
 )
 }
 \arguments{
-\item{id}{integer required. The ID of the civis_data_match.}
+\item{id}{integer required. The ID of the Civis Data Match job.}
 
 \item{run_id}{integer required. The ID of the run.}
 

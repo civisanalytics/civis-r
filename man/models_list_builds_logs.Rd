@@ -7,7 +7,7 @@
 models_list_builds_logs(id, build_id, last_id = NULL, limit = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of the model.}
+\item{id}{integer required. The ID of the Model job.}
 
 \item{build_id}{integer required. The ID of the build.}
 

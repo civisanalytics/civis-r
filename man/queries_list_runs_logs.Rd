@@ -7,7 +7,7 @@
 queries_list_runs_logs(id, run_id, last_id = NULL, limit = NULL)
 }
 \arguments{
-\item{id}{integer required. The ID of the query.}
+\item{id}{integer required. The ID of the Query job.}
 
 \item{run_id}{integer required. The ID of the run.}
 

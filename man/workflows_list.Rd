@@ -23,7 +23,7 @@ workflows_list(
 
 \item{author}{string optional. If specified, return items from any of these authors. It accepts a comma-separated list of user IDs.}
 
-\item{state}{array optional. State of the most recent execution.One or more of queued, running, succeeded, failed, cancelled, idle, and scheduled.}
+\item{state}{array optional. State of the most recent execution. One or more of queued, running, succeeded, failed, cancelled, idle, and scheduled. Note that the "scheduled" state applies only to scheduled workflows which have never been run. If you want to see all scheduled workflows, please use the "scheduled" filter instead.}
 
 \item{scheduled}{boolean optional. If the workflow is scheduled.}
 

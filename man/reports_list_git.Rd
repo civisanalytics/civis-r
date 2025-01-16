@@ -7,7 +7,7 @@
 reports_list_git(id)
 }
 \arguments{
-\item{id}{integer required. The ID of the file.}
+\item{id}{integer required. The ID of the item.}
 }
 \value{
 A list containing the following elements:

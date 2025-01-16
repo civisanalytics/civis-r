@@ -4,7 +4,12 @@
 \alias{databases_get_table_privilegesschema_name}
 \title{Show table privileges}
 \usage{
-databases_get_table_privilegesschema_name(id, schema_name, table_name)
+databases_get_table_privilegesschema_name(
+  id,
+  schema_name,
+  table_name,
+  credential_id = NULL
+)
 }
 \arguments{
 \item{id}{integer required. The ID of the database}
@@ -12,6 +17,8 @@ databases_get_table_privilegesschema_name(id, schema_name, table_name)
 \item{schema_name}{string required. The name of the schema}
 
 \item{table_name}{string required. The name of the table}
+
+\item{credential_id}{integer optional. If provided, schemas will be filtered based on the given credential.}
 }
 \value{
 A list containing the following elements:

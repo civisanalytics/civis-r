@@ -7,7 +7,7 @@
 scripts_delete_r_runs(id, run_id)
 }
 \arguments{
-\item{id}{integer required. The ID of the r.}
+\item{id}{integer required. The ID of the R job.}
 
 \item{run_id}{integer required. The ID of the run.}
 }
