@@ -34,13 +34,10 @@ fake_model <- structure(
 
 test_that("fetch_logs.civis_ml calls scripts_list_custom_runs_logs", {
   fake_scripts_list_custom_runs_logs <- mock(log_response)
-
-  with_mock(
-    `civis::scripts_list_custom_runs_logs` = fake_scripts_list_custom_runs_logs,
-
-    fetch_logs(fake_model)
+  local_mocked_bindings(
+    scripts_list_custom_runs_logs = fake_scripts_list_custom_runs_logs
   )
-
+  fetch_logs(fake_model)
   expect_args(fake_scripts_list_custom_runs_logs, 1,
               id = fake_model$job$id,
               run_id = fake_model$run$id,
@@ -68,10 +65,10 @@ test_that("fetch_logs.civis_api calls the right logging function with right args
   fake_scripts_list_sql_runs_logs <- mock(log_response)
   log_args <- attr(fake_api, "args")
 
-  with_mock(
-    `civis::scripts_list_sql_runs_logs` = fake_scripts_list_sql_runs_logs,
-    expect_equal(fetch_logs(fake_api), format_scripts_logs(log_response))
+  local_mocked_bindings(
+    scripts_list_sql_runs_logs = fake_scripts_list_sql_runs_logs
   )
+  expect_equal(fetch_logs(fake_api), format_scripts_logs(log_response))
   expect_args(fake_scripts_list_sql_runs_logs, 1,
               id = log_args$id, run_id = log_args$run_id, limit = 100)
 })
@@ -88,23 +85,18 @@ test_that("fetch_logs.civis_error calls the right logging function with right ar
   fake_scripts_list_sql_runs_logs <- mock(log_response)
   log_args <- attr(fake_api_err, "args")
 
-  with_mock(
-    `civis::scripts_list_sql_runs_logs` = fake_scripts_list_sql_runs_logs,
-    expect_equal(fetch_logs(fake_api_err), format_scripts_logs(log_response))
+  local_mocked_bindings(
+    scripts_list_sql_runs_logs = fake_scripts_list_sql_runs_logs
   )
+  expect_equal(fetch_logs(fake_api_err), format_scripts_logs(log_response))
   expect_args(fake_scripts_list_sql_runs_logs, 1,
               id = log_args$id, run_id = log_args$run_id, limit = 100)
 })
 
 test_that("formats the log messages", {
   # note: do *NOT* test time formatting in messages.
-  fake_scripts_list_custom_runs_logs <- mock(log_response)
-
-  msgs <- with_mock(
-    `civis::scripts_list_custom_runs_logs` = fake_scripts_list_custom_runs_logs,
-
-    fetch_logs(fake_model)
-  )
+  local_mocked_bindings(scripts_list_custom_runs_logs = mock(log_response))
+  msgs <- fetch_logs(fake_model)
   msg_lines <- strsplit(msgs, "\n")
   expected_messages <- c("Process used approximately 83.28 MiB of its 3188 limit", "Script complete.")
   for (i in 1:2) expect_true(grepl(expected_messages[i], msg_lines[i]))

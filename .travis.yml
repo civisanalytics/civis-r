@@ -1,10 +1,11 @@
 os: linux
 dist: jammy
 language: generic
-# Test this recent and not so recent versions of R.
+# Test this with multiple versions of R.
+# rocker/verse:4.3 is the oldest version for which testthat >= 3.2.0, with local_mocked_bindings, is easily available.
 env:
 - ROCKER_VERSION=4.4
-- ROCKER_VERSION=4.0
+- ROCKER_VERSION=4.3
 services:
   - docker
 before_install:

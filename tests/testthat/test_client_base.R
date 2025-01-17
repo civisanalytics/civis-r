@@ -33,19 +33,21 @@ body_params <- NULL
 ###############################################################################
 
 test_that("call api extracts json content correctly", {
-  response <- with_mock(
-    `civis::api_key` = function(...) "fake_key",
-    `httr::RETRY` = function(...) httr_200,
-    call_api("GET", path, path_params, query_params, body_params))
+  local_mocked_bindings(
+    api_key = function(...) "fake_key",
+    httr_RETRY = function(...) httr_200,
+  )
+  response <- call_api("GET", path, path_params, query_params, body_params)
   expect_equal(response[[1]]$name, "Leanne Graham")
   expect_is(response, "civis_api")
 })
 
 test_that("print and str methods for civis_api", {
-  response <- with_mock(
-    `civis::api_key` = function(...) "fake_key",
-    `httr::RETRY` = function(...) httr_200,
-    call_api("GET", path, path_params, query_params, body_params))
+  local_mocked_bindings(
+    api_key = function(...) "fake_key",
+    httr_RETRY = function(...) httr_200,
+  )
+  response <- call_api("GET", path, path_params, query_params, body_params)
 
   # print hides attributes
   expect_false(grepl("attribute", capture_output(print(response))))
@@ -58,85 +60,95 @@ test_that("print and str methods for civis_api", {
 })
 
 test_that("call api catches http error", {
-  with_mock(
-    `civis::api_key` = function(...) "fake_key",
-    `httr::RETRY` = function(...) httr_504,
-    expect_error(
-      call_api("GET", path, path_params, query_params, body_params),
-      "Gateway Timeout \\(HTTP 504\\). Failed to GET httpbin.org/status/504."
-    )
+  local_mocked_bindings(
+    api_key = function(...) "fake_key",
+    httr_RETRY = function(...) httr_504,
+  )
+  expect_error(
+    call_api("GET", path, path_params, query_params, body_params),
+    "Gateway Timeout \\(HTTP 504\\). Failed to GET httpbin.org/status/504."
   )
 })
 
 test_that("stop_for_status concatenates Platform specific errors", {
   error <- "Gateway Timeout \\(HTTP 504\\). hi from platform!"
-  with_mock(
+  local_mocked_bindings(
     # Mocks the response so it includes an error like those in Platform
-    `httr::content` = function(...) list(errorDescription = "hi from platform!"),
-    expect_error(stop_for_status(httr_504), error)
+    httr_content = function(...) list(errorDescription = "hi from platform!"),
   )
+  expect_error(stop_for_status(httr_504), error)
 })
 
 test_that("204, 205 responses return NULL", {
-  response <- with_mock(
-      `civis::api_key` = function(...) "fake_key",
-      `httr::RETRY` = function(...) httr_204,
-      call_api("POST", path, path_params, query_params, body_params))
+  local_mocked_bindings(
+    api_key = function(...) "fake_key",
+    httr_RETRY = function(...) httr_204,
+  )
+  response <- call_api("POST", path, path_params, query_params, body_params)
   expect_null(response$content)
   expect_is(response, "civis_api")
 
-  response <- with_mock(
-      `civis::api_key` = function(...) "fake_key",
-      `httr::RETRY` = function(...) httr_205,
-      call_api("GET", path, path_params, query_params, body_params))
+  local_mocked_bindings(
+    httr_RETRY = function(...) httr_205,
+  )
+  response <- call_api("GET", path, path_params, query_params, body_params)
   expect_null(response$content)
   expect_is(response, "civis_api")
-
 })
 
 test_that("no retry on GET/PUT/POST and code 403", {
+  local_mocked_bindings(
+    api_key = function(...) "fake_key"
+  )
   for (verb in c("GET", "PUT", "POST")) {
       mock_rp <- mock(httr_403, cycle = TRUE)
-      with_mock(
-        `civis::api_key` = function(...) "fake_key",
-        `httr:::request_perform` = mock_rp,
-        expect_error(call_api(verb, path, path_params, query_params, body_params),
-                     paste0(httr_403$status_code)),
-        expect_called(mock_rp, 1))
+      # We don't call httr::request_perform directly, so setting .package here seems warranted here.
+      # cf. https://testthat.r-lib.org/reference/local_mocked_bindings.html#namespaced-calls
+      local_mocked_bindings(
+        request_perform = mock_rp, .package = "httr"
+      )
+      expect_error(call_api(verb, path, path_params, query_params, body_params),
+                   paste0(httr_403$status_code))
+      expect_called(mock_rp, 1)
     }
 })
 
 test_that("retry on GET/POST on 429", {
   mock_rp <- mock(httr_429, cycle = TRUE)
-  with_mock(
-    `civis::api_key` = function(...) "fake_key",
-    `httr:::request_perform` = mock_rp,
-    `httr:::backoff_full_jitter` = function(...) Sys.sleep(0),
-    expect_error(call_api("GET", path, path_params, query_params, body_params),
-                 paste0(httr_429$status_code)),
-    expect_called(mock_rp, 10),
-    expect_error(call_api("POST", path, path_params, query_params, body_params),
-               paste0(httr_429$status_code)),
-    expect_called(mock_rp, 20))
+  local_mocked_bindings(
+    api_key = function(...) "fake_key"
+  )
+  local_mocked_bindings(
+    request_perform = mock_rp,
+    backoff_full_jitter = function(...) Sys.sleep(0),
+    .package = "httr"
+  )
+  expect_error(call_api("GET", path, path_params, query_params, body_params),
+               paste0(httr_429$status_code))
+  expect_called(mock_rp, 10)
+  expect_error(call_api("POST", path, path_params, query_params, body_params),
+               paste0(httr_429$status_code))
+  expect_called(mock_rp, 20)
 })
 
 test_that("failing to parse JSON content returns CivisClientError", {
   error <- 'Unable to parse JSON from response'
-  with_mock(
-    `civis::api_key` = function(...) "fake_key",
-    `httr::RETRY` = function(...) httr_200,
-
+  local_mocked_bindings(
+    api_key = function(...) "fake_key"
+  )
+  local_mocked_bindings(
+    httr_RETRY = function(...) httr_200,
     # This simulates httr::content failing with an arbitrary error/message
-    `httr::content` = function(...) stop("httr failed to parse response, throwing an error!"),
+    httr_content = function(...) stop("httr failed to parse response, throwing an error!"),
+  )
 
-    # Tests for the right error message (same as python client)
-    expect_error(call_api("GET", path, path_params, query_params, body_params), error),
+  # Tests for the right error message (same as python client)
+  expect_error(call_api("GET", path, path_params, query_params, body_params), error)
 
-    # Tests that the error is a CivisClientError (same as python client) that is try-catchable
-    expect_true(
-      tryCatch(call_api("GET", path, path_params, query_params, body_params),
-             civis_api_error = function(c) TRUE,
-             error = function(e) FALSE)
-    ))
+  # Tests that the error is a CivisClientError (same as python client) that is try-catchable
+  expect_true(
+    tryCatch(call_api("GET", path, path_params, query_params, body_params),
+            civis_api_error = function(c) TRUE,
+            error = function(e) FALSE)
+  )
 })
-

@@ -40,7 +40,7 @@ call_api <- function(verb, path, path_params, query_params, body_params) {
       # Retry get and put for these error codes, in addition to 429.
       retry_on <- c(413, 429, 502, 503, 504)
       terminate_on <- setdiff(200:527, retry_on)
-      request <- httr::RETRY
+      request <- httr_RETRY
       request_args <- c(request_args, list(terminate_on = terminate_on,
                                            pause_cap = 600,
                                            times = 10))
@@ -50,7 +50,7 @@ call_api <- function(verb, path, path_params, query_params, body_params) {
       request_args <- c(request_args, list(terminate_on = terminate_on,
                                            pause_cap = 600,
                                            times = 10))
-      request <- httr::RETRY
+      request <- httr_RETRY
     }
     response <- do.call(request, request_args)
 
@@ -60,7 +60,7 @@ call_api <- function(verb, path, path_params, query_params, body_params) {
     if (response$status_code %in% c(204, 205)) {
       content <- list()
     } else {
-      content <- try(httr::content(response), silent = TRUE)
+      content <- try(httr_content(response), silent = TRUE)
     }
 
     if (is.error(content)) {
@@ -130,7 +130,7 @@ stop_for_status <- function(x, task = NULL) {
 
   call <- sys.call(-1)
   # e.g. 429, 503 do not have errorDescription fields
-  error_msg <- tryCatch(httr::content(x)$errorDescription,
+  error_msg <- tryCatch(httr_content(x)$errorDescription,
                         error = function(e) "")
   condition <- httr::http_condition(x, "error", task = task, call = call)
   condition$message <- paste0(c(condition$message, error_msg), collapse = " ")

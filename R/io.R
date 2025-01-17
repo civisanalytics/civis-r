@@ -1,3 +1,10 @@
+# Wrap some functions for testing purposes.
+# See https://testthat.r-lib.org/reference/local_mocked_bindings.html#namespaced-calls
+httr_RETRY <- function(...) httr::RETRY(...)
+httr_content <- function(...) httr::content(...)
+httr_upload_file <- function(...) httr::upload_file(...)
+future_value <- function(...) future::value(...)
+
 #' Read tables and files from Civis Platform
 #'
 #' @description \code{read_civis} loads a table from Redshift as a data frame if
@@ -258,9 +265,9 @@ write_civis.character <- function(x, tablename, database = NULL, if_exists = "fa
           credential_id = credential_id),
       import_args)
     job_r <- do.call(start_import_job, args)
-    put_r <- httr::RETRY("PUT", job_r[["uploadUri"]], body = httr::upload_file(x), terminate_on = setdiff(400:499, 429))
+    put_r <- httr_RETRY("PUT", job_r[["uploadUri"]], body = httr_upload_file(x), terminate_on = setdiff(400:499, 429))
     if (put_r$status_code != 200) {
-      msg <- httr::content(put_r)
+      msg <- httr_content(put_r)
       stop(msg)
     }
 
@@ -422,8 +429,8 @@ write_civis_file.character <- function(x, name = x, expires_at = NULL, ...) {
   } else {
     u <- files_post(name = name, expires_at = expires_at)
     uploadFields <- u$uploadFields
-    uploadFields$file <- httr::upload_file(x)
-    resp <- httr::RETRY("POST", url = u$uploadUrl, body = uploadFields)
+    uploadFields$file <- httr_upload_file(x)
+    resp <- httr_RETRY("POST", url = u$uploadUrl, body = uploadFields)
     httr::stop_for_status(resp, task = "upload file to S3")
     id <- u$id
   }
@@ -566,7 +573,7 @@ download_civis.numeric <- function(x, file,
             verb = "GET",
             terminate_on = setdiff(400:499, 429))
   if (progress) args <- c(args, list(httr::progress()))
-  resp <- do.call(httr::RETRY, args)
+  resp <- do.call(httr_RETRY, args)
 
   httr::stop_for_status(resp, task = "download file from S3")
   invisible(file)
@@ -656,7 +663,7 @@ civis_to_multifile_csv <- function(sql, database, job_name = NULL, hidden = TRUE
   r <- switch(get_status(stat),
          "succeeded" = download_script_results(script_id, run_id),
          "failed" = stop(scripts_get_sql_runs(script_id, run_id)[["error"]]))
-  httr::content(r, as = 'parsed', type = 'application/json')
+  httr_content(r, as = 'parsed', type = 'application/json')
 }
 
 #' Run a Query on Platform
@@ -815,7 +822,7 @@ multipart_upload <- function(file, name = "", chunk_size = 32 * 1024, expires_at
   u <- files_post_multipart(name, length(fls), expires_at = expires_at)
   urls <- u$uploadUrls
   uploads <- lapply(seq_along(urls), upload_one, urls = urls, fls = fls)
-  lapply(uploads, future::value)
+  lapply(uploads, future_value)
   files_post_multipart_complete(u$id)
   lapply(fls, unlink)
   u$id
@@ -823,8 +830,8 @@ multipart_upload <- function(file, name = "", chunk_size = 32 * 1024, expires_at
 
 upload_one <- function(i, urls, fls) {
   future::future({
-    data <- httr::upload_file(fls[[i]], type = "raw")
-    resp <- httr::RETRY("PUT", url = urls[[i]], body = data)
+    data <- httr_upload_file(fls[[i]], type = "raw")
+    resp <- httr_RETRY("PUT", url = urls[[i]], body = data)
     cat("Uploading file part ", i, " of ", length(urls), fill = TRUE)
     httr::stop_for_status(resp, task = "upload file to S3")
     return(resp)
@@ -911,7 +918,7 @@ download_script_results <- function(script_id, run_id,
   if (progress) {
     args <- c(args, list(httr::progress()))
   }
-  r <- do.call(httr::RETRY, args)
+  r <- do.call(httr_RETRY, args)
   httr::stop_for_status(r)
   r
 }
@@ -950,5 +957,3 @@ with_tempfile <- function(fn, ...) {
     unlink(filename)
   })
 }
-
-
