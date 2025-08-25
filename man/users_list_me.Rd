@@ -32,7 +32,7 @@ A list containing the following elements:
 \item{organizationDefaultThemeId}{integer, The ID of the organizations's default theme.}
 \item{createdAt}{string, The date and time when the user was created.}
 \item{signInCount}{integer, The number of times the user has signed in.}
-\item{assumingRole}{boolean, Whether the user is assuming this role or not.}
+\item{assumingRole}{boolean, Whether the user is assuming a role or not.}
 \item{assumingAdmin}{boolean, Whether the user is assuming admin.}
 \item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
 \item{superadminModeExpiration}{string, The user is in superadmin mode when set to a DateTime. The user is not in superadmin mode when set to null.}

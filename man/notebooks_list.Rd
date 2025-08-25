@@ -65,7 +65,7 @@ An array containing the following fields:
 \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
 \item createdAt string, 
 \item updatedAt string, 
-\item notebookId integer, The ID of the owning Notebook
+\item notebookId integer, The ID of owning Notebook
 }}
 \item{archived}{string, The archival status of the requested item(s).}
 }

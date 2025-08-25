@@ -18,8 +18,8 @@ An array containing the following fields:
 \item{id}{integer, The ID of the usage statistic to get.}
 \item{runId}{integer, The ID of the run which contributed this usage.}
 \item{jobId}{integer, The ID of the job which contributed this usage.}
-\item{userId}{integer, The ID of the user who contributed this usage.}
-\item{organizationId}{integer, The organization of the user who contributed this usage.}
+\item{userId}{integer, The ID of the user who started the run.}
+\item{organizationId}{integer, The organization of the user who started the run.}
 \item{runCreatedAt}{string, When the run was created at.}
 \item{runTime}{integer, The duration of the run in seconds.}
 \item{credits}{number, The number of credits used.}
