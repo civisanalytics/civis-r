@@ -8,7 +8,6 @@
 ^docs$
 ^CODE_OF_CONDUCT\.md$
 ^_pkgdown\.yaml$
-^NEWS\.md$
 ^cran-comments\.md$
 ^doc$
 ^Meta$
