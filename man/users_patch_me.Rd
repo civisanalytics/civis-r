@@ -84,7 +84,9 @@ users_patch_me(preferences = NULL, last_checked_announcements = NULL)
 \item defaultSuccessNotificationsOn boolean, Whether email notifications for the success of all applicable jobs are on by default.
 \item defaultFailureNotificationsOn boolean, Whether email notifications for the failure of all applicable jobs are on by default.
 \item myActivityMetrics boolean, Whether the activity metrics are filtered to the current user.
-\item aiSQLAssistDisabled boolean, Whether the query page includes AI-powered SQL assistance.
+\item standardSQLAutocompleteDisabled boolean, Whether the query page includes standard SQL autocomplete.
+\item aiSQLAssistDisabled boolean, Whether the query page includes AI-powered SQL autocomplete.
+\item queryPreviewRows integer, Number of preview rows query should return in the UI.
 }}
 
 \item{last_checked_announcements}{string optional. The date and time at which the user last checked their announcements.}
@@ -115,7 +117,7 @@ A list containing the following elements:
 \item{organizationDefaultThemeId}{integer, The ID of the organizations's default theme.}
 \item{createdAt}{string, The date and time when the user was created.}
 \item{signInCount}{integer, The number of times the user has signed in.}
-\item{assumingRole}{boolean, Whether the user is assuming a role or not.}
+\item{assumingRole}{boolean, Whether the user is assuming this role or not.}
 \item{assumingAdmin}{boolean, Whether the user is assuming admin.}
 \item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
 \item{superadminModeExpiration}{string, The user is in superadmin mode when set to a DateTime. The user is not in superadmin mode when set to null.}

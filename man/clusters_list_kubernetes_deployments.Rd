@@ -8,6 +8,8 @@ clusters_list_kubernetes_deployments(
   id,
   base_type = NULL,
   state = NULL,
+  start_date = NULL,
+  end_date = NULL,
   limit = NULL,
   page_num = NULL,
   order = NULL,
@@ -20,6 +22,10 @@ clusters_list_kubernetes_deployments(
 \item{base_type}{string optional. If specified, return deployments of these base types. It accepts a comma-separated list, possible values are 'Notebook', 'Service', 'Run'.}
 
 \item{state}{string optional. If specified, return deployments in these states. It accepts a comma-separated list, possible values are pending, running, terminated, sleeping}
+
+\item{start_date}{string optional. If specified, return deployments created after this date. Must be 31 days or less before end date. Defaults to 7 days prior to end date. The date must be provided in the format YYYY-MM-DD.}
+
+\item{end_date}{string optional. If specified, return deployments created before this date. Defaults to 7 days after start date, or today if start date is not specified. The date must be provided in the format YYYY-MM-DD.}
 
 \item{limit}{integer optional. Number of results to return. Defaults to its maximum of 50.}
 
