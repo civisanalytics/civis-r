@@ -63,7 +63,7 @@ users_post(
 
 \item{robot}{boolean optional. Whether the user is a robot.}
 
-\item{send_email}{boolean optional. Whether the user will receive a welcome email.}
+\item{send_email}{boolean optional. Whether the user will receive a welcome email. Defaults to false.}
 }
 \value{
 A list containing the following elements:

@@ -1,11 +1,12 @@
 # Changelog
 
-## Unreleased
+## [3.1.3] - 2025-08-25
 
 ### Changed
 
 - Regenerated the default Client (`R/generated_client.R`)
 - Update tests to stop using the deprecated `with_mock()` function. See issue #253.
+- Update maintainer list
 
 ## [3.1.2] - 2022-03-30
 

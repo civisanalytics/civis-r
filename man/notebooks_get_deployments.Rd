@@ -29,7 +29,7 @@ A list containing the following elements:
 \item{maxCpuUsage}{number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
-\item{notebookId}{integer, The ID of owning Notebook}
+\item{notebookId}{integer, The ID of the owning Notebook}
 }
 \description{
 Get details about a Notebook deployment
