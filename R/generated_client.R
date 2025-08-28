@@ -2552,7 +2552,7 @@ endpoints_list <- function() {
 
 #' Create a Civis Data Match Enhancement
 #' @param name string required. The name of the enhancement job.
-#' @param input_field_mapping list required. The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).
+#' @param input_field_mapping list required. The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., \{"phone": ["home_phone", "mobile_phone"], ...\}).
 #' @param input_table list required. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -2639,7 +2639,7 @@ endpoints_list <- function() {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
+#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., \{"phone": ["home_phone", "mobile_phone"], ...\}).}
 #' \item{inputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -2733,7 +2733,7 @@ enhancements_post_civis_data_match <- function(name, input_field_mapping, input_
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
+#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., \{"phone": ["home_phone", "mobile_phone"], ...\}).}
 #' \item{inputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -2781,7 +2781,7 @@ enhancements_get_civis_data_match <- function(id) {
 #' Replace all attributes of this Civis Data Match Enhancement
 #' @param id integer required. The ID for the enhancement.
 #' @param name string required. The name of the enhancement job.
-#' @param input_field_mapping list required. The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).
+#' @param input_field_mapping list required. The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., \{"phone": ["home_phone", "mobile_phone"], ...\}).
 #' @param input_table list required. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -2868,7 +2868,7 @@ enhancements_get_civis_data_match <- function(id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
+#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., \{"phone": ["home_phone", "mobile_phone"], ...\}).}
 #' \item{inputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -2938,7 +2938,7 @@ enhancements_put_civis_data_match <- function(id, name, input_field_mapping, inp
 #' \item successOn boolean, If success email notifications are on. Defaults to user's preferences.
 #' \item failureOn boolean, If failure email notifications are on. Defaults to user's preferences.
 #' }
-#' @param input_field_mapping list optional. The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).
+#' @param input_field_mapping list optional. The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., \{"phone": ["home_phone", "mobile_phone"], ...\}).
 #' @param input_table list optional. A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -3003,7 +3003,7 @@ enhancements_put_civis_data_match <- function(id, name, input_field_mapping, inp
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
+#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., \{"phone": ["home_phone", "mobile_phone"], ...\}).}
 #' \item{inputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -3100,7 +3100,7 @@ enhancements_patch_civis_data_match <- function(id, name = NULL, schedule = NULL
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
+#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., \{"phone": ["home_phone", "mobile_phone"], ...\}).}
 #' \item{inputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -3636,7 +3636,7 @@ enhancements_put_civis_data_match_transfer <- function(id, user_id, include_depe
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
+#' \item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., \{"phone": ["home_phone", "mobile_phone"], ...\}).}
 #' \item{inputTable}{list, A list containing the following elements: 
 #' \itemize{
 #' \item databaseName string, The Redshift database name for the table.
@@ -15050,7 +15050,7 @@ models_list_types <- function() {
 #' \item{dependentVariableOrder}{array, The order of dependent variables, especially useful for Ordinal Modeling.}
 #' \item{excludedColumns}{array, A list of columns which will be considered ineligible to be independent variables.}
 #' \item{limitingSQL}{string, A custom SQL WHERE clause used to filter the rows used to build the model. (e.g., "id > 105").}
-#' \item{crossValidationParameters}{list, Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.}
+#' \item{crossValidationParameters}{list, Cross validation parameter grid for tree methods, e.g. \{"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]\}.}
 #' \item{numberOfFolds}{integer, Number of folds for cross validation. Default value is 5.}
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
@@ -15142,7 +15142,7 @@ models_list <- function(model_name = NULL, training_table_name = NULL, dependent
 #' \item{excludedColumns}{array, A list of columns which will be considered ineligible to be independent variables.}
 #' \item{limitingSQL}{string, A custom SQL WHERE clause used to filter the rows used to build the model. (e.g., "id > 105").}
 #' \item{activeBuildId}{integer, The ID of the current active build, the build used to score predictions.}
-#' \item{crossValidationParameters}{list, Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.}
+#' \item{crossValidationParameters}{list, Cross validation parameter grid for tree methods, e.g. \{"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]\}.}
 #' \item{numberOfFolds}{integer, Number of folds for cross validation. Default value is 5.}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -15712,7 +15712,7 @@ models_delete_projects <- function(id, project_id) {
 #' \item{excludedColumns}{array, A list of columns which will be considered ineligible to be independent variables.}
 #' \item{limitingSQL}{string, A custom SQL WHERE clause used to filter the rows used to build the model. (e.g., "id > 105").}
 #' \item{activeBuildId}{integer, The ID of the current active build, the build used to score predictions.}
-#' \item{crossValidationParameters}{list, Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.}
+#' \item{crossValidationParameters}{list, Cross validation parameter grid for tree methods, e.g. \{"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]\}.}
 #' \item{numberOfFolds}{integer, Number of folds for cross validation. Default value is 5.}
 #' \item{notifications}{list, A list containing the following elements: 
 #' \itemize{
@@ -22936,7 +22936,7 @@ scripts_list_history <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param template_script_id integer optional. The ID of the template script, if any.  A script cannot both have a template script and be a template for other scripts.
@@ -22988,7 +22988,7 @@ scripts_list_history <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -23241,7 +23241,7 @@ scripts_delete <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -23339,7 +23339,7 @@ scripts_get <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -23418,7 +23418,7 @@ scripts_get <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -23552,7 +23552,7 @@ scripts_post_containers <- function(required_resources, name = NULL, parent_id =
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -23664,7 +23664,7 @@ scripts_get_containers <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -23742,7 +23742,7 @@ scripts_get_containers <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -23848,7 +23848,7 @@ scripts_put_containers <- function(id, required_resources, name = NULL, parent_i
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -23932,7 +23932,7 @@ scripts_put_containers <- function(id, required_resources, name = NULL, parent_i
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -24123,7 +24123,7 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -24197,7 +24197,7 @@ scripts_list_containers_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -24325,7 +24325,7 @@ scripts_post_sql <- function(name, sql, remote_host_id, credential_id, parent_id
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -24434,7 +24434,7 @@ scripts_get_sql <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -24507,7 +24507,7 @@ scripts_get_sql <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -24613,7 +24613,7 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -24689,7 +24689,7 @@ scripts_put_sql <- function(id, name, sql, remote_host_id, credential_id, parent
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -24817,7 +24817,7 @@ scripts_delete_sql <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -24891,7 +24891,7 @@ scripts_delete_sql <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -25015,7 +25015,7 @@ scripts_post_python3 <- function(name, source, parent_id = NULL, user_context = 
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -25118,7 +25118,7 @@ scripts_get_python3 <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -25191,7 +25191,7 @@ scripts_get_python3 <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -25293,7 +25293,7 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -25367,7 +25367,7 @@ scripts_put_python3 <- function(id, name, source, parent_id = NULL, user_context
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -25491,7 +25491,7 @@ scripts_delete_python3 <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -25565,7 +25565,7 @@ scripts_delete_python3 <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -25689,7 +25689,7 @@ scripts_post_r <- function(name, source, parent_id = NULL, user_context = NULL, 
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -25792,7 +25792,7 @@ scripts_get_r <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -25865,7 +25865,7 @@ scripts_get_r <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -25967,7 +25967,7 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -26041,7 +26041,7 @@ scripts_put_r <- function(id, name, source, parent_id = NULL, user_context = NUL
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -26165,7 +26165,7 @@ scripts_delete_r <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -26258,7 +26258,7 @@ scripts_delete_r <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -26401,7 +26401,7 @@ scripts_post_dbt <- function(name, repo_http_uri, parent_id = NULL, user_context
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -26523,7 +26523,7 @@ scripts_get_dbt <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -26615,7 +26615,7 @@ scripts_get_dbt <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -26736,7 +26736,7 @@ scripts_put_dbt <- function(id, name, repo_http_uri, parent_id = NULL, user_cont
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -26829,7 +26829,7 @@ scripts_put_dbt <- function(id, name, repo_http_uri, parent_id = NULL, user_cont
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -26974,7 +26974,7 @@ scripts_delete_dbt <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -27038,7 +27038,7 @@ scripts_delete_dbt <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -27154,7 +27154,7 @@ scripts_post_javascript <- function(name, source, remote_host_id, credential_id,
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -27251,7 +27251,7 @@ scripts_get_javascript <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -27314,7 +27314,7 @@ scripts_get_javascript <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -27408,7 +27408,7 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }
 #' @param arguments list optional. Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.
 #' @param schedule list optional. A list containing the following elements: 
@@ -27474,7 +27474,7 @@ scripts_put_javascript <- function(id, name, source, remote_host_id, credential_
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -27729,7 +27729,7 @@ scripts_list_custom <- function(from_template_id = NULL, author = NULL, status =
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -27864,7 +27864,7 @@ scripts_post_custom <- function(from_template_id, name = NULL, parent_id = NULL,
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -28036,7 +28036,7 @@ scripts_get_custom <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -28208,7 +28208,7 @@ scripts_put_custom <- function(id, name = NULL, parent_id = NULL, arguments = NU
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -31280,7 +31280,7 @@ scripts_delete_sql_projects <- function(id, project_id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -31744,7 +31744,7 @@ scripts_delete_containers_projects <- function(id, project_id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -32202,7 +32202,7 @@ scripts_delete_python3_projects <- function(id, project_id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -32656,7 +32656,7 @@ scripts_delete_r_projects <- function(id, project_id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -33110,7 +33110,7 @@ scripts_delete_dbt_projects <- function(id, project_id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -33583,7 +33583,7 @@ scripts_delete_javascript_projects <- function(id, project_id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -34035,7 +34035,7 @@ scripts_delete_custom_projects <- function(id, project_id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -34167,7 +34167,7 @@ scripts_put_custom_archive <- function(id, status) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -34298,7 +34298,7 @@ scripts_post_sql_clone <- function(id, clone_schedule = NULL, clone_triggers = N
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -34417,7 +34417,7 @@ scripts_post_javascript_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -34544,7 +34544,7 @@ scripts_post_python3_clone <- function(id, clone_schedule = NULL, clone_triggers
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -34677,7 +34677,7 @@ scripts_post_r_clone <- function(id, clone_schedule = NULL, clone_triggers = NUL
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -34808,7 +34808,7 @@ scripts_post_containers_clone <- function(id, clone_schedule = NULL, clone_trigg
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -34960,7 +34960,7 @@ scripts_post_dbt_clone <- function(id, clone_schedule = NULL, clone_triggers = N
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{arguments}{list, Parameter-value pairs to use when running this script. Only settable if this script has defined parameters.}
 #' \item{isTemplate}{boolean, Whether others scripts use this one as a template.}
@@ -38649,7 +38649,7 @@ templates_list_scripts <- function(hidden = NULL, author = NULL, category = NULL
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{name}{string, The name of the template.}
 #' \item{category}{string, The category of this template.}
@@ -38706,7 +38706,7 @@ templates_post_scripts <- function(script_id, name, note = NULL, ui_report_id = 
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{name}{string, The name of the template.}
 #' \item{category}{string, The category of this template.}
@@ -38767,7 +38767,7 @@ templates_get_scripts <- function(id) {
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{name}{string, The name of the template.}
 #' \item{category}{string, The category of this template.}
@@ -38828,7 +38828,7 @@ templates_put_scripts <- function(id, name, note = NULL, ui_report_id = NULL, ar
 #' \item required boolean, Whether this param is required.
 #' \item value string, The value you would like to set this param to. Setting this value makes this parameter a fixed param.
 #' \item default string, If an argument for this parameter is not defined, it will use this default value. Use true, True, t, y, yes, or 1 for true bool's or false, False, f, n, no, or 0 for false bool's. Cannot be used for parameters that are required or a credential type.
-#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `{label: 'Import', 'value': 'import'}`
+#' \item allowedValues array, The possible values this parameter can take, effectively making this an enumerable parameter. Allowed values is an array of hashes of the following format: `\{label: 'Import', 'value': 'import'\}`
 #' }}
 #' \item{name}{string, The name of the template.}
 #' \item{category}{string, The category of this template.}

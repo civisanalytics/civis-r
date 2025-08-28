@@ -56,7 +56,7 @@ A list containing the following elements:
 \item online boolean, Whether this user is online.
 }}
 \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
-\item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., {"phone": ["home_phone", "mobile_phone"], ...}).}
+\item{inputFieldMapping}{list, The field (i.e., column) mapping for the input table. See https://api.civisanalytics.com/enhancements/field-mapping for a list of valid field types and descriptions. Each field type should be mapped to a string specifying a column name in the input table. For field types that support multiple values (e.g., the "phone" field), a list of column names can be provided (e.g., \{"phone": ["home_phone", "mobile_phone"], ...\}).}
 \item{inputTable}{list, A list containing the following elements: 
 \itemize{
 \item databaseName string, The Redshift database name for the table.
