@@ -354,8 +354,7 @@ get_descr_str <- function(x) {
   desc <- gsub("\n[[:space:]]*", " ", desc)
   # Escape braces to avoid issues with devtools::check()
   # cf. https://stackoverflow.com/questions/37360571/how-do-you-escape-using-roxygen2
-  desc <- gsub("([{}])", "\\\\\\1", desc)
-  desc
+  gsub("([{}])", "\\\\\\1", desc)
 }
 
 get_req_str <- function(x) {
