@@ -83,7 +83,7 @@ as possible or not.}
 \item{object}{CivisFuture}
 }
 \value{
-A \code{CivisFuture} inheriting from \code{\link{Future}} that evaluates \code{expr} on the given container.
+A \code{CivisFuture} inheriting from \code{\link[future]{Future}} that evaluates \code{expr} on the given container.
 }
 \description{
 Evaluate an expression in Civis Platform
