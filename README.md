@@ -1,6 +1,6 @@
 Civis Platform API R Client
 ================
-[![Build Status](https://travis-ci.org/civisanalytics/civis-r.svg?branch=master)](https://travis-ci.org/civisanalytics/civis-r)
+[![Build Status](https://api.travis-ci.com/civisanalytics/civis-r.svg?branch=master)](https://app.travis-ci.com/github/civisanalytics/civis-r/)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/civis)](https://cran.r-project.org/package=civis)
 
 ## Introduction
@@ -18,7 +18,7 @@ The full documentation is hosted [here](https://civisanalytics.github.io/civis-r
 ## API Keys
 
 Installing and using `civis` requires an API key.  Instructions
-for creating an API key can be found [here](https://civis.zendesk.com/hc/en-us/articles/216341583-Generating-an-API-Key).
+for creating an API key can be found [here](https://support.civisanalytics.com/hc/en-us/articles/216341583-Generating-an-API-Key).
 All API keys have a set expiration date and so a new key will need to be
 created at least every 30 days.
 
