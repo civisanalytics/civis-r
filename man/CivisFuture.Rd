@@ -63,12 +63,12 @@ evaluated the future) only after the value of the future is collected.
 Exactly when the values are collected may depend on various factors such
 as number of free workers and whether \code{earlySignal} is TRUE (more
 frequently) or FALSE (less frequently).
-\emph{Some types of futures ignore this argument.}}
+\emph{Some future backends may ignore this argument.}}
 
 \item{earlySignal}{Specified whether conditions should be signaled as soon
 as possible or not.}
 
-\item{label}{An optional character string label attached to the future.}
+\item{label}{A character string label attached to the future.}
 
 \item{required_resources}{resources, see \code{\link{scripts_post_containers}}}
 
@@ -83,7 +83,7 @@ as possible or not.}
 \item{object}{CivisFuture}
 }
 \value{
-A \code{CivisFuture} inheriting from \code{\link{Future}} that evaluates \code{expr} on the given container.
+A \code{CivisFuture} inheriting from \code{\link[future]{Future}} that evaluates \code{expr} on the given container.
 }
 \description{
 Evaluate an expression in Civis Platform
