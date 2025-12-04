@@ -95,7 +95,7 @@ test_that("CivisFuture has the right stuff", {
 
  a <- 5
  fut <- CivisFuture(quote(a + 3))
- expect_equal(fut$envir$a, 5)
+ expect_equal(fut$globals$a, 5)
 
  library(jsonlite)
  fut <- CivisFuture(quote(toJSON(1:2)))
