@@ -59,7 +59,7 @@ eagerly (starting immediately), otherwise not.}
 
 \item{gc}{If TRUE, the garbage collector is run after the future is resolved.}
 
-\item{label}{An optional character string label attached to the future.}
+\item{label}{A character string label attached to the future.}
 
 \item{required_resources}{resources, see \code{\link{scripts_post_containers}}}
 
