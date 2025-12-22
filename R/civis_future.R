@@ -66,7 +66,6 @@ CivisFuture <- function(expr = NULL,
                         lazy = FALSE,
                         local = lifecycle::deprecated(),
                         gc = FALSE,
-                        earlySignal = FALSE,
                         label = NULL,
                         required_resources = list(cpu = 1024, memory = 2048, diskSpace = 4),
                         docker_image_name = "civisanalytics/datascience-r",
@@ -87,14 +86,13 @@ CivisFuture <- function(expr = NULL,
 
   }
 
-  future <- future::Future(expr = expr,
+  future <- future::future(expr = expr,
                            envir = env,
                            substitute = substitute,
                            globals = gp$globals,
                            packages = unique(c(packages, gp$packages)),
                            lazy = lazy,
                            gc = gc,
-                           earlySignal = earlySignal,
                            label = label,
                            version = "1.8",  # see: https://github.com/civisanalytics/civis-r/issues/168
 
