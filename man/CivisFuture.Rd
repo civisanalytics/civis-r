@@ -18,7 +18,6 @@ CivisFuture(
   lazy = FALSE,
   local = lifecycle::deprecated(),
   gc = FALSE,
-  earlySignal = FALSE,
   label = NULL,
   required_resources = list(cpu = 1024, memory = 2048, diskSpace = 4),
   docker_image_name = "civisanalytics/datascience-r",
@@ -58,15 +57,11 @@ eagerly (starting immediately), otherwise not.}
 
 \item{local}{deprecated as of \code{civis} v3.0.1}
 
-\item{gc}{If TRUE, the garbage collector run (in the process that
-evaluated the future) only after the value of the future is collected.
-Exactly when the values are collected may depend on various factors such
-as number of free workers and whether \code{earlySignal} is TRUE (more
-frequently) or FALSE (less frequently).
-\emph{Some future backends may ignore this argument.}}
-
-\item{earlySignal}{Specified whether conditions should be signaled as soon
-as possible or not.}
+\item{gc}{If TRUE, the garbage collector is run in the worker R session
+after the future has been resolved and its value has been collected, but
+before that worker is made available to run another task. This mainly
+matters when workers are reused and memory or other resources are
+constrained.}
 
 \item{label}{A character string label attached to the future.}
 
@@ -83,7 +78,7 @@ as possible or not.}
 \item{object}{CivisFuture}
 }
 \value{
-A \code{CivisFuture} inheriting from \code{\link[future]{Future}} that evaluates \code{expr} on the given container.
+A \code{CivisFuture} inheriting from \code{\link{Future}} that evaluates \code{expr} on the given container.
 }
 \description{
 Evaluate an expression in Civis Platform
