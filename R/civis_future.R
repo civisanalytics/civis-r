@@ -86,7 +86,7 @@ CivisFuture <- function(expr = NULL,
 
   }
 
-  future <- future::future(expr = expr,
+  future <- future::Future(expr = expr,
                            envir = env,
                            substitute = substitute,
                            globals = gp$globals,
