@@ -57,7 +57,11 @@ eagerly (starting immediately), otherwise not.}
 
 \item{local}{deprecated as of \code{civis} v3.0.1}
 
-\item{gc}{If TRUE, the garbage collector is run after the future is resolved.}
+\item{gc}{If TRUE, the garbage collector is run in the worker R session
+after the future has been resolved and its value has been collected, but
+before that worker is made available to run another task. This mainly
+matters when workers are reused and memory or other resources are
+constrained.}
 
 \item{label}{A character string label attached to the future.}
 
