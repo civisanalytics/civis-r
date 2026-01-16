@@ -21,11 +21,11 @@ if (length(pkgs) > 0) {
 
 cat("Evaluating R expression", fill = TRUE)
 
-attach(fut$envir)
+attach(fut$globals)
 
 res <- eval(fut$expr)
 
-detach(fut$envir)
+detach(fut$globals)
 
 cat("Complete.", fill = TRUE)
 

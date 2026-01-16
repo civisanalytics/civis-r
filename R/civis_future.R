@@ -80,15 +80,7 @@ CivisFuture <- function(expr = NULL,
   
   gp <- future::getGlobalsAndPackages(expr, envir = envir, globals = globals)
 
-  ## if there are globals, assign them in envir
-  env <- new.env()
-  if (length(gp) > 0) {
-    env <- list2env(gp$globals)
-
-  }
-
   future <- future::Future(expr = expr,
-                           envir = env,
                            substitute = substitute,
                            globals = gp$globals,
                            packages = unique(c(packages, gp$packages)),
@@ -111,7 +103,8 @@ CivisFuture <- function(expr = NULL,
 #' @describeIn CivisFuture Run a CivisFuture
 run.CivisFuture <- function(future, ...) {
   if (is.null(future$job$containerId)) {
-    cargo <- c(expr = future$expr, envir = future$envir,
+    envir <- list2env(future$globals)
+    cargo <- c(expr = future$expr, envir = envir,
                packages = list(future$packages))
     task_file_id <- write_civis_file(cargo)
     runner_file_id <- upload_runner_script()
