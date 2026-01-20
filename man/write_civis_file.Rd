@@ -47,7 +47,7 @@ or \code{\link{download_civis}}.
 Data frames are uploaded as CSVs with \code{\link{write.csv}}.
 R objects are serialized with \code{\link{saveRDS}}. Files are uploaded as-is.
 Objects or files larger than 50mb are chunked and can be uploaded in parallel
-if a \code{\link[future]{plan}} has been set. Files larger than 5TB cannot be uploaded.
+if a \code{\link{plan}} has been set. Files larger than 5TB cannot be uploaded.
 }
 \details{
 Data frames are uploaded as CSVs using \code{\link{write.csv}}, with row.names = FALSE

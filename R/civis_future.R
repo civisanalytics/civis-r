@@ -50,6 +50,7 @@ class(civis_platform) <- c("CivisFuture", "future", "function")
 #' Evaluate an expression in Civis Platform
 #' @inheritParams future::Future
 #' @param local deprecated as of \code{civis} v3.0.1
+#' @param gc If TRUE, the garbage collector is run after the value of the future has been collected, i.e., when it is no longer needed or when the future is terminated.
 #' @param required_resources resources, see \code{\link{scripts_post_containers}}
 #' @param docker_image_name the image for the container script.
 #' @param docker_image_tag the tag for the Docker image.
@@ -66,7 +67,6 @@ CivisFuture <- function(expr = NULL,
                         lazy = FALSE,
                         local = lifecycle::deprecated(),
                         gc = FALSE,
-                        earlySignal = FALSE,
                         label = NULL,
                         required_resources = list(cpu = 1024, memory = 2048, diskSpace = 4),
                         docker_image_name = "civisanalytics/datascience-r",
@@ -86,7 +86,6 @@ CivisFuture <- function(expr = NULL,
                            packages = unique(c(packages, gp$packages)),
                            lazy = lazy,
                            gc = gc,
-                           earlySignal = earlySignal,
                            label = label,
                            version = "1.8",  # see: https://github.com/civisanalytics/civis-r/issues/168
 
