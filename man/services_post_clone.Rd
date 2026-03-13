@@ -38,7 +38,7 @@ A list containing the following elements:
 \item{cpu}{integer, The amount of cpu allocated to each replica of the the Service.}
 \item{createdAt}{string, }
 \item{updatedAt}{string, }
-\item{credentials}{array, A list of credential IDs to pass to the Service.}
+\item{credentials}{array, The credentials attached to the service. Accepts a list of credential IDs and returns a list of id, name pairs.}
 \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}

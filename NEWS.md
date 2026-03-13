@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.4] - 2026-03-13
+
+### Changed
+- Regenerated the default Client (`R/generated_client.R`)
+- Updated `CivisFuture` class and related future functionality (issue #263)
+- Updated maintainer
+
 ## [3.1.3] - 2025-08-25
 
 ### Changed

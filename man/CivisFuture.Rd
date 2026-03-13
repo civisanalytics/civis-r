@@ -57,13 +57,9 @@ eagerly (starting immediately), otherwise not.}
 
 \item{local}{deprecated as of \code{civis} v3.0.1}
 
-\item{gc}{If TRUE, the garbage collector is run in the worker R session
-after the future has been resolved and its value has been collected, but
-before that worker is made available to run another task. This mainly
-matters when workers are reused and memory or other resources are
-constrained.}
+\item{gc}{If TRUE, the garbage collector is run after the value of the future has been collected, i.e., when it is no longer needed or when the future is terminated.}
 
-\item{label}{A character string label attached to the future.}
+\item{label}{An optional character string label attached to the future.}
 
 \item{required_resources}{resources, see \code{\link{scripts_post_containers}}}
 
@@ -78,7 +74,7 @@ constrained.}
 \item{object}{CivisFuture}
 }
 \value{
-A \code{CivisFuture} inheriting from \code{\link{Future}} that evaluates \code{expr} on the given container.
+A \code{CivisFuture} inheriting from \code{\link[future]{Future}} that evaluates \code{expr} on the given container.
 }
 \description{
 Evaluate an expression in Civis Platform

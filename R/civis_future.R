@@ -3,7 +3,7 @@ NULL
 
 #' Evaluate an expression in Civis Platform
 #'
-#' This is used as with the \code{\link{future}} API as an argument to \code{\link{plan}}.
+#' This is used as with the \code{\link[future]{future}} API as an argument to \code{\link[future]{plan}}.
 #'
 #' @param ... Arguments to \code{\link{CivisFuture}} and then \code{\link{scripts_post_containers}}
 #' @return The result of evaluating \code{expr}.
@@ -56,7 +56,7 @@ class(civis_platform) <- c("CivisFuture", "future", "function")
 #' @param docker_image_tag the tag for the Docker image.
 #' @param ... arguments to \code{\link{scripts_post_containers}}
 #'
-#' @return A \code{CivisFuture} inheriting from \code{\link{Future}} that evaluates \code{expr} on the given container.
+#' @return A \code{CivisFuture} inheriting from \code{\link[future]{Future}} that evaluates \code{expr} on the given container.
 #'
 #' @export
 CivisFuture <- function(expr = NULL,

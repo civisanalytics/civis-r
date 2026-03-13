@@ -13,7 +13,7 @@ civis_platform(...)
 The result of evaluating \code{expr}.
 }
 \description{
-This is used as with the \code{\link{future}} API as an argument to \code{\link{plan}}.
+This is used as with the \code{\link[future]{future}} API as an argument to \code{\link[future]{plan}}.
 }
 \examples{
 \dontrun{

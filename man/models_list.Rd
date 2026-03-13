@@ -57,7 +57,7 @@ An array containing the following fields:
 \item{dependentVariableOrder}{array, The order of dependent variables, especially useful for Ordinal Modeling.}
 \item{excludedColumns}{array, A list of columns which will be considered ineligible to be independent variables.}
 \item{limitingSQL}{string, A custom SQL WHERE clause used to filter the rows used to build the model. (e.g., "id > 105").}
-\item{crossValidationParameters}{list, Cross validation parameter grid for tree methods, e.g. \{"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]\}.}
+\item{crossValidationParameters}{list, Cross validation parameter grid for tree methods, e.g. {"n_estimators": [100, 200, 500], "learning_rate": [0.01, 0.1], "max_depth": [2, 3]}.}
 \item{numberOfFolds}{integer, Number of folds for cross validation. Default value is 5.}
 \item{schedule}{list, A list containing the following elements: 
 \itemize{

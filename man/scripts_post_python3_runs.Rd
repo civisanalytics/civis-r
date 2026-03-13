@@ -19,6 +19,7 @@ A list containing the following elements:
 \item{startedAt}{string, The time the run started at.}
 \item{finishedAt}{string, The time the run completed.}
 \item{error}{string, The error, if any, returned by the run.}
+\item{inputs}{list, The inputs of the script at the time of the run, including params and arguments.}
 \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
 \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 }
