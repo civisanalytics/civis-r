@@ -21,11 +21,9 @@ if (length(pkgs) > 0) {
 
 cat("Evaluating R expression", fill = TRUE)
 
-attach(fut$envir)
+eval_env <- list2env(as.list(fut$globals), parent = parent.frame())
 
-res <- eval(fut$expr)
-
-detach(fut$envir)
+res <- eval(fut$expr, envir = eval_env)
 
 cat("Complete.", fill = TRUE)
 
