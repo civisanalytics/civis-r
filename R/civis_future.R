@@ -102,8 +102,9 @@ CivisFuture <- function(expr = NULL,
 #' @describeIn CivisFuture Run a CivisFuture
 run.CivisFuture <- function(future, ...) {
   if (is.null(future$job$containerId)) {
-    cargo <- c(expr = future$expr, globals = list(future$globals),
-               packages = list(future$packages))
+    cargo <- list(expr = future$expr,
+                  globals = future$globals,
+                  packages = future$packages)
     task_file_id <- write_civis_file(cargo)
     runner_file_id <- upload_runner_script()
     cmd <- make_docker_cmd(task_file_id, runner_file_id)
