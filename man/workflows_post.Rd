@@ -71,6 +71,7 @@ A list containing the following elements:
 \item online boolean, Whether this user is online.
 }}
 \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
+\item{lastExecutionId}{integer, The ID of the most recent execution of this workflow, if any.}
 \item{schedule}{list, A list containing the following elements: 
 \itemize{
 \item scheduled boolean, If the item is scheduled.

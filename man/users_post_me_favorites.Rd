@@ -9,13 +9,13 @@ users_post_me_favorites(object_id, object_type)
 \arguments{
 \item{object_id}{integer required. The id of the object. If specified as a query parameter, must also specify object_type parameter.}
 
-\item{object_type}{string required. The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Tableau Report, Service Report, HTML Report, SQL Report}
+\item{object_type}{string required. The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Table, Tableau Report, Service Report, HTML Report, SQL Report}
 }
 \value{
 A list containing the following elements:
 \item{id}{integer, The id of the favorite.}
 \item{objectId}{integer, The id of the object. If specified as a query parameter, must also specify object_type parameter.}
-\item{objectType}{string, The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Tableau Report, Service Report, HTML Report, SQL Report}
+\item{objectType}{string, The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Table, Tableau Report, Service Report, HTML Report, SQL Report}
 \item{objectName}{string, The name of the object that is favorited.}
 \item{createdAt}{string, The time this favorite was created.}
 \item{objectUpdatedAt}{string, The time the object that is favorited was last updated}

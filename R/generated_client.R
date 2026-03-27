@@ -1086,6 +1086,32 @@ clusters_list_kubernetes_instance_configs_historical_metrics <- function(instanc
  }
 
 
+#' Get historical compute metrics for a Kubernetes Cluster
+#' @param id integer required. The ID of the Kubernetes cluster.
+#' @param start_date string optional. UTC start date in YYYY-MM-DD format (inclusive).
+#' @param end_date string optional. UTC end date in YYYY-MM-DD format (inclusive). Must be within 31 days of start_date.
+#' @param type array optional. Compute metric types to retrieve. Allowed values are: ["Jobs"]. Defaults to returning metrics for all available types. The default may change as support for additional types is added.
+#' 
+#' @return  A list containing the following elements:
+#' \item{url}{string, Presigned URL to download the compute metrics CSV file from S3.}
+#' @export
+clusters_list_kubernetes_compute_metrics <- function(id, start_date = NULL, end_date = NULL, type = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/clusters/kubernetes/{id}/compute_metrics"
+  path_params  <- list(id = id)
+  query_params <- list(start_date = start_date, end_date = end_date, type = type)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
 #' Get list of Credential Types
 #' 
 #' @return  A list containing the following elements:
@@ -10399,6 +10425,7 @@ imports_post_files <- function(schema, name, remote_host_id, credential_id, max_
 #' \item{startedAt}{string, The time the run started at.}
 #' \item{finishedAt}{string, The time the run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
+#' \item{inputs}{list, The inputs of the import at the time of the run.}
 #' @export
 imports_post_files_runs <- function(id) {
 
@@ -10464,6 +10491,7 @@ imports_list_files_runs <- function(id, limit = NULL, page_num = NULL, order = N
 #' \item{startedAt}{string, The time the run started at.}
 #' \item{finishedAt}{string, The time the run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
+#' \item{inputs}{list, The inputs of the import at the time of the run.}
 #' @export
 imports_get_files_runs <- function(id, run_id) {
 
@@ -11035,6 +11063,7 @@ imports_put_files_csv_archive <- function(id, status) {
 #' \item{startedAt}{string, The time the run started at.}
 #' \item{finishedAt}{string, The time the run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
+#' \item{inputs}{list, The inputs of the import at the time of the run.}
 #' @export
 imports_post_files_csv_runs <- function(id) {
 
@@ -11100,6 +11129,7 @@ imports_list_files_csv_runs <- function(id, limit = NULL, page_num = NULL, order
 #' \item{startedAt}{string, The time the run started at.}
 #' \item{finishedAt}{string, The time the run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
+#' \item{inputs}{list, The inputs of the import at the time of the run.}
 #' @export
 imports_get_files_csv_runs <- function(id, run_id) {
 
@@ -17219,7 +17249,7 @@ ontology_list <- function(subset = NULL) {
 
 #' List Favorites
 #' @param object_id integer optional. The id of the object. If specified as a query parameter, must also specify object_type parameter.
-#' @param object_type string optional. The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Tableau Report, Service Report, HTML Report, SQL Report
+#' @param object_type string optional. The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Table, Tableau Report, Service Report, HTML Report, SQL Report
 #' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
 #' @param order string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at, object_type, object_id.
@@ -17228,7 +17258,7 @@ ontology_list <- function(subset = NULL) {
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The id of the favorite.}
 #' \item{objectId}{integer, The id of the object. If specified as a query parameter, must also specify object_type parameter.}
-#' \item{objectType}{string, The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Tableau Report, Service Report, HTML Report, SQL Report}
+#' \item{objectType}{string, The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Table, Tableau Report, Service Report, HTML Report, SQL Report}
 #' \item{objectName}{string, The name of the object that is favorited.}
 #' \item{createdAt}{string, The time this favorite was created.}
 #' \item{objectUpdatedAt}{string, The time the object that is favorited was last updated}
@@ -17261,12 +17291,12 @@ organizations_list_favorites <- function(object_id = NULL, object_type = NULL, l
 
 #' Favorite an item for your organization
 #' @param object_id integer required. The id of the object. If specified as a query parameter, must also specify object_type parameter.
-#' @param object_type string required. The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Tableau Report, Service Report, HTML Report, SQL Report
+#' @param object_type string required. The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Table, Tableau Report, Service Report, HTML Report, SQL Report
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The id of the favorite.}
 #' \item{objectId}{integer, The id of the object. If specified as a query parameter, must also specify object_type parameter.}
-#' \item{objectType}{string, The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Tableau Report, Service Report, HTML Report, SQL Report}
+#' \item{objectType}{string, The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Table, Tableau Report, Service Report, HTML Report, SQL Report}
 #' \item{objectName}{string, The name of the object that is favorited.}
 #' \item{createdAt}{string, The time this favorite was created.}
 #' \item{objectUpdatedAt}{string, The time the object that is favorited was last updated}
@@ -28335,6 +28365,7 @@ scripts_delete_custom <- function(id) {
 #' \item{startedAt}{string, The time the run started at.}
 #' \item{finishedAt}{string, The time the run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
+#' \item{inputs}{list, The inputs of the script at the time of the run, including params and arguments.}
 #' \item{output}{array, An array containing the following fields: 
 #' \itemize{
 #' \item outputName string, The name of the output file.
@@ -28414,6 +28445,7 @@ scripts_list_sql_runs <- function(id, limit = NULL, page_num = NULL, order = NUL
 #' \item{startedAt}{string, The time the run started at.}
 #' \item{finishedAt}{string, The time the run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
+#' \item{inputs}{list, The inputs of the script at the time of the run, including params and arguments.}
 #' \item{output}{array, An array containing the following fields: 
 #' \itemize{
 #' \item outputName string, The name of the output file.
@@ -28527,6 +28559,7 @@ scripts_list_sql_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL)
 #' \item{startedAt}{string, The time the run started at.}
 #' \item{finishedAt}{string, The time the run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
+#' \item{inputs}{list, The inputs of the script at the time of the run, including params and arguments.}
 #' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
 #' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
@@ -28596,6 +28629,7 @@ scripts_list_containers_runs <- function(id, limit = NULL, page_num = NULL, orde
 #' \item{startedAt}{string, The time the run started at.}
 #' \item{finishedAt}{string, The time the run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
+#' \item{inputs}{list, The inputs of the script at the time of the run, including params and arguments.}
 #' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
 #' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
@@ -28651,6 +28685,7 @@ scripts_delete_containers_runs <- function(id, run_id) {
 #' \item{startedAt}{string, The time the run started at.}
 #' \item{finishedAt}{string, The time the run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
+#' \item{inputs}{list, The inputs of the script at the time of the run, including params and arguments.}
 #' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
 #' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
@@ -28720,6 +28755,7 @@ scripts_list_python3_runs <- function(id, limit = NULL, page_num = NULL, order =
 #' \item{startedAt}{string, The time the run started at.}
 #' \item{finishedAt}{string, The time the run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
+#' \item{inputs}{list, The inputs of the script at the time of the run, including params and arguments.}
 #' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
 #' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
@@ -28828,6 +28864,7 @@ scripts_list_python3_runs_logs <- function(id, run_id, last_id = NULL, limit = N
 #' \item{startedAt}{string, The time the run started at.}
 #' \item{finishedAt}{string, The time the run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
+#' \item{inputs}{list, The inputs of the script at the time of the run, including params and arguments.}
 #' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
 #' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
@@ -28897,6 +28934,7 @@ scripts_list_r_runs <- function(id, limit = NULL, page_num = NULL, order = NULL,
 #' \item{startedAt}{string, The time the run started at.}
 #' \item{finishedAt}{string, The time the run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
+#' \item{inputs}{list, The inputs of the script at the time of the run, including params and arguments.}
 #' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
 #' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
@@ -29005,6 +29043,7 @@ scripts_list_r_runs_logs <- function(id, run_id, last_id = NULL, limit = NULL) {
 #' \item{startedAt}{string, The time the run started at.}
 #' \item{finishedAt}{string, The time the run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
+#' \item{inputs}{list, The inputs of the script at the time of the run, including params and arguments.}
 #' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
 #' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
@@ -29074,6 +29113,7 @@ scripts_list_dbt_runs <- function(id, limit = NULL, page_num = NULL, order = NUL
 #' \item{startedAt}{string, The time the run started at.}
 #' \item{finishedAt}{string, The time the run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
+#' \item{inputs}{list, The inputs of the script at the time of the run, including params and arguments.}
 #' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB.}
 #' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores.}
 #' @export
@@ -29353,6 +29393,7 @@ scripts_list_javascript_runs_logs <- function(id, run_id, last_id = NULL, limit 
 #' \item{startedAt}{string, The time the run started at.}
 #' \item{finishedAt}{string, The time the run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
+#' \item{inputs}{list, The inputs of the script at the time of the run, including params and arguments.}
 #' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB. Only available if the backing script is a Python, R, or container script.}
 #' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores. Only available if the backing script is a Python, R, or container script.}
 #' @export
@@ -29422,6 +29463,7 @@ scripts_list_custom_runs <- function(id, limit = NULL, page_num = NULL, order = 
 #' \item{startedAt}{string, The time the run started at.}
 #' \item{finishedAt}{string, The time the run completed.}
 #' \item{error}{string, The error, if any, returned by the run.}
+#' \item{inputs}{list, The inputs of the script at the time of the run, including params and arguments.}
 #' \item{maxMemoryUsage}{number, If the run has finished, the maximum amount of memory used during the run, in MB. Only available if the backing script is a Python, R, or container script.}
 #' \item{maxCpuUsage}{number, If the run has finished, the maximum amount of cpu used during the run, in millicores. Only available if the backing script is a Python, R, or container script.}
 #' @export
@@ -35255,7 +35297,7 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' @param instance_type string optional. The EC2 instance type to deploy to.
 #' @param memory integer optional. The amount of memory allocated to each replica of the Service.
 #' @param cpu integer optional. The amount of cpu allocated to each replica of the the Service.
-#' @param credentials array optional. A list of credential IDs to pass to the Service.
+#' @param credentials array optional. The credentials attached to the service. Accepts a list of credential IDs and returns a list of id, name pairs.
 #' @param permission_set_id integer optional. The ID of the associated permission set, if any.
 #' @param git_repo_url string optional. The url for the git repo where the Service code lives.
 #' @param git_repo_ref string optional. The git reference to use when pulling code from the repo.
@@ -35297,7 +35339,7 @@ services_list <- function(hidden = NULL, archived = NULL, author = NULL, status 
 #' \item{cpu}{integer, The amount of cpu allocated to each replica of the the Service.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{credentials}{array, The credentials attached to the service. Accepts a list of credential IDs and returns a list of id, name pairs.}
 #' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
@@ -35383,7 +35425,7 @@ services_post <- function(name = NULL, description = NULL, type = NULL, docker_i
 #' \item{cpu}{integer, The amount of cpu allocated to each replica of the the Service.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{credentials}{array, The credentials attached to the service. Accepts a list of credential IDs and returns a list of id, name pairs.}
 #' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
@@ -35454,7 +35496,7 @@ services_get <- function(id) {
 #' @param instance_type string optional. The EC2 instance type to deploy to.
 #' @param memory integer optional. The amount of memory allocated to each replica of the Service.
 #' @param cpu integer optional. The amount of cpu allocated to each replica of the the Service.
-#' @param credentials array optional. A list of credential IDs to pass to the Service.
+#' @param credentials array optional. The credentials attached to the service. Accepts a list of credential IDs and returns a list of id, name pairs.
 #' @param permission_set_id integer optional. The ID of the associated permission set, if any.
 #' @param git_repo_url string optional. The url for the git repo where the Service code lives.
 #' @param git_repo_ref string optional. The git reference to use when pulling code from the repo.
@@ -35495,7 +35537,7 @@ services_get <- function(id) {
 #' \item{cpu}{integer, The amount of cpu allocated to each replica of the the Service.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{credentials}{array, The credentials attached to the service. Accepts a list of credential IDs and returns a list of id, name pairs.}
 #' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
@@ -35566,7 +35608,7 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' @param instance_type string optional. The EC2 instance type to deploy to.
 #' @param memory integer optional. The amount of memory allocated to each replica of the Service.
 #' @param cpu integer optional. The amount of cpu allocated to each replica of the the Service.
-#' @param credentials array optional. A list of credential IDs to pass to the Service.
+#' @param credentials array optional. The credentials attached to the service. Accepts a list of credential IDs and returns a list of id, name pairs.
 #' @param permission_set_id integer optional. The ID of the associated permission set, if any.
 #' @param git_repo_url string optional. The url for the git repo where the Service code lives.
 #' @param git_repo_ref string optional. The git reference to use when pulling code from the repo.
@@ -35607,7 +35649,7 @@ services_put <- function(id, name = NULL, description = NULL, docker_image_name 
 #' \item{cpu}{integer, The amount of cpu allocated to each replica of the the Service.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{credentials}{array, The credentials attached to the service. Accepts a list of credential IDs and returns a list of id, name pairs.}
 #' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
@@ -35953,7 +35995,7 @@ services_put_transfer <- function(id, user_id, include_dependencies, email_body 
 #' \item{cpu}{integer, The amount of cpu allocated to each replica of the the Service.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{credentials}{array, The credentials attached to the service. Accepts a list of credential IDs and returns a list of id, name pairs.}
 #' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
@@ -36347,7 +36389,7 @@ services_list_deployments_logs <- function(id, deployment_id, start_at = NULL, e
 #' \item{cpu}{integer, The amount of cpu allocated to each replica of the the Service.}
 #' \item{createdAt}{string, }
 #' \item{updatedAt}{string, }
-#' \item{credentials}{array, A list of credential IDs to pass to the Service.}
+#' \item{credentials}{array, The credentials attached to the service. Accepts a list of credential IDs and returns a list of id, name pairs.}
 #' \item{permissionSetId}{integer, The ID of the associated permission set, if any.}
 #' \item{gitRepoUrl}{string, The url for the git repo where the Service code lives.}
 #' \item{gitRepoRef}{string, The git reference to use when pulling code from the repo.}
@@ -36957,6 +36999,630 @@ storage_hosts_put_transfer <- function(id, user_id, include_dependencies, email_
   path_params  <- list(id = id)
   query_params <- list()
   body_params  <- list(userId = user_id, includeDependencies = include_dependencies, emailBody = email_body, sendEmail = send_email)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Create a Studio
+#' @param name string optional. The name of the studio.
+#' @param docker_image_name string optional. The name of the docker image to pull from DockerHub.
+#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub (default: latest).
+#' @param instance_type string optional. The EC2 instance type to deploy to.
+#' @param required_resources list optional. A list containing the following elements: 
+#' \itemize{
+#' \item memory integer, The amount of memory allocated to the studio.
+#' \item diskSpace number, The amount of disk space, in GB, to allocate for the studio. Fractional values (e.g. 0.25) are supported.
+#' \item cpu integer, The amount of cpu allocated to the studio.
+#' }
+#' @param git_credential_id integer optional. The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. 
+#' @param params array optional. An array containing the following fields: 
+#' \itemize{
+#' \item name string, The variable's name as used within your code.
+#' \item description string, A short sentence or fragment describing this parameter.
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
+#' \item value string, The value you would like to set this param to.
+#' }
+#' @param git_repo_url string optional. The URL of the git repository (e.g., https://github.com/organization/repo_name.git).
+#' @param git_ref string optional. The git reference if git repo is specified
+#' @param partition_label string optional. The partition label used to run this object.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the studio.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{name}{string, The name of the studio.}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{instanceType}{string, The EC2 instance type to deploy to.}
+#' \item{requiredResources}{list, A list containing the following elements: 
+#' \itemize{
+#' \item memory integer, The amount of memory allocated to the studio.
+#' \item diskSpace number, The amount of disk space, in GB, to allocate for the studio. Fractional values (e.g. 0.25) are supported.
+#' \item cpu integer, The amount of cpu allocated to the studio.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{mostRecentDeployment}{list, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, A signed URL for viewing the deployed item.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment, in MB.
+#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
+#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item studioId integer, The ID of the owning Studio
+#' }}
+#' \item{gitCredentialId}{integer, The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. }
+#' \item{params}{array, An array containing the following fields: 
+#' \itemize{
+#' \item name string, The variable's name as used within your code.
+#' \item description string, A short sentence or fragment describing this parameter.
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
+#' \item value string, The value you would like to set this param to.
+#' }}
+#' \item{gitRepoId}{integer, The ID of the git repository.}
+#' \item{gitRepoUrl}{string, The URL of the git repository (e.g., https://github.com/organization/repo_name.git).}
+#' \item{gitRef}{string, The git reference if git repo is specified}
+#' \item{partitionLabel}{string, The partition label used to run this object.}
+#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+studios_post <- function(name = NULL, docker_image_name = NULL, docker_image_tag = NULL, instance_type = NULL, required_resources = NULL, git_credential_id = NULL, params = NULL, git_repo_url = NULL, git_ref = NULL, partition_label = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/studios/"
+  path_params  <- list()
+  query_params <- list()
+  body_params  <- list(name = name, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, instanceType = instance_type, requiredResources = required_resources, gitCredentialId = git_credential_id, params = params, gitRepoUrl = git_repo_url, gitRef = git_ref, partitionLabel = partition_label)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get a Studio
+#' @param id integer required. 
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the studio.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{name}{string, The name of the studio.}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{instanceType}{string, The EC2 instance type to deploy to.}
+#' \item{requiredResources}{list, A list containing the following elements: 
+#' \itemize{
+#' \item memory integer, The amount of memory allocated to the studio.
+#' \item diskSpace number, The amount of disk space, in GB, to allocate for the studio. Fractional values (e.g. 0.25) are supported.
+#' \item cpu integer, The amount of cpu allocated to the studio.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{mostRecentDeployment}{list, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, A signed URL for viewing the deployed item.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment, in MB.
+#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
+#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item studioId integer, The ID of the owning Studio
+#' }}
+#' \item{gitCredentialId}{integer, The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. }
+#' \item{params}{array, An array containing the following fields: 
+#' \itemize{
+#' \item name string, The variable's name as used within your code.
+#' \item description string, A short sentence or fragment describing this parameter.
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
+#' \item value string, The value you would like to set this param to.
+#' }}
+#' \item{gitRepoId}{integer, The ID of the git repository.}
+#' \item{gitRepoUrl}{string, The URL of the git repository (e.g., https://github.com/organization/repo_name.git).}
+#' \item{gitRef}{string, The git reference if git repo is specified}
+#' \item{partitionLabel}{string, The partition label used to run this object.}
+#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+studios_get <- function(id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/studios/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Replace all attributes of this Studio
+#' @param id integer required. The ID of the studio.
+#' @param name string optional. The name of the studio.
+#' @param docker_image_name string optional. The name of the docker image to pull from DockerHub.
+#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub (default: latest).
+#' @param instance_type string optional. The EC2 instance type to deploy to.
+#' @param required_resources list optional. A list containing the following elements: 
+#' \itemize{
+#' \item memory integer, The amount of memory allocated to the studio.
+#' \item diskSpace number, The amount of disk space, in GB, to allocate for the studio. Fractional values (e.g. 0.25) are supported.
+#' \item cpu integer, The amount of cpu allocated to the studio.
+#' }
+#' @param git_credential_id integer optional. The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. 
+#' @param params array optional. An array containing the following fields: 
+#' \itemize{
+#' \item name string, The variable's name as used within your code.
+#' \item description string, A short sentence or fragment describing this parameter.
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
+#' \item value string, The value you would like to set this param to.
+#' }
+#' @param git_repo_url string optional. The URL of the git repository (e.g., https://github.com/organization/repo_name.git).
+#' @param git_ref string optional. The git reference if git repo is specified
+#' @param partition_label string optional. The partition label used to run this object.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the studio.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{name}{string, The name of the studio.}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{instanceType}{string, The EC2 instance type to deploy to.}
+#' \item{requiredResources}{list, A list containing the following elements: 
+#' \itemize{
+#' \item memory integer, The amount of memory allocated to the studio.
+#' \item diskSpace number, The amount of disk space, in GB, to allocate for the studio. Fractional values (e.g. 0.25) are supported.
+#' \item cpu integer, The amount of cpu allocated to the studio.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{mostRecentDeployment}{list, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, A signed URL for viewing the deployed item.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment, in MB.
+#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
+#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item studioId integer, The ID of the owning Studio
+#' }}
+#' \item{gitCredentialId}{integer, The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. }
+#' \item{params}{array, An array containing the following fields: 
+#' \itemize{
+#' \item name string, The variable's name as used within your code.
+#' \item description string, A short sentence or fragment describing this parameter.
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
+#' \item value string, The value you would like to set this param to.
+#' }}
+#' \item{gitRepoId}{integer, The ID of the git repository.}
+#' \item{gitRepoUrl}{string, The URL of the git repository (e.g., https://github.com/organization/repo_name.git).}
+#' \item{gitRef}{string, The git reference if git repo is specified}
+#' \item{partitionLabel}{string, The partition label used to run this object.}
+#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+studios_put <- function(id, name = NULL, docker_image_name = NULL, docker_image_tag = NULL, instance_type = NULL, required_resources = NULL, git_credential_id = NULL, params = NULL, git_repo_url = NULL, git_ref = NULL, partition_label = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/studios/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, instanceType = instance_type, requiredResources = required_resources, gitCredentialId = git_credential_id, params = params, gitRepoUrl = git_repo_url, gitRef = git_ref, partitionLabel = partition_label)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PUT", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update some attributes of this Studio
+#' @param id integer required. The ID of the studio.
+#' @param name string optional. The name of the studio.
+#' @param docker_image_name string optional. The name of the docker image to pull from DockerHub.
+#' @param docker_image_tag string optional. The tag of the docker image to pull from DockerHub (default: latest).
+#' @param instance_type string optional. The EC2 instance type to deploy to.
+#' @param required_resources list optional. A list containing the following elements: 
+#' \itemize{
+#' \item memory integer, The amount of memory allocated to the studio.
+#' \item diskSpace number, The amount of disk space, in GB, to allocate for the studio. Fractional values (e.g. 0.25) are supported.
+#' \item cpu integer, The amount of cpu allocated to the studio.
+#' }
+#' @param git_credential_id integer optional. The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. 
+#' @param params array optional. An array containing the following fields: 
+#' \itemize{
+#' \item name string, The variable's name as used within your code.
+#' \item description string, A short sentence or fragment describing this parameter.
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
+#' \item value string, The value you would like to set this param to.
+#' }
+#' @param git_repo_url string optional. The URL of the git repository (e.g., https://github.com/organization/repo_name.git).
+#' @param git_ref string optional. The git reference if git repo is specified
+#' @param partition_label string optional. The partition label used to run this object.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the studio.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{name}{string, The name of the studio.}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{instanceType}{string, The EC2 instance type to deploy to.}
+#' \item{requiredResources}{list, A list containing the following elements: 
+#' \itemize{
+#' \item memory integer, The amount of memory allocated to the studio.
+#' \item diskSpace number, The amount of disk space, in GB, to allocate for the studio. Fractional values (e.g. 0.25) are supported.
+#' \item cpu integer, The amount of cpu allocated to the studio.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{mostRecentDeployment}{list, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, A signed URL for viewing the deployed item.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment, in MB.
+#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
+#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item studioId integer, The ID of the owning Studio
+#' }}
+#' \item{gitCredentialId}{integer, The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. }
+#' \item{params}{array, An array containing the following fields: 
+#' \itemize{
+#' \item name string, The variable's name as used within your code.
+#' \item description string, A short sentence or fragment describing this parameter.
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
+#' \item value string, The value you would like to set this param to.
+#' }}
+#' \item{gitRepoId}{integer, The ID of the git repository.}
+#' \item{gitRepoUrl}{string, The URL of the git repository (e.g., https://github.com/organization/repo_name.git).}
+#' \item{gitRef}{string, The git reference if git repo is specified}
+#' \item{partitionLabel}{string, The partition label used to run this object.}
+#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+studios_patch <- function(id, name = NULL, docker_image_name = NULL, docker_image_tag = NULL, instance_type = NULL, required_resources = NULL, git_credential_id = NULL, params = NULL, git_repo_url = NULL, git_ref = NULL, partition_label = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/studios/{id}"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(name = name, dockerImageName = docker_image_name, dockerImageTag = docker_image_tag, instanceType = instance_type, requiredResources = required_resources, gitCredentialId = git_credential_id, params = params, gitRepoUrl = git_repo_url, gitRef = git_ref, partitionLabel = partition_label)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("PATCH", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' List deployments for a Studio
+#' @param studio_id integer required. The ID of the owning Studio
+#' @param deployment_id integer optional. The ID for this deployment
+#' @param limit integer optional. Number of results to return. Defaults to 20. Maximum allowed is 50.
+#' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
+#' @param order string optional. The field on which to order the result set. Defaults to created_at. Must be one of: created_at.
+#' @param order_dir string optional. Direction in which to sort, either asc (ascending) or desc (descending) defaulting to desc.
+#' 
+#' @return  An array containing the following fields:
+#' \item{deploymentId}{integer, The ID for this deployment.}
+#' \item{userId}{integer, The ID of the owner.}
+#' \item{host}{string, Domain of the deployment.}
+#' \item{name}{string, Name of the deployment.}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{instanceType}{string, The EC2 instance type requested for the deployment.}
+#' \item{memory}{integer, The memory allocated to the deployment, in MB.}
+#' \item{cpu}{integer, The cpu allocated to the deployment, in millicores.}
+#' \item{state}{string, The state of the deployment.}
+#' \item{stateMessage}{string, A detailed description of the state.}
+#' \item{maxMemoryUsage}{number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.}
+#' \item{maxCpuUsage}{number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{studioId}{integer, The ID of the owning Studio}
+#' @export
+studios_list_deployments <- function(studio_id, deployment_id = NULL, limit = NULL, page_num = NULL, order = NULL, order_dir = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/studios/{studio_id}/deployments"
+  path_params  <- list(studio_id = studio_id)
+  query_params <- list(deployment_id = deployment_id, limit = limit, page_num = page_num, order = order, order_dir = order_dir)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Deploy a Studio
+#' @param studio_id integer required. The ID of the owning Studio
+#' @param deployment_id integer optional. The ID for this deployment
+#' 
+#' @return  A list containing the following elements:
+#' \item{deploymentId}{integer, The ID for this deployment.}
+#' \item{userId}{integer, The ID of the owner.}
+#' \item{host}{string, Domain of the deployment.}
+#' \item{name}{string, Name of the deployment.}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{displayUrl}{string, A signed URL for viewing the deployed item.}
+#' \item{instanceType}{string, The EC2 instance type requested for the deployment.}
+#' \item{memory}{integer, The memory allocated to the deployment, in MB.}
+#' \item{cpu}{integer, The cpu allocated to the deployment, in millicores.}
+#' \item{state}{string, The state of the deployment.}
+#' \item{stateMessage}{string, A detailed description of the state.}
+#' \item{maxMemoryUsage}{number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.}
+#' \item{maxCpuUsage}{number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{studioId}{integer, The ID of the owning Studio}
+#' @export
+studios_post_deployments <- function(studio_id, deployment_id = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/studios/{studio_id}/deployments"
+  path_params  <- list(studio_id = studio_id)
+  query_params <- list()
+  body_params  <- list(deploymentId = deployment_id)
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("POST", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get details about a Studio deployment
+#' @param studio_id integer required. The ID of the owning Studio
+#' @param deployment_id integer required. The ID for this deployment
+#' 
+#' @return  A list containing the following elements:
+#' \item{deploymentId}{integer, The ID for this deployment.}
+#' \item{userId}{integer, The ID of the owner.}
+#' \item{host}{string, Domain of the deployment.}
+#' \item{name}{string, Name of the deployment.}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{displayUrl}{string, A signed URL for viewing the deployed item.}
+#' \item{instanceType}{string, The EC2 instance type requested for the deployment.}
+#' \item{memory}{integer, The memory allocated to the deployment, in MB.}
+#' \item{cpu}{integer, The cpu allocated to the deployment, in millicores.}
+#' \item{state}{string, The state of the deployment.}
+#' \item{stateMessage}{string, A detailed description of the state.}
+#' \item{maxMemoryUsage}{number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.}
+#' \item{maxCpuUsage}{number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{studioId}{integer, The ID of the owning Studio}
+#' @export
+studios_get_deployments <- function(studio_id, deployment_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/studios/{studio_id}/deployments/{deployment_id}"
+  path_params  <- list(studio_id = studio_id, deployment_id = deployment_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Delete a Studio deployment
+#' @param studio_id integer required. The ID of the owning Studio
+#' @param deployment_id integer required. The ID for this deployment
+#' 
+#' @return  An empty HTTP response
+#' @export
+studios_delete_deployments <- function(studio_id, deployment_id) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/studios/{studio_id}/deployments/{deployment_id}"
+  path_params  <- list(studio_id = studio_id, deployment_id = deployment_id)
+  query_params <- list()
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("DELETE", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Get the logs for a Studio deployment
+#' @param id integer required. The ID of the owning Studio.
+#' @param deployment_id integer required. The ID for this deployment.
+#' @param start_at string optional. Log entries with a lower timestamp will be omitted.
+#' @param end_at string optional. Log entries with a higher timestamp will be omitted.
+#' @param limit integer optional. The maximum number of log messages to return. Default of 10000.
+#' 
+#' @return  An array containing the following fields:
+#' \item{message}{string, The log message.}
+#' \item{stream}{string, The stream of the log. One of "stdout", "stderr".}
+#' \item{createdAt}{string, The time the log was created.}
+#' \item{source}{string, The source of the log. One of "system", "user".}
+#' @export
+studios_list_deployments_logs <- function(id, deployment_id, start_at = NULL, end_at = NULL, limit = NULL) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/studios/{id}/deployments/{deployment_id}/logs"
+  path_params  <- list(id = id, deployment_id = deployment_id)
+  query_params <- list(start_at = start_at, end_at = end_at, limit = limit)
+  body_params  <- list()
+  path_params  <- path_params[match_params(path_params, args)]
+  query_params <- query_params[match_params(query_params, args)]
+  body_params  <- body_params[match_params(body_params, args)]
+  resp <- call_api("GET", path, path_params, query_params, body_params)
+
+  return(resp)
+
+ }
+
+
+#' Update the archive status of this object
+#' @param id integer required. The ID of the object.
+#' @param status boolean required. The desired archived status of the object.
+#' 
+#' @return  A list containing the following elements:
+#' \item{id}{integer, The ID of the studio.}
+#' \item{author}{list, A list containing the following elements: 
+#' \itemize{
+#' \item id integer, The ID of this user.
+#' \item name string, This user's name.
+#' \item username string, This user's username.
+#' \item initials string, This user's initials.
+#' \item online boolean, Whether this user is online.
+#' }}
+#' \item{name}{string, The name of the studio.}
+#' \item{dockerImageName}{string, The name of the docker image to pull from DockerHub.}
+#' \item{dockerImageTag}{string, The tag of the docker image to pull from DockerHub (default: latest).}
+#' \item{instanceType}{string, The EC2 instance type to deploy to.}
+#' \item{requiredResources}{list, A list containing the following elements: 
+#' \itemize{
+#' \item memory integer, The amount of memory allocated to the studio.
+#' \item diskSpace number, The amount of disk space, in GB, to allocate for the studio. Fractional values (e.g. 0.25) are supported.
+#' \item cpu integer, The amount of cpu allocated to the studio.
+#' }}
+#' \item{createdAt}{string, }
+#' \item{updatedAt}{string, }
+#' \item{mostRecentDeployment}{list, A list containing the following elements: 
+#' \itemize{
+#' \item deploymentId integer, The ID for this deployment.
+#' \item userId integer, The ID of the owner.
+#' \item host string, Domain of the deployment.
+#' \item name string, Name of the deployment.
+#' \item dockerImageName string, The name of the docker image to pull from DockerHub.
+#' \item dockerImageTag string, The tag of the docker image to pull from DockerHub (default: latest).
+#' \item displayUrl string, A signed URL for viewing the deployed item.
+#' \item instanceType string, The EC2 instance type requested for the deployment.
+#' \item memory integer, The memory allocated to the deployment, in MB.
+#' \item cpu integer, The cpu allocated to the deployment, in millicores.
+#' \item state string, The state of the deployment.
+#' \item stateMessage string, A detailed description of the state.
+#' \item maxMemoryUsage number, If the deployment has finished, the maximum amount of memory used during the deployment, in MB.
+#' \item maxCpuUsage number, If the deployment has finished, the maximum amount of cpu used during the deployment, in millicores.
+#' \item createdAt string, 
+#' \item updatedAt string, 
+#' \item studioId integer, The ID of the owning Studio
+#' }}
+#' \item{gitCredentialId}{integer, The id of the git credential to be used when checking out the specified git repo. If not supplied, the first git credential you've submitted will be used. }
+#' \item{params}{array, An array containing the following fields: 
+#' \itemize{
+#' \item name string, The variable's name as used within your code.
+#' \item description string, A short sentence or fragment describing this parameter.
+#' \item type string, The type of parameter. Valid options: string, multi_line_string, integer, float, bool, file, table, database, credential_aws, credential_redshift, or credential_custom
+#' \item value string, The value you would like to set this param to.
+#' }}
+#' \item{gitRepoId}{integer, The ID of the git repository.}
+#' \item{gitRepoUrl}{string, The URL of the git repository (e.g., https://github.com/organization/repo_name.git).}
+#' \item{gitRef}{string, The git reference if git repo is specified}
+#' \item{partitionLabel}{string, The partition label used to run this object.}
+#' \item{myPermissionLevel}{string, Your permission level on the object. One of "read", "write", or "manage".}
+#' \item{archived}{string, The archival status of the requested item(s).}
+#' @export
+studios_put_archive <- function(id, status) {
+
+  args <- as.list(match.call())[-1]
+  path <- "/studios/{id}/archive"
+  path_params  <- list(id = id)
+  query_params <- list()
+  body_params  <- list(status = status)
   path_params  <- path_params[match_params(path_params, args)]
   query_params <- query_params[match_params(query_params, args)]
   body_params  <- body_params[match_params(body_params, args)]
@@ -39291,6 +39957,7 @@ users_post <- function(name, email, primary_group_id, user, active = NULL, city 
 #' \item{createdAt}{string, The date and time when the user was created.}
 #' \item{signInCount}{integer, The number of times the user has signed in.}
 #' \item{assumingRole}{boolean, Whether the user is assuming this role or not.}
+#' \item{roleAssumer}{list, Details about the role assumer.}
 #' \item{assumingAdmin}{boolean, Whether the user is assuming admin.}
 #' \item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
 #' \item{superadminModeExpiration}{string, The user is in superadmin mode when set to a DateTime. The user is not in superadmin mode when set to null.}
@@ -39426,6 +40093,7 @@ users_list_me <- function() {
 #' \item{createdAt}{string, The date and time when the user was created.}
 #' \item{signInCount}{integer, The number of times the user has signed in.}
 #' \item{assumingRole}{boolean, Whether the user is assuming this role or not.}
+#' \item{roleAssumer}{list, Details about the role assumer.}
 #' \item{assumingAdmin}{boolean, Whether the user is assuming admin.}
 #' \item{assumingAdminExpiration}{string, When the user's admin role is set to expire.}
 #' \item{superadminModeExpiration}{string, The user is in superadmin mode when set to a DateTime. The user is not in superadmin mode when set to null.}
@@ -39908,7 +40576,7 @@ users_delete_sessions <- function(id) {
 
 #' List Favorites
 #' @param object_id integer optional. The id of the object. If specified as a query parameter, must also specify object_type parameter.
-#' @param object_type string optional. The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Tableau Report, Service Report, HTML Report, SQL Report
+#' @param object_type string optional. The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Table, Tableau Report, Service Report, HTML Report, SQL Report
 #' @param limit integer optional. Number of results to return. Defaults to 50. Maximum allowed is 1000.
 #' @param page_num integer optional. Page number of the results to return. Defaults to the first page, 1.
 #' @param order string optional. The field on which to order the result set. Defaults to position. Must be one of: position, created_at.
@@ -39917,7 +40585,7 @@ users_delete_sessions <- function(id) {
 #' @return  An array containing the following fields:
 #' \item{id}{integer, The id of the favorite.}
 #' \item{objectId}{integer, The id of the object. If specified as a query parameter, must also specify object_type parameter.}
-#' \item{objectType}{string, The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Tableau Report, Service Report, HTML Report, SQL Report}
+#' \item{objectType}{string, The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Table, Tableau Report, Service Report, HTML Report, SQL Report}
 #' \item{objectName}{string, The name of the object that is favorited.}
 #' \item{createdAt}{string, The time this favorite was created.}
 #' \item{objectUpdatedAt}{string, The time the object that is favorited was last updated}
@@ -39950,12 +40618,12 @@ users_list_me_favorites <- function(object_id = NULL, object_type = NULL, limit 
 
 #' Favorite an item
 #' @param object_id integer required. The id of the object. If specified as a query parameter, must also specify object_type parameter.
-#' @param object_type string required. The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Tableau Report, Service Report, HTML Report, SQL Report
+#' @param object_type string required. The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Table, Tableau Report, Service Report, HTML Report, SQL Report
 #' 
 #' @return  A list containing the following elements:
 #' \item{id}{integer, The id of the favorite.}
 #' \item{objectId}{integer, The id of the object. If specified as a query parameter, must also specify object_type parameter.}
-#' \item{objectType}{string, The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Tableau Report, Service Report, HTML Report, SQL Report}
+#' \item{objectType}{string, The type of the object that is favorited. Valid options: Container Script, Identity Resolution, Import, Python Script, R Script, dbt Script, JavaScript Script, SQL Script, Template Script, Project, Workflow, Table, Tableau Report, Service Report, HTML Report, SQL Report}
 #' \item{objectName}{string, The name of the object that is favorited.}
 #' \item{createdAt}{string, The time this favorite was created.}
 #' \item{objectUpdatedAt}{string, The time the object that is favorited was last updated}
@@ -40311,6 +40979,7 @@ workflows_list <- function(hidden = NULL, archived = NULL, author = NULL, state 
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
+#' \item{lastExecutionId}{integer, The ID of the most recent execution of this workflow, if any.}
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
@@ -40377,6 +41046,7 @@ workflows_post <- function(name, description = NULL, from_job_chain = NULL, defi
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
+#' \item{lastExecutionId}{integer, The ID of the most recent execution of this workflow, if any.}
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
@@ -40468,6 +41138,7 @@ workflows_get <- function(id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
+#' \item{lastExecutionId}{integer, The ID of the most recent execution of this workflow, if any.}
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
@@ -40559,6 +41230,7 @@ workflows_put <- function(id, name, description = NULL, definition = NULL, sched
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
+#' \item{lastExecutionId}{integer, The ID of the most recent execution of this workflow, if any.}
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
@@ -40863,6 +41535,7 @@ workflows_put_transfer <- function(id, user_id, include_dependencies, email_body
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
+#' \item{lastExecutionId}{integer, The ID of the most recent execution of this workflow, if any.}
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.
@@ -41245,6 +41918,7 @@ workflows_post_git_checkout_latest <- function(id) {
 #' \item online boolean, Whether this user is online.
 #' }}
 #' \item{state}{string, The state of the workflow. State is "running" if any execution is running, otherwise reflects most recent execution state.}
+#' \item{lastExecutionId}{integer, The ID of the most recent execution of this workflow, if any.}
 #' \item{schedule}{list, A list containing the following elements: 
 #' \itemize{
 #' \item scheduled boolean, If the item is scheduled.

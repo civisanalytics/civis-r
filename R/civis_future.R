@@ -3,7 +3,7 @@ NULL
 
 #' Evaluate an expression in Civis Platform
 #'
-#' This is used as with the \code{\link{future}} API as an argument to \code{\link{plan}}.
+#' This is used as with the \code{\link[future]{future}} API as an argument to \code{\link[future]{plan}}.
 #'
 #' @param ... Arguments to \code{\link{CivisFuture}} and then \code{\link{scripts_post_containers}}
 #' @return The result of evaluating \code{expr}.
@@ -50,12 +50,13 @@ class(civis_platform) <- c("CivisFuture", "future", "function")
 #' Evaluate an expression in Civis Platform
 #' @inheritParams future::Future
 #' @param local deprecated as of \code{civis} v3.0.1
+#' @param gc If TRUE, the garbage collector is run after the value of the future has been collected, i.e., when it is no longer needed or when the future is terminated.
 #' @param required_resources resources, see \code{\link{scripts_post_containers}}
 #' @param docker_image_name the image for the container script.
 #' @param docker_image_tag the tag for the Docker image.
 #' @param ... arguments to \code{\link{scripts_post_containers}}
 #'
-#' @return A \code{CivisFuture} inheriting from \code{\link{Future}} that evaluates \code{expr} on the given container.
+#' @return A \code{CivisFuture} inheriting from \code{\link[future]{Future}} that evaluates \code{expr} on the given container.
 #'
 #' @export
 CivisFuture <- function(expr = NULL,
@@ -66,7 +67,6 @@ CivisFuture <- function(expr = NULL,
                         lazy = FALSE,
                         local = lifecycle::deprecated(),
                         gc = FALSE,
-                        earlySignal = FALSE,
                         label = NULL,
                         required_resources = list(cpu = 1024, memory = 2048, diskSpace = 4),
                         docker_image_name = "civisanalytics/datascience-r",
@@ -86,7 +86,6 @@ CivisFuture <- function(expr = NULL,
                            packages = unique(c(packages, gp$packages)),
                            lazy = lazy,
                            gc = gc,
-                           earlySignal = earlySignal,
                            label = label,
                            version = "1.8",  # see: https://github.com/civisanalytics/civis-r/issues/168
 
@@ -103,9 +102,9 @@ CivisFuture <- function(expr = NULL,
 #' @describeIn CivisFuture Run a CivisFuture
 run.CivisFuture <- function(future, ...) {
   if (is.null(future$job$containerId)) {
-    envir <- list2env(future$globals)
-    cargo <- c(expr = future$expr, envir = envir,
-               packages = list(future$packages))
+    cargo <- list(expr = future$expr,
+                  globals = future$globals,
+                  packages = future$packages)
     task_file_id <- write_civis_file(cargo)
     runner_file_id <- upload_runner_script()
     cmd <- make_docker_cmd(task_file_id, runner_file_id)

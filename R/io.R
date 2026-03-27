@@ -330,7 +330,7 @@ write_civis.numeric <- function(x, tablename, database = NULL, if_exists = "fail
 #' Data frames are uploaded as CSVs with \code{\link{write.csv}}.
 #' R objects are serialized with \code{\link{saveRDS}}. Files are uploaded as-is.
 #' Objects or files larger than 50mb are chunked and can be uploaded in parallel
-#' if a \code{\link{plan}} has been set. Files larger than 5TB cannot be uploaded.
+#' if a \code{\link[future]{plan}} has been set. Files larger than 5TB cannot be uploaded.
 #'
 #' @param x R object or path of file to upload.
 #' @param name string, Name of the file or object.

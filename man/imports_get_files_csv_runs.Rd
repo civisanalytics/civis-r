@@ -21,6 +21,7 @@ A list containing the following elements:
 \item{startedAt}{string, The time the run started at.}
 \item{finishedAt}{string, The time the run completed.}
 \item{error}{string, The error, if any, returned by the run.}
+\item{inputs}{list, The inputs of the import at the time of the run.}
 }
 \description{
 Check status of a run

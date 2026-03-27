@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.1.4] - 2026-03-13
+
+### Changed
+- Regenerated the default Client (`R/generated_client.R`)
+- Updated `CivisFuture` class: removed deprecated `earlySignal` argument (issue #263)
+- Updated `CivisFuture` class: removed deprecated `envir` field from `future::Future()` and updated remote eval to use `globals` instead (issue #262)
+- Updated maintainer
+
 ## [3.1.3] - 2025-08-25
 
 ### Changed
